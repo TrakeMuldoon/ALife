@@ -1,0 +1,55 @@
+﻿Environment
+	- Object
+		- RealLocation (Float Point)
+		- VisualLocation (Int Point)
+		- Radius
+		- Orientation
+		- Label
+		- CollisionLevel (string)
+		
+		: Agent (list)
+			()ExecuteTurn
+				()BrainExecute
+				()ExecuteActions
+				()CheckCollisions
+				()ResolveCollisions
+				()CheckEvolution
+				()ResolveEvolution
+			- Brain
+				- Rule (list)
+					- Condition (list)
+						- DataPoint
+						- Operation [GreaterThan, LessThan, EqualTo, GTEQ, LTEQ, Within, NotWithin]
+						- DataPoint/Number
+					- Action
+			- Input
+				- Value
+				- MostRecentPositiveValue
+				- Delta
+				- Name
+				
+				: SenseInput
+					- CentrePoint
+					- Radius
+				()Detect
+					: PieInput
+						-Sweep
+						-StartAngle
+						: VisualInput
+					
+					: CircleInput
+						: AudioInput 
+						: SmellInput
+						: AgentProximityInput
+						: SpecificProximityInput
+
+				: PropertyInput
+					- Minimum
+					- Maximum
+			
+			- Action
+				()Enact
+				: MoveAction
+				: RotateAction
+				: BiteAction
+				

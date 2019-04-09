@@ -11,6 +11,12 @@ namespace AlifeUniversal.ALife.AgentPieces
         public readonly Action SuccessAction;
         public readonly Func<double> SuccessParam;
 
+        protected Behaviour(Action thenDoThis, Func<double> resultParam)
+        {
+            SuccessAction = thenDoThis;
+            SuccessParam = resultParam;
+        }
+
         //will be run once a "turn"
         public abstract void EvaluateBehaviour();
     }

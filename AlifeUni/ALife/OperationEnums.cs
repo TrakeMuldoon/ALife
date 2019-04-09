@@ -30,6 +30,12 @@ namespace AlifeUniversal.ALife
     {
         EqualTo,
         NoEqualTo,
+        AND,
+        OR,
+        NAND,
+        NOR,
+        XOR,
+        XNOR,
         IsTrue,
         IsFalse
     }

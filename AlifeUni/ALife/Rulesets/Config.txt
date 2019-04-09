@@ -1,0 +1,27 @@
+Action Config
+	<Action>
+		CheckAgainstProperty
+		PositiveOutcomeEffects
+
+Input Configs
+	Properties	
+
+		
+
+
+Agent Config
+	General Agent
+		<Agent>
+			Reproduction Trigger
+			Reproduction Rules
+
+			Size Min, Size Max
+			Random Inputs?
+			Predefined Inputs
+			
+	Specific Custom Agents
+		<Agent>
+
+
+Environment Config
+	Number of Starting Agents

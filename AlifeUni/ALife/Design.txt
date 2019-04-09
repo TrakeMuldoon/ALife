@@ -16,7 +16,7 @@
 				()CheckEvolution
 				()ResolveEvolution
 			- Brain
-				- Rule (list)
+				- Behaviour (list)
 					- Condition (list)
 						- DataPoint
 						- Operation [GreaterThan, LessThan, EqualTo, GTEQ, LTEQ, Within, NotWithin]
@@ -53,3 +53,6 @@
 				: RotateAction
 				: BiteAction
 				
+
+https://www.youtube.com/watch?v=OLnv8QaEDL0
+Evolve.io

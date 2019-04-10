@@ -18,6 +18,9 @@ Agent Config
 			Size Min, Size Max
 			Random Inputs?
 			Predefined Inputs
+			<Brain>
+				Behaviours Min
+				Behaviours Max
 			
 	Specific Custom Agents
 		<Agent>

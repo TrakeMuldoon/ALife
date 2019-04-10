@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlifeUniversal.ALife.AgentPieces
+namespace AlifeUniversal.ALife
 {
-    abstract class Behaviour
+    public abstract class Behaviour
     {
+        public String AsEnglish;
+
         public readonly Action SuccessAction;
         public readonly Func<double> SuccessParam;
 

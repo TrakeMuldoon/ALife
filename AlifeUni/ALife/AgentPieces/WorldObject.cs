@@ -12,6 +12,9 @@ namespace AlifeUniversal.ALife
     {
         public Point CentrePoint;
 
+        public String GenusLabel;
+        public String IndividualLabel;
+
         private double radius;
         public double Radius
         {

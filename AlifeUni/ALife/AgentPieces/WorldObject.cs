@@ -75,7 +75,7 @@ namespace AlifeUniversal.ALife
 
         public virtual void TrashItem()
         {
-            Environment.World.RemoveWorldObject(this);
+            Planet.World.RemoveWorldObject(this);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using AlifeUniversal.ALife;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
@@ -34,32 +35,13 @@ namespace AlifeUni
         public MainPage()
         {
             this.InitializeComponent();
+            Planet.CreateWorld();
             startticks = DateTime.Now.Ticks;
-        }
-
-        private void canvas_Draw(CanvasControl sender
-                         , CanvasDrawEventArgs args)
-        {
-            CanvasCommandList cl = new CanvasCommandList(sender);
-            using (CanvasDrawingSession clds = cl.CreateDrawingSession())
-            {
-                for (int i = 0; i < 100; i++)
-                {
-                    clds.DrawText("Hello, World!", RndPosition(), Color.FromArgb(255, RndByte(), RndByte(), RndByte()));
-                    clds.DrawCircle(RndPosition(), RndRadius(), Color.FromArgb(255, RndByte(), RndByte(), RndByte()));
-                    clds.DrawLine(RndPosition(), RndPosition(), Color.FromArgb(255, RndByte(), RndByte(), RndByte()));
-                }
-            }
-            GaussianBlurEffect blur = new GaussianBlurEffect();
-            blur.Source = cl;
-            blur.BlurAmount = 10.0f;
-            args.DrawingSession.DrawImage(blur);
+            animCanvas.ClearColor = Colors.NavajoWhite;
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            //this.canvas.RemoveFromVisualTree();
-            //this.canvas = null;
             this.animCanvas.RemoveFromVisualTree();
             this.animCanvas = null;
         }

@@ -10,7 +10,10 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Unloaded="Page_Unloaded">
 
-    <Grid>
-        <canvas:CanvasAnimatedControl x:Name="animCanvas" Draw="animCanvas_Draw" CreateResources="animCanvas_CreateResources" />
+    <Grid Background="PaleGoldenrod">
+        <Border Background="Black" BorderBrush="Red" BorderThickness="5">
+            <canvas:CanvasAnimatedControl x:Name="animCanvas" Draw="animCanvas_Draw" CreateResources="animCanvas_CreateResources" 
+                                          Width="1000" Height="1000" />
+        </Border>
     </Grid>
 </Page>

@@ -1,0 +1,67 @@
+﻿SenseClusters
+	Eye
+		CanSeeSomething
+		IsRed
+		HowRed
+		IsBlue
+		HowBlue
+		IsGreen
+		HowGreen
+		HowManyThingsDoISee
+		IsSpecialKnownThing
+
+	Ear
+		CanHearSomething
+		HowLoud
+		WhatPitch
+		HowManyThingsDoIHear
+		IsSpecialKnownThing
+
+	Nose
+		CanISmellSomething
+		HowStrong
+		WhatScent
+		HowManyThingsDoISmell
+		IsSpecialKnownThing
+
+	Touch
+		AmITouchingSomething
+		WhatTexture
+		HowManyThingsAmItouching
+		IsSpecialKnownThing
+
+
+Actions as Inputs (Input<bool> of "Have I just completed this action")
+ActionEngagemnt as Inputs (i.e. "collided")
+Inputs as Actions (i.e. if Inputs take resources to use, then it may be a decision to use them)
+
+Brain Behaviours
+Brain Neural Network
+
+Fitness Function Concepts
+1. Reproduction based on triggers happening during run
+	Reaching certain areas, 
+	Achieving certain age
+	Maximimzing/hitting certain property thresholds (energy > 100)
+	Reproducing voluntarily as an Action
+2. Run envrionment until all creatures are dead, then evaluate fitness of all agents, and reproduce only the top X percent
+
+Reproduction
+Need a way to have a certain amount of mutability
+	Repro for Behaviour Brains
+		Reproduce X percent of rules intact
+		Add/Remove 1/2 rules
+		Modify 1/2 rules
+	Repro for NN Brains
+		Change 1-2 weights in each layer
+	Modify certain properties as well
+		MovementEnergyCost
+	Modify Physical pieces
+		Hearing Distance
+		Sight
+		Number of eyes
+
+DistanceToGoal Input
+OrientationToGoal Input
+ProximityDetector Input
+CollisionInput

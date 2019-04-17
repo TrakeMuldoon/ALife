@@ -32,7 +32,7 @@ namespace AlifeUniversal.ALife
         internal void ExecuteTurn()
         {
             //TODO: Holy Crap this is bad
-            double randNum = Environment.World.NumberGen.NextDouble();
+            double randNum = Planet.World.NumberGen.NextDouble();
             
             //Reset Colour
             parent.Actions["Color"].AttemptEnact(0.001);

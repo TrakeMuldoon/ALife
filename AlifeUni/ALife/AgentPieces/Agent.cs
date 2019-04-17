@@ -19,7 +19,7 @@ namespace AlifeUniversal.ALife
             : base(birthPosition
                   , 5                                               //current radius
                   , "Agent"                                         //Genus Label
-                  , Environment.World.NextUniqueID().ToString()     //Individual Label
+                  , Planet.World.NextUniqueID().ToString()     //Individual Label
                   , "Physical"                                      //Collision Level
                   , Windows.UI.Colors.DarkSalmon)                   //Start Color
         {

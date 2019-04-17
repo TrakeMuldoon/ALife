@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace AlifeUniversal.ALife
 {
-    public sealed class Environment
+    public sealed class Planet
     {
-        private static Environment instance;
+        private static Planet instance;
 
-        static Environment()
+        static Planet()
         {
 
         }
 
-        private Environment(int seed)
+        private Planet(int seed)
         {
             NumberGen = new Random(seed);
 
-            //TODO: Put Environment Creation into the config
+            //TODO: Put PLanet Creation into the config
 
             //TODO: Create Special Objects from Config
 
@@ -31,7 +31,7 @@ namespace AlifeUniversal.ALife
             }
         }
 
-        public static Environment World
+        public static Planet World
         {
             get
             {
@@ -54,7 +54,7 @@ namespace AlifeUniversal.ALife
 
         public static void CreateWorld(int seed)
         {
-            instance = new Environment(seed);
+            instance = new Planet(seed);
         }
 
 

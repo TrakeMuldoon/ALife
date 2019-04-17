@@ -27,7 +27,7 @@ namespace AlifeUniversal.ALife
             byte gByte = (byte)(G * 255);
             byte bByte = (byte)(B * 255);
 
-            self.color = Color.FromArgb(255, rByte, gByte, bByte);
+            self.Color = Color.FromArgb(255, rByte, gByte, bByte);
         }
     }
 }

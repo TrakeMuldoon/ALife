@@ -8,20 +8,27 @@ namespace AlifeUniversal.ALife
 {
     public abstract class Input
     {
-        private double myValue;
-        public double Value
+        public abstract Type GetContainedType();
+    }
+
+    public abstract class Input<T> : Input
+    {
+        private T myValue;
+        public T Value
         {
-            get {
+            get
+            {
                 return myValue;
             }
-            set {
+            set
+            {
                 mostRecentValue = myValue;
                 myValue = value;
             }
         }
 
-        private double mostRecentValue;
-        public double MostRecentValue
+        private T mostRecentValue;
+        public T MostRecentValue
         {
             get
             {
@@ -29,14 +36,13 @@ namespace AlifeUniversal.ALife
             }
         }
 
-        public double Delta
+        public abstract T Delta();
+
+        public override Type GetContainedType()
         {
-            get
-            {
-                return myValue - mostRecentValue;
-            }
+            return typeof(T);
         }
 
-        public double Name;
+        public string Name;
     }
 }

@@ -12,8 +12,8 @@ namespace AlifeUniversal.ALife
     {
         public Point CentrePoint;
 
-        public String GenusLabel;
-        public String IndividualLabel;
+        public readonly String GenusLabel;
+        public readonly String IndividualLabel;
 
         private double radius;
         public double Radius
@@ -44,7 +44,18 @@ namespace AlifeUniversal.ALife
 
         public bool Alive;
 
-        public Color color; 
+        public Color Color; 
+
+        protected WorldObject(Point centrePoint, double startRadius, string genusLabel, string individualLabel, string collisionLevel, Color color)
+        {
+            CentrePoint = centrePoint;
+            Radius = startRadius;
+            GenusLabel = genusLabel;
+            IndividualLabel = individualLabel;
+            CollisionLevel = collisionLevel;
+            Color = color;
+            Alive = true;
+        }
 
         /* METHODS */
         public virtual void ExecuteTurn()

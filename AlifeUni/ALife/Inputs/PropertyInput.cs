@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AlifeUniversal.ALife
 {
-    public class PropertyInput : Input
+    public class PropertyInput : Input<Double>
     {
         public double PropertyMaximum;
         public double PropertyMinimum;
@@ -54,6 +54,12 @@ namespace AlifeUniversal.ALife
             }
 
             Value = temp;
+        }
+
+        public override double Delta()
+        {
+            //TODO: This is actually wrong. Need to fix it to update the delta
+            return Value - MostRecentValue;
         }
     }
 }

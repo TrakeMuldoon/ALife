@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
 
 namespace AlifeUniversal.ALife
 {
@@ -10,26 +12,39 @@ namespace AlifeUniversal.ALife
     {
         protected Brain myBrain;
 
-        List<SenseInput> Senses;
-        List<Action> Actions;
+        public readonly List<SenseInput> Senses;
+        public readonly ReadOnlyDictionary<String, Action> Actions;
 
-        public Agent()
+        public Agent(Point birthPosition)
+            : base(birthPosition
+                  , 5                                               //current radius
+                  , "Agent"                                         //Genus Label
+                  , Environment.World.NextUniqueID().ToString()     //Individual Label
+                  , "Physical"                                      //Collision Level
+                  , Windows.UI.Colors.DarkSalmon)                   //Start Color
         {
-            Senses = GenerateSenses();
-            Properties = GenerateAgentProperties();
+            CentrePoint = birthPosition;
+            OrientationInRads = 0;
+            
+            //Senses = GenerateSenses();
+            //Properties = GenerateAgentProperties();
             Actions = GenerateActions();
 
-            myBrain = new Brain();
+            myBrain = new Brain(this);
+
+            
         }
 
-        private List<Action> GenerateActions()
+        private ReadOnlyDictionary<string, Action> GenerateActions()
         {
             //TODO: Link this somehow to world-settings
-            List<Action> myActions = new List<Action>();
-            myActions.Add(new ColorAction(this));
-            myActions.Add(new MoveAction(this));
-            myActions.Add(new TurnAction(this));
-            return myActions;
+            //TODO: This probably doesn't need to be a dictionary
+            Dictionary<string, Action> myActions = new Dictionary<string, Action>();
+            myActions.Add("Color", new ColorAction(this));
+            myActions.Add("Move", new MoveAction(this));
+            myActions.Add("Rotate", new RotateAction(this));
+
+            return new ReadOnlyDictionary<string, Action>(myActions);
         }
 
         private Dictionary<String, PropertyInput> GenerateAgentProperties()

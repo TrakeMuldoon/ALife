@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AlifeUniversal.ALife
 {
-    class TurnAction : Action
+    class RotateAction : Action
     {
-        public TurnAction(Agent myself) : base(myself)
+        public RotateAction(Agent myself) : base(myself)
         {
         }
 

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 
-namespace AlifeUniversal.ALife
+namespace ALifeUni.ALife
 {
     public class Agent : WorldObject
     {
@@ -15,12 +16,12 @@ namespace AlifeUniversal.ALife
         public readonly List<SenseInput> Senses;
         public readonly ReadOnlyDictionary<String, Action> Actions;
 
-        public Agent(Point birthPosition)
+        public Agent(Vector2 birthPosition)
             : base(birthPosition
                   , 5                                               //current radius
                   , "Agent"                                         //Genus Label
                   , Planet.World.NextUniqueID().ToString()          //Individual Label
-                  , "Physical"                                      //Collision Level
+                  , ReferenceValues.CollisionLevelPhysical          //Collision Level
                   , Windows.UI.Colors.DarkSalmon)                   //Start Color
         {
             CentrePoint = birthPosition;

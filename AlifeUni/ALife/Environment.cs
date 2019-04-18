@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlifeUniversal.ALife
+namespace ALifeUni.ALife
 {
     public sealed class Planet
     {
@@ -18,17 +19,6 @@ namespace AlifeUniversal.ALife
         private Planet(int seed)
         {
             NumberGen = new Random(seed);
-
-            //TODO: Put PLanet Creation into the config
-
-            //TODO: Create Special Objects from Config
-
-            //TODO: Read new world agentnum from config
-            for(int i = 0; i < 10; i++)
-            {
-
-
-            }
         }
 
         public static Planet World
@@ -55,6 +45,23 @@ namespace AlifeUniversal.ALife
         public static void CreateWorld(int seed)
         {
             instance = new Planet(seed);
+
+            //TODO: Put PLanet Creation into the config
+
+            //TODO: Create Special Objects from Config
+
+            //TODO: Read new world agentnum from config
+
+            int locationMultiplier = 12;
+            for (int i = 0; i < 100; i++)
+            {
+                int yPosBase = 1 + (i / 3);
+                int xPosBase = 1 + ((i - 1) / 3) + (((i - 1) % 3) % 2);
+                int xPos = xPosBase * locationMultiplier;
+                int yPos = yPosBase * locationMultiplier;
+                Agent ag = new Agent(new Vector2((float)xPos, (float)yPos));
+                instance.AddObjectToWorld(ag);
+            }
         }
 
 
@@ -69,13 +76,13 @@ namespace AlifeUniversal.ALife
         public readonly List<WorldObject> AllControlledObjects = new List<WorldObject>();
         public readonly Dictionary<string, List<WorldObject>> CollisionLevels = new Dictionary<string, List<WorldObject>>();
 
-        internal void AddObjectToWorld(WorldObject toAdd, String collisionLevel)
+        internal void AddObjectToWorld(WorldObject toAdd)
         {
-            if(!CollisionLevels.ContainsKey(collisionLevel))
+            if(!CollisionLevels.ContainsKey(toAdd.CollisionLevel))
             {
-                CollisionLevels.Add(collisionLevel, new List<WorldObject>());
+                CollisionLevels.Add(toAdd.CollisionLevel, new List<WorldObject>());
             }
-            CollisionLevels[collisionLevel].Add(toAdd);
+            CollisionLevels[toAdd.CollisionLevel].Add(toAdd);
 
             AllControlledObjects.Add(toAdd);
         }

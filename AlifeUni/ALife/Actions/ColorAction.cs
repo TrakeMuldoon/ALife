@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI;
 
-namespace AlifeUniversal.ALife
+namespace ALifeUni.ALife
 {
     class ColorAction : Action
     {

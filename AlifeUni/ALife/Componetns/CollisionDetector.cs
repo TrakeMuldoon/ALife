@@ -1,4 +1,4 @@
-﻿namespace AlifeUniversal.ALife
+﻿namespace ALifeUni.ALife
 {
     public class CollisionDetector
     {

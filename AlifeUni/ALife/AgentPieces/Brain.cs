@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlifeUniversal.ALife
+namespace ALifeUni.ALife
 {
     public class Brain
     {

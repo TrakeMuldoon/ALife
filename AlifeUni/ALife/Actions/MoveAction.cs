@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 
-namespace AlifeUniversal.ALife
+namespace ALifeUni.ALife
 {
     class MoveAction : Action
     {
@@ -18,11 +19,11 @@ namespace AlifeUniversal.ALife
 
         protected override void TakeAction(double IntensityPercent)
         {
-            Point origin = self.CentrePoint;
+            Vector2 origin = self.CentrePoint;
 
-            Point destination = new Point();
-            destination.X = origin.X + (Speed / 100) * IntensityPercent * Math.Cos(self.OrientationInRads);
-            destination.Y = origin.Y + (Speed / 100) * IntensityPercent * Math.Sin(self.OrientationInRads);
+            Vector2 destination = new Vector2();
+            destination.X = (float)(origin.X + (Speed / 100) * IntensityPercent * Math.Cos(self.OrientationInRads));
+            destination.Y = (float)(origin.Y + (Speed / 100) * IntensityPercent * Math.Sin(self.OrientationInRads));
             self.CentrePoint = destination;
         }
     }

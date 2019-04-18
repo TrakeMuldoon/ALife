@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlifeUniversal.ALife
+namespace ALifeUni.ALife
 {
     class RotateAction : Action
     {

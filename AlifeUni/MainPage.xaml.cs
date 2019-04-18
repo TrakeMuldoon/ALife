@@ -1,6 +1,7 @@
-﻿using AlifeUniversal.ALife;
+﻿using ALifeUni.ALife;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace AlifeUni
+namespace ALifeUni
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -46,58 +47,62 @@ namespace AlifeUni
             this.animCanvas = null;
         }
 
-        Random rnd = new Random();
-        private Vector2 RndPosition()
-        {
-            double x = rnd.NextDouble() * 500f;
-            double y = rnd.NextDouble() * 500f;
-            return new Vector2((float)x, (float)y);
-        }
+        //Random rnd = new Random();
+        //private Vector2 RndPosition()
+        //{
+        //    double x = rnd.NextDouble() * 500f;
+        //    double y = rnd.NextDouble() * 500f;
+        //    return new Vector2((float)x, (float)y);
+        //}
 
-        private float RndRadius()
-        {
-            return (float)rnd.NextDouble() * 150f;
-        }
+        //private float RndRadius()
+        //{
+        //    return (float)rnd.NextDouble() * 150f;
+        //}
 
-        private byte RndByte()
-        {
-            return (byte)rnd.Next(256);
-        }
+        //private byte RndByte()
+        //{
+        //    return (byte)rnd.Next(256);
+        //}
 
-        long numDraws = 0;
-        private void animCanvas_Draw(Microsoft.Graphics.Canvas.UI.Xaml.ICanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedDrawEventArgs args)
+        //long numDraws = 0;
+        private void animCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
-            ++numDraws;
-            float radius = (float)(1 + Math.Sin(args.Timing.TotalTime.TotalSeconds)) * 10f;
-            blur.BlurAmount = radius;
-            args.DrawingSession.DrawImage(blur);
-            args.DrawingSession.DrawText(DateTime.Now.Ticks.ToString(), new Vector2(0, 0), Colors.Black);
-            decimal ticksPerDraw = (DateTime.Now.Ticks - startticks) / numDraws;
-            args.DrawingSession.DrawText(numDraws.ToString(), new Vector2(0, 20), Colors.Black);
-            args.DrawingSession.DrawText((DateTime.Now.Ticks - startticks).ToString(), new Vector2(0, 40), Colors.Black);
-            args.DrawingSession.DrawText(ticksPerDraw.ToString(), new Vector2(0, 60), Colors.Black);
-        }
-
-
-        String blah = "1000";
-        GaussianBlurEffect blur = new GaussianBlurEffect();
-        private void animCanvas_CreateResources(Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
-        {
-            CanvasCommandList cl = new CanvasCommandList(sender);
-            using (CanvasDrawingSession clds = cl.CreateDrawingSession())
+            foreach(WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical])
             {
-                for (int i = 0; i < 100; i++)
-                {
-                    clds.DrawText(blah, RndPosition(), Color.FromArgb(255, RndByte(), RndByte(), RndByte()));
-                    clds.DrawCircle(RndPosition(), RndRadius(), Color.FromArgb(255, RndByte(), RndByte(), RndByte()));
-                    clds.DrawLine(RndPosition(), RndPosition(), Color.FromArgb(255, RndByte(), RndByte(), RndByte()));
-                }
+                args.DrawingSession.DrawCircle(wo.CentrePoint, wo.Radius, wo.Color);
             }
-            blur = new GaussianBlurEffect()
-            {
-                Source = cl,
-                BlurAmount = 10.0f
-            };
+            //++numDraws;
+            //float radius = (float)(1 + Math.Sin(args.Timing.TotalTime.TotalSeconds)) * 10f;
+            //blur.BlurAmount = radius;
+            //args.DrawingSession.DrawImage(blur);
+            //args.DrawingSession.DrawText(DateTime.Now.Ticks.ToString(), new Vector2(0, 0), Colors.Black);
+            //decimal ticksPerDraw = (DateTime.Now.Ticks - startticks) / numDraws;
+            //args.DrawingSession.DrawText(numDraws.ToString(), new Vector2(0, 20), Colors.Black);
+            //args.DrawingSession.DrawText((DateTime.Now.Ticks - startticks).ToString(), new Vector2(0, 40), Colors.Black);
+            //args.DrawingSession.DrawText(ticksPerDraw.ToString(), new Vector2(0, 60), Colors.Black);
+        }
+
+
+        //String blah = "1000";
+        //GaussianBlurEffect blur = new GaussianBlurEffect();
+        private void animCanvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
+        {
+            //CanvasCommandList cl = new CanvasCommandList(sender);
+            //using (CanvasDrawingSession clds = cl.CreateDrawingSession())
+            //{
+            //    for (int i = 0; i < 100; i++)
+            //    {
+            //        clds.DrawText(blah, RndPosition(), Color.FromArgb(255, RndByte(), RndByte(), RndByte()));
+            //        clds.DrawCircle(RndPosition(), RndRadius(), Color.FromArgb(255, RndByte(), RndByte(), RndByte()));
+            //        clds.DrawLine(RndPosition(), RndPosition(), Color.FromArgb(255, RndByte(), RndByte(), RndByte()));
+            //    }
+            //}
+            //blur = new GaussianBlurEffect()
+            //{
+            //    Source = cl,
+            //    BlurAmount = 10.0f
+            //};
         }
 
     }

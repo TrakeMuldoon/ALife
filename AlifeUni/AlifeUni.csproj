@@ -126,6 +126,7 @@
     <Compile Include="ALife\AgentPieces\Brain.cs" />
     <Compile Include="ALife\AgentPieces\DoubleBehaviour.cs" />
     <Compile Include="ALife\AgentPieces\WorldObject.cs" />
+    <Compile Include="ALife\ReferenceValues.cs" />
     <Compile Include="ALife\Componetns\CollisionDetector.cs" />
     <Compile Include="ALife\Environment.cs" />
     <Compile Include="ALife\Inputs\Input.cs" />

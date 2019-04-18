@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 
-namespace AlifeUniversal.ALife
+namespace ALifeUni.ALife
 {
     public abstract class WorldObject
     {
-        public Point CentrePoint;
+        public Vector2 CentrePoint;
 
         public readonly String GenusLabel;
         public readonly String IndividualLabel;
 
-        private double radius;
-        public double Radius
+        private float radius;
+        public float Radius
         {
             get
             {
@@ -25,7 +26,7 @@ namespace AlifeUniversal.ALife
 
             set
             {
-                double rad = value;
+                float rad = value;
                 if(rad > Settings.ObjectRadiusMax)
                 {
                     rad = Settings.ObjectRadiusMax;
@@ -40,13 +41,13 @@ namespace AlifeUniversal.ALife
 
         public Dictionary<String, PropertyInput> Properties = new Dictionary<string, PropertyInput>();
 
-        public readonly String CollisionLevel;
+        public readonly string CollisionLevel;
 
         public bool Alive;
 
         public Color Color; 
 
-        protected WorldObject(Point centrePoint, double startRadius, string genusLabel, string individualLabel, string collisionLevel, Color color)
+        protected WorldObject(Vector2 centrePoint, float startRadius, string genusLabel, string individualLabel, string collisionLevel, Color color)
         {
             CentrePoint = centrePoint;
             Radius = startRadius;

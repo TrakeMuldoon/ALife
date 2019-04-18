@@ -35,10 +35,10 @@ namespace ALifeUni.ALife
             double randNum = Planet.World.NumberGen.NextDouble();
             
             //Reset Colour
-            parent.Actions["Color"].AttemptEnact(0.001);
+            parent.Actions["Color"].AttemptEnact(0.0099);
             if (randNum < 0.33)
             {
-                parent.Actions["Turn"].AttemptEnact(randNum * 3);
+                parent.Actions["Rotate"].AttemptEnact(randNum * 3);
             }
             else if(randNum < 0.66)
             {
@@ -46,7 +46,7 @@ namespace ALifeUni.ALife
             }
             else
             {
-                parent.Actions["Color"].AttemptEnact(0.1);
+                parent.Actions["Color"].AttemptEnact(0.99);
             }
         }
     }

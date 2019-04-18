@@ -13,6 +13,7 @@
     <Grid Background="PaleGoldenrod">
         <Border Background="Black" BorderBrush="Red" BorderThickness="5">
             <canvas:CanvasAnimatedControl x:Name="animCanvas" Draw="animCanvas_Draw" CreateResources="animCanvas_CreateResources" 
+                                          Tapped="AnimCanvas_Tapped"
                                           Width="1000" Height="1000" />
         </Border>
     </Grid>

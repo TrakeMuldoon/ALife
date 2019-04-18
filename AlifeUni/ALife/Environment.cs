@@ -87,6 +87,19 @@ namespace ALifeUni.ALife
             AllControlledObjects.Add(toAdd);
         }
 
+        internal void ExecuteOneTurn()
+        {
+            for(int i = 0; i < 10000; i++)
+            //while(true)
+            {
+                foreach (WorldObject wo in AllControlledObjects)
+                {
+                    wo.ExecuteTurn();
+                    //TODO, clean ups?
+                }
+            }
+        }
+
         internal void RemoveWorldObject(WorldObject mySelf)
         {
             string collisionLevel = mySelf.CollisionLevel;

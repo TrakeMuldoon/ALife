@@ -1,5 +1,5 @@
-﻿SAVING of Planets!
-
+﻿
+Game Loop!
 Have an interface that runs 1 turn, runs many turns, runs forever, runs in the background.
 HAve an interface to view an intdivudla agent
 Have an interface that allowed editing of agents.
@@ -36,15 +36,21 @@ SenseClusters
 		HowManyThingsAmItouching
 		IsSpecialKnownThing
 
+
+Brain Behaviours
+	Represent Rules as an Array, to assist with repdouctution
+Brain Neural Network
+
 Load many vluaes and features from a Config (See Config Spec)
 
 Actions as Inputs (Input<bool> of "Have I just completed this action")
 ActionEngagemnt as Inputs (i.e. "collided")
 Inputs as Actions (i.e. if Inputs take resources to use, then it may be a decision to use them)
 
-Brain Behaviours
-	Represent Rules as an Array, to assist with repdouctution
-Brain Neural Network
+DistanceToGoal Input
+OrientationToGoal Input
+ProximityDetector Input
+CollisionInput
 
 Fitness Function Concepts
 1. Reproduction based on triggers happening during run
@@ -69,7 +75,5 @@ Need a way to have a certain amount of mutability
 		Sight
 		Number of eyes
 
-DistanceToGoal Input
-OrientationToGoal Input
-ProximityDetector Input
-CollisionInput
+
+SAVING of Planets!

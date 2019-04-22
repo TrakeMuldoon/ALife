@@ -1,0 +1,53 @@
+Collision detection
+Rotation to Goal Input
+Distance to Goal Input
+Eyeball Generator
+Random Brain Generator
+
+Custom Environment Setup
+External Fitness Function
+Reproduction
+"Mutability" concept
+
+Run Foot Traffic Simulation
+
+Interface Updates:
+Game Loop
+Game Pause
+Game 1 Step
+Game Play
+
+Inspect End Of Run
+
+Inspect Individual Agent
+
+ProximityDetectorInput
+SenseClusters:
+Eyes
+Ears
+Nose
+Touch
+
+Actions:
+Bite
+
+Actions as Inputs
+Inputs as Actions
+Collision -> Collide
+Bite -> Bitten
+Punch -> Punched
+
+Configurability
+- Custom Objects (Pineapples)
+
+AmbientFood?
+
+Update Reproduction to include physical characteristics
+
+Update UI to view ancestry
+
+Editing of Agents
+
+Saving of Current State (Including flag for "edited or not")
+
+

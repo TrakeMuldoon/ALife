@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlifeUni.ALife.Componetns
+namespace ALifeUni.ALife
 {
-    public struct Square
+    public struct BoundingBox
     {
         public float MaxX;
         public float MaxY;
         public float MinX;
         public float MinY;
 
-        public bool IsCollision(Square interloper)
+        public bool IsCollision(BoundingBox interloper)
         {
             if(MinX < interloper.MaxX
                 && MaxX > interloper.MinX

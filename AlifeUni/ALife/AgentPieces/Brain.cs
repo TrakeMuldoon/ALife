@@ -36,11 +36,11 @@ namespace ALifeUni.ALife
             
             //Reset Colour
             parent.Actions["Color"].AttemptEnact(0.0099);
-            if (randNum < 0.33)
+            if (randNum < 0.20)
             {
                 parent.Actions["Rotate"].AttemptEnact(randNum * 3);
             }
-            else if(randNum < 0.66)
+            else if(randNum < 0.90)
             {
                 parent.Actions["Move"].AttemptEnact((randNum - 0.33) * 3);
             }

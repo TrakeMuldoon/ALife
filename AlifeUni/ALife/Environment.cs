@@ -35,17 +35,23 @@ namespace ALifeUni.ALife
                 }
             }
         }
-
+        
         public static void CreateWorld()
         {
             Random r = new Random();
-            CreateWorld(r.Next());
+            CreateWorld(r.Next(), 90, 90);
         }
 
-        public static void CreateWorld(int seed)
+        private static int WorldWidth;
+        private static int WorldHeight;
+
+        public static void CreateWorld(int seed, int height, int width)
         {
+            WorldWidth = width;
+            WorldHeight = height;
             instance = new Planet(seed);
 
+            
             //TODO: Put PLanet Creation into the config
 
             //TODO: Create Special Objects from Config
@@ -74,36 +80,40 @@ namespace ALifeUni.ALife
         }
 
         public readonly List<WorldObject> AllControlledObjects = new List<WorldObject>();
-        public readonly Dictionary<string, List<WorldObject>> CollisionLevels = new Dictionary<string, List<WorldObject>>();
+        public readonly Dictionary<string, ICollisionMap> CollisionLevels = new Dictionary<string, ICollisionMap>();
 
         internal void AddObjectToWorld(WorldObject toAdd)
         {
             if(!CollisionLevels.ContainsKey(toAdd.CollisionLevel))
             {
-                CollisionLevels.Add(toAdd.CollisionLevel, new List<WorldObject>());
+                CollisionLevels.Add(toAdd.CollisionLevel, new CollisionGrid(WorldHeight, WorldWidth));
             }
-            CollisionLevels[toAdd.CollisionLevel].Add(toAdd);
+            CollisionLevels[toAdd.CollisionLevel].Insert(toAdd);
 
             AllControlledObjects.Add(toAdd);
         }
 
+
+        internal void ExecuteManyTurns(int numTurns)
+        {
+            for (int i = 0; i < numTurns; i++)
+            {
+                ExecuteOneTurn();
+            }
+        }
+
         internal void ExecuteOneTurn()
         {
-            for(int i = 0; i < 10000; i++)
-            //while(true)
+            foreach (WorldObject wo in AllControlledObjects)
             {
-                foreach (WorldObject wo in AllControlledObjects)
-                {
-                    wo.ExecuteTurn();
-                    //TODO, clean ups?
-                }
+                wo.ExecuteTurn();
             }
         }
 
         internal void RemoveWorldObject(WorldObject mySelf)
         {
             string collisionLevel = mySelf.CollisionLevel;
-            CollisionLevels[collisionLevel].Remove(mySelf);
+            CollisionLevels[collisionLevel].RemoveObject(mySelf);
             AllControlledObjects.Remove(mySelf);
         }
     }

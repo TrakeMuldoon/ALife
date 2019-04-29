@@ -1,4 +1,13 @@
 Collision detection
+Fix Agent Location falling off the edge of the world
+
+Interface Updates:
+Game Loop
+Game Pause
+Game 1 Step
+Game Play
+
+
 Rotation to Goal Input
 Distance to Goal Input
 Eyeball Generator
@@ -10,12 +19,6 @@ Reproduction
 "Mutability" concept
 
 Run Foot Traffic Simulation
-
-Interface Updates:
-Game Loop
-Game Pause
-Game 1 Step
-Game Play
 
 Inspect End Of Run
 

@@ -32,6 +32,7 @@ namespace ALifeUni
     {
 
         long startticks;
+        DispatcherTimer dt = new DispatcherTimer();
 
 
         public MainPage()
@@ -40,6 +41,15 @@ namespace ALifeUni
             Planet.CreateWorld();
             startticks = DateTime.Now.Ticks;
             animCanvas.ClearColor = Colors.NavajoWhite;
+            dt.Interval = new TimeSpan(5);
+            dt.Tick += Dt_Tick;
+            dt.Start();
+        }
+
+        private void Dt_Tick(object sender, object e)
+        {
+            //Planet.World.ExecuteManyTurns(10);
+            Planet.World.ExecuteOneTurn();
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -58,7 +68,6 @@ namespace ALifeUni
                 //    args.DrawingSession.DrawCircle(wo.CentrePoint, wo.Radius, brush);
                 //}
                 args.DrawingSession.FillCircle(wo.CentrePoint, wo.Radius, wo.Color);
-                
             }
         }
 
@@ -71,7 +80,14 @@ namespace ALifeUni
 
         private void AnimCanvas_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Planet.World.ExecuteOneTurn();
+            if (dt.IsEnabled)
+            {
+                dt.Stop();
+            }
+            else
+            {
+                dt.Start();
+            }
         }
     }
 }

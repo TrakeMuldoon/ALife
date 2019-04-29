@@ -7,8 +7,8 @@
     <ProjectGuid>{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AlifeUni</RootNamespace>
-    <AssemblyName>AlifeUni</AssemblyName>
+    <RootNamespace>ALifeUni</RootNamespace>
+    <AssemblyName>ALifeUni</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
@@ -126,10 +126,12 @@
     <Compile Include="ALife\AgentPieces\Brain.cs" />
     <Compile Include="ALife\AgentPieces\DoubleBehaviour.cs" />
     <Compile Include="ALife\AgentPieces\WorldObject.cs" />
-    <Compile Include="ALife\Componetns\CollisionQuadTree.cs" />
-    <Compile Include="ALife\Componetns\Square.cs" />
+    <None Include="ALife\Components\CollisionQuadTree.cs" />
+    <Compile Include="ALife\Components\CollisionGrid.cs" />
+    <Compile Include="ALife\Components\ICollisionMap.cs" />
+    <Compile Include="ALife\Components\BoundingBox.cs" />
     <Compile Include="ALife\ReferenceValues.cs" />
-    <Compile Include="ALife\Componetns\CollisionDetector.cs" />
+    <Compile Include="ALife\Components\CollisionDetector.cs" />
     <Compile Include="ALife\Environment.cs" />
     <Compile Include="ALife\Inputs\Input.cs" />
     <Compile Include="ALife\Inputs\PropertyInput.cs" />
@@ -148,7 +150,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="AlifeUni_TemporaryKey.pfx" />
+    <None Include="ALifeUni_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\splashscreen.scale-200.png" />

@@ -1,17 +1,28 @@
-﻿using ALifeUni.ALife;
+﻿///////////////// NOT COMPILED
+///////////////// NOT COMPILED
+///////////////// NOT COMPILED
+///////////////// NOT COMPILED
+///////////////// NOT COMPILED
+///////////////// NOT COMPILED
+///////////////// NOT COMPILED
+///////////////// NOT COMPILED
+///////////////// NOT COMPILED
+///////////////// NOT COMPILED
+
+using ALifeUni.ALife;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlifeUni.ALife.Componetns
+namespace ALifeUni.ALife
 {
-    class CollisionQuadTree
+    class CollisionQuadTree : ICollisionMap
     {
         readonly int Height;
         readonly int Width;
-        readonly Square location;
+        readonly BoundingBox location;
 
         int minSegmentSize;
         int maxEntities;
@@ -43,7 +54,7 @@ namespace AlifeUni.ALife.Componetns
 
         public bool Insert(WorldObject item)
         {
-            Square itemSquare = new Square();
+            BoundingBox itemSquare = new BoundingBox();
             itemSquare.MaxX = item.CentrePoint.X + item.Radius;
             itemSquare.MinX = item.CentrePoint.X - item.Radius;
             itemSquare.MaxY = item.CentrePoint.Y + item.Radius;
@@ -66,6 +77,7 @@ namespace AlifeUni.ALife.Componetns
                 //It doesn't collide, doesn't belong here.
                 return false;
             }
+            return true;
         }
 
         //Query //return List<WorldObject> potential collisions

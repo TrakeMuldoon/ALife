@@ -51,7 +51,15 @@ namespace AlifeUni.ALife.Componetns
 
             if(location.IsCollision(itemSquare))
             {
-                
+                //if I don't have children
+                    //Place child in my list
+                    //if I have more than 10 objects
+                        //split
+                //else
+                    //place child in my list
+                    //instert against all four childs
+                    //Place in the dictionary against those lists as well
+                    
             }
             else
             {
@@ -60,15 +68,14 @@ namespace AlifeUni.ALife.Componetns
             }
         }
 
-        //Insert
         //Query //return List<WorldObject> potential collisions
-        //Does cube collide with me
-        //Yes.
-        //Do I have children?
-        //yes.
-        //Check children 
-
-        //Else go home, you failed
+            //Does cube collide with me
+            //Yes.
+                //Do I have children?
+                //yes.
+                //Check children 
+            //Else go home, you failed
+        
         //RemoveAll
         //MoveObject
 

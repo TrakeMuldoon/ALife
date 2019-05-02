@@ -12,15 +12,15 @@ namespace ALifeUni.ALife
 {
     public abstract class WorldObject
     {
-        private Coordinate centre;
-        public Coordinate CentrePoint
+        private Point centre;
+        public Point CentrePoint
         {
             get { return centre; }
 
             set
             {
-                float properX = value.X;
-                float properY = value.Y;
+                double properX = value.X;
+                double properY = value.Y;
 
                 if (value.X + Radius > Planet.World.WorldWidth)
                 {
@@ -38,7 +38,7 @@ namespace ALifeUni.ALife
                 {
                     properY = Radius;
                 }
-                centre = new Coordinate(properX, properY);
+                centre = new Point(properX, properY);
             }
         }
 
@@ -84,7 +84,7 @@ namespace ALifeUni.ALife
 
         public Color Color; 
 
-        protected WorldObject(Coordinate centrePoint, float startRadius, string genusLabel, string individualLabel, string collisionLevel, Color color)
+        protected WorldObject(Point centrePoint, float startRadius, string genusLabel, string individualLabel, string collisionLevel, Color color)
         {
             CentrePoint = centrePoint;
             Radius = startRadius;

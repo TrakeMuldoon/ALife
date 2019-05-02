@@ -8,12 +8,12 @@ namespace ALifeUni.ALife.UtilityClasses
 {
     public struct BoundingBox
     {
-        public float MaxX;
-        public float MaxY;
-        public float MinX;
-        public float MinY;
+        public double MaxX;
+        public double MaxY;
+        public double MinX;
+        public double MinY;
 
-        public BoundingBox(float minX, float minY, float maxX, float maxY)
+        public BoundingBox(double minX, double minY, double maxX, double maxY)
         {
             MinX = minX;
             MinY = minY;

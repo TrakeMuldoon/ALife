@@ -1,4 +1,5 @@
 ﻿using ALifeUni.ALife;
+using ALifeUni.ALife.UtilityClasses;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
@@ -38,7 +39,7 @@ namespace ALifeUni
         public MainPage()
         {
             this.InitializeComponent();
-            Planet.CreateWorld();
+            Planet.CreateWorld((int)animCanvas.Height, (int)animCanvas.Width);
             startticks = DateTime.Now.Ticks;
             animCanvas.ClearColor = Colors.NavajoWhite;
             dt.Tick += Dt_Tick;
@@ -66,7 +67,7 @@ namespace ALifeUni
             foreach (WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].EnumerateItems())
             {
                 //Agent Body
-                args.DrawingSession.FillCircle(new Vector2(wo.CentrePoint.X, wo.CentrePoint.Y), wo.Radius, wo.Color);
+                args.DrawingSession.FillCircle(new Vector2((float)wo.CentrePoint.X, (float)wo.CentrePoint.Y), wo.Radius, wo.Color);
                 //Agent Orientation
                 if (wo is Agent)
                 {
@@ -75,7 +76,11 @@ namespace ALifeUni
                     float newY = (float)(wo.CentrePoint.Y + wo.Radius * Math.Sin(ag.OrientationInRads));
                     args.DrawingSession.FillCircle(new Vector2(newX, newY), 1, Colors.DarkCyan);
                 }
+            }
 
+            foreach(Point p in taps)
+            {
+                args.DrawingSession.FillCircle(new Vector2((float)p.X, (float)p.Y), 2, Colors.Peru);
             }
         }
 
@@ -86,9 +91,11 @@ namespace ALifeUni
         {
         }
 
+        List<Point> taps = new List<Point>();
         private void AnimCanvas_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            Point tapPoint = e.GetPosition(animCanvas);
+            taps.Add(tapPoint);
         }
 
         private void PauseSim_Click(object sender, RoutedEventArgs e)
@@ -101,7 +108,7 @@ namespace ALifeUni
 
         private void SlowPlaySim_Click(object sender, RoutedEventArgs e)
         {
-            dt.Interval = new TimeSpan(5000);
+            dt.Interval = new TimeSpan(0,0,0,0,500);
             if (!dt.IsEnabled)
             {
                 dt.Start();
@@ -115,7 +122,7 @@ namespace ALifeUni
 
         private void PlaySim_Go()
         {
-            dt.Interval = new TimeSpan(100);
+            dt.Interval = new TimeSpan(0,0,0,0,100);
             if (!dt.IsEnabled)
             {
                 dt.Start();
@@ -125,7 +132,7 @@ namespace ALifeUni
 
         private void FastPlaySim_Click(object sender, RoutedEventArgs e)
         {
-            dt.Interval = new TimeSpan(10);
+            dt.Interval = new TimeSpan(0,0,0,0,1);
             if (!dt.IsEnabled)
             {
                 dt.Start();

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
 
 namespace ALifeUni.ALife
 {
@@ -20,7 +21,7 @@ namespace ALifeUni.ALife
         private int GridSize = 25;
         private List<WorldObject>[,] objectGrid;
         private List<WorldObject> trackedObjects;
-        private Dictionary<WorldObject, List<Coordinate>> agentLocationTracker = new Dictionary<WorldObject, List<Coordinate>>();
+        private Dictionary<WorldObject, List<Point>> agentLocationTracker = new Dictionary<WorldObject, List<Point>>();
 
         public CollisionGrid(int gridHeight, int gridWidth)
         {
@@ -82,17 +83,17 @@ namespace ALifeUni.ALife
             int yMinBucket = (int)(newObject.CentrePoint.Y - newObject.Radius) / GridSize;
 
             //This creates a list of grid buckets that the agent falls within
-            List<Coordinate> myCoords = new List<Coordinate>();
+            List<Point> myCoords = new List<Point>();
             for (int x = xMinBucket; x <= xMaxBucket; x++)
             {
                 for(int y = yMinBucket; y <= yMaxBucket; y++)
                 {
-                    myCoords.Add(new Coordinate(x,y));
+                    myCoords.Add(new Point(x,y));
                 }
             }
 
             //insert into all applicable buckets
-            foreach(Coordinate gc in myCoords)
+            foreach(Point gc in myCoords)
             {
                 objectGrid[(int)gc.X,(int)gc.Y].Add(newObject);
             }
@@ -118,7 +119,7 @@ namespace ALifeUni.ALife
 
         public List<WorldObject> QueryForBoundingBoxCollisions(WorldObject queryObject)
         {
-            Coordinate pos = queryObject.CentrePoint;
+            Point pos = queryObject.CentrePoint;
             float rad = queryObject.Radius;
             BoundingBox myBox = new BoundingBox(pos.X - rad, pos.Y - rad, pos.X + rad, pos.Y + rad);
 
@@ -169,8 +170,8 @@ namespace ALifeUni.ALife
         public void RemoveObject(WorldObject killMe)
         {
             trackedObjects.Remove(killMe);
-            List<Coordinate> myCoords = agentLocationTracker[killMe];
-            foreach(Coordinate coord in myCoords)
+            List<Point> myCoords = agentLocationTracker[killMe];
+            foreach(Point coord in myCoords)
             {
                 objectGrid[(int)coord.X, (int)coord.Y].Remove(killMe);
             }

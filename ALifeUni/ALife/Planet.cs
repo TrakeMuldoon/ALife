@@ -5,6 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
 
 namespace ALifeUni.ALife
 {
@@ -46,6 +47,13 @@ namespace ALifeUni.ALife
             Random r = new Random();
             CreateWorld(r.Next(), 1000, 1000);
         }
+        public  static void CreateWorld(int height, int width)
+        {
+            Random r = new Random();
+
+            CreateWorld(r.Next(), height, width);
+        }
+
 
         public static void CreateWorld(int seed, int height, int width)
         {
@@ -64,10 +72,11 @@ namespace ALifeUni.ALife
                 int xPosBase = 1 + ((i - 1) / 3) + (((i - 1) % 3) % 2);
                 int xPos = xPosBase * locationMultiplier;
                 int yPos = yPosBase * locationMultiplier;
-                Agent ag = new Agent(new Coordinate((float)xPos, (float)yPos));
+                Agent ag = new Agent(new Point(xPos, yPos));
                 instance.AddObjectToWorld(ag);
             }
         }
+
 
         public readonly List<WorldObject> AllControlledObjects = new List<WorldObject>();
 
@@ -105,16 +114,6 @@ namespace ALifeUni.ALife
         }
 
 
-        internal void AddObjectToWorld(WorldObject toAdd)
-        {
-            if(!_collisionLevels.ContainsKey(toAdd.CollisionLevel))
-            {
-                _collisionLevels.Add(toAdd.CollisionLevel, new CollisionGrid(WorldHeight, WorldWidth));
-            }
-            _collisionLevels[toAdd.CollisionLevel].Insert(toAdd);
-
-            AllControlledObjects.Add(toAdd);
-        }
 
         internal void ExecuteManyTurns(int numTurns)
         {
@@ -132,11 +131,24 @@ namespace ALifeUni.ALife
             }
         }
 
+
+
         internal void RemoveWorldObject(WorldObject mySelf)
         {
             string collisionLevel = mySelf.CollisionLevel;
             CollisionLevels[collisionLevel].RemoveObject(mySelf);
             AllControlledObjects.Remove(mySelf);
+        }
+
+        internal void AddObjectToWorld(WorldObject toAdd)
+        {
+            if (!_collisionLevels.ContainsKey(toAdd.CollisionLevel))
+            {
+                _collisionLevels.Add(toAdd.CollisionLevel, new CollisionGrid(WorldHeight, WorldWidth));
+            }
+            _collisionLevels[toAdd.CollisionLevel].Insert(toAdd);
+
+            AllControlledObjects.Add(toAdd);
         }
     }
 }

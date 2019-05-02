@@ -139,7 +139,6 @@
     <Compile Include="ALife\OperationEnums.cs" />
     <Compile Include="ALife\Rulesets\Settings.cs" />
     <Compile Include="ALife\UtilityClasses\Circle.cs" />
-    <Compile Include="ALife\UtilityClasses\Coordinate.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>

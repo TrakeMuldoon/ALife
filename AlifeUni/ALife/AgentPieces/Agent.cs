@@ -19,7 +19,7 @@ namespace ALifeUni.ALife
         public readonly List<SenseInput> Senses;
         public readonly ReadOnlyDictionary<String, Action> Actions;
 
-        public Agent(Coordinate birthPosition)
+        public Agent(Point birthPosition)
             : base(birthPosition
                   , 5                                               //current radius
                   , "Agent"                                         //Genus Label

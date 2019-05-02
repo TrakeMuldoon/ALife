@@ -21,16 +21,16 @@ namespace ALifeUni.ALife
 
         protected override void TakeAction(double IntensityPercent)
         {
-            Coordinate origin = self.CentrePoint;
+            Point origin = self.CentrePoint;
             double magnitude = Speed * IntensityPercent;
 
-            float newX = (float)(magnitude * Math.Cos(self.OrientationInRads)) + origin.X;
-            float newY = (float)(magnitude * Math.Sin(self.OrientationInRads)) + origin.Y;
-
+            double newX = (magnitude * Math.Cos(self.OrientationInRads)) + origin.X;
+            double newY = (magnitude * Math.Sin(self.OrientationInRads)) + origin.Y;
+            
             ////Gravity!
             //newY = newY + 5;
 
-            Coordinate destination = new Coordinate(newX, newY);
+            Point destination = new Point(newX, newY);
             BoundingBox destBoundingBox = new BoundingBox(destination.X - self.Radius, destination.Y - self.Radius, destination.X + self.Radius, destination.Y + self.Radius);
 
             ICollisionMap collider = Planet.World.CollisionLevels[self.CollisionLevel];

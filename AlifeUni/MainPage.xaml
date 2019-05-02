@@ -12,11 +12,11 @@
     Unloaded="Page_Unloaded">
 
     <StackPanel Orientation="Horizontal">
-        <ScrollViewer x:Name="Zoomer" Width="1050" Background="Aqua">
+        <ScrollViewer x:Name="Zoomer" Width="1020" Background="Aqua">
             <Border Background="Black" BorderBrush="Red" BorderThickness="5">
                 <canvas:CanvasAnimatedControl x:Name="animCanvas" Draw="animCanvas_Draw" CreateResources="animCanvas_CreateResources" 
                                               Tapped="AnimCanvas_Tapped"
-                                              Width="1000" Height="1000">
+                                              Width="1000" Height="880">
                 
                 </canvas:CanvasAnimatedControl>
             </Border>

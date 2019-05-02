@@ -8,7 +8,7 @@ namespace ALifeUni.ALife
 {
     public abstract class SenseInput : Input
     {
-        public readonly CollisionDetector myField;
+        //public readonly CollisionDetector myField;
         public abstract double Detect();
     }
 }

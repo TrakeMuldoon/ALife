@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ALifeUni.ALife
+namespace ALifeUni.ALife.UtilityClasses
 {
     public struct BoundingBox
     {
@@ -12,6 +12,14 @@ namespace ALifeUni.ALife
         public float MaxY;
         public float MinX;
         public float MinY;
+
+        public BoundingBox(float minX, float minY, float maxX, float maxY)
+        {
+            MinX = minX;
+            MinY = minY;
+            MaxX = maxX;
+            MaxY = maxY;
+        }
 
         public bool IsCollision(BoundingBox interloper)
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ALifeUni.ALife.UtilityClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -11,13 +12,17 @@ namespace ALifeUni.ALife
     {
         private static Planet instance;
 
+
+
         static Planet()
         {
 
         }
 
-        private Planet(int seed)
+        private Planet(int seed, int height, int width)
         {
+            worldWidth = width;
+            worldHeight = height;
             NumberGen = new Random(seed);
         }
 
@@ -39,19 +44,13 @@ namespace ALifeUni.ALife
         public static void CreateWorld()
         {
             Random r = new Random();
-            CreateWorld(r.Next(), 90, 90);
+            CreateWorld(r.Next(), 1000, 1000);
         }
-
-        private static int WorldWidth;
-        private static int WorldHeight;
 
         public static void CreateWorld(int seed, int height, int width)
         {
-            WorldWidth = width;
-            WorldHeight = height;
-            instance = new Planet(seed);
+            instance = new Planet(seed, height, width);
 
-            
             //TODO: Put PLanet Creation into the config
 
             //TODO: Create Special Objects from Config
@@ -65,11 +64,37 @@ namespace ALifeUni.ALife
                 int xPosBase = 1 + ((i - 1) / 3) + (((i - 1) % 3) % 2);
                 int xPos = xPosBase * locationMultiplier;
                 int yPos = yPosBase * locationMultiplier;
-                Agent ag = new Agent(new Vector2((float)xPos, (float)yPos));
+                Agent ag = new Agent(new Coordinate((float)xPos, (float)yPos));
                 instance.AddObjectToWorld(ag);
             }
         }
 
+        public readonly List<WorldObject> AllControlledObjects = new List<WorldObject>();
+
+        public IReadOnlyDictionary<string, string> my = new Dictionary<string, string>();
+
+        private Dictionary<string, ICollisionMap> _collisionLevels = new Dictionary<string, ICollisionMap>();
+        public IReadOnlyDictionary<string, ICollisionMap> CollisionLevels
+        {
+            get { return (Dictionary<string, ICollisionMap>) _collisionLevels; }
+        }
+        private int worldWidth;
+        public int WorldWidth
+        {
+            get
+            {
+                return worldWidth;
+            }
+        }
+
+        private int worldHeight;
+        public int WorldHeight
+        {
+            get
+            {
+                return worldHeight;
+            }
+        }
 
         public readonly Random NumberGen;
 
@@ -79,20 +104,17 @@ namespace ALifeUni.ALife
             return ++uniqueInt;
         }
 
-        public readonly List<WorldObject> AllControlledObjects = new List<WorldObject>();
-        public readonly Dictionary<string, ICollisionMap> CollisionLevels = new Dictionary<string, ICollisionMap>();
 
         internal void AddObjectToWorld(WorldObject toAdd)
         {
-            if(!CollisionLevels.ContainsKey(toAdd.CollisionLevel))
+            if(!_collisionLevels.ContainsKey(toAdd.CollisionLevel))
             {
-                CollisionLevels.Add(toAdd.CollisionLevel, new CollisionGrid(WorldHeight, WorldWidth));
+                _collisionLevels.Add(toAdd.CollisionLevel, new CollisionGrid(WorldHeight, WorldWidth));
             }
-            CollisionLevels[toAdd.CollisionLevel].Insert(toAdd);
+            _collisionLevels[toAdd.CollisionLevel].Insert(toAdd);
 
             AllControlledObjects.Add(toAdd);
         }
-
 
         internal void ExecuteManyTurns(int numTurns)
         {

@@ -41,6 +41,7 @@ namespace ALifeUni
             Planet.CreateWorld();
             startticks = DateTime.Now.Ticks;
             animCanvas.ClearColor = Colors.NavajoWhite;
+            Zoomer.ChangeView(10, 10, 100);
             dt.Interval = new TimeSpan(5);
             dt.Tick += Dt_Tick;
             dt.Start();
@@ -60,14 +61,24 @@ namespace ALifeUni
 
         private void animCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
+            
+            //for(int i = 0; i < Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical])
 
-            foreach (WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical])
+            foreach (WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].EnumerateItems())
             {
                 //using (CanvasSolidColorBrush brush = new CanvasSolidColorBrush(sender.Device, Colors.Red))
                 //{
                 //    args.DrawingSession.DrawCircle(wo.CentrePoint, wo.Radius, brush);
                 //}
-                args.DrawingSession.FillCircle(wo.CentrePoint, wo.Radius, wo.Color);
+                args.DrawingSession.FillCircle(new Vector2(wo.CentrePoint.X, wo.CentrePoint.Y), wo.Radius, wo.Color);
+                if(wo is Agent)
+                {
+                    Agent ag = (Agent)wo;
+                    float newX = (float)(wo.CentrePoint.X + wo.Radius * Math.Cos(ag.OrientationInRads));
+                    float newY = (float)(wo.CentrePoint.Y + wo.Radius * Math.Sin(ag.OrientationInRads));
+                    args.DrawingSession.FillCircle(new Vector2(newX, newY), 1, Colors.DarkCyan);
+                }
+
             }
         }
 

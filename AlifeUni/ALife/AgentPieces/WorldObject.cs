@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ALifeUni.ALife.UtilityClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -11,7 +12,35 @@ namespace ALifeUni.ALife
 {
     public abstract class WorldObject
     {
-        public Vector2 CentrePoint;
+        private Coordinate centre;
+        public Coordinate CentrePoint
+        {
+            get { return centre; }
+
+            set
+            {
+                float properX = value.X;
+                float properY = value.Y;
+
+                if (value.X + Radius > Planet.World.WorldWidth)
+                {
+                    properX = Planet.World.WorldWidth - Radius;
+                }
+                if (value.X - Radius < 0)
+                {
+                    properX = Radius;
+                }
+                if (value.Y + Radius > Planet.World.WorldHeight)
+                {
+                    properY = Planet.World.WorldHeight - Radius;
+                }
+                if (value.Y - Radius < 0)
+                {
+                    properY = Radius;
+                }
+                centre = new Coordinate(properX, properY);
+            }
+        }
 
         public readonly String GenusLabel;
         public readonly String IndividualLabel;
@@ -39,6 +68,14 @@ namespace ALifeUni.ALife
             }
         }
 
+        public BoundingBox Boundary
+        {
+            get
+            {
+                return new BoundingBox(CentrePoint.X - Radius, CentrePoint.Y - Radius, CentrePoint.X + Radius, CentrePoint.Y + Radius);
+            }
+        }
+
         public Dictionary<String, PropertyInput> Properties = new Dictionary<string, PropertyInput>();
 
         public readonly string CollisionLevel;
@@ -47,7 +84,7 @@ namespace ALifeUni.ALife
 
         public Color Color; 
 
-        protected WorldObject(Vector2 centrePoint, float startRadius, string genusLabel, string individualLabel, string collisionLevel, Color color)
+        protected WorldObject(Coordinate centrePoint, float startRadius, string genusLabel, string individualLabel, string collisionLevel, Color color)
         {
             CentrePoint = centrePoint;
             Radius = startRadius;

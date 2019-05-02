@@ -14,8 +14,8 @@ namespace ALifeUni.ALife
 
         protected override void TakeAction(double IntensityPercent)
         {
-            double rotationInRads = (double)(2 * Math.PI * IntensityPercent) / 100;
-            rotationInRads -= 60;
+            double rotationInRads = (double)(2 * Math.PI * IntensityPercent);
+            rotationInRads -= 1;
             rotationInRads = Math.Abs(rotationInRads);
 
             self.OrientationInRads += rotationInRads;

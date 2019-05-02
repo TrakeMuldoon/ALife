@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ALifeUni.ALife.UtilityClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ALifeUni.ALife
 {
-    public interface ICollisionMap : IEnumerable<WorldObject>
+    public interface ICollisionMap 
     {
         bool Insert(WorldObject newObject);
 
@@ -15,13 +16,15 @@ namespace ALifeUni.ALife
         /// </summary>
         /// <param name="queryObject">Query the collision map for this object</param>
         /// <returns></returns>
-        List<WorldObject> QueryForCollisions(WorldObject queryObject);
-        List<WorldObject> QueryForCollisions(BoundingBox queryBox);
-        List<WorldObject> QueryForCollisions(BoundingBox queryBox, WorldObject self);
+        List<WorldObject> QueryForBoundingBoxCollisions(WorldObject queryObject);
+        List<WorldObject> QueryForBoundingBoxCollisions(BoundingBox queryBox);
+        List<WorldObject> QueryForBoundingBoxCollisions(BoundingBox queryBox, WorldObject self);
 
         void RemoveObject(WorldObject killMe);
 
         void MoveObject(WorldObject moveMe);
+
+        IEnumerable<WorldObject> EnumerateItems();
 
     }
 }

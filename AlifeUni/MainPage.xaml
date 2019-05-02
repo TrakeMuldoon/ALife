@@ -6,15 +6,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Unloaded="Page_Unloaded">
-
+    
     <Grid Background="PaleGoldenrod">
-        <Border Background="Black" BorderBrush="Red" BorderThickness="5">
-            <canvas:CanvasAnimatedControl x:Name="animCanvas" Draw="animCanvas_Draw" CreateResources="animCanvas_CreateResources" 
-                                          Tapped="AnimCanvas_Tapped"
-                                          Width="1000" Height="1000" />
-        </Border>
+        <ScrollViewer x:Name="Zoomer">
+            <Border Background="Black" BorderBrush="Red" BorderThickness="5">
+                <canvas:CanvasAnimatedControl x:Name="animCanvas" Draw="animCanvas_Draw" CreateResources="animCanvas_CreateResources" 
+                                              Tapped="AnimCanvas_Tapped"
+                                              Width="1000" Height="1000">
+                
+                </canvas:CanvasAnimatedControl>
+            </Border>
+        </ScrollViewer>
     </Grid>
 </Page>

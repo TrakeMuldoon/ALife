@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ALifeUni.ALife
+namespace ALifeUni.ALife.BehaviourBrainPieces
 {
-    public class Brain
+    public class BehaviourBrain
     {
         public IEnumerable<Behaviour> Behaviours
         {
@@ -17,7 +17,7 @@ namespace ALifeUni.ALife
         private Agent parent;
 
 
-        public Brain(Agent parent)
+        public BehaviourBrain(Agent parent)
         {
             this.parent = parent;
             //behaviours = new List<Behaviour>();
@@ -34,8 +34,6 @@ namespace ALifeUni.ALife
             //TODO: Holy Crap this is bad
             double randNum = Planet.World.NumberGen.NextDouble();
             
-            //Reset Colour
-            parent.Actions["Color"].AttemptEnact(0.0099);
             if (randNum < 0.20)
             {
                 parent.Actions["Rotate"].AttemptEnact(randNum * 3);
@@ -44,10 +42,10 @@ namespace ALifeUni.ALife
             {
                 parent.Actions["Move"].AttemptEnact((randNum - 0.33) * 3);
             }
-            else
-            {
-                parent.Actions["Color"].AttemptEnact(0.99);
-            }
+            //else
+            //{
+            //    parent.Actions["Color"].AttemptEnact(0.99);
+            //}
         }
     }
 }

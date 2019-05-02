@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ALifeUni.ALife.BehaviourBrainPieces;
+using ALifeUni.ALife.UtilityClasses;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -6,17 +8,18 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.UI;
 
 namespace ALifeUni.ALife
 {
     public class Agent : WorldObject
     {
-        protected Brain myBrain;
+        protected BehaviourBrain myBrain;
 
         public readonly List<SenseInput> Senses;
         public readonly ReadOnlyDictionary<String, Action> Actions;
 
-        public Agent(Vector2 birthPosition)
+        public Agent(Coordinate birthPosition)
             : base(birthPosition
                   , 5                                               //current radius
                   , "Agent"                                         //Genus Label
@@ -31,7 +34,7 @@ namespace ALifeUni.ALife
             //Properties = GenerateAgentProperties();
             Actions = GenerateActions();
 
-            myBrain = new Brain(this);
+            myBrain = new BehaviourBrain(this);
 
             
         }
@@ -66,6 +69,7 @@ namespace ALifeUni.ALife
 
         public override void ExecuteAliveTurn()
         {
+            this.Color = Colors.Firebrick;
             myBrain.ExecuteTurn();
         }
 

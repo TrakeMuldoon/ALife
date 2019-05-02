@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ALifeUni.ALife
+namespace ALifeUni.ALife.BehaviourBrainPieces
 {
     public abstract class Behaviour
     {

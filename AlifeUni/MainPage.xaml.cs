@@ -41,10 +41,9 @@ namespace ALifeUni
             Planet.CreateWorld();
             startticks = DateTime.Now.Ticks;
             animCanvas.ClearColor = Colors.NavajoWhite;
-            Zoomer.ChangeView(10, 10, 100);
-            dt.Interval = new TimeSpan(5);
             dt.Tick += Dt_Tick;
-            dt.Start();
+
+            PlaySim_Go();
         }
 
         private void Dt_Tick(object sender, object e)
@@ -66,12 +65,10 @@ namespace ALifeUni
 
             foreach (WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].EnumerateItems())
             {
-                //using (CanvasSolidColorBrush brush = new CanvasSolidColorBrush(sender.Device, Colors.Red))
-                //{
-                //    args.DrawingSession.DrawCircle(wo.CentrePoint, wo.Radius, brush);
-                //}
+                //Agent Body
                 args.DrawingSession.FillCircle(new Vector2(wo.CentrePoint.X, wo.CentrePoint.Y), wo.Radius, wo.Color);
-                if(wo is Agent)
+                //Agent Orientation
+                if (wo is Agent)
                 {
                     Agent ag = (Agent)wo;
                     float newX = (float)(wo.CentrePoint.X + wo.Radius * Math.Cos(ag.OrientationInRads));
@@ -91,14 +88,60 @@ namespace ALifeUni
 
         private void AnimCanvas_Tapped(object sender, TappedRoutedEventArgs e)
         {
+
+        }
+
+        private void PauseSim_Click(object sender, RoutedEventArgs e)
+        {
             if (dt.IsEnabled)
             {
                 dt.Stop();
             }
-            else
+        }
+
+        private void SlowPlaySim_Click(object sender, RoutedEventArgs e)
+        {
+            dt.Interval = new TimeSpan(5000);
+            if (!dt.IsEnabled)
             {
                 dt.Start();
             }
+        }
+
+        private void PlaySim_Click(object sender, RoutedEventArgs e)
+        {
+            PlaySim_Go();
+        }
+
+        private void PlaySim_Go()
+        {
+            dt.Interval = new TimeSpan(100);
+            if (!dt.IsEnabled)
+            {
+                dt.Start();
+            }
+        }
+
+
+        private void FastPlaySim_Click(object sender, RoutedEventArgs e)
+        {
+            dt.Interval = new TimeSpan(10);
+            if (!dt.IsEnabled)
+            {
+                dt.Start();
+            }
+        }
+
+        private void ZoomFactor_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //Zoomer.ChangeView(10, 10, 10000);
+            TextBox sen = (TextBox)sender;
+            float newZoom;
+            if (float.TryParse(sen.Text, out newZoom))
+            {
+                Zoomer.ChangeView(0, 0, newZoom);
+            }
+            
         }
     }
 }

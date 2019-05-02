@@ -10,9 +10,9 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Unloaded="Page_Unloaded">
-    
-    <Grid Background="PaleGoldenrod">
-        <ScrollViewer x:Name="Zoomer">
+
+    <StackPanel Orientation="Horizontal">
+        <ScrollViewer x:Name="Zoomer" Width="1050" Background="Aqua">
             <Border Background="Black" BorderBrush="Red" BorderThickness="5">
                 <canvas:CanvasAnimatedControl x:Name="animCanvas" Draw="animCanvas_Draw" CreateResources="animCanvas_CreateResources" 
                                               Tapped="AnimCanvas_Tapped"
@@ -21,5 +21,12 @@
                 </canvas:CanvasAnimatedControl>
             </Border>
         </ScrollViewer>
-    </Grid>
+        <StackPanel Width="100" Background="Beige">
+            <Button x:Name="PauseSim" Click="PauseSim_Click">Pause</Button>
+            <Button x:Name="SlowPlaySim" Click="SlowPlaySim_Click">Slow</Button>
+            <Button x:Name="PlaySim" Click="PlaySim_Click">Play</Button>
+            <Button x:Name="FastPlaySim" Click="FastPlaySim_Click">Fast</Button>
+            <TextBox x:Name="ZoomFactor" TextChanged="ZoomFactor_TextChanged" />
+        </StackPanel>
+    </StackPanel>
 </Page>

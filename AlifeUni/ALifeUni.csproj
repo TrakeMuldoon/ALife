@@ -121,23 +121,25 @@
     <Compile Include="ALife\Actions\MoveAction.cs" />
     <Compile Include="ALife\Actions\RotateAction.cs" />
     <Compile Include="ALife\AgentPieces\Agent.cs" />
-    <Compile Include="ALife\AgentPieces\Behaviour.cs" />
-    <Compile Include="ALife\AgentPieces\BoolBehaviour.cs" />
-    <Compile Include="ALife\AgentPieces\Brain.cs" />
-    <Compile Include="ALife\AgentPieces\DoubleBehaviour.cs" />
+    <Compile Include="ALife\AgentPieces\BehaviourBrainPieces\Behaviour.cs" />
+    <Compile Include="ALife\AgentPieces\BehaviourBrainPieces\BoolBehaviour.cs" />
+    <Compile Include="ALife\AgentPieces\BehaviourBrainPieces\BehaviourBrain.cs" />
+    <Compile Include="ALife\AgentPieces\BehaviourBrainPieces\DoubleBehaviour.cs" />
     <Compile Include="ALife\AgentPieces\WorldObject.cs" />
-    <None Include="ALife\Components\CollisionQuadTree.cs" />
-    <Compile Include="ALife\Components\CollisionGrid.cs" />
-    <Compile Include="ALife\Components\ICollisionMap.cs" />
-    <Compile Include="ALife\Components\BoundingBox.cs" />
+    <None Include="ALife\Collision\CollisionQuadTree.cs" />
+    <Compile Include="ALife\Collision\CollisionGrid.cs" />
+    <Compile Include="ALife\Collision\ICollisionMap.cs" />
+    <Compile Include="ALife\UtilityClasses\BoundingBox.cs" />
     <Compile Include="ALife\ReferenceValues.cs" />
-    <Compile Include="ALife\Components\CollisionDetector.cs" />
-    <Compile Include="ALife\Environment.cs" />
+    <Compile Include="ALife\Collision\CollisionDetector.cs" />
+    <Compile Include="ALife\Planet.cs" />
     <Compile Include="ALife\Inputs\Input.cs" />
     <Compile Include="ALife\Inputs\PropertyInput.cs" />
     <Compile Include="ALife\Inputs\SenseCluster.cs" />
     <Compile Include="ALife\OperationEnums.cs" />
     <Compile Include="ALife\Rulesets\Settings.cs" />
+    <Compile Include="ALife\UtilityClasses\Circle.cs" />
+    <Compile Include="ALife\UtilityClasses\Coordinate.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>

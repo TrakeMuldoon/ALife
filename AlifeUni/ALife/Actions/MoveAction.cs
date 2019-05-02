@@ -22,12 +22,13 @@ namespace ALifeUni.ALife
         protected override void TakeAction(double IntensityPercent)
         {
             Coordinate origin = self.CentrePoint;
+            double magnitude = Speed * IntensityPercent;
 
-            float newX = (float)(Speed / 100 * IntensityPercent * Math.Cos(self.OrientationInRads)) + origin.X;
-            float newY = (float)(Speed / 100 * IntensityPercent * Math.Sin(self.OrientationInRads)) + origin.Y;
+            float newX = (float)(magnitude * Math.Cos(self.OrientationInRads)) + origin.X;
+            float newY = (float)(magnitude * Math.Sin(self.OrientationInRads)) + origin.Y;
 
-            //Gravity!
-            newY = newY + 5;
+            ////Gravity!
+            //newY = newY + 5;
 
             Coordinate destination = new Coordinate(newX, newY);
             BoundingBox destBoundingBox = new BoundingBox(destination.X - self.Radius, destination.Y - self.Radius, destination.X + self.Radius, destination.Y + self.Radius);

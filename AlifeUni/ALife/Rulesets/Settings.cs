@@ -14,7 +14,7 @@ namespace ALifeUni.ALife
         public static float AgentRadiusMax = 10;
         public static float AgentRadiusMin = 5;
 
-        public static double AgentDefaultSpeed = 100;
+        public static double AgentDefaultSpeed = 5;
         public static double AgentMaximumTurnDegrees = 90;
     }
 }

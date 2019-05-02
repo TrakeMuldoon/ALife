@@ -193,14 +193,9 @@ namespace ALifeUni.ALife
             while(i < trackedObjects.Count)
             {
                 WorldObject ret = trackedObjects[0];
-                try
-                {
-                    ret = trackedObjects[i++];
-                }
-                finally
-                { 
-                    
-                }
+
+                try { ret = trackedObjects[i++]; }
+                catch(ArgumentOutOfRangeException aore) { /* Swallowed */ }
                 yield return ret;
             }
         }

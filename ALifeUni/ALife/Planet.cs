@@ -107,10 +107,14 @@ namespace ALifeUni.ALife
 
         public readonly Random NumberGen;
 
+        private object UniqueLock = new object();
         private int uniqueInt = 0;
         public int NextUniqueID()
         {
-            return ++uniqueInt;
+            lock(UniqueLock)
+            {
+                return ++uniqueInt;
+            }
         }
 
 

@@ -27,8 +27,8 @@ namespace ALifeUni.ALife
             double newX = (magnitude * Math.Cos(self.OrientationInRads)) + origin.X;
             double newY = (magnitude * Math.Sin(self.OrientationInRads)) + origin.Y;
             
-            ////Gravity!
-            //newY = newY + 5;
+            //Gravity!
+            newY = newY + 5;
 
             Point destination = new Point(newX, newY);
             BoundingBox destBoundingBox = new BoundingBox(destination.X - self.Radius, destination.Y - self.Radius, destination.X + self.Radius, destination.Y + self.Radius);

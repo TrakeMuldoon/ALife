@@ -14,6 +14,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -61,13 +62,19 @@ namespace ALifeUni
 
         private void animCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
-            
-            //for(int i = 0; i < Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical])
 
+            if (special != null)
+            {
+                Vector2 agentCentre = new Vector2((float)special.CentrePoint.X, (float)special.CentrePoint.Y);
+                //Agent Body
+                args.DrawingSession.DrawCircle(agentCentre, special.Radius + 1, Colors.Blue);
+            }
+            
             foreach (WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].EnumerateItems())
             {
+                Vector2 agentCentre = new Vector2((float)wo.CentrePoint.X, (float)wo.CentrePoint.Y);
                 //Agent Body
-                args.DrawingSession.FillCircle(new Vector2((float)wo.CentrePoint.X, (float)wo.CentrePoint.Y), wo.Radius, wo.Color);
+                args.DrawingSession.FillCircle(agentCentre, wo.Radius, wo.Color);
                 //Agent Orientation
                 if (wo is Agent)
                 {
@@ -76,26 +83,41 @@ namespace ALifeUni
                     float newY = (float)(wo.CentrePoint.Y + wo.Radius * Math.Sin(ag.OrientationInRads));
                     args.DrawingSession.FillCircle(new Vector2(newX, newY), 1, Colors.DarkCyan);
                 }
+
             }
 
-            foreach(Point p in taps)
+            foreach (Point p in taps)
             {
                 args.DrawingSession.FillCircle(new Vector2((float)p.X, (float)p.Y), 2, Colors.Peru);
             }
         }
 
-
-        //String blah = "1000";
-        //GaussianBlurEffect blur = new GaussianBlurEffect();
         private void animCanvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
         {
         }
 
         List<Point> taps = new List<Point>();
+        WorldObject special;
         private void AnimCanvas_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Point tapPoint = e.GetPosition(animCanvas);
-            taps.Add(tapPoint);
+            BoundingBox bb = new BoundingBox(tapPoint.X, tapPoint.Y, tapPoint.X, tapPoint.Y);
+            List<WorldObject> colls = Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].QueryForBoundingBoxCollisions(bb);
+
+            if(colls.Count > 0)
+            {
+                WorldObject clicked = colls[0];
+                if(clicked != special)
+                {
+                    special = clicked;
+                }
+                else
+                {
+                    //click again to unselect
+                    special = null;
+                }
+            }
+            //taps.Add(tapPoint);
         }
 
         private void PauseSim_Click(object sender, RoutedEventArgs e)
@@ -129,7 +151,6 @@ namespace ALifeUni
             }
         }
 
-
         private void FastPlaySim_Click(object sender, RoutedEventArgs e)
         {
             dt.Interval = new TimeSpan(0,0,0,0,1);
@@ -138,6 +159,11 @@ namespace ALifeUni
                 dt.Start();
             }
         }
+        private void SkipAhead_Click(object sender, RoutedEventArgs e)
+        {
+            Planet.World.ExecuteManyTurns(200);
+        }
+
 
         private void ZoomFactor_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -148,7 +174,61 @@ namespace ALifeUni
             {
                 Zoomer.ChangeView(0, 0, newZoom);
             }
-            
         }
+
+        private void MatchDPI_Checked(object sender, RoutedEventArgs e)
+        {
+            float newZoom;
+            if (float.TryParse(ZoomFactor.Text, out newZoom))
+            {
+                animCanvas.DpiScale = newZoom;
+            }
+        }
+
+        private void MatchDPI_Unchecked(object sender, RoutedEventArgs e)
+        {
+            animCanvas.DpiScale = 1;
+        }
+
+        Point? dragStart;
+        private void AnimCanvas_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            dragStart = e.GetCurrentPoint(animCanvas).Position;
+        }
+
+        private void AnimCanvas_PointerMoved(object sender, PointerRoutedEventArgs e)
+        {
+            
+            int panMagnifyFactor = 10;
+            float newZoom;
+            if (float.TryParse(ZoomFactor.Text, out newZoom))
+            {
+                panMagnifyFactor = (int)(8 * newZoom);
+            }
+
+            if(dragStart.HasValue)
+            {
+                Point current = e.GetCurrentPoint(animCanvas).Position;
+                Point moveDelta = new Point((current.X - dragStart.Value.X) * panMagnifyFactor
+                                            , (current.Y - dragStart.Value.Y) * panMagnifyFactor);
+                Point offset = new Point(Zoomer.HorizontalOffset + moveDelta.X, Zoomer.VerticalOffset + moveDelta.Y);
+                
+                Zoomer.ChangeView(offset.X, offset.Y, null);
+                dragStart = current;
+            }
+        }
+
+        private void AnimCanvas_PointerReleased(object sender, PointerRoutedEventArgs e)
+        {
+            if (dragStart.HasValue)
+            {
+                //Point end = e.GetCurrentPoint(animCanvas).Position;
+                //Point delta = new Point(end.X - dragStart.Value.X, end.Y - dragStart.Value.Y);
+                //Zoomer.ChangeView(delta.X, delta.Y, null);
+                dragStart = null;
+            }
+        }
+
+
     }
 }

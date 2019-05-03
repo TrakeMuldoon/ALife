@@ -1,4 +1,7 @@
-﻿using ALifeUni.ALife.BehaviourBrainPieces;
+﻿using ALifeUni.ALife.AgentPieces.Brains;
+using ALifeUni.ALife.AgentPieces.Brains.RandomBrains;
+using ALifeUni.ALife.Brains.BehaviourBrainPieces;
+using ALifeUni.ALife.Inputs;
 using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
@@ -14,9 +17,9 @@ namespace ALifeUni.ALife
 {
     public class Agent : WorldObject
     {
-        protected BehaviourBrain myBrain;
+        protected IBrain myBrain;
 
-        public readonly List<SenseInput> Senses;
+        public readonly List<SenseCluster> Senses;
         public readonly ReadOnlyDictionary<String, Action> Actions;
 
         public Agent(Point birthPosition)
@@ -25,7 +28,7 @@ namespace ALifeUni.ALife
                   , "Agent"                                         //Genus Label
                   , Planet.World.NextUniqueID().ToString()          //Individual Label
                   , ReferenceValues.CollisionLevelPhysical          //Collision Level
-                  , Windows.UI.Colors.DarkSalmon)                   //Start Color
+                  , Windows.UI.Colors.PeachPuff)                   //Start Color
         {
             CentrePoint = birthPosition;
             OrientationInRads = 0;
@@ -34,7 +37,7 @@ namespace ALifeUni.ALife
             //Properties = GenerateAgentProperties();
             Actions = GenerateActions();
 
-            myBrain = new BehaviourBrain(this);
+            myBrain = new RandomBrain(this);
 
             
         }
@@ -57,7 +60,7 @@ namespace ALifeUni.ALife
             return new Dictionary<string, PropertyInput>();
         }
 
-        private List<SenseInput> GenerateSenses()
+        private List<SenseCluster> GenerateSenses()
         {
             throw new NotImplementedException();
         }

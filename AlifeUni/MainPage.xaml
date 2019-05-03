@@ -12,21 +12,28 @@
     Unloaded="Page_Unloaded">
 
     <StackPanel Orientation="Horizontal">
-        <ScrollViewer x:Name="Zoomer" Width="1020" Background="Aqua">
+        <ScrollViewer x:Name="Zoomer"  Background="Aqua"
+                      HorizontalScrollBarVisibility="Visible"
+                      VerticalScrollBarVisibility="Visible">
             <Border Background="Black" BorderBrush="Red" BorderThickness="5">
                 <canvas:CanvasAnimatedControl x:Name="animCanvas" Draw="animCanvas_Draw" CreateResources="animCanvas_CreateResources" 
                                               Tapped="AnimCanvas_Tapped"
+                                              PointerPressed="AnimCanvas_PointerPressed"
+                                              PointerMoved="AnimCanvas_PointerMoved"
+                                              PointerReleased="AnimCanvas_PointerReleased"
                                               Width="1000" Height="880">
-                
+                    
                 </canvas:CanvasAnimatedControl>
             </Border>
         </ScrollViewer>
         <StackPanel Width="100" Background="Beige">
-            <Button x:Name="PauseSim" Click="PauseSim_Click">Pause</Button>
-            <Button x:Name="SlowPlaySim" Click="SlowPlaySim_Click">Slow</Button>
-            <Button x:Name="PlaySim" Click="PlaySim_Click">Play</Button>
-            <Button x:Name="FastPlaySim" Click="FastPlaySim_Click">Fast</Button>
+            <Button x:Name="PauseSim"  HorizontalAlignment="Stretch" Click="PauseSim_Click">Pause</Button>
+            <Button x:Name="SlowPlaySim" HorizontalAlignment="Stretch" Click="SlowPlaySim_Click">Slow</Button>
+            <Button x:Name="PlaySim" HorizontalAlignment="Stretch" Click="PlaySim_Click">Play</Button>
+            <Button x:Name="FastPlaySim" HorizontalAlignment="Stretch" Click="FastPlaySim_Click">Fast</Button>
+            <Button x:Name="SkipAhead" HorizontalAlignment="Stretch" Click="SkipAhead_Click">Stupid Fast</Button>
             <TextBox x:Name="ZoomFactor" TextChanged="ZoomFactor_TextChanged" />
+            <CheckBox x:Name="matchDPI" Checked="MatchDPI_Checked" Unchecked="MatchDPI_Unchecked" />
         </StackPanel>
     </StackPanel>
 </Page>

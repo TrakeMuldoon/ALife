@@ -14,11 +14,10 @@ namespace ALifeUni.ALife
 
         protected override void TakeAction(double IntensityPercent)
         {
-            double rotationInRads = (double)(2 * Math.PI * IntensityPercent);
-            rotationInRads -= 1;
-            rotationInRads = Math.Abs(rotationInRads);
+            double turn = Settings.AgentMaximumTurnDegrees * IntensityPercent;
 
-            self.OrientationInRads += rotationInRads;
+
+            self.Orientation.Degrees += turn;
         }
     }
 }

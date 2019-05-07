@@ -31,7 +31,7 @@ namespace ALifeUni.ALife
                   , Windows.UI.Colors.PeachPuff)                   //Start Color
         {
             CentrePoint = birthPosition;
-            OrientationInRads = 0;
+            Orientation = new Angle(0);
             
             //Senses = GenerateSenses();
             //Properties = GenerateAgentProperties();
@@ -76,15 +76,7 @@ namespace ALifeUni.ALife
             myBrain.ExecuteTurn();
         }
 
-        private double radian;
-        public double OrientationInRads
-        {
-            get { return radian; }
-            set
-            {
-                radian = value % (6.28318);//2pi
-            }
-        }
+        public Angle Orientation;
 
     }
 }

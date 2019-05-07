@@ -16,5 +16,6 @@ namespace ALifeUni.ALife.Inputs
         public abstract BoundingBox GetBoundingBox();
 
         public abstract void DrawOnCanvas();
+
     }
 }

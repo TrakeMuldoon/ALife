@@ -79,8 +79,8 @@ namespace ALifeUni
                 if (wo is Agent)
                 {
                     Agent ag = (Agent)wo;
-                    float newX = (float)(wo.CentrePoint.X + wo.Radius * Math.Cos(ag.OrientationInRads));
-                    float newY = (float)(wo.CentrePoint.Y + wo.Radius * Math.Sin(ag.OrientationInRads));
+                    float newX = (float)(wo.CentrePoint.X + wo.Radius * Math.Cos(ag.Orientation.Radians));
+                    float newY = (float)(wo.CentrePoint.Y + wo.Radius * Math.Sin(ag.Orientation.Radians));
                     args.DrawingSession.FillCircle(new Vector2(newX, newY), 1, Colors.DarkCyan);
                 }
 

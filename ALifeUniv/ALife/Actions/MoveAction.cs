@@ -24,8 +24,8 @@ namespace ALifeUni.ALife
             Point origin = self.CentrePoint;
             double magnitude = Speed * IntensityPercent;
 
-            double newX = (magnitude * Math.Cos(self.OrientationInRads)) + origin.X;
-            double newY = (magnitude * Math.Sin(self.OrientationInRads)) + origin.Y;
+            double newX = (magnitude * Math.Cos(self.Orientation.Radians)) + origin.X;
+            double newY = (magnitude * Math.Sin(self.Orientation.Radians)) + origin.Y;
             
             //Gravity!
             newY = newY + 5;

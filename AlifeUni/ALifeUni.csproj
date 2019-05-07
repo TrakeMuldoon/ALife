@@ -133,19 +133,16 @@
     <Compile Include="ALife\Collision\IDetectionShape.cs" />
     <Compile Include="ALife\Collision\ICollisionMap.cs" />
     <Compile Include="ALife\Inputs\SenseClusters\EyeCluster.cs" />
-    <Compile Include="ALife\Inputs\SenseInputs\EyeInput.cs" />
-    <Compile Include="ALife\Inputs\SenseInput.cs" />
     <Compile Include="ALife\UtilityClasses\BoundingBox.cs" />
     <Compile Include="ALife\ReferenceValues.cs" />
     <Compile Include="ALife\Collision\CollisionDetector.cs" />
     <Compile Include="ALife\Planet.cs" />
     <Compile Include="ALife\Inputs\Input.cs" />
     <Compile Include="ALife\Inputs\PropertyInput.cs" />
-    <Compile Include="ALife\Inputs\SenseClusters\SenseCluster.cs" />
+    <Compile Include="ALife\Inputs\SenseCluster.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\OperationEnums.cs" />
     <Compile Include="ALife\Rulesets\Settings.cs" />
     <Compile Include="ALife\UtilityClasses\Circle.cs" />
-    <Compile Include="ALife\UtilityClasses\IShape.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>

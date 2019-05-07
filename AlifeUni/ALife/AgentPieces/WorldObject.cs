@@ -10,11 +10,11 @@ using Windows.UI;
 
 namespace ALifeUni.ALife
 {
-    public abstract class WorldObject
+    public abstract class WorldObject : Circle
     {
         private Point centre;
-        public Point CentrePoint
-        {
+        public override Point CentrePoint
+        { 
             get { return centre; }
 
             set
@@ -46,7 +46,7 @@ namespace ALifeUni.ALife
         public readonly String IndividualLabel;
 
         private float radius;
-        public float Radius
+        public override float Radius
         {
             get
             {
@@ -68,14 +68,6 @@ namespace ALifeUni.ALife
             }
         }
 
-        public BoundingBox Boundary
-        {
-            get
-            {
-                return new BoundingBox(CentrePoint.X - Radius, CentrePoint.Y - Radius, CentrePoint.X + Radius, CentrePoint.Y + Radius);
-            }
-        }
-
         public Dictionary<String, PropertyInput> Properties = new Dictionary<string, PropertyInput>();
 
         public readonly string CollisionLevel;
@@ -85,6 +77,7 @@ namespace ALifeUni.ALife
         public Color Color; 
 
         protected WorldObject(Point centrePoint, float startRadius, string genusLabel, string individualLabel, string collisionLevel, Color color)
+            : base(centrePoint, startRadius)
         {
             CentrePoint = centrePoint;
             Radius = startRadius;

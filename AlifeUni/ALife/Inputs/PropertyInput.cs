@@ -17,6 +17,10 @@ namespace ALifeUni.ALife
             {
                 throw new Exception("Negative Value for 'increase property'");
             }
+            if (value == 0)
+            {
+                return;
+            }
             double temp = Value + value;
             if(temp > PropertyMaximum)
             {
@@ -24,6 +28,7 @@ namespace ALifeUni.ALife
             }
 
             Value = temp;
+            modified = true;
         }
 
         public void DecreasePropertyBy(double value)
@@ -32,6 +37,10 @@ namespace ALifeUni.ALife
             {
                 throw new Exception("Negative Value for 'decrease property'");
             }
+            if(value == 0)
+            {
+                return;
+            }
             double temp = Value - value;
             if (temp < PropertyMinimum)
             {
@@ -39,11 +48,16 @@ namespace ALifeUni.ALife
             }
 
             Value = temp;
+            modified = true;
         }
 
         public void ChangePropertyTo(double value)
         {
             double temp = value;
+            if(temp == Value)
+            {
+                return;
+            }
             if (temp < PropertyMinimum)
             {
                 temp = PropertyMinimum;
@@ -54,12 +68,7 @@ namespace ALifeUni.ALife
             }
 
             Value = temp;
-        }
-
-        public override double Delta()
-        {
-            //TODO: This is actually wrong. Need to fix it to update the delta
-            return Value - MostRecentValue;
+            modified = true;
         }
     }
 }

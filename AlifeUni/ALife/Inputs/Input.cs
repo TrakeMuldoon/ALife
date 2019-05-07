@@ -13,6 +13,7 @@ namespace ALifeUni.ALife
 
     public abstract class Input<T> : Input
     {
+
         private T myValue;
         public T Value
         {
@@ -24,6 +25,7 @@ namespace ALifeUni.ALife
             {
                 mostRecentValue = myValue;
                 myValue = value;
+                modified = true;
             }
         }
 
@@ -36,7 +38,21 @@ namespace ALifeUni.ALife
             }
         }
 
-        public abstract T Delta();
+        protected bool modified;
+        public bool Modified
+        {
+            get
+            {
+                return modified;
+            }
+        }
+
+        public void Reset()
+        {
+            modified = false;
+        }
+
+
 
         public override Type GetContainedType()
         {

@@ -119,11 +119,7 @@ namespace ALifeUni.ALife
 
         public List<WorldObject> QueryForBoundingBoxCollisions(WorldObject queryObject)
         {
-            Point pos = queryObject.CentrePoint;
-            float rad = queryObject.Radius;
-            BoundingBox myBox = new BoundingBox(pos.X - rad, pos.Y - rad, pos.X + rad, pos.Y + rad);
-
-            return QueryForBoundingBoxCollisions(myBox, queryObject);
+            return QueryForBoundingBoxCollisions(queryObject.GetBoundingBox(), queryObject);
         }
 
         public List<WorldObject> QueryForBoundingBoxCollisions(BoundingBox queryBox)
@@ -151,7 +147,7 @@ namespace ALifeUni.ALife
             List<WorldObject> boundingCollisions = new List<WorldObject>();
             foreach(WorldObject wo in potentialCollisions)
             {
-                if(wo.Boundary.IsCollision(queryBox))
+                if(wo.GetBoundingBox().IsCollision(queryBox))
                 {
                     boundingCollisions.Add(wo);
                 }

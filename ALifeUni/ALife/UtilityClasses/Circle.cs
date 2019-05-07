@@ -7,10 +7,18 @@ using Windows.Foundation;
 
 namespace ALifeUni.ALife.UtilityClasses
 {
-    public class Circle
+    public class Circle : IShape
     {
-        public Point CentrePoint;
-        public float Radius;
+        public virtual Point CentrePoint
+        {
+            get;
+            set;
+        }
+        public virtual float Radius
+        {
+            get;
+            set;
+        }
 
         public Circle(Point coords, float radius)
         {
@@ -21,6 +29,16 @@ namespace ALifeUni.ALife.UtilityClasses
         public Circle(float xVal, float yVal, float radius) : this(new Point(xVal, yVal), radius)
         {
             
+        }
+
+        public BoundingBox GetBoundingBox()
+        {
+            return new BoundingBox(CentrePoint.X - Radius, CentrePoint.Y - Radius, CentrePoint.X + Radius, CentrePoint.Y + Radius);
+        }
+
+        public void DrawOnCanvas()
+        {
+            throw new NotImplementedException();
         }
     }
 }

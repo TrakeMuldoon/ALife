@@ -34,7 +34,7 @@ namespace ALifeUni
     {
 
         long startticks;
-        DispatcherTimer dt = new DispatcherTimer();
+        DispatcherTimer gameTimer = new DispatcherTimer();
 
 
         public MainPage()
@@ -43,7 +43,7 @@ namespace ALifeUni
             Planet.CreateWorld((int)animCanvas.Height, (int)animCanvas.Width);
             startticks = DateTime.Now.Ticks;
             animCanvas.ClearColor = Colors.NavajoWhite;
-            dt.Tick += Dt_Tick;
+            gameTimer.Tick += Dt_Tick;
 
             PlaySim_Go();
         }
@@ -104,8 +104,10 @@ namespace ALifeUni
             BoundingBox bb = new BoundingBox(tapPoint.X, tapPoint.Y, tapPoint.X, tapPoint.Y);
             List<WorldObject> colls = Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].QueryForBoundingBoxCollisions(bb);
 
+            //Check if we have any collisions for the tap
             if(colls.Count > 0)
             {
+                //If we do have a collisions, then set that agent to be "Special"
                 WorldObject clicked = colls[0];
                 if(clicked != special)
                 {
@@ -117,23 +119,22 @@ namespace ALifeUni
                     special = null;
                 }
             }
-            //taps.Add(tapPoint);
         }
 
         private void PauseSim_Click(object sender, RoutedEventArgs e)
         {
-            if (dt.IsEnabled)
+            if (gameTimer.IsEnabled)
             {
-                dt.Stop();
+                gameTimer.Stop();
             }
         }
 
         private void SlowPlaySim_Click(object sender, RoutedEventArgs e)
         {
-            dt.Interval = new TimeSpan(0,0,0,0,500);
-            if (!dt.IsEnabled)
+            gameTimer.Interval = new TimeSpan(0,0,0,0,500);
+            if (!gameTimer.IsEnabled)
             {
-                dt.Start();
+                gameTimer.Start();
             }
         }
 
@@ -144,19 +145,19 @@ namespace ALifeUni
 
         private void PlaySim_Go()
         {
-            dt.Interval = new TimeSpan(0,0,0,0,100);
-            if (!dt.IsEnabled)
+            gameTimer.Interval = new TimeSpan(0,0,0,0,100);
+            if (!gameTimer.IsEnabled)
             {
-                dt.Start();
+                gameTimer.Start();
             }
         }
 
         private void FastPlaySim_Click(object sender, RoutedEventArgs e)
         {
-            dt.Interval = new TimeSpan(0,0,0,0,1);
-            if (!dt.IsEnabled)
+            gameTimer.Interval = new TimeSpan(0,0,0,0,1);
+            if (!gameTimer.IsEnabled)
             {
-                dt.Start();
+                gameTimer.Start();
             }
         }
         private void SkipAhead_Click(object sender, RoutedEventArgs e)
@@ -164,10 +165,10 @@ namespace ALifeUni
             Planet.World.ExecuteManyTurns(200);
         }
 
-
         private void ZoomFactor_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //Zoomer.ChangeView(10, 10, 10000);
+            //Increase the zoom
+            //TODO: Link this to the Dpi checkbox, I just realized that they're only linked from the checkbox side and not from the textchanged side. I'm dumb
             TextBox sen = (TextBox)sender;
             float newZoom;
             if (float.TryParse(sen.Text, out newZoom))
@@ -178,15 +179,20 @@ namespace ALifeUni
 
         private void MatchDPI_Checked(object sender, RoutedEventArgs e)
         {
+            //Increase the DPI as the zoom increases, to a maximum of 8, otherwise it breaks
             float newZoom;
             if (float.TryParse(ZoomFactor.Text, out newZoom))
             {
-                animCanvas.DpiScale = newZoom;
+                float DpiValue = Math.Min(newZoom,8);
+                DpiValue = Math.Max(DpiValue, 0);
+                
+                animCanvas.DpiScale = DpiValue;
             }
         }
 
         private void MatchDPI_Unchecked(object sender, RoutedEventArgs e)
         {
+            //When the check gets unchecked, just set the DPI scale to 1, which is shitty when zoomed in.
             animCanvas.DpiScale = 1;
         }
 
@@ -199,13 +205,15 @@ namespace ALifeUni
         private void AnimCanvas_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
             
-            int panMagnifyFactor = 10;
+            int panMagnifyFactor = 0;
             float newZoom;
             if (float.TryParse(ZoomFactor.Text, out newZoom))
             {
-                panMagnifyFactor = (int)(8 * newZoom);
+                panMagnifyFactor = (int)(12 * newZoom);
             }
 
+            //Constantly updates the position the pan window should be as you drag along. 
+            //Each time this is called constitutes a new drag.
             if(dragStart.HasValue)
             {
                 Point current = e.GetCurrentPoint(animCanvas).Position;
@@ -220,11 +228,9 @@ namespace ALifeUni
 
         private void AnimCanvas_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
+            //When a drag is released, null it out
             if (dragStart.HasValue)
             {
-                //Point end = e.GetCurrentPoint(animCanvas).Position;
-                //Point delta = new Point(end.X - dragStart.Value.X, end.Y - dragStart.Value.Y);
-                //Zoomer.ChangeView(delta.X, delta.Y, null);
                 dragStart = null;
             }
         }

@@ -1,10 +1,27 @@
 Action Config
 	<Action>
-		CheckAgainstProperty
-		PositiveOutcomeEffects
+		Label: String
+		PreActionValidations : <CheckAgainstProperty>(list)
+		Cost : <PropertyModification>(list)
+		CheckSuccess : <CheckAgainstProperty>(list)
+		PositiveOutcomes : <PropertyModification>(list)
+		NegativeOutcomes : <PropertyModification>(list)
+
+	<PropertyModification>
+		Target : Agent(Myself || "target")
+		PropertyTarget : <Property>
+		EffectType : Plus, Minus
+		Value : double? Int? who knows
+
+	<CheckAgainstPropety>
+		Target : Agent(Myself || "Target")
+		Evaluate : <Property>
+		Operation : GreaterThan, LessThan, EqualTo
+		CompareTo : <Property> || Value;
+
 
 Input Configs
-	Properties	
+	<Property>
 
 		
 

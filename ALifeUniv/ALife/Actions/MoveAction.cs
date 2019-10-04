@@ -28,9 +28,10 @@ namespace ALifeUni.ALife
             double newY = (magnitude * Math.Sin(self.Orientation.Radians)) + origin.Y;
             
             //Gravity!
-            newY = newY + 5;
+            //newY = newY + 5;
 
             Point destination = new Point(newX, newY);
+            //Note the agent has a bounding box, but it needs to be recalculated because this is their THEORETICAL bounding box, after they've moved.
             BoundingBox destBoundingBox = new BoundingBox(destination.X - self.Radius, destination.Y - self.Radius, destination.X + self.Radius, destination.Y + self.Radius);
 
             ICollisionMap collider = Planet.World.CollisionLevels[self.CollisionLevel];

@@ -10,8 +10,6 @@ using Windows.Foundation;
 
 namespace ALifeUni.ALife
 {
-
-
     class CollisionGrid : ICollisionMap
     {
         public readonly int Height;
@@ -179,11 +177,6 @@ namespace ALifeUni.ALife
             return trackedObjects.GetEnumerator();
         }
 
-        //IEnumerator IEnumerable.GetEnumerator()
-        //{
-        //    return trackedObjects.GetEnumerator();
-        //}
-
         public IEnumerable<WorldObject> EnumerateItems()
         {
             int i = 0;
@@ -192,7 +185,7 @@ namespace ALifeUni.ALife
                 WorldObject ret = trackedObjects[0];
 
                 try { ret = trackedObjects[i++]; }
-                catch(ArgumentOutOfRangeException aore) { /* Swallowed */ }
+                catch(ArgumentOutOfRangeException aore) { /* Swallowed, theoretically this list could have changed */ }
                 yield return ret;
             }
         }

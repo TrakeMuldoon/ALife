@@ -28,12 +28,12 @@ namespace ALifeUni.ALife
                   , "Agent"                                         //Genus Label
                   , Planet.World.NextUniqueID().ToString()          //Individual Label
                   , ReferenceValues.CollisionLevelPhysical          //Collision Level
-                  , Windows.UI.Colors.PeachPuff)                   //Start Color
+                  , Windows.UI.Colors.PeachPuff)                    //Start Color
         {
             CentrePoint = birthPosition;
             Orientation = new Angle(0);
             
-            //Senses = GenerateSenses();
+            Senses = GenerateSenses();
             //Properties = GenerateAgentProperties();
             Actions = GenerateActions();
 
@@ -62,7 +62,9 @@ namespace ALifeUni.ALife
 
         private List<SenseCluster> GenerateSenses()
         {
-            throw new NotImplementedException();
+            List<SenseCluster> mySenses = new List<SenseCluster>();
+            //mySenses.Add(new EyeCluster());
+            return mySenses;
         }
 
         public override void ExecuteDeadTurn()

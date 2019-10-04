@@ -19,6 +19,11 @@ namespace ALifeUni.ALife.AgentPieces.Brains.RandomBrains
         {
             double randNum = Planet.World.NumberGen.NextDouble();
 
+            foreach(SenseCluster sc in parent.Senses)
+            {
+                sc.Detect();
+            }
+
             if (randNum < 0.20)
             {
                 parent.Actions["Rotate"].AttemptEnact(randNum * 3);

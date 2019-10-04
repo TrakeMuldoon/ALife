@@ -22,9 +22,10 @@ Action Config
 
 Input Configs
 	<Property>
-
-		
-
+		Label : string
+		Value : Double
+		Threshold : null
+		DeltaThreshold : null
 
 Agent Config
 	General Agent

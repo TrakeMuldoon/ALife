@@ -5,17 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ALifeUni.ALife.Inputs
+namespace ALifeUni.ALife
 {
-    public abstract class SenseInput<T> : Input<T>, IShape
+    public interface SenseInput
     {
-        public abstract IShape GetShape();
-        public abstract String GetCollisionLevel();
-        public abstract void Detect();
+        void SetValue(List<WorldObject> collisions);
+    }
 
-        public abstract BoundingBox GetBoundingBox();
-
-        public abstract void DrawOnCanvas();
-
+    public abstract class SenseInput<T> : Input<T>, SenseInput
+    {
+        public abstract void SetValue(List<WorldObject> collisions);
     }
 }

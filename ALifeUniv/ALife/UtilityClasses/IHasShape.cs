@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ALifeUni.ALife.Inputs.SenseClusters
+namespace ALifeUni.ALife.UtilityClasses
 {
-    class EyeCluster
+    public interface IHasShape
     {
+        IShape GetShape();
     }
 }

@@ -10,7 +10,9 @@ using Windows.UI;
 
 namespace ALifeUni.ALife
 {
-    public abstract class WorldObject : Circle
+    //TODO: World Objects are current hardcodded to be "Circle". 
+    // This won't do. Need to fix. 
+    public abstract class WorldObject : Circle, IHasShape
     {
         private Point centre;
         public override Point CentrePoint
@@ -107,6 +109,11 @@ namespace ALifeUni.ALife
         public virtual void TrashItem()
         {
             Planet.World.RemoveWorldObject(this);
+        }
+
+        public IShape GetShape()
+        {
+            return this;
         }
     }
 }

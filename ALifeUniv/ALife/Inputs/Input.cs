@@ -52,8 +52,6 @@ namespace ALifeUni.ALife
             modified = false;
         }
 
-
-
         public override Type GetContainedType()
         {
             return typeof(T);

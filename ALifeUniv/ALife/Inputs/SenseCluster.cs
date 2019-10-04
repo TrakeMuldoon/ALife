@@ -1,18 +1,32 @@
-﻿using ALifeUni.ALife.Collision;
+﻿using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ALifeUni.ALife.Inputs
+namespace ALifeUni.ALife
 {
-    public abstract class SenseCluster : Input
-    {
-        public abstract double Detect();
-        public abstract void ClearResults();
 
-        public IDetectionShape myDetectionShape;
+    public abstract class SenseCluster : IHasShape
+    {
+        readonly List<SenseInput> SubInputs;
+        readonly string CollisionLevel = ReferenceValues.CollisionLevelPhysical;
+
+        public virtual void Detect()
+        {
+            ICollisionMap collider = Planet.World.CollisionLevels[this.CollisionLevel];
+                                                                                  /*Chaining dots is bad practice, except in this case.
+                                                                                   * A "null" shape is an unrecoverable error*/
+            List<WorldObject> collisions = collider.QueryForBoundingBoxCollisions(this.GetShape().GetBoundingBox());
+
+            foreach(SenseInput si in SubInputs)
+            {
+                si.SetValue(collisions);
+            }
+        }
+
+        public abstract IShape GetShape();
 
         //On/Off
         //How Many (0-255 for each)

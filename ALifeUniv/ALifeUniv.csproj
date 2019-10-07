@@ -145,6 +145,8 @@
     <Compile Include="ALife\Planet.cs" />
     <Compile Include="ALife\Rulesets\Settings.cs" />
     <Compile Include="ALife\UtilityClasses\Circle.cs" />
+    <Compile Include="ALife\UtilityClasses\EnumShapes.cs" />
+    <Compile Include="ALife\UtilityClasses\ExtraMath.cs" />
     <Compile Include="ALife\UtilityClasses\IHasShape.cs" />
     <Compile Include="ALife\UtilityClasses\IShape.cs" />
     <Compile Include="ALife\UtilityClasses\Sector.cs" />

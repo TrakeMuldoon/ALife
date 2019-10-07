@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ALifeUni.ALife.UtilityClasses
 {
-    public interface IShape
+    public enum ShapesEnum
     {
-        BoundingBox GetBoundingBox();
-
-        Type GetShapeType();
+        Circle,
+        Sector,
+        Rectangle
     }
 }

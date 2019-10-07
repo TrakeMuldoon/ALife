@@ -57,6 +57,10 @@ namespace ALifeUni.ALife.UtilityClasses
             }
         }
 
+        public static Angle operator +(Angle a, Angle b)
+            => new Angle(a.degrees + b.degrees);
 
+        public static Angle operator -(Angle a, Angle b)
+            => new Angle(a.degrees - b.degrees);
     }
 }

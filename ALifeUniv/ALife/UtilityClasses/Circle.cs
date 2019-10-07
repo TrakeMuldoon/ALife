@@ -36,9 +36,9 @@ namespace ALifeUni.ALife.UtilityClasses
             return new BoundingBox(CentrePoint.X - Radius, CentrePoint.Y - Radius, CentrePoint.X + Radius, CentrePoint.Y + Radius);
         }
 
-        public void DrawOnCanvas()
+        public Type GetShapeType()
         {
-            throw new NotImplementedException();
+            return typeof(Circle);
         }
     }
 }

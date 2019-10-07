@@ -21,29 +21,30 @@ namespace ALifeUni.ALife
 
         protected override void TakeAction(double IntensityPercent)
         {
-            Point origin = self.CentrePoint;
+            Point origin = new Point(self.CentrePoint.X, self.CentrePoint.Y);
             double magnitude = Speed * IntensityPercent;
 
             double newX = (magnitude * Math.Cos(self.Orientation.Radians)) + origin.X;
             double newY = (magnitude * Math.Sin(self.Orientation.Radians)) + origin.Y;
             
             //Gravity!
-            //newY = newY + 5;
+            newY = newY + 5;
 
             Point destination = new Point(newX, newY);
-            //Note the agent has a bounding box, but it needs to be recalculated because this is their THEORETICAL bounding box, after they've moved.
-            BoundingBox destBoundingBox = new BoundingBox(destination.X - self.Radius, destination.Y - self.Radius, destination.X + self.Radius, destination.Y + self.Radius);
+            self.CentrePoint = destination;
 
             ICollisionMap collider = Planet.World.CollisionLevels[self.CollisionLevel];
-            List<WorldObject> collisions = collider.QueryForBoundingBoxCollisions(destBoundingBox, self);
+            List<WorldObject> collisions = collider.QueryForBoundingBoxCollisions(self.GetBoundingBox(), self);
 
-            if (collisions.Count == 0)
+            //If there are no collisions, we propogate the move.
+            //Otherwise, we reverse it, and turn red.
+            if(collisions.Count == 0)
             {
-                self.CentrePoint = destination;
                 collider.MoveObject(self);
             }
             else
             {
+                self.CentrePoint = origin;
                 self.Color = Colors.Red;
             }
         }

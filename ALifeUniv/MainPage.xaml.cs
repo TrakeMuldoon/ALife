@@ -1,27 +1,16 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.UtilityClasses;
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Brushes;
-using Microsoft.Graphics.Canvas.Effects;
+using ALifeUni.UI;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
-using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -72,18 +61,7 @@ namespace ALifeUni
             
             foreach (WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].EnumerateItems())
             {
-                Vector2 agentCentre = new Vector2((float)wo.CentrePoint.X, (float)wo.CentrePoint.Y);
-                //Agent Body
-                args.DrawingSession.FillCircle(agentCentre, wo.Radius, wo.Color);
-                //Agent Orientation
-                if (wo is Agent)
-                {
-                    Agent ag = (Agent)wo;
-                    float newX = (float)(wo.CentrePoint.X + wo.Radius * Math.Cos(ag.Orientation.Radians));
-                    float newY = (float)(wo.CentrePoint.Y + wo.Radius * Math.Sin(ag.Orientation.Radians));
-                    args.DrawingSession.FillCircle(new Vector2(newX, newY), 1, Colors.DarkCyan);
-                }
-
+                DrawingLogic.DrawWorldObject(wo, args);
             }
 
             foreach (Point p in taps)
@@ -128,6 +106,15 @@ namespace ALifeUni
                 gameTimer.Stop();
             }
         }
+
+        private void OneTurnSim_Click(object sender, RoutedEventArgs e)
+        {
+            if (!gameTimer.IsEnabled)
+            {
+                Planet.World.ExecuteOneTurn();
+            }
+        }
+
 
         private void SlowPlaySim_Click(object sender, RoutedEventArgs e)
         {

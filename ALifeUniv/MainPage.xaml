@@ -28,6 +28,7 @@
         </ScrollViewer>
         <StackPanel Width="100" Background="Beige">
             <Button x:Name="PauseSim"  HorizontalAlignment="Stretch" Click="PauseSim_Click">Pause</Button>
+            <Button x:Name="OneTurn" HorizontalAlignment="Stretch" Click="OneTurnSim_Click">1 Turn</Button>
             <Button x:Name="SlowPlaySim" HorizontalAlignment="Stretch" Click="SlowPlaySim_Click">Slow</Button>
             <Button x:Name="PlaySim" HorizontalAlignment="Stretch" Click="PlaySim_Click">Play</Button>
             <Button x:Name="FastPlaySim" HorizontalAlignment="Stretch" Click="FastPlaySim_Click">Fast</Button>

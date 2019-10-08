@@ -129,6 +129,7 @@
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\OperationEnums.cs" />
     <Compile Include="ALife\AgentPieces\Brains\RandomBrains\RandomBrain.cs" />
     <Compile Include="ALife\AgentPieces\WorldObject.cs" />
+    <Compile Include="UI\DrawingLogic.cs" />
     <None Include="ALife\Collision\CollisionQuadTree.cs" />
     <Compile Include="ALife\Collision\CollisionGrid.cs" />
     <Compile Include="ALife\Collision\ICollisionMap.cs" />

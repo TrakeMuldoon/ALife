@@ -1,14 +1,4 @@
-﻿/*
- * NOT COMPILED
- * 
- * NOT COMPILED 
- * 
- * NOT COMPILED
- * 
- * NOT COMPILED
- */
-
-using ALifeUni.ALife.AgentPieces.Brains;
+﻿using ALifeUni.ALife.AgentPieces.Brains;
 using System;
 using System.Collections.Generic;
 
@@ -24,7 +14,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
             }
         }
 
-        private List<Behaviour> behaviours;
+        private List<Behaviour> behaviours = new List<Behaviour>();
         private Agent parent;
 
 

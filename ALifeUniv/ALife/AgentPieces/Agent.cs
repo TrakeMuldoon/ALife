@@ -22,6 +22,13 @@ namespace ALifeUni.ALife
         public readonly List<SenseCluster> Senses;
         public readonly ReadOnlyDictionary<String, Action> Actions;
 
+
+        public Angle Orientation;
+        public override Angle GetOrientation()
+        {
+            return Orientation;
+        }
+
         public Agent(Point birthPosition)
             : base(birthPosition
                   , 5                                               //current radius
@@ -63,7 +70,7 @@ namespace ALifeUni.ALife
         private List<SenseCluster> GenerateSenses()
         {
             List<SenseCluster> mySenses = new List<SenseCluster>();
-            //mySenses.Add(new EyeCluster());
+            mySenses.Add(new EyeCluster(this));
             return mySenses;
         }
 
@@ -77,8 +84,5 @@ namespace ALifeUni.ALife
             this.Color = Colors.Firebrick;
             myBrain.ExecuteTurn();
         }
-
-        public Angle Orientation;
-
     }
 }

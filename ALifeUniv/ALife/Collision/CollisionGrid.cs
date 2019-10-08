@@ -185,7 +185,10 @@ namespace ALifeUni.ALife
                 WorldObject ret = trackedObjects[0];
 
                 try { ret = trackedObjects[i++]; }
-                catch(ArgumentOutOfRangeException aore) { /* Swallowed, theoretically this list could have changed */ }
+                catch(ArgumentOutOfRangeException aore)
+                {
+                    /* Swallowed, it is possible that while enumerating items, the list is modified. We'll return the first item in the list */
+                }
                 yield return ret;
             }
         }

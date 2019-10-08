@@ -9,14 +9,16 @@ namespace ALifeUni.ALife
 {
     public class EyeCluster : SenseCluster
     {
-        public EyeCluster()
+        ChildSector myShape;
+
+        public EyeCluster(IShape Parent)
         {
-            throw new NotImplementedException();
+            myShape = new ChildSector(new Angle(0), new Angle(0), Parent);
         }
 
         public override IShape GetShape()
         {
-            throw new NotImplementedException();
+            return myShape;
         }
     }
 }

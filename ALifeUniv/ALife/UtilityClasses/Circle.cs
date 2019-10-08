@@ -19,6 +19,15 @@ namespace ALifeUni.ALife.UtilityClasses
             get;
             set;
         }
+        public virtual Point GetCentrePoint()
+        {
+            return CentrePoint;
+        }
+
+        public virtual Angle GetOrientation()
+        {
+            throw new Exception("Do Not Get Orientation of a raw circle, it has no meaning");
+        }
 
         public Circle(Point coords, float radius)
         {
@@ -29,6 +38,11 @@ namespace ALifeUni.ALife.UtilityClasses
         public Circle(float xVal, float yVal, float radius) : this(new Point(xVal, yVal), radius)
         {
             
+        }
+
+        public void Reset()
+        {
+            throw new NotImplementedException();
         }
 
         public BoundingBox GetBoundingBox()

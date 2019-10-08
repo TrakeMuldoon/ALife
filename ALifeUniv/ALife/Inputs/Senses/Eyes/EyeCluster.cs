@@ -14,11 +14,6 @@ namespace ALifeUni.ALife
             throw new NotImplementedException();
         }
 
-        //public override void Detect()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public override IShape GetShape()
         {
             throw new NotImplementedException();

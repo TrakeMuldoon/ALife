@@ -39,9 +39,9 @@ namespace ALifeUni.ALife.UtilityClasses
     {
         public Angle OrientationAngle;
         public Angle OrientationAroundParent;
-        public IShape Parent;
+        public Circle Parent;
 
-        public ChildSector(Angle orientationAngle, Angle orientationAroundParent, IShape parent)
+        public ChildSector(Angle orientationAngle, Angle orientationAroundParent, Circle parent)
         {
             OrientationAngle = orientationAngle;
             OrientationAroundParent = orientationAroundParent;
@@ -51,8 +51,8 @@ namespace ALifeUni.ALife.UtilityClasses
         public override Point GetCentrePoint()
         {
             Angle startAngle = Parent.GetOrientation() + OrientationAroundParent;
-            double myOriginX = Parent.GetCentrePoint().X + (Radius * Math.Cos(startAngle.Radians));
-            double myOriginY = Parent.GetCentrePoint().Y + (Radius * Math.Sin(startAngle.Radians));
+            double myOriginX = Parent.GetCentrePoint().X + (Parent.Radius * Math.Cos(startAngle.Radians));
+            double myOriginY = Parent.GetCentrePoint().Y + (Parent.Radius * Math.Sin(startAngle.Radians));
             Point myOriginPoint = new Point(myOriginX, myOriginY);
             return myOriginPoint;
         }
@@ -72,9 +72,9 @@ namespace ALifeUni.ALife.UtilityClasses
 
     public abstract class Sector : IShape
     {
-
-        public float Radius;
-        public Angle SweepAngle;
+        //TODO unhardcode this
+        public float Radius = 8;
+        public Angle SweepAngle = new Angle(45);
 
         public abstract Point GetCentrePoint();
         public abstract Angle GetOrientation();
@@ -172,7 +172,7 @@ namespace ALifeUni.ALife.UtilityClasses
             double maxX = ExtraMath.MultiMax(xValues.ToArray());
             double maxY = ExtraMath.MultiMax(yValues.ToArray());
             BoundingBox sectorBB = new BoundingBox(minX, minY, maxX, maxY);
-            myBox = sectorBB;
+            //myBox = sectorBB;
             return sectorBB;
         }
 

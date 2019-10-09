@@ -99,6 +99,11 @@ namespace ALifeUni
             }
         }
 
+        private void ResetSim_Click(object sender, RoutedEventArgs e)
+        {
+            Planet.CreateWorld((int)animCanvas.Height, (int)animCanvas.Width);
+        }
+
         private void PauseSim_Click(object sender, RoutedEventArgs e)
         {
             if (gameTimer.IsEnabled)
@@ -109,10 +114,11 @@ namespace ALifeUni
 
         private void OneTurnSim_Click(object sender, RoutedEventArgs e)
         {
-            if (!gameTimer.IsEnabled)
+            if (gameTimer.IsEnabled)
             {
-                Planet.World.ExecuteOneTurn();
+                gameTimer.Stop();
             }
+            Planet.World.ExecuteOneTurn();
         }
 
 

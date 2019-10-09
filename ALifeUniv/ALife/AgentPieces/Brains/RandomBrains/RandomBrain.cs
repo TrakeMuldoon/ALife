@@ -24,14 +24,16 @@ namespace ALifeUni.ALife.AgentPieces.Brains.RandomBrains
                 sc.Detect();
             }
 
-            if (randNum < 0.20)
-            {
-                parent.Actions["Rotate"].AttemptEnact(randNum * 3);
-            }
-            else if (randNum < 0.90)
-            {
-                parent.Actions["Move"].AttemptEnact((randNum - 0.33) * 3);
-            }
+
+            parent.Actions["Rotate"].AttemptEnact(0.05f);
+            //if (randNum < 0.20)
+            //{
+            //    parent.Actions["Rotate"].AttemptEnact(randNum);
+            //}
+            //else if (randNum < 0.90)
+            //{
+            //    parent.Actions["Move"].AttemptEnact((randNum - 0.33) * 3);
+            //}
             //else
             //{
             //    parent.Actions["Color"].AttemptEnact(0.99);

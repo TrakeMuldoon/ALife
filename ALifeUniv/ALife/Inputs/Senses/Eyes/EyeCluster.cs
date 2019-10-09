@@ -11,7 +11,7 @@ namespace ALifeUni.ALife
     {
         ChildSector myShape;
 
-        public EyeCluster(IShape Parent)
+        public EyeCluster(Circle Parent)
         {
             myShape = new ChildSector(new Angle(0), new Angle(0), Parent);
         }

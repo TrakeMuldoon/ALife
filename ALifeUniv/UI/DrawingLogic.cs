@@ -25,27 +25,37 @@ namespace ALifeUni.UI
                 float newY = (float)(wo.CentrePoint.Y + wo.Radius * Math.Sin(ag.Orientation.Radians));
                 args.DrawingSession.FillCircle(new Vector2(newX, newY), 1, Colors.DarkCyan);
 
-                BoundingBox bb = ag.GetBoundingBox();
-                Point maxPoints = new Point(bb.MaxX, bb.MaxY);
-                Point minPoints = new Point(bb.MinX, bb.MinY);
-                Rect drawRec = new Rect(maxPoints, minPoints);
-                args.DrawingSession.DrawRectangle(drawRec, Colors.AntiqueWhite);
+                DrawBoundingBox(ag.GetBoundingBox(), args, Colors.AntiqueWhite);
 
                 foreach(IHasShape shape in ag.Senses)
                 {
                     IShape currShape = shape.GetShape();
                     if(currShape is Sector)
                     {
-                        Sector sec = (Sector)currShape;
+                        ChildSector sec = (ChildSector)currShape;
+                        DrawBoundingBox(sec.GetBoundingBox(), args, Colors.Green);
+
+
                         CanvasPathBuilder pathBuilder = new CanvasPathBuilder(args.DrawingSession);
+                        Angle myAngle = sec.OrientationAngle + sec.OrientationAroundParent + sec.Parent.GetOrientation();
+                        Vector2 centre = new Vector2((float)sec.GetCentrePoint().X, (float)sec.GetCentrePoint().Y);
+                        pathBuilder.BeginFigure(centre);
+                        pathBuilder.AddArc(centre, sec.Radius, sec.Radius, (float)myAngle.Radians, (float)sec.SweepAngle.Radians);
+                        pathBuilder.EndFigure(CanvasFigureLoop.Closed);
+                        CanvasGeometry cg = CanvasGeometry.CreatePath(pathBuilder);
 
-                        //Angle myAngle = sec.OrientationAngle + sec.OrientationAroundParent + sec.OrientationOfParent;
-                        //Vector2 vec2 = new Vector2((float)sec.CentrePoint.X, (float)sec.CentrePoint.Y);
-                        //pathBuilder.AddArc(vec2, sec.Radius, sec.Radius, (float)myAngle.Radians, (float)sec.SweepAngle.Radians);
-
+                        args.DrawingSession.FillGeometry(cg, Colors.Black);
                     }
                 }
             }
+        }
+
+        internal static void DrawBoundingBox(BoundingBox bb, CanvasAnimatedDrawEventArgs args, Color color)
+        {
+            Point maxPoints = new Point(bb.MaxX, bb.MaxY);
+            Point minPoints = new Point(bb.MinX, bb.MinY);
+            Rect drawRec = new Rect(maxPoints, minPoints);
+            args.DrawingSession.DrawRectangle(drawRec, color, 0.3f);
         }
     }
 }

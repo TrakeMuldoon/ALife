@@ -74,7 +74,7 @@ namespace ALifeUni.ALife.UtilityClasses
     {
         //TODO unhardcode this
         public float Radius = 8;
-        public Angle SweepAngle = new Angle(45);
+        public Angle SweepAngle = new Angle(60);
 
         public abstract Point GetCentrePoint();
         public abstract Angle GetOrientation();
@@ -122,48 +122,48 @@ namespace ALifeUni.ALife.UtilityClasses
                 if(absOrientationAngle.Degrees < 90
                     && endAngle.Degrees > 90)
                 {
-                    xValues.Add(myOriginPoint.X + Radius);
+                    yValues.Add(myOriginPoint.Y + Radius);
                 }
                 if(absOrientationAngle.Degrees < 180
                     && endAngle.Degrees > 180)
                 {
-                    yValues.Add(myOriginPoint.Y - Radius);
+                    xValues.Add(myOriginPoint.X - Radius);
                 }
                 if(absOrientationAngle.Degrees < 270
                     && endAngle.Degrees > 270)
                 {
-                    xValues.Add(myOriginPoint.X - Radius);
+                    yValues.Add(myOriginPoint.Y - Radius);
                 }
             }
             else
             {
-                yValues.Add(myOriginPoint.Y + Radius);
+                xValues.Add(myOriginPoint.X + Radius);
                 //These if statements cover the potential start locations
-                if(absOrientationAngle.Degrees < 90)
+                if (absOrientationAngle.Degrees < 90)
                 {
-                    xValues.Add(myOriginPoint.X + Radius);
+                    yValues.Add(myOriginPoint.Y + Radius);
                 }
-                if(absOrientationAngle.Degrees < 180)
+                if (absOrientationAngle.Degrees < 180)
                 {
-                    yValues.Add(myOriginPoint.Y - Radius);
+                    xValues.Add(myOriginPoint.X - Radius);
                 }
                 if (absOrientationAngle.Degrees < 270)
                 {
-                    xValues.Add(myOriginPoint.X - Radius);
+                    yValues.Add(myOriginPoint.Y - Radius);
                 }
 
                 //These three if statements cover the potential end locations
                 if (endAngle.Degrees > 90)
                 {
-                    xValues.Add(myOriginPoint.X + Radius);
+                    yValues.Add(myOriginPoint.Y + Radius);
                 }
                 if (endAngle.Degrees > 180)
                 {
-                    yValues.Add(myOriginPoint.Y - Radius);
+                    xValues.Add(myOriginPoint.X - Radius);
                 }
                 if (endAngle.Degrees > 270)
                 {
-                    xValues.Add(myOriginPoint.X - Radius);
+                    yValues.Add(myOriginPoint.Y - Radius);
                 }
             }
 

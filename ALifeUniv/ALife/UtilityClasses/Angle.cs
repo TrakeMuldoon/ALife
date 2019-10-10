@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ALifeUni.ALife.UtilityClasses
 {
-    public struct Angle
+    public class Angle
     {
         private double rads;
         public double Radians

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ALifeUni.ALife.UtilityClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,8 +17,8 @@ namespace ALifeUni.ALife
         {
             double turn = Settings.AgentMaximumTurnDegrees * IntensityPercent;
 
-
-            self.Orientation.Degrees += turn;
+            Angle myOrientation = self.Orientation;
+            myOrientation.Degrees += turn;
         }
     }
 }

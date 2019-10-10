@@ -28,13 +28,13 @@ namespace ALifeUni.ALife
             double newY = (magnitude * Math.Sin(self.Orientation.Radians)) + origin.Y;
             
             //Gravity!
-            newY = newY + 5;
+            //newY = newY + 5;
 
             Point destination = new Point(newX, newY);
             self.CentrePoint = destination;
 
             ICollisionMap collider = Planet.World.CollisionLevels[self.CollisionLevel];
-            List<WorldObject> collisions = collider.QueryForBoundingBoxCollisions(self.GetBoundingBox(), self);
+            List<WorldObject> collisions = collider.QueryForBoundingBoxCollisions(self.BoundingBox, self);
 
             //If there are no collisions, we propogate the move.
             //Otherwise, we reverse it, and turn red.

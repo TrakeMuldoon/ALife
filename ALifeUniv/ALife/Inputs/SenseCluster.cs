@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
+using Windows.UI;
 
 namespace ALifeUni.ALife
 {
@@ -14,15 +15,31 @@ namespace ALifeUni.ALife
     {
         readonly List<SenseInput> SubInputs = new List<SenseInput>();
         readonly string CollisionLevel = ReferenceValues.CollisionLevelPhysical;
+        readonly Agent parent;
+
+        public SenseCluster(Agent parent)
+        {
+            this.parent = parent;
+        }
 
         public virtual void Detect()
         {
             ICollisionMap collider = Planet.World.CollisionLevels[this.CollisionLevel];
 
-            this.GetShape().Reset();
-                                                                                  /*Chaining dots is bad practice, except in this case.
-                                                                                   * A "null" shape is an unrecoverable error*/
-            List<WorldObject> collisions = collider.QueryForBoundingBoxCollisions(this.GetShape().GetBoundingBox());
+            IShape myShape = this.GetShape();
+
+            myShape.Reset();
+            BoundingBox bb = myShape.BoundingBox;
+            List<WorldObject> collisions = collider.QueryForBoundingBoxCollisions(bb, parent);
+            if(collisions.Count > 0)
+            {
+                GetShape().Color = Colors.Green;
+            }
+            else
+            {
+                GetShape().Color = Colors.Yellow;
+            }
+
 
             foreach(SenseInput si in SubInputs)
             {

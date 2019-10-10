@@ -14,7 +14,8 @@
     <StackPanel Orientation="Horizontal">
         <ScrollViewer x:Name="Zoomer"  Background="Aqua"
                       HorizontalScrollBarVisibility="Visible"
-                      VerticalScrollBarVisibility="Visible">
+                      VerticalScrollBarVisibility="Visible"
+                      Width="1000">
             <Border Background="Black" BorderBrush="Red" BorderThickness="5">
                 <canvas:CanvasAnimatedControl x:Name="animCanvas" Draw="animCanvas_Draw" CreateResources="animCanvas_CreateResources" 
                                               Tapped="AnimCanvas_Tapped"

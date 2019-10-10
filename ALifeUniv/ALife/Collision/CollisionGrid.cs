@@ -117,7 +117,7 @@ namespace ALifeUni.ALife
 
         public List<WorldObject> QueryForBoundingBoxCollisions(WorldObject queryObject)
         {
-            return QueryForBoundingBoxCollisions(queryObject.GetBoundingBox(), queryObject);
+            return QueryForBoundingBoxCollisions(queryObject.BoundingBox, queryObject);
         }
 
         public List<WorldObject> QueryForBoundingBoxCollisions(BoundingBox queryBox)
@@ -145,7 +145,7 @@ namespace ALifeUni.ALife
             List<WorldObject> boundingCollisions = new List<WorldObject>();
             foreach(WorldObject wo in potentialCollisions)
             {
-                if(wo.GetBoundingBox().IsCollision(queryBox))
+                if(wo.BoundingBox.IsCollision(queryBox))
                 {
                     boundingCollisions.Add(wo);
                 }

@@ -5,68 +5,78 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.UI;
 
 namespace ALifeUni.ALife.UtilityClasses
 {
     public class AgentSector : Sector
     {
-        public Point CentrePoint;
-        public Angle Orientation;
+        public override Point CentrePoint
+        {
+            get;
+            set;
+        }
+        public override BoundingBox BoundingBox
+        {
+            get
+            {
+                return GetBoundingBox(CentrePoint, Orientation);
+            }
+        }
+        public override Angle Orientation
+        {
+            get;
+            set;
+        }
 
         public AgentSector(Point centrePoint, Angle orientation)
         {
             CentrePoint = centrePoint;
             Orientation = orientation;
         }
-
-        public override BoundingBox GetBoundingBox()
-        {
-            return GetBoundingBox(CentrePoint, Orientation);
-        }
-
-        public override Point GetCentrePoint()
-        {
-            return CentrePoint;
-        }
-
-        public override Angle GetOrientation()
-        {
-            return Orientation;
-        }
     }
 
     public class ChildSector : Sector
     {
-        public Angle OrientationAngle;
+        public override Angle Orientation
+        {
+            get;
+            set;
+        }
         public Angle OrientationAroundParent;
         public Circle Parent;
 
         public ChildSector(Angle orientationAngle, Angle orientationAroundParent, Circle parent)
         {
-            OrientationAngle = orientationAngle;
+            Orientation = orientationAngle;
             OrientationAroundParent = orientationAroundParent;
             Parent = parent;
         }
 
-        public override Point GetCentrePoint()
+        public override Point CentrePoint
         {
-            Angle startAngle = Parent.GetOrientation() + OrientationAroundParent;
-            double myOriginX = Parent.GetCentrePoint().X + (Parent.Radius * Math.Cos(startAngle.Radians));
-            double myOriginY = Parent.GetCentrePoint().Y + (Parent.Radius * Math.Sin(startAngle.Radians));
-            Point myOriginPoint = new Point(myOriginX, myOriginY);
-            return myOriginPoint;
+            get
+            {
+                Angle startAngle = Parent.Orientation + OrientationAroundParent;
+                double myOriginX = Parent.CentrePoint.X + (Parent.Radius * Math.Cos(startAngle.Radians));
+                double myOriginY = Parent.CentrePoint.Y + (Parent.Radius * Math.Sin(startAngle.Radians));
+                Point myOriginPoint = new Point(myOriginX, myOriginY);
+                return myOriginPoint;
+            }
+            set
+            {
+
+            }
         }
 
-        public override Angle GetOrientation()
+        public override BoundingBox BoundingBox
         {
-            return OrientationAngle;
-        }
+            get
+            {
+                Angle startAngle = Parent.Orientation + OrientationAroundParent;
 
-        public override BoundingBox GetBoundingBox()
-        {
-            Angle startAngle = Parent.GetOrientation()+ OrientationAroundParent;
-
-            return GetBoundingBox(GetCentrePoint(), startAngle + OrientationAngle);
+                return GetBoundingBox(CentrePoint, startAngle + Orientation);
+            }
         }
     }
 
@@ -76,23 +86,45 @@ namespace ALifeUni.ALife.UtilityClasses
         public float Radius = 8;
         public Angle SweepAngle = new Angle(60);
 
-        public abstract Point GetCentrePoint();
-        public abstract Angle GetOrientation();
+        public abstract BoundingBox BoundingBox
+        {
+            get;
+        }
+        public Color Color
+        {
+            get;
+            set;
+        }
+
+        public abstract Point CentrePoint
+        {
+            get;
+            set;
+        }
+        public abstract Angle Orientation
+        {
+            get;
+            set;
+        }
 
         private BoundingBox? myBox = null;
-
         public void Reset()
         {
             myBox = null;
         }
 
-        public abstract BoundingBox GetBoundingBox();
-
         public BoundingBox GetBoundingBox(Point xyTranslationFromZero, Angle rotation)
         {
             if (myBox != null)
             {
-                return myBox.Value;
+                try
+                {
+                    return myBox.Value;
+                }
+                catch(NullReferenceException nullref)
+                {
+                    //swallow, and just build the bb
+                }
             }
             Angle absOrientationAngle = rotation;
             Point myOriginPoint = xyTranslationFromZero;
@@ -171,8 +203,9 @@ namespace ALifeUni.ALife.UtilityClasses
             double minY = ExtraMath.MultiMin(yValues.ToArray());
             double maxX = ExtraMath.MultiMax(xValues.ToArray());
             double maxY = ExtraMath.MultiMax(yValues.ToArray());
+
             BoundingBox sectorBB = new BoundingBox(minX, minY, maxX, maxY);
-            //myBox = sectorBB;
+            myBox = sectorBB;
             return sectorBB;
         }
 

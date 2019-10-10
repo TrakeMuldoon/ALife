@@ -25,7 +25,7 @@ namespace ALifeUni.UI
                 float newY = (float)(wo.CentrePoint.Y + wo.Radius * Math.Sin(ag.Orientation.Radians));
                 args.DrawingSession.FillCircle(new Vector2(newX, newY), 1, Colors.DarkCyan);
 
-                DrawBoundingBox(ag.GetBoundingBox(), args, Colors.AntiqueWhite);
+                DrawBoundingBox(ag.BoundingBox, args, Colors.AntiqueWhite);
 
                 foreach(IHasShape shape in ag.Senses)
                 {
@@ -33,18 +33,18 @@ namespace ALifeUni.UI
                     if(currShape is Sector)
                     {
                         ChildSector sec = (ChildSector)currShape;
-                        DrawBoundingBox(sec.GetBoundingBox(), args, Colors.Green);
+                        DrawBoundingBox(sec.BoundingBox, args, Colors.Green);
 
 
                         CanvasPathBuilder pathBuilder = new CanvasPathBuilder(args.DrawingSession);
-                        Angle myAngle = sec.OrientationAngle + sec.OrientationAroundParent + sec.Parent.GetOrientation();
-                        Vector2 centre = new Vector2((float)sec.GetCentrePoint().X, (float)sec.GetCentrePoint().Y);
+                        Angle myAngle = sec.Orientation + sec.OrientationAroundParent + sec.Parent.Orientation;
+                        Vector2 centre = new Vector2((float)sec.CentrePoint.X, (float)sec.CentrePoint.Y);
                         pathBuilder.BeginFigure(centre);
                         pathBuilder.AddArc(centre, sec.Radius, sec.Radius, (float)myAngle.Radians, (float)sec.SweepAngle.Radians);
                         pathBuilder.EndFigure(CanvasFigureLoop.Closed);
                         CanvasGeometry cg = CanvasGeometry.CreatePath(pathBuilder);
 
-                        args.DrawingSession.FillGeometry(cg, Colors.Black);
+                        args.DrawingSession.FillGeometry(cg, sec.Color);
                     }
                 }
             }

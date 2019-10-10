@@ -45,7 +45,7 @@ namespace ALifeUni.ALife
         public static void CreateWorld()
         {
             Random r = new Random();
-            CreateWorld(r.Next(), 1000, 1000);
+            CreateWorld(r.Next(), 1000, 800);
         }
         public  static void CreateWorld(int height, int width)
         {
@@ -75,8 +75,8 @@ namespace ALifeUni.ALife
             //    Agent ag = new Agent(new Point(xPos, yPos));
             //    instance.AddObjectToWorld(ag);
             //}
-            int locationMultiplier = 50;
-            for (int i = 0; i < 1; i++)
+            int locationMultiplier = 20;
+            for (int i = 0; i < 100; i++)
             {
                 int yPosBase = 2 + (i / 3);
                 int xPosBase = 2 + ((i - 1) / 3) + (((i - 1) % 3) % 2);

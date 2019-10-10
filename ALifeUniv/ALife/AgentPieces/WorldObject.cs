@@ -73,8 +73,6 @@ namespace ALifeUni.ALife
 
         public bool Alive;
 
-        public Color Color; 
-
         protected WorldObject(Point centrePoint, float startRadius, string genusLabel, string individualLabel, string collisionLevel, Color color)
             : base(centrePoint, startRadius)
         {

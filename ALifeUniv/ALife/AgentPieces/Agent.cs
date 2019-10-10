@@ -22,11 +22,10 @@ namespace ALifeUni.ALife
         public readonly List<SenseCluster> Senses;
         public readonly ReadOnlyDictionary<String, Action> Actions;
 
-
-        public Angle Orientation;
-        public override Angle GetOrientation()
+        public override Angle Orientation
         {
-            return Orientation;
+            get;
+            set;
         }
 
         public Agent(Point birthPosition)
@@ -45,8 +44,6 @@ namespace ALifeUni.ALife
             Actions = GenerateActions();
 
             myBrain = new RandomBrain(this);
-
-            
         }
 
         private ReadOnlyDictionary<string, Action> GenerateActions()

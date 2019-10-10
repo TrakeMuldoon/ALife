@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.UI;
 
 namespace ALifeUni.ALife.UtilityClasses
 {
@@ -19,16 +20,27 @@ namespace ALifeUni.ALife.UtilityClasses
             get;
             set;
         }
-        public virtual Point GetCentrePoint()
+
+        public BoundingBox BoundingBox
         {
-            return CentrePoint;
+            get
+            {
+                return new BoundingBox(CentrePoint.X - Radius, CentrePoint.Y - Radius, CentrePoint.X + Radius, CentrePoint.Y + Radius);
+            }
         }
 
-        public virtual Angle GetOrientation()
+        public virtual Angle Orientation
         {
-            throw new Exception("Do Not Get Orientation of a raw circle, it has no meaning");
+            get;
+            set;
         }
 
+        public virtual Color Color
+        {
+            get;
+            set;
+        }
+        
         public Circle(Point coords, float radius)
         {
             CentrePoint = coords;
@@ -42,12 +54,7 @@ namespace ALifeUni.ALife.UtilityClasses
 
         public void Reset()
         {
-            throw new NotImplementedException();
-        }
-
-        public BoundingBox GetBoundingBox()
-        {
-            return new BoundingBox(CentrePoint.X - Radius, CentrePoint.Y - Radius, CentrePoint.X + Radius, CentrePoint.Y + Radius);
+            //Reset does nothing for Circles, because the bounding box is so easy to calculate
         }
 
         public Type GetShapeType()

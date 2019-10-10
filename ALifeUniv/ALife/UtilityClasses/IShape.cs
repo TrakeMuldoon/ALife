@@ -4,15 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.UI;
 
 namespace ALifeUni.ALife.UtilityClasses
 {
     public interface IShape
     {
-        Point GetCentrePoint();
-        Angle GetOrientation();
-        BoundingBox GetBoundingBox();
+        Point CentrePoint
+        {
+            get;
+        }
+        Angle Orientation
+        {
+            get;
+        }
 
+        BoundingBox BoundingBox
+        {
+            get;
+        }
+
+        Color Color
+        {
+            get;
+            set;
+        }
         Type GetShapeType();
 
         void Reset();

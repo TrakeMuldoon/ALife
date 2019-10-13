@@ -202,7 +202,7 @@ namespace ALifeUni
             float newZoom;
             if (float.TryParse(ZoomFactor.Text, out newZoom))
             {
-                panMagnifyFactor = (int)(12 * newZoom);
+                panMagnifyFactor = (int)(8 * newZoom);
             }
 
             //Constantly updates the position the pan window should be as you drag along. 
@@ -210,8 +210,8 @@ namespace ALifeUni
             if(dragStart.HasValue)
             {
                 Point current = e.GetCurrentPoint(animCanvas).Position;
-                Point moveDelta = new Point((current.X - dragStart.Value.X) * panMagnifyFactor
-                                            , (current.Y - dragStart.Value.Y) * panMagnifyFactor);
+                Point moveDelta = new Point((current.X - dragStart.Value.X) * panMagnifyFactor * -1
+                                            , (current.Y - dragStart.Value.Y) * panMagnifyFactor * -1);
                 Point offset = new Point(Zoomer.HorizontalOffset + moveDelta.X, Zoomer.VerticalOffset + moveDelta.Y);
                 
                 Zoomer.ChangeView(offset.X, offset.Y, null);

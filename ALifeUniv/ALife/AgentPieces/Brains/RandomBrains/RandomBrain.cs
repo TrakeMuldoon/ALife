@@ -28,7 +28,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.RandomBrains
 
             if (randNum < 0.20)
             {
-                parent.Actions["Rotate"].AttemptEnact(randNum);
+                parent.Actions["Rotate"].AttemptEnact(randNum * 5);
             }
             else if (randNum < 0.90)
             {

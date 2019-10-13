@@ -31,6 +31,8 @@ namespace ALifeUni.ALife
             myShape.Reset();
             BoundingBox bb = myShape.BoundingBox;
             List<WorldObject> collisions = collider.QueryForBoundingBoxCollisions(bb, parent);
+            collisions = CollisionDetector.FineGrainedCollisionDetection(collisions, myShape);
+
             if(collisions.Count > 0)
             {
                 GetShape().Color = Colors.Green;

@@ -15,7 +15,7 @@ namespace ALifeUni.ALife
 
         protected override void TakeAction(double IntensityPercent)
         {
-            double turn = Settings.AgentMaximumTurnDegrees * IntensityPercent;
+            double turn = (Settings.AgentMaximumTurnDegrees * IntensityPercent) - (Settings.AgentMaximumTurnDegrees/2);
 
             Angle myOrientation = self.Orientation;
             myOrientation.Degrees += turn;

@@ -129,6 +129,7 @@
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\OperationEnums.cs" />
     <Compile Include="ALife\AgentPieces\Brains\RandomBrains\RandomBrain.cs" />
     <Compile Include="ALife\AgentPieces\WorldObject.cs" />
+    <Compile Include="ALife\UtilityClasses\Shapes\Rectangle.cs" />
     <Compile Include="UI\DrawingLogic.cs" />
     <None Include="ALife\Collision\CollisionQuadTree.cs" />
     <Compile Include="ALife\Collision\CollisionGrid.cs" />
@@ -145,12 +146,12 @@
     <Compile Include="ALife\ReferenceValues.cs" />
     <Compile Include="ALife\Planet.cs" />
     <Compile Include="ALife\Rulesets\Settings.cs" />
-    <Compile Include="ALife\UtilityClasses\Circle.cs" />
-    <Compile Include="ALife\UtilityClasses\EnumShapes.cs" />
+    <Compile Include="ALife\UtilityClasses\Shapes\Circle.cs" />
+    <Compile Include="ALife\UtilityClasses\Shapes\EnumShapes.cs" />
     <Compile Include="ALife\UtilityClasses\ExtraMath.cs" />
-    <Compile Include="ALife\UtilityClasses\IHasShape.cs" />
-    <Compile Include="ALife\UtilityClasses\IShape.cs" />
-    <Compile Include="ALife\UtilityClasses\Sector.cs" />
+    <Compile Include="ALife\UtilityClasses\Shapes\IHasShape.cs" />
+    <Compile Include="ALife\UtilityClasses\Shapes\IShape.cs" />
+    <Compile Include="ALife\UtilityClasses\Shapes\Sector.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>

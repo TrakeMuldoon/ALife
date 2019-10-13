@@ -13,8 +13,6 @@ namespace ALifeUni.ALife
     {
         private static Planet instance;
 
-
-
         static Planet()
         {
 
@@ -65,16 +63,6 @@ namespace ALifeUni.ALife
 
             //TODO: Read new world agentnum from config
 
-            //int locationMultiplier = 12;
-            //for (int i = 0; i < 100; i++)
-            //{
-            //    int yPosBase = 1 + (i / 3);
-            //    int xPosBase = 1 + ((i - 1) / 3) + (((i - 1) % 3) % 2);
-            //    int xPos = xPosBase * locationMultiplier;
-            //    int yPos = yPosBase * locationMultiplier;
-            //    Agent ag = new Agent(new Point(xPos, yPos));
-            //    instance.AddObjectToWorld(ag);
-            //}
             int locationMultiplier = 20;
             for (int i = 0; i < 100; i++)
             {
@@ -117,6 +105,14 @@ namespace ALifeUni.ALife
         }
 
         public readonly Random NumberGen;
+        private int turns = 0;
+        public int Turns
+        {
+            get
+            {
+                return turns;
+            }
+        }
 
         private object UniqueLock = new object();
         private int uniqueInt = 0;
@@ -128,8 +124,6 @@ namespace ALifeUni.ALife
             }
         }
 
-
-
         internal void ExecuteManyTurns(int numTurns)
         {
             for (int i = 0; i < numTurns; i++)
@@ -140,13 +134,12 @@ namespace ALifeUni.ALife
 
         internal void ExecuteOneTurn()
         {
+            turns++;
             foreach (WorldObject wo in AllControlledObjects)
             {
                 wo.ExecuteTurn();
             }
         }
-
-
 
         internal void RemoveWorldObject(WorldObject mySelf)
         {

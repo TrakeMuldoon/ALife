@@ -121,7 +121,7 @@ namespace ALifeUni.ALife.UtilityClasses
                 {
                     return myBox.Value;
                 }
-                catch(NullReferenceException nullref)
+                catch(InvalidOperationException ioe)
                 {
                     //swallow, and just build the bb
                 }
@@ -209,9 +209,13 @@ namespace ALifeUni.ALife.UtilityClasses
             return sectorBB;
         }
 
-        public Type GetShapeType()
+        public ShapesEnum GetShape()
         {
-            return typeof(Sector);
+            return ShapesEnum.Sector;
         }
+        //public Type GetShapeType()
+        //{
+        //    return typeof(Sector);
+        //}
     }
 }

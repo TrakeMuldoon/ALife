@@ -121,6 +121,7 @@
     <Compile Include="ALife\Actions\MoveAction.cs" />
     <Compile Include="ALife\Actions\RotateAction.cs" />
     <Compile Include="ALife\AgentPieces\Agent.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourCondition.cs" />
     <Compile Include="ALife\AgentPieces\Brains\IBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\Behaviour.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BoolBehaviour.cs" />

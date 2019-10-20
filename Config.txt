@@ -46,3 +46,11 @@ Agent Config
 
 Environment Config
 	Number of Starting Agents
+	Distribution pattern
+
+BehaviourBrain
+	Behaviours(List)
+		<Behaviour>
+			<BehaviourCondition>(list)
+				InputTarget : Input
+				Comparator : 

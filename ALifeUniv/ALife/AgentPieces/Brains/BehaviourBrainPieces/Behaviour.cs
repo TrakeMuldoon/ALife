@@ -1,3 +1,5 @@
+using ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces;
+using ALifeUni.ALife.Inputs.SenseClusters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
     {
         public String AsEnglish;
 
+        public readonly List<BehaviourCondition> Conditions = new List<BehaviourCondition>();
         public readonly Action SuccessAction;
         public readonly Func<double> SuccessParam;
 
@@ -17,6 +20,13 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
         {
             SuccessAction = thenDoThis;
             SuccessParam = resultParam;
+
+            BehaviourCondition<bool> bc = new BehaviourCondition<bool>();
+            //bc.inputTarget = new EyeInput();
+            //bc.comparator = (x, y) =>  x == y;
+            //bc.compareTo = true;
+
+
         }
 
         //will be run once a "turn"

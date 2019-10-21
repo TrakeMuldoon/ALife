@@ -40,17 +40,18 @@ namespace ALifeUni.ALife
             private set;
         }
 
+        const double IntensityMax = 1.0;
+        const double IntensityMin = 0.0;
         public void AttemptEnact()
         {
             if(activated && AttemptSuccessful())
             {
-                Intensity = Intensity > 1.0 ? 1.0 : (Intensity < 0.0 ? 0.0 : Intensity); 
+                //This is the long form of Clamp, it restricts a value to between Max and Min
+                Intensity = Intensity > IntensityMax ? IntensityMax : (Intensity < IntensityMin ? IntensityMin : Intensity); 
                 TakeAction(Intensity);
-                //Reset the Intensity;
-                Reset();
             }
-            //else
-            //No need to reset, because nothing has changed. 
+            //Reset the Intensity;
+            Reset();
         }
 
         protected abstract bool AttemptSuccessful();

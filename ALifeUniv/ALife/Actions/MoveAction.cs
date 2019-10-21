@@ -19,6 +19,11 @@ namespace ALifeUni.ALife
         
         }
 
+        protected override bool AttemptSuccessful()
+        {
+            return true;
+        }
+
         protected override void TakeAction(double IntensityPercent)
         {
             Point origin = new Point(self.CentrePoint.X, self.CentrePoint.Y);

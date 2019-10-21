@@ -28,11 +28,13 @@ namespace ALifeUni.ALife.AgentPieces.Brains.RandomBrains
 
             if (randNum < 0.20)
             {
-                parent.Actions["Rotate"].AttemptEnact(randNum * 5);
+                parent.Actions["Rotate"].Intensity += randNum * 5;
+                parent.Actions["Rotate"].AttemptEnact();
             }
             else if (randNum < 0.90)
             {
-                parent.Actions["Move"].AttemptEnact((randNum - 0.33) * 3);
+                parent.Actions["Move"].Intensity += (randNum - 0.33) * 3;
+                parent.Actions["Move"].AttemptEnact();
             }
             //else
             //{

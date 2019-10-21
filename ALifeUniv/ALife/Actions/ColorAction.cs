@@ -13,6 +13,11 @@ namespace ALifeUni.ALife
         {
         }
 
+        protected override bool AttemptSuccessful()
+        {
+            return true;
+        }
+
         protected override void TakeAction(double IntensityPercent)
         {
             double R = IntensityPercent;

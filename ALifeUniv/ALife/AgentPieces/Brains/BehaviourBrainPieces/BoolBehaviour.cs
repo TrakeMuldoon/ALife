@@ -60,7 +60,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
             }
             if (compareResult)
             {
-                SuccessAction.AttemptEnact(SuccessParam());
+                SuccessAction.Intensity += SuccessParam();
             }
         }
     }

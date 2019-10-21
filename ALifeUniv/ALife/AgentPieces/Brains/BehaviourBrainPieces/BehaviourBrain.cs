@@ -32,8 +32,14 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
 
         public void ExecuteTurn()
         {
-            //TODO: Holy Crap this is bad
-            throw new NotImplementedException();
+            foreach(Behaviour beh in behaviours)
+            {
+                beh.EvaluateBehaviour();
+            }
+            foreach(Action act in parent.Actions.Values)
+            {
+                act.AttemptEnact();
+            }
         }
     }
 }

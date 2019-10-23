@@ -1,0 +1,10 @@
+@import "__pi";
+
+@function rad($angle) {
+	$unit: unit($angle);
+	$unitless: $angle / ($angle * 0 + 1);
+	@if $unit == deg {
+		$unitless: $unitless / 180 * pi();
+	}
+	@return $unitless;
+}

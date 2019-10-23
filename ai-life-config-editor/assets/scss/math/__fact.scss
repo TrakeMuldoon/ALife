@@ -1,0 +1,9 @@
+@function fact($number) {
+	$value: 1;
+	@if $number > 1 {
+		@for $i from 1 through $number {
+			$value: $value * $i;
+		}
+	}
+	@return $value;
+}

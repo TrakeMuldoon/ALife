@@ -1,0 +1,9 @@
+@mixin after($block: inline-block) {
+	position: relative;
+
+	&::after {
+		display: $block;
+		content: '';
+		@content;
+	}
+}

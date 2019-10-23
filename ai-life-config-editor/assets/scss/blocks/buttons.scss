@@ -1,0 +1,22 @@
+$btnColours: (red: firebrick, blue: blue);
+
+%button {
+  display: inline-block;
+  border-radius: 4px;
+  text-decoration: none;
+  padding: 10px 30px;
+}
+
+@each $col, $hex in $btnColours {
+  .button--#{$col} {
+    @extend %button;
+
+    border: 1px solid $hex;
+    color: $hex;
+
+    &:hover {
+      color: white; // TODO: check HSL to det. if white or black ought be used;
+      background-color: $hex;
+    }
+  }
+}

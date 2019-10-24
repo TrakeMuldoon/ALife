@@ -4,32 +4,43 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
 {
-    public abstract class Behaviour
+    public class Behaviour
     {
-        public String AsEnglish;
-
+        public readonly String AsEnglish;
         public readonly List<BehaviourCondition> Conditions = new List<BehaviourCondition>();
         public readonly Action SuccessAction;
         public readonly Func<double> SuccessParam;
 
-        protected Behaviour(Action thenDoThis, Func<double> resultParam)
+        //protected Behaviour(Action thenDoThis, Func<double> resultParam)
+        //{
+        //    SuccessAction = thenDoThis;
+        //    SuccessParam = resultParam;
+        //}
+        protected Behaviour(String englishString)
         {
-            SuccessAction = thenDoThis;
-            SuccessParam = resultParam;
-
-            BehaviourCondition<bool> bc = new BehaviourCondition<bool>();
-            //bc.inputTarget = new EyeInput();
-            //bc.comparator = (x, y) =>  x == y;
-            //bc.compareTo = true;
-
-
+            AsEnglish = englishString;
+            Regex englishStringParser =
+                new Regex("If ([^\\s]+)( and( [^\\s]+))* then( Wait\\(\\d+\\) to )?( [^\\s]+) with intensity( [^\\s]+)\\.");
         }
 
         //will be run once a "turn"
-        public abstract void EvaluateBehaviour();
+        public void EvaluateBehaviour()
+        {
+            foreach(BehaviourCondition bc in Conditions)
+            {
+                if(!bc.EvaluateSuccess())
+                {
+                    //AND is the only logic, therefore if they fail a condition, this behaviour does not evaluate
+                    return;
+                }
+            }
+
+            SuccessAction.Intensity += SuccessParam();
+        }
     }
 }

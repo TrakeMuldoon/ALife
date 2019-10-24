@@ -1,6 +1,7 @@
 ﻿using ALifeUni.ALife.AgentPieces.Brains;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
 {
@@ -16,18 +17,18 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
 
         private List<Behaviour> behaviours = new List<Behaviour>();
         private Agent parent;
-
+        private double prop = 1.0;
 
         public BehaviourBrain(Agent parent)
         {
             this.parent = parent;
-            //behaviours = new List<Behaviour>();
-            ////TODO: Config this, for now, it'll be 10
+            //Func<double> blah = this.prop;
 
-            //for(int i = 0; i < 10; i ++)
-            //{
+            Func<double> bleh = () => this.prop;
+            Regex englishStringParser =
+                new Regex("If (([^\\s]+)( and( [^\\s]+))*) then( Wait\\(\\d+\\) to )?( [^\\s]+) with intensity( [^\\s]+)\\.");
 
-            //}
+
         }
 
         public void ExecuteTurn()

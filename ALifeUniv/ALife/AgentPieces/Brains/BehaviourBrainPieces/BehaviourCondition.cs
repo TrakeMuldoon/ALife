@@ -12,7 +12,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
         public Func<T, T, bool> comparator;
         public T compareTo;
 
-        public override bool EvaluateCondition()
+        public override bool EvaluateSuccess()
         {
             return comparator(inputTarget.Value, compareTo);
         }
@@ -20,6 +20,6 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
 
     public abstract class BehaviourCondition
     {
-        public abstract bool EvaluateCondition(); 
+        public abstract bool EvaluateSuccess(); 
     }
 }

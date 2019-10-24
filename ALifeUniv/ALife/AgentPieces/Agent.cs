@@ -20,6 +20,7 @@ namespace ALifeUni.ALife
         protected IBrain myBrain;
 
         public readonly List<SenseCluster> Senses;
+        //public readonly ReadOnlyDictionary<String, Property> Properties;
         public readonly ReadOnlyDictionary<String, Action> Actions;
 
         public override Angle Orientation
@@ -43,7 +44,8 @@ namespace ALifeUni.ALife
             //Properties = GenerateAgentProperties();
             Actions = GenerateActions();
 
-            myBrain = new RandomBrain(this);
+            //myBrain = new RandomBrain(this);
+            myBrain = new BehaviourBrain(this);
         }
 
         private ReadOnlyDictionary<string, Action> GenerateActions()

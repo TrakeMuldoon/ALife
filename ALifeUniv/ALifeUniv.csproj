@@ -137,10 +137,10 @@
     <Compile Include="ALife\Collision\ICollisionMap.cs" />
     <Compile Include="ALife\Collision\CollisionDetector.cs" />
     <Compile Include="ALife\Inputs\Input.cs" />
-    <Compile Include="ALife\Inputs\PropertyInput.cs" />
-    <Compile Include="ALife\Inputs\SenseCluster.cs" />
+    <Compile Include="ALife\Inputs\Property\PropertyInput.cs" />
+    <Compile Include="ALife\Inputs\Senses\SenseCluster.cs" />
     <Compile Include="ALife\Inputs\Senses\Eyes\EyeCluster.cs" />
-    <Compile Include="ALife\Inputs\SenseInput.cs" />
+    <Compile Include="ALife\Inputs\Senses\SenseInput.cs" />
     <Compile Include="ALife\Inputs\Senses\Eyes\EyeInput.cs" />
     <Compile Include="ALife\UtilityClasses\Angle.cs" />
     <Compile Include="ALife\UtilityClasses\BoundingBox.cs" />

@@ -116,10 +116,10 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ALife\Actions\Action.cs" />
-    <Compile Include="ALife\Actions\ColorAction.cs" />
-    <Compile Include="ALife\Actions\MoveAction.cs" />
-    <Compile Include="ALife\Actions\RotateAction.cs" />
+    <Compile Include="ALife\AgentPieces\Actions\Action.cs" />
+    <Compile Include="ALife\AgentPieces\Actions\ColorAction.cs" />
+    <Compile Include="ALife\AgentPieces\Actions\MoveAction.cs" />
+    <Compile Include="ALife\AgentPieces\Actions\RotateAction.cs" />
     <Compile Include="ALife\AgentPieces\Agent.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourCondition.cs" />
     <Compile Include="ALife\AgentPieces\Brains\IBrain.cs" />
@@ -129,30 +129,30 @@
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\Archive\DoubleBehaviour.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\Archive\OperationEnums.cs" />
     <Compile Include="ALife\AgentPieces\Brains\RandomBrains\RandomBrain.cs" />
-    <Compile Include="ALife\AgentPieces\WorldObject.cs" />
-    <Compile Include="ALife\UtilityClasses\Shapes\Rectangle.cs" />
+    <Compile Include="ALife\WorldObject.cs" />
+    <Compile Include="ALife\Physics\Shapes\Rectangle.cs" />
     <Compile Include="UI\DrawingLogic.cs" />
     <None Include="ALife\Collision\CollisionQuadTree.cs" />
     <Compile Include="ALife\Collision\CollisionGrid.cs" />
     <Compile Include="ALife\Collision\ICollisionMap.cs" />
     <Compile Include="ALife\Collision\CollisionDetector.cs" />
-    <Compile Include="ALife\Inputs\Input.cs" />
-    <Compile Include="ALife\Inputs\Property\PropertyInput.cs" />
-    <Compile Include="ALife\Inputs\Senses\SenseCluster.cs" />
-    <Compile Include="ALife\Inputs\Senses\Eyes\EyeCluster.cs" />
-    <Compile Include="ALife\Inputs\Senses\SenseInput.cs" />
-    <Compile Include="ALife\Inputs\Senses\Eyes\EyeInput.cs" />
-    <Compile Include="ALife\UtilityClasses\Angle.cs" />
-    <Compile Include="ALife\UtilityClasses\BoundingBox.cs" />
+    <Compile Include="ALife\AgentPieces\Input.cs" />
+    <Compile Include="ALife\AgentPieces\Property\PropertyInput.cs" />
+    <Compile Include="ALife\AgentPieces\Senses\SenseCluster.cs" />
+    <Compile Include="ALife\AgentPieces\Senses\Eyes\EyeCluster.cs" />
+    <Compile Include="ALife\AgentPieces\Senses\SenseInput.cs" />
+    <Compile Include="ALife\AgentPieces\Senses\Eyes\EyeInput.cs" />
+    <Compile Include="ALife\Physics\Angle.cs" />
+    <Compile Include="ALife\Physics\BoundingBox.cs" />
     <Compile Include="ALife\ReferenceValues.cs" />
     <Compile Include="ALife\Planet.cs" />
     <Compile Include="ALife\Rulesets\Settings.cs" />
-    <Compile Include="ALife\UtilityClasses\Shapes\Circle.cs" />
-    <Compile Include="ALife\UtilityClasses\Shapes\EnumShapes.cs" />
-    <Compile Include="ALife\UtilityClasses\ExtraMath.cs" />
-    <Compile Include="ALife\UtilityClasses\Shapes\IHasShape.cs" />
-    <Compile Include="ALife\UtilityClasses\Shapes\IShape.cs" />
-    <Compile Include="ALife\UtilityClasses\Shapes\Sector.cs" />
+    <Compile Include="ALife\Physics\Shapes\Circle.cs" />
+    <Compile Include="ALife\Physics\Shapes\EnumShapes.cs" />
+    <Compile Include="ALife\Physics\ExtraMath.cs" />
+    <Compile Include="ALife\Physics\Shapes\IHasShape.cs" />
+    <Compile Include="ALife\Physics\Shapes\IShape.cs" />
+    <Compile Include="ALife\Physics\Shapes\Sector.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>

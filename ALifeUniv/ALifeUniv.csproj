@@ -122,6 +122,8 @@
     <Compile Include="ALife\AgentPieces\Actions\RotateAction.cs" />
     <Compile Include="ALife\AgentPieces\Agent.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourCondition.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourInput.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourInputCabinet.cs" />
     <Compile Include="ALife\AgentPieces\Brains\IBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\Behaviour.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\Archive\BoolBehaviour.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\Archive\DoubleBehaviour.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\Archive\OperationEnums.cs" />
     <Compile Include="ALife\AgentPieces\Brains\RandomBrains\RandomBrain.cs" />
+    <Compile Include="ALife\AgentPieces\Senses\Eyes\RedInput.cs" />
     <Compile Include="ALife\WorldObject.cs" />
     <Compile Include="ALife\Physics\Shapes\Rectangle.cs" />
     <Compile Include="UI\DrawingLogic.cs" />

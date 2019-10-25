@@ -65,7 +65,7 @@ namespace ALifeUni.ALife.UtilityClasses
             }
             set
             {
-
+                throw new Exception("There should be no setting of ChildSector Centrepoints");
             }
         }
 
@@ -209,13 +209,9 @@ namespace ALifeUni.ALife.UtilityClasses
             return sectorBB;
         }
 
-        public ShapesEnum GetShape()
+        public ShapesEnum GetShapeEnum()
         {
             return ShapesEnum.Sector;
         }
-        //public Type GetShapeType()
-        //{
-        //    return typeof(Sector);
-        //}
     }
 }

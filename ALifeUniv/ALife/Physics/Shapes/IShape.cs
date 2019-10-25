@@ -29,7 +29,7 @@ namespace ALifeUni.ALife.UtilityClasses
             get;
             set;
         }
-        ShapesEnum GetShape();
+        ShapesEnum GetShapeEnum();
 
         void Reset();
     }

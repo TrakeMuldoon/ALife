@@ -57,14 +57,9 @@ namespace ALifeUni.ALife.UtilityClasses
             //Reset does nothing for Circles, because the bounding box is so easy to calculate
         }
 
-        public ShapesEnum GetShape()
+        public ShapesEnum GetShapeEnum()
         {
             return ShapesEnum.Circle;
         }
-
-        //public Type GetShapeType()
-        //{
-        //    return typeof(Circle);
-        //}
     }
 }

@@ -8,7 +8,7 @@ namespace ALifeUni.ALife
     {
         public static List<WorldObject> FineGrainedCollisionDetection(List<WorldObject> toCollide, IShape me)
         {
-            switch (me.GetShape())
+            switch (me.GetShapeEnum())
             {
                 case ShapesEnum.Circle: return FineGrainedCollisionDetection(toCollide, (Circle)me);
                 case ShapesEnum.Sector: return FineGrainedCollisionDetection(toCollide, (Sector)me);

@@ -9,9 +9,13 @@ namespace ALifeUni.ALife.Inputs.SenseClusters
 {
     public class EyeInput : SenseInput<bool>
     {
+        public EyeInput(string name) : base(name)
+        {
+        }
+
         public override void SetValue(List<WorldObject> collisions)
         {
-            throw new NotImplementedException();
+            Value = collisions.Count > 0;
         }
     }
 }

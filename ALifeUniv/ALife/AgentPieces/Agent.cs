@@ -20,7 +20,6 @@ namespace ALifeUni.ALife
         protected IBrain myBrain;
 
         public readonly List<SenseCluster> Senses;
-        //public readonly ReadOnlyDictionary<String, Property> Properties;
         public readonly ReadOnlyDictionary<String, Action> Actions;
 
         public override Angle Orientation
@@ -69,7 +68,7 @@ namespace ALifeUni.ALife
         private List<SenseCluster> GenerateSenses()
         {
             List<SenseCluster> mySenses = new List<SenseCluster>();
-            mySenses.Add(new EyeCluster(this));
+            mySenses.Add(new EyeCluster(this, "EyeCluster1"));
             return mySenses;
         }
 

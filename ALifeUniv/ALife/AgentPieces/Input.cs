@@ -8,12 +8,18 @@ namespace ALifeUni.ALife
 {
     public abstract class Input
     {
+        public readonly String Name;
+
+        public Input(String name)
+        {
+            Name = name;
+        }
+
         public abstract Type GetContainedType();
     }
 
     public abstract class Input<T> : Input
-    {
-
+    { 
         private T myValue;
         public T Value
         {
@@ -47,6 +53,10 @@ namespace ALifeUni.ALife
             }
         }
 
+        public Input(string name) : base(name)
+        {
+        }
+
         public void Reset()
         {
             modified = false;
@@ -56,7 +66,5 @@ namespace ALifeUni.ALife
         {
             return typeof(T);
         }
-
-        public string Name;
     }
 }

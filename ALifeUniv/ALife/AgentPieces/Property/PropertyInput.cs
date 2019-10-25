@@ -11,6 +11,10 @@ namespace ALifeUni.ALife
         public double PropertyMaximum;
         public double PropertyMinimum;
 
+        public PropertyInput(string name) : base(name)
+        {
+        }
+
         public void IncreasePropertyBy(double value)
         {
             if(value < 0)

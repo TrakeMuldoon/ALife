@@ -13,13 +13,15 @@ namespace ALifeUni.ALife
 
     public abstract class SenseCluster : IHasShape
     {
-        readonly List<SenseInput> SubInputs = new List<SenseInput>();
+        public readonly string Name;
+        public readonly List<SenseInput> SubInputs = new List<SenseInput>();
         readonly string CollisionLevel = ReferenceValues.CollisionLevelPhysical;
         readonly Agent parent;
 
-        public SenseCluster(Agent parent)
+        public SenseCluster(Agent parent, String name)
         {
             this.parent = parent;
+            Name = name;
         }
 
         public virtual void Detect()

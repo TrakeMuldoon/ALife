@@ -8,13 +8,23 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
 {
     public class BehaviourCondition<T> : BehaviourCondition
     {
-        public Func<T> inputTarget;
-        public Func<T, T, bool> comparator;
-        public Func<T> compareTo;
+        public String text;
+        private BehaviourInput origin;
+        private Func<T, T, bool> comparator;
+        private BehaviourInput compareTo;
+
+        public BehaviourCondition(BehaviourInput leftSide, Func<T, T, bool> operation, BehaviourInput rightSide)
+        {
+            origin = leftSide;
+            comparator = operation;
+            compareTo = rightSide;
+        }
 
         public override bool EvaluateSuccess()
         {
-            return comparator(inputTarget(), compareTo());
+            Func<T> ogFunc = ((BehaviourInput<T>)origin).MyFunc;
+            Func<T> ctFunc = ((BehaviourInput<T>)compareTo).MyFunc;
+            return comparator(ogFunc(), ctFunc());
         }
     }
 

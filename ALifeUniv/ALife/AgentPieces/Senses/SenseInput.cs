@@ -9,6 +9,11 @@ namespace ALifeUni.ALife
 {
     public interface SenseInput
     {
+        string Name
+        {
+            get;
+            set;
+        }
         void SetValue(List<WorldObject> collisions);
     }
 
@@ -17,7 +22,7 @@ namespace ALifeUni.ALife
         public SenseInput(string name) : base(name)
         {
         }
-
+        
         public abstract void SetValue(List<WorldObject> collisions);
     }
 }

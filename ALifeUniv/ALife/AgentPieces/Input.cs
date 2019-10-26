@@ -8,7 +8,11 @@ namespace ALifeUni.ALife
 {
     public abstract class Input
     {
-        public readonly String Name;
+        public String Name
+        {
+            get;
+            set;
+        }
 
         public Input(String name)
         {

@@ -123,10 +123,11 @@
     <Compile Include="ALife\AgentPieces\Agent.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourCondition.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourInput.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourInputCabinet.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourCabinet.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourInputFactory.cs" />
     <Compile Include="ALife\AgentPieces\Brains\IBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\Behaviour.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\Archive\BoolBehaviour.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\Archive\oldBoolBehaviour.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\Archive\DoubleBehaviour.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\Archive\OperationEnums.cs" />

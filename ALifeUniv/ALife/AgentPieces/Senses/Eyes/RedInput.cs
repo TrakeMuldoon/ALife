@@ -25,8 +25,8 @@ namespace ALifeUni.ALife.Inputs.SenseClusters
             if(count == 0)
             {
                 throw new Exception("Should not have no collisions");
-                Value = 0;
-                return;
+                //Value = 0;
+                //return;
             }
             double average = redness / count;
             double betweenOneAndZero = average / byte.MaxValue;

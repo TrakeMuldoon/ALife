@@ -19,6 +19,14 @@ namespace ALifeUni.ALife
         
         }
 
+        public override string Name
+        {
+            get
+            {
+                return "Move";
+            }
+        }
+
         protected override bool AttemptSuccessful()
         {
             return true;

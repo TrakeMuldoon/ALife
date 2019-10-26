@@ -7,11 +7,20 @@ using Windows.UI;
 
 namespace ALifeUni.ALife
 {
-    class ColorAction : Action
+    public class ColorAction : Action
     {
         public ColorAction(Agent myself) : base(myself)
         {
         }
+
+        public override string Name
+        {
+            get
+            {
+                return "Color";
+            }
+        }
+        
 
         protected override bool AttemptSuccessful()
         {

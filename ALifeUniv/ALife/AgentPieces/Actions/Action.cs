@@ -14,6 +14,11 @@ namespace ALifeUni.ALife
             self = myself;
         }
 
+        public abstract string Name
+        {
+            get;
+        }
+
         private double intensity;
         public double Intensity
         {

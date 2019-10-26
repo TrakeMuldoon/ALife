@@ -12,7 +12,13 @@ namespace ALifeUni.ALife
         public RotateAction(Agent myself) : base(myself)
         {
         }
-
+        public override string Name
+        {
+            get
+            {
+                return "Rotate";
+            }
+        }
         protected override bool AttemptSuccessful()
         {
             return true;

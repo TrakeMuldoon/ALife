@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,26 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
             bis.Add(new BehaviourInput<double>(act.Name + ".IntensityLastTurn", () => act.IntensityLastTurn));
             bis.Add(new BehaviourInput<bool>(act.Name + ".ActivatedLastTurn", () => act.ActivatedLastTurn));
             return bis;
+        }
+
+        public static BehaviourCondition GetRandomConditionForInputs(BehaviourInput b1, BehaviourInput b2)
+        {
+            switch(b1)
+            {
+                case BehaviourInput<bool> boo1: return BoolConditionFactory.GetRandomBehaviour(b1, b2);
+                case BehaviourInput<double> dob1: return DoubleConditionFactory.GetRandomBehaviour(b1, b2);
+                default: throw new NotImplementedException("unimiplemented condition type: " + b1.GetContainedType());
+            }
+        }
+
+        public static BehaviourCondition GetConditionForInputsByName(BehaviourInput b1, BehaviourInput b2, string name)
+        {
+            switch (b1)
+            {
+                case BehaviourInput<bool> boo1: return BoolConditionFactory.GetConditionByName(b1, b2, name);
+                case BehaviourInput<double> dob1: return DoubleConditionFactory.GetConditionByName(b1, b2, name);
+                default: throw new NotImplementedException("unimiplemented condition type: " + b1.GetContainedType());
+            }
         }
     }
 }

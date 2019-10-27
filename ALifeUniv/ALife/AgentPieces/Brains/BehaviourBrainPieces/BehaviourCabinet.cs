@@ -63,8 +63,25 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
         public BehaviourInput GetRandomBehaviourInput()
         {
             int randomNumber = Planet.World.NumberGen.Next(0, totalInputs);
-            foreach()
-
+            foreach(Type aType in TypeToListBI.Keys)
+            {
+                randomNumber -= TypeToListBI[aType].Count;
+                if (randomNumber < 0)
+                {
+                    randomNumber += TypeToListBI[aType].Count;
+                    return TypeToListBI[aType][randomNumber];
+                }
+            }
+            throw new IndexOutOfRangeException("Some, I was unable to return a random number");
+        }
+        
+        public BehaviourCondition GetRandomConditionForInputs(BehaviourInput b1, BehaviourInput b2)
+        {
+            return BehaviourInputFactory.GetRandomConditionForInputs(b1, b2);
+        }
+        public BehaviourCondition GetConditionForInputsByName(BehaviourInput b1, BehaviourInput b2, String name)
+        {
+            return BehaviourInputFactory.GetConditionForInputsByName(b1, b2, name);
         }
     }
 }

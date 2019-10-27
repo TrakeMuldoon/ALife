@@ -9,11 +9,12 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
     public class BehaviourCondition<T> : BehaviourCondition
     {
         public String text;
+        public bool LastState;
         private BehaviourInput origin;
         private Func<T, T, bool> comparator;
         private BehaviourInput compareTo;
 
-        public BehaviourCondition(BehaviourInput leftSide, Func<T, T, bool> operation, BehaviourInput rightSide)
+        public BehaviourCondition(BehaviourInput leftSide, BehaviourInput rightSide, Func<T, T, bool> operation)
         {
             origin = leftSide;
             comparator = operation;
@@ -22,9 +23,12 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
 
         public override bool EvaluateSuccess()
         {
+            //TODO: potentially create an "initialized" variable. 
+            //Not worth it right now, because it will cost CPU cycles, and would still throw an error.
             Func<T> ogFunc = ((BehaviourInput<T>)origin).MyFunc;
             Func<T> ctFunc = ((BehaviourInput<T>)compareTo).MyFunc;
-            return comparator(ogFunc(), ctFunc());
+            LastState = comparator(ogFunc(), ctFunc());
+            return LastState;
         }
     }
 

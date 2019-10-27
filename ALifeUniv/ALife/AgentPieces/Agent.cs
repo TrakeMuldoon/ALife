@@ -44,7 +44,7 @@ namespace ALifeUni.ALife
             Actions = GenerateActions();
 
             //myBrain = new RandomBrain(this);
-            myBrain = new BehaviourBrain(this);
+            myBrain = new BehaviourBrain(this, null);
         }
 
         private ReadOnlyDictionary<string, Action> GenerateActions()

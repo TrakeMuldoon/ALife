@@ -19,18 +19,18 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
             {
                 foreach(SenseInput si in sc.SubInputs)
                 {
-                    List<BehaviourInput> currInputs = BehaviourInputFactory.BehaviourInputsFromInput((Input)si);
+                    List<BehaviourInput> currInputs = BehaviourFactory.GenerateBehaviourInputsFromInput((Input)si);
                     AddInputsFromInputList(currInputs);
                 }
             }
             foreach(PropertyInput pi in parent.Properties.Values)
             {
-                List<BehaviourInput> currInputs = BehaviourInputFactory.BehaviourInputsFromInput((Input)pi);
+                List<BehaviourInput> currInputs = BehaviourFactory.GenerateBehaviourInputsFromInput((Input)pi);
                 AddInputsFromInputList(currInputs);
             }
             foreach(Action act in parent.Actions.Values)
             {
-                List<BehaviourInput> currInputs = BehaviourInputFactory.BehaviourInputsFromAction(act);
+                List<BehaviourInput> currInputs = BehaviourFactory.GenerateBehaviourInputsFromAction(act);
                 AddInputsFromInputList(currInputs);
             }
             totalInputs = StringToBI.Count;
@@ -77,11 +77,11 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
         
         public BehaviourCondition GetRandomConditionForInputs(BehaviourInput b1, BehaviourInput b2)
         {
-            return BehaviourInputFactory.GetRandomConditionForInputs(b1, b2);
+            return BehaviourFactory.GetRandomConditionForInputs(b1, b2);
         }
         public BehaviourCondition GetConditionForInputsByName(BehaviourInput b1, BehaviourInput b2, String name)
         {
-            return BehaviourInputFactory.GetConditionForInputsByName(b1, b2, name);
+            return BehaviourFactory.GetConditionForInputsByName(b1, b2, name);
         }
     }
 }

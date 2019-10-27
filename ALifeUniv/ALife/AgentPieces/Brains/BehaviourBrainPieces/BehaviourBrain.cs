@@ -1,4 +1,5 @@
 ﻿using ALifeUni.ALife.AgentPieces.Brains;
+using ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -18,17 +19,16 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
         private List<Behaviour> behaviours = new List<Behaviour>();
         private Agent parent;
         private double prop = 1.0;
+        private BehaviourCabinet behaviorCabinet;
 
-        public BehaviourBrain(Agent parent)
+        public BehaviourBrain(Agent parent, string [] behaviourStrings)
         {
+            this.behaviorCabinet = new BehaviourCabinet(parent);
             this.parent = parent;
-            //Func<double> blah = this.prop;
-
-            Func<double> bleh = () => this.prop;
-            Regex englishStringParser =
-                new Regex("If (([^\\s]+)( and( [^\\s]+))*) then( Wait\\(\\d+\\) to )?( [^\\s]+) with intensity( [^\\s]+)\\.");
-
-
+            foreach(string b in behaviourStrings)
+            {
+                behaviours.Add(new Behaviour(b, behaviorCabinet));
+            }
         }
 
         public void ExecuteTurn()

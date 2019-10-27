@@ -124,7 +124,7 @@
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourCondition.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourInput.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourCabinet.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\TypedClasses\BehaviourInputFactory.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\TypedClasses\BehaviourFactory.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\TypedClasses\StringConditionFactory.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\TypedClasses\DoubleConditionFactory.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\TypedClasses\BoolConditionFactory.cs" />

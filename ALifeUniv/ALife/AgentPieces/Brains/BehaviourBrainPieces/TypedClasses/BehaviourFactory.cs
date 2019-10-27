@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
 {
-    public static class BehaviourInputFactory
+    public static class BehaviourFactory
     {
-        public static List<BehaviourInput> BehaviourInputsFromInput(Input myInput)
+        public static List<BehaviourInput> GenerateBehaviourInputsFromInput(Input myInput)
         {
             List<BehaviourInput> bis = new List<BehaviourInput>();
             switch(myInput)
@@ -29,7 +29,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
             return bis;
         }
 
-        public static List<BehaviourInput> BehaviourInputsFromAction(Action act)
+        public static List<BehaviourInput> GenerateBehaviourInputsFromAction(Action act)
         {
             List<BehaviourInput> bis = new List<BehaviourInput>();
             bis.Add(new BehaviourInput<double>(act.Name + ".IntensityLastTurn", () => act.IntensityLastTurn));

@@ -12,19 +12,21 @@ If EarCluster1.Volume LessThan EarCluster2.Volume						Then	Rotate(-0.55) 		//If
 If EyeballCluster1.SeesSomething equals True and EyeballCluster1.Red GreaterThan 0.5		Then 	Bite(0.5)		// If you see something, and that thing is red, omnomnom
 
 The spec is like this
+"IF <CONDITION> THEN <POSITIVERESULT>"
+Condition is defined as 
+"<VARIABLE> <OPERATION> <[CONSTANT]|VARIABLE>( AND <CONDTIION>)?"
+So we can have many conditions chained with the "AND" keyword.
 
-“If [A](someVariable) [B](someOperator) [C](someVariable||someConstant) [D](AND [A][B][C]) then [E](SomeAction) with Intensity [F]”
+PositiveResult is defined as 
+"( WAIT [CONSTANT] TO)? <ACTION> INTENSITY <[CONSTANT]|VARIABLE>"
 
 Where 
-[A] represents some dynamic value associated with the agent who owns the brain
-	[A] Could be a Double, Int, String, or Bool
-[B] is some Operation (GreaterThan, LessThan, Contains, Equals, etc.) that applies to the Type of [A]
-[C] is either some Constant of the same type as [A] or another variable on the Agent which is the same type as [A]
+Variable:  represents some dynamic value associated with the agent who owns the brain
+	Could be a Double, Int, String, or Bool
+Operation is some Operation (GreaterThan, LessThan, Contains, Equals, etc.) that applies to the Type of Variable
 
-[D] simply means that you can optionally chain many of these “Conditionals”
-
-[E] refers to one of the actions that can be taken by the agent
-[F] is either a constant, or a variable on the agent, but it MUST be a double.
+Action refers to one of the actions that can be taken by the agent
+The final Variable must be of type double, because that is all that agents can output right now
 
 The theory is that having a set of these behaviours will create an agent who can make meaningful decisions and have interesting emergent behavior
 Another large advantages is that it will be very easy to manually create agents that behave a certain way, as opposed to Neural Nets, which are very difficult to custom define.

@@ -9,7 +9,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
     public enum StringOperationEnum
     {
         EqualTo,
-        NoEqualTo,
+        NotEqualTo,
         Contains,
         DoesNotContain,
         StartsWith,
@@ -36,7 +36,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
             switch (val)
             {
                 case StringOperationEnum.EqualTo:           return new BehaviourCondition<string>(b1, b2, (x, y) => x == y);
-                case StringOperationEnum.NoEqualTo:         return new BehaviourCondition<string>(b1, b2, (x, y) => x != y);
+                case StringOperationEnum.NotEqualTo:        return new BehaviourCondition<string>(b1, b2, (x, y) => x != y);
                 case StringOperationEnum.Contains:          return new BehaviourCondition<string>(b1, b2, (x, y) => x.Contains(y));
                 case StringOperationEnum.DoesNotContain:    return new BehaviourCondition<string>(b1, b2, (x, y) => !x.Contains(y));
                 case StringOperationEnum.StartsWith:        return new BehaviourCondition<string>(b1, b2, (x, y) => x.StartsWith(y));

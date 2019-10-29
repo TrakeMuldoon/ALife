@@ -56,5 +56,26 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
                 default: throw new NotImplementedException("unimiplemented condition type: " + b1.GetContainedType());
             }
         }
+
+        internal static BehaviourInput GetBehaviourConstantFromString(BehaviourInput b1, string untrimmedConstant)
+        {
+            string con = untrimmedConstant.Trim('[', ']');
+            switch (b1)
+            {
+                case BehaviourInput<bool> boo1:
+                    bool bval = bool.Parse(con);
+                    return new BehaviourInput<bool>(untrimmedConstant, () => bval);
+                case BehaviourInput<double> dob1:
+                    double dval = double.Parse(con);
+                    return new BehaviourInput<double>(untrimmedConstant, () => dval);
+                case BehaviourInput<string> str1:
+                    string sval = untrimmedConstant;
+                    return new BehaviourInput<string>(untrimmedConstant, () => sval);
+                case BehaviourInput<int> int1:
+                    int ival = int.Parse(untrimmedConstant);
+                    return new BehaviourInput<int>(untrimmedConstant, () => ival);
+                default: throw new NotImplementedException("unimiplemented condition type: " + b1.GetContainedType());
+            }
+        }
     }
 }

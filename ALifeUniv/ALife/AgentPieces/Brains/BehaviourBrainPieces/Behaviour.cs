@@ -13,8 +13,8 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
     {
         public readonly String AsEnglish;
         public readonly List<BehaviourCondition> Conditions = new List<BehaviourCondition>();
-        public readonly Action SuccessAction;
-        public readonly Func<double> SuccessParam;
+        //public readonly Action SuccessAction;
+        //public readonly Func<double> SuccessParam;
 
         //protected Behaviour(Action thenDoThis, Func<double> resultParam)
         //{
@@ -24,9 +24,15 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
         public Behaviour(String englishString, BehaviourCabinet cabinet)
         {
             AsEnglish = englishString;
-            //Regex englishStringParser =
-            //    new Regex("If ([^\\s]+)( and( [^\\s]+))* then( Wait\\(\\d+\\) to )?( [^\\s]+) with intensity( [^\\s]+)\\.");
-            Regex englishStringParser = new Regex("^IF (.*) THEN (.*)\\.");
+            //Spec: <BEHAVIOUR> = "IF <CONDITION> THEN <RESULT>"
+            //Spec: <CONDITON> = "<VARIABLE> <OPERATION> <CONSTANT|VARIABLE>( AND <CONDITON>)?"     -- Conditions can be chained together
+            //Spec: <VARIABLE> = "\\w+(\\.\\w+)+"                                                   -- Some property of the Agent which evaluates to a value
+            //Spec: <OPERATION> = "\\w+"                                                            -- Some comparator which is valid to compare to values of the correct type
+            //Spec: <CONSTANT> = "\\[\\w+\\]"                                                       -- Some constant of the type of the variable mentioned
+            //Spec: <RESULT> = "( <WAIT>)? <ACTION> INTENSITY <CONSTANT|VARIABLE>"                  -- Waiting is optional
+            //Spec: <WAIT> = "WAIT <CONSTANT>"                                                      -- Indicates the number of turns to wait
+            //Spec: <ACTION> = "\\w+(\\.\\w+)"                                                      -- Some action of the Agent
+            Regex englishStringParser = new Regex("^IF (.*) THEN (.*)\\.$");
             Match behaviourMatch = englishStringParser.Match(englishString);
             ParseConditions(behaviourMatch.Groups[1].Value, cabinet);
             //ParseResults(behaviourMatch.Groups[2].Value, cabinet);
@@ -49,7 +55,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
                 throw new Exception("Wtf number of pieces of a behaviour condition");
             }
             BehaviourInput b1 = cabinet.GetBehaviourInputByName(pieces[0]);
-            BehaviourInput b2 = cabinet.GetBehaviourInputByName(pieces[2]);
+            BehaviourInput b2 = pieces[2].StartsWith("[") ? BehaviourFactory.GetBehaviourConstantFromString(b1, pieces[2]) :  cabinet.GetBehaviourInputByName(pieces[2]);
             BehaviourCondition bc = BehaviourFactory.GetConditionForInputsByName(b1, b2, pieces[1]);
             return bc;
         }

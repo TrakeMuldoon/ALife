@@ -15,7 +15,7 @@ namespace ALifeUni.ALife
         public EyeCluster(Agent parent, String name) : base(parent, name)
         {
             myShape = new ChildSector(new Angle(0), new Angle(0), parent);
-            SubInputs.Add(new EyeInput(name + ".Eye"));
+            SubInputs.Add(new EyeInput(name + ".SeeSomething"));
             SubInputs.Add(new ColorBoolInput(name + ".IsRed", (WorldObject wo) => wo.Color.R));
             SubInputs.Add(new ColorBoolInput(name + ".IsBlue", (WorldObject wo) => wo.Color.B));
             SubInputs.Add(new ColorBoolInput(name + ".IsGreen", (WorldObject wo) => wo.Color.G));

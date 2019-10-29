@@ -21,7 +21,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
         private double prop = 1.0;
         private BehaviourCabinet behaviorCabinet;
 
-        public BehaviourBrain(Agent parent, string [] behaviourStrings)
+        public BehaviourBrain(Agent parent, params string [] behaviourStrings)
         {
             this.behaviorCabinet = new BehaviourCabinet(parent);
             this.parent = parent;
@@ -31,11 +31,17 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
             }
         }
 
+        BehaviourWaitQueue bwq = new BehaviourWaitQueue();
+
         public void ExecuteTurn()
         {
             foreach(Behaviour beh in behaviours)
             {
                 beh.EvaluateBehaviour();
+            }
+            foreach(System.Action actionWithIntensity in bwq.ExecuteTurn())
+            {
+                actionWithIntensity();
             }
             foreach(Action act in parent.Actions.Values)
             {

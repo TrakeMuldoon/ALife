@@ -15,12 +15,9 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
         public readonly List<BehaviourCondition> Conditions = new List<BehaviourCondition>();
         //public readonly Action SuccessAction;
         //public readonly Func<double> SuccessParam;
+        Regex englishStringParser = new Regex("^IF (.*) THEN (.*)$");
+        Regex resultParser = new Regex("^(WAIT (\\w+) )?(\\w+) INTENSITY (\\w+)$");
 
-        //protected Behaviour(Action thenDoThis, Func<double> resultParam)
-        //{
-        //    SuccessAction = thenDoThis;
-        //    SuccessParam = resultParam;
-        //}
         public Behaviour(String englishString, BehaviourCabinet cabinet)
         {
             AsEnglish = englishString;
@@ -32,10 +29,17 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
             //Spec: <RESULT> = "( <WAIT>)? <ACTION> INTENSITY <CONSTANT|VARIABLE>"                  -- Waiting is optional
             //Spec: <WAIT> = "WAIT <CONSTANT>"                                                      -- Indicates the number of turns to wait
             //Spec: <ACTION> = "\\w+(\\.\\w+)"                                                      -- Some action of the Agent
-            Regex englishStringParser = new Regex("^IF (.*) THEN (.*)\\.$");
             Match behaviourMatch = englishStringParser.Match(englishString);
             ParseConditions(behaviourMatch.Groups[1].Value, cabinet);
-            //ParseResults(behaviourMatch.Groups[2].Value, cabinet);
+            ParseResults(behaviourMatch.Groups[2].Value, cabinet);
+        }
+
+        private void ParseResults(string value, BehaviourCabinet cabinet)
+        {
+            Match resultsMatch = resultParser.Match(value);
+            string waitMatch = resultsMatch.Groups[2].Value;
+            string actionMatch = resultsMatch.Groups[3].Value;
+            string variableValue = resultsMatch.Groups[4].Value;
         }
 
         private void ParseConditions(String conditionsString, BehaviourCabinet cabinet)
@@ -55,7 +59,11 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
                 throw new Exception("Wtf number of pieces of a behaviour condition");
             }
             BehaviourInput b1 = cabinet.GetBehaviourInputByName(pieces[0]);
+
+            //Check if b2 starts with "[" which means a constant, then it sends it to the constant factory
+            //otherwise it gets the behaviour input from the Cabinet
             BehaviourInput b2 = pieces[2].StartsWith("[") ? BehaviourFactory.GetBehaviourConstantFromString(b1, pieces[2]) :  cabinet.GetBehaviourInputByName(pieces[2]);
+
             BehaviourCondition bc = BehaviourFactory.GetConditionForInputsByName(b1, b2, pieces[1]);
             return bc;
         }

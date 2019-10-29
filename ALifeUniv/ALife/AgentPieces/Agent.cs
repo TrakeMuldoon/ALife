@@ -44,7 +44,10 @@ namespace ALifeUni.ALife
             Actions = GenerateActions();
 
             //myBrain = new RandomBrain(this);
-            myBrain = new BehaviourBrain(this, null);
+            
+            myBrain = new BehaviourBrain(this,
+                "IF EyeCluster1.SeeSomething.Value Equals EyeCluster1.IsRed.Value AND EyeCluster1.HowRed.Value GreaterThan [0.1] THEN WAIT [3] TO Move [0.8]",
+                "IF EyeCluster1.HowGreen.Value LessThan [0.8] THEN Color EyeCluster1.HowGreen.Value");
         }
 
         private ReadOnlyDictionary<string, Action> GenerateActions()

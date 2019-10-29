@@ -16,7 +16,12 @@ namespace ALifeUni.ALife
         {
             myShape = new ChildSector(new Angle(0), new Angle(0), parent);
             SubInputs.Add(new EyeInput(name + ".Eye"));
-            SubInputs.Add(new RedInput(name + ".Red"));
+            SubInputs.Add(new ColorBoolInput(name + ".IsRed", (WorldObject wo) => wo.Color.R));
+            SubInputs.Add(new ColorBoolInput(name + ".IsBlue", (WorldObject wo) => wo.Color.B));
+            SubInputs.Add(new ColorBoolInput(name + ".IsGreen", (WorldObject wo) => wo.Color.G));
+            SubInputs.Add(new ColorInput(name + ".HowRed", (WorldObject wo) => wo.Color.R));
+            SubInputs.Add(new ColorInput(name + ".HowBlue", (WorldObject wo) => wo.Color.B));
+            SubInputs.Add(new ColorInput(name + ".HowGreen", (WorldObject wo) => wo.Color.G));
         }
 
         public override IShape GetShape()

@@ -12,9 +12,11 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
         Dictionary<String, BehaviourInput> StringToBI = new Dictionary<string, BehaviourInput>();
         Dictionary<Type, List<BehaviourInput>> TypeToListBI = new Dictionary<Type, List<BehaviourInput>>();
         int totalInputs = 0;
+        Agent myParent;
 
         public BehaviourCabinet(Agent parent)
         {
+            myParent = parent;
             foreach(SenseCluster sc in parent.Senses)
             {
                 foreach(SenseInput si in sc.SubInputs)
@@ -82,6 +84,11 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
         public BehaviourCondition GetConditionForInputsByName(BehaviourInput b1, BehaviourInput b2, String name)
         {
             return BehaviourFactory.GetConditionForInputsByName(b1, b2, name);
+        }
+
+        public Action GetActionByName(string name)
+        {
+            return myParent.Actions[name];
         }
     }
 }

@@ -8,7 +8,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
 {
     public enum BoolOperationEnum
     {
-        EqualTo,
+        Equals,
         NotEqualTo,
         AND,
         OR,
@@ -37,7 +37,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
         {
             switch (val)
             {
-                case BoolOperationEnum.EqualTo:     return new BehaviourCondition<bool>(b1, b2, (x, y) => x == y);
+                case BoolOperationEnum.Equals:      return new BehaviourCondition<bool>(b1, b2, (x, y) => x == y);
                 case BoolOperationEnum.NotEqualTo:  return new BehaviourCondition<bool>(b1, b2, (x, y) => x != y);
                 case BoolOperationEnum.AND:         return new BehaviourCondition<bool>(b1, b2, (x, y) => x && y);
                 case BoolOperationEnum.OR:          return new BehaviourCondition<bool>(b1, b2, (x, y) => x || y);

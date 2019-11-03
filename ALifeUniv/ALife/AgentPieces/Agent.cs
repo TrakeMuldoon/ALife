@@ -46,8 +46,8 @@ namespace ALifeUni.ALife
             //myBrain = new RandomBrain(this);
             
             myBrain = new BehaviourBrain(this,
-                "IF EyeCluster1.SeeSomething.Value Equals EyeCluster1.IsRed.Value AND EyeCluster1.HowRed.Value GreaterThan [0.1] THEN WAIT [3] TO Move [0.8]",
-                "IF EyeCluster1.HowGreen.Value LessThan [0.8] THEN Color EyeCluster1.HowGreen.Value");
+                "IF EyeCluster1.SeeSomething.Value Equals EyeCluster1.IsRed.Value AND EyeCluster1.HowRed.Value GreaterThan [0.1] THEN WAIT [3] TO Move AT [0.8]",
+                "IF EyeCluster1.HowGreen.Value LessThan [0.8] THEN Color AT EyeCluster1.HowGreen.Value");
         }
 
         private ReadOnlyDictionary<string, Action> GenerateActions()
@@ -55,9 +55,14 @@ namespace ALifeUni.ALife
             //TODO: Link this somehow to world-settings
             //TODO: This probably doesn't need to be a dictionary
             Dictionary<string, Action> myActions = new Dictionary<string, Action>();
-            myActions.Add("Color", new ColorAction(this));
-            myActions.Add("Move", new MoveAction(this));
-            myActions.Add("Rotate", new RotateAction(this));
+            List<Action> actionList = new List<Action>()
+            {
+                new ColorAction(this),
+                new MoveAction(this),
+                new RotateAction(this)
+            };
+
+            actionList.ForEach((ac) => myActions.Add(ac.Name, ac));
 
             return new ReadOnlyDictionary<string, Action>(myActions);
         }

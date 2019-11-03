@@ -37,7 +37,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
         {
             foreach(Behaviour beh in behaviours)
             {
-                beh.EvaluateBehaviour();
+                beh.EvaluateBehaviour(bwq);
             }
             foreach(System.Action actionWithIntensity in bwq.ExecuteTurn())
             {

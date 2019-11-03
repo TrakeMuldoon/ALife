@@ -13,10 +13,10 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
     {
         public readonly String AsEnglish;
         public readonly List<BehaviourCondition> Conditions = new List<BehaviourCondition>();
-        //public readonly Action SuccessAction;
-        //public readonly Func<double> SuccessParam;
+        public Action SuccessAction;
+        public Func<double> SuccessParam;
+        private int waitTurns = 0;
         Regex englishStringParser = new Regex("^IF (.*) THEN (.*)$");
-        Regex resultParser = new Regex("^(WAIT (\\w+) )?(\\w+) INTENSITY (\\w+)$");
 
         public Behaviour(String englishString, BehaviourCabinet cabinet)
         {
@@ -32,14 +32,6 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
             Match behaviourMatch = englishStringParser.Match(englishString);
             ParseConditions(behaviourMatch.Groups[1].Value, cabinet);
             ParseResults(behaviourMatch.Groups[2].Value, cabinet);
-        }
-
-        private void ParseResults(string value, BehaviourCabinet cabinet)
-        {
-            Match resultsMatch = resultParser.Match(value);
-            string waitMatch = resultsMatch.Groups[2].Value;
-            string actionMatch = resultsMatch.Groups[3].Value;
-            string variableValue = resultsMatch.Groups[4].Value;
         }
 
         private void ParseConditions(String conditionsString, BehaviourCabinet cabinet)
@@ -68,8 +60,33 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
             return bc;
         }
 
+        Regex resultParser = new Regex("^(WAIT \\[(\\d+)\\] TO )?(\\w+) (\\w+)$");
+        private void ParseResults(string value, BehaviourCabinet cabinet)
+        {
+            Match resultsMatch = resultParser.Match(value);
+            string waitMatch = resultsMatch.Groups[2].Value;
+            string actionMatch = resultsMatch.Groups[3].Value;
+            string variableValue = resultsMatch.Groups[4].Value;
+
+            if(resultsMatch.Groups[1].Success)
+            {
+                waitTurns = int.Parse(waitMatch);
+            }
+            //else waitTurns remains zero. the default value.
+            SuccessAction = cabinet.GetActionByName(actionMatch);
+
+            BehaviourInput dummydouble = new BehaviourInput<double>(null, null);
+            
+            //Check if b2 starts with "[" which means a constant, then it sends it to the constant factory
+            //otherwise it gets the behaviour input from the Cabinet
+            BehaviourInput intensity = variableValue.StartsWith("[") ? BehaviourFactory.GetBehaviourConstantFromString(dummydouble, variableValue) : cabinet.GetBehaviourInputByName(variableValue);
+
+            SuccessParam = ((BehaviourInput<double>)intensity).MyFunc;
+        }
+
+
         //will be run once a "turn"
-        public void EvaluateBehaviour()
+        public void EvaluateBehaviour(BehaviourWaitQueue bwq)
         {
             foreach(BehaviourCondition bc in Conditions)
             {
@@ -80,7 +97,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
                 }
             }
 
-            SuccessAction.Intensity += SuccessParam();
+            bwq.AddAction(() => SuccessAction.Intensity += SuccessParam(), waitTurns);
         }
     }
 }

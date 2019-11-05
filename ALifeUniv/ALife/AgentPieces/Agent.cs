@@ -47,7 +47,9 @@ namespace ALifeUni.ALife
             
             myBrain = new BehaviourBrain(this,
                 "IF Eye1.SeeSomething.Value Equals Eye1.IsRed.Value AND Eye1.HowRed.Value GreaterThan [0.1] THEN WAIT [3] TO Move AT [0.8]",
-                "IF Eye1.HowGreen.Value LessThan [0.8] THEN Color AT Eye1.HowGreen.Value");
+                "IF Eye1.HowGreen.Value LessThan [0.8] THEN Color AT Eye1.HowGreen.Value",
+                "IF Eye1.SeeSomething.Value Equals [False] THEN Move AT [1.0]",
+                "IF Eye1.SeeSomething.Value Equals [False] THEN Rotate AT [0.2]");
         }
 
         private ReadOnlyDictionary<string, Action> GenerateActions()
@@ -87,8 +89,10 @@ namespace ALifeUni.ALife
 
         public override void ExecuteAliveTurn()
         {
-            this.Color = Colors.Firebrick;
+            this.DebugColor = Colors.Aquamarine;
             myBrain.ExecuteTurn();
+            //Reset all the senses. 
+            Senses.ForEach((se) => se.GetShape().Reset());
         }
     }
 }

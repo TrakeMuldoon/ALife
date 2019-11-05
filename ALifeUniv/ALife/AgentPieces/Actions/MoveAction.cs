@@ -59,7 +59,7 @@ namespace ALifeUni.ALife
             else
             {
                 self.CentrePoint = origin;
-                self.Color = Colors.Red;
+                self.DebugColor = Colors.Red;
             }
         }
     }

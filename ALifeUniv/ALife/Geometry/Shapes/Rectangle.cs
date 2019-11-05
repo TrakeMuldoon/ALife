@@ -18,6 +18,8 @@ namespace ALifeUni.ALife.UtilityClasses
 
         public Color Color { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        public Color DebugColor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public ShapesEnum GetShapeEnum()
         {
             throw new NotImplementedException();

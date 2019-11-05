@@ -35,7 +35,11 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
 
         public void ExecuteTurn()
         {
-            foreach(Behaviour beh in behaviours)
+            foreach (SenseCluster sc in parent.Senses)
+            {
+                sc.Detect();
+            }
+            foreach (Behaviour beh in behaviours)
             {
                 beh.EvaluateBehaviour(bwq);
             }

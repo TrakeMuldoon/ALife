@@ -17,6 +17,8 @@ namespace ALifeUni.UI
             Vector2 agentCentre = new Vector2((float)wo.CentrePoint.X, (float)wo.CentrePoint.Y);
             //Agent Body
             args.DrawingSession.FillCircle(agentCentre, wo.Radius, wo.Color);
+
+            args.DrawingSession.FillCircle(agentCentre, 3, wo.GetShape().DebugColor);
             //Agent Orientation
             if (wo is Agent)
             {

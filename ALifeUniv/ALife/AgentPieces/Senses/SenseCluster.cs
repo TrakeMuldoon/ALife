@@ -37,11 +37,11 @@ namespace ALifeUni.ALife
 
             if(collisions.Count > 0)
             {
-                GetShape().Color = Colors.Green;
+                GetShape().DebugColor = Colors.Green;
             }
             else
             {
-                GetShape().Color = Colors.Yellow;
+                GetShape().DebugColor = Colors.Yellow;
             }
 
 

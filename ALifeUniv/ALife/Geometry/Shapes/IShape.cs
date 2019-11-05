@@ -29,6 +29,12 @@ namespace ALifeUni.ALife.UtilityClasses
             get;
             set;
         }
+        Color DebugColor
+        {
+            get;
+            set;
+        }
+
         ShapesEnum GetShapeEnum();
 
         void Reset();

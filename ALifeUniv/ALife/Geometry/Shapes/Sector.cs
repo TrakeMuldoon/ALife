@@ -95,6 +95,11 @@ namespace ALifeUni.ALife.UtilityClasses
             get;
             set;
         }
+        public Color DebugColor
+        {
+            get;
+            set;
+        }
 
         public abstract Point CentrePoint
         {

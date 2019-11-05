@@ -60,7 +60,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
             return bc;
         }
 
-        Regex resultParser = new Regex("^(WAIT \\[(\\d+)\\] TO )?(\\w+) AT ([\\[\\]\\w]+)$");
+        Regex resultParser = new Regex("^(WAIT \\[(\\d+)\\] TO )?(\\w+) AT ([\\[\\]\\.\\w]+)$");
         private void ParseResults(string value, BehaviourCabinet cabinet)
         {
             Match resultsMatch = resultParser.Match(value);

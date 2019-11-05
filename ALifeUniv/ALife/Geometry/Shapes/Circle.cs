@@ -40,7 +40,12 @@ namespace ALifeUni.ALife.UtilityClasses
             get;
             set;
         }
-        
+        public virtual Color DebugColor
+        {
+            get;
+            set;
+        }
+
         public Circle(Point coords, float radius)
         {
             CentrePoint = coords;

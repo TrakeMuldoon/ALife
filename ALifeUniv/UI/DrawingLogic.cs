@@ -17,12 +17,14 @@ namespace ALifeUni.UI
             Vector2 agentCentre = new Vector2((float)wo.CentrePoint.X, (float)wo.CentrePoint.Y);
             //Agent Body
             args.DrawingSession.FillCircle(agentCentre, wo.Radius, wo.Color);
+            //Core of the body is the debug colour
+            args.DrawingSession.FillCircle(agentCentre, 2, wo.GetShape().DebugColor);
 
-            args.DrawingSession.FillCircle(agentCentre, 3, wo.GetShape().DebugColor);
             //Agent Orientation
             if (wo is Agent)
             {
                 Agent ag = (Agent)wo;
+                //Draw Orientation
                 float newX = (float)(wo.CentrePoint.X + wo.Radius * Math.Cos(ag.Orientation.Radians));
                 float newY = (float)(wo.CentrePoint.Y + wo.Radius * Math.Sin(ag.Orientation.Radians));
                 args.DrawingSession.FillCircle(new Vector2(newX, newY), 1, Colors.DarkCyan);

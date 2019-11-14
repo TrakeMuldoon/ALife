@@ -25,9 +25,9 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
         {
             this.behaviorCabinet = new BehaviourCabinet(parent);
             this.parent = parent;
-            foreach(string b in behaviourStrings)
+            foreach(string behaviourString in behaviourStrings)
             {
-                behaviours.Add(new Behaviour(b, behaviorCabinet));
+                behaviours.Add(new Behaviour(behaviourString, behaviorCabinet));
             }
         }
 

@@ -92,8 +92,11 @@ namespace ALifeUni.ALife.UtilityClasses
         }
         public Color Color
         {
-            get;
-            set;
+            get
+            {
+                return Windows.UI.Colors.Blue;
+            }
+            set { }
         }
         public Color DebugColor
         {

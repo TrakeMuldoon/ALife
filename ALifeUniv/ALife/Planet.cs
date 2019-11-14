@@ -45,6 +45,12 @@ namespace ALifeUni.ALife
             Random r = new Random();
             CreateWorld(r.Next(), 1000, 800);
         }
+
+        internal string NextUniqueAgentID()
+        {
+            throw new NotImplementedException();
+        }
+
         public  static void CreateWorld(int height, int width)
         {
             Random r = new Random();

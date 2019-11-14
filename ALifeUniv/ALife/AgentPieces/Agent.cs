@@ -1,4 +1,5 @@
-﻿using ALifeUni.ALife.AgentPieces.Brains;
+﻿using ALifeUni.ALife.AgentPieces;
+using ALifeUni.ALife.AgentPieces.Brains;
 using ALifeUni.ALife.AgentPieces.Brains.RandomBrains;
 using ALifeUni.ALife.Brains.BehaviourBrainPieces;
 using ALifeUni.ALife.Inputs;
@@ -32,9 +33,9 @@ namespace ALifeUni.ALife
             : base(birthPosition
                   , 5                                               //current radius
                   , "Agent"                                         //Genus Label
-                  , Planet.World.NextUniqueID().ToString()          //Individual Label
+                  , AgentIDGenerator.GetNextAgentId()               //Individual Label
                   , ReferenceValues.CollisionLevelPhysical          //Collision Level
-                  , Windows.UI.Colors.PeachPuff)                    //Start Color
+                  , Windows.UI.Colors.OrangeRed)                    //Start Color
         {
             CentrePoint = birthPosition;
             Orientation = new Angle(0);

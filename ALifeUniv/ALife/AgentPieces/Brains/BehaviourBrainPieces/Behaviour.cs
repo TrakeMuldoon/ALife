@@ -29,9 +29,22 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
             //Spec: <RESULT> = "( <WAIT>)? <ACTION> INTENSITY <CONSTANT|VARIABLE>"                  -- Waiting is optional
             //Spec: <WAIT> = "WAIT <CONSTANT>"                                                      -- Indicates the number of turns to wait
             //Spec: <ACTION> = "\\w+(\\.\\w+)"                                                      -- Some action of the Agent
-            Match behaviourMatch = englishStringParser.Match(englishString);
-            ParseConditions(behaviourMatch.Groups[1].Value, cabinet);
-            ParseResults(behaviourMatch.Groups[2].Value, cabinet);
+            //Spec: "*" = Random Behaviour
+            if(englishString.Equals("*"))
+            {
+                CreateRandomBehaviour();
+            }
+            else
+            {
+                Match behaviourMatch = englishStringParser.Match(englishString);
+                ParseConditions(behaviourMatch.Groups[1].Value, cabinet);
+                ParseResults(behaviourMatch.Groups[2].Value, cabinet);
+            }
+        }
+
+        private void CreateRandomBehaviour()
+        {
+            throw new NotImplementedException();
         }
 
         private void ParseConditions(String conditionsString, BehaviourCabinet cabinet)

@@ -1,4 +1,5 @@
-﻿using ALifeUni.ALife.AgentPieces.Brains;
+﻿using ALifeUni.ALife.AgentPieces;
+using ALifeUni.ALife.AgentPieces.Brains;
 using ALifeUni.ALife.AgentPieces.Brains.RandomBrains;
 using ALifeUni.ALife.Brains.BehaviourBrainPieces;
 using ALifeUni.ALife.Inputs;
@@ -32,9 +33,9 @@ namespace ALifeUni.ALife
             : base(birthPosition
                   , 5                                               //current radius
                   , "Agent"                                         //Genus Label
-                  , Planet.World.NextUniqueID().ToString()          //Individual Label
+                  , AgentIDGenerator.GetNextAgentId()               //Individual Label
                   , ReferenceValues.CollisionLevelPhysical          //Collision Level
-                  , Windows.UI.Colors.PeachPuff)                    //Start Color
+                  , Windows.UI.Colors.OrangeRed)                    //Start Color
         {
             CentrePoint = birthPosition;
             Orientation = new Angle(0);
@@ -43,7 +44,13 @@ namespace ALifeUni.ALife
             //Properties = GenerateAgentProperties();
             Actions = GenerateActions();
 
-            myBrain = new RandomBrain(this);
+            //myBrain = new RandomBrain(this);
+            
+            myBrain = new BehaviourBrain(this,
+                "IF Eye1.SeeSomething.Value Equals Eye1.IsRed.Value AND Eye1.HowRed.Value GreaterThan [0.1] THEN WAIT [3] TO Move AT [0.8]",
+                "IF Eye1.HowGreen.Value LessThan [0.8] THEN Color AT Eye1.HowGreen.Value",
+                "IF Eye1.SeeSomething.Value Equals [False] THEN Move AT [1.0]",
+                "IF Eye1.SeeSomething.Value Equals [False] THEN Rotate AT [0.2]");
         }
 
         private ReadOnlyDictionary<string, Action> GenerateActions()
@@ -51,9 +58,14 @@ namespace ALifeUni.ALife
             //TODO: Link this somehow to world-settings
             //TODO: This probably doesn't need to be a dictionary
             Dictionary<string, Action> myActions = new Dictionary<string, Action>();
-            myActions.Add("Color", new ColorAction(this));
-            myActions.Add("Move", new MoveAction(this));
-            myActions.Add("Rotate", new RotateAction(this));
+            List<Action> actionList = new List<Action>()
+            {
+                new ColorAction(this),
+                new MoveAction(this),
+                new RotateAction(this)
+            };
+
+            actionList.ForEach((ac) => myActions.Add(ac.Name, ac));
 
             return new ReadOnlyDictionary<string, Action>(myActions);
         }
@@ -67,7 +79,7 @@ namespace ALifeUni.ALife
         private List<SenseCluster> GenerateSenses()
         {
             List<SenseCluster> mySenses = new List<SenseCluster>();
-            mySenses.Add(new EyeCluster(this));
+            mySenses.Add(new EyeCluster(this, "Eye1"));
             return mySenses;
         }
 
@@ -78,8 +90,10 @@ namespace ALifeUni.ALife
 
         public override void ExecuteAliveTurn()
         {
-            this.Color = Colors.Firebrick;
+            this.DebugColor = Colors.Aquamarine;
             myBrain.ExecuteTurn();
+            //Reset all the senses. 
+            Senses.ForEach((se) => se.GetShape().Reset());
         }
     }
 }

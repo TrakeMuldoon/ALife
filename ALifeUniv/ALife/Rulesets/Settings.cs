@@ -8,13 +8,16 @@ namespace ALifeUni.ALife
 {
     public static class Settings
     {
-        public static float ObjectRadiusMax = 15;
-        public static float ObjectRadiusMin = 1;
+        public const float ObjectRadiusMax = 15;
+        public const float ObjectRadiusMin = 1;
 
-        public static float AgentRadiusMax = 10;
-        public static float AgentRadiusMin = 5;
+        public const float AgentRadiusMax = 10;
+        public const float AgentRadiusMin = 5;
 
-        public static double AgentDefaultSpeed = 5;
-        public static double AgentMaximumTurnDegrees = 90;
+        public const double AgentDefaultSpeed = 5;
+        public const double AgentMaximumTurnDegrees = 90;
+
+        public const int BehaviourWaitMax = 5;
+
     }
 }

@@ -1,14 +1,19 @@
 # Current Roadmap
+## Short term tasks
+* [ ] Implement Actions in BehaviourBrain
+* [ ] Implement Constants in BehaviourBrain
+* [ ] Refactor all Actions into "ActionClusters"
+* [ ] Add Actions into BehaviourCabinet
+* [ ] Implement "WAIT" Action
+* [ ] Implement Random BehaviourBrain creation
+* [ ] TEST complete BehaviourBrain with custom behaviours
+* [ ] Update UI to show Behaviours in Right hand Panel
+* [ ] Implement Cloning/Mutation
+* [ ] Implement no movement countdown to death.
+* [ ] Implement Bumping Behaviour to test First Scenario
 
-## Top Issues
-* [ ] Collision detection
-* [ ] Fix Agent Location falling off the edge of the world
-
-## Interface Updates
-* [x] Game Loop
-* [x] Game Pause
-* [x] Game 1 Step
-* [x] Game Play
+* First Scenario is : Agents all run around, if they do not move for 100 turns, they automatically die. If they bump into another agent, the passive agent dies, and the active agent produces an offspring 
+** Desired Behaviour evolves: See Something, RUN FORWARD HARD. Or perhaps running forward as fast as they can blindly, might still work. 
 
 ## Goal-based Features
 The goal is provided/set to the agents; they do not decide at this time.

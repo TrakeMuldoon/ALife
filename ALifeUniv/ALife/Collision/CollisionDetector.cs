@@ -8,7 +8,7 @@ namespace ALifeUni.ALife
     {
         public static List<WorldObject> FineGrainedCollisionDetection(List<WorldObject> toCollide, IShape me)
         {
-            switch (me.GetShape())
+            switch (me.GetShapeEnum())
             {
                 case ShapesEnum.Circle: return FineGrainedCollisionDetection(toCollide, (Circle)me);
                 case ShapesEnum.Sector: return FineGrainedCollisionDetection(toCollide, (Sector)me);
@@ -74,7 +74,7 @@ namespace ALifeUni.ALife
         }
         public static Boolean IndividualShapeCollision(Circle a, Sector b)
         {
-            return false;
+            return true;
         }
         public static Boolean IndividualShapeCollision(Circle a, Rectangle b)
         {
@@ -94,54 +94,26 @@ namespace ALifeUni.ALife
         }
 
 
-        //Line Segment Collision
-        //http://devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/
-
-        //This works on lines of inifinite length. There is additional code for line segments, outlined at the link.
-
-        //        Input
-        //    LineA1  Point First point on line A
-
-        //    LineA2 Point   Second point on line A
-        //   LineB1  Point First point on line B
-
-        //    LineB2 Point   Second point on line B
-        //Output
-
-        //    True if lines collide
-        //Method
-        //    denom = ((LineB2.Y – LineB1.Y) * (LineA2.X – LineA1.X)) –
-        //		((LineB2.X – lineB1.X) * (LineA2.Y - LineA1.Y))
-        //	return denom != 0
-
-        //This is amended code from a second article on the topic
         //http://devmag.org.za/2009/04/17/basic-collision-detection-in-2d-part-2/
         //        LineLineCollision
         //Input
-
-        //    LineA1 Point   First point on line A
-        //   LineA2  Point Second point on line A
-
-        //    LineB1 Point   First point on line B
-        //   LineB2  Point Second point on line B
+        //    LineA1  Point   First point on line A
+        //    LineA2  Point   Second point on line A
+        //    LineB1  Point   First point on line B
+        //    LineB2  Point   Second point on line B
         //Output
         //    The point of the collision, or null if no collision exists.
         //Method
-        //    denom = ((LineB2.Y – LineB1.Y) * (LineA2.X – LineA1.X)) –
-        //		((LineB2.X – LineB1.X) * (LineA2.Y - LineA1.Y))
+        //    denom = ((LineB2.Y – LineB1.Y) * (LineA2.X – LineA1.X)) – ((LineB2.X – LineB1.X) * (LineA2.Y - LineA1.Y))
         //	if (denom == 0)
         //		return null
         //	else
-        //		ua = (((LineB2.X – LineB1.X) * (LineA1.Y – LineB1.Y)) –
-        //			((LineB2.Y – LineB1.Y) * (LineA1.X – LineB1.X))) / denom
-        //        /* The following 3 lines are only necessary if we are checking line
-        //			segments instead of infinite-length lines */
-        //        ub = (((LineA2.X – LineA1.X) * (LineA1.Y – LineB1.Y)) –
-        //			((LineA2.Y – LineA1.Y) * (LineA1.X – LineB1.X))) / denom
-        //		if (ua< 0) || (ua > 1) || (ub< 0) || (ub > 1)
+        //		ua = (((LineB2.X – LineB1.X) * (LineA1.Y – LineB1.Y)) – ((LineB2.Y – LineB1.Y) * (LineA1.X – LineB1.X))) / denom
+        //      //The following 3 lines are only necessary if we are checking line segments instead of infinite-length lines */
+        //      ub = (((LineA2.X – LineA1.X) * (LineA1.Y – LineB1.Y)) – ((LineA2.Y – LineA1.Y) * (LineA1.X – LineB1.X))) / denom
+        //		if (ua < 0) || (ua > 1) || (ub< 0) || (ub > 1)
         //			return null
-
-        //		return LineA1 + ua* (LineA2 – LineA1)
+        //		return LineA1 + ua * (LineA2 – LineA1)
 
 
 //            CircleLineCollision
@@ -162,7 +134,7 @@ namespace ALifeUni.ALife
 //    b = 2 * ((P2MinusP1.X * LocalP1.X) + (P2MinusP1.Y * LocalP1.Y))
 //    c = (LocalP1.X* LocalP1.X) + (LocalP1.Y* LocalP1.Y) – (Radius* Radius)
 //    delta = b * b – (4 * a* c)
-//	  if (delta< 0) // No intersection
+//	  if (delta < 0) // No intersection
 //          return null;
 //    else if (delta == 0) // One intersection
 //          u = -b / (2 * a)

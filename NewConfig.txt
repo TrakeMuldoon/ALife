@@ -1,0 +1,73 @@
+<Environment>
+	Size
+		Length
+		Width
+	Starting Conditions
+		Zones
+			Position : <coord>
+			Color : <Color>
+			Size
+				Length : <Integer>
+				Width : <Integer>
+		AgentGroup
+			AgentTypes
+				AgentType : <AgentType>
+				NumAgents : <Integer>
+
+
+<AgentType>
+	TypeName : <String>
+	<AgentDefinition>
+		FixedInputs : <Input>(list)
+		FreeInputs : <Input>(list)
+		RandomInputs : [Integer]
+		
+		FixedActions : List<Action>
+		FreeActions : List<Action>
+
+		ScenarioAttributes : List<Attribute>
+		CentrePoint : <coord> //Required
+		Radius : <Attribute> //Required
+		Color : <Attribute> //Required
+
+		Brain : <Brain>
+
+		ReproductionRules 
+			ReproductionTrigger : <ReproductionTrigger>
+			ReproductionEffect : <ReproductionEffect>
+
+			
+<Action>
+	Label: String
+	PreActionValidations : <CheckAgainstProperty>(list)
+	Cost : <PropertyModification>(list)
+	CheckSuccess : <CheckAgainstProperty>(list)
+	PositiveOutcomes : <PropertyModification>(list)
+	NegativeOutcomes : <PropertyModification>(list)
+
+	<PropertyModification>
+		Target : Agent(Myself || "target")
+		PropertyTarget : <Property>
+		EffectType : Plus, Minus
+		Value : double? Int? who knows
+
+	<CheckAgainstPropety>
+		Target : Agent(Myself || "Target")
+		Evaluate : <Property>
+		Operation : GreaterThan, LessThan, EqualTo
+		CompareTo : <Property> || Value;
+
+
+Input Configs
+	<Property>
+		Label : string
+		Value : Double
+		Threshold : null
+		DeltaThreshold : null
+
+BehaviourBrain
+	Behaviours(List)
+		<Behaviour>
+			<BehaviourCondition>(list)
+				InputTarget : Input
+				Comparator : 

@@ -99,6 +99,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
 
 
         //will be run once a "turn"
+        /*
         public void EvaluateBehaviour(BehaviourWaitQueue bwq)
         {
             foreach(BehaviourCondition bc in Conditions)
@@ -111,6 +112,24 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
             }
 
             bwq.AddAction(() => SuccessAction.Intensity += SuccessParam(), waitTurns);
+        }
+        */
+
+        public bool ConditionsPassed()
+        {
+            foreach(BehaviourCondition bc in Conditions)
+            {
+                if(!bc.EvaluateSuccess())
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void AddActionToWaitQueue(BehaviourWaitQueue bwq)
+        {
+            bwq.AddAction(() => SuccessAction.Intensity += SuccessParam(),waitTurns);
         }
     }
 }

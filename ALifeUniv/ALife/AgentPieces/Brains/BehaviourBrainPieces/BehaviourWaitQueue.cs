@@ -21,7 +21,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
             waitQueue[(currPosition + waitTurns) % Settings.BehaviourWaitMax].Add(activity);
         }
 
-        public IEnumerable<System.Action> ExecuteTurn()
+        public IEnumerable<System.Action> PopCurrentActions()
         {
             IEnumerable<System.Action> toReturn = waitQueue[currPosition];
             waitQueue[currPosition] = new List<System.Action>();

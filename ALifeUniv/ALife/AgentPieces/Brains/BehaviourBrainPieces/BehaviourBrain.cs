@@ -41,11 +41,15 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
             }
             foreach (Behaviour beh in behaviours)
             {
-                beh.EvaluateBehaviour(bwq);
+                if(beh.ConditionsPassed())
+                {
+                    beh.AddActionToWaitQueue(bwq);
+                }
             }
-            foreach(System.Action actionWithIntensity in bwq.ExecuteTurn())
+            IEnumerable<System.Action> actions = bwq.PopCurrentActions();  
+            foreach(System.Action actWithIntensity in actions)
             {
-                actionWithIntensity();
+                actWithIntensity();
             }
             foreach(Action act in parent.Actions.Values)
             {

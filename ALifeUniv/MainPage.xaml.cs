@@ -7,7 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using Windows.Foundation;
+using Windows.System;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -43,8 +45,17 @@ namespace ALifeUni
             Planet.World.ExecuteOneTurn();
         }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+            Window.Current.CoreWindow.KeyUp += CoreWindow_KeyUp;
+        }
+
+
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
+            Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
+            Window.Current.CoreWindow.KeyUp -= CoreWindow_KeyUp;
             this.animCanvas.RemoveFromVisualTree();
             this.animCanvas = null;
         }
@@ -52,19 +63,19 @@ namespace ALifeUni
         private void animCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
 
-            if (special != null)
+            if(special != null)
             {
                 Vector2 agentCentre = new Vector2((float)special.CentrePoint.X, (float)special.CentrePoint.Y);
                 //Agent Body
                 args.DrawingSession.DrawCircle(agentCentre, special.Radius + 1, Colors.Blue);
             }
-            
-            foreach (WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].EnumerateItems())
+
+            foreach(WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].EnumerateItems())
             {
                 DrawingLogic.DrawWorldObject(wo, args);
             }
 
-            foreach (Point p in taps)
+            foreach(Point p in taps)
             {
                 args.DrawingSession.FillCircle(new Vector2((float)p.X, (float)p.Y), 2, Colors.Peru);
             }
@@ -99,6 +110,8 @@ namespace ALifeUni
             }
         }
 
+        #region speed controls
+
         private void ResetSim_Click(object sender, RoutedEventArgs e)
         {
             Planet.CreateWorld((int)animCanvas.Height, (int)animCanvas.Width);
@@ -106,7 +119,7 @@ namespace ALifeUni
 
         private void PauseSim_Click(object sender, RoutedEventArgs e)
         {
-            if (gameTimer.IsEnabled)
+            if(gameTimer.IsEnabled)
             {
                 gameTimer.Stop();
             }
@@ -114,18 +127,17 @@ namespace ALifeUni
 
         private void OneTurnSim_Click(object sender, RoutedEventArgs e)
         {
-            if (gameTimer.IsEnabled)
+            if(gameTimer.IsEnabled)
             {
                 gameTimer.Stop();
             }
             Planet.World.ExecuteOneTurn();
         }
 
-
         private void SlowPlaySim_Click(object sender, RoutedEventArgs e)
         {
-            gameTimer.Interval = new TimeSpan(0,0,0,0,500);
-            if (!gameTimer.IsEnabled)
+            gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            if(!gameTimer.IsEnabled)
             {
                 gameTimer.Start();
             }
@@ -138,8 +150,8 @@ namespace ALifeUni
 
         private void PlaySim_Go()
         {
-            gameTimer.Interval = new TimeSpan(0,0,0,0,100);
-            if (!gameTimer.IsEnabled)
+            gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            if(!gameTimer.IsEnabled)
             {
                 gameTimer.Start();
             }
@@ -147,8 +159,8 @@ namespace ALifeUni
 
         private void FastPlaySim_Click(object sender, RoutedEventArgs e)
         {
-            gameTimer.Interval = new TimeSpan(0,0,0,0,1);
-            if (!gameTimer.IsEnabled)
+            gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 1);
+            if(!gameTimer.IsEnabled)
             {
                 gameTimer.Start();
             }
@@ -158,15 +170,50 @@ namespace ALifeUni
             Planet.World.ExecuteManyTurns(200);
         }
 
+        #endregion
+
         private void ZoomFactor_TextChanged(object sender, TextChangedEventArgs e)
         {
             //Increase the zoom
-            //TODO: Link this to the Dpi checkbox, I just realized that they're only linked from the checkbox side and not from the textchanged side. I'm dumb
             TextBox sen = (TextBox)sender;
             float newZoom;
-            if (float.TryParse(sen.Text, out newZoom))
+            if(float.TryParse(sen.Text, out newZoom))
             {
-                Zoomer.ChangeView(0, 0, newZoom);
+                if(newZoom > 8)
+                {
+                    sen.Text = "8";
+                    return;
+                }
+                if(newZoom < 1)
+                {
+                    sen.Text = "1";
+                    return;
+                }
+
+                double newHeight = Zoomer.ActualHeight * newZoom;
+                double newVert = Zoomer.VerticalOffset / Zoomer.ExtentHeight * newHeight;
+                double newHorz = Zoomer.HorizontalOffset / Zoomer.ExtentWidth * newHeight;
+
+                animCanvas.DpiScale = (int)newZoom;
+                Zoomer.ChangeView(newHorz, newVert, newZoom);
+            }
+        }
+
+        private void IncreaseZoom()
+        {
+            float newZoom;
+            if(float.TryParse(ZoomFactor.Text, out newZoom))
+            {
+                ZoomFactor.Text = (newZoom + 1).ToString();
+            }
+        }
+
+        private void DecreaseZoom()
+        {
+            float newZoom;
+            if(float.TryParse(ZoomFactor.Text, out newZoom))
+            {
+                ZoomFactor.Text = (newZoom - 1).ToString();
             }
         }
 
@@ -174,11 +221,11 @@ namespace ALifeUni
         {
             //Increase the DPI as the zoom increases, to a maximum of 8, otherwise it breaks
             float newZoom;
-            if (float.TryParse(ZoomFactor.Text, out newZoom))
+            if(float.TryParse(ZoomFactor.Text, out newZoom))
             {
-                float DpiValue = Math.Min(newZoom,8);
+                float DpiValue = Math.Min(newZoom, 8);
                 DpiValue = Math.Max(DpiValue, 0);
-                
+
                 animCanvas.DpiScale = DpiValue;
             }
         }
@@ -189,6 +236,8 @@ namespace ALifeUni
             animCanvas.DpiScale = 1;
         }
 
+        #region Mouse Controls
+
         Point? dragStart;
         private void AnimCanvas_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
@@ -197,10 +246,10 @@ namespace ALifeUni
 
         private void AnimCanvas_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
-            
+
             int panMagnifyFactor = 0;
             float newZoom;
-            if (float.TryParse(ZoomFactor.Text, out newZoom))
+            if(float.TryParse(ZoomFactor.Text, out newZoom))
             {
                 panMagnifyFactor = (int)(8 * newZoom);
             }
@@ -213,7 +262,7 @@ namespace ALifeUni
                 Point moveDelta = new Point((current.X - dragStart.Value.X) * panMagnifyFactor * -1
                                             , (current.Y - dragStart.Value.Y) * panMagnifyFactor * -1);
                 Point offset = new Point(Zoomer.HorizontalOffset + moveDelta.X, Zoomer.VerticalOffset + moveDelta.Y);
-                
+
                 Zoomer.ChangeView(offset.X, offset.Y, null);
                 dragStart = current;
             }
@@ -222,12 +271,33 @@ namespace ALifeUni
         private void AnimCanvas_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
             //When a drag is released, null it out
-            if (dragStart.HasValue)
+            if(dragStart.HasValue)
             {
                 dragStart = null;
             }
         }
 
+        #endregion
 
+
+        int counter = 0;
+        private void CoreWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
+        {
+            debugText.Text = args.VirtualKey + Environment.NewLine + args.KeyStatus.WasKeyDown + Environment.NewLine + args.Handled;
+
+            debugCounter.Text = (counter++).ToString();
+
+            switch(args.VirtualKey)
+            {
+                case VirtualKey.Q: IncreaseZoom(); break;
+                case VirtualKey.E: DecreaseZoom(); break;
+                default: break;
+            }
+        }
+
+        private void CoreWindow_KeyUp(CoreWindow sender, KeyEventArgs args)
+        {
+            upValue.Text += args.VirtualKey;
+        }
     }
 }

@@ -9,26 +9,29 @@
     xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="Page_Loaded"
     Unloaded="Page_Unloaded">
 
     <StackPanel Orientation="Horizontal">
         <ScrollViewer x:Name="Zoomer"  Background="Aqua"
                       HorizontalScrollBarVisibility="Visible"
                       VerticalScrollBarVisibility="Visible"
-                      Width="1000">
+                      BorderBrush="Blue"
+                      BorderThickness="1"
+                      Width="1010">
             <Border Background="Black" BorderBrush="Red" BorderThickness="5">
                 <canvas:CanvasAnimatedControl x:Name="animCanvas" Draw="animCanvas_Draw" CreateResources="animCanvas_CreateResources" 
-                                              Tapped="AnimCanvas_Tapped"
-                                              PointerPressed="AnimCanvas_PointerPressed"
-                                              PointerMoved="AnimCanvas_PointerMoved"
-                                              PointerReleased="AnimCanvas_PointerReleased"
-                                              Width="1000" Height="880">
-                    
+                                                  Tapped="AnimCanvas_Tapped"
+                                                  PointerPressed="AnimCanvas_PointerPressed"
+                                                  PointerMoved="AnimCanvas_PointerMoved"
+                                                  PointerReleased="AnimCanvas_PointerReleased"
+                                                  Width="1000" Height="880">
+
                 </canvas:CanvasAnimatedControl>
             </Border>
+
         </ScrollViewer>
         <StackPanel Width="100" Background="Beige">
-
             <Button x:Name="ResetSim" HorizontalAlignment="Stretch" Click="ResetSim_Click">RESET</Button>
             <Button x:Name="PauseSim" HorizontalAlignment="Stretch" Click="PauseSim_Click">Pause</Button>
             <Button x:Name="OneTurn" HorizontalAlignment="Stretch" Click="OneTurnSim_Click">1 Turn</Button>
@@ -36,8 +39,12 @@
             <Button x:Name="PlaySim" HorizontalAlignment="Stretch" Click="PlaySim_Click">Play</Button>
             <Button x:Name="FastPlaySim" HorizontalAlignment="Stretch" Click="FastPlaySim_Click">Fast</Button>
             <Button x:Name="SkipAhead" HorizontalAlignment="Stretch" Click="SkipAhead_Click">Stupid Fast</Button>
-            <TextBox x:Name="ZoomFactor" TextChanged="ZoomFactor_TextChanged" />
+            <TextBox x:Name="ZoomFactor" TextChanged="ZoomFactor_TextChanged"  Text="1"/>
             <CheckBox x:Name="matchDPI" Checked="MatchDPI_Checked" Unchecked="MatchDPI_Unchecked" />
+            <TextBlock x:Name="debugText" />
+            <TextBlock x:Name="debugCounter" />
+
+            <TextBlock x:Name="upValue" />
         </StackPanel>
     </StackPanel>
 </Page>

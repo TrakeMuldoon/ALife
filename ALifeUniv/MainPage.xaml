@@ -43,8 +43,17 @@
             <CheckBox x:Name="matchDPI" Checked="MatchDPI_Checked" Unchecked="MatchDPI_Unchecked" />
             <TextBlock x:Name="debugText" />
             <TextBlock x:Name="debugCounter" />
-
             <TextBlock x:Name="upValue" />
+            <ListView x:Name="Layers" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding LayerView}"></CheckBox>
+                            <TextBlock Text="{Binding LayerName}"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
     </StackPanel>
 </Page>

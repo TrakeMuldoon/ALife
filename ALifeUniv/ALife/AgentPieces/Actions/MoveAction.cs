@@ -58,7 +58,16 @@ namespace ALifeUni.ALife
             }
             else
             {
-                self.CentrePoint = origin;
+                //TODO: Somehow abstract out "Collision behaviour"
+                //Collision means death
+                foreach(WorldObject wo in collisions)
+                {
+                    wo.Die();
+                }
+                //self must die, but also stop the movement from taking place. 
+                //Also, we change colour of self, to see who bumped into whom.
+                self.Die();
+                //self.CentrePoint = origin;
                 self.DebugColor = Colors.Red;
             }
         }

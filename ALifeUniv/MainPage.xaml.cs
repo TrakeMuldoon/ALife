@@ -6,6 +6,7 @@ using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using Windows.ApplicationModel.Calls;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
@@ -26,7 +27,6 @@ namespace ALifeUni
 
         long startticks;
         DispatcherTimer gameTimer = new DispatcherTimer();
-
 
         public MainPage()
         {
@@ -70,14 +70,16 @@ namespace ALifeUni
                 args.DrawingSession.DrawCircle(agentCentre, special.Radius + 1, Colors.Blue);
             }
 
+            if(Planet.World.CollisionLevels.ContainsKey(ReferenceValues.CollisionLevelDead))
+            {
+                foreach(WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelDead].EnumerateItems())
+                {
+                    DrawingLogic.DrawWorldObject(wo, args);
+                }
+            }
             foreach(WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].EnumerateItems())
             {
                 DrawingLogic.DrawWorldObject(wo, args);
-            }
-
-            foreach(Point p in taps)
-            {
-                args.DrawingSession.FillCircle(new Vector2((float)p.X, (float)p.Y), 2, Colors.Peru);
             }
         }
 
@@ -85,7 +87,6 @@ namespace ALifeUni
         {
         }
 
-        List<Point> taps = new List<Point>();
         WorldObject special;
         private void AnimCanvas_Tapped(object sender, TappedRoutedEventArgs e)
         {

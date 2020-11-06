@@ -85,8 +85,6 @@ namespace ALifeUni.ALife
 
         public readonly List<WorldObject> AllControlledObjects = new List<WorldObject>();
 
-        public IReadOnlyDictionary<string, string> my = new Dictionary<string, string>();
-
         private Dictionary<string, ICollisionMap> _collisionLevels = new Dictionary<string, ICollisionMap>();
         public IReadOnlyDictionary<string, ICollisionMap> CollisionLevels
         {
@@ -152,6 +150,17 @@ namespace ALifeUni.ALife
             string collisionLevel = mySelf.CollisionLevel;
             CollisionLevels[collisionLevel].RemoveObject(mySelf);
             AllControlledObjects.Remove(mySelf);
+        }
+
+        internal void ChangeCollisionLayerForObject(WorldObject mySelf, string newLevel)
+        {
+            string currCollisionLevel = mySelf.CollisionLevel;
+            CollisionLevels[currCollisionLevel].RemoveObject(mySelf);
+            if(!_collisionLevels.ContainsKey(newLevel))
+            {
+                _collisionLevels.Add(newLevel, new CollisionGrid(WorldHeight, WorldWidth));
+            }
+            CollisionLevels[newLevel].Insert(mySelf);
         }
 
         internal void AddObjectToWorld(WorldObject toAdd)

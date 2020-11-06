@@ -88,18 +88,20 @@ namespace ALifeUni.ALife
         /* METHODS */
         public virtual void ExecuteTurn()
         {
-            if (!Alive)
+            if (Alive)
             {
-                ExecuteDeadTurn();
+                ExecuteAliveTurn();
             }
             else
             {
-                ExecuteAliveTurn();
+                ExecuteDeadTurn();
             }
         }
 
         public abstract void ExecuteAliveTurn();
         public abstract void ExecuteDeadTurn();
+
+        public abstract void Die();
 
         public virtual void TrashItem()
         {

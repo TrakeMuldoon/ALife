@@ -39,13 +39,13 @@ namespace ALifeUni.ALife
         {
             CentrePoint = birthPosition;
             Orientation = new Angle(0);
-            
-            Senses = GenerateSenses();
-            //Properties = GenerateAgentProperties();
-            Actions = GenerateActions();
 
+            InitializeAgentProperties(); //Adds any agent properties custom to Agents
+            Senses = GenerateSenses();
+            Actions = GenerateActions();
+       
             //myBrain = new RandomBrain(this);
-            
+
             myBrain = new BehaviourBrain(this,
                 "IF Eye1.SeeSomething.Value Equals Eye1.IsRed.Value AND Eye1.HowRed.Value GreaterThan [0.1] THEN WAIT [3] TO Move AT [0.8]",
                 "IF Eye1.HowGreen.Value LessThan [0.8] THEN Color AT Eye1.HowGreen.Value",
@@ -70,10 +70,11 @@ namespace ALifeUni.ALife
             return new ReadOnlyDictionary<string, Action>(myActions);
         }
 
-        private Dictionary<String, PropertyInput> GenerateAgentProperties()
+        private void InitializeAgentProperties()
         {
-            //TODO: Link this to settings
-            return new Dictionary<string, PropertyInput>();
+            //TODO: Link this to the config generation
+            PropertyInput Age = new PropertyInput("Age", 0, Double.MaxValue);
+            Properties.Add(Age.Name, Age);
         }
 
         private List<SenseCluster> GenerateSenses()
@@ -81,6 +82,13 @@ namespace ALifeUni.ALife
             List<SenseCluster> mySenses = new List<SenseCluster>();
             mySenses.Add(new EyeCluster(this, "Eye1"));
             return mySenses;
+        }
+
+        public override void Die()
+        {
+            this.Alive = false;
+            this.DebugColor = Colors.Maroon;
+            Planet.World.ChangeCollisionLayerForObject(this, ReferenceValues.CollisionLevelDead);
         }
 
         public override void ExecuteDeadTurn()
@@ -92,6 +100,7 @@ namespace ALifeUni.ALife
         {
             this.DebugColor = Colors.Aquamarine;
             myBrain.ExecuteTurn();
+            Properties["Age"].IncreasePropertyBy(1.0);
             //Reset all the senses. 
             Senses.ForEach((se) => se.GetShape().Reset());
         }

@@ -11,5 +11,6 @@ namespace ALifeUni.ALife
         public const string CollisionLevelPhysical = "Physical";
         public const string CollisionLevelScent = "Scent";
         public const string CollisionLevelSound = "Sound";
+        public const string CollisionLevelDead = "Dead";
     }
 }

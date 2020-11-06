@@ -79,11 +79,11 @@ namespace ALifeUni.ALife
                 Agent ag = new Agent(new Point(xPos, yPos));
                 instance.AddObjectToWorld(ag);
             }
-
         }
 
-
         public readonly List<WorldObject> AllControlledObjects = new List<WorldObject>();
+        public readonly List<WorldObject> AllActiveObjects = new List<WorldObject>();
+        public readonly List<WorldObject> AllNewObjects = new List<WorldObject>();
 
         private Dictionary<string, ICollisionMap> _collisionLevels = new Dictionary<string, ICollisionMap>();
         public IReadOnlyDictionary<string, ICollisionMap> CollisionLevels
@@ -139,9 +139,14 @@ namespace ALifeUni.ALife
         internal void ExecuteOneTurn()
         {
             turns++;
-            foreach (WorldObject wo in AllControlledObjects)
+            foreach (WorldObject wo in AllActiveObjects)
             {
                 wo.ExecuteTurn();
+            }
+            while(AllNewObjects.Count > 0)
+            {
+                AllActiveObjects.Add(AllNewObjects[0]);
+                AllNewObjects.RemoveAt(0);
             }
         }
 
@@ -150,6 +155,8 @@ namespace ALifeUni.ALife
             string collisionLevel = mySelf.CollisionLevel;
             CollisionLevels[collisionLevel].RemoveObject(mySelf);
             AllControlledObjects.Remove(mySelf);
+            AllNewObjects.Remove(mySelf);
+            AllActiveObjects.Remove(mySelf);
         }
 
         internal void ChangeCollisionLayerForObject(WorldObject mySelf, string newLevel)
@@ -172,6 +179,7 @@ namespace ALifeUni.ALife
             _collisionLevels[toAdd.CollisionLevel].Insert(toAdd);
 
             AllControlledObjects.Add(toAdd);
+            AllNewObjects.Add(toAdd);
         }
     }
 }

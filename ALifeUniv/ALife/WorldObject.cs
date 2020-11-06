@@ -103,6 +103,8 @@ namespace ALifeUni.ALife
 
         public abstract void Die();
 
+        public abstract WorldObject Reproduce(bool exactCopy);
+
         public virtual void TrashItem()
         {
             Planet.World.RemoveWorldObject(this);

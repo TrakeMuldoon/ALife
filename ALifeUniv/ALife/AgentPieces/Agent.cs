@@ -74,6 +74,12 @@ namespace ALifeUni.ALife
         {
             //TODO: Link this to the config generation
             PropertyInput Age = new PropertyInput("Age", 0, Double.MaxValue);
+            PropertyInput ReproAge = new PropertyInput("ReproAge", 0, Double.MaxValue);
+            Random r = new Random();
+            ReproAge.Value = Math.Floor(900 * r.NextDouble()) + 100;
+
+
+            Properties.Add(ReproAge.Name, ReproAge);
             Properties.Add(Age.Name, Age);
         }
 
@@ -98,11 +104,103 @@ namespace ALifeUni.ALife
 
         public override void ExecuteAliveTurn()
         {
-            this.DebugColor = Colors.Aquamarine;
+            //this.DebugColor = Colors.Aquamarine;
             myBrain.ExecuteTurn();
             Properties["Age"].IncreasePropertyBy(1.0);
             //Reset all the senses. 
             Senses.ForEach((se) => se.GetShape().Reset());
+            CheckAndReproduce();
+        }
+
+        public void CheckAndReproduce()
+        {
+            if((Properties["Age"].Value % Properties["ReproAge"].Value) == 0)
+            {
+                WorldObject child = Reproduce(false);
+                Planet.World.AddObjectToWorld(child);
+            }
+        }
+
+
+        public override WorldObject Reproduce(bool exactCopy)
+        {
+            //Determine child position
+            Point childCenter = FindAdjacentFreeSpace();
+
+            //Create Child
+            Agent child = new Agent(childCenter);
+            child.DebugColor = Colors.BurlyWood;
+            //Reproduce Actions
+
+            //Reproduce Properties
+
+            //Reproduce Inputs
+
+            //Reproduce Brain
+
+            //Reproduce Reproduction Rules
+
+            return child;
+        }
+
+        private Point FindAdjacentFreeSpace()
+        {
+            BoundingBox pbb = this.BoundingBox;
+            
+            BoundingBox childBB = new BoundingBox(pbb.MinX, pbb.MinY, pbb.MaxX, pbb.MaxY);
+            double diameter = this.Radius * 2;
+            
+            ICollisionMap collider = Planet.World.CollisionLevels[this.CollisionLevel];
+            List<WorldObject> collisions = new List<WorldObject>();
+            bool found = false;
+            for(int distance = 1; distance < 4;  distance++)
+            {
+                childBB.MinX += diameter;
+                childBB.MaxX += diameter;
+                childBB.MinY += diameter;
+                childBB.MaxY += diameter;
+                for(int direction = 0; direction < 4; direction++)
+                {
+                    for(int numSteps = 0; numSteps < distance * 2; numSteps++)
+                    {
+                        switch(direction)
+                        {
+                            case 0://south
+                                childBB.MinY -= diameter;
+                                childBB.MaxY -= diameter;
+                                break;
+                            case 1://west
+                                childBB.MinX -= diameter;
+                                childBB.MaxY -= diameter;
+                                break;
+                            case 2://north
+                                childBB.MinY += diameter;
+                                childBB.MaxY += diameter;
+                                break;
+                            case 3://east
+                                childBB.MinX += diameter;
+                                childBB.MaxX += diameter;
+                                break;
+                            default: throw new Exception("invalid direction");
+                        }
+                        collisions = collider.QueryForBoundingBoxCollisions(childBB);
+                        if(collisions.Count < 1)
+                        {
+                            found = true;
+                            goto Found;
+                        }
+                    }
+                }
+            }
+            Found: 
+            if(!found)
+            {
+                throw new Exception("too crowded");
+            }
+
+
+            Point childCenter = new Point((childBB.MinX + childBB.MaxX) / 2, (childBB.MinY + childBB.MaxY) / 2);
+            return childCenter;
         }
     }
 }

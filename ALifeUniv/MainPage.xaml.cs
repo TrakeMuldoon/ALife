@@ -70,18 +70,49 @@ namespace ALifeUni
                 args.DrawingSession.DrawCircle(agentCentre, special.Radius + 1, Colors.Blue);
             }
 
-            if(Planet.World.CollisionLevels.ContainsKey(ReferenceValues.CollisionLevelDead))
+            if(ShowDead)
             {
-                foreach(WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelDead].EnumerateItems())
+                if(Planet.World.CollisionLevels.ContainsKey(ReferenceValues.CollisionLevelDead))
+                {
+                    foreach(WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelDead].EnumerateItems())
+                    {
+                        DrawingLogic.DrawWorldObject(wo, args);
+                    }
+                }
+            }
+            if(ShowLive)
+            {
+                foreach(WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].EnumerateItems())
                 {
                     DrawingLogic.DrawWorldObject(wo, args);
                 }
             }
-            foreach(WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].EnumerateItems())
-            {
-                DrawingLogic.DrawWorldObject(wo, args);
-            }
         }
+
+
+        private bool ShowLive = true;
+        private bool ShowDead = false;
+        private void CheckLiveLayer_Checked(object sender, RoutedEventArgs e)
+        {
+            ShowLive = true;
+        }
+        private void CheckDeadLayer_Checked(object sender, RoutedEventArgs e)
+        {
+            ShowDead = true;
+        }
+
+        private void CheckLiveLayer_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ShowLive = false;
+        }
+
+        private void CheckDeadLayer_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ShowDead = false;
+        }
+
+
+
 
         private void animCanvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
         {
@@ -116,6 +147,7 @@ namespace ALifeUni
         private void ResetSim_Click(object sender, RoutedEventArgs e)
         {
             Planet.CreateWorld((int)animCanvas.Height, (int)animCanvas.Width);
+            special = null;
         }
 
         private void PauseSim_Click(object sender, RoutedEventArgs e)

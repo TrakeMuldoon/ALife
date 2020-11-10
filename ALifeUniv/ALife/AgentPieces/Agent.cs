@@ -35,7 +35,7 @@ namespace ALifeUni.ALife
                   , "Agent"                                         //Genus Label
                   , AgentIDGenerator.GetNextAgentId()               //Individual Label
                   , ReferenceValues.CollisionLevelPhysical          //Collision Level
-                  , Windows.UI.Colors.OrangeRed)                    //Start Color
+                  , Colors.OrangeRed)                               //Start Color
         {
             CentrePoint = birthPosition;
             Orientation = new Angle(0);
@@ -48,9 +48,38 @@ namespace ALifeUni.ALife
 
             myBrain = new BehaviourBrain(this,
                 "IF Eye1.SeeSomething.Value Equals Eye1.IsRed.Value AND Eye1.HowRed.Value GreaterThan [0.1] THEN WAIT [3] TO Move AT [0.8]",
-                "IF Eye1.HowGreen.Value LessThan [0.8] THEN Color AT Eye1.HowGreen.Value",
+                //"IF Eye1.HowGreen.Value LessThan [0.8] THEN Color AT Eye1.HowGreen.Value",
                 "IF Eye1.SeeSomething.Value Equals [False] THEN Move AT [1.0]",
                 "IF Eye1.SeeSomething.Value Equals [False] THEN Rotate AT [0.3]");
+        }
+
+        private Agent(Point birthPosition, Agent parent)
+             : base(birthPosition
+                  , parent.Radius                                                                //current radius
+                  , "Agent"                                                                      //Genus Label
+                  , AgentIDGenerator.GetNextChildId(parent.IndividualLabel, parent.numChildren)  //Individual Label
+                  , parent.CollisionLevel                                                        //Collision Level
+                  , parent.Color)
+        {
+            CentrePoint = birthPosition;
+            Orientation = new Angle(0);
+
+            DebugColor = Colors.Blue;
+
+            Senses = new List<SenseCluster>();
+            Actions = GenerateActions();
+            InitializeAgentProperties();
+            myBrain = new BehaviourBrain(this);
+
+            //Reproduce Actions
+
+            //Reproduce Properties
+            
+            //Reproduce Inputs
+
+            //Reproduce Brain
+
+            //Reproduce Reproduction Rules
         }
 
         private ReadOnlyDictionary<string, Action> GenerateActions()
@@ -104,7 +133,6 @@ namespace ALifeUni.ALife
 
         public override void ExecuteAliveTurn()
         {
-            //this.DebugColor = Colors.Aquamarine;
             myBrain.ExecuteTurn();
             Properties["Age"].IncreasePropertyBy(1.0);
             //Reset all the senses. 
@@ -124,22 +152,13 @@ namespace ALifeUni.ALife
 
         public override WorldObject Reproduce(bool exactCopy)
         {
+            numChildren += 1;
+
             //Determine child position
             Point childCenter = FindAdjacentFreeSpace();
 
             //Create Child
-            Agent child = new Agent(childCenter);
-            child.DebugColor = Colors.BurlyWood;
-            //Reproduce Actions
-
-            //Reproduce Properties
-
-            //Reproduce Inputs
-
-            //Reproduce Brain
-
-            //Reproduce Reproduction Rules
-
+            Agent child = new Agent(childCenter, this);
             return child;
         }
 

@@ -43,6 +43,7 @@ namespace ALifeUni.ALife
 
         public readonly String GenusLabel;
         public readonly String IndividualLabel;
+        protected int numChildren = 0;
 
         private float radius;
         public override float Radius

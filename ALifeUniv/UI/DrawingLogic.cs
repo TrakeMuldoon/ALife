@@ -21,7 +21,7 @@ namespace ALifeUni.UI
             args.DrawingSession.FillCircle(agentCentre, 2, wo.GetShape().DebugColor);
 
             //Agent Orientation
-            if (wo is Agent)
+            if(wo is Agent)
             {
                 Agent ag = (Agent)wo;
                 //Draw Orientation

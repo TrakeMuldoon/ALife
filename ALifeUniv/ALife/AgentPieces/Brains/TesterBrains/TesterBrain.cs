@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ALifeUni.ALife.AgentPieces.Brains.RandomBrains
 {
-    class RandomBrain : IBrain
+    class TesterBrain : IBrain
     {
         private Agent parent;
 
-        public RandomBrain(Agent parent)
+        public TesterBrain(Agent parent)
         {
             this.parent = parent;
         }
@@ -18,23 +18,14 @@ namespace ALifeUni.ALife.AgentPieces.Brains.RandomBrains
         public void ExecuteTurn()
         {
             
+
             foreach(SenseCluster sc in parent.Senses)
             {
                 sc.Detect();
             }
 
-            for(int i = 0; i < parent.Actions.Count; i++)
-            {
-                Action act = parent.Actions.Values.ElementAt(i);
-                double ifValue = Planet.World.NumberGen.NextDouble();
-                double intensityValue = Planet.World.NumberGen.NextDouble();
-
-                if(ifValue > 0.5)
-                {
-                    act.Intensity = intensityValue;
-                    act.AttemptEnact();
-                }
-            }
+            parent.Actions["Rotate"].Intensity = 0.1;
+            parent.Actions["Rotate"].AttemptEnact();
             
             //Reset means that the bounding box cache is wiped out
             //Until the next time it is reset (during detect) it will be using the cached one

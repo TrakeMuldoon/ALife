@@ -51,8 +51,7 @@ namespace ALifeUni.ALife
         {
             if(activated && AttemptSuccessful())
             {
-                //This is the long form of Clamp, it restricts a value to between Max and Min
-                Intensity = Intensity > IntensityMax ? IntensityMax : (Intensity < IntensityMin ? IntensityMin : Intensity); 
+                Intensity = Math.Clamp(Intensity, IntensityMin, IntensityMax);
                 TakeAction(Intensity);
             }
             //Reset the Intensity;

@@ -51,7 +51,6 @@ namespace ALifeUni.ALife
             collisions = CollisionDetector.FineGrainedCollisionDetection(collisions, self);
 
             //If there are no collisions, we propogate the move.
-            //Otherwise, we reverse it, and turn red.
             if(collisions.Count == 0)
             {
                 collider.MoveObject(self);
@@ -59,7 +58,8 @@ namespace ALifeUni.ALife
             else
             {
                 //TODO: Somehow abstract out "Collision behaviour"
-                //Collision means death
+
+                //Collision means death right now
                 foreach(WorldObject wo in collisions)
                 {
                     wo.Die();
@@ -67,7 +67,6 @@ namespace ALifeUni.ALife
                 //self must die, but also stop the movement from taking place. 
                 //Also, we change colour of self, to see who bumped into whom.
                 self.Die();
-                //self.CentrePoint = origin;
                 self.DebugColor = Colors.Red;
             }
         }

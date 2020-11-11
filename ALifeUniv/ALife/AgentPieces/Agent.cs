@@ -35,7 +35,7 @@ namespace ALifeUni.ALife
                   , "Agent"                                         //Genus Label
                   , AgentIDGenerator.GetNextAgentId()               //Individual Label
                   , ReferenceValues.CollisionLevelPhysical          //Collision Level
-                  , Colors.Green)                               //Start Color
+                  , Colors.Green)                                   //Start Color
         {
             CentrePoint = birthPosition;
             Orientation = new Angle(0);
@@ -45,22 +45,23 @@ namespace ALifeUni.ALife
             Actions = GenerateActions();
 
             //myBrain = new RandomBrain(this);
-            myBrain = new TesterBrain(this);
+            //myBrain = new TesterBrain(this);
+            myBrain = new BehaviourBrain(this,
+                "IF Eye1.SeeSomething.Value Equals Eye1.IsRed.Value AND Eye1.HowRed.Value GreaterThan [0.1] THEN WAIT [3] TO Move AT [0.8]",
+                //"IF Eye1.HowGreen.Value LessThan [0.8] THEN Color AT Eye1.HowGreen.Value",
+                "IF Eye1.SeeSomething.Value Equals [False] THEN Move AT [1.0]",
+                "IF Eye1.SeeSomething.Value Equals [False] THEN Rotate AT [0.3]");
+
             this.DebugColor = Colors.PaleVioletRed;
-            //myBrain = new BehaviourBrain(this,
-            //    "IF Eye1.SeeSomething.Value Equals Eye1.IsRed.Value AND Eye1.HowRed.Value GreaterThan [0.1] THEN WAIT [3] TO Move AT [0.8]",
-            //    //"IF Eye1.HowGreen.Value LessThan [0.8] THEN Color AT Eye1.HowGreen.Value",
-            //    "IF Eye1.SeeSomething.Value Equals [False] THEN Move AT [1.0]",
-            //    "IF Eye1.SeeSomething.Value Equals [False] THEN Rotate AT [0.3]");
         }
 
         private Agent(Point birthPosition, Agent parent)
              : base(birthPosition
                   , parent.Radius                                                                //current radius
-                  , "Agent"                                                                      //Genus Label
+                  , parent.GenusLabel                                                            //Genus Label
                   , AgentIDGenerator.GetNextChildId(parent.IndividualLabel, parent.numChildren)  //Individual Label
                   , parent.CollisionLevel                                                        //Collision Level
-                  , parent.Color)
+                  , parent.Color)                                                                //Start Color
         {
             CentrePoint = birthPosition;
             Orientation = new Angle(0);
@@ -86,7 +87,6 @@ namespace ALifeUni.ALife
         private ReadOnlyDictionary<string, Action> GenerateActions()
         {
             //TODO: Link this somehow to world-settings
-            //TODO: This probably doesn't need to be a dictionary
             Dictionary<string, Action> myActions = new Dictionary<string, Action>();
             List<Action> actionList = new List<Action>()
             {

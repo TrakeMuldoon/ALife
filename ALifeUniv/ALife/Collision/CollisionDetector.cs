@@ -74,6 +74,7 @@ namespace ALifeUni.ALife
         }
         public static Boolean IndividualShapeCollision(Circle a, Sector b)
         {
+            //TODO: Implement this? Because it's currently a LIEEEEEE
             return true;
         }
         public static Boolean IndividualShapeCollision(Circle a, Rectangle b)

@@ -39,7 +39,6 @@ namespace ALifeUni.UI
                         ChildSector sec = (ChildSector)currShape;
                         DrawBoundingBox(sec.BoundingBox, args, Colors.Green);
 
-
                         CanvasPathBuilder pathBuilder = new CanvasPathBuilder(args.DrawingSession);
                         Angle myAngle = sec.Orientation + sec.OrientationAroundParent + sec.Parent.Orientation;
                         Vector2 centre = new Vector2((float)sec.CentrePoint.X, (float)sec.CentrePoint.Y);
@@ -48,7 +47,8 @@ namespace ALifeUni.UI
                         pathBuilder.EndFigure(CanvasFigureLoop.Closed);
                         CanvasGeometry cg = CanvasGeometry.CreatePath(pathBuilder);
 
-                        args.DrawingSession.FillGeometry(cg, sec.Color);
+                        args.DrawingSession.FillGeometry(cg, sec.DebugColor);
+                        args.DrawingSession.DrawGeometry(cg, sec.Color, 1);
                     }
                 }
             }

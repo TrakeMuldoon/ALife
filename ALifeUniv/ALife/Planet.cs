@@ -63,7 +63,7 @@ namespace ALifeUni.ALife
         {
             instance = new Planet(seed, height, width);
 
-            //TODO: Put PLanet Creation into the config
+            //TODO: Put Planet Creation into the config
 
             //TODO: Create Special Objects from Config
 

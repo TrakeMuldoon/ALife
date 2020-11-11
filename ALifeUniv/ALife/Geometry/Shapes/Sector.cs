@@ -83,8 +83,8 @@ namespace ALifeUni.ALife.UtilityClasses
     public abstract class Sector : IShape
     {
         //TODO unhardcode this
-        public float Radius = 8;
-        public Angle SweepAngle = new Angle(60);
+        public float Radius = 12;
+        public Angle SweepAngle = new Angle(50);
 
         public abstract BoundingBox BoundingBox
         {

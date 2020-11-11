@@ -122,18 +122,19 @@
     <Compile Include="ALife\AgentPieces\Actions\RotateAction.cs" />
     <Compile Include="ALife\AgentPieces\Agent.cs" />
     <Compile Include="ALife\AgentPieces\AgentIDGenerator.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourCondition.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourInput.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourCabinet.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourWaitQueue.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\TypedClasses\BehaviourFactory.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\TypedClasses\StringConditionFactory.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\TypedClasses\DoubleConditionFactory.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\TypedClasses\BoolConditionFactory.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourCondition.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourInput.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourCabinet.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourWaitQueue.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\TypedClasses\BehaviourFactory.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\TypedClasses\StringConditionFactory.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\TypedClasses\DoubleConditionFactory.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\TypedClasses\BoolConditionFactory.cs" />
     <Compile Include="ALife\AgentPieces\Brains\IBrain.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\Behaviour.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\BehaviourBrain.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\Behaviour.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\RandomBrains\RandomBrain.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\TesterBrains\TesterBrain.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorBoolInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorInput.cs" />
     <Compile Include="ALife\WorldObject.cs" />
@@ -175,7 +176,7 @@
     <None Include="ALifeUni_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ALife\AgentPieces\Brains\BehaviourBrainPieces\spec.txt" />
+    <Content Include="ALife\AgentPieces\Brains\BehaviourBrains\spec.txt" />
     <Content Include="Assets\splashscreen.scale-200.png" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>

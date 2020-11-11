@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
+namespace ALifeUni.ALife.Brains.BehaviourBrains
 {
     public class Behaviour
     {
@@ -26,13 +26,13 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
             //Spec: <VARIABLE> = "\\w+(\\.\\w+)+"                                                   -- Some property of the Agent which evaluates to a value
             //Spec: <OPERATION> = "\\w+"                                                            -- Some comparator which is valid to compare to values of the correct type
             //Spec: <CONSTANT> = "\\[\\w+\\]"                                                       -- Some constant of the type of the variable mentioned
-            //Spec: <RESULT> = "( <WAIT>)? <ACTION> INTENSITY <CONSTANT|VARIABLE>"                  -- Waiting is optional
-            //Spec: <WAIT> = "WAIT <CONSTANT>"                                                      -- Indicates the number of turns to wait
+            //Spec: <RESULT> = "( <WAIT>)? <ACTION> AT <CONSTANT|VARIABLE>"                         -- Waiting is optional
+            //Spec: <WAIT> = "WAIT <CONSTANT> TO"                                                   -- Indicates the number of turns to wait
             //Spec: <ACTION> = "\\w+(\\.\\w+)"                                                      -- Some action of the Agent
             //Spec: "*" = Random Behaviour
             if(englishString.Equals("*"))
             {
-                CreateRandomBehaviour();
+                CreateRandomBehaviour(cabinet);
             }
             else
             {
@@ -42,9 +42,20 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
             }
         }
 
-        private void CreateRandomBehaviour()
+        private void CreateRandomBehaviour(BehaviourCabinet cabinet)
         {
-            throw new NotImplementedException();
+            //if condition then result
+            //Generate between 1 and 3 conditions
+            //select input
+            //select operator
+            //determine whether value will be constant or value
+
+            //Generate a result
+            //Optionally add a "wait time"
+            //select action
+            //generate intensity
+            //determine whether value will be constant or value
+
         }
 
         private void ParseConditions(String conditionsString, BehaviourCabinet cabinet)

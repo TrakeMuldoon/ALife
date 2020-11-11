@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
+namespace ALifeUni.ALife.Brains.BehaviourBrains
 {
     public class BehaviourBrain : IBrain
     {
@@ -47,10 +47,14 @@ namespace ALifeUni.ALife.Brains.BehaviourBrainPieces
                 }
             }
             IEnumerable<System.Action> actions = bwq.PopCurrentActions();  
+
+            //This adds the intensity to the agents actions
             foreach(System.Action actWithIntensity in actions)
             {
                 actWithIntensity();
             }
+
+            //This makes the agent enact those items.
             foreach(Action act in parent.Actions.Values)
             {
                 act.AttemptEnact();

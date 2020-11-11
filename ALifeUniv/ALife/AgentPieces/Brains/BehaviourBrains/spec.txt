@@ -51,7 +51,7 @@ But each of those Inputs has three subvalues
 2.	Delta [T] (since last change, not last turn)
 3.	ModifiedThisTurn [Bool]
 2.	Properties
-a.	Properties like “Strenght” or Energy
+a.	Properties like “Strength” or Energy
 i.	These are represented as Inputs as well so they have
 1.	Value [T]
 2.	Delta [T]

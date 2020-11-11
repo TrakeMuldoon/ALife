@@ -90,5 +90,11 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
         {
             return myParent.Actions[name];
         }
+        public Action GetRandomAction()
+        {
+            int randomActionNum = Planet.World.NumberGen.Next(myParent.Actions.Count);
+            Action randomAction = myParent.Actions.Values.ElementAt(randomActionNum);
+            return randomAction;
+        }
     }
 }

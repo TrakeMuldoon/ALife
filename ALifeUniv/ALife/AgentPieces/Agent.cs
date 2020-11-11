@@ -1,7 +1,7 @@
 ﻿using ALifeUni.ALife.AgentPieces;
 using ALifeUni.ALife.AgentPieces.Brains;
 using ALifeUni.ALife.AgentPieces.Brains.RandomBrains;
-using ALifeUni.ALife.Brains.BehaviourBrainPieces;
+using ALifeUni.ALife.Brains.BehaviourBrains;
 using ALifeUni.ALife.Inputs;
 using ALifeUni.ALife.UtilityClasses;
 using System;
@@ -35,7 +35,7 @@ namespace ALifeUni.ALife
                   , "Agent"                                         //Genus Label
                   , AgentIDGenerator.GetNextAgentId()               //Individual Label
                   , ReferenceValues.CollisionLevelPhysical          //Collision Level
-                  , Colors.OrangeRed)                               //Start Color
+                  , Colors.Green)                               //Start Color
         {
             CentrePoint = birthPosition;
             Orientation = new Angle(0);
@@ -43,14 +43,15 @@ namespace ALifeUni.ALife
             InitializeAgentProperties(); //Adds any agent properties custom to Agents
             Senses = GenerateSenses();
             Actions = GenerateActions();
-       
-            //myBrain = new RandomBrain(this);
 
-            myBrain = new BehaviourBrain(this,
-                "IF Eye1.SeeSomething.Value Equals Eye1.IsRed.Value AND Eye1.HowRed.Value GreaterThan [0.1] THEN WAIT [3] TO Move AT [0.8]",
-                //"IF Eye1.HowGreen.Value LessThan [0.8] THEN Color AT Eye1.HowGreen.Value",
-                "IF Eye1.SeeSomething.Value Equals [False] THEN Move AT [1.0]",
-                "IF Eye1.SeeSomething.Value Equals [False] THEN Rotate AT [0.3]");
+            //myBrain = new RandomBrain(this);
+            myBrain = new TesterBrain(this);
+            this.DebugColor = Colors.PaleVioletRed;
+            //myBrain = new BehaviourBrain(this,
+            //    "IF Eye1.SeeSomething.Value Equals Eye1.IsRed.Value AND Eye1.HowRed.Value GreaterThan [0.1] THEN WAIT [3] TO Move AT [0.8]",
+            //    //"IF Eye1.HowGreen.Value LessThan [0.8] THEN Color AT Eye1.HowGreen.Value",
+            //    "IF Eye1.SeeSomething.Value Equals [False] THEN Move AT [1.0]",
+            //    "IF Eye1.SeeSomething.Value Equals [False] THEN Rotate AT [0.3]");
         }
 
         private Agent(Point birthPosition, Agent parent)
@@ -107,6 +108,7 @@ namespace ALifeUni.ALife
             Random r = new Random();
             ReproAge.Value = Math.Floor(900 * r.NextDouble()) + 100;
 
+            
 
             Properties.Add(ReproAge.Name, ReproAge);
             Properties.Add(Age.Name, Age);
@@ -172,7 +174,7 @@ namespace ALifeUni.ALife
             ICollisionMap collider = Planet.World.CollisionLevels[this.CollisionLevel];
             List<WorldObject> collisions = new List<WorldObject>();
             bool found = false;
-            for(int distance = 1; distance < 4;  distance++)
+            for(int distance = 1; distance < 5;  distance++)
             {
                 childBB.MinX += diameter;
                 childBB.MaxX += diameter;
@@ -190,7 +192,7 @@ namespace ALifeUni.ALife
                                 break;
                             case 1://west
                                 childBB.MinX -= diameter;
-                                childBB.MaxY -= diameter;
+                                childBB.MaxX -= diameter;
                                 break;
                             case 2://north
                                 childBB.MinY += diameter;
@@ -216,7 +218,6 @@ namespace ALifeUni.ALife
             {
                 throw new Exception("too crowded");
             }
-
 
             Point childCenter = new Point((childBB.MinX + childBB.MaxX) / 2, (childBB.MinY + childBB.MaxY) / 2);
             return childCenter;

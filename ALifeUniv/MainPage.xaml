@@ -18,7 +18,7 @@
                       VerticalScrollBarVisibility="Visible"
                       BorderBrush="Blue"
                       BorderThickness="1"
-                      Width="1010">
+                      Width="1050">
             <Border Background="Black" BorderBrush="Red" BorderThickness="5">
                 <canvas:CanvasAnimatedControl x:Name="animCanvas" Draw="animCanvas_Draw" CreateResources="animCanvas_CreateResources" 
                                                   Tapped="AnimCanvas_Tapped"

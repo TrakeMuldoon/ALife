@@ -18,7 +18,6 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
 
         private List<Behaviour> behaviours = new List<Behaviour>();
         private Agent parent;
-        private double prop = 1.0;
         private BehaviourCabinet behaviorCabinet;
 
         public BehaviourBrain(Agent parent, params string [] behaviourStrings)
@@ -41,17 +40,15 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
             }
             foreach (Behaviour beh in behaviours)
             {
-                if(beh.ConditionsPassed())
-                {
-                    beh.AddActionToWaitQueue(bwq);
-                }
+                beh.EvaluateAndEnqueue(bwq);
             }
-            IEnumerable<System.Action> actions = bwq.PopCurrentActions();  
+
+            IEnumerable<System.Action> actions = bwq.PopThisTurnsActions();  
 
             //This adds the intensity to the agents actions
-            foreach(System.Action actWithIntensity in actions)
+            foreach(System.Action addIntensityToAction in actions)
             {
-                actWithIntensity();
+                addIntensityToAction();
             }
 
             //This makes the agent enact those items.

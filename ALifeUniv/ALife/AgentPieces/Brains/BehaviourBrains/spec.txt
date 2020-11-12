@@ -6,19 +6,21 @@ In my artificial life program, I need to define the brains for each of the creat
 The brain I am working on right now is called the “BehaviourBrain” and it is quite simple.
 
 Sample 
-If EyeballCluster1.SeesSomething EQUALS False 							Then	MoveForward(0.88)	//If there’s nothing in front, go forward
-If EarCluster2.Volume GreaterThan 0.5 								Then	Rotate(0.55)		//If you hear something on the right, turn to it
-If EarCluster1.Volume LessThan EarCluster2.Volume						Then	Rotate(-0.55) 		//If it’s louder on the left, turn left
-If EyeballCluster1.SeesSomething equals True and EyeballCluster1.Red GreaterThan 0.5		Then 	Bite(0.5)		// If you see something, and that thing is red, omnomnom
+IF EyeballCluster1.SeesSomething	Equals		[False] 				THEN	Move	AT	[0.88]		//If there’s nothing in front, go forward
+IF EarCluster2.Volume				GreaterThan [0.5] 					THEN	Rotate	AT	[0.55]		//If you hear something on the right, turn to it
+IF EarCluster1.Volume				LessThan	EarCluster2.Volume		THEN	Rotate	AT	[-0.55] 	//If it’s louder on the left, turn left
+
+IF EyeballCluster1.SeesSomething Equals [True]		AND		EyeballCluster1.Red GreaterThan [0.5]	THEN 	Bite AT [0.5]
+// If you see something, and that thing is red, omnomnom
 
 The spec is like this
-"IF <CONDITION> THEN <POSITIVERESULT>"
-Condition is defined as 
+"IF <CONDITION> THEN <RESULT>"
+CONDITION is defined as 
 "<VARIABLE> <OPERATION> <[CONSTANT]|VARIABLE>( AND <CONDTIION>)?"
 So we can have many conditions chained with the "AND" keyword.
 
-PositiveResult is defined as 
-"( WAIT [CONSTANT] TO)? <ACTION> INTENSITY <[CONSTANT]|VARIABLE>"
+RESULT is defined as 
+"( WAIT [CONSTANT] TO)? <ACTION> AT <[CONSTANT]|VARIABLE>"
 
 Where 
 Variable:  represents some dynamic value associated with the agent who owns the brain
@@ -38,27 +40,27 @@ The variables which are key here: [A], the value that are on the agents, are muc
 
 There are (currently) three types that could feed that [A]
 1.	A “SenseCluster” has a set of Inputs.
-a.	EyeCluster has the following Inputs
-i.	SeesSomething [Bool]
-ii.	HowRed [Double] (represents 0-255)
-iii.	HowGreen [Double]
-iv.	HowBlue [Double]
-v.	HowManyThings [Int]
-vi.	IsClose [Bool]
-vii.	IsFar [Bool]
+	a.	EyeCluster has the following Inputs
+		i.	SeesSomething [Bool]
+		ii.	HowRed [Double] (represents 0-255)
+		iii.	HowGreen [Double]
+		iv.	HowBlue [Double]
+		v.	HowManyThings [Int]
+		vi.	IsClose [Bool]
+		vii.	IsFar [Bool]
 But each of those Inputs has three subvalues
-1.	Value [T]
-2.	Delta [T] (since last change, not last turn)
-3.	ModifiedThisTurn [Bool]
+	1.	Value [T]
+	2.	Delta [T] (since last change, not last turn)
+	3.	ModifiedThisTurn [Bool]
 2.	Properties
-a.	Properties like “Strength” or Energy
-i.	These are represented as Inputs as well so they have
-1.	Value [T]
-2.	Delta [T]
-3.	ModifiedThisTurn [Bool]
+	a.	Properties like “Strength” or Energy
+		i.	These are represented as Inputs as well so they have
+			1.	Value [T]
+			2.	Delta [T]
+			3.	ModifiedThisTurn [Bool]
 3.	Actions can also be represented as Inputs, and they have two subvalues
-a.	ValueLastTurn [Double]
-b.	ActivatedLastTurn [Bool]
+	a.	ValueLastTurn [Double]
+	b.	ActivatedLastTurn [Bool]
 
 So, the issue here is that an [A] could be 
 SenseCluster.Input.Delta if it is a “sensory based input”
@@ -73,12 +75,12 @@ The second problem is the creation of these behaviours.
 There are three main creation methods
 
 1.	Randomly generated. This will be used when randomly generating agents (which is 90% of the time), or when a reproduced agent needs a new behavior.
-a.	Seems to me this requires all the Inputs available in a list somewhere, but they don’t share a type, so it’s tough to have them all share a List, 
-b.	Unless their type is “Action<T>()” which would store lambdas. And make the “Conditional” part of the behavior just a big lambda. This is cool, but it doesn’t work for the other two methods.
+	a.	Seems to me this requires all the Inputs available in a list somewhere, but they don’t share a type, so it’s tough to have them all share a List, 
+	b.	Unless their type is “Action<T>()” which would store lambdas. And make the “Conditional” part of the behavior just a big lambda. This is cool, but it doesn’t work for the other two methods.
 2.	From a string.
-a.	This will be done when the agents are defined in configuration, or a new rule is added from the UI.
-b.	This requires that all the available inputs be stored in such a way that they can be looked up in a hashtable format, or found somehow. (assume for now that the input is valid. If it is invalid, we’ll just throw it away)
+	a.	This will be done when the agents are defined in configuration, or a new rule is added from the UI.
+	b.	This requires that all the available inputs be stored in such a way that they can be looked up in a hashtable format, or found somehow. (assume for now that the input is valid. If it is invalid, we’ll just throw it away)
 3.	Modified from an earlier Behavior
-a.	This is the main reason why the first option from Randomly generated, doesn’t work. If the inputs are stored in the Behaviour as a lambda, then you can’t extract the lambda and change the values, (i.e. change the [A], change the [B] or Change the value of [C])
-b.	So the Behaviours must be stored in some kind of composite fashion. 
+	a.	This is the main reason why the first option from Randomly generated, doesn’t work. If the inputs are stored in the Behaviour as a lambda, then you can’t extract the lambda and change the values, (i.e. change the [A], change the [B] or Change the value of [C])
+	b.	So the Behaviours must be stored in some kind of composite fashion. 
 

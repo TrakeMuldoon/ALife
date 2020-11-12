@@ -19,7 +19,39 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
     }
     public static class BoolConditionFactory
     {
-        public static BehaviourCondition GetRandomBehaviour(BehaviourInput b1, BehaviourInput b2)
+        public static BehaviourCondition GetRandomBehaviourConditionForBehaviour(BehaviourInput b1, BehaviourCabinet cabinet)
+        {
+            BehaviourInput b2 = GetRandomVariableOrConstant(cabinet);
+            return GetRandomBehaviourOperation(b1, b2);
+        }
+
+        public static BehaviourInput GetRandomVariableOrConstant(BehaviourCabinet cabinet)
+        {
+            double variableOrConstant = Planet.World.NumberGen.NextDouble();
+
+            BehaviourInput b2;
+            if(variableOrConstant > 0.5)
+            {
+                //variable
+                b2 = cabinet.GetRandomBehaviourInputByType(typeof(bool));
+            }
+            else
+            {
+                //constant
+                BehaviourInput dummybool = new BehaviourInput<bool>(null, null);
+                b2 = BehaviourFactory.GetBehaviourConstantFromString(dummybool, GetRandomConstantValue().ToString());
+            }
+            return b2;
+        }
+
+        private static bool GetRandomConstantValue()
+        {
+            double randomBool = Planet.World.NumberGen.NextDouble();
+            
+            return randomBool > 0.5;
+        }
+
+        public static BehaviourCondition GetRandomBehaviourOperation(BehaviourInput b1, BehaviourInput b2)
         {
             Array arr = Enum.GetValues(typeof(BoolOperationEnum));
             int rand = Planet.World.NumberGen.Next(0, arr.Length);
@@ -37,14 +69,14 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
         {
             switch (val)
             {
-                case BoolOperationEnum.Equals:      return new BehaviourCondition<bool>(b1, b2, (x, y) => x == y);
-                case BoolOperationEnum.NotEqualTo:  return new BehaviourCondition<bool>(b1, b2, (x, y) => x != y);
-                case BoolOperationEnum.AND:         return new BehaviourCondition<bool>(b1, b2, (x, y) => x && y);
-                case BoolOperationEnum.OR:          return new BehaviourCondition<bool>(b1, b2, (x, y) => x || y);
-                case BoolOperationEnum.NAND:        return new BehaviourCondition<bool>(b1, b2, (x, y) => !(x && y));
-                case BoolOperationEnum.NOR:         return new BehaviourCondition<bool>(b1, b2, (x, y) => !(x || y));
-                case BoolOperationEnum.XOR:         return new BehaviourCondition<bool>(b1, b2, (x, y) => x ^ y);
-                case BoolOperationEnum.XNOR:        return new BehaviourCondition<bool>(b1, b2, (x, y) => !(x ^ y));
+                case BoolOperationEnum.Equals:      return new BehaviourCondition<bool>(b1, b2, (x, y) => x == y, val.ToString());
+                case BoolOperationEnum.NotEqualTo:  return new BehaviourCondition<bool>(b1, b2, (x, y) => x != y, val.ToString());
+                case BoolOperationEnum.AND:         return new BehaviourCondition<bool>(b1, b2, (x, y) => x && y, val.ToString());
+                case BoolOperationEnum.OR:          return new BehaviourCondition<bool>(b1, b2, (x, y) => x || y, val.ToString());
+                case BoolOperationEnum.NAND:        return new BehaviourCondition<bool>(b1, b2, (x, y) => !(x && y), val.ToString());
+                case BoolOperationEnum.NOR:         return new BehaviourCondition<bool>(b1, b2, (x, y) => !(x || y), val.ToString());
+                case BoolOperationEnum.XOR:         return new BehaviourCondition<bool>(b1, b2, (x, y) => x ^ y, val.ToString());
+                case BoolOperationEnum.XNOR:        return new BehaviourCondition<bool>(b1, b2, (x, y) => !(x ^ y), val.ToString());
             }
             throw new Exception("Impossible Exception!");
         }

@@ -9,6 +9,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
 {
     public static class BehaviourFactory
     {
+        #region Generating Inputs
         public static List<BehaviourInput> GenerateBehaviourInputsFromInput(Input myInput)
         {
             List<BehaviourInput> bis = new List<BehaviourInput>();
@@ -22,6 +23,8 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
                 case Input<double> d1:
                     bis.Add(new BehaviourInput<double>(myInput.Name + ".Value", () => d1.Value));
                     bis.Add(new BehaviourInput<double>(myInput.Name + ".MostRecentValue", () => d1.MostRecentValue));
+                    bis.Add(new BehaviourInput<bool>(myInput.Name + ".Increased", () => d1.Value > d1.MostRecentValue));
+                    bis.Add(new BehaviourInput<bool>(myInput.Name + ".Decreased", () => d1.Value < d1.MostRecentValue));
                     bis.Add(new BehaviourInput<bool>(myInput.Name + ".Modified", () => d1.Modified));
                     break;
                 default: throw new Exception("Unknown type " + myInput.GetContainedType() + " for BehaviourInputs");
@@ -36,19 +39,28 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
             bis.Add(new BehaviourInput<bool>(act.Name + ".ActivatedLastTurn", () => act.ActivatedLastTurn));
             return bis;
         }
+        #endregion
 
         public static BehaviourCondition GetRandomConditionForInputs(BehaviourInput b1, BehaviourInput b2)
         {
+            if(b1.GetContainedType() != b2.GetContainedType())
+            {
+                throw new Exception("Attempting to compare incomparables");
+            }
             switch(b1)
             {
-                case BehaviourInput<bool> boo1: return BoolConditionFactory.GetRandomBehaviour(b1, b2);
-                case BehaviourInput<double> dob1: return DoubleConditionFactory.GetRandomBehaviour(b1, b2);
+                case BehaviourInput<bool> boo1: return BoolConditionFactory.GetRandomBehaviourOperation(b1, b2);
+                case BehaviourInput<double> dob1: return DoubleConditionFactory.GetRandomBehaviourOperation(b1, b2);
                 default: throw new NotImplementedException("unimiplemented condition type: " + b1.GetContainedType());
             }
         }
 
         public static BehaviourCondition GetConditionForInputsByName(BehaviourInput b1, BehaviourInput b2, string name)
         {
+            if(b1.GetContainedType() != b2.GetContainedType())
+            {
+                throw new Exception("Attempting to compare incomparables");
+            }
             switch (b1)
             {
                 case BehaviourInput<bool> boo1: return BoolConditionFactory.GetConditionByName(b1, b2, name);
@@ -74,6 +86,18 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
                 case BehaviourInput<int> int1:
                     int ival = int.Parse(untrimmedConstant);
                     return new BehaviourInput<int>(untrimmedConstant, () => ival);
+                default: throw new NotImplementedException("unimiplemented condition type: " + b1.GetContainedType());
+            }
+        }
+
+        internal static BehaviourCondition GetRandomBehaviorConditionFromInput(BehaviourInput b1, BehaviourCabinet cabinet)
+        {
+            switch(b1)
+            {
+                case BehaviourInput<bool> boo1:
+                    return BoolConditionFactory.GetRandomBehaviourConditionForBehaviour(b1, cabinet);
+                case BehaviourInput<double> dob1:
+                    return DoubleConditionFactory.GetRandomBehaviourConditionForBehaviour(b1, cabinet);
                 default: throw new NotImplementedException("unimiplemented condition type: " + b1.GetContainedType());
             }
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Input;
 
 namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
 {
@@ -19,7 +20,38 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
     }
     public static class DoubleConditionFactory
     {
-        public static BehaviourCondition GetRandomBehaviour(BehaviourInput b1, BehaviourInput b2)
+        public static BehaviourCondition GetRandomBehaviourConditionForBehaviour(BehaviourInput b1, BehaviourCabinet cabinet)
+        {
+            BehaviourInput b2 = GetRandomVariableOrConstant(cabinet);
+            return GetRandomBehaviourOperation(b1, b2);
+        }
+
+        public static BehaviourInput GetRandomVariableOrConstant(BehaviourCabinet cabinet)
+        {
+            double variableOrConstant = Planet.World.NumberGen.NextDouble();
+
+            BehaviourInput b2;
+            if(variableOrConstant > 0.5)
+            {
+                //variable
+                b2 = cabinet.GetRandomBehaviourInputByType(typeof(double));
+            }
+            else
+            {
+                //constant
+                BehaviourInput dummydouble = new BehaviourInput<double>(null, null);
+                b2 = BehaviourFactory.GetBehaviourConstantFromString(dummydouble, "[" + GetRandomConstantValue().ToString() + "]");
+            }
+            return b2;
+        }
+
+        private static double GetRandomConstantValue()
+        {
+            double randomDouble = Planet.World.NumberGen.NextDouble();
+            return randomDouble;
+        }
+
+        public static BehaviourCondition GetRandomBehaviourOperation(BehaviourInput b1, BehaviourInput b2)
         {
             Array arr = Enum.GetValues(typeof(DoubleOperationEnum));
             int rand = Planet.World.NumberGen.Next(0, arr.Length);
@@ -37,14 +69,14 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
         {
             switch (val)
             {
-                case DoubleOperationEnum.GreaterThan:           return new BehaviourCondition<double>(b1, b2, (x, y) => x > y);
-                case DoubleOperationEnum.LessThan:              return new BehaviourCondition<double>(b1, b2, (x, y) => x < y);
-                case DoubleOperationEnum.EqualTo:               return new BehaviourCondition<double>(b1, b2, (x, y) => x == y);
-                case DoubleOperationEnum.NotEqualTo:            return new BehaviourCondition<double>(b1, b2, (x, y) => x != y);
-                case DoubleOperationEnum.LessThanOrEqualTo:     return new BehaviourCondition<double>(b1, b2, (x, y) => x <= y);
-                case DoubleOperationEnum.GreaterThanOrEqualTo:  return new BehaviourCondition<double>(b1, b2, (x, y) => x >= y);
-                case DoubleOperationEnum.IntegerEqual:          return new BehaviourCondition<double>(b1, b2, (x, y) => x/1 == y/1);
-                case DoubleOperationEnum.DecimalEqual:          return new BehaviourCondition<double>(b1, b2, (x, y) => x%1 == y%1);
+                case DoubleOperationEnum.GreaterThan:           return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) > Math.Round(y, 4), val.ToString());
+                case DoubleOperationEnum.LessThan:              return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) < Math.Round(y, 4), val.ToString());
+                case DoubleOperationEnum.EqualTo:               return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) == Math.Round(y, 4), val.ToString());
+                case DoubleOperationEnum.NotEqualTo:            return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) != Math.Round(y, 4), val.ToString());
+                case DoubleOperationEnum.LessThanOrEqualTo:     return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) <= Math.Round(y, 4), val.ToString());
+                case DoubleOperationEnum.GreaterThanOrEqualTo:  return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) >= Math.Round(y, 4), val.ToString());
+                case DoubleOperationEnum.IntegerEqual:          return new BehaviourCondition<double>(b1, b2, (x, y) => x/1 == y/1, val.ToString());
+                case DoubleOperationEnum.DecimalEqual:          return new BehaviourCondition<double>(b1, b2, (x, y) => x%1 == y%1, val.ToString());
             }
             throw new Exception("Impossible Exception!");
         }

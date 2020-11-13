@@ -43,6 +43,7 @@ namespace ALifeUni.ALife
         public static void CreateWorld()
         {
             Random r = new Random();
+            //TODO Hardcoded world size
             CreateWorld(r.Next(), 1000, 800);
         }
 

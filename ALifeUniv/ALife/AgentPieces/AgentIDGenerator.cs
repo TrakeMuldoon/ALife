@@ -28,7 +28,7 @@ namespace ALifeUni.ALife.AgentPieces
             {
                 throw new Exception("Maxed Out On New IDs");
             }
-            string ret = String.Empty + one + two + three;
+            string ret = String.Empty + three + two + one;
             return ret;
         }
 

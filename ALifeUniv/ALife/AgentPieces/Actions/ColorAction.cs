@@ -9,6 +9,7 @@ namespace ALifeUni.ALife
 {
     public class ColorAction : Action
     {
+        //TODO: Split colour action into three actions.
         public ColorAction(Agent myself) : base(myself)
         {
         }

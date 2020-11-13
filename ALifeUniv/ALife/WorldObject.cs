@@ -7,7 +7,6 @@ using Windows.UI;
 namespace ALifeUni.ALife
 {
     //TODO: World Objects are current hardcodded to be "Circle". 
-    // This won't do. Need to fix. 
     public abstract class WorldObject : Circle, IHasShape
     {
         private Point centre;
@@ -56,14 +55,7 @@ namespace ALifeUni.ALife
             set
             {
                 float rad = value;
-                if(rad > Settings.ObjectRadiusMax)
-                {
-                    rad = Settings.ObjectRadiusMax;
-                }
-                else if (rad < Settings.ObjectRadiusMin)
-                {
-                    rad = Settings.ObjectRadiusMin;
-                }
+                rad = Math.Clamp(rad, Settings.ObjectRadiusMin, Settings.ObjectRadiusMax);
                 radius = rad;
             }
         }

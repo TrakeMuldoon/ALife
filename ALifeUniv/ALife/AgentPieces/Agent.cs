@@ -31,14 +31,14 @@ namespace ALifeUni.ALife
 
         public Agent(Point birthPosition)
             : base(birthPosition
-                  , 5                                               //current radius
+                  , 5                                               //current radius    //TODO: Hardcoded Agent Radius
                   , "Agent"                                         //Genus Label
                   , AgentIDGenerator.GetNextAgentId()               //Individual Label
                   , ReferenceValues.CollisionLevelPhysical          //Collision Level
-                  , Colors.Green)                                   //Start Color
+                  , Colors.Green)                                   //Start Color       //TODO: Hardcoded start colour
         {
             CentrePoint = birthPosition;
-            Orientation = new Angle(0);
+            Orientation = new Angle(0);//TODO Agent Orientation starts at zero. Is this okay?
 
             InitializeAgentProperties(); //Adds any agent properties custom to Agents
             Senses = GenerateSenses();
@@ -46,12 +46,13 @@ namespace ALifeUni.ALife
 
             //myBrain = new RandomBrain(this);
             //myBrain = new TesterBrain(this);
+            //TODO: Brain Behaviour is hardcoded. IT shoudl be in the config.
             myBrain = new BehaviourBrain(this,
                 "IF Eye1.SeeSomething.Value Equals Eye1.IsRed.Value AND Eye1.HowRed.Value GreaterThan [0.1] THEN WAIT [3] TO Move AT [0.8]",
                 //"IF Eye1.HowGreen.Value LessThan [0.8] THEN Color AT Eye1.HowGreen.Value",
                 "IF Eye1.SeeSomething.Value Equals [False] THEN Move AT [1.0]",
-                "IF Eye1.SeeSomething.Value Equals [False] THEN Rotate AT [0.3]",
-                "*");
+                "IF Eye1.SeeSomething.Value Equals [False] THEN Rotate AT [0.3]", "*"
+                );
 
             this.DebugColor = Colors.PaleVioletRed;
         }
@@ -104,12 +105,11 @@ namespace ALifeUni.ALife
         private void InitializeAgentProperties()
         {
             //TODO: Link this to the config generation
+            //TODO: Implement Property<int> instead of making all properties doubles.
             PropertyInput Age = new PropertyInput("Age", 0, Double.MaxValue);
             PropertyInput ReproAge = new PropertyInput("ReproAge", 0, Double.MaxValue);
             Random r = new Random();
             ReproAge.Value = Math.Floor(900 * r.NextDouble()) + 100;
-
-            
 
             Properties.Add(ReproAge.Name, ReproAge);
             Properties.Add(Age.Name, Age);
@@ -118,6 +118,7 @@ namespace ALifeUni.ALife
         private List<SenseCluster> GenerateSenses()
         {
             List<SenseCluster> mySenses = new List<SenseCluster>();
+            //TODO: Hardcoded Sense creation. This should be in config;
             mySenses.Add(new EyeCluster(this, "Eye1"));
             return mySenses;
         }

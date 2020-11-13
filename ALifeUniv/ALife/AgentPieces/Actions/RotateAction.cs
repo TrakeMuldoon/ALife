@@ -26,6 +26,7 @@ namespace ALifeUni.ALife
 
         protected override void TakeAction(double IntensityPercent)
         {
+            //TODO: Linked to Settings, should be linked to config.
             double turn = (Settings.AgentMaximumTurnDegrees * IntensityPercent) - (Settings.AgentMaximumTurnDegrees/2);
 
             Angle myOrientation = self.Orientation;

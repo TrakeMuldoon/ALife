@@ -39,9 +39,6 @@ namespace ALifeUni.ALife
 
             double newX = (magnitude * Math.Cos(self.Orientation.Radians)) + origin.X;
             double newY = (magnitude * Math.Sin(self.Orientation.Radians)) + origin.Y;
-            
-            //Gravity!
-            //newY = newY + 3;
 
             Point destination = new Point(newX, newY);
             self.CentrePoint = destination;

@@ -8,6 +8,7 @@ namespace ALifeUni.ALife
 {
     public abstract class Action
     {
+        //TODO: Rename to "AgentAction" to reduce confusion with function Action
         protected Agent self;
         public Action(Agent myself)
         {

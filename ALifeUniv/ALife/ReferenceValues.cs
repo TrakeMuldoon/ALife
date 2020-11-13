@@ -8,6 +8,7 @@ namespace ALifeUni.ALife
 {
     public class ReferenceValues
     {
+        public const string CollisionLevelZone = "Zone";
         public const string CollisionLevelPhysical = "Physical";
         public const string CollisionLevelScent = "Scent";
         public const string CollisionLevelSound = "Sound";

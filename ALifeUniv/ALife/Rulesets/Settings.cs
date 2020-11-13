@@ -8,6 +8,7 @@ namespace ALifeUni.ALife
 {
     public static class Settings
     {
+        //TODO Extract Settings into a file somehow
         public const float ObjectRadiusMax = 15;
         public const float ObjectRadiusMin = 1;
 

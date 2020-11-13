@@ -49,5 +49,6 @@
             <CheckBox x:Name="CheckLiveLayer" Checked="CheckLiveLayer_Checked" Unchecked="CheckLiveLayer_Unchecked" Content="View Live Layer" IsChecked="True"/>
             <CheckBox x:Name="CheckDeadLayer" Checked="CheckDeadLayer_Checked" Unchecked="CheckDeadLayer_Unchecked" Content="View Dead Layer" />
         </StackPanel>
+        <local:AgentInfoPanel x:Name="AgentPanel"></local:AgentInfoPanel>
     </StackPanel>
 </Page>

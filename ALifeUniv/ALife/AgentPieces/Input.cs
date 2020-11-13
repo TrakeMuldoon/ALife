@@ -20,6 +20,8 @@ namespace ALifeUni.ALife
         }
 
         public abstract Type GetContainedType();
+
+        public abstract String GetValueAsString();
     }
 
     public abstract class Input<T> : Input
@@ -69,6 +71,11 @@ namespace ALifeUni.ALife
         public override Type GetContainedType()
         {
             return typeof(T);
+        }
+
+        public override string GetValueAsString()
+        {
+            return Value.ToString();
         }
     }
 }

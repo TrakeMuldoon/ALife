@@ -43,6 +43,7 @@ namespace ALifeUni
         {
             //Planet.World.ExecuteManyTurns(10);
             Planet.World.ExecuteOneTurn();
+            AgentPanel.updateInfo();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -133,11 +134,16 @@ namespace ALifeUni
                 if(clicked != special)
                 {
                     special = clicked;
+                    if(clicked is Agent)
+                    {
+                        AgentPanel.TheAgent = (Agent)clicked;
+                    }
                 }
                 else
                 {
                     //click again to unselect
                     special = null;
+                    AgentPanel.TheAgent = null;
                 }
             }
         }
@@ -165,6 +171,7 @@ namespace ALifeUni
                 gameTimer.Stop();
             }
             Planet.World.ExecuteOneTurn();
+            AgentPanel.updateInfo();
         }
 
         private void SlowPlaySim_Click(object sender, RoutedEventArgs e)
@@ -201,6 +208,7 @@ namespace ALifeUni
         private void SkipAhead_Click(object sender, RoutedEventArgs e)
         {
             Planet.World.ExecuteManyTurns(200);
+            AgentPanel.updateInfo();
         }
 
         #endregion

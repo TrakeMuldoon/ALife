@@ -18,7 +18,7 @@ namespace ALifeUni.ALife
 {
     public class Agent : WorldObject
     {
-        protected IBrain myBrain;
+        public readonly IBrain myBrain;
 
         public readonly List<SenseCluster> Senses;
         public readonly ReadOnlyDictionary<String, Action> Actions;

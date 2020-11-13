@@ -15,6 +15,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
     public class Behaviour
     {
         public readonly String AsEnglish;
+        public bool PassedThisTurn;
         public readonly List<BehaviourCondition> Conditions = new List<BehaviourCondition>();
         public Action SuccessAction;
         public Func<double> SuccessParam;
@@ -148,10 +149,12 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
             {
                 if(!bc.EvaluateSuccess())
                 {
+                    PassedThisTurn = false;
                     return;
                 }
             }
 
+            PassedThisTurn = true;
             bwq.AddAction(() => SuccessAction.Intensity += SuccessParam(), waitTurns);
         }
 

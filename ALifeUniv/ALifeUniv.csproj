@@ -139,8 +139,8 @@
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorInput.cs" />
     <Compile Include="ALife\WorldObject.cs" />
     <Compile Include="ALife\Geometry\Shapes\Rectangle.cs" />
-    <Compile Include="AgentView.xaml.cs">
-      <DependentUpon>AgentView.xaml</DependentUpon>
+    <Compile Include="AgentInfoPanel.xaml.cs">
+      <DependentUpon>AgentInfoPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\DrawingLogic.cs" />
     <None Include="ALife\Collision\CollisionQuadTree.cs" />
@@ -192,7 +192,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="AgentView.xaml">
+    <Page Include="AgentInfoPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

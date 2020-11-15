@@ -37,6 +37,18 @@ namespace ALifeUni
             gameTimer.Tick += Dt_Tick;
 
             PlaySim_Go();
+
+            TreeView tt = VisualSettings;
+            TreeViewNode num1 = new TreeViewNode();
+            num1.Content = "num 1";
+            TreeViewNode num1a = new TreeViewNode();
+            num1a.Content = "num 1.a";
+            num1.Children.Add(num1a);
+            TreeViewNode num2 = new TreeViewNode();
+            num2.Content = "num 2";
+
+            tt.RootNodes.Add(num1);
+            tt.RootNodes.Add(num2);
         }
 
         private void Dt_Tick(object sender, object e)

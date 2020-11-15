@@ -31,7 +31,7 @@
             </Border>
 
         </ScrollViewer>
-        <StackPanel Width="100" Background="Beigi">
+        <StackPanel Width="100" Background="Chocolate">
             <Button x:Name="ResetSim" HorizontalAlignment="Stretch" Click="ResetSim_Click">RESET</Button>
             <Button x:Name="PauseSim" HorizontalAlignment="Stretch" Click="PauseSim_Click">Pause</Button>
             <Button x:Name="OneTurn" HorizontalAlignment="Stretch" Click="OneTurnSim_Click">1 Turn</Button>

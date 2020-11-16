@@ -15,7 +15,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Action = ALifeUni.ALife.Action;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -77,7 +76,7 @@ namespace ALifeUni
         private void actionsBuilder()
         {
             StringBuilder sb = new StringBuilder();
-            foreach(Action ac in theAgent.Actions.Values)
+            foreach(AgentAction ac in theAgent.Actions.Values)
             {
                 sb.Append(ac.Name + ": " + ac.IntensityLastTurn + Environment.NewLine);
             }

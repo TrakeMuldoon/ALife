@@ -10,7 +10,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife
 {
-    class MoveAction : Action
+    class MoveAction : AgentAction
     {
         private double Speed = Settings.AgentDefaultSpeed;
 

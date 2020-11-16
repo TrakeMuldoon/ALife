@@ -30,7 +30,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
                 List<BehaviourInput> currInputs = BehaviourFactory.GenerateBehaviourInputsFromInput((Input)pi);
                 AddInputsFromInputList(currInputs);
             }
-            foreach(Action act in parent.Actions.Values)
+            foreach(AgentAction act in parent.Actions.Values)
             {
                 List<BehaviourInput> currInputs = BehaviourFactory.GenerateBehaviourInputsFromAction(act);
                 AddInputsFromInputList(currInputs);
@@ -89,14 +89,14 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
             return BehaviourFactory.GetConditionForInputsByName(b1, b2, name);
         }
 
-        public Action GetActionByName(string name)
+        public AgentAction GetActionByName(string name)
         {
             return myParent.Actions[name];
         }
-        public Action GetRandomAction()
+        public AgentAction GetRandomAction()
         {
             int randomActionNum = Planet.World.NumberGen.Next(myParent.Actions.Count);
-            Action randomAction = myParent.Actions.Values.ElementAt(randomActionNum);
+            AgentAction randomAction = myParent.Actions.Values.ElementAt(randomActionNum);
             return randomAction;
         }
     }

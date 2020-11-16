@@ -7,7 +7,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife
 {
-    public class ColorAction : Action
+    public class ColorAction : AgentAction
     {
         //TODO: Split colour action into three actions.
         public ColorAction(Agent myself) : base(myself)

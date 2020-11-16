@@ -5,26 +5,26 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
 {
     public class BehaviourWaitQueue
     {
-        List<System.Action>[] waitQueue = new List<System.Action>[Settings.BehaviourWaitMax];
+        List<Action>[] waitQueue = new List<Action>[Settings.BehaviourWaitMax];
         int currPosition = 0;
 
         public BehaviourWaitQueue()
         {
             for(int i = 0; i < Settings.BehaviourWaitMax; i++)
             {
-                waitQueue[i] = new List<System.Action>();
+                waitQueue[i] = new List<Action>();
             }
         }
 
-        public void AddAction(System.Action activity, int waitTurns)
+        public void AddAction(Action activity, int waitTurns)
         {
             waitQueue[(currPosition + waitTurns) % Settings.BehaviourWaitMax].Add(activity);
         }
 
-        public IEnumerable<System.Action> PopThisTurnsActions()
+        public IEnumerable<Action> PopThisTurnsActions()
         {
-            IEnumerable<System.Action> toReturn = waitQueue[currPosition];
-            waitQueue[currPosition] = new List<System.Action>();
+            IEnumerable<Action> toReturn = waitQueue[currPosition];
+            waitQueue[currPosition] = new List<Action>();
             currPosition = (currPosition + 1) % Settings.BehaviourWaitMax;
             return toReturn;
         }

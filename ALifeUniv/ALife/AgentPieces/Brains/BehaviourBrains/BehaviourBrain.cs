@@ -43,16 +43,16 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
                 beh.EvaluateAndEnqueue(bwq);
             }
 
-            IEnumerable<System.Action> actions = bwq.PopThisTurnsActions();  
+            IEnumerable<Action> actions = bwq.PopThisTurnsActions();  
 
             //This adds the intensity to the agents actions
-            foreach(System.Action addIntensityToAction in actions)
+            foreach(Action addIntensityToAgentAction in actions)
             {
-                addIntensityToAction();
+                addIntensityToAgentAction();
             }
 
             //This makes the agent enact those items.
-            foreach(Action act in parent.Actions.Values)
+            foreach(AgentAction act in parent.Actions.Values)
             {
                 act.AttemptEnact();
             }

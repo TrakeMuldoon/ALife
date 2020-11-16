@@ -25,7 +25,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.RandomBrains
 
             for(int i = 0; i < parent.Actions.Count; i++)
             {
-                Action act = parent.Actions.Values.ElementAt(i);
+                AgentAction act = parent.Actions.Values.ElementAt(i);
                 double ifValue = Planet.World.NumberGen.NextDouble();
                 double intensityValue = Planet.World.NumberGen.NextDouble();
 

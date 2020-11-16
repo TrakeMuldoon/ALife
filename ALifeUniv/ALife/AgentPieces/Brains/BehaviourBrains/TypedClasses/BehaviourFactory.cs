@@ -32,7 +32,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
             return bis;
         }
 
-        public static List<BehaviourInput> GenerateBehaviourInputsFromAction(Action act)
+        public static List<BehaviourInput> GenerateBehaviourInputsFromAction(AgentAction act)
         {
             List<BehaviourInput> bis = new List<BehaviourInput>();
             bis.Add(new BehaviourInput<double>(act.Name + ".IntensityLastTurn", () => act.IntensityLastTurn));

@@ -17,7 +17,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
         public readonly String AsEnglish;
         public bool PassedThisTurn;
         public readonly List<BehaviourCondition> Conditions = new List<BehaviourCondition>();
-        public Action SuccessAction;
+        public AgentAction SuccessAction;
         public Func<double> SuccessParam;
         private int waitTurns = 0;
         private string intensityString;

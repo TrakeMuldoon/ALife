@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ALifeUni.ALife
 {
-    public abstract class Action
+    public abstract class AgentAction
     {
         //TODO: Rename to "AgentAction" to reduce confusion with function Action
         protected Agent self;
-        public Action(Agent myself)
+        public AgentAction(Agent myself)
         {
             self = myself;
         }

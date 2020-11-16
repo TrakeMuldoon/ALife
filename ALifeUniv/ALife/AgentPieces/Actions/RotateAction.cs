@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ALifeUni.ALife
 {
-    class RotateAction : Action
+    class RotateAction : AgentAction
     {
         public RotateAction(Agent myself) : base(myself)
         {

@@ -21,7 +21,7 @@ namespace ALifeUni.ALife
         public readonly IBrain myBrain;
 
         public readonly List<SenseCluster> Senses;
-        public readonly ReadOnlyDictionary<String, Action> Actions;
+        public readonly ReadOnlyDictionary<String, AgentAction> Actions;
 
         public override Angle Orientation
         {
@@ -87,11 +87,11 @@ namespace ALifeUni.ALife
             //Reproduce Reproduction Rules
         }
 
-        private ReadOnlyDictionary<string, Action> GenerateActions()
+        private ReadOnlyDictionary<string, AgentAction> GenerateActions()
         {
             //TODO: Link this somehow to world-settings
-            Dictionary<string, Action> myActions = new Dictionary<string, Action>();
-            List<Action> actionList = new List<Action>()
+            Dictionary<string, AgentAction> myActions = new Dictionary<string, AgentAction>();
+            List<AgentAction> actionList = new List<AgentAction>()
             {
                 new ColorAction(this),
                 new MoveAction(this),
@@ -100,7 +100,7 @@ namespace ALifeUni.ALife
 
             actionList.ForEach((ac) => myActions.Add(ac.Name, ac));
 
-            return new ReadOnlyDictionary<string, Action>(myActions);
+            return new ReadOnlyDictionary<string, AgentAction>(myActions);
         }
 
         private void InitializeAgentProperties()

@@ -1,19 +1,22 @@
 # Current Roadmap
 ## Short term tasks
-* [ ] Implement Actions in BehaviourBrain
-* [ ] Implement Constants in BehaviourBrain
-* [ ] Refactor all Actions into "ActionClusters"
-* [ ] Add Actions into BehaviourCabinet
-* [ ] Implement "WAIT" Action
-* [ ] Implement Random BehaviourBrain creation
+* [x] Implement Actions in BehaviourBrain
+* [x] Implement Constants in BehaviourBrain
+* [x] Refactor all Actions into "ActionClusters"
+* [x] Add Actions into BehaviourCabinet
+* [x] Implement "WAIT" Action
+* [x] Implement Random BehaviourBrain creation
 * [ ] TEST complete BehaviourBrain with custom behaviours
-* [ ] Update UI to show Behaviours in Right hand Panel
+* [x] Update UI to show Behaviours in Right hand Panel
 * [ ] Implement Cloning/Mutation
 * [ ] Implement no movement countdown to death.
-* [ ] Implement Bumping Behaviour to test First Scenario
+* [x] Implement Bumping Behaviour
+* [ ] Implement First Scenario
+* [ ] Implement End of turn trigger evaluations (i.e. reproduce/death)
 
 * First Scenario is : Agents all run around, if they do not move for 100 turns, they automatically die. If they bump into another agent, the passive agent dies, and the active agent produces an offspring 
 ** Desired Behaviour evolves: See Something, RUN FORWARD HARD. Or perhaps running forward as fast as they can blindly, might still work. 
+
 
 ## Goal-based Features
 The goal is provided/set to the agents; they do not decide at this time.
@@ -44,7 +47,7 @@ Required to start running simulations; currently, these are configured/provided.
 * [ ] Inspect End Of Run - some meaningful report at end of run (TBD); e.g., might include ability to export the best agent(s), or a selection based on some criterion/-ia
 
 ## Runtime Tasks
-* [ ] Inspect Individual Agent - window to show agent stats
+* [x] Inspect Individual Agent - window to show agent stats
 
 ## Senses and Behaviours
 * [ ] ProximityDetectorInput

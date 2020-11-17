@@ -1,4 +1,17 @@
-﻿using ALifeUni.ALife.UtilityClasses;
+﻿//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+
+using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +20,9 @@ using System.Threading.Tasks;
 
 namespace ALifeUni.ALife
 {
-    class RotateAction : AgentAction
+    class OldRotateAction : ActionPart
     {
-        public RotateAction(Agent myself) : base(myself)
+        public OldRotateAction(Agent myself) : base(myself)
         {
         }
         public override string Name

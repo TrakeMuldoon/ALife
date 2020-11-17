@@ -116,11 +116,15 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ALife\AgentPieces\AgentActions\AgentAction.cs" />
-    <Compile Include="ALife\AgentPieces\AgentActions\ColorAction.cs" />
-    <Compile Include="ALife\AgentPieces\AgentActions\MoveAction.cs" />
-    <Compile Include="ALife\AgentPieces\AgentActions\RotateAction.cs" />
+    <Compile Include="ALife\AgentPieces\AgentActions\ActionCluster.cs" />
+    <Compile Include="ALife\AgentPieces\AgentActions\ActionPart.cs" />
+    <Compile Include="ALife\AgentPieces\AgentActions\ColorCluster.cs" />
+    <Compile Include="ALife\AgentPieces\AgentActions\MoveCluster.cs" />
+    <None Include="ALife\AgentPieces\AgentActions\OldColorAction.cs" />
+    <None Include="ALife\AgentPieces\AgentActions\OldMoveAction.cs" />
+    <None Include="ALife\AgentPieces\AgentActions\OldRotateAction.cs" />
     <Compile Include="ALife\AgentPieces\Agent.cs" />
+    <Compile Include="ALife\AgentPieces\AgentActions\RotateCluster.cs" />
     <Compile Include="ALife\AgentPieces\AgentIDGenerator.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourCondition.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourInput.cs" />

@@ -32,11 +32,14 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
             return bis;
         }
 
-        public static List<BehaviourInput> GenerateBehaviourInputsFromAction(AgentAction act)
+        public static List<BehaviourInput> GenerateBehaviourInputsFromAction(ActionCluster act)
         {
             List<BehaviourInput> bis = new List<BehaviourInput>();
-            bis.Add(new BehaviourInput<double>(act.Name + ".IntensityLastTurn", () => act.IntensityLastTurn));
             bis.Add(new BehaviourInput<bool>(act.Name + ".ActivatedLastTurn", () => act.ActivatedLastTurn));
+            foreach(ActionPart ap in act.SubActions.Values)
+            {
+                bis.Add(new BehaviourInput<double>(ap.FullName + ".IntensityLastTurn", () => ap.IntensityLastTurn));
+            }
             return bis;
         }
         #endregion

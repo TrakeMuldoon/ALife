@@ -1,4 +1,17 @@
-﻿using ALifeUni.ALife.UtilityClasses;
+﻿//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+
+using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +23,11 @@ using Windows.UI;
 
 namespace ALifeUni.ALife
 {
-    class MoveAction : AgentAction
+    class OldMoveAction : ActionPart
     {
         private double Speed = Settings.AgentDefaultSpeed;
 
-        public MoveAction(Agent myself) : base(myself)
+        public OldMoveAction(Agent myself) : base(myself)
         {
         
         }

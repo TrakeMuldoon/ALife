@@ -1,4 +1,17 @@
-﻿using System;
+﻿//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+//NOT COMPILED
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,10 +20,10 @@ using Windows.UI;
 
 namespace ALifeUni.ALife
 {
-    public class ColorAction : AgentAction
+    public class OldColorAction : ActionPart
     {
         //TODO: Split colour action into three actions.
-        public ColorAction(Agent myself) : base(myself)
+        public OldColorAction(Agent myself) : base(myself)
         {
         }
 

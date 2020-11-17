@@ -17,16 +17,37 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
         }
 
         private List<Behaviour> behaviours = new List<Behaviour>();
-        private Agent parent;
+        private Agent self;
         private BehaviourCabinet behaviorCabinet;
 
-        public BehaviourBrain(Agent parent, params string [] behaviourStrings)
+        public BehaviourBrain(Agent self, params string [] behaviourStrings)
         {
-            this.behaviorCabinet = new BehaviourCabinet(parent);
-            this.parent = parent;
+            this.behaviorCabinet = new BehaviourCabinet(self);
+            this.self = self;
             foreach(string behaviourString in behaviourStrings)
             {
                 behaviours.Add(new Behaviour(behaviourString, behaviorCabinet));
+            }
+        }
+
+        public BehaviourBrain(Agent self, BehaviourBrain oldBrain)
+        {
+            this.behaviorCabinet = new BehaviourCabinet(self);
+            this.self = self;
+            //TODO pull from config somehow
+            foreach(Behaviour beh in oldBrain.Behaviours)
+            {
+                double belowNinety = Planet.World.NumberGen.NextDouble();
+                if(belowNinety < 0.9)
+                {
+                    behaviours.Add(new Behaviour(beh.AsEnglish, behaviorCabinet));
+                }
+                //else this behaviour is dropped
+            }
+            double belowEightyFive = Planet.World.NumberGen.NextDouble();
+            if(belowEightyFive < 0.85)
+            {
+                behaviours.Add(new Behaviour("*", behaviorCabinet));
             }
         }
 
@@ -34,7 +55,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
 
         public void ExecuteTurn()
         {
-            foreach (SenseCluster sc in parent.Senses)
+            foreach (SenseCluster sc in self.Senses)
             {
                 sc.Detect();
             }
@@ -52,9 +73,9 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
             }
 
             //This makes the agent enact those items.
-            foreach(AgentAction act in parent.Actions.Values)
+            foreach(ActionCluster act in self.Actions.Values)
             {
-                act.AttemptEnact();
+                act.ActivateAction();
             }
         }
     }

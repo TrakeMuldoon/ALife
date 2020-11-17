@@ -24,8 +24,8 @@ namespace ALifeUni.ALife.AgentPieces.Brains.RandomBrains
                 sc.Detect();
             }
 
-            parent.Actions["Rotate"].Intensity = 0.1;
-            parent.Actions["Rotate"].AttemptEnact();
+            parent.Actions["Rotate"].SubActions["TurnLeft"].Intensity = 0.1;
+            parent.Actions["Rotate"].ActivateAction();
             
             //Reset means that the bounding box cache is wiped out
             //Until the next time it is reset (during detect) it will be using the cached one

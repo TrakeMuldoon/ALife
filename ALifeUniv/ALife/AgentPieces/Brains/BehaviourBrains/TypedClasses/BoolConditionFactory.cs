@@ -10,7 +10,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
     {
         Equals,
         NotEqualTo,
-        AND,
+        WITH,
         OR,
         NAND,
         NOR,
@@ -39,7 +39,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
             {
                 //constant
                 BehaviourInput dummybool = new BehaviourInput<bool>(null, null);
-                b2 = BehaviourFactory.GetBehaviourConstantFromString(dummybool, GetRandomConstantValue().ToString());
+                b2 = BehaviourFactory.GetBehaviourConstantFromString(dummybool, "[" + GetRandomConstantValue().ToString() + "]");
             }
             return b2;
         }
@@ -71,7 +71,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
             {
                 case BoolOperationEnum.Equals:      return new BehaviourCondition<bool>(b1, b2, (x, y) => x == y, val.ToString());
                 case BoolOperationEnum.NotEqualTo:  return new BehaviourCondition<bool>(b1, b2, (x, y) => x != y, val.ToString());
-                case BoolOperationEnum.AND:         return new BehaviourCondition<bool>(b1, b2, (x, y) => x && y, val.ToString());
+                case BoolOperationEnum.WITH:        return new BehaviourCondition<bool>(b1, b2, (x, y) => x && y, val.ToString());
                 case BoolOperationEnum.OR:          return new BehaviourCondition<bool>(b1, b2, (x, y) => x || y, val.ToString());
                 case BoolOperationEnum.NAND:        return new BehaviourCondition<bool>(b1, b2, (x, y) => !(x && y), val.ToString());
                 case BoolOperationEnum.NOR:         return new BehaviourCondition<bool>(b1, b2, (x, y) => !(x || y), val.ToString());

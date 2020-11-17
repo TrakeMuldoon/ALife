@@ -17,7 +17,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
         public readonly String AsEnglish;
         public bool PassedThisTurn;
         public readonly List<BehaviourCondition> Conditions = new List<BehaviourCondition>();
-        public AgentAction SuccessAction;
+        public ActionPart SuccessAction;
         public Func<double> SuccessParam;
         private int waitTurns = 0;
         private string intensityString;
@@ -44,6 +44,11 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
                 Match behaviourMatch = englishStringParser.Match(englishString);
                 ParseConditions(behaviourMatch.Groups[1].Value, cabinet);
                 ParseResults(behaviourMatch.Groups[2].Value, cabinet);
+            }
+
+            if(AsEnglish != this.GenerateString())
+            {
+                throw new Exception("");
             }
         }
 
@@ -117,20 +122,20 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
             return bc;
         }
 
-        Regex resultParser = new Regex("^(WAIT \\[(\\d+)\\] TO )?(\\w+) AT ([\\[\\]\\.\\w]+)$");
+        Regex resultParser = new Regex("^(WAIT \\[(\\d+)\\] TO )?(\\w+(\\.\\w+)) AT ([\\[\\]\\.\\w]+)$");
         private void ParseResults(string value, BehaviourCabinet cabinet)
         {
             Match resultsMatch = resultParser.Match(value);
             string waitMatch = resultsMatch.Groups[2].Value;
             string actionMatch = resultsMatch.Groups[3].Value;
-            string variableValue = resultsMatch.Groups[4].Value;
+            string variableValue = resultsMatch.Groups[5].Value;
 
             if(resultsMatch.Groups[1].Success)
             {
                 waitTurns = int.Parse(waitMatch);
             }
             //else waitTurns remains zero. the default value.
-            SuccessAction = cabinet.GetActionByName(actionMatch);
+            SuccessAction = cabinet.GetActionPartByFullName(actionMatch);
 
             //dummy double exists because you need to pass in the "type" of the constant
             BehaviourInput dummydouble = new BehaviourInput<double>(null, null);
@@ -190,7 +195,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
             {
                 sb.Append("WAIT [" + waitTurns + "] TO ");
             }
-            sb.Append(this.SuccessAction.Name);
+            sb.Append(this.SuccessAction.FullName);
             sb.Append(" AT ");
             sb.Append(this.intensityString);
 

@@ -76,11 +76,15 @@ namespace ALifeUni
         private void actionsBuilder()
         {
             StringBuilder sb = new StringBuilder();
-            foreach(AgentAction ac in theAgent.Actions.Values)
+            foreach(ActionCluster ac in theAgent.Actions.Values)
             {
-                sb.Append(ac.Name + ": " + ac.IntensityLastTurn + Environment.NewLine);
+                sb.Append(ac.Name + ":" + ac.LastTurnString() + Environment.NewLine);
+                foreach(ActionPart ap in ac.SubActions.Values)
+                {
+                    sb.Append("   " + ap.Name + ": " + ap.IntensityLastTurn + Environment.NewLine);
+                }
+                Actions.Text = sb.ToString();
             }
-            Actions.Text = sb.ToString();
         }
 
         private void brainBuilder()

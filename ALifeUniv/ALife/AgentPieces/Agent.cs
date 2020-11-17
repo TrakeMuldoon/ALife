@@ -21,7 +21,7 @@ namespace ALifeUni.ALife
         public readonly IBrain myBrain;
 
         public readonly List<SenseCluster> Senses;
-        public readonly ReadOnlyDictionary<String, AgentAction> Actions;
+        public readonly ReadOnlyDictionary<String, ActionCluster> Actions;
 
         public override Angle Orientation
         {
@@ -52,7 +52,7 @@ namespace ALifeUni.ALife
                 ////"IF Eye1.HowGreen.Value LessThan [0.8] THEN Color AT Eye1.HowGreen.Value",
                 //"IF Eye1.SeeSomething.Value Equals [False] THEN Move AT [1.0]",
                 //"IF Eye1.SeeSomething.Value Equals [False] THEN Rotate AT [0.3]", "*"
-                "*", "*", "*", "*"
+                "*", "*", "*", "*", "*"
                 );
 
             this.DebugColor = Colors.PaleVioletRed;
@@ -71,10 +71,11 @@ namespace ALifeUni.ALife
 
             DebugColor = Colors.Blue;
 
-            Senses = new List<SenseCluster>();
-            Actions = GenerateActions();
             InitializeAgentProperties();
-            myBrain = new BehaviourBrain(this);
+            Senses = GenerateSenses();
+            Actions = GenerateActions();
+
+            myBrain = new BehaviourBrain(this, (BehaviourBrain)parent.myBrain);
 
             //Reproduce Actions
 
@@ -87,20 +88,20 @@ namespace ALifeUni.ALife
             //Reproduce Reproduction Rules
         }
 
-        private ReadOnlyDictionary<string, AgentAction> GenerateActions()
+        private ReadOnlyDictionary<string, ActionCluster> GenerateActions()
         {
             //TODO: Link this somehow to world-settings
-            Dictionary<string, AgentAction> myActions = new Dictionary<string, AgentAction>();
-            List<AgentAction> actionList = new List<AgentAction>()
+            Dictionary<string, ActionCluster> myActions = new Dictionary<string, ActionCluster>();
+            List<ActionCluster> actionList = new List<ActionCluster>()
             {
-                new ColorAction(this),
-                new MoveAction(this),
-                new RotateAction(this)
+                new ColorCluster(this),
+                new MoveCluster(this),
+                new RotateCluster(this)
             };
 
             actionList.ForEach((ac) => myActions.Add(ac.Name, ac));
 
-            return new ReadOnlyDictionary<string, AgentAction>(myActions);
+            return new ReadOnlyDictionary<string, ActionCluster>(myActions);
         }
 
         private void InitializeAgentProperties()

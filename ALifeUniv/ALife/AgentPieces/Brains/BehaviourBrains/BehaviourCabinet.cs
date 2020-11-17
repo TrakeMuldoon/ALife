@@ -11,6 +11,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
         //TODO: Note that the dictionaries are unordered, which could cause reproducability problems.
         Dictionary<String, BehaviourInput> StringToBI = new Dictionary<string, BehaviourInput>();
         Dictionary<Type, List<BehaviourInput>> TypeToListBI = new Dictionary<Type, List<BehaviourInput>>();
+        Dictionary<String, ActionPart> FullStringToActionPart = new Dictionary<string, ActionPart>();
         int totalInputs = 0;
         Agent myParent;
 
@@ -30,12 +31,18 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
                 List<BehaviourInput> currInputs = BehaviourFactory.GenerateBehaviourInputsFromInput((Input)pi);
                 AddInputsFromInputList(currInputs);
             }
-            foreach(AgentAction act in parent.Actions.Values)
+            foreach(ActionCluster act in parent.Actions.Values)
             {
                 List<BehaviourInput> currInputs = BehaviourFactory.GenerateBehaviourInputsFromAction(act);
                 AddInputsFromInputList(currInputs);
+
+                foreach(ActionPart ap in act.SubActions.Values)
+                {
+                    FullStringToActionPart.Add(ap.FullName, ap);
+                }
             }
             totalInputs = StringToBI.Count;
+
         }
 
         private void AddInputsFromInputList(List<BehaviourInput> behaviours)
@@ -89,14 +96,14 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
             return BehaviourFactory.GetConditionForInputsByName(b1, b2, name);
         }
 
-        public AgentAction GetActionByName(string name)
+        public ActionPart GetActionPartByFullName(string name)
         {
-            return myParent.Actions[name];
+            return FullStringToActionPart[name];
         }
-        public AgentAction GetRandomAction()
+        public ActionPart GetRandomAction()
         {
-            int randomActionNum = Planet.World.NumberGen.Next(myParent.Actions.Count);
-            AgentAction randomAction = myParent.Actions.Values.ElementAt(randomActionNum);
+            int randomActionNum = Planet.World.NumberGen.Next(FullStringToActionPart.Count);
+            ActionPart randomAction = FullStringToActionPart.Values.ElementAt(randomActionNum);
             return randomAction;
         }
     }

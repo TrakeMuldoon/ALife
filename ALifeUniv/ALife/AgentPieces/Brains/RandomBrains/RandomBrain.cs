@@ -23,17 +23,20 @@ namespace ALifeUni.ALife.AgentPieces.Brains.RandomBrains
                 sc.Detect();
             }
 
-            for(int i = 0; i < parent.Actions.Count; i++)
+            foreach(ActionCluster ac in parent.Actions.Values)
             {
-                AgentAction act = parent.Actions.Values.ElementAt(i);
-                double ifValue = Planet.World.NumberGen.NextDouble();
-                double intensityValue = Planet.World.NumberGen.NextDouble();
-
-                if(ifValue > 0.5)
+                foreach(ActionPart ap in ac.SubActions.Values)
                 {
-                    act.Intensity = intensityValue;
-                    act.AttemptEnact();
+                    double ifValue = Planet.World.NumberGen.NextDouble();
+                    double intensityValue = Planet.World.NumberGen.NextDouble();
+
+                    if(ifValue > 0.5)
+                    {
+                        ap.Intensity = intensityValue;
+
+                    }
                 }
+                ac.ActivateAction();
             }
             
             //Reset means that the bounding box cache is wiped out

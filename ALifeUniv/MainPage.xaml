@@ -31,7 +31,7 @@
             </Border>
 
         </ScrollViewer>
-        <StackPanel Width="100" Background="Chocolate">
+        <StackPanel Width="200" Background="White">
             <Button x:Name="ResetSim" HorizontalAlignment="Stretch" Click="ResetSim_Click">RESET</Button>
             <Button x:Name="PauseSim" HorizontalAlignment="Stretch" Click="PauseSim_Click">Pause</Button>
             <Button x:Name="OneTurn" HorizontalAlignment="Stretch" Click="OneTurnSim_Click">1 Turn</Button>
@@ -46,21 +46,15 @@
             <TextBlock x:Name="upValue" />
 
             <TextBlock x:Name="LayersLabel" Text="Layers"></TextBlock>
-            <CheckBox x:Name="CheckLiveLayer" Checked="CheckLiveLayer_Checked" Unchecked="CheckLiveLayer_Unchecked" Content="View Live Layer" IsChecked="True"/>
-            <CheckBox x:Name="CheckDeadLayer" Checked="CheckDeadLayer_Checked" Unchecked="CheckDeadLayer_Unchecked" Content="View Dead Layer" />
-
-            <TreeView x:Name="VisualSettings">
-                <TreeView.ItemTemplate>
+            <ListView x:Name="SettingsCheckboxes">
+                <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TreeViewItem Background="RED" Foreground="Black">
-                            <StackPanel>
-                                <CheckBox/>
-                                <TextBlock/>
-                            </StackPanel>
-                        </TreeViewItem>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Content="{Binding Name}" Click="CheckVisualSetting" IsChecked="True"/>
+                        </StackPanel>
                     </DataTemplate>
-                </TreeView.ItemTemplate>
-            </TreeView>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
         <local:AgentInfoPanel x:Name="AgentPanel"></local:AgentInfoPanel>
     </StackPanel>

@@ -12,15 +12,14 @@ namespace ALifeUni.UI
 {
     public static class DrawingLogic
     {
-        internal static void DrawWorldObject(WorldObject wo, CanvasAnimatedDrawEventArgs args)
+        internal static void DrawWorldObject(WorldObject wo, CanvasAnimatedDrawEventArgs args, AgentSettings agentSettings)
         {
-            Vector2 agentCentre = new Vector2((float)wo.CentrePoint.X, (float)wo.CentrePoint.Y);
-            //Agent Body
-            args.DrawingSession.FillCircle(agentCentre, wo.Radius, wo.Color);
+            Vector2 objectCentre = new Vector2((float)wo.CentrePoint.X, (float)wo.CentrePoint.Y);
+            //World Object Body
+            args.DrawingSession.FillCircle(objectCentre, wo.Radius, wo.Color);
             //Core of the body is the debug colour
-            args.DrawingSession.FillCircle(agentCentre, 2, wo.GetShape().DebugColor);
+            args.DrawingSession.FillCircle(objectCentre, 2, wo.GetShape().DebugColor);
 
-            //Agent Orientation
             if(wo is Agent)
             {
                 Agent ag = (Agent)wo;
@@ -29,26 +28,35 @@ namespace ALifeUni.UI
                 float newY = (float)(wo.CentrePoint.Y + wo.Radius * Math.Sin(ag.Orientation.Radians));
                 args.DrawingSession.FillCircle(new Vector2(newX, newY), 1, Colors.DarkCyan);
 
-                DrawBoundingBox(ag.BoundingBox, args, Colors.AntiqueWhite);
-
-                foreach(IHasShape shape in ag.Senses)
+                if(agentSettings.DrawBoundingBox)
                 {
-                    IShape currShape = shape.GetShape();
-                    if(currShape is Sector)
+                    DrawBoundingBox(ag.BoundingBox, args, Colors.AntiqueWhite);
+                }
+
+                if(agentSettings.DrawSenses)
+                {
+                    foreach(IHasShape shape in ag.Senses)
                     {
-                        ChildSector sec = (ChildSector)currShape;
-                        DrawBoundingBox(sec.BoundingBox, args, Colors.Green);
+                        IShape currShape = shape.GetShape();
+                        if(currShape is Sector)
+                        {
+                            ChildSector sec = (ChildSector)currShape;
+                            if(agentSettings.DrawSenseBoundingBox)
+                            {
+                                DrawBoundingBox(sec.BoundingBox, args, Colors.Green);
+                            }
 
-                        CanvasPathBuilder pathBuilder = new CanvasPathBuilder(args.DrawingSession);
-                        Angle myAngle = sec.Orientation + sec.OrientationAroundParent + sec.Parent.Orientation;
-                        Vector2 centre = new Vector2((float)sec.CentrePoint.X, (float)sec.CentrePoint.Y);
-                        pathBuilder.BeginFigure(centre);
-                        pathBuilder.AddArc(centre, sec.Radius, sec.Radius, (float)myAngle.Radians, (float)sec.SweepAngle.Radians);
-                        pathBuilder.EndFigure(CanvasFigureLoop.Closed);
-                        CanvasGeometry cg = CanvasGeometry.CreatePath(pathBuilder);
+                            CanvasPathBuilder pathBuilder = new CanvasPathBuilder(args.DrawingSession);
+                            Angle myAngle = sec.Orientation + sec.OrientationAroundParent + sec.Parent.Orientation;
+                            Vector2 centre = new Vector2((float)sec.CentrePoint.X, (float)sec.CentrePoint.Y);
+                            pathBuilder.BeginFigure(centre);
+                            pathBuilder.AddArc(centre, sec.Radius, sec.Radius, (float)myAngle.Radians, (float)sec.SweepAngle.Radians);
+                            pathBuilder.EndFigure(CanvasFigureLoop.Closed);
+                            CanvasGeometry cg = CanvasGeometry.CreatePath(pathBuilder);
 
-                        args.DrawingSession.FillGeometry(cg, sec.DebugColor);
-                        args.DrawingSession.DrawGeometry(cg, sec.Color, 1);
+                            args.DrawingSession.FillGeometry(cg, sec.DebugColor);
+                            args.DrawingSession.DrawGeometry(cg, sec.Color, 1);
+                        }
                     }
                 }
             }

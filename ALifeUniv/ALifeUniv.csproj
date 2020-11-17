@@ -144,6 +144,7 @@
       <DependentUpon>AgentInfoPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\DrawingLogic.cs" />
+    <Compile Include="UI\VisualSettings.cs" />
     <None Include="ALife\Collision\CollisionQuadTree.cs" />
     <Compile Include="ALife\Collision\CollisionGrid.cs" />
     <Compile Include="ALife\Collision\ICollisionMap.cs" />

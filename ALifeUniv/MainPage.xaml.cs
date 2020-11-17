@@ -27,6 +27,7 @@ namespace ALifeUni
 
         long startticks;
         DispatcherTimer gameTimer = new DispatcherTimer();
+        private VisualSettings VisSettings = new VisualSettings();
 
         public MainPage()
         {
@@ -37,18 +38,7 @@ namespace ALifeUni
             gameTimer.Tick += Dt_Tick;
 
             PlaySim_Go();
-
-            TreeView tt = VisualSettings;
-            TreeViewNode num1 = new TreeViewNode();
-            num1.Content = "num 1";
-            TreeViewNode num1a = new TreeViewNode();
-            num1a.Content = "num 1.a";
-            num1.Children.Add(num1a);
-            TreeViewNode num2 = new TreeViewNode();
-            num2.Content = "num 2";
-
-            tt.RootNodes.Add(num1);
-            tt.RootNodes.Add(num2);
+            SettingsCheckboxes.ItemsSource = VisSettings.AllValues;
         }
 
         private void Dt_Tick(object sender, object e)
@@ -83,49 +73,40 @@ namespace ALifeUni
                 args.DrawingSession.DrawCircle(agentCentre, special.Radius + 1, Colors.Blue);
             }
 
-            if(ShowDead)
+            if(VisSettings.For[VisualSettingsEnum.ShowDeadLayer].IsChecked)
             {
                 if(Planet.World.CollisionLevels.ContainsKey(ReferenceValues.CollisionLevelDead))
                 {
+                    AgentSettings localSettings = new AgentSettings(VisSettings.For[VisualSettingsEnum.ShowDeadBoundingBox].IsChecked
+                                                              , VisSettings.For[VisualSettingsEnum.ShowDeadSenses].IsChecked
+                                                              , VisSettings.For[VisualSettingsEnum.ShowDeadSenseBoundingBox].IsChecked);
+
                     foreach(WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelDead].EnumerateItems())
                     {
-                        DrawingLogic.DrawWorldObject(wo, args);
+                        DrawingLogic.DrawWorldObject(wo, args, localSettings);
                     }
                 }
             }
-            if(ShowLive)
+            if(VisSettings.SettingsEnumMatrix[VisualSettingsEnum.ShowLiveLayer].IsChecked)
             {
+                AgentSettings localSettings = new AgentSettings(VisSettings.For[VisualSettingsEnum.ShowLiveBoundingBox].IsChecked
+                                                               , VisSettings.For[VisualSettingsEnum.ShowLiveSenses].IsChecked
+                                                               , VisSettings.For[VisualSettingsEnum.ShowLiveSenseBoundingBox].IsChecked);
+
                 foreach(WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].EnumerateItems())
                 {
-                    DrawingLogic.DrawWorldObject(wo, args);
+                    DrawingLogic.DrawWorldObject(wo, args, localSettings);
                 }
             }
         }
 
 
-        private bool ShowLive = true;
-        private bool ShowDead = false;
-        private void CheckLiveLayer_Checked(object sender, RoutedEventArgs e)
+        private void CheckVisualSetting(object sender, RoutedEventArgs e)
         {
-            ShowLive = true;
+            CheckBox check = (CheckBox)sender;
+            VisSettings.SettingsStringMatrix[check.Content.ToString()].IsChecked = check.IsChecked.Value;
+
         }
-        private void CheckDeadLayer_Checked(object sender, RoutedEventArgs e)
-        {
-            ShowDead = true;
-        }
-
-        private void CheckLiveLayer_Unchecked(object sender, RoutedEventArgs e)
-        {
-            ShowLive = false;
-        }
-
-        private void CheckDeadLayer_Unchecked(object sender, RoutedEventArgs e)
-        {
-            ShowDead = false;
-        }
-
-
-
 
         private void animCanvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
         {

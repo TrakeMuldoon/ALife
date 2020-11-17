@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ALifeUni.ALife
 {
-    public class PropertyInput : Input<Double>
+    public class PropertyInput : Input<double>, IPropertyInput<double>
     {
         public double PropertyMaximum;
         public double PropertyMinimum;
@@ -19,6 +19,11 @@ namespace ALifeUni.ALife
         {
             PropertyMaximum = propertyMaximum;
             PropertyMinimum = propertyMinimum;
+        }
+
+        public double GetValue()
+        {
+            return Value;
         }
 
         public void IncreasePropertyBy(double value)
@@ -63,22 +68,14 @@ namespace ALifeUni.ALife
 
         public void ChangePropertyTo(double value)
         {
-            double temp = value;
-            if(temp == Value)
-            {
-                return;
-            }
-            if (temp < PropertyMinimum)
-            {
-                temp = PropertyMinimum;
-            }
-            else if(temp > PropertyMaximum)
-            {
-                temp = PropertyMaximum;
-            }
-
-            Value = temp;
+            Value = Math.Clamp(value, PropertyMinimum, PropertyMaximum);
             modified = true;
         }
+
+        public Type GetMyType()
+        {
+            return typeof(double);
+        }
+
     }
 }

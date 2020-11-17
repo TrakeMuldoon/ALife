@@ -1,0 +1,76 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ALifeUni.ALife
+{
+    public class StatisticInput : Input<int>, IPropertyInput<int>
+    {
+        public int StatisticMaximum;
+        public int StatisticMinimum;
+
+        public StatisticInput(string name, int statisticMinimum, int statisticMaximum) : base(name)
+        {
+            StatisticMaximum = statisticMaximum;
+            StatisticMinimum = statisticMinimum;
+        }
+
+        public int GetValue()
+        {
+            return Value;
+        }
+
+        public void IncreasePropertyBy(int value)
+        {
+            if(value < 0)
+            {
+                throw new Exception("Negative Value for 'increase property'");
+            }
+            if(value == 0)
+            {
+                return;
+            }
+            int temp = Value + value;
+            if(temp > StatisticMaximum)
+            {
+                temp = StatisticMaximum;
+            }
+
+            Value = temp;
+            modified = true;
+        }
+
+        public void DecreasePropertyBy(int value)
+        {
+            if(value < 0)
+            {
+                throw new Exception("Negative Value for 'decrease property'");
+            }
+            if(value == 0)
+            {
+                return;
+            }
+            int temp = Value - value;
+            if(temp < StatisticMinimum)
+            {
+                temp = StatisticMinimum;
+            }
+
+            Value = temp;
+            modified = true;
+        }
+
+        public void ChangePropertyTo(int value)
+        {
+            Value = Math.Clamp(value, StatisticMinimum, StatisticMaximum);
+            modified = true;
+        }
+
+        public Type GetMyType()
+        {
+            return typeof(int);
+        }
+    }
+}

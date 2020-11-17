@@ -27,6 +27,13 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
                     bis.Add(new BehaviourInput<bool>(myInput.Name + ".Decreased", () => d1.Value < d1.MostRecentValue));
                     bis.Add(new BehaviourInput<bool>(myInput.Name + ".Modified", () => d1.Modified));
                     break;
+                case Input<int> d1:
+                    bis.Add(new BehaviourInput<int>(myInput.Name + ".Value", () => d1.Value));
+                    bis.Add(new BehaviourInput<int>(myInput.Name + ".MostRecentValue", () => d1.MostRecentValue));
+                    bis.Add(new BehaviourInput<bool>(myInput.Name + ".Increased", () => d1.Value > d1.MostRecentValue));
+                    bis.Add(new BehaviourInput<bool>(myInput.Name + ".Decreased", () => d1.Value < d1.MostRecentValue));
+                    bis.Add(new BehaviourInput<bool>(myInput.Name + ".Modified", () => d1.Modified));
+                    break;
                 default: throw new Exception("Unknown type " + myInput.GetContainedType() + " for BehaviourInputs");
             }
             return bis;
@@ -52,8 +59,9 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
             }
             switch(b1)
             {
-                case BehaviourInput<bool> boo1: return BoolConditionFactory.GetRandomBehaviourOperation(b1, b2);
-                case BehaviourInput<double> dob1: return DoubleConditionFactory.GetRandomBehaviourOperation(b1, b2);
+                case BehaviourInput<bool> boo1:     return BoolConditionFactory.GetRandomBehaviourOperation(b1, b2);
+                case BehaviourInput<double> dob1:   return DoubleConditionFactory.GetRandomBehaviourOperation(b1, b2);
+                case BehaviourInput<int> int1:      return IntConditionFactory.GetRandomBehaviourOperation(b1, b2);
                 default: throw new NotImplementedException("unimiplemented condition type: " + b1.GetContainedType());
             }
         }
@@ -66,8 +74,9 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
             }
             switch (b1)
             {
-                case BehaviourInput<bool> boo1: return BoolConditionFactory.GetConditionByName(b1, b2, name);
-                case BehaviourInput<double> dob1: return DoubleConditionFactory.GetConditionByName(b1, b2, name);
+                case BehaviourInput<bool> boo1:     return BoolConditionFactory.GetConditionByName(b1, b2, name);
+                case BehaviourInput<double> dob1:   return DoubleConditionFactory.GetConditionByName(b1, b2, name);
+                case BehaviourInput<int> int1:      return IntConditionFactory.GetConditionByName(b1, b2, name);
                 default: throw new NotImplementedException("unimiplemented condition type: " + b1.GetContainedType());
             }
         }
@@ -77,18 +86,14 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
             string con = untrimmedConstant.Trim('[', ']');
             switch (b1)
             {
-                case BehaviourInput<bool> boo1:
-                    bool bval = bool.Parse(con);
-                    return new BehaviourInput<bool>(untrimmedConstant, () => bval);
-                case BehaviourInput<double> dob1:
-                    double dval = double.Parse(con);
-                    return new BehaviourInput<double>(untrimmedConstant, () => dval);
-                case BehaviourInput<string> str1:
-                    string sval = untrimmedConstant;
-                    return new BehaviourInput<string>(untrimmedConstant, () => sval);
-                case BehaviourInput<int> int1:
-                    int ival = int.Parse(untrimmedConstant);
-                    return new BehaviourInput<int>(untrimmedConstant, () => ival);
+                case BehaviourInput<bool> boo1:     bool bval = bool.Parse(con);
+                                                    return new BehaviourInput<bool>(untrimmedConstant, () => bval);
+                case BehaviourInput<double> dob1:   double dval = double.Parse(con);
+                                                    return new BehaviourInput<double>(untrimmedConstant, () => dval);
+                case BehaviourInput<int> int1:      int ival = int.Parse(con);
+                                                    return new BehaviourInput<int>(untrimmedConstant, () => ival);
+                case BehaviourInput<string> str1:   string sval = untrimmedConstant;
+                                                    return new BehaviourInput<string>(untrimmedConstant, () => sval);
                 default: throw new NotImplementedException("unimiplemented condition type: " + b1.GetContainedType());
             }
         }
@@ -97,10 +102,9 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
         {
             switch(b1)
             {
-                case BehaviourInput<bool> boo1:
-                    return BoolConditionFactory.GetRandomBehaviourConditionForBehaviour(b1, cabinet);
-                case BehaviourInput<double> dob1:
-                    return DoubleConditionFactory.GetRandomBehaviourConditionForBehaviour(b1, cabinet);
+                case BehaviourInput<bool> boo1:     return BoolConditionFactory.GetRandomBehaviourConditionForBehaviour(b1, cabinet);
+                case BehaviourInput<double> dob1:   return DoubleConditionFactory.GetRandomBehaviourConditionForBehaviour(b1, cabinet);
+                case BehaviourInput<int> int1:      return IntConditionFactory.GetRandomBehaviourConditionForBehaviour(b1, cabinet);
                 default: throw new NotImplementedException("unimiplemented condition type: " + b1.GetContainedType());
             }
         }

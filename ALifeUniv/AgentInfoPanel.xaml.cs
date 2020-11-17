@@ -70,6 +70,10 @@ namespace ALifeUni
             {
                 sb.Append(pi.Name + ": " + pi.GetValueAsString() + Environment.NewLine);
             }
+            foreach(StatisticInput si in theAgent.Statistics.Values)
+            {
+                sb.Append(si.Name + ": " + si.GetValueAsString() + Environment.NewLine);
+            }
             Properties.Text = sb.ToString();
         }
 

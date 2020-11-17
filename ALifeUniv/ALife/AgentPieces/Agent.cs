@@ -108,13 +108,12 @@ namespace ALifeUni.ALife
         {
             //TODO: Link this to the config generation
             //TODO: Implement Property<int> instead of making all properties doubles.
-            PropertyInput Age = new PropertyInput("Age", 0, Double.MaxValue);
-            PropertyInput ReproAge = new PropertyInput("ReproAge", 0, Double.MaxValue);
-            Random r = new Random();
-            ReproAge.Value = Math.Floor(900 * r.NextDouble()) + 100;
+            StatisticInput Age = new StatisticInput("Age", 0, Int32.MaxValue);
+            StatisticInput ReproAge = new StatisticInput("ReproAge", 0, Int32.MaxValue);
+            ReproAge.Value = Planet.World.NumberGen.Next(100, 500);
 
-            Properties.Add(ReproAge.Name, ReproAge);
-            Properties.Add(Age.Name, Age);
+            Statistics.Add(ReproAge.Name, ReproAge);
+            Statistics.Add(Age.Name, Age);
         }
 
         private List<SenseCluster> GenerateSenses()
@@ -140,18 +139,18 @@ namespace ALifeUni.ALife
         public override void ExecuteAliveTurn()
         {
             myBrain.ExecuteTurn();
-            Properties["Age"].IncreasePropertyBy(1.0);
+            Statistics["Age"].IncreasePropertyBy(1);
             //Reset all the senses. 
             Senses.ForEach((se) => se.GetShape().Reset());
-            CheckAndReproduce();
+            EndOfTurnTriggers();
         }
 
-        public void CheckAndReproduce()
+        public void EndOfTurnTriggers()
         {
-            if((Properties["Age"].Value % Properties["ReproAge"].Value) == 0)
+            //TODO: Pull End of Turn triggers from Config
+            if((Statistics["Age"].Value % Statistics["ReproAge"].Value) == 0)
             {
-                WorldObject child = Reproduce(false);
-                Planet.World.AddObjectToWorld(child);
+                Reproduce(false);
             }
         }
 
@@ -165,6 +164,8 @@ namespace ALifeUni.ALife
 
             //Create Child
             Agent child = new Agent(childCenter, this);
+            Planet.World.AddObjectToWorld(child);
+
             return child;
         }
 

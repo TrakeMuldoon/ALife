@@ -14,9 +14,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
         EqualTo,
         NotEqualTo,
         LessThanOrEqualTo,
-        GreaterThanOrEqualTo,
-        IntegerEqual,
-        DecimalEqual
+        GreaterThanOrEqualTo
     }
     public static class DoubleConditionFactory
     {
@@ -47,7 +45,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
 
         private static double GetRandomConstantValue()
         {
-            double randomDouble = Planet.World.NumberGen.NextDouble();
+            double randomDouble = Math.Round(Planet.World.NumberGen.NextDouble(), 5);
             return randomDouble;
         }
 
@@ -75,8 +73,6 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
                 case DoubleOperationEnum.NotEqualTo:            return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) != Math.Round(y, 4), val.ToString());
                 case DoubleOperationEnum.LessThanOrEqualTo:     return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) <= Math.Round(y, 4), val.ToString());
                 case DoubleOperationEnum.GreaterThanOrEqualTo:  return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) >= Math.Round(y, 4), val.ToString());
-                case DoubleOperationEnum.IntegerEqual:          return new BehaviourCondition<double>(b1, b2, (x, y) => x/1 == y/1, val.ToString());
-                case DoubleOperationEnum.DecimalEqual:          return new BehaviourCondition<double>(b1, b2, (x, y) => x%1 == y%1, val.ToString());
             }
             throw new Exception("Impossible Exception!");
         }

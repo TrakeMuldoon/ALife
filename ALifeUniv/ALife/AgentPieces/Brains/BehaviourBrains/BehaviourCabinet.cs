@@ -26,9 +26,15 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
                     AddInputsFromInputList(currInputs);
                 }
             }
+
             foreach(PropertyInput pi in parent.Properties.Values)
             {
                 List<BehaviourInput> currInputs = BehaviourFactory.GenerateBehaviourInputsFromInput((Input)pi);
+                AddInputsFromInputList(currInputs);
+            }
+            foreach(StatisticInput si in parent.Statistics.Values)
+            {
+                List<BehaviourInput> currInputs = BehaviourFactory.GenerateBehaviourInputsFromInput((Input)si);
                 AddInputsFromInputList(currInputs);
             }
             foreach(ActionCluster act in parent.Actions.Values)

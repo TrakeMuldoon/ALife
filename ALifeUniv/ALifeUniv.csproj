@@ -128,6 +128,7 @@
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourCabinet.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourWaitQueue.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\TypedClasses\BehaviourFactory.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\TypedClasses\IntConditionFactory.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\TypedClasses\StringConditionFactory.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\TypedClasses\DoubleConditionFactory.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\TypedClasses\BoolConditionFactory.cs" />
@@ -136,6 +137,8 @@
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\RandomBrains\RandomBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\TesterBrains\TesterBrain.cs" />
+    <Compile Include="ALife\AgentPieces\Property\IPropertyInput.cs" />
+    <Compile Include="ALife\AgentPieces\Property\StatisticInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorBoolInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorInput.cs" />
     <Compile Include="ALife\WorldObject.cs" />

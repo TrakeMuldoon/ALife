@@ -60,7 +60,9 @@ namespace ALifeUni.ALife
             }
         }
 
+        //TODO: Merge PropertyInput and StatisticInput into a single "Properties" cabinet
         public Dictionary<String, PropertyInput> Properties = new Dictionary<string, PropertyInput>();
+        public Dictionary<String, StatisticInput> Statistics = new Dictionary<string, StatisticInput>();
 
         public readonly string CollisionLevel;
 

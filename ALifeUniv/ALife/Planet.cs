@@ -22,6 +22,7 @@ namespace ALifeUni.ALife
         {
             worldWidth = width;
             worldHeight = height;
+            Seed = seed;
             NumberGen = new Random(seed);
         }
 
@@ -85,6 +86,7 @@ namespace ALifeUni.ALife
         public readonly List<WorldObject> AllControlledObjects = new List<WorldObject>();
         public readonly List<WorldObject> AllActiveObjects = new List<WorldObject>();
         public readonly List<WorldObject> AllNewObjects = new List<WorldObject>();
+        public readonly int Seed;
 
         private Dictionary<string, ICollisionMap> _collisionLevels = new Dictionary<string, ICollisionMap>();
         public IReadOnlyDictionary<string, ICollisionMap> CollisionLevels

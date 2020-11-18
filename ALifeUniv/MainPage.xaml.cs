@@ -14,6 +14,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -33,6 +34,11 @@ namespace ALifeUni
         {
             this.InitializeComponent();
             Planet.CreateWorld((int)animCanvas.Height, (int)animCanvas.Width);
+
+            //1880480903
+
+            seed = Planet.World.Seed.ToString();
+            SimSeed.Text = seed;
             startticks = DateTime.Now.Ticks;
             animCanvas.ClearColor = Colors.NavajoWhite;
             gameTimer.Tick += Dt_Tick;
@@ -92,10 +98,12 @@ namespace ALifeUni
                 AgentSettings localSettings = new AgentSettings(VisSettings.For[VisualSettingsEnum.ShowLiveBoundingBox].IsChecked
                                                                , VisSettings.For[VisualSettingsEnum.ShowLiveSenses].IsChecked
                                                                , VisSettings.For[VisualSettingsEnum.ShowLiveSenseBoundingBox].IsChecked);
-
-                foreach(WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].EnumerateItems())
+                if(Planet.World.CollisionLevels.ContainsKey(ReferenceValues.CollisionLevelPhysical))
                 {
-                    DrawingLogic.DrawWorldObject(wo, args, localSettings);
+                    foreach(WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].EnumerateItems())
+                    {
+                        DrawingLogic.DrawWorldObject(wo, args, localSettings);
+                    }
                 }
             }
         }
@@ -141,13 +149,39 @@ namespace ALifeUni
             }
         }
 
-        #region speed controls
+        private String seed = String.Empty;
+        private void SimSeed_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            if(tb.Text != seed)
+            {
+
+                tb.BorderBrush = new SolidColorBrush(Colors.Red);
+            }
+            else
+            {
+                tb.BorderBrush = new SolidColorBrush(Colors.Black);
+            }
+        }
 
         private void ResetSim_Click(object sender, RoutedEventArgs e)
         {
-            Planet.CreateWorld((int)animCanvas.Height, (int)animCanvas.Width);
+            int seedValue;
+            if(int.TryParse(seed, out seedValue))
+            {
+                Planet.CreateWorld(seedValue, (int)animCanvas.Height, (int)animCanvas.Width);            
+            }
+            else
+            {
+                Planet.CreateWorld((int)animCanvas.Height, (int)animCanvas.Width);
+            }
+
+            seed = Planet.World.Seed.ToString();
+            SimSeed.Text = seed;
             special = null;
         }
+
+        #region speed controls
 
         private void PauseSim_Click(object sender, RoutedEventArgs e)
         {
@@ -206,6 +240,7 @@ namespace ALifeUni
 
         #endregion
 
+        #region Zoom controls
         private void ZoomFactor_TextChanged(object sender, TextChangedEventArgs e)
         {
             //Increase the zoom
@@ -269,6 +304,7 @@ namespace ALifeUni
             //When the check gets unchecked, just set the DPI scale to 1, which is shitty when zoomed in.
             animCanvas.DpiScale = 1;
         }
+        #endregion
 
         #region Mouse Controls
 

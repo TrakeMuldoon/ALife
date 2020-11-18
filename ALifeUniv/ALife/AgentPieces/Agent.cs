@@ -175,6 +175,10 @@ namespace ALifeUni.ALife
             Agent child = new Agent(childCenter, this);
             Planet.World.AddObjectToWorld(child);
 
+            if(numChildren >= 60)
+            {
+                Die();
+            }
             return child;
         }
 

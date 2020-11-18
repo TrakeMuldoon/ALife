@@ -108,10 +108,8 @@ namespace ALifeUni.ALife
             {
                 wo.Die();
             }
-            //self must die, but also stop the movement from taking place. 
-            //Also, we change colour of self, to see who bumped into whom.
-            self.Die();
-            self.DebugColor = Colors.Red;
+            //This says that bumping into someone means you will reproduce.
+            self.Statistics["NumChildrenWaiting"].IncreasePropertyBy(1);
         }
 
 

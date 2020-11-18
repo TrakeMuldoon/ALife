@@ -68,6 +68,13 @@ namespace ALifeUni.ALife
             modified = true;
         }
 
+        public override int Value
+        {
+            get { return base.Value; }
+            set { base.Value = Math.Clamp(value, StatisticMinimum, StatisticMaximum); }
+
+        }
+
         public Type GetMyType()
         {
             return typeof(int);

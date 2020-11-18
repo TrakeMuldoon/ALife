@@ -72,6 +72,13 @@ namespace ALifeUni.ALife
             modified = true;
         }
 
+        public override double Value
+        {
+            get { return base.Value; }
+            set { base.Value = Math.Clamp(value, PropertyMinimum, PropertyMinimum); }
+
+        }
+
         public Type GetMyType()
         {
             return typeof(double);

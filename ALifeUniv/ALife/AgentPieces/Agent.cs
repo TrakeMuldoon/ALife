@@ -109,11 +109,14 @@ namespace ALifeUni.ALife
             //TODO: Link this to the config generation
             //TODO: Implement Property<int> instead of making all properties doubles.
             StatisticInput Age = new StatisticInput("Age", 0, Int32.MaxValue);
-            StatisticInput ReproAge = new StatisticInput("ReproAge", 0, Int32.MaxValue);
-            ReproAge.Value = Planet.World.NumberGen.Next(100, 500);
-
-            Statistics.Add(ReproAge.Name, ReproAge);
             Statistics.Add(Age.Name, Age);
+            StatisticInput NumChild = new StatisticInput("NumChildrenWaiting", 0, Int32.MaxValue);
+            Statistics.Add(NumChild.Name, NumChild);
+            StatisticInput TimeSinceRepro = new StatisticInput("TimeSinceRepro", 0, Int32.MaxValue);
+            Statistics.Add(TimeSinceRepro.Name, TimeSinceRepro);
+            StatisticInput MinimumReproWait = new StatisticInput("MinimumReproWait", 0, Int32.MaxValue);
+            MinimumReproWait.Value = 5;
+            Statistics.Add(MinimumReproWait.Name, MinimumReproWait);
         }
 
         private List<SenseCluster> GenerateSenses()
@@ -148,10 +151,16 @@ namespace ALifeUni.ALife
         public void EndOfTurnTriggers()
         {
             //TODO: Pull End of Turn triggers from Config
-            if((Statistics["Age"].Value % Statistics["ReproAge"].Value) == 0)
+            if(Statistics["NumChildrenWaiting"].Value > 0)
             {
-                Reproduce(false);
+                if(Statistics["TimeSinceRepro"].Value > Statistics["MinimumReproWait"].Value)
+                {
+                    Reproduce(false);
+                    Statistics["NumChildrenWaiting"].DecreasePropertyBy(1);
+                    Statistics["TimeSinceRepro"].Value = 0;
+                }
             }
+            Statistics["TimeSinceRepro"].IncreasePropertyBy(1);
         }
 
 

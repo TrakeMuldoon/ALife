@@ -29,7 +29,7 @@ namespace ALifeUni.ALife
     public abstract class Input<T> : Input
     { 
         private T myValue;
-        public T Value
+        public virtual T Value
         {
             get
             {

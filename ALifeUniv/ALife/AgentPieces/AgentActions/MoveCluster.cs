@@ -77,8 +77,8 @@ namespace ALifeUni.ALife
             double tempY = (forwardDist * Math.Sin(self.Orientation.Radians)) + origin.Y;
 
             rightDist = Speed * rightMagnitude;
-            double newX = (forwardDist * Math.Cos(self.Orientation.Radians + (Math.PI / 2))) + tempX;
-            double newY = (forwardDist * Math.Sin(self.Orientation.Radians + (Math.PI / 2))) + tempY;
+            double newX = (rightDist * Math.Cos(self.Orientation.Radians + (Math.PI / 2))) + tempX;
+            double newY = (rightDist * Math.Sin(self.Orientation.Radians + (Math.PI / 2))) + tempY;
 
             Point destination = new Point(newX, newY);
             self.CentrePoint = destination;

@@ -15,7 +15,7 @@
     Unloaded="Page_Unloaded">
     <Page.Resources>
         <Style x:Key="CBStyle" TargetType="controls:DataGridCell">
-            <Setter Property="Background" Value="AntiqueWhite"/>
+            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Margin" Value="-10"/>
             <Setter Property="Padding" Value="0" />
             <Setter Property="Width" Value="32" />
@@ -26,10 +26,11 @@
         </Style>
         <Style x:Key="ElemStyle" TargetType="CheckBox">
             <Setter Property="Background" Value="RED"/>
-            <Setter Property="Margin" Value="50"/>
+            <Setter Property="Margin" Value="-2"/>
             <Setter Property="Padding" Value="0" />
             <Setter Property="Width" Value="90" />
             <Setter Property="Height" Value="28" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
         </Style>
         <Style x:Key="headStyle" TargetType="cprim:DataGridColumnHeader" >
             <Setter Property="Margin" Value="0" />
@@ -62,7 +63,7 @@
             </Border>
 
         </ScrollViewer>
-        <StackPanel Width="200" Background="White">
+        <StackPanel Width="220" Background="White">
             <TextBox x:Name="SimSeed" HorizontalAlignment="Stretch" TextChanged="SimSeed_TextChanged"/>
             <Button x:Name="ResetSim" HorizontalAlignment="Stretch" Click="ResetSim_Click">RESET</Button>
             <Button x:Name="PauseSim" HorizontalAlignment="Stretch" Click="PauseSim_Click">Pause</Button>
@@ -91,11 +92,13 @@
                                                      Width="32"/>
                     <controls:DataGridCheckBoxColumn Header="Obj" Binding="{Binding ShowObjects}"
                                                      HeaderStyle="{StaticResource headStyle}"
-                                                     CellStyle="{StaticResource CBStyle}"
+                                                     CellStyle="{StaticResource CBStyle}" 
+                                                     ElementStyle="{StaticResource ElemStyle}"
                                                      Width="32"/>
                     <controls:DataGridCheckBoxColumn Header="Ag" Binding="{Binding ShowAgents}"
                                                      HeaderStyle="{StaticResource headStyle}"
                                                      CellStyle="{StaticResource CBStyle}"
+                                                     ElementStyle="{StaticResource ElemStyle}"
                                                      Width="32"/>
                     <controls:DataGridCheckBoxColumn Header="BB" Binding="{Binding ShowBoundingBoxes}"
                                                      HeaderStyle="{StaticResource headStyle}"

@@ -83,9 +83,9 @@ namespace ALifeUni.ALife.UtilityClasses
     public abstract class Sector : IShape
     {
         //TODO Hardecoded Sector Radius is bad!
-        public float Radius = 12;
+        public float Radius = 40;
         //TODO Hardcoded Sector SweepAngle is Bad!
-        public Angle SweepAngle = new Angle(50);
+        public Angle SweepAngle = new Angle(5);
 
         public abstract BoundingBox BoundingBox
         {

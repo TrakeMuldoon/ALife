@@ -129,6 +129,12 @@ namespace ALifeUni.ALife
             int yMaxBucket = (int)(queryBox.MaxY) / GridSize;
             int yMinBucket = (int)(queryBox.MinY) / GridSize;
 
+            //Clamp Them
+            xMaxBucket = Math.Clamp(xMaxBucket, 0, objectGrid.GetLength(0)-1);
+            xMinBucket = Math.Clamp(xMinBucket, 0, objectGrid.GetLength(0)-1);
+            yMaxBucket = Math.Clamp(yMaxBucket, 0, objectGrid.GetLength(1)-1);
+            yMinBucket = Math.Clamp(yMinBucket, 0, objectGrid.GetLength(1)-1);
+
             //This creates a list of grid buckets that the bounding box falls within
             HashSet<WorldObject> potentialCollisions = new HashSet<WorldObject>();
             for (int x = xMinBucket; x <= xMaxBucket; x++)

@@ -1,4 +1,5 @@
-﻿using ALifeUni.ALife.UtilityClasses;
+﻿using ALifeUni.ALife.AgentPieces;
+using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace ALifeUni.ALife
             worldHeight = height;
             Seed = seed;
             NumberGen = new Random(seed);
+            AgentIDGenerator.Reset();
         }
 
         public static Planet World

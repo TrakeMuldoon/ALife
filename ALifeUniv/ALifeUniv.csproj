@@ -141,6 +141,7 @@
     <Compile Include="ALife\AgentPieces\Property\StatisticInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorBoolInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorInput.cs" />
+    <Compile Include="ALife\EmptyObject.cs" />
     <Compile Include="ALife\WorldObject.cs" />
     <Compile Include="ALife\Geometry\Shapes\Rectangle.cs" />
     <Compile Include="AgentInfoPanel.xaml.cs">

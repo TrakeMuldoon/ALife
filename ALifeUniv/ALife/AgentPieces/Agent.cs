@@ -182,20 +182,19 @@ namespace ALifeUni.ALife
 
         private Point FindAdjacentFreeSpace()
         {
-            BoundingBox pbb = this.BoundingBox;
-            
-            BoundingBox childBB = new BoundingBox(pbb.MinX, pbb.MinY, pbb.MaxX, pbb.MaxY);
+            //BoundingBox pbb = this.BoundingBox;
+            EmptyObject wo = new EmptyObject(this.CentrePoint, this.Radius, this.CollisionLevel);
+            Point movingCentrePoint = new Point(wo.CentrePoint.X, wo.CentrePoint.Y);
+
+            //BoundingBox childBB = new BoundingBox(pbb.MinX, pbb.MinY, pbb.MaxX, pbb.MaxY);
             double diameter = this.Radius * 2;
             
             ICollisionMap collider = Planet.World.CollisionLevels[this.CollisionLevel];
             List<WorldObject> collisions = new List<WorldObject>();
-            bool found = false;
             for(int distance = 1; distance < 5;  distance++)
             {
-                childBB.MinX += diameter;
-                childBB.MaxX += diameter;
-                childBB.MinY += diameter;
-                childBB.MaxY += diameter;
+                movingCentrePoint.X += diameter;
+                movingCentrePoint.Y += diameter;
                 for(int direction = 0; direction < 4; direction++)
                 {
                     for(int numSteps = 0; numSteps < distance * 2; numSteps++)
@@ -203,40 +202,32 @@ namespace ALifeUni.ALife
                         switch(direction)
                         {
                             case 0://south
-                                childBB.MinY -= diameter;
-                                childBB.MaxY -= diameter;
+                                movingCentrePoint.Y -= diameter;
                                 break;
                             case 1://west
-                                childBB.MinX -= diameter;
-                                childBB.MaxX -= diameter;
+                                movingCentrePoint.X -= diameter;
                                 break;
                             case 2://north
-                                childBB.MinY += diameter;
-                                childBB.MaxY += diameter;
+                                movingCentrePoint.Y += diameter;
                                 break;
                             case 3://east
-                                childBB.MinX += diameter;
-                                childBB.MaxX += diameter;
+                                movingCentrePoint.X += diameter;
                                 break;
                             default: throw new Exception("invalid direction");
                         }
-                        collisions = collider.QueryForBoundingBoxCollisions(childBB);
+                        wo.CentrePoint = new Point(movingCentrePoint.X, movingCentrePoint.Y);
+                        collisions = collider.QueryForBoundingBoxCollisions(wo.BoundingBox);
                         if(collisions.Count < 1)
                         {
-                            found = true;
-                            goto Found;
+                            Point childCenter = wo.CentrePoint;
+                            return childCenter;
                         }
                     }
                 }
             }
-            Found: 
-            if(!found)
-            {
-                throw new Exception("too crowded");
-            }
 
-            Point childCenter = new Point((childBB.MinX + childBB.MaxX) / 2, (childBB.MinY + childBB.MaxY) / 2);
-            return childCenter;
+            //The only way to get here is if the search algorithm above, evaluates all 24 positions and can't find anything.
+            throw new Exception("too crowded");
         }
     }
 }

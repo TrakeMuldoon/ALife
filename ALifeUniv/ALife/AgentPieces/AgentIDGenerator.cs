@@ -10,12 +10,17 @@ namespace ALifeUni.ALife.AgentPieces
     {
         const String PrimaryIDChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-        const String ChildIDCharsSetOne = "abcdefghijklmnopqrstuvwxyz";
-        const String ChildIDCharsSetTwo = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        const String ChildIDCharsSetOne = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const String ChildIDCharsSetTwo = "abcdefghijklmnopqrstuvwxyz0123456789";
 
         static int primLen = PrimaryIDChars.Length;
         static int primLenSq = primLen * primLen;
         static int primaryIDNum = 0;
+
+        internal static void Reset()
+        {
+            primaryIDNum = 0;
+        }
 
         internal static string GetNextAgentId()
         {

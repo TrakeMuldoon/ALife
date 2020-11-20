@@ -16,6 +16,7 @@ namespace ALifeUni.ALife
 
             set
             {
+                //TODO: This stops agents from fallling off the world. But they don't know they're doing or not doing that.
                 double properX = value.X;
                 double properY = value.Y;
 

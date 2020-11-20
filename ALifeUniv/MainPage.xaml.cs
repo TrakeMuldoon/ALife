@@ -3,6 +3,8 @@ using ALifeUni.ALife.UtilityClasses;
 using ALifeUni.UI;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using Microsoft.Toolkit.Uwp.UI.Controls;
+using Microsoft.Toolkit.Uwp.UI.Controls.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -28,30 +30,29 @@ namespace ALifeUni
 
         long startticks;
         DispatcherTimer gameTimer = new DispatcherTimer();
-        private VisualSettings VisSettings = new VisualSettings();
+        public List<LayerUISettings> UIGrid;
 
         public MainPage()
         {
             this.InitializeComponent();
+
+            animCanvas.ClearColor = Colors.NavajoWhite;
+
             Planet.CreateWorld((int)animCanvas.Height, (int)animCanvas.Width);
-
-            //1880480903
-
             seed = Planet.World.Seed.ToString();
             SimSeed.Text = seed;
+
+            UIGrid = LayerUISettings.GetSettings();
+            VisualSettingsGrid.ItemsSource = UIGrid;
+
             startticks = DateTime.Now.Ticks;
-            animCanvas.ClearColor = Colors.NavajoWhite;
             gameTimer.Tick += Dt_Tick;
 
             PlaySim_Go();
-            SettingsCheckboxes.ItemsSource = VisSettings.AllValues;
         }
 
-        private void Dt_Tick(object sender, object e)
+        private void animCanvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
         {
-            //Planet.World.ExecuteManyTurns(10);
-            Planet.World.ExecuteOneTurn();
-            AgentPanel.updateInfo();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -59,7 +60,6 @@ namespace ALifeUni
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
             Window.Current.CoreWindow.KeyUp += CoreWindow_KeyUp;
         }
-
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -69,55 +69,39 @@ namespace ALifeUni
             this.animCanvas = null;
         }
 
+        private void Dt_Tick(object sender, object e)
+        {
+            //Planet.World.ExecuteManyTurns(10);
+            Planet.World.ExecuteOneTurn();
+            AgentPanel.updateInfo();
+        }
+
         private void animCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
 
             if(special != null)
             {
                 Vector2 agentCentre = new Vector2((float)special.CentrePoint.X, (float)special.CentrePoint.Y);
-                //Agent Body
                 args.DrawingSession.DrawCircle(agentCentre, special.Radius + 1, Colors.Blue);
             }
 
-            if(VisSettings.For[VisualSettingsEnum.ShowDeadLayer].IsChecked)
+            foreach(LayerUISettings layer in UIGrid)
             {
-                if(Planet.World.CollisionLevels.ContainsKey(ReferenceValues.CollisionLevelDead))
-                {
-                    AgentSettings localSettings = new AgentSettings(VisSettings.For[VisualSettingsEnum.ShowDeadBoundingBox].IsChecked
-                                                              , VisSettings.For[VisualSettingsEnum.ShowDeadSenses].IsChecked
-                                                              , VisSettings.For[VisualSettingsEnum.ShowDeadSenseBoundingBox].IsChecked);
-
-                    foreach(WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelDead].EnumerateItems())
-                    {
-                        DrawingLogic.DrawWorldObject(wo, args, localSettings);
-                    }
-                }
-            }
-            if(VisSettings.SettingsEnumMatrix[VisualSettingsEnum.ShowLiveLayer].IsChecked)
-            {
-                AgentSettings localSettings = new AgentSettings(VisSettings.For[VisualSettingsEnum.ShowLiveBoundingBox].IsChecked
-                                                               , VisSettings.For[VisualSettingsEnum.ShowLiveSenses].IsChecked
-                                                               , VisSettings.For[VisualSettingsEnum.ShowLiveSenseBoundingBox].IsChecked);
-                if(Planet.World.CollisionLevels.ContainsKey(ReferenceValues.CollisionLevelPhysical))
-                {
-                    foreach(WorldObject wo in Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].EnumerateItems())
-                    {
-                        DrawingLogic.DrawWorldObject(wo, args, localSettings);
-                    }
-                }
+                DrawLayer(layer, args);
             }
         }
 
-
-        private void CheckVisualSetting(object sender, RoutedEventArgs e)
+        private void DrawLayer(LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
         {
-            CheckBox check = (CheckBox)sender;
-            VisSettings.SettingsStringMatrix[check.Content.ToString()].IsChecked = check.IsChecked.Value;
-
-        }
-
-        private void animCanvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
-        {
+            if(!ui.ShowLayer                                                       //Not showing it
+                || !Planet.World.CollisionLevels.ContainsKey(ui.LayerName))        //Layer doesn't exist
+            {
+                return;
+            }
+            foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
+            {
+                DrawingLogic.DrawWorldObject(wo, ui, args);
+            }
         }
 
         WorldObject special;
@@ -162,6 +146,7 @@ namespace ALifeUni
             {
                 tb.BorderBrush = new SolidColorBrush(Colors.Black);
             }
+            seed = tb.Text;
         }
 
         private void ResetSim_Click(object sender, RoutedEventArgs e)
@@ -178,6 +163,7 @@ namespace ALifeUni
 
             seed = Planet.World.Seed.ToString();
             SimSeed.Text = seed;
+            SimSeed_TextChanged(SimSeed, null);
             special = null;
         }
 
@@ -349,14 +335,9 @@ namespace ALifeUni
 
         #endregion
 
-
-        int counter = 0;
+        #region Keyboard Controls
         private void CoreWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
         {
-            debugText.Text = args.VirtualKey + Environment.NewLine + args.KeyStatus.WasKeyDown + Environment.NewLine + args.Handled;
-
-            debugCounter.Text = (counter++).ToString();
-
             switch(args.VirtualKey)
             {
                 case VirtualKey.Q: IncreaseZoom(); break;
@@ -367,7 +348,8 @@ namespace ALifeUni
 
         private void CoreWindow_KeyUp(CoreWindow sender, KeyEventArgs args)
         {
-            upValue.Text += args.VirtualKey;
+            //upValue.Text += args.VirtualKey;
         }
+        #endregion
     }
 }

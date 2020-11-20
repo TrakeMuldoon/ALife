@@ -147,7 +147,7 @@
       <DependentUpon>AgentInfoPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\DrawingLogic.cs" />
-    <Compile Include="UI\VisualSettings.cs" />
+    <Compile Include="UI\LayerUISettings.cs" />
     <None Include="ALife\Collision\CollisionQuadTree.cs" />
     <Compile Include="ALife\Collision\CollisionGrid.cs" />
     <Compile Include="ALife\Collision\ICollisionMap.cs" />
@@ -205,6 +205,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
+      <Version>6.1.1</Version>
     </PackageReference>
     <PackageReference Include="Win2D.uwp">
       <Version>1.23.0</Version>

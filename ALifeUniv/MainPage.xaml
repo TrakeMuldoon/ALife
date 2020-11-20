@@ -7,11 +7,42 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:cprim="using:Microsoft.Toolkit.Uwp.UI.Controls.Primitives"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="Page_Loaded"
     Unloaded="Page_Unloaded">
+    <Page.Resources>
+        <Style x:Key="CBStyle" TargetType="controls:DataGridCell">
+            <Setter Property="Background" Value="AntiqueWhite"/>
+            <Setter Property="Margin" Value="-10"/>
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Width" Value="32" />
+            <Setter Property="Height" Value="28" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="IsFocusEngagementEnabled" Value="False"/>
+            <Setter Property="AllowFocusOnInteraction" Value="False"/>
+        </Style>
+        <Style x:Key="ElemStyle" TargetType="CheckBox">
+            <Setter Property="Background" Value="RED"/>
+            <Setter Property="Margin" Value="50"/>
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Width" Value="90" />
+            <Setter Property="Height" Value="28" />
+        </Style>
+        <Style x:Key="headStyle" TargetType="cprim:DataGridColumnHeader" >
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Background" Value="Green"/>
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="BorderBrush" Value="Red" />
+            <Setter Property="MinWidth" Value="80" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+        </Style>
+    </Page.Resources>
     
+
     <StackPanel Orientation="Horizontal">
         <ScrollViewer x:Name="Zoomer"  Background="Aqua"
                       HorizontalScrollBarVisibility="Visible"
@@ -41,21 +72,44 @@
             <Button x:Name="FastPlaySim" HorizontalAlignment="Stretch" Click="FastPlaySim_Click">Fast</Button>
             <Button x:Name="SkipAhead" HorizontalAlignment="Stretch" Click="SkipAhead_Click">Stupid Fast</Button>
             <TextBox x:Name="ZoomFactor" TextChanged="ZoomFactor_TextChanged"  Text="1"/>
-            <CheckBox x:Name="matchDPI" Checked="MatchDPI_Checked" Unchecked="MatchDPI_Unchecked" />
+            <!--<CheckBox x:Name="matchDPI" Checked="MatchDPI_Checked" Unchecked="MatchDPI_Unchecked" />
             <TextBlock x:Name="debugText" />
             <TextBlock x:Name="debugCounter" />
-            <TextBlock x:Name="upValue" />
+            <TextBlock x:Name="upValue" />-->
 
             <TextBlock x:Name="LayersLabel" Text="Layers"></TextBlock>
-            <ListView x:Name="SettingsCheckboxes">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox Content="{Binding Name}" Click="CheckVisualSetting" IsChecked="True"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <controls:DataGrid x:Name="VisualSettingsGrid"
+                               AutoGenerateColumns="false">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Header="Layer" Binding="{Binding LayerName}"
+                                                 HeaderStyle="{StaticResource headStyle}"
+                                                 Width="50" />
+                    <controls:DataGridCheckBoxColumn Header="On" Binding="{Binding ShowLayer}"
+                                                     HeaderStyle="{StaticResource headStyle}"
+                                                     CellStyle="{StaticResource CBStyle}"
+                                                     ElementStyle="{StaticResource ElemStyle}"
+                                                     Width="32"/>
+                    <controls:DataGridCheckBoxColumn Header="Obj" Binding="{Binding ShowObjects}"
+                                                     HeaderStyle="{StaticResource headStyle}"
+                                                     CellStyle="{StaticResource CBStyle}"
+                                                     Width="32"/>
+                    <controls:DataGridCheckBoxColumn Header="Ag" Binding="{Binding ShowAgents}"
+                                                     HeaderStyle="{StaticResource headStyle}"
+                                                     CellStyle="{StaticResource CBStyle}"
+                                                     Width="32"/>
+                    <controls:DataGridCheckBoxColumn Header="BB" Binding="{Binding ShowBoundingBoxes}"
+                                                     HeaderStyle="{StaticResource headStyle}"
+                                                     CellStyle="{StaticResource CBStyle}"
+                                                     Width="32"/>
+                    <controls:DataGridCheckBoxColumn Header="Sen" Binding="{Binding ShowSenses}"
+                                                     HeaderStyle="{StaticResource headStyle}"
+                                                     CellStyle="{StaticResource CBStyle}"
+                                                     Width="32"/>
+
+
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
+
         </StackPanel>
         <local:AgentInfoPanel x:Name="AgentPanel"></local:AgentInfoPanel>
     </StackPanel>

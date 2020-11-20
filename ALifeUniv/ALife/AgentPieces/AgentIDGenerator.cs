@@ -10,7 +10,8 @@ namespace ALifeUni.ALife.AgentPieces
     {
         const String PrimaryIDChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-        const String ChildIDChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        const String ChildIDCharsSetOne = "abcdefghijklmnopqrstuvwxyz";
+        const String ChildIDCharsSetTwo = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
         static int primLen = PrimaryIDChars.Length;
         static int primLenSq = primLen * primLen;
@@ -34,12 +35,15 @@ namespace ALifeUni.ALife.AgentPieces
 
         internal static string GetNextChildId(string id, int numChildren)
         {
-            if(numChildren > ChildIDChars.Length)
+            int valueOne = numChildren / ChildIDCharsSetTwo.Length;
+            int valueTwo = numChildren % ChildIDCharsSetTwo.Length;
+
+            if(valueOne > ChildIDCharsSetOne.Length)
             {
                 throw new Exception("Too Many Children");
             }
 
-            return id + ChildIDChars[numChildren];
+            return id + ChildIDCharsSetOne[valueOne] + ChildIDCharsSetTwo[valueTwo];
         }
     }
 }

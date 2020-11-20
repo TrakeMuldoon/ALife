@@ -47,13 +47,7 @@ namespace ALifeUni.ALife
             //myBrain = new RandomBrain(this);
             //myBrain = new TesterBrain(this);
             //TODO: Brain Behaviour is hardcoded. IT shoudl be in the config.
-            myBrain = new BehaviourBrain(this,
-                //"IF Eye1.SeeSomething.Value Equals Eye1.IsRed.Value AND Eye1.HowRed.Value GreaterThan [0.1] THEN WAIT [3] TO Move AT [0.8]",
-                ////"IF Eye1.HowGreen.Value LessThan [0.8] THEN Color AT Eye1.HowGreen.Value",
-                //"IF Eye1.SeeSomething.Value Equals [False] THEN Move AT [1.0]",
-                //"IF Eye1.SeeSomething.Value Equals [False] THEN Rotate AT [0.3]", "*"
-                "*", "*", "*", "*", "*"
-                );
+            myBrain = new BehaviourBrain(this,"*", "*", "*", "*", "*");
 
             this.DebugColor = Colors.PaleVioletRed;
         }
@@ -75,7 +69,7 @@ namespace ALifeUni.ALife
             Senses = GenerateSenses();
             Actions = GenerateActions();
 
-            myBrain = new BehaviourBrain(this, (BehaviourBrain)parent.myBrain);
+            myBrain = parent.myBrain.Reproduce(this);
 
             //Reproduce Actions
 

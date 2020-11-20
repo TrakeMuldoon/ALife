@@ -8,22 +8,32 @@ namespace ALifeUni.ALife.AgentPieces.Brains.RandomBrains
 {
     class RandomBrain : IBrain
     {
-        private Agent parent;
+        private Agent body;
 
-        public RandomBrain(Agent parent)
+        public RandomBrain(Agent body)
         {
-            this.parent = parent;
+            this.body = body;
+        }
+
+        public IBrain Clone(Agent newSelf)
+        {
+            return new RandomBrain(newSelf);
+        }
+
+        public IBrain Reproduce(Agent newSelf)
+        {
+            return new RandomBrain(newSelf);
         }
 
         public void ExecuteTurn()
         {
             
-            foreach(SenseCluster sc in parent.Senses)
+            foreach(SenseCluster sc in body.Senses)
             {
                 sc.Detect();
             }
 
-            foreach(ActionCluster ac in parent.Actions.Values)
+            foreach(ActionCluster ac in body.Actions.Values)
             {
                 foreach(ActionPart ap in ac.SubActions.Values)
                 {
@@ -41,7 +51,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.RandomBrains
             
             //Reset means that the bounding box cache is wiped out
             //Until the next time it is reset (during detect) it will be using the cached one
-            foreach (SenseCluster sc in parent.Senses)
+            foreach (SenseCluster sc in body.Senses)
             {
                 sc.GetShape().Reset();
             }

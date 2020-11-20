@@ -30,7 +30,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
             }
         }
 
-        public BehaviourBrain(Agent self, BehaviourBrain oldBrain)
+        private BehaviourBrain(Agent self, BehaviourBrain oldBrain)
         {
             this.behaviorCabinet = new BehaviourCabinet(self);
             this.self = self;
@@ -50,6 +50,17 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
                 behaviours.Add(new Behaviour("*", behaviorCabinet));
             }
         }
+
+        public IBrain Clone(Agent newSelf)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBrain Reproduce(Agent newSelf)
+        {
+            return new BehaviourBrain(newSelf, this);
+        }
+
 
         BehaviourWaitQueue bwq = new BehaviourWaitQueue();
 

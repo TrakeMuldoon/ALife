@@ -100,7 +100,9 @@ namespace ALifeUni
                 foreach(Behaviour beh in brain.Behaviours)
                 {
                     sb.Append(beh.PassedThisTurn ? "!!" : "XX");
-                    sb.Append(" : " + beh.AsEnglish + Environment.NewLine);
+                    string behave = beh.AsEnglish;
+                    behave = behave.Replace(" THEN", Environment.NewLine + "\\t" + "THEN");
+                    sb.Append(" : " + behave + Environment.NewLine);
                 }
             }
             else

@@ -139,6 +139,14 @@ namespace ALifeUni.ALife
             Statistics["Age"].IncreasePropertyBy(1);
             //Reset all the senses. 
             Senses.ForEach((se) => se.GetShape().Reset());
+            foreach(StatisticInput stat in Statistics.Values)
+            {
+                stat.Reset();
+            }
+            foreach(PropertyInput prop in Properties.Values)
+            {
+                prop.Reset();
+            }
             EndOfTurnTriggers();
         }
 

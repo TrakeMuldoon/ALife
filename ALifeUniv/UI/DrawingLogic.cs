@@ -48,7 +48,7 @@ namespace ALifeUni.UI
                 ChildSector sec = (ChildSector)currShape;
                 if(uiSettings.ShowBoundingBoxes)
                 {
-                    DrawBoundingBox(sec.BoundingBox, Colors.PaleGreen, args);
+                    DrawBoundingBox(sec.BoundingBox, Colors.Black, args);
                 }
 
                 CanvasPathBuilder pathBuilder = new CanvasPathBuilder(args.DrawingSession);
@@ -78,7 +78,7 @@ namespace ALifeUni.UI
 
             if(ui.ShowBoundingBoxes)
             {
-                DrawBoundingBox(wo.BoundingBox, Colors.PaleGreen, args);
+                DrawBoundingBox(wo.BoundingBox, Colors.Black, args);
             }
         }
 

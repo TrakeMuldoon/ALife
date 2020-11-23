@@ -20,7 +20,7 @@ namespace ALifeUni.UI
 
         public LayerUISettings(string layerName) : this(layerName, false) { }
 
-        public LayerUISettings(string layerName, bool showLayer) : this(layerName, showLayer, true, true, false, false) {  }
+        public LayerUISettings(string layerName, bool showLayer) : this(layerName, showLayer, true, true, true, true) {  }
 
         public LayerUISettings(string layerName, bool showLayer, bool showObjects, bool showAgents, bool showBoundingBoxes, bool showSenses)
         {

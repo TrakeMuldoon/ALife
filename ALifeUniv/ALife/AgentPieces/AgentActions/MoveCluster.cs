@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ALifeUni.ALife.UtilityClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -73,15 +74,12 @@ namespace ALifeUni.ALife
             
             //Move forward, then move right from that point
             forwardDist = Speed * forwardMagnitude;
-            double tempX = (forwardDist * Math.Cos(self.Orientation.Radians)) + origin.X;
-            double tempY = (forwardDist * Math.Sin(self.Orientation.Radians)) + origin.Y;
-
             rightDist = Speed * rightMagnitude;
-            double newX = (rightDist * Math.Cos(self.Orientation.Radians + (Math.PI / 2))) + tempX;
-            double newY = (rightDist * Math.Sin(self.Orientation.Radians + (Math.PI / 2))) + tempY;
 
-            Point destination = new Point(newX, newY);
-            self.CentrePoint = destination;
+            Point tempPoint = ExtraMath.TranslateByVector(origin, self.Orientation.Radians, forwardDist);
+            Point finalPoint = ExtraMath.TranslateByVector(tempPoint, self.Orientation.Radians + (Math.PI / 2), rightDist);
+
+            self.CentrePoint = finalPoint;
 
             ICollisionMap collider = Planet.World.CollisionLevels[self.CollisionLevel];
             List<WorldObject> collisions = collider.QueryForBoundingBoxCollisions(self.BoundingBox, self);

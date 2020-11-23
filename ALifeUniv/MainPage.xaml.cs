@@ -105,6 +105,7 @@ namespace ALifeUni
         }
 
         WorldObject special;
+        int numCreated;
         private void AnimCanvas_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Point tapPoint = e.GetPosition(animCanvas);
@@ -118,8 +119,8 @@ namespace ALifeUni
             {
                 if(colls.Count == 0)
                 {
-                    Agent ag = new Agent(tapPoint);
-                    Planet.World.AddObjectToWorld(ag);
+                    EmptyObject eo = new EmptyObject(tapPoint, 5, ReferenceValues.CollisionLevelPhysical, (numCreated++).ToString());
+                    Planet.World.AddObjectToWorld(eo);
                 }
                 else
                 {

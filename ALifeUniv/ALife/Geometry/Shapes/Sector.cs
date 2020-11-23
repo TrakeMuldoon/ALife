@@ -93,11 +93,8 @@ namespace ALifeUni.ALife.UtilityClasses
         }
         public Color Color
         {
-            get
-            {
-                return Windows.UI.Colors.Blue;
-            }
-            set { }
+            get;
+            set;
         }
         public Color DebugColor
         {

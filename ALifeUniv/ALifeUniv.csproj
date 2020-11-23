@@ -139,6 +139,7 @@
     <Compile Include="ALife\AgentPieces\Brains\TesterBrains\TesterBrain.cs" />
     <Compile Include="ALife\AgentPieces\Property\IPropertyInput.cs" />
     <Compile Include="ALife\AgentPieces\Property\StatisticInput.cs" />
+    <Compile Include="ALife\AgentPieces\Senses\Eyes\EyeIdentifierInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorBoolInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\EyeCounterInput.cs" />

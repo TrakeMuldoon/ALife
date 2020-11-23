@@ -48,7 +48,7 @@ namespace ALifeUni.UI
                 ChildSector sec = (ChildSector)currShape;
                 if(uiSettings.ShowBoundingBoxes)
                 {
-                    DrawBoundingBox(sec.BoundingBox, Colors.Green, args);
+                    DrawBoundingBox(sec.BoundingBox, Colors.PaleGreen, args);
                 }
 
                 CanvasPathBuilder pathBuilder = new CanvasPathBuilder(args.DrawingSession);
@@ -62,6 +62,10 @@ namespace ALifeUni.UI
                 args.DrawingSession.FillGeometry(cg, sec.DebugColor);
                 args.DrawingSession.DrawGeometry(cg, sec.Color, 1);
             }
+            else
+            {
+                throw new NotImplementedException("What the hell shape is this?");
+            }    
         }
 
         private static void DrawObject(WorldObject wo, LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
@@ -74,7 +78,7 @@ namespace ALifeUni.UI
 
             if(ui.ShowBoundingBoxes)
             {
-                DrawBoundingBox(wo.BoundingBox, Colors.AntiqueWhite, args);
+                DrawBoundingBox(wo.BoundingBox, Colors.PaleGreen, args);
             }
         }
 

@@ -111,25 +111,48 @@ namespace ALifeUni
             BoundingBox bb = new BoundingBox(tapPoint.X, tapPoint.Y, tapPoint.X, tapPoint.Y);
             List<WorldObject> colls = Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].QueryForBoundingBoxCollisions(bb);
 
-            //Check if we have any collisions for the tap
-            if(colls.Count > 0)
+            CoreWindow cw = Window.Current.CoreWindow;
+            CoreVirtualKeyStates ks = cw.GetAsyncKeyState(VirtualKey.Control);
+
+            if(ks.HasFlag(CoreVirtualKeyStates.Down))
             {
-                //If we do have a collisions, then set that agent to be "Special"
-                WorldObject clicked = colls[0];
-                if(clicked != special)
+                if(colls.Count == 0)
                 {
-                    special = clicked;
-                    if(clicked is Agent)
-                    {
-                        AgentPanel.TheAgent = (Agent)clicked;
-                    }
+                    Agent ag = new Agent(tapPoint);
+                    Planet.World.AddObjectToWorld(ag);
                 }
                 else
                 {
-                    //click again to unselect
-                    special = null;
-                    AgentPanel.TheAgent = null;
+                    Planet.World.RemoveWorldObject(colls[0]);
                 }
+            }
+            else
+            {
+                if(colls.Count > 0)
+                {
+                    MakeSpecial(colls);
+                }
+            }
+        }
+
+        private void MakeSpecial(List<WorldObject> colls)
+        {
+
+            //If we do have a collisions, then set that agent to be "Special"
+            WorldObject clicked = colls[0];
+            if(clicked != special)
+            {
+                special = clicked;
+                if(clicked is Agent)
+                {
+                    AgentPanel.TheAgent = (Agent)clicked;
+                }
+            }
+            else
+            {
+                //click again to unselect
+                special = null;
+                AgentPanel.TheAgent = null;
             }
         }
 

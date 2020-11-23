@@ -20,6 +20,11 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
                     bis.Add(new BehaviourInput<bool>(myInput.Name + ".MostRecentValue", () => b1.MostRecentValue));
                     bis.Add(new BehaviourInput<bool>(myInput.Name + ".Modified", () => b1.Modified));
                     break;
+                case Input<string> s1:
+                    bis.Add(new BehaviourInput<string>(myInput.Name + ".Value", () => s1.Value));
+                    bis.Add(new BehaviourInput<string>(myInput.Name + ".MostRecentValue", () => s1.MostRecentValue));
+                    bis.Add(new BehaviourInput<bool>(myInput.Name + ".Modified", () => s1.Modified));
+                    break;
                 case Input<double> d1:
                     bis.Add(new BehaviourInput<double>(myInput.Name + ".Value", () => d1.Value));
                     bis.Add(new BehaviourInput<double>(myInput.Name + ".MostRecentValue", () => d1.MostRecentValue));
@@ -62,6 +67,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
                 case BehaviourInput<bool> boo1:     return BoolConditionFactory.GetRandomBehaviourOperation(b1, b2);
                 case BehaviourInput<double> dob1:   return DoubleConditionFactory.GetRandomBehaviourOperation(b1, b2);
                 case BehaviourInput<int> int1:      return IntConditionFactory.GetRandomBehaviourOperation(b1, b2);
+                case BehaviourInput<string> str1:   return StringConditionFactory.GetRandomBehaviourOperation(b1, b2);
                 default: throw new NotImplementedException("unimiplemented condition type: " + b1.GetContainedType());
             }
         }
@@ -76,7 +82,8 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
             {
                 case BehaviourInput<bool> boo1:     return BoolConditionFactory.GetConditionByName(b1, b2, name);
                 case BehaviourInput<double> dob1:   return DoubleConditionFactory.GetConditionByName(b1, b2, name);
-                case BehaviourInput<int> int1:      return IntConditionFactory.GetConditionByName(b1, b2, name);
+                case BehaviourInput<int> int1:      return IntConditionFactory.GetConditionByName(b1, b2, name);    
+                case BehaviourInput<string> str1:   return StringConditionFactory.GetConditionByName(b1, b2, name);
                 default: throw new NotImplementedException("unimiplemented condition type: " + b1.GetContainedType());
             }
         }
@@ -105,6 +112,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
                 case BehaviourInput<bool> boo1:     return BoolConditionFactory.GetRandomBehaviourConditionForBehaviour(b1, cabinet);
                 case BehaviourInput<double> dob1:   return DoubleConditionFactory.GetRandomBehaviourConditionForBehaviour(b1, cabinet);
                 case BehaviourInput<int> int1:      return IntConditionFactory.GetRandomBehaviourConditionForBehaviour(b1, cabinet);
+                case BehaviourInput<string> str1:   return StringConditionFactory.GetRandomBehaviourConditionForBehaviour(b1, cabinet);
                 default: throw new NotImplementedException("unimiplemented condition type: " + b1.GetContainedType());
             }
         }

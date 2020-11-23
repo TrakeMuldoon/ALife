@@ -26,6 +26,7 @@ namespace ALifeUni.ALife
 
         public virtual void Detect()
         {
+            //TODO: Factor this out. The SenseClusters shouldn't need to know the details of the collision detection
             ICollisionMap collider = Planet.World.CollisionLevels[this.CollisionLevel];
 
             IShape myShape = this.GetShape();
@@ -36,7 +37,7 @@ namespace ALifeUni.ALife
             collisions = CollisionDetector.FineGrainedCollisionDetection(collisions, myShape);
 
             GetShape().DebugColor = collisions.Count > 0 ? Colors.Transparent : Colors.Red;
-            GetShape().Color = collisions.Count > 0 ? Colors.Red : Colors.Transparent;
+            GetShape().Color = collisions.Count > 0 ? Colors.Black : Colors.Transparent;
             foreach(SenseInput si in SubInputs)
             {
                 si.SetValue(collisions);

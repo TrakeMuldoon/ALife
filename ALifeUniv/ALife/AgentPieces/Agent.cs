@@ -45,9 +45,9 @@ namespace ALifeUni.ALife
             Actions = GenerateActions();
 
             //myBrain = new RandomBrain(this);
-            //myBrain = new TesterBrain(this);
+            myBrain = new TesterBrain(this);
             //TODO: Brain Behaviour is hardcoded. IT shoudl be in the config.
-            myBrain = new BehaviourBrain(this,"*", "*", "*", "*", "*");
+            //myBrain = new BehaviourBrain(this,"*", "*", "*", "*", "*");
 
             this.DebugColor = Colors.PaleVioletRed;
         }

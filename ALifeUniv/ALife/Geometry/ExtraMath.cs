@@ -92,5 +92,13 @@ namespace ALifeUni.ALife.UtilityClasses
             }
             return min;
         }
+
+        public static Point TranslateByVector(Point a, double radians, double distance)
+        {
+            double newX = (distance * Math.Cos(radians)) + a.X;
+            double newY = (distance * Math.Sin(radians)) + a.Y;
+
+            return new Point(newX, newY);
+        }
     }
 }

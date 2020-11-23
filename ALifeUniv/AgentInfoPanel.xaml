@@ -12,6 +12,7 @@
     <StackPanel x:Name="SelectedAgent">
         <TextBlock x:Name="NameLabel" Text="Name" />
         <TextBlock x:Name="AgentName" />
+        <TextBlock x:Name="AgentLocation" />
 
         <TextBlock x:Name="SensesLabel" Text="Senses" />
         <TextBlock x:Name="Senses" />

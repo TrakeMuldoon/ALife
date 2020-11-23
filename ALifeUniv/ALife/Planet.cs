@@ -85,13 +85,13 @@ namespace ALifeUni.ALife
             //}
 
             Agent ag;
-            ag = new Agent(new Point(200, 200));
-            instance.AddObjectToWorld(ag);
-            ag = new Agent(new Point(250, 200));
-            instance.AddObjectToWorld(ag);
-            ag = new Agent(new Point(200, 250));
-            instance.AddObjectToWorld(ag);
-            ag = new Agent(new Point(250, 250));
+            //ag = new Agent(new Point(100, 100));
+            //instance.AddObjectToWorld(ag);
+            //ag = new Agent(new Point(150, 100));
+            //instance.AddObjectToWorld(ag);
+            //ag = new Agent(new Point(100, 150));
+            //instance.AddObjectToWorld(ag);
+            ag = new Agent(new Point(150, 150));
             instance.AddObjectToWorld(ag);
         }
 

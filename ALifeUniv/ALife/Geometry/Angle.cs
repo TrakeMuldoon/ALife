@@ -1,12 +1,14 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ALifeUni.ALife.UtilityClasses
 {
+    [DebuggerDisplay("Deg:{Degrees}, Rads:{Radians}")]
     public class Angle
     {
         private double rads;

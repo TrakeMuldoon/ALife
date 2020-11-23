@@ -10,7 +10,10 @@ namespace ALifeUni.ALife
 {
     public class EmptyObject : WorldObject
     {
-        public EmptyObject(Point centrePoint, float startRadius, string collisionLevel) : base(centrePoint, startRadius, String.Empty, String.Empty, collisionLevel, Colors.Transparent)
+        public EmptyObject(Point centrePoint, float startRadius, string collisionLevel) : this(centrePoint, startRadius, collisionLevel, String.Empty)
+        {
+        }
+        public EmptyObject(Point centrePoint, float startRadius, string collisionLevel, string name) : base(centrePoint, startRadius, "Empty", name, collisionLevel, Colors.Transparent)
         {
         }
 
@@ -21,7 +24,7 @@ namespace ALifeUni.ALife
 
         public override void ExecuteAliveTurn()
         {
-            throw new NotImplementedException();
+           //Do Nothing
         }
 
         public override void ExecuteDeadTurn()

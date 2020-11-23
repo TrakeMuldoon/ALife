@@ -17,6 +17,8 @@ namespace ALifeUni.ALife
             //TODO: Hardcoded sweep and orientation angles here. They should be linked to parent or to configuration
             myShape = new ChildSector(new Angle(0), new Angle(0), parent);
             SubInputs.Add(new EyeInput(name + ".SeeSomething"));
+            SubInputs.Add(new EyeCounterInput(name + ".HowMany"));
+            SubInputs.Add(new EyeIdentifierInput(name + ".WhoISee"));
             SubInputs.Add(new ColorBoolInput(name + ".IsRed", (WorldObject wo) => wo.Color.R));
             SubInputs.Add(new ColorBoolInput(name + ".IsBlue", (WorldObject wo) => wo.Color.B));
             SubInputs.Add(new ColorBoolInput(name + ".IsGreen", (WorldObject wo) => wo.Color.G));

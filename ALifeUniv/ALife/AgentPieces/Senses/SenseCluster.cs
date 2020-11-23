@@ -35,7 +35,8 @@ namespace ALifeUni.ALife
             List<WorldObject> collisions = collider.QueryForBoundingBoxCollisions(bb, parent);
             collisions = CollisionDetector.FineGrainedCollisionDetection(collisions, myShape);
 
-            GetShape().DebugColor = collisions.Count > 0 ? Colors.Green : Colors.Transparent;
+            GetShape().DebugColor = collisions.Count > 0 ? Colors.Transparent : Colors.Red;
+            GetShape().Color = collisions.Count > 0 ? Colors.Red : Colors.Transparent;
             foreach(SenseInput si in SubInputs)
             {
                 si.SetValue(collisions);

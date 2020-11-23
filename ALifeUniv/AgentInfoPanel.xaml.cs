@@ -44,6 +44,7 @@ namespace ALifeUni
                 return;
             }
             AgentName.Text = theAgent.IndividualLabel;
+            AgentLocation.Text = Math.Round(theAgent.CentrePoint.X, 4) + "," + Math.Round(theAgent.CentrePoint.Y, 4);
             senseBuilder();
             propertiesBuilder();
             actionsBuilder();

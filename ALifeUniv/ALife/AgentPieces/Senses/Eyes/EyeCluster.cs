@@ -15,7 +15,12 @@ namespace ALifeUni.ALife
         public EyeCluster(Agent parent, String name) : base(parent, name)
         {
             //TODO: Hardcoded sweep and orientation angles here. They should be linked to parent or to configuration
-            myShape = new ChildSector(new Angle(270), new Angle(260), parent);
+            //TODO: Hardcoded other angles here too. All bad. BAD
+            Angle orientationAroundParent = new Angle(-90);
+            Angle relativeOrientation = new Angle(-10);
+            float radius = 100;
+            Angle sweep = new Angle(30);
+            myShape = new ChildSector(orientationAroundParent, relativeOrientation, radius, sweep, parent);
             SubInputs.Add(new EyeInput(name + ".SeeSomething"));
             SubInputs.Add(new EyeCounterInput(name + ".HowMany"));
             SubInputs.Add(new EyeIdentifierInput(name + ".WhoISee"));

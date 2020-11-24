@@ -73,26 +73,16 @@ namespace ALifeUni.ALife
 
             //TODO: Read new world agentnum from config
 
-            //int locationMultiplier = 20;
-            //for (int i = 0; i < 100; i++)
-            //{
-            //    int yPosBase = 2 + (i / 3);
-            //    int xPosBase = 2 + ((i - 1) / 3) + (((i - 1) % 3) % 2);
-            //    int xPos = xPosBase * locationMultiplier;
-            //    int yPos = yPosBase * locationMultiplier;
-            //    Agent ag = new Agent(new Point(xPos, yPos));
-            //    instance.AddObjectToWorld(ag);
-            //}
-
-            Agent ag;
-            //ag = new Agent(new Point(100, 100));
-            //instance.AddObjectToWorld(ag);
-            //ag = new Agent(new Point(150, 100));
-            //instance.AddObjectToWorld(ag);
-            //ag = new Agent(new Point(100, 150));
-            //instance.AddObjectToWorld(ag);
-            ag = new Agent(new Point(150, 150));
-            instance.AddObjectToWorld(ag);
+            int locationMultiplier = 23;
+            for (int i = 0; i < 100; i++)
+            {
+                int yPosBase = 2 + (i / 3);
+                int xPosBase = 2 + ((i - 1) / 3) + (((i - 1) % 3) % 2);
+                int xPos = xPosBase * locationMultiplier;
+                int yPos = yPosBase * locationMultiplier;
+                Agent ag = new Agent(new Point(xPos, yPos));
+                instance.AddObjectToWorld(ag);
+            }
         }
 
         public readonly List<WorldObject> AllControlledObjects = new List<WorldObject>();

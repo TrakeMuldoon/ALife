@@ -16,10 +16,10 @@ namespace ALifeUni.ALife
         {
             //TODO: Hardcoded sweep and orientation angles here. They should be linked to parent or to configuration
             //TODO: Hardcoded other angles here too. All bad. BAD
-            Angle orientationAroundParent = new Angle(-90);
-            Angle relativeOrientation = new Angle(-10);
-            float radius = 100;
-            Angle sweep = new Angle(30);
+            Angle orientationAroundParent = new Angle(20);
+            Angle relativeOrientation = new Angle(20);
+            float radius = 80;
+            Angle sweep = new Angle(25);
             myShape = new ChildSector(orientationAroundParent, relativeOrientation, radius, sweep, parent);
             SubInputs.Add(new EyeInput(name + ".SeeSomething"));
             SubInputs.Add(new EyeCounterInput(name + ".HowMany"));

@@ -176,7 +176,7 @@ namespace ALifeUni.ALife
 
         private static bool PointWithinSweep(Point targetPoint, Sector sector)
         {
-            double deltaX = targetPoint.X - sector.CentrePoint.Y;
+            double deltaX = targetPoint.X - sector.CentrePoint.X;
             double deltaY = targetPoint.Y - sector.CentrePoint.Y;
 
             double angleBetweenPoints = Math.Atan2(deltaY, deltaX);

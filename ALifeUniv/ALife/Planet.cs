@@ -74,10 +74,12 @@ namespace ALifeUni.ALife
             //TODO: Read new world agentnum from config
 
             int locationMultiplier = 23;
-            for (int i = 0; i < 100; i++)
+            //int numAgents = 100;
+            int numAgents = 1;
+            for (int i = 0; i < numAgents; i++)
             {
-                int yPosBase = 2 + (i / 3);
-                int xPosBase = 2 + ((i - 1) / 3) + (((i - 1) % 3) % 2);
+                int yPosBase = 4 + (i / 3);
+                int xPosBase = 6 + ((i - 1) / 3) + (((i - 1) % 3) % 2);
                 int xPos = xPosBase * locationMultiplier;
                 int yPos = yPosBase * locationMultiplier;
                 Agent ag = new Agent(new Point(xPos, yPos));

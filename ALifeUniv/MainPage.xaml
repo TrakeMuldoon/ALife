@@ -72,6 +72,7 @@
             <Button x:Name="PlaySim" HorizontalAlignment="Stretch" Click="PlaySim_Click">Play</Button>
             <Button x:Name="FastPlaySim" HorizontalAlignment="Stretch" Click="FastPlaySim_Click">Fast</Button>
             <Button x:Name="SkipAhead" HorizontalAlignment="Stretch" Click="SkipAhead_Click">Stupid Fast</Button>
+            <Button x:Name="SkipFarAhead" HorizontalAlignment="Stretch" Click="SkipFarAhead_Click">Obscenely Fast</Button>
             <TextBox x:Name="ZoomFactor" TextChanged="ZoomFactor_TextChanged"  Text="1"/>
             <!--<CheckBox x:Name="matchDPI" Checked="MatchDPI_Checked" Unchecked="MatchDPI_Unchecked" />
             <TextBlock x:Name="debugText" />

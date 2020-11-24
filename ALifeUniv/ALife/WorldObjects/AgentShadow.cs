@@ -8,12 +8,9 @@ using Windows.UI;
 
 namespace ALifeUni.ALife
 {
-    public class EmptyObject : WorldObject
+    public class AgentShadow : WorldObject
     {
-        public EmptyObject(Point centrePoint, float startRadius, string collisionLevel) : this(centrePoint, startRadius, collisionLevel, String.Empty)
-        {
-        }
-        public EmptyObject(Point centrePoint, float startRadius, string collisionLevel, string name) : base(centrePoint, startRadius, "Empty", name, collisionLevel, Colors.Gray)
+        public AgentShadow(Point centrePoint, float startRadius, string genusLabel, string individualLabel, string collisionLevel, Color color) : base(centrePoint, startRadius, genusLabel, individualLabel, collisionLevel, color)
         {
         }
 
@@ -24,7 +21,7 @@ namespace ALifeUni.ALife
 
         public override void ExecuteAliveTurn()
         {
-            //Do Nothing
+            throw new NotImplementedException();
         }
 
         public override void ExecuteDeadTurn()

@@ -248,6 +248,24 @@ namespace ALifeUni
             AgentPanel.updateInfo();
         }
 
+        private void SkipFarAhead_Click(object sender, RoutedEventArgs e)
+        {
+            List<LayerUISettings> settingsStorage = new List<LayerUISettings>();
+            foreach(LayerUISettings set in UIGrid)
+            {
+                settingsStorage.Add(set);
+            }
+            UIGrid.Clear();
+
+            Planet.World.ExecuteManyTurns(5000);
+            AgentPanel.updateInfo();
+
+            foreach(LayerUISettings set in settingsStorage)
+            {
+                UIGrid.Add(set);
+            }
+        }
+
         #endregion
 
         #region Zoom controls

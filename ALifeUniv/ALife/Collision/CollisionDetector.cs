@@ -143,31 +143,41 @@ namespace ALifeUni.ALife
             //3c (rounded segment)
             //The algorithm for circle sector collision will be as follows
 
+            //Check if the circle is within the sector or breaks the circle portion
             //Check if any of the three points of sector are within B
             //Check if the circle breaks the line segments
-            //Check if the circle is within the sector or breaks the circle portion
 
-
+            //Check if the centre point is within the sweep range
+            if (PointWithinSweep(circle.CentrePoint, sector))
+            {
+                //if it is, the either the target is within the radius distance or it's too far.
+                return CircleCircleCollision(circle, new Circle(sector.CentrePoint, sector.Radius));
+            }
 
             //Check the centrepoint of the Sector
-            if(PointCircleCollision(sector.CentrePoint, circle)) return true;
+            if (PointCircleCollision(sector.CentrePoint, circle)) return true;
 
             //Check the left point of the sector
             Point leftPoint = ExtraMath.TranslateByVector(sector.CentrePoint, sector.AbsoluteOrientation.Radians, sector.Radius);
-            if(PointCircleCollision(leftPoint, circle)) return true;
+            if (PointCircleCollision(leftPoint, circle)) return true;
 
             //Check the right point of the sector
             Point rightPoint = ExtraMath.TranslateByVector(sector.CentrePoint, (sector.AbsoluteOrientation + sector.SweepAngle).Radians, sector.Radius);
-            if(PointCircleCollision(rightPoint, circle)) return true;
+            if (PointCircleCollision(rightPoint, circle)) return true;
 
             //Now we're checking the line segment collisions
-            if(LineSegmentCircleCollision(sector.CentrePoint, leftPoint, circle)) return true;
+            if (LineSegmentCircleCollision(sector.CentrePoint, leftPoint, circle)) return true;
 
-            if(LineSegmentCircleCollision(sector.CentrePoint, rightPoint, circle)) return true;
+            if (LineSegmentCircleCollision(sector.CentrePoint, rightPoint, circle)) return true;
 
-            //Now check if the target centrepoint is INSIDE the sector
-            double deltaX = circle.CentrePoint.X - sector.CentrePoint.Y;
-            double deltaY = circle.CentrePoint.Y - sector.CentrePoint.Y;
+            //All Options Exhausted
+            return false;
+        }
+
+        private static bool PointWithinSweep(Point targetPoint, Sector sector)
+        {
+            double deltaX = targetPoint.X - sector.CentrePoint.Y;
+            double deltaY = targetPoint.Y - sector.CentrePoint.Y;
 
             double angleBetweenPoints = Math.Atan2(deltaY, deltaX);
             Angle abp = new Angle(angleBetweenPoints, true);
@@ -176,17 +186,9 @@ namespace ALifeUni.ALife
             abp -= sector.AbsoluteOrientation;
             Angle maximum = sector.SweepAngle;
 
-            if(abp.Degrees < maximum.Degrees)
-            {
-                //Success! it is in the sweet spot.
-                //Now we just check "circle circle" collision
-                return CircleCircleCollision(new Circle(sector.CentrePoint, sector.Radius), circle);
-            }
-
-            //TODO CONTINUE HERE...
-
-            return false;
+            return abp.Degrees < maximum.Degrees;
         }
+
         public static Boolean IndividualShapeCollision(Circle a, Rectangle b)
         {
             throw new NotImplementedException();

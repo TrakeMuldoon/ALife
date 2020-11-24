@@ -143,12 +143,10 @@
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorBoolInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\EyeCounterInput.cs" />
-    <Compile Include="ALife\EmptyObject.cs" />
+    <Compile Include="ALife\WorldObjects\EmptyObject.cs" />
+    <Compile Include="ALife\WorldObjects\AgentShadow.cs" />
     <Compile Include="ALife\WorldObject.cs" />
     <Compile Include="ALife\Geometry\Shapes\Rectangle.cs" />
-    <Compile Include="AgentInfoPanel.xaml.cs">
-      <DependentUpon>AgentInfoPanel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\DrawingLogic.cs" />
     <Compile Include="UI\LayerUISettings.cs" />
     <None Include="ALife\Collision\CollisionQuadTree.cs" />
@@ -172,6 +170,9 @@
     <Compile Include="ALife\Geometry\Shapes\IHasShape.cs" />
     <Compile Include="ALife\Geometry\Shapes\IShape.cs" />
     <Compile Include="ALife\Geometry\Shapes\Sector.cs" />
+    <Compile Include="AgentInfoPanel.xaml.cs">
+      <DependentUpon>AgentInfoPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>

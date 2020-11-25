@@ -6,7 +6,7 @@
 * [x] Add Actions into BehaviourCabinet
 * [x] Implement "WAIT" Action
 * [x] Implement Random BehaviourBrain creation
-* [ ] TEST complete BehaviourBrain with custom behaviours
+* [X] TEST complete BehaviourBrain with custom behaviours
 * [x] Update UI to show Behaviours in Right hand Panel
 * [ ] Implement Cloning/Mutation
 * [ ] Implement no movement countdown to death.
@@ -14,9 +14,10 @@
 * [ ] Implement First Scenario
 * [ ] Implement End of turn trigger evaluations (i.e. reproduce/death)
 
-* First Scenario is : Agents all run around, if they do not move for 100 turns, they automatically die. If they bump into another agent, the passive agent dies, and the active agent produces an offspring 
-** Desired Behaviour evolves: See Something, RUN FORWARD HARD. Or perhaps running forward as fast as they can blindly, might still work. 
-
+* [ ] View Previous Agent State to see why they did what they did
+* [ ] Implement Zones (starting zones)
+* [ ] Goal Based Features
+* [ ] Implmenet running across the field scenario
 
 ## Goal-based Features
 The goal is provided/set to the agents; they do not decide at this time.
@@ -52,7 +53,7 @@ Required to start running simulations; currently, these are configured/provided.
 ## Senses and Behaviours
 * [ ] ProximityDetectorInput
 * [ ] SenseClusters: Most senses are composites of multiple values (0-255); e.g., ears could be "volume of sound", "pitch of sound" and "calibre/timbre of sound". This could include some optimizations about detection. Senses we want to target:
-   * [ ] Eyes
+   * [x] Eyes
    * [ ] Ears
    * [ ] Nose
    * [ ] Touch
@@ -61,8 +62,8 @@ Required to start running simulations; currently, these are configured/provided.
 Actions are outputs of the NN, anything which the agent could "choose" to do as a result of the inputs.
 * [ ] Bite
 * [ ] Idle
-* [ ] Move
-* [ ] Rotate
+* [x] Move
+* [x] Rotate
 _Note_: We could make composite actions as in "veer right = move forward + rotate right" kind of thing.
 
 ### Agent properties connection

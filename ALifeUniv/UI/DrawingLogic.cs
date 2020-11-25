@@ -12,14 +12,14 @@ namespace ALifeUni.UI
 {
     public static class DrawingLogic
     {
-        internal static void DrawWorldObject(WorldObject wo,LayerUISettings uiSettings,  CanvasAnimatedDrawEventArgs args)
+        internal static void DrawWorldObject(WorldObject wo, LayerUISettings uiSettings,  CanvasAnimatedDrawEventArgs args)
         {
             if(!(wo is Agent)
                 && uiSettings.ShowObjects)
             {
                 DrawObject(wo, uiSettings, args);
             }
-            if(wo is Agent
+            else if(wo is Agent
                 && uiSettings.ShowAgents)
             {
                 DrawObject(wo, uiSettings, args);
@@ -34,13 +34,29 @@ namespace ALifeUni.UI
                 {
                     foreach(IHasShape shape in ag.Senses)
                     {
-                        DrawSense(uiSettings, args, shape);
+                        DrawSense(shape, uiSettings, args);
                     }
                 }
             }
+            else
+            {
+                throw new Exception("What the hell is this??");
+            }
         }
 
-        private static void DrawSense(LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args, IHasShape shape)
+        internal static void DrawAgentShadow(AgentShadow wo, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
+        {
+            Color orig = wo.DebugColor;
+            wo.DebugColor = Colors.White;
+            DrawWorldObject(wo, uiSettings, args);
+            wo.DebugColor = orig;
+            foreach(IHasShape shape in wo.Senses)
+            {
+                DrawSense(shape, uiSettings, args);
+            }
+        }
+
+        private static void DrawSense(IHasShape shape, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
         {
             IShape currShape = shape.GetShape();
             if(currShape is Sector)

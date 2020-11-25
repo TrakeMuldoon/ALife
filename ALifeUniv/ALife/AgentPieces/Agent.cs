@@ -23,10 +23,10 @@ namespace ALifeUni.ALife
         public readonly List<SenseCluster> Senses;
         public readonly ReadOnlyDictionary<String, ActionCluster> Actions;
 
-        public override Angle Orientation
+        public AgentShadow Shadow
         {
             get;
-            set;
+            private set;
         }
 
         public Agent(Point birthPosition)
@@ -45,11 +45,12 @@ namespace ALifeUni.ALife
             Actions = GenerateActions();
 
             //myBrain = new RandomBrain(this);
-            //myBrain = new TesterBrain(this);
+            myBrain = new TesterBrain(this);
             //TODO: Brain Behaviour is hardcoded. IT shoudl be in the config.
-            myBrain = new BehaviourBrain(this,"*", "*", "*", "*", "*");
+            //myBrain = new BehaviourBrain(this,"*", "*", "*", "*", "*");
 
             this.DebugColor = Colors.PaleVioletRed;
+            this.Shadow = new AgentShadow(this);
         }
 
         private Agent(Point birthPosition, Agent parent)
@@ -135,6 +136,8 @@ namespace ALifeUni.ALife
 
         public override void ExecuteAliveTurn()
         {
+            Shadow = new AgentShadow(this);
+
             myBrain.ExecuteTurn();
             Statistics["Age"].IncreasePropertyBy(1);
             //Reset all the senses. 

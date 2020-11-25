@@ -98,9 +98,43 @@ namespace ALifeUni
             {
                 return;
             }
-            foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
+
+            if(viewPast
+                && special != null)
             {
-                DrawingLogic.DrawWorldObject(wo, ui, args);
+                int compnumber = special.ExecutionOrder;
+                foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
+                {
+                    if(compnumber < wo.ExecutionOrder)
+                    {
+                        DrawingLogic.DrawWorldObject(wo, ui, args);
+                        continue;
+                    }
+
+                    if(!(wo is Agent))
+                    {
+                        //TODO: Should ALL objects have shadows??
+                        DrawingLogic.DrawWorldObject(wo, ui, args);
+                        continue;
+                    }
+
+                    Agent ag = (Agent)wo;
+
+                    if (compnumber == wo.ExecutionOrder)
+                    {
+                        DrawingLogic.DrawAgentShadow(ag.Shadow, ui, args);
+                        continue;
+                    }
+                    
+                    DrawingLogic.DrawWorldObject(ag.Shadow, ui, args);
+                }
+            }
+            else
+            {
+                foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
+                {
+                    DrawingLogic.DrawWorldObject(wo, ui, args);
+                }
             }
         }
 
@@ -378,19 +412,25 @@ namespace ALifeUni
         #endregion
 
         #region Keyboard Controls
+        Boolean viewPast;
         private void CoreWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
         {
             switch(args.VirtualKey)
             {
                 case VirtualKey.Q: IncreaseZoom(); break;
                 case VirtualKey.E: DecreaseZoom(); break;
+                case VirtualKey.X: viewPast = true; break;
                 default: break;
             }
         }
 
         private void CoreWindow_KeyUp(CoreWindow sender, KeyEventArgs args)
         {
-            //upValue.Text += args.VirtualKey;
+            switch(args.VirtualKey)
+            {
+                case VirtualKey.X: viewPast = false; break;
+                default: break;
+            }
         }
         #endregion
     }

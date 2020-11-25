@@ -9,6 +9,7 @@ namespace ALifeUni.ALife
     //TODO: World Objects are current hardcodded to be "Circle". 
     public abstract class WorldObject : Circle, IHasShape
     {
+        public int ExecutionOrder;
         private Point centre;
         public override Point CentrePoint
         { 
@@ -39,6 +40,12 @@ namespace ALifeUni.ALife
                 centre.X = properX;
                 centre.Y = properY;
             }
+        }
+
+        public override Angle Orientation
+        {
+            get;
+            set;
         }
 
         public readonly String GenusLabel;

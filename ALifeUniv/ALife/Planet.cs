@@ -146,8 +146,10 @@ namespace ALifeUni.ALife
         internal void ExecuteOneTurn()
         {
             turns++;
+            int order = 0;
             foreach (WorldObject wo in AllActiveObjects)
             {
+                wo.ExecutionOrder = order++;
                 wo.ExecuteTurn();
             }
             while(AllNewObjects.Count > 0)

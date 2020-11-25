@@ -16,9 +16,9 @@ namespace ALifeUni.ALife
         public readonly string Name;
         public readonly List<SenseInput> SubInputs = new List<SenseInput>();
         readonly string CollisionLevel = ReferenceValues.CollisionLevelPhysical;
-        readonly Agent parent;
+        readonly WorldObject parent;
 
-        public SenseCluster(Agent parent, String name)
+        public SenseCluster(WorldObject parent, String name)
         {
             this.parent = parent;
             Name = name;
@@ -45,6 +45,8 @@ namespace ALifeUni.ALife
         }
 
         public abstract IShape GetShape();
+
+        public abstract SenseCluster Clone(WorldObject newParent);
 
         //On/Off
         //How Many (0-255 for each)

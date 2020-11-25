@@ -12,7 +12,7 @@ namespace ALifeUni.ALife
     {
         ChildSector myShape;
 
-        public EyeCluster(Agent parent, String name) : base(parent, name)
+        public EyeCluster(WorldObject parent, String name) : base(parent, name)
         {
             //TODO: Hardcoded sweep and orientation angles here. They should be linked to parent or to configuration
             //TODO: Hardcoded other angles here too. All bad. BAD
@@ -30,6 +30,18 @@ namespace ALifeUni.ALife
             SubInputs.Add(new ColorInput(name + ".HowRed", (WorldObject wo) => wo.Color.R));
             SubInputs.Add(new ColorInput(name + ".HowBlue", (WorldObject wo) => wo.Color.B));
             SubInputs.Add(new ColorInput(name + ".HowGreen", (WorldObject wo) => wo.Color.G));
+        }
+
+        public override SenseCluster Clone(WorldObject newParent)
+        {
+            EyeCluster newEC = new EyeCluster(newParent, Name);
+            newEC.myShape.OrientationAroundParent = new Angle(myShape.OrientationAroundParent.Degrees);
+            newEC.myShape.RelativeOrientation = new Angle(myShape.RelativeOrientation.Degrees);
+            newEC.myShape.Radius = myShape.Radius;
+            newEC.myShape.SweepAngle = new Angle(myShape.SweepAngle.Degrees);
+            newEC.myShape.Color = myShape.Color;
+            newEC.myShape.DebugColor = myShape.DebugColor;
+            return newEC;
         }
 
         public override IShape GetShape()

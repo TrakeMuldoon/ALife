@@ -74,10 +74,7 @@
             <Button x:Name="SkipAhead" HorizontalAlignment="Stretch" Click="SkipAhead_Click">Stupid Fast</Button>
             <Button x:Name="SkipFarAhead" HorizontalAlignment="Stretch" Click="SkipFarAhead_Click">Obscenely Fast</Button>
             <TextBox x:Name="ZoomFactor" TextChanged="ZoomFactor_TextChanged"  Text="1"/>
-            <!--<CheckBox x:Name="matchDPI" Checked="MatchDPI_Checked" Unchecked="MatchDPI_Unchecked" />
-            <TextBlock x:Name="debugText" />
-            <TextBlock x:Name="debugCounter" />
-            <TextBlock x:Name="upValue" />-->
+            <!--<TextBlock x:Name="debugText" />-->
 
             <TextBlock x:Name="LayersLabel" Text="Layers"></TextBlock>
             <controls:DataGrid x:Name="VisualSettingsGrid"

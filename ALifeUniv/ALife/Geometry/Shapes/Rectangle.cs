@@ -10,30 +10,24 @@ namespace ALifeUni.ALife.UtilityClasses
 {
     public class Rectangle : IShape
     {
-        public double Length;
-        public double Width;
-        public Point TopLeft;
+        public double FBLength;
+        public double RLWidth;
 
-        private double splitDistanceOver2;
-        private double radsDiff;
-
-        public Rectangle(double length, double width, Point topLeft, Color color)
+        public Rectangle(double fbLength, double rlWidth, Point centrePoint, Color color)
         {
-            Length = length;
-            Width = width;
-            TopLeft = topLeft;
+            CentrePoint = centrePoint;
+            FBLength = fbLength;
+            RLWidth = rlWidth;
             Color = color;
+            DebugColor = Colors.IndianRed;
+
             Orientation = new Angle(0);
-            splitDistanceOver2 = Math.Sqrt((length * length) + (width * width)) / 2;
-            radsDiff = Math.Atan(length / width);
         }
 
         public virtual Point CentrePoint
         {
-            get
-            {
-                return ExtraMath.TranslateByVector(TopLeft, Orientation.Radians + radsDiff, splitDistanceOver2);
-            }
+            get;
+            set;
         }
 
         public virtual Angle Orientation

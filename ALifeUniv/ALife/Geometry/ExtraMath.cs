@@ -94,17 +94,13 @@ namespace ALifeUni.ALife.UtilityClasses
             return min;
         }
 
-        public static Point TranslateByVector(Point a, double radians, double distance)
+        //TODO: Make this take an "Angle" and not "Radians". I think it will be cleaner elsewhere
+        public static Point TranslateByVector(Point startPoint, double radians, double distance)
         {
-            double newX = (distance * Math.Cos(radians)) + a.X;
-            double newY = (distance * Math.Sin(radians)) + a.Y;
+            double newX = (distance * Math.Cos(radians)) + startPoint.X;
+            double newY = (distance * Math.Sin(radians)) + startPoint.Y;
 
             return new Point(newX, newY);
-        }
-
-        public static Vector2 PointToVector(Point a)
-        {
-            return new Vector2((float)a.X, (float)a.Y);
         }
     }
 }

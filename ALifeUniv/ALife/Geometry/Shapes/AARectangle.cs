@@ -8,39 +8,74 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.UtilityClasses
 {
-    public class AARectangle : Rectangle
+    public class AARectangle : IShape
     {
-        public override Point CentrePoint
+
+
+        public Point CentrePoint
         {
             get
             {
-                double cpX = TopLeft.X + Width / 2;
-                double cpY = TopLeft.Y + Length / 2;
+                double cpX = TopLeft.X + XWidth / 2;
+                double cpY = TopLeft.Y + YHeight / 2;
                 return new Point(cpX, cpY);
             }
         }
 
         private Angle ori = new Angle(0);
 
-        public AARectangle() : base(3,4, new Point(0,0), Colors.Red)
+        public AARectangle(double xWidth, double yHeight, Point topLeft, Color color)
         {
+            XWidth = xWidth;
+            YHeight = yHeight;
+            Color = color;
+            TopLeft = topLeft;
         }
 
-        public override Angle Orientation
+        public double XWidth
+        {
+            get;
+            set;
+        }
+        public double YHeight
+        {
+            get;
+            set;
+        }
+
+        public Point TopLeft
+        {
+            get;
+            set;
+        }
+
+        public Angle Orientation
         {
             get { return ori; }
         }
-        public override BoundingBox BoundingBox
+        public BoundingBox BoundingBox
         {
-            get { return new BoundingBox(TopLeft.X, TopLeft.Y, TopLeft.X + Width, TopLeft.Y + Length); }
+            get { return new BoundingBox(TopLeft.X, TopLeft.Y, TopLeft.X + XWidth, TopLeft.Y + YHeight); }
         }
 
-        public override ShapesEnum GetShapeEnum()
+        public Color Color
+        { 
+            get; 
+            set; 
+        }
+
+        public Color DebugColor
+        { 
+            get;
+            set;
+        }
+
+        public ShapesEnum GetShapeEnum()
         {
             return ShapesEnum.AARectangle;
         }
 
-        public override void Reset()
+        public void Reset()
         {
             //This does nothing for AARectangles
         }

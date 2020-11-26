@@ -7,6 +7,7 @@ using System.Collections;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
+using Windows.UI.Xaml.Controls;
 
 namespace ALifeUni.UI
 {
@@ -31,9 +32,8 @@ namespace ALifeUni.UI
 
                 Agent ag = (Agent)wo;
                 //Draw Orientation
-                float newX = (float)(wo.CentrePoint.X + wo.Radius * Math.Cos(ag.Orientation.Radians));
-                float newY = (float)(wo.CentrePoint.Y + wo.Radius * Math.Sin(ag.Orientation.Radians));
-                args.DrawingSession.FillCircle(new Vector2(newX, newY), 1, Colors.DarkCyan);
+                Point ori = ExtraMath.TranslateByVector(wo.CentrePoint, ag.Orientation.Radians, wo.Radius);
+                args.DrawingSession.FillCircle(ori.ToVector2(), 1, Colors.DarkRed);
 
                 if(uiSettings.ShowSenses)
                 {
@@ -74,7 +74,7 @@ namespace ALifeUni.UI
 
                 CanvasPathBuilder pathBuilder = new CanvasPathBuilder(args.DrawingSession);
                 Angle myAngle = sec.Orientation + sec.OrientationAroundParent + sec.Parent.Orientation;
-                Vector2 centre = ExtraMath.PointToVector(sec.CentrePoint);
+                Vector2 centre = sec.CentrePoint.ToVector2();
                 pathBuilder.BeginFigure(centre);
                 pathBuilder.AddArc(centre, sec.Radius, sec.Radius, (float)myAngle.Radians, (float)sec.SweepAngle.Radians);
                 pathBuilder.EndFigure(CanvasFigureLoop.Closed);
@@ -91,11 +91,11 @@ namespace ALifeUni.UI
 
         private static void DrawObjectBase(WorldObject wo, LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
         {
-            Vector2 objectCentre = new Vector2((float)wo.CentrePoint.X, (float)wo.CentrePoint.Y);
+            Vector2 objectCentre = wo.CentrePoint.ToVector2();
             //World Object Body
             args.DrawingSession.FillCircle(objectCentre, wo.Radius, wo.Color);
             //Core of the body is the debug colour
-            args.DrawingSession.FillCircle(objectCentre, 2, wo.GetShape().DebugColor);
+            args.DrawingSession.FillCircle(objectCentre, 2, wo.DebugColor);
 
             if(ui.ShowBoundingBoxes)
             {
@@ -111,25 +111,35 @@ namespace ALifeUni.UI
             args.DrawingSession.DrawRectangle(drawRec, color, 0.3f);
         }
 
+        internal static void DrawAARectangle(AARectangle rec, CanvasAnimatedDrawEventArgs args)
+        {
+            args.DrawingSession.DrawRectangle((float)rec.TopLeft.X, (float)rec.TopLeft.Y, (float)rec.XWidth, (float)rec.YHeight, rec.Color);
+            args.DrawingSession.FillCircle(rec.CentrePoint.ToVector2(), 2, rec.DebugColor);
+        }
+
         internal static void DrawRectangle(Rectangle rec, CanvasAnimatedDrawEventArgs args)
         {
-            Point rovingPoint = rec.TopLeft;
+            Point rovingPoint = rec.CentrePoint;
+            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians, rec.FBLength / 2);
+            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians - (Math.PI / 2), rec.RLWidth/2);
+            
             CanvasPathBuilder cpb = new CanvasPathBuilder(args.DrawingSession.Device);
-            cpb.BeginFigure(ExtraMath.PointToVector(rovingPoint));
-            
-            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians, rec.Width);
-            cpb.AddLine(ExtraMath.PointToVector(rovingPoint));
-            
-            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians + Math.PI/2, rec.Width);
-            cpb.AddLine(ExtraMath.PointToVector(rovingPoint));
+            cpb.BeginFigure(rovingPoint.ToVector2());
 
-            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians + Math.PI, rec.Width);
-            cpb.AddLine(ExtraMath.PointToVector(rovingPoint));
+            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians + (Math.PI / 2), rec.RLWidth);
+            cpb.AddLine(rovingPoint.ToVector2());
+
+            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians + Math.PI, rec.FBLength);
+            cpb.AddLine(rovingPoint.ToVector2());
+
+            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians + (Math.PI * 3 / 2), rec.RLWidth);
+            cpb.AddLine(rovingPoint.ToVector2());
 
             cpb.EndFigure(CanvasFigureLoop.Closed);
             CanvasGeometry cg = CanvasGeometry.CreatePath(cpb);
 
             args.DrawingSession.DrawGeometry(cg, rec.Color);
+            args.DrawingSession.FillCircle(rec.CentrePoint.ToVector2(), 2, rec.DebugColor);
         }
     }
 }

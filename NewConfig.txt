@@ -4,15 +4,16 @@
 		Width
 	Starting Conditions
 		Zones
-			Position : <coord>
+			TopLeft : <coord>
 			Color : <Color>
 			Size
 				Length : <Integer>
 				Width : <Integer>
-		AgentGroup
-			AgentTypes
+		AgentGroups
+			<AgentGroup> : multiple
 				AgentType : <AgentType>
 				NumAgents : <Integer>
+				DistributionPattern: <String>
 
 
 <AgentType>
@@ -26,7 +27,6 @@
 		FreeActions : List<Action>
 
 		ScenarioAttributes : List<Attribute>
-		CentrePoint : <coord> //Required
 		Radius : <Attribute> //Required
 		Color : <Attribute> //Required
 

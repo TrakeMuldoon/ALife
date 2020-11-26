@@ -116,6 +116,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ALife\AgentDistribution.cs" />
     <Compile Include="ALife\AgentPieces\AgentActions\ActionCluster.cs" />
     <Compile Include="ALife\AgentPieces\AgentActions\ActionPart.cs" />
     <Compile Include="ALife\AgentPieces\AgentActions\ColorCluster.cs" />

@@ -24,7 +24,7 @@ namespace ALifeUni.ALife.UtilityClasses
 
         private Angle ori = new Angle(0);
 
-        public AARectangle(double xWidth, double yHeight, Point topLeft, Color color)
+        public AARectangle(Point topLeft, double xWidth, double yHeight, Color color)
         {
             XWidth = xWidth;
             YHeight = yHeight;

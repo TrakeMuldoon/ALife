@@ -7,6 +7,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.UI;
 
 namespace ALifeUni.ALife
 {
@@ -85,8 +86,15 @@ namespace ALifeUni.ALife
                 Agent ag = new Agent(new Point(xPos, yPos));
                 instance.AddObjectToWorld(ag);
             }
+
+            Zone red = new Zone("Start", new Point(0, 0), 100, height, Colors.Red);
+            Zone blue = new Zone("End", new Point(width-100, 0), 100, height, Colors.Blue);
+            instance.Zones.Add(red.Name, red);
+            instance.Zones.Add(blue.Name, blue);
         }
 
+
+        public readonly Dictionary<String, Zone> Zones = new Dictionary<string, Zone>();
         public readonly List<WorldObject> AllControlledObjects = new List<WorldObject>();
         public readonly List<WorldObject> AllActiveObjects = new List<WorldObject>();
         public readonly List<WorldObject> AllNewObjects = new List<WorldObject>();

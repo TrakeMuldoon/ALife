@@ -92,6 +92,16 @@ namespace ALifeUni
 
         private void DrawLayer(LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
         {
+            if(ui.LayerName == ReferenceValues.CollisionLevelZone
+                && ui.ShowLayer)
+            {
+                foreach(Zone z in Planet.World.Zones.Values)
+                {
+                    DrawingLogic.DrawZone(z, args);
+                }
+                return;
+            }
+
             if(!ui.ShowLayer                                                       //Not showing it
                 || !Planet.World.CollisionLevels.ContainsKey(ui.LayerName))        //Layer doesn't exist
             {

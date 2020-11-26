@@ -13,7 +13,7 @@ namespace ALifeUni.ALife.UtilityClasses
         public double FBLength;
         public double RLWidth;
 
-        public Rectangle(double fbLength, double rlWidth, Point centrePoint, Color color)
+        public Rectangle(Point centrePoint, double fbLength, double rlWidth, Color color)
         {
             CentrePoint = centrePoint;
             FBLength = fbLength;

@@ -13,9 +13,12 @@ namespace ALifeUni.UI
 {
     public static class DrawingLogic
     {
-        internal static void DrawZone(AARectangle zone, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
+        internal static void DrawZone(Zone zone, CanvasAnimatedDrawEventArgs args)
         {
-
+            DrawAARectangle(zone, args);
+            Color textColor = zone.Color;
+            textColor.A = 255;
+            args.DrawingSession.DrawText(zone.Name, zone.TopLeft.ToVector2(), textColor);
         }
 
         internal static void DrawWorldObject(WorldObject wo, LayerUISettings uiSettings,  CanvasAnimatedDrawEventArgs args)
@@ -113,7 +116,7 @@ namespace ALifeUni.UI
 
         internal static void DrawAARectangle(AARectangle rec, CanvasAnimatedDrawEventArgs args)
         {
-            args.DrawingSession.DrawRectangle((float)rec.TopLeft.X, (float)rec.TopLeft.Y, (float)rec.XWidth, (float)rec.YHeight, rec.Color);
+            args.DrawingSession.FillRectangle((float)rec.TopLeft.X, (float)rec.TopLeft.Y, (float)rec.XWidth, (float)rec.YHeight, rec.Color);
             args.DrawingSession.FillCircle(rec.CentrePoint.ToVector2(), 2, rec.DebugColor);
         }
 

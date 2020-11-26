@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -99,6 +100,11 @@ namespace ALifeUni.ALife.UtilityClasses
             double newY = (distance * Math.Sin(radians)) + a.Y;
 
             return new Point(newX, newY);
+        }
+
+        public static Vector2 PointToVector(Point a)
+        {
+            return new Vector2((float)a.X, (float)a.Y);
         }
     }
 }

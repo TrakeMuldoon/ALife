@@ -12,17 +12,22 @@ namespace ALifeUni.UI
 {
     public static class DrawingLogic
     {
+        internal static void DrawZone(AARectangle zone, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
+        {
+
+        }
+
         internal static void DrawWorldObject(WorldObject wo, LayerUISettings uiSettings,  CanvasAnimatedDrawEventArgs args)
         {
             if(!(wo is Agent)
                 && uiSettings.ShowObjects)
             {
-                DrawObject(wo, uiSettings, args);
+                DrawObjectBase(wo, uiSettings, args);
             }
             else if(wo is Agent
                 && uiSettings.ShowAgents)
             {
-                DrawObject(wo, uiSettings, args);
+                DrawObjectBase(wo, uiSettings, args);
 
                 Agent ag = (Agent)wo;
                 //Draw Orientation
@@ -69,7 +74,7 @@ namespace ALifeUni.UI
 
                 CanvasPathBuilder pathBuilder = new CanvasPathBuilder(args.DrawingSession);
                 Angle myAngle = sec.Orientation + sec.OrientationAroundParent + sec.Parent.Orientation;
-                Vector2 centre = new Vector2((float)sec.CentrePoint.X, (float)sec.CentrePoint.Y);
+                Vector2 centre = ExtraMath.PointToVector(sec.CentrePoint);
                 pathBuilder.BeginFigure(centre);
                 pathBuilder.AddArc(centre, sec.Radius, sec.Radius, (float)myAngle.Radians, (float)sec.SweepAngle.Radians);
                 pathBuilder.EndFigure(CanvasFigureLoop.Closed);
@@ -84,7 +89,7 @@ namespace ALifeUni.UI
             }    
         }
 
-        private static void DrawObject(WorldObject wo, LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
+        private static void DrawObjectBase(WorldObject wo, LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
         {
             Vector2 objectCentre = new Vector2((float)wo.CentrePoint.X, (float)wo.CentrePoint.Y);
             //World Object Body
@@ -104,6 +109,27 @@ namespace ALifeUni.UI
             Point minPoints = new Point(bb.MinX, bb.MinY);
             Rect drawRec = new Rect(maxPoints, minPoints);
             args.DrawingSession.DrawRectangle(drawRec, color, 0.3f);
+        }
+
+        internal static void DrawRectangle(Rectangle rec, CanvasAnimatedDrawEventArgs args)
+        {
+            Point rovingPoint = rec.TopLeft;
+            CanvasPathBuilder cpb = new CanvasPathBuilder(args.DrawingSession.Device);
+            cpb.BeginFigure(ExtraMath.PointToVector(rovingPoint));
+            
+            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians, rec.Width);
+            cpb.AddLine(ExtraMath.PointToVector(rovingPoint));
+            
+            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians + Math.PI/2, rec.Width);
+            cpb.AddLine(ExtraMath.PointToVector(rovingPoint));
+
+            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians + Math.PI, rec.Width);
+            cpb.AddLine(ExtraMath.PointToVector(rovingPoint));
+
+            cpb.EndFigure(CanvasFigureLoop.Closed);
+            CanvasGeometry cg = CanvasGeometry.CreatePath(cpb);
+
+            args.DrawingSession.DrawGeometry(cg, rec.Color);
         }
     }
 }

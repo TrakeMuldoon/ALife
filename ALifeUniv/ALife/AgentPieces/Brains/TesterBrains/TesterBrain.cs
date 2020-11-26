@@ -36,7 +36,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.RandomBrains
             }
 
             body.Actions["Rotate"].SubActions["TurnLeft"].Intensity = 0.1;
-            body.Actions["Move"].SubActions["GoForward"].Intensity = 0.1;
+            body.Actions["Move"].SubActions["GoForward"].Intensity = 0.5;
             
             foreach(ActionCluster ac in body.Actions.Values)
             {

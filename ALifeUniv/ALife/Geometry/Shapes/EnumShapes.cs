@@ -10,6 +10,7 @@ namespace ALifeUni.ALife.UtilityClasses
     {
         Circle,
         Sector,
-        Rectangle
+        Rectangle,
+        AARectangle
     }
 }

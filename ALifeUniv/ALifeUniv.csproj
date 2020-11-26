@@ -143,10 +143,12 @@
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorBoolInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\EyeCounterInput.cs" />
+    <Compile Include="ALife\Geometry\Shapes\AARectangle.cs" />
     <Compile Include="ALife\WorldObjects\EmptyObject.cs" />
     <Compile Include="ALife\WorldObjects\AgentShadow.cs" />
     <Compile Include="ALife\WorldObject.cs" />
     <Compile Include="ALife\Geometry\Shapes\Rectangle.cs" />
+    <Compile Include="ALife\Zone.cs" />
     <Compile Include="UI\DrawingLogic.cs" />
     <Compile Include="UI\LayerUISettings.cs" />
     <None Include="ALife\Collision\CollisionQuadTree.cs" />

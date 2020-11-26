@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ALifeUni.ALife
 {
-    class Zone //: Rectangle
+    class Zone //: AARectangle
     {
     }
 }

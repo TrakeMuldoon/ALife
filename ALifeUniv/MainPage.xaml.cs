@@ -71,7 +71,6 @@ namespace ALifeUni
 
         private void Dt_Tick(object sender, object e)
         {
-            //Planet.World.ExecuteManyTurns(10);
             Planet.World.ExecuteOneTurn();
             AgentPanel.updateInfo();
         }

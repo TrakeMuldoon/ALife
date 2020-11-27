@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALifeUni.ALife
 {
@@ -27,7 +23,7 @@ namespace ALifeUni.ALife
 
     [DebuggerDisplay("{Name}:{Value}")]
     public abstract class Input<T> : Input
-    { 
+    {
         private T myValue;
         public virtual T Value
         {

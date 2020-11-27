@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
 {
@@ -44,6 +40,6 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
     public abstract class BehaviourCondition
     {
         public abstract override string ToString();
-        public abstract bool EvaluateSuccess(); 
+        public abstract bool EvaluateSuccess();
     }
 }

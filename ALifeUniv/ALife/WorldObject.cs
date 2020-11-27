@@ -12,7 +12,7 @@ namespace ALifeUni.ALife
         public int ExecutionOrder;
         private Point centre;
         public override Point CentrePoint
-        { 
+        {
             get { return centre; }
 
             set
@@ -21,19 +21,19 @@ namespace ALifeUni.ALife
                 double properX = value.X;
                 double properY = value.Y;
 
-                if (value.X + Radius > Planet.World.WorldWidth)
+                if(value.X + Radius > Planet.World.WorldWidth)
                 {
                     properX = Planet.World.WorldWidth - Radius;
                 }
-                if (value.X - Radius < 0)
+                if(value.X - Radius < 0)
                 {
                     properX = Radius;
                 }
-                if (value.Y + Radius > Planet.World.WorldHeight)
+                if(value.Y + Radius > Planet.World.WorldHeight)
                 {
                     properY = Planet.World.WorldHeight - Radius;
                 }
-                if (value.Y - Radius < 0)
+                if(value.Y - Radius < 0)
                 {
                     properY = Radius;
                 }
@@ -91,7 +91,7 @@ namespace ALifeUni.ALife
         /* METHODS */
         public virtual void ExecuteTurn()
         {
-            if (Alive)
+            if(Alive)
             {
                 ExecuteAliveTurn();
             }

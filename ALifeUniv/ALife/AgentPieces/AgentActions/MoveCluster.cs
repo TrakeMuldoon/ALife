@@ -1,11 +1,7 @@
 ﻿using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.UI;
 
 namespace ALifeUni.ALife
 {
@@ -19,10 +15,10 @@ namespace ALifeUni.ALife
             SubActions.Add("StopForward", new ActionPart("StopForward", Name));
             SubActions.Add("GoBackward", new ActionPart("GoBackward", Name));
             SubActions.Add("StopBackward", new ActionPart("StopBackward", Name));
-            SubActions.Add("GoLeft",new ActionPart("GoLeft", Name));
-            SubActions.Add("StopLeft",new ActionPart("StopLeft", Name));
-            SubActions.Add("GoRight",new ActionPart("GoRight", Name));
-            SubActions.Add("StopRight",new ActionPart("StopRight", Name));
+            SubActions.Add("GoLeft", new ActionPart("GoLeft", Name));
+            SubActions.Add("StopLeft", new ActionPart("StopLeft", Name));
+            SubActions.Add("GoRight", new ActionPart("GoRight", Name));
+            SubActions.Add("StopRight", new ActionPart("StopRight", Name));
         }
         protected override bool ValidatePreconditions()
         {
@@ -71,7 +67,7 @@ namespace ALifeUni.ALife
         private bool Move(double forwardMagnitude, double rightMagnitude)
         {
             Point origin = new Point(self.CentrePoint.X, self.CentrePoint.Y);
-            
+
             //Move forward, then move right from that point
             forwardDist = Speed * forwardMagnitude;
             rightDist = Speed * rightMagnitude;

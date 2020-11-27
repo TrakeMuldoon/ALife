@@ -1,9 +1,4 @@
-﻿using ALifeUni.ALife.UtilityClasses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ALifeUni.ALife
 {
@@ -22,7 +17,7 @@ namespace ALifeUni.ALife
         public SenseInput(string name) : base(name)
         {
         }
-        
+
         public abstract void SetValue(List<WorldObject> collisions);
     }
 }

@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -169,13 +165,13 @@ namespace ALifeUni.ALife.UtilityClasses
 
         public BoundingBox GetBoundingBox(Point xyTranslationFromZero, Angle rotation)
         {
-            if (myBox != null)
+            if(myBox != null)
             {
                 try
                 {
                     return myBox.Value;
                 }
-                catch(InvalidOperationException ioe)
+                catch(InvalidOperationException)
                 {
                     //swallow, and just build the bb
                 }
@@ -225,29 +221,29 @@ namespace ALifeUni.ALife.UtilityClasses
             {
                 xValues.Add(myOriginPoint.X + Radius);
                 //These if statements cover the potential start locations
-                if (absOrientationAngle.Degrees < 90)
+                if(absOrientationAngle.Degrees < 90)
                 {
                     yValues.Add(myOriginPoint.Y + Radius);
                 }
-                if (absOrientationAngle.Degrees < 180)
+                if(absOrientationAngle.Degrees < 180)
                 {
                     xValues.Add(myOriginPoint.X - Radius);
                 }
-                if (absOrientationAngle.Degrees < 270)
+                if(absOrientationAngle.Degrees < 270)
                 {
                     yValues.Add(myOriginPoint.Y - Radius);
                 }
 
                 //These three if statements cover the potential end locations
-                if (endAngle.Degrees > 90)
+                if(endAngle.Degrees > 90)
                 {
                     yValues.Add(myOriginPoint.Y + Radius);
                 }
-                if (endAngle.Degrees > 180)
+                if(endAngle.Degrees > 180)
                 {
                     xValues.Add(myOriginPoint.X - Radius);
                 }
-                if (endAngle.Degrees > 270)
+                if(endAngle.Degrees > 270)
                 {
                     yValues.Add(myOriginPoint.Y - Radius);
                 }

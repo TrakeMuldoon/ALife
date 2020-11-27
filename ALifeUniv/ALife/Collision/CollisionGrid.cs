@@ -1,11 +1,6 @@
 ﻿using ALifeUni.ALife.UtilityClasses;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 
 namespace ALifeUni.ALife
@@ -41,7 +36,7 @@ namespace ALifeUni.ALife
             int numYBoxesCeil = (int)Math.Ceiling(numYBoxes);
             int numXBoxesFloor = (int)Math.Floor(numXBoxes);
             int numYBoxesFloor = (int)Math.Floor(numYBoxes);
-            
+
 
             trackedObjects = new List<WorldObject>();
 
@@ -82,18 +77,18 @@ namespace ALifeUni.ALife
 
             //This creates a list of grid buckets that the agent falls within
             List<Point> myCoords = new List<Point>();
-            for (int x = xMinBucket; x <= xMaxBucket; x++)
+            for(int x = xMinBucket; x <= xMaxBucket; x++)
             {
                 for(int y = yMinBucket; y <= yMaxBucket; y++)
                 {
-                    myCoords.Add(new Point(x,y));
+                    myCoords.Add(new Point(x, y));
                 }
             }
 
             //insert into all applicable buckets
             foreach(Point gc in myCoords)
             {
-                objectGrid[(int)gc.X,(int)gc.Y].Add(newObject);
+                objectGrid[(int)gc.X, (int)gc.Y].Add(newObject);
             }
 
             //Insert agent into the bucket tracker,
@@ -122,7 +117,7 @@ namespace ALifeUni.ALife
 
         public List<WorldObject> QueryForBoundingBoxCollisions(BoundingBox queryBox)
         {
-             //figure out xMin and xMax bucket
+            //figure out xMin and xMax bucket
             int xMaxBucket = (int)(queryBox.MaxX) / GridSize;
             int xMinBucket = (int)(queryBox.MinX) / GridSize;
             //figure out yMin and yMax bucket
@@ -130,18 +125,18 @@ namespace ALifeUni.ALife
             int yMinBucket = (int)(queryBox.MinY) / GridSize;
 
             //Clamp Them
-            xMaxBucket = Math.Clamp(xMaxBucket, 0, objectGrid.GetLength(0)-1);
-            xMinBucket = Math.Clamp(xMinBucket, 0, objectGrid.GetLength(0)-1);
-            yMaxBucket = Math.Clamp(yMaxBucket, 0, objectGrid.GetLength(1)-1);
-            yMinBucket = Math.Clamp(yMinBucket, 0, objectGrid.GetLength(1)-1);
+            xMaxBucket = Math.Clamp(xMaxBucket, 0, objectGrid.GetLength(0) - 1);
+            xMinBucket = Math.Clamp(xMinBucket, 0, objectGrid.GetLength(0) - 1);
+            yMaxBucket = Math.Clamp(yMaxBucket, 0, objectGrid.GetLength(1) - 1);
+            yMinBucket = Math.Clamp(yMinBucket, 0, objectGrid.GetLength(1) - 1);
 
             //This creates a list of grid buckets that the bounding box falls within
             HashSet<WorldObject> potentialCollisions = new HashSet<WorldObject>();
-            for (int x = xMinBucket; x <= xMaxBucket; x++)
+            for(int x = xMinBucket; x <= xMaxBucket; x++)
             {
-                for (int y = yMinBucket; y <= yMaxBucket; y++)
+                for(int y = yMinBucket; y <= yMaxBucket; y++)
                 {
-                    foreach(WorldObject wo in objectGrid[x,y])
+                    foreach(WorldObject wo in objectGrid[x, y])
                     {
                         potentialCollisions.Add(wo);
                     }
@@ -191,7 +186,7 @@ namespace ALifeUni.ALife
                 WorldObject ret = trackedObjects[0];
 
                 try { ret = trackedObjects[i++]; }
-                catch(ArgumentOutOfRangeException aore)
+                catch(ArgumentOutOfRangeException)
                 {
                     /* Swallowed, it is possible that while enumerating items, the list is modified. We'll return the first item in the list */
                 }

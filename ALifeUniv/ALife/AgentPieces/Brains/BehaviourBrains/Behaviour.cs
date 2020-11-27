@@ -1,14 +1,9 @@
 using ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces;
 using ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses;
-using ALifeUni.ALife.Inputs.SenseClusters;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Windows.Services.Cortana;
-using Windows.UI.WebUI;
 
 namespace ALifeUni.ALife.Brains.BehaviourBrains
 {
@@ -116,7 +111,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
 
             //Check if b2 starts with "[" which means a constant, then it sends it to the constant factory
             //otherwise it gets the behaviour input from the Cabinet
-            BehaviourInput b2 = pieces[2].StartsWith("[") ? BehaviourFactory.GetBehaviourConstantFromString(b1, pieces[2]) :  cabinet.GetBehaviourInputByName(pieces[2]);
+            BehaviourInput b2 = pieces[2].StartsWith("[") ? BehaviourFactory.GetBehaviourConstantFromString(b1, pieces[2]) : cabinet.GetBehaviourInputByName(pieces[2]);
 
             BehaviourCondition bc = BehaviourFactory.GetConditionForInputsByName(b1, b2, pieces[1]);
             return bc;
@@ -139,7 +134,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
 
             //dummy double exists because you need to pass in the "type" of the constant
             BehaviourInput dummydouble = new BehaviourInput<double>(null, null);
-            
+
             //Check if b2 starts with "[" which means a constant, then it sends it to the constant factory
             //otherwise it gets the behaviour input from the Cabinet
             BehaviourInput intensity = variableValue.StartsWith("[") ? BehaviourFactory.GetBehaviourConstantFromString(dummydouble, variableValue) : cabinet.GetBehaviourInputByName(variableValue);
@@ -177,7 +172,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
 
         public void AddActionToWaitQueue(BehaviourWaitQueue bwq)
         {
-            bwq.AddAction(() => SuccessAction.Intensity += SuccessParam(),waitTurns);
+            bwq.AddAction(() => SuccessAction.Intensity += SuccessParam(), waitTurns);
         }
 
         public string GenerateString()
@@ -204,7 +199,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
 
         public override string ToString()
         {
-             return AsEnglish;
+            return AsEnglish;
         }
     }
 }

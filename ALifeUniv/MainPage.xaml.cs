@@ -3,12 +3,9 @@ using ALifeUni.ALife.UtilityClasses;
 using ALifeUni.UI;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
-using Microsoft.Toolkit.Uwp.UI.Controls;
-using Microsoft.Toolkit.Uwp.UI.Controls.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
-using Windows.ApplicationModel.Calls;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
@@ -129,12 +126,12 @@ namespace ALifeUni
 
                     Agent ag = (Agent)wo;
 
-                    if (compnumber == wo.ExecutionOrder)
+                    if(compnumber == wo.ExecutionOrder)
                     {
                         DrawingLogic.DrawAgentShadow(ag.Shadow, ui, args);
                         continue;
                     }
-                    
+
                     DrawingLogic.DrawWorldObject(ag.Shadow, ui, args);
                 }
             }
@@ -221,7 +218,7 @@ namespace ALifeUni
             int seedValue;
             if(int.TryParse(seed, out seedValue))
             {
-                Planet.CreateWorld(seedValue, (int)animCanvas.Height, (int)animCanvas.Width);            
+                Planet.CreateWorld(seedValue, (int)animCanvas.Height, (int)animCanvas.Width);
             }
             else
             {

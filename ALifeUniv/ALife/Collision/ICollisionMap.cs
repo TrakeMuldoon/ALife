@@ -1,13 +1,9 @@
 ﻿using ALifeUni.ALife.UtilityClasses;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALifeUni.ALife
 {
-    public interface ICollisionMap 
+    public interface ICollisionMap
     {
         /// <summary>
         /// Query for collisions will examine the map and everything in it, and return a list of objects whose bounding boxes collide with the bounding box of the input

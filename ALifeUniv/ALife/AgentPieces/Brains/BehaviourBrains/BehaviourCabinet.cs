@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
 {
@@ -29,12 +27,12 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
 
             foreach(PropertyInput pi in parent.Properties.Values)
             {
-                List<BehaviourInput> currInputs = BehaviourFactory.GenerateBehaviourInputsFromInput((Input)pi);
+                List<BehaviourInput> currInputs = BehaviourFactory.GenerateBehaviourInputsFromInput(pi);
                 AddInputsFromInputList(currInputs);
             }
             foreach(StatisticInput si in parent.Statistics.Values)
             {
-                List<BehaviourInput> currInputs = BehaviourFactory.GenerateBehaviourInputsFromInput((Input)si);
+                List<BehaviourInput> currInputs = BehaviourFactory.GenerateBehaviourInputsFromInput(si);
                 AddInputsFromInputList(currInputs);
             }
             foreach(ActionCluster act in parent.Actions.Values)
@@ -53,11 +51,11 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
 
         private void AddInputsFromInputList(List<BehaviourInput> behaviours)
         {
-            foreach (BehaviourInput bi in behaviours)
+            foreach(BehaviourInput bi in behaviours)
             {
                 StringToBI.Add(bi.FullName, bi);
                 Type bit = bi.GetContainedType();
-                if (!TypeToListBI.ContainsKey(bit))
+                if(!TypeToListBI.ContainsKey(bit))
                 {
                     TypeToListBI.Add(bit, new List<BehaviourInput>());
                 }
@@ -84,7 +82,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
             foreach(Type aType in TypeToListBI.Keys)
             {
                 randomNumber -= TypeToListBI[aType].Count;
-                if (randomNumber < 0)
+                if(randomNumber < 0)
                 {
                     randomNumber += TypeToListBI[aType].Count;
                     return TypeToListBI[aType][randomNumber];
@@ -92,7 +90,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
             }
             throw new IndexOutOfRangeException("Some, I was unable to return a random number");
         }
-        
+
         public BehaviourCondition GetRandomConditionForInputs(BehaviourInput b1, BehaviourInput b2)
         {
             return BehaviourFactory.GetRandomConditionForInputs(b1, b2);

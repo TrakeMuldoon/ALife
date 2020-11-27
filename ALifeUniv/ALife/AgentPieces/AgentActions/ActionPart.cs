@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALifeUni.ALife
 {
@@ -12,7 +8,7 @@ namespace ALifeUni.ALife
         public ActionPart(String name, string ParentName)
         {
             Name = name;
-            FullName = ParentName + "." +  name;
+            FullName = ParentName + "." + name;
         }
 
         public readonly string FullName;

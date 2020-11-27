@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ALifeUni.ALife
-{ 
+{
     public class EyeCounterInput : SenseInput<int>
     {
         public EyeCounterInput(string name) : base(name)

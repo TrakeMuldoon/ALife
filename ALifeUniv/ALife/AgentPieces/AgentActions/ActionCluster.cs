@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALifeUni.ALife
 {
     public abstract class ActionCluster
     {
         public readonly string Name;
-        public readonly Dictionary<string, ActionPart> SubActions = new Dictionary<string,ActionPart>();
+        public readonly Dictionary<string, ActionPart> SubActions = new Dictionary<string, ActionPart>();
         protected readonly Agent self;
 
         public ActionCluster(Agent self, String name)

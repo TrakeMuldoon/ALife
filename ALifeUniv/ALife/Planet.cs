@@ -1,11 +1,6 @@
 ﻿using ALifeUni.ALife.AgentPieces;
-using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -33,7 +28,7 @@ namespace ALifeUni.ALife
         {
             get
             {
-                if (instance != null)
+                if(instance != null)
                 {
                     return instance;
                 }
@@ -43,7 +38,7 @@ namespace ALifeUni.ALife
                 }
             }
         }
-        
+
         public static void CreateWorld()
         {
             Random r = new Random();
@@ -56,7 +51,7 @@ namespace ALifeUni.ALife
             throw new NotImplementedException();
         }
 
-        public  static void CreateWorld(int height, int width)
+        public static void CreateWorld(int height, int width)
         {
             Random r = new Random();
 
@@ -87,7 +82,7 @@ namespace ALifeUni.ALife
             //}
 
             Zone red = new Zone("Start", new Point(0, 0), 100, height, Colors.Red);
-            Zone blue = new Zone("End", new Point(width-100, 0), 100, height, Colors.Blue);
+            Zone blue = new Zone("End", new Point(width - 100, 0), 100, height, Colors.Blue);
             instance.Zones.Add(red.Name, red);
             instance.Zones.Add(blue.Name, blue);
 
@@ -119,7 +114,7 @@ namespace ALifeUni.ALife
         private Dictionary<string, ICollisionMap> _collisionLevels = new Dictionary<string, ICollisionMap>();
         public IReadOnlyDictionary<string, ICollisionMap> CollisionLevels
         {
-            get { return (Dictionary<string, ICollisionMap>) _collisionLevels; }
+            get { return _collisionLevels; }
         }
         private int worldWidth;
         public int WorldWidth
@@ -161,7 +156,7 @@ namespace ALifeUni.ALife
 
         internal void ExecuteManyTurns(int numTurns)
         {
-            for (int i = 0; i < numTurns; i++)
+            for(int i = 0; i < numTurns; i++)
             {
                 ExecuteOneTurn();
             }
@@ -171,7 +166,7 @@ namespace ALifeUni.ALife
         {
             turns++;
             int order = 0;
-            foreach (WorldObject wo in AllActiveObjects)
+            foreach(WorldObject wo in AllActiveObjects)
             {
                 wo.ExecutionOrder = order++;
                 wo.ExecuteTurn();
@@ -205,7 +200,7 @@ namespace ALifeUni.ALife
 
         internal void AddObjectToWorld(WorldObject toAdd)
         {
-            if (!_collisionLevels.ContainsKey(toAdd.CollisionLevel))
+            if(!_collisionLevels.ContainsKey(toAdd.CollisionLevel))
             {
                 _collisionLevels.Add(toAdd.CollisionLevel, new CollisionGrid(WorldHeight, WorldWidth));
             }

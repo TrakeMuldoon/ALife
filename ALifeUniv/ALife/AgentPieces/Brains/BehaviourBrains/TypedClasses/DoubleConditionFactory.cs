@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Input;
 
 namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
 {
@@ -53,19 +48,19 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
         {
             Array arr = Enum.GetValues(typeof(DoubleOperationEnum));
             int rand = Planet.World.NumberGen.Next(0, arr.Length);
-            DoubleOperationEnum val = (DoubleOperationEnum) arr.GetValue(rand);
+            DoubleOperationEnum val = (DoubleOperationEnum)arr.GetValue(rand);
             return GetNewBehaviourByEnum(b1, b2, val);
         }
 
         internal static BehaviourCondition GetConditionByName(BehaviourInput b1, BehaviourInput b2, string name)
         {
-            DoubleOperationEnum val = (DoubleOperationEnum) Enum.Parse(typeof(DoubleOperationEnum), name);
+            DoubleOperationEnum val = (DoubleOperationEnum)Enum.Parse(typeof(DoubleOperationEnum), name);
             return GetNewBehaviourByEnum(b1, b2, val);
         }
 
         private static BehaviourCondition GetNewBehaviourByEnum(BehaviourInput b1, BehaviourInput b2, DoubleOperationEnum val)
         {
-            switch (val)
+            switch(val)
             {
                 case DoubleOperationEnum.GreaterThan:           return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) > Math.Round(y, 4), val.ToString());
                 case DoubleOperationEnum.LessThan:              return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) < Math.Round(y, 4), val.ToString());

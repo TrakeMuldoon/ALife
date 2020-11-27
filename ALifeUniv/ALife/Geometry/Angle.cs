@@ -1,10 +1,6 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALifeUni.ALife.UtilityClasses
 {
@@ -33,7 +29,7 @@ namespace ALifeUni.ALife.UtilityClasses
             get { return degrees; }
             set
             {
-                if (value < 0)
+                if(value < 0)
                 {
                     value += 360;
                 }
@@ -49,7 +45,7 @@ namespace ALifeUni.ALife.UtilityClasses
             degrees = 0;
             rads = 0;
 
-            if (isRads == true)
+            if(isRads == true)
             {
                 Radians = value;
             }

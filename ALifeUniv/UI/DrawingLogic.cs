@@ -3,11 +3,9 @@ using ALifeUni.ALife.UtilityClasses;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
-using System.Collections;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
-using Windows.UI.Xaml.Controls;
 
 namespace ALifeUni.UI
 {
@@ -21,7 +19,7 @@ namespace ALifeUni.UI
             args.DrawingSession.DrawText(zone.Name, zone.TopLeft.ToVector2(), textColor);
         }
 
-        internal static void DrawWorldObject(WorldObject wo, LayerUISettings uiSettings,  CanvasAnimatedDrawEventArgs args)
+        internal static void DrawWorldObject(WorldObject wo, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
         {
             if(!(wo is Agent)
                 && uiSettings.ShowObjects)
@@ -89,7 +87,7 @@ namespace ALifeUni.UI
             else
             {
                 throw new NotImplementedException("What the hell shape is this?");
-            }    
+            }
         }
 
         private static void DrawObjectBase(WorldObject wo, LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
@@ -124,8 +122,8 @@ namespace ALifeUni.UI
         {
             Point rovingPoint = rec.CentrePoint;
             rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians, rec.FBLength / 2);
-            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians - (Math.PI / 2), rec.RLWidth/2);
-            
+            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians - (Math.PI / 2), rec.RLWidth / 2);
+
             CanvasPathBuilder cpb = new CanvasPathBuilder(args.DrawingSession.Device);
             cpb.BeginFigure(rovingPoint.ToVector2());
 

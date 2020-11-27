@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
 {
@@ -47,7 +43,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
         private static bool GetRandomConstantValue()
         {
             double randomBool = Planet.World.NumberGen.NextDouble();
-            
+
             return randomBool > 0.5;
         }
 
@@ -55,19 +51,19 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
         {
             Array arr = Enum.GetValues(typeof(BoolOperationEnum));
             int rand = Planet.World.NumberGen.Next(0, arr.Length);
-            BoolOperationEnum val = (BoolOperationEnum) arr.GetValue(rand);
+            BoolOperationEnum val = (BoolOperationEnum)arr.GetValue(rand);
             return GetNewBehaviourByEnum(b1, b2, val);
         }
 
         internal static BehaviourCondition GetConditionByName(BehaviourInput b1, BehaviourInput b2, string name)
         {
-            BoolOperationEnum val = (BoolOperationEnum) Enum.Parse(typeof(BoolOperationEnum), name);
+            BoolOperationEnum val = (BoolOperationEnum)Enum.Parse(typeof(BoolOperationEnum), name);
             return GetNewBehaviourByEnum(b1, b2, val);
         }
 
         private static BehaviourCondition GetNewBehaviourByEnum(BehaviourInput b1, BehaviourInput b2, BoolOperationEnum val)
         {
-            switch (val)
+            switch(val)
             {
                 case BoolOperationEnum.Equals:      return new BehaviourCondition<bool>(b1, b2, (x, y) => x == y, val.ToString());
                 case BoolOperationEnum.NotEqualTo:  return new BehaviourCondition<bool>(b1, b2, (x, y) => x != y, val.ToString());

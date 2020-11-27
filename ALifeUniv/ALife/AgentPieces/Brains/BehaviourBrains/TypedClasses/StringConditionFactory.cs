@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
 {
@@ -55,19 +51,19 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
         {
             Array arr = Enum.GetValues(typeof(StringOperationEnum));
             int rand = Planet.World.NumberGen.Next(0, arr.Length);
-            StringOperationEnum val = (StringOperationEnum) arr.GetValue(rand);
+            StringOperationEnum val = (StringOperationEnum)arr.GetValue(rand);
             return GetNewBehaviourByEnum(b1, b2, val);
         }
 
         internal static BehaviourCondition GetConditionByName(BehaviourInput b1, BehaviourInput b2, string name)
         {
-            StringOperationEnum val = (StringOperationEnum) Enum.Parse(typeof(StringOperationEnum), name);
+            StringOperationEnum val = (StringOperationEnum)Enum.Parse(typeof(StringOperationEnum), name);
             return GetNewBehaviourByEnum(b1, b2, val);
         }
 
         private static BehaviourCondition GetNewBehaviourByEnum(BehaviourInput b1, BehaviourInput b2, StringOperationEnum val)
         {
-            switch (val)
+            switch(val)
             {
                 case StringOperationEnum.EqualTo:           return new BehaviourCondition<string>(b1, b2, (x, y) => x == y, val.ToString());
                 case StringOperationEnum.NotEqualTo:        return new BehaviourCondition<string>(b1, b2, (x, y) => x != y, val.ToString());

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -45,13 +41,13 @@ namespace ALifeUni.ALife.UtilityClasses
         }
 
         public Color Color
-        { 
-            get; 
-            set; 
+        {
+            get;
+            set;
         }
 
-        public Color DebugColor 
-        { 
+        public Color DebugColor
+        {
             get;
             set;
         }
@@ -75,7 +71,7 @@ namespace ALifeUni.ALife.UtilityClasses
                 {
                     return myBox.Value;
                 }
-                catch(InvalidOperationException ioe)
+                catch(InvalidOperationException)
                 {
                     //swallow, and just build the bb
                 }
@@ -85,7 +81,7 @@ namespace ALifeUni.ALife.UtilityClasses
             Point tempPoint = CentrePoint;
             tempPoint = ExtraMath.TranslateByVector(tempPoint, Orientation.Radians, FBLength / 2);
             Point topLeft = ExtraMath.TranslateByVector(tempPoint, Orientation.Radians - (Math.PI / 2), RLWidth / 2);
-            
+
             Point topRight = ExtraMath.TranslateByVector(topLeft, Orientation.Radians + (Math.PI / 2), RLWidth);
             Point bottomRight = ExtraMath.TranslateByVector(topRight, Orientation.Radians + Math.PI, FBLength);
             Point bottomLeft = ExtraMath.TranslateByVector(bottomRight, Orientation.Radians + (Math.PI * 3 / 2), RLWidth);

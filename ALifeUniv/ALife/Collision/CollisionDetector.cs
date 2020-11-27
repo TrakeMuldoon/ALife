@@ -9,7 +9,7 @@ namespace ALifeUni.ALife
     {
         public static List<WorldObject> FineGrainedCollisionDetection(List<WorldObject> toCollide, IShape me)
         {
-            switch (me.GetShapeEnum())
+            switch(me.GetShapeEnum())
             {
                 case ShapesEnum.Circle: return FineGrainedCollisionDetection(toCollide, (Circle)me);
                 case ShapesEnum.Sector: return FineGrainedCollisionDetection(toCollide, (Sector)me);
@@ -35,9 +35,9 @@ namespace ALifeUni.ALife
         public static List<WorldObject> FineGrainedCollisionDetection(List<WorldObject> toCollide, Rectangle me)
         {
             List<WorldObject> collisions = new List<WorldObject>();
-            foreach (WorldObject wo in toCollide)
+            foreach(WorldObject wo in toCollide)
             {
-                if (IndividualShapeCollision(wo, me))
+                if(IndividualShapeCollision(wo, me))
                 {
                     collisions.Add(wo);
                 }
@@ -49,9 +49,9 @@ namespace ALifeUni.ALife
         public static List<WorldObject> FineGrainedCollisionDetection(List<WorldObject> toCollide, Sector me)
         {
             List<WorldObject> collisions = new List<WorldObject>();
-            foreach (WorldObject wo in toCollide)
+            foreach(WorldObject wo in toCollide)
             {
-                if (IndividualShapeCollision(wo, me))
+                if(IndividualShapeCollision(wo, me))
                 {
                     collisions.Add(wo);
                 }
@@ -78,7 +78,7 @@ namespace ALifeUni.ALife
         {
             return PointRadiusPointRadiusCollision(a.CentrePoint, a.Radius, b.CentrePoint, b.Radius);
         }
-        
+
         private static Boolean PointCircleCollision(Point a, Circle c)
         {
             return PointRadiusPointRadiusCollision(a, 0, c.CentrePoint, c.Radius);
@@ -148,27 +148,27 @@ namespace ALifeUni.ALife
             //Check if the circle breaks the line segments
 
             //Check if the centre point is within the sweep range
-            if (PointWithinSweep(circle.CentrePoint, sector))
+            if(PointWithinSweep(circle.CentrePoint, sector))
             {
                 //if it is, the either the target is within the radius distance or it's too far.
                 return CircleCircleCollision(circle, new Circle(sector.CentrePoint, sector.Radius));
             }
 
             //Check the centrepoint of the Sector
-            if (PointCircleCollision(sector.CentrePoint, circle)) return true;
+            if(PointCircleCollision(sector.CentrePoint, circle)) return true;
 
             //Check the left point of the sector
             Point leftPoint = ExtraMath.TranslateByVector(sector.CentrePoint, sector.AbsoluteOrientation.Radians, sector.Radius);
-            if (PointCircleCollision(leftPoint, circle)) return true;
+            if(PointCircleCollision(leftPoint, circle)) return true;
 
             //Check the right point of the sector
             Point rightPoint = ExtraMath.TranslateByVector(sector.CentrePoint, (sector.AbsoluteOrientation + sector.SweepAngle).Radians, sector.Radius);
-            if (PointCircleCollision(rightPoint, circle)) return true;
+            if(PointCircleCollision(rightPoint, circle)) return true;
 
             //Now we're checking the line segment collisions
-            if (LineSegmentCircleCollision(sector.CentrePoint, leftPoint, circle)) return true;
+            if(LineSegmentCircleCollision(sector.CentrePoint, leftPoint, circle)) return true;
 
-            if (LineSegmentCircleCollision(sector.CentrePoint, rightPoint, circle)) return true;
+            if(LineSegmentCircleCollision(sector.CentrePoint, rightPoint, circle)) return true;
 
             //All Options Exhausted
             return false;
@@ -229,35 +229,35 @@ namespace ALifeUni.ALife
         //		return LineA1 + ua * (LineA2 – LineA1)
 
 
-//            CircleLineCollision
-//Input
-//    LineP1        Point   First point describing the line
-//    LineP2        Point   Second point describing the line
-//    CircleCentre  Point   The centre of the circle
-//    Radius        Floating-point The circle's radius
-//Output
-//    The point(s) of the collision, or null if no collision exists.
-//Method
-//    // Transform to local coordinates
-//    LocalP1 = LineP1 – CircleCentre
-//    LocalP2 = LineP2 – CircleCentre
-//    // Precalculate this value. We use it often
-//    P2MinusP1 = LocalP2 – LocalP1
-//    a = (P2MinusP1.X) * (P2MinusP1.X) + (P2MinusP1.Y) * (P2MinusP1.Y)
-//    b = 2 * ((P2MinusP1.X * LocalP1.X) + (P2MinusP1.Y * LocalP1.Y))
-//    c = (LocalP1.X* LocalP1.X) + (LocalP1.Y* LocalP1.Y) – (Radius* Radius)
-//    delta = b * b – (4 * a* c)
-//	  if (delta < 0) // No intersection
-//          return null;
-//    else if (delta == 0) // One intersection
-//          u = -b / (2 * a)
-//          return LineP1 + (u* P2MinusP1)
-//          /* Use LineP1 instead of LocalP1 because we want our answer in global
-//              space, not the circle's local space */
-//    else if (delta > 0) // Two intersections
-//		SquareRootDelta = sqrt(delta)
-//        u1 = (-b + SquareRootDelta) / (2 * a)
-//		u2 = (-b - SquareRootDelta) / (2 * a)
-//		return { LineP1 + (u1* P2MinusP1) ; LineP1 + (u2* P2MinusP1)
+        //            CircleLineCollision
+        //Input
+        //    LineP1        Point   First point describing the line
+        //    LineP2        Point   Second point describing the line
+        //    CircleCentre  Point   The centre of the circle
+        //    Radius        Floating-point The circle's radius
+        //Output
+        //    The point(s) of the collision, or null if no collision exists.
+        //Method
+        //    // Transform to local coordinates
+        //    LocalP1 = LineP1 – CircleCentre
+        //    LocalP2 = LineP2 – CircleCentre
+        //    // Precalculate this value. We use it often
+        //    P2MinusP1 = LocalP2 – LocalP1
+        //    a = (P2MinusP1.X) * (P2MinusP1.X) + (P2MinusP1.Y) * (P2MinusP1.Y)
+        //    b = 2 * ((P2MinusP1.X * LocalP1.X) + (P2MinusP1.Y * LocalP1.Y))
+        //    c = (LocalP1.X* LocalP1.X) + (LocalP1.Y* LocalP1.Y) – (Radius* Radius)
+        //    delta = b * b – (4 * a* c)
+        //	  if (delta < 0) // No intersection
+        //          return null;
+        //    else if (delta == 0) // One intersection
+        //          u = -b / (2 * a)
+        //          return LineP1 + (u* P2MinusP1)
+        //          /* Use LineP1 instead of LocalP1 because we want our answer in global
+        //              space, not the circle's local space */
+        //    else if (delta > 0) // Two intersections
+        //		SquareRootDelta = sqrt(delta)
+        //        u1 = (-b + SquareRootDelta) / (2 * a)
+        //		u2 = (-b - SquareRootDelta) / (2 * a)
+        //		return { LineP1 + (u1* P2MinusP1) ; LineP1 + (u2* P2MinusP1)
     }
 }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALifeUni.ALife
 {
@@ -32,7 +28,7 @@ namespace ALifeUni.ALife
             {
                 throw new Exception("Negative Value for 'increase property'");
             }
-            if (value == 0)
+            if(value == 0)
             {
                 return;
             }
@@ -48,7 +44,7 @@ namespace ALifeUni.ALife
 
         public void DecreasePropertyBy(double value)
         {
-            if (value < 0)
+            if(value < 0)
             {
                 throw new Exception("Negative Value for 'decrease property'");
             }
@@ -57,7 +53,7 @@ namespace ALifeUni.ALife
                 return;
             }
             double temp = Value - value;
-            if (temp < PropertyMinimum)
+            if(temp < PropertyMinimum)
             {
                 temp = PropertyMinimum;
             }

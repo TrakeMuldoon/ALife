@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALifeUni.UI
 {
@@ -20,7 +17,7 @@ namespace ALifeUni.UI
 
         public LayerUISettings(string layerName) : this(layerName, false) { }
 
-        public LayerUISettings(string layerName, bool showLayer) : this(layerName, showLayer, true, true, true, true) {  }
+        public LayerUISettings(string layerName, bool showLayer) : this(layerName, showLayer, true, true, true, true) { }
 
         public LayerUISettings(string layerName, bool showLayer, bool showObjects, bool showAgents, bool showBoundingBoxes, bool showSenses)
         {

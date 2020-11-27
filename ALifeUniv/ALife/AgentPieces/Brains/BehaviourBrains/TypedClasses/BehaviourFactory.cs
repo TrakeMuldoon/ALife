@@ -1,9 +1,6 @@
 ﻿using ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
 {
@@ -78,7 +75,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
             {
                 throw new Exception("Attempting to compare incomparables");
             }
-            switch (b1)
+            switch(b1)
             {
                 case BehaviourInput<bool> boo1:     return BoolConditionFactory.GetConditionByName(b1, b2, name);
                 case BehaviourInput<double> dob1:   return DoubleConditionFactory.GetConditionByName(b1, b2, name);
@@ -91,7 +88,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
         internal static BehaviourInput GetBehaviourConstantFromString(BehaviourInput b1, string untrimmedConstant)
         {
             string con = untrimmedConstant.Trim('[', ']');
-            switch (b1)
+            switch(b1)
             {
                 case BehaviourInput<bool> boo1:     bool bval = bool.Parse(con);
                                                     return new BehaviourInput<bool>(untrimmedConstant, () => bval);

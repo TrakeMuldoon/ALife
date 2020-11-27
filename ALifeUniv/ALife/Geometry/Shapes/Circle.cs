@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Foundation;
+﻿using Windows.Foundation;
 using Windows.UI;
 
 namespace ALifeUni.ALife.UtilityClasses
@@ -54,7 +49,7 @@ namespace ALifeUni.ALife.UtilityClasses
 
         public Circle(float xVal, float yVal, float radius) : this(new Point(xVal, yVal), radius)
         {
-            
+
         }
 
         public void Reset()

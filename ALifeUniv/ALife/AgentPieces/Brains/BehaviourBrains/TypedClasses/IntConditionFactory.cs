@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Input;
 
 namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
 {
@@ -46,7 +41,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
 
         private static int GetRandomConstantValue()
         {
-            int randomint = Planet.World.NumberGen.Next(0,100);
+            int randomint = Planet.World.NumberGen.Next(0, 100);
             return randomint;
         }
 
@@ -54,26 +49,26 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
         {
             Array arr = Enum.GetValues(typeof(IntOperationEnum));
             int rand = Planet.World.NumberGen.Next(0, arr.Length);
-            IntOperationEnum val = (IntOperationEnum) arr.GetValue(rand);
+            IntOperationEnum val = (IntOperationEnum)arr.GetValue(rand);
             return GetNewBehaviourByEnum(b1, b2, val);
         }
 
         internal static BehaviourCondition GetConditionByName(BehaviourInput b1, BehaviourInput b2, string name)
         {
-            IntOperationEnum val = (IntOperationEnum) Enum.Parse(typeof(IntOperationEnum), name);
+            IntOperationEnum val = (IntOperationEnum)Enum.Parse(typeof(IntOperationEnum), name);
             return GetNewBehaviourByEnum(b1, b2, val);
         }
 
         private static BehaviourCondition GetNewBehaviourByEnum(BehaviourInput b1, BehaviourInput b2, IntOperationEnum val)
         {
-            switch (val)
+            switch(val)
             {
-                case IntOperationEnum.GreaterThan:           return new BehaviourCondition<int>(b1, b2, (x, y) => x > y, val.ToString());
-                case IntOperationEnum.LessThan:              return new BehaviourCondition<int>(b1, b2, (x, y) => x < y, val.ToString());
-                case IntOperationEnum.EqualTo:               return new BehaviourCondition<int>(b1, b2, (x, y) => x == y, val.ToString());
-                case IntOperationEnum.NotEqualTo:            return new BehaviourCondition<int>(b1, b2, (x, y) => x != y, val.ToString());
-                case IntOperationEnum.LessThanOrEqualTo:     return new BehaviourCondition<int>(b1, b2, (x, y) => x <= y, val.ToString());
-                case IntOperationEnum.GreaterThanOrEqualTo:  return new BehaviourCondition<int>(b1, b2, (x, y) => x >= y, val.ToString());
+                case IntOperationEnum.GreaterThan:          return new BehaviourCondition<int>(b1, b2, (x, y) => x > y, val.ToString());
+                case IntOperationEnum.LessThan:             return new BehaviourCondition<int>(b1, b2, (x, y) => x < y, val.ToString());
+                case IntOperationEnum.EqualTo:              return new BehaviourCondition<int>(b1, b2, (x, y) => x == y, val.ToString());
+                case IntOperationEnum.NotEqualTo:           return new BehaviourCondition<int>(b1, b2, (x, y) => x != y, val.ToString());
+                case IntOperationEnum.LessThanOrEqualTo:    return new BehaviourCondition<int>(b1, b2, (x, y) => x <= y, val.ToString());
+                case IntOperationEnum.GreaterThanOrEqualTo: return new BehaviourCondition<int>(b1, b2, (x, y) => x >= y, val.ToString());
             }
             throw new Exception("Impossible Exception!");
         }

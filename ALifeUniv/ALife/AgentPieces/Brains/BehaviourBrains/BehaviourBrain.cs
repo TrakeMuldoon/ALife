@@ -2,7 +2,6 @@
 using ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces;
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace ALifeUni.ALife.Brains.BehaviourBrains
 {
@@ -20,7 +19,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
         private Agent self;
         private BehaviourCabinet behaviorCabinet;
 
-        public BehaviourBrain(Agent self, params string [] behaviourStrings)
+        public BehaviourBrain(Agent self, params string[] behaviourStrings)
         {
             this.behaviorCabinet = new BehaviourCabinet(self);
             this.self = self;
@@ -66,16 +65,16 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
 
         public void ExecuteTurn()
         {
-            foreach (SenseCluster sc in self.Senses)
+            foreach(SenseCluster sc in self.Senses)
             {
                 sc.Detect();
             }
-            foreach (Behaviour beh in behaviours)
+            foreach(Behaviour beh in behaviours)
             {
                 beh.EvaluateAndEnqueue(bwq);
             }
 
-            IEnumerable<Action> actions = bwq.PopThisTurnsActions();  
+            IEnumerable<Action> actions = bwq.PopThisTurnsActions();
 
             //This adds the intensity to the agents actions
             foreach(Action addIntensityToAgentAction in actions)

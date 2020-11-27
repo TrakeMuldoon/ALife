@@ -1,16 +1,10 @@
 ﻿using ALifeUni.ALife.AgentPieces;
 using ALifeUni.ALife.AgentPieces.Brains;
 using ALifeUni.ALife.AgentPieces.Brains.RandomBrains;
-using ALifeUni.ALife.Brains.BehaviourBrains;
-using ALifeUni.ALife.Inputs;
 using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -193,10 +187,10 @@ namespace ALifeUni.ALife
 
             //BoundingBox childBB = new BoundingBox(pbb.MinX, pbb.MinY, pbb.MaxX, pbb.MaxY);
             double diameter = this.Radius * 2;
-            
+
             ICollisionMap collider = Planet.World.CollisionLevels[this.CollisionLevel];
             List<WorldObject> collisions = new List<WorldObject>();
-            for(int distance = 1; distance < 5;  distance++)
+            for(int distance = 1; distance < 5; distance++)
             {
                 movingCentrePoint.X += diameter;
                 movingCentrePoint.Y += diameter;

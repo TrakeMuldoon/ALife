@@ -63,7 +63,6 @@ namespace ALifeUni.ALife
             CreateWorld(r.Next(), height, width);
         }
 
-
         public static void CreateWorld(int seed, int height, int width)
         {
             instance = new Planet(seed, height, width);
@@ -74,26 +73,43 @@ namespace ALifeUni.ALife
 
             //TODO: Read new world agentnum from config
 
-            int locationMultiplier = 23;
-            //int numAgents = 100;
-            int numAgents = 1;
-            for (int i = 0; i < numAgents; i++)
-            {
-                int yPosBase = 4 + (i / 3);
-                int xPosBase = 6 + ((i - 1) / 3) + (((i - 1) % 3) % 2);
-                int xPos = xPosBase * locationMultiplier;
-                int yPos = yPosBase * locationMultiplier;
-                Agent ag = new Agent(new Point(xPos, yPos));
-                instance.AddObjectToWorld(ag);
-            }
+            //int locationMultiplier = 23;
+            ////int numAgents = 100;
+            //int numAgents = 1;
+            //for (int i = 0; i < numAgents; i++)
+            //{
+            //    int yPosBase = 4 + (i / 3);
+            //    int xPosBase = 6 + ((i - 1) / 3) + (((i - 1) % 3) % 2);
+            //    int xPos = xPosBase * locationMultiplier;
+            //    int yPos = yPosBase * locationMultiplier;
+            //    Agent ag = new Agent(new Point(xPos, yPos));
+            //    instance.AddObjectToWorld(ag);
+            //}
 
             Zone red = new Zone("Start", new Point(0, 0), 100, height, Colors.Red);
             Zone blue = new Zone("End", new Point(width-100, 0), 100, height, Colors.Blue);
             instance.Zones.Add(red.Name, red);
             instance.Zones.Add(blue.Name, blue);
+
+            instance.Distributor = new RandomAgentDistributor(red, true, ReferenceValues.CollisionLevelPhysical);
+
+            //hack to get around collision level issue
+            Agent dummy = new Agent(new Point(0, 0));
+            instance.AddObjectToWorld(dummy);
+            instance.RemoveWorldObject(dummy);
+
+            int numAgents = 100;
+            int agentRadius = 5;
+            for(int i = 0; i < numAgents; i++)
+            {
+                Point nextCP = instance.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
+                Agent ag = new Agent(nextCP);
+                instance.AddObjectToWorld(ag);
+            }
+
         }
 
-
+        public AgentDistributor Distributor;
         public readonly Dictionary<String, Zone> Zones = new Dictionary<string, Zone>();
         public readonly List<WorldObject> AllControlledObjects = new List<WorldObject>();
         public readonly List<WorldObject> AllActiveObjects = new List<WorldObject>();

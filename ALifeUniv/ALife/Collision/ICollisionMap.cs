@@ -9,8 +9,6 @@ namespace ALifeUni.ALife
 {
     public interface ICollisionMap 
     {
-        bool Insert(WorldObject newObject);
-
         /// <summary>
         /// Query for collisions will examine the map and everything in it, and return a list of objects whose bounding boxes collide with the bounding box of the input
         /// </summary>
@@ -19,6 +17,8 @@ namespace ALifeUni.ALife
         List<WorldObject> QueryForBoundingBoxCollisions(WorldObject queryObject);
         List<WorldObject> QueryForBoundingBoxCollisions(BoundingBox queryBox);
         List<WorldObject> QueryForBoundingBoxCollisions(BoundingBox queryBox, WorldObject self);
+
+        bool Insert(WorldObject newObject);
 
         void RemoveObject(WorldObject killMe);
 

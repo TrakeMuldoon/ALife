@@ -61,6 +61,7 @@ namespace ALifeUni.ALife
                   , parent.CollisionLevel                                                        //Collision Level
                   , parent.Color)                                                                //Start Color
         {
+            //TODO: fix reproduction of agents
             CentrePoint = birthPosition;
             Orientation = new Angle(0);
 
@@ -75,12 +76,13 @@ namespace ALifeUni.ALife
             //Reproduce Actions
 
             //Reproduce Properties
-            
+
             //Reproduce Inputs
 
             //Reproduce Brain
 
             //Reproduce Reproduction Rules
+            this.Shadow = new AgentShadow(this);
         }
 
         private ReadOnlyDictionary<string, ActionCluster> GenerateActions()

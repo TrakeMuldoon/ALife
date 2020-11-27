@@ -1,4 +1,5 @@
 ﻿using ALifeUni.ALife.AgentPieces;
+using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;
@@ -68,25 +69,14 @@ namespace ALifeUni.ALife
 
             //TODO: Read new world agentnum from config
 
-            //int locationMultiplier = 23;
-            ////int numAgents = 100;
-            //int numAgents = 1;
-            //for (int i = 0; i < numAgents; i++)
-            //{
-            //    int yPosBase = 4 + (i / 3);
-            //    int xPosBase = 6 + ((i - 1) / 3) + (((i - 1) % 3) % 2);
-            //    int xPos = xPosBase * locationMultiplier;
-            //    int yPos = yPosBase * locationMultiplier;
-            //    Agent ag = new Agent(new Point(xPos, yPos));
-            //    instance.AddObjectToWorld(ag);
-            //}
-
             Zone red = new Zone("Start", new Point(0, 0), 100, height, Colors.Red);
             Zone blue = new Zone("End", new Point(width - 100, 0), 100, height, Colors.Blue);
             instance.Zones.Add(red.Name, red);
             instance.Zones.Add(blue.Name, blue);
 
-            instance.Distributor = new RandomAgentDistributor(red, true, ReferenceValues.CollisionLevelPhysical);
+            //instance.Distributor = new RandomAgentDistributor(red, true, ReferenceValues.CollisionLevelPhysical);
+            StraightLineDistributorConfig config = new StraightLineDistributorConfig(new Angle(220), 12, new Point(20, 20));
+            instance.Distributor = new StraightLineAgentDistributor(red, true, ReferenceValues.CollisionLevelPhysical, config);
 
             //hack to get around collision level issue
             Agent dummy = new Agent(new Point(0, 0));

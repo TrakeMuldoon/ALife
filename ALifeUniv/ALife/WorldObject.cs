@@ -106,7 +106,9 @@ namespace ALifeUni.ALife
 
         public abstract void Die();
 
-        public abstract WorldObject Reproduce(bool exactCopy);
+        public abstract WorldObject Reproduce();
+
+        public abstract WorldObject Clone();
 
         public virtual void TrashItem()
         {

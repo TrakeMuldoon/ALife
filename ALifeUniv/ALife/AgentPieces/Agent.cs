@@ -156,7 +156,7 @@ namespace ALifeUni.ALife
             {
                 if(Statistics["TimeSinceRepro"].Value > Statistics["MinimumReproWait"].Value)
                 {
-                    Reproduce(false);
+                    Reproduce();
                     Statistics["NumChildrenWaiting"].DecreasePropertyBy(1);
                     Statistics["TimeSinceRepro"].Value = 0;
                 }
@@ -165,7 +165,7 @@ namespace ALifeUni.ALife
         }
 
 
-        public override WorldObject Reproduce(bool exactCopy)
+        public override WorldObject Reproduce()
         {
             numChildren += 1;
 

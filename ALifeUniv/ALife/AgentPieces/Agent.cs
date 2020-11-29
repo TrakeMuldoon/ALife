@@ -179,6 +179,11 @@ namespace ALifeUni.ALife
             return child;
         }
 
+        public override WorldObject Clone()
+        {
+            throw new NotImplementedException();
+        }
+
         private Point FindAdjacentFreeSpace()
         {
             //BoundingBox pbb = this.BoundingBox;

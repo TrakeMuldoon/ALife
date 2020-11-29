@@ -5,7 +5,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife
 {
-    public class AgentShadow : WorldObject
+    public class AgentShadow : WorldObject //TODO Make this a "Circle" and not a "WorldObject"
     {
         public readonly List<SenseCluster> Senses = new List<SenseCluster>();
 
@@ -34,7 +34,12 @@ namespace ALifeUni.ALife
             throw new NotImplementedException();
         }
 
-        public override WorldObject Reproduce(bool exactCopy)
+        public override WorldObject Reproduce()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override WorldObject Clone()
         {
             throw new NotImplementedException();
         }

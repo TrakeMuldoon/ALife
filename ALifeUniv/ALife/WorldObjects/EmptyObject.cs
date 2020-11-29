@@ -28,7 +28,12 @@ namespace ALifeUni.ALife
             throw new NotImplementedException();
         }
 
-        public override WorldObject Reproduce(bool exactCopy)
+        public override WorldObject Reproduce()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override WorldObject Clone()
         {
             throw new NotImplementedException();
         }

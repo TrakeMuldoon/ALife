@@ -47,11 +47,6 @@ namespace ALifeUni.ALife
             CreateWorld(r.Next(), 1000, 800);
         }
 
-        internal string NextUniqueAgentID()
-        {
-            throw new NotImplementedException();
-        }
-
         public static void CreateWorld(int height, int width)
         {
             Random r = new Random();
@@ -64,34 +59,28 @@ namespace ALifeUni.ALife
             instance = new Planet(seed, height, width);
 
             //TODO: Put Planet Creation into the config
-
             //TODO: Create Special Objects from Config
-
             //TODO: Read new world agentnum from config
 
-            Zone red = new Zone("Start", new Point(0, 0), 100, height, Colors.Red);
-            Zone blue = new Zone("End", new Point(width - 100, 0), 100, height, Colors.Blue);
+            Zone red = new Zone("Start", "Random", Colors.Red, new Point(0, 0), 100, height);
+            Zone blue = new Zone("End", "Random", Colors.Blue, new Point(width - 100, 0), 100, height);
             instance.Zones.Add(red.Name, red);
             instance.Zones.Add(blue.Name, blue);
 
-            //instance.Distributor = new RandomAgentDistributor(red, true, ReferenceValues.CollisionLevelPhysical);
-            StraightLineDistributorConfig config = new StraightLineDistributorConfig(new Angle(220), 12, new Point(20, 20));
-            instance.Distributor = new StraightLineAgentDistributor(red, true, ReferenceValues.CollisionLevelPhysical, config);
+            instance._collisionLevels.Add(ReferenceValues.CollisionLevelPhysical, new CollisionGrid(height, width));
 
-            //hack to get around collision level issue
-            Agent dummy = new Agent(new Point(0, 0));
-            instance.AddObjectToWorld(dummy);
-            instance.RemoveWorldObject(dummy);
+            //instance.Distributor = new RandomAgentDistributor(red, true, ReferenceValues.CollisionLevelPhysical);
+            //StraightLineDistributorConfig config = new StraightLineDistributorConfig(new Angle(220), 12, new Point(20, 20));
+            //instance.Distributor = new StraightLineAgentDistributor(red, true, ReferenceValues.CollisionLevelPhysical, config);
 
             int numAgents = 100;
             int agentRadius = 5;
             for(int i = 0; i < numAgents; i++)
             {
-                Point nextCP = instance.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
-                Agent ag = new Agent(nextCP);
+                Point nextCP = red.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
+                Agent ag = new Agent(nextCP, red);
                 instance.AddObjectToWorld(ag);
             }
-
         }
 
         public AgentDistributor Distributor;

@@ -29,35 +29,45 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
             }
         }
 
-        private BehaviourBrain(Agent self, BehaviourBrain oldBrain)
+        private BehaviourBrain(Agent self, BehaviourBrain oldBrain, bool exact)
         {
-            this.behaviorCabinet = new BehaviourCabinet(self);
             this.self = self;
-            //TODO pull from config somehow
-            foreach(Behaviour beh in oldBrain.Behaviours)
+            this.behaviorCabinet = new BehaviourCabinet(self);
+
+            List<string> rules = new List<string>();
+            oldBrain.behaviours.ForEach((beh) => rules.Add(beh.ToString()));
+
+            if(!exact)
             {
-                double belowNinety = Planet.World.NumberGen.NextDouble();
-                if(belowNinety < 0.9)
+                rules.Add("*");
+                for(int i = rules.Count; i > 0; i--)
                 {
-                    behaviours.Add(new Behaviour(beh.AsEnglish, behaviorCabinet));
+                    //TODO: Modification percentage hardcoded
+                    double below10 = Planet.World.NumberGen.Next();
+                    if(below10 < 0.1)
+                    {
+                        rules.RemoveAt(i - 1);
+                        break;
+                    }
                 }
-                //else this behaviour is dropped
+                rules.Add("*");
             }
-            double belowEightyFive = Planet.World.NumberGen.NextDouble();
-            if(belowEightyFive < 0.85)
+            //else we dont need to modify the list
+
+            foreach(string rule in rules)
             {
-                behaviours.Add(new Behaviour("*", behaviorCabinet));
+                behaviours.Add(new Behaviour(rule, this.behaviorCabinet));
             }
         }
 
         public IBrain Clone(Agent newSelf)
         {
-            throw new NotImplementedException();
+            return new BehaviourBrain(newSelf, this, true);
         }
 
         public IBrain Reproduce(Agent newSelf)
         {
-            return new BehaviourBrain(newSelf, this);
+            return new BehaviourBrain(newSelf, this, false);
         }
 
 

@@ -145,7 +145,7 @@ namespace ALifeUni
         }
 
         WorldObject special;
-        int numCreated;
+        int numSpecialItemsCreated;
         private void AnimCanvas_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Point tapPoint = e.GetPosition(animCanvas);
@@ -159,7 +159,7 @@ namespace ALifeUni
             {
                 if(colls.Count == 0)
                 {
-                    EmptyObject eo = new EmptyObject(tapPoint, 5, ReferenceValues.CollisionLevelPhysical, (numCreated++).ToString());
+                    EmptyObject eo = new EmptyObject(tapPoint, 5, ReferenceValues.CollisionLevelPhysical, (numSpecialItemsCreated++).ToString());
                     Planet.World.AddObjectToWorld(eo);
                 }
                 else
@@ -178,7 +178,6 @@ namespace ALifeUni
 
         private void MakeSpecial(List<WorldObject> colls)
         {
-
             //If we do have a collisions, then set that agent to be "Special"
             WorldObject clicked = colls[0];
             if(clicked != special)
@@ -290,19 +289,19 @@ namespace ALifeUni
 
         private void SkipFarAhead_Click(object sender, RoutedEventArgs e)
         {
-            List<LayerUISettings> settingsStorage = new List<LayerUISettings>();
+            Queue<bool> viewables = new Queue<bool>();
             foreach(LayerUISettings set in UIGrid)
             {
-                settingsStorage.Add(set);
+                viewables.Enqueue(set.ShowLayer);
+                set.ShowLayer = false;
             }
-            UIGrid.Clear();
 
             Planet.World.ExecuteManyTurns(5000);
             AgentPanel.updateInfo();
 
-            foreach(LayerUISettings set in settingsStorage)
+            foreach(LayerUISettings set in UIGrid)
             {
-                UIGrid.Add(set);
+                set.ShowLayer = viewables.Dequeue();
             }
         }
 

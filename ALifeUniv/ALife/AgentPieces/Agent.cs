@@ -1,6 +1,7 @@
 ﻿using ALifeUni.ALife.AgentPieces;
 using ALifeUni.ALife.AgentPieces.Brains;
 using ALifeUni.ALife.AgentPieces.Brains.RandomBrains;
+using ALifeUni.ALife.Brains.BehaviourBrains;
 using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,22 @@ namespace ALifeUni.ALife
 {
     public class Agent : WorldObject
     {
-        public readonly IBrain myBrain;
+        public IBrain myBrain
+        {
+            get;
+            private set;
+        }
 
-        public readonly List<SenseCluster> Senses;
-        public readonly ReadOnlyDictionary<String, ActionCluster> Actions;
+        public List<SenseCluster> Senses
+        {
+            get;
+            private set;
+        }
+        public ReadOnlyDictionary<String, ActionCluster> Actions
+        {
+            get;
+            private set;
+        }
 
         public AgentShadow Shadow
         {
@@ -23,7 +36,9 @@ namespace ALifeUni.ALife
             private set;
         }
 
-        public Agent(Point birthPosition)
+        public readonly Zone Zone;
+
+        public Agent(Point birthPosition, Zone zone)
             : base(birthPosition
                   , 5                                               //current radius    //TODO: Hardcoded Agent Radius
                   , "Agent"                                         //Genus Label
@@ -32,22 +47,25 @@ namespace ALifeUni.ALife
                   , Colors.Green)                                   //Start Color       //TODO: Hardcoded start colour
         {
             CentrePoint = birthPosition;
+            Zone = zone;
+
             Orientation = new Angle(0);//TODO Agent Orientation starts at zero. Is this okay?
 
             InitializeAgentProperties(); //Adds any agent properties custom to Agents
-            Senses = GenerateSenses();
-            Actions = GenerateActions();
+            Senses = GenerateSenses(); //TODO: Import senses from a config
+            Actions = GenerateActions(); //TODO: Import senses into a uiSetting thing.
 
             //myBrain = new RandomBrain(this);
-            myBrain = new TesterBrain(this);
+            //myBrain = new TesterBrain(this);
             //TODO: Brain Behaviour is hardcoded. IT shoudl be in the config.
-            //myBrain = new BehaviourBrain(this,"*", "*", "*", "*", "*");
+            myBrain = new BehaviourBrain(this,"*", "*", "*", "*", "*", "*");
 
             this.DebugColor = Colors.PaleVioletRed;
             this.Shadow = new AgentShadow(this);
         }
 
-        private Agent(Point birthPosition, Agent parent)
+        //FOR REPRODUCTION/Cloning
+        private Agent(Point birthPosition, Agent parent, Zone zone)
              : base(birthPosition
                   , parent.Radius                                                                //current radius
                   , parent.GenusLabel                                                            //Genus Label
@@ -55,28 +73,12 @@ namespace ALifeUni.ALife
                   , parent.CollisionLevel                                                        //Collision Level
                   , parent.Color)                                                                //Start Color
         {
-            //TODO: fix reproduction of agents
             CentrePoint = birthPosition;
-            Orientation = new Angle(0);
+            Zone = zone;
 
+            Orientation = new Angle(0); //TODO Abstract this out?
+            
             DebugColor = Colors.Blue;
-
-            InitializeAgentProperties();
-            Senses = GenerateSenses();
-            Actions = GenerateActions();
-
-            myBrain = parent.myBrain.Reproduce(this);
-
-            //Reproduce Actions
-
-            //Reproduce Properties
-
-            //Reproduce Inputs
-
-            //Reproduce Brain
-
-            //Reproduce Reproduction Rules
-            this.Shadow = new AgentShadow(this);
         }
 
         private ReadOnlyDictionary<string, ActionCluster> GenerateActions()
@@ -156,7 +158,7 @@ namespace ALifeUni.ALife
             {
                 if(Statistics["TimeSinceRepro"].Value > Statistics["MinimumReproWait"].Value)
                 {
-                    Reproduce();
+                    ProduceOffspring();
                     Statistics["NumChildrenWaiting"].DecreasePropertyBy(1);
                     Statistics["TimeSinceRepro"].Value = 0;
                 }
@@ -164,24 +166,43 @@ namespace ALifeUni.ALife
             Statistics["TimeSinceRepro"].IncreasePropertyBy(1);
         }
 
+        public void ProduceOffspring()
+        {
+            Clone();
+        }
 
         public override WorldObject Reproduce()
         {
-            numChildren += 1;
-
-            //Determine child position
-            Point childCenter = FindAdjacentFreeSpace();
-
-            //Create Child
-            Agent child = new Agent(childCenter, this);
-            Planet.World.AddObjectToWorld(child);
-
-            return child;
+            throw new NotImplementedException();
         }
 
         public override WorldObject Clone()
         {
-            throw new NotImplementedException();
+            numChildren += 1;
+
+            //Determine child position
+            Point birthSpot = Zone.Distributor.NextAgentCentre(this.Radius * 2, this.Radius * 2);
+            //Point childCenter = FindAdjacentFreeSpace();
+
+            //Create Child
+            Agent child = new Agent(birthSpot, this, Zone);
+
+            child.InitializeAgentProperties(); //This initializes all the properties to their default state. 
+
+            child.Senses = new List<SenseCluster>();
+            foreach(SenseCluster sc in Senses)
+            {
+                child.Senses.Add(sc.Clone(child));
+            }
+
+            child.Actions = child.GenerateActions();
+
+            child.myBrain = myBrain.Clone(child);
+
+            Planet.World.AddObjectToWorld(child);
+
+            child.Shadow = new AgentShadow(child);
+            return child;
         }
 
         private Point FindAdjacentFreeSpace()
@@ -197,6 +218,7 @@ namespace ALifeUni.ALife
             List<WorldObject> collisions = new List<WorldObject>();
             for(int distance = 1; distance < 5; distance++)
             {
+                //Start checking the NE
                 movingCentrePoint.X += diameter;
                 movingCentrePoint.Y += diameter;
                 for(int direction = 0; direction < 4; direction++)
@@ -205,18 +227,10 @@ namespace ALifeUni.ALife
                     {
                         switch(direction)
                         {
-                            case 0://south
-                                movingCentrePoint.Y -= diameter;
-                                break;
-                            case 1://west
-                                movingCentrePoint.X -= diameter;
-                                break;
-                            case 2://north
-                                movingCentrePoint.Y += diameter;
-                                break;
-                            case 3://east
-                                movingCentrePoint.X += diameter;
-                                break;
+                            case 0: movingCentrePoint.Y -= diameter; break; //south
+                            case 1: movingCentrePoint.X -= diameter; break; //west
+                            case 2: movingCentrePoint.Y += diameter; break; //north
+                            case 3: movingCentrePoint.X += diameter; break; //east
                             default: throw new Exception("invalid direction");
                         }
                         wo.CentrePoint = new Point(movingCentrePoint.X, movingCentrePoint.Y);

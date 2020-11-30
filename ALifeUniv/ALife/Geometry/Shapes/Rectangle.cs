@@ -96,7 +96,7 @@ namespace ALifeUni.ALife.UtilityClasses
             return bb;
         }
 
-        public IShape Clone()
+        public IShape CloneShape()
         {
             Rectangle rec =  new Rectangle(CentrePoint, FBLength, RLWidth, Color);
             rec.Orientation = Orientation;

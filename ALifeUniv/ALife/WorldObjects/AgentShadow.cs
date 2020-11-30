@@ -16,7 +16,7 @@ namespace ALifeUni.ALife
             foreach(SenseCluster sc in self.Senses)
             {
                 IShape shape = sc.GetShape();
-                IShape clone = shape.Clone();
+                IShape clone = shape.CloneShape();
                 if(shape is ChildSector)
                 {
                     ((ChildSector)clone).Parent = this;

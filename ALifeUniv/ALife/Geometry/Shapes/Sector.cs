@@ -44,7 +44,7 @@ namespace ALifeUni.ALife.UtilityClasses
             Orientation = orientation;
         }
 
-        public override IShape Clone()
+        public override IShape CloneShape()
         {
             AgentSector asec = new AgentSector(CentrePoint, Orientation, Radius, SweepAngle);
             asec.Color = Color;
@@ -113,7 +113,7 @@ namespace ALifeUni.ALife.UtilityClasses
         }
 
         //TODO: Ask Jeremy or Bryan about how to implement this properly
-        public override IShape Clone()
+        public override IShape CloneShape()
         {
             ChildSector clon = new ChildSector(OrientationAroundParent, RelativeOrientation, Radius, SweepAngle, Parent);
             clon.Color = Color;
@@ -279,6 +279,6 @@ namespace ALifeUni.ALife.UtilityClasses
             return ShapesEnum.Sector;
         }
 
-        public abstract IShape Clone();
+        public abstract IShape CloneShape();
     }
 }

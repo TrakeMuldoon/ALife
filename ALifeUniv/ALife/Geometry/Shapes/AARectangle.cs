@@ -74,7 +74,7 @@ namespace ALifeUni.ALife.UtilityClasses
             //This does nothing for AARectangles
         }
 
-        public IShape Clone()
+        public IShape CloneShape()
         {
             return new AARectangle(TopLeft, XWidth, YHeight, Color);
         }

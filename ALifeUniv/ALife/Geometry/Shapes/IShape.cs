@@ -13,12 +13,10 @@ namespace ALifeUni.ALife.UtilityClasses
         {
             get;
         }
-
         BoundingBox BoundingBox
         {
             get;
         }
-
         Color Color
         {
             get;
@@ -33,6 +31,6 @@ namespace ALifeUni.ALife.UtilityClasses
         ShapesEnum GetShapeEnum();
 
         void Reset();
-        IShape Clone();
+        IShape CloneShape();
     }
 }

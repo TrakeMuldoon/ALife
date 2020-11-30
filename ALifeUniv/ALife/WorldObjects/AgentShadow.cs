@@ -1,47 +1,28 @@
 ﻿using ALifeUni.ALife.UtilityClasses;
-using System;
 using System.Collections.Generic;
 using Windows.UI;
 
 namespace ALifeUni.ALife
 {
-    public class AgentShadow : WorldObject //TODO Make this a "Circle" and not a "WorldObject"
+    public class AgentShadow : Circle
     {
-        public readonly List<SenseCluster> Senses = new List<SenseCluster>();
+        public readonly List<IShape> SenseShapes = new List<IShape>();
 
-        public AgentShadow(Agent self) : base(self.CentrePoint, self.Radius, self.GenusLabel, "sha:" + self.IndividualLabel, self.CollisionLevel, self.Color)
+        public AgentShadow(Agent self) : base(self.CentrePoint, self.Radius)
         {
+            Color = self.Color;
             DebugColor = Colors.Yellow;
             Orientation = new Angle(self.Orientation.Degrees);
             foreach(SenseCluster sc in self.Senses)
             {
-                Senses.Add(sc.Clone(this));
+                IShape shape = sc.GetShape();
+                IShape clone = shape.Clone();
+                if(shape is ChildSector)
+                {
+                    ((ChildSector)clone).Parent = this;
+                }
+                SenseShapes.Add(clone);
             }
-        }
-
-        public override void Die()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ExecuteAliveTurn()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ExecuteDeadTurn()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override WorldObject Reproduce()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override WorldObject Clone()
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -95,5 +95,12 @@ namespace ALifeUni.ALife.UtilityClasses
             myBox = bb;
             return bb;
         }
+
+        public IShape Clone()
+        {
+            Rectangle rec =  new Rectangle(CentrePoint, FBLength, RLWidth, Color);
+            rec.Orientation = Orientation;
+            return rec;
+        }
     }
 }

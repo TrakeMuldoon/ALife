@@ -33,5 +33,6 @@ namespace ALifeUni.ALife.UtilityClasses
         ShapesEnum GetShapeEnum();
 
         void Reset();
+        IShape Clone();
     }
 }

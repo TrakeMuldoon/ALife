@@ -113,14 +113,14 @@ namespace ALifeUni
                 {
                     if(compnumber < wo.ExecutionOrder)
                     {
-                        DrawingLogic.DrawWorldObject(wo, ui, args);
+                        DrawingLogic.DrawPastObject(wo, ui, args);
                         continue;
                     }
 
                     if(!(wo is Agent))
                     {
                         //TODO: Should ALL objects have shadows??
-                        DrawingLogic.DrawWorldObject(wo, ui, args);
+                        DrawingLogic.DrawPastObject(wo, ui, args);
                         continue;
                     }
 
@@ -132,7 +132,7 @@ namespace ALifeUni
                         continue;
                     }
 
-                    DrawingLogic.DrawWorldObject(ag.Shadow, ui, args);
+                    DrawingLogic.DrawPastObject(ag.Shadow, ui, args);
                 }
             }
             else

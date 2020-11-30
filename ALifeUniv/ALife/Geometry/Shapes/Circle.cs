@@ -61,5 +61,13 @@ namespace ALifeUni.ALife.UtilityClasses
         {
             return ShapesEnum.Circle;
         }
+
+        public IShape Clone()
+        {
+            Circle cir = new Circle(CentrePoint, Radius);
+            cir.Orientation = Orientation;
+            cir.Color = Color;
+            return cir;
+        }
     }
 }

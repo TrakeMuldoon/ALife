@@ -43,6 +43,13 @@ namespace ALifeUni.ALife.UtilityClasses
             CentrePoint = centrePoint;
             Orientation = orientation;
         }
+
+        public override IShape Clone()
+        {
+            AgentSector asec = new AgentSector(CentrePoint, Orientation, Radius, SweepAngle);
+            asec.Color = Color;
+            return asec;
+        }
     }
 
     public class ChildSector : Sector
@@ -103,6 +110,14 @@ namespace ALifeUni.ALife.UtilityClasses
             {
                 return GetBoundingBox(CentrePoint, AbsoluteOrientation);
             }
+        }
+
+        //TODO: Ask Jeremy or Bryan about how to implement this properly
+        public override IShape Clone()
+        {
+            ChildSector clon = new ChildSector(OrientationAroundParent, RelativeOrientation, Radius, SweepAngle, Parent);
+            clon.Color = Color;
+            return clon;
         }
     }
 
@@ -263,5 +278,7 @@ namespace ALifeUni.ALife.UtilityClasses
         {
             return ShapesEnum.Sector;
         }
+
+        public abstract IShape Clone();
     }
 }

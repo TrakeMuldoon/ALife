@@ -24,25 +24,12 @@ namespace ALifeUni.UI
             if(!(wo is Agent)
                 && uiSettings.ShowObjects)
             {
-                DrawObjectBase(wo, uiSettings, args);
+                DrawShape(wo, uiSettings, args);
             }
             else if(wo is Agent
                 && uiSettings.ShowAgents)
             {
-                DrawObjectBase(wo, uiSettings, args);
-
-                Agent ag = (Agent)wo;
-                //Draw Orientation
-                Point ori = ExtraMath.TranslateByVector(wo.CentrePoint, ag.Orientation.Radians, wo.Radius);
-                args.DrawingSession.FillCircle(ori.ToVector2(), 1, Colors.DarkRed);
-
-                if(uiSettings.ShowSenses)
-                {
-                    foreach(IHasShape shape in ag.Senses)
-                    {
-                        DrawSense(shape, uiSettings, args);
-                    }
-                }
+                DrawAgent((Agent)wo, uiSettings, args);
             }
             else
             {
@@ -50,47 +37,78 @@ namespace ALifeUni.UI
             }
         }
 
-        internal static void DrawAgentShadow(AgentShadow wo, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
+        private static void DrawAgent(Agent ag, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
         {
-            Color orig = wo.DebugColor;
-            wo.DebugColor = Colors.White;
-            DrawWorldObject(wo, uiSettings, args);
-            wo.DebugColor = orig;
-            foreach(IHasShape shape in wo.Senses)
-            {
-                DrawSense(shape, uiSettings, args);
-            }
-        }
+            DrawShape(ag, uiSettings, args);
 
-        private static void DrawSense(IHasShape shape, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
-        {
-            IShape currShape = shape.GetShape();
-            if(currShape is Sector)
+            //Draw Orientation
+            Point ori = ExtraMath.TranslateByVector(ag.CentrePoint, ag.Orientation.Radians, ag.Radius);
+            args.DrawingSession.FillCircle(ori.ToVector2(), 1, Colors.DarkRed);
+
+            if(uiSettings.ShowSenses)
             {
-                ChildSector sec = (ChildSector)currShape;
-                if(uiSettings.ShowBoundingBoxes)
+                foreach(IHasShape shape in ag.Senses)
                 {
-                    DrawBoundingBox(sec.BoundingBox, Colors.Black, args);
+                    DrawShape(shape.GetShape(), uiSettings, args);
                 }
-
-                CanvasPathBuilder pathBuilder = new CanvasPathBuilder(args.DrawingSession);
-                Angle myAngle = sec.Orientation + sec.OrientationAroundParent + sec.Parent.Orientation;
-                Vector2 centre = sec.CentrePoint.ToVector2();
-                pathBuilder.BeginFigure(centre);
-                pathBuilder.AddArc(centre, sec.Radius, sec.Radius, (float)myAngle.Radians, (float)sec.SweepAngle.Radians);
-                pathBuilder.EndFigure(CanvasFigureLoop.Closed);
-                CanvasGeometry cg = CanvasGeometry.CreatePath(pathBuilder);
-
-                args.DrawingSession.FillGeometry(cg, sec.DebugColor);
-                args.DrawingSession.DrawGeometry(cg, sec.Color, 1);
-            }
-            else
-            {
-                throw new NotImplementedException("What the hell shape is this?");
             }
         }
 
-        private static void DrawObjectBase(WorldObject wo, LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
+        internal static void DrawAgentShadow(AgentShadow shadow, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
+        {
+            Color orig = shadow.DebugColor;
+            shadow.DebugColor = Colors.White;
+            DrawCircle(shadow, uiSettings, args);
+            shadow.DebugColor = orig;
+            Point ori = ExtraMath.TranslateByVector(shadow.CentrePoint, shadow.Orientation.Radians, shadow.Radius);
+            args.DrawingSession.FillCircle(ori.ToVector2(), 1, Colors.DarkRed);
+            foreach(IShape shape in shadow.SenseShapes)
+            {
+                DrawShape(shape, uiSettings, args);
+            }
+        }
+
+        internal static void DrawPastObject(IShape shape, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
+        {
+            Color pastDebug = shape.DebugColor;
+            shape.DebugColor = Colors.White;
+            DrawShape(shape, uiSettings, args);
+            shape.DebugColor = pastDebug;
+        }
+
+        private static void DrawShape(IShape shape, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
+        {
+            switch(shape)
+            {
+                case Circle cir: DrawCircle(cir, uiSettings, args); break;
+                case Sector sec: DrawSector(sec, uiSettings, args); break;
+                case Rectangle rect: DrawRectangle(rect, uiSettings, args); break;
+                case AARectangle aar: DrawAARectangle(aar, args); break;
+                default: throw new NotImplementedException("What the heck shape is this?");
+            }
+        }
+
+        private static void DrawSector(IShape currShape, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
+        {
+            ChildSector sec = (ChildSector)currShape;
+            if(uiSettings.ShowBoundingBoxes)
+            {
+                DrawBoundingBox(sec.BoundingBox, Colors.Black, args);
+            }
+
+            CanvasPathBuilder pathBuilder = new CanvasPathBuilder(args.DrawingSession);
+            Angle myAngle = sec.Orientation + sec.OrientationAroundParent + sec.Parent.Orientation;
+            Vector2 centre = sec.CentrePoint.ToVector2();
+            pathBuilder.BeginFigure(centre);
+            pathBuilder.AddArc(centre, sec.Radius, sec.Radius, (float)myAngle.Radians, (float)sec.SweepAngle.Radians);
+            pathBuilder.EndFigure(CanvasFigureLoop.Closed);
+            CanvasGeometry cg = CanvasGeometry.CreatePath(pathBuilder);
+
+            args.DrawingSession.FillGeometry(cg, sec.DebugColor);
+            args.DrawingSession.DrawGeometry(cg, sec.Color, 1);
+        }
+
+        private static void DrawCircle(Circle wo, LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
         {
             Vector2 objectCentre = wo.CentrePoint.ToVector2();
             //World Object Body
@@ -104,21 +122,8 @@ namespace ALifeUni.UI
             }
         }
 
-        internal static void DrawBoundingBox(BoundingBox bb, Color color, CanvasAnimatedDrawEventArgs args)
-        {
-            Point maxPoints = new Point(bb.MaxX, bb.MaxY);
-            Point minPoints = new Point(bb.MinX, bb.MinY);
-            Rect drawRec = new Rect(maxPoints, minPoints);
-            args.DrawingSession.DrawRectangle(drawRec, color, 0.3f);
-        }
 
-        internal static void DrawAARectangle(AARectangle rec, CanvasAnimatedDrawEventArgs args)
-        {
-            args.DrawingSession.FillRectangle((float)rec.TopLeft.X, (float)rec.TopLeft.Y, (float)rec.XWidth, (float)rec.YHeight, rec.Color);
-            args.DrawingSession.FillCircle(rec.CentrePoint.ToVector2(), 2, rec.DebugColor);
-        }
-
-        internal static void DrawRectangle(Rectangle rec, CanvasAnimatedDrawEventArgs args)
+        private static void DrawRectangle(Rectangle rec, LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
         {
             Point rovingPoint = rec.CentrePoint;
             rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians, rec.FBLength / 2);
@@ -141,6 +146,26 @@ namespace ALifeUni.UI
 
             args.DrawingSession.DrawGeometry(cg, rec.Color);
             args.DrawingSession.FillCircle(rec.CentrePoint.ToVector2(), 2, rec.DebugColor);
+
+            if(ui.ShowBoundingBoxes)
+            {
+                DrawBoundingBox(rec.BoundingBox, Colors.Black, args);
+            }
         }
+
+        private static void DrawAARectangle(AARectangle rec, CanvasAnimatedDrawEventArgs args)
+        {
+            args.DrawingSession.FillRectangle((float)rec.TopLeft.X, (float)rec.TopLeft.Y, (float)rec.XWidth, (float)rec.YHeight, rec.Color);
+            args.DrawingSession.FillCircle(rec.CentrePoint.ToVector2(), 2, rec.DebugColor);
+        }
+
+        private static void DrawBoundingBox(BoundingBox bb, Color color, CanvasAnimatedDrawEventArgs args)
+        {
+            Point maxPoints = new Point(bb.MaxX, bb.MaxY);
+            Point minPoints = new Point(bb.MinX, bb.MinY);
+            Rect drawRec = new Rect(maxPoints, minPoints);
+            args.DrawingSession.DrawRectangle(drawRec, color, 0.3f);
+        }
+
     }
 }

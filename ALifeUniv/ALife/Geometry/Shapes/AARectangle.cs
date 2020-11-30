@@ -6,7 +6,6 @@ namespace ALifeUni.ALife.UtilityClasses
     public class AARectangle : IShape
     {
 
-
         public Point CentrePoint
         {
             get
@@ -73,6 +72,11 @@ namespace ALifeUni.ALife.UtilityClasses
         public void Reset()
         {
             //This does nothing for AARectangles
+        }
+
+        public IShape Clone()
+        {
+            return new AARectangle(TopLeft, XWidth, YHeight, Color);
         }
     }
 }

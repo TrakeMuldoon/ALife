@@ -33,6 +33,11 @@ namespace ALifeUni.ALife
             {
                 if(SubActionsEngaged())
                 {
+                    //Limit the Intensity.
+                    foreach(ActionPart ap in SubActions.Values)
+                    {
+                        ap.Clamp();
+                    }
                     bool success = AttemptEnact();
                     if(success)
                     {

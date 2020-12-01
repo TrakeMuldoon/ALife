@@ -41,7 +41,7 @@ namespace ALifeUni.ALife
 
         public abstract IShape GetShape();
 
-        public abstract SenseCluster Clone(WorldObject newParent);
+        public abstract SenseCluster CloneSense(WorldObject newParent);
 
         //On/Off
         //How Many (0-255 for each)

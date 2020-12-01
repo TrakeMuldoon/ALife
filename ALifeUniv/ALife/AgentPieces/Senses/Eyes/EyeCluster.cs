@@ -12,8 +12,8 @@ namespace ALifeUni.ALife
         {
             //TODO: Hardcoded sweep and orientation angles here. They should be linked to parent or to configuration
             //TODO: Hardcoded other angles here too. All bad. BAD
-            Angle orientationAroundParent = new Angle(20);
-            Angle relativeOrientation = new Angle(20);
+            Angle orientationAroundParent = new Angle(5);
+            Angle relativeOrientation = new Angle(355);
             float radius = 80;
             Angle sweep = new Angle(25);
             myShape = new ChildSector(orientationAroundParent, relativeOrientation, radius, sweep, parent);
@@ -28,7 +28,7 @@ namespace ALifeUni.ALife
             SubInputs.Add(new ColorInput(name + ".HowGreen", (WorldObject wo) => wo.Color.G));
         }
 
-        public override SenseCluster Clone(WorldObject newParent)
+        public override SenseCluster CloneSense(WorldObject newParent)
         {
             EyeCluster newEC = new EyeCluster(newParent, Name);
             newEC.myShape.OrientationAroundParent = new Angle(myShape.OrientationAroundParent.Degrees);

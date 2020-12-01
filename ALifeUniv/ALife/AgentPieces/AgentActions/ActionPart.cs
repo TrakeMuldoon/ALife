@@ -35,6 +35,11 @@ namespace ALifeUni.ALife
         const double IntensityMax = 1.0;
         const double IntensityMin = 0.0;
 
+        public void Clamp()
+        {
+            intensity = Math.Clamp(intensity, IntensityMin, IntensityMax);
+        }
+
         public virtual void Reset()
         {
             IntensityLastTurn = intensity;

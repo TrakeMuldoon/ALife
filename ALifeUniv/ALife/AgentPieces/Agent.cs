@@ -177,12 +177,52 @@ namespace ALifeUni.ALife
 
         public void ProduceOffspring()
         {
-            Clone();
+            Reproduce();
         }
 
         public override WorldObject Reproduce()
         {
-            throw new NotImplementedException();
+            numChildren += 1;
+
+            //Determine child position
+            Point birthSpot = Zone.Distributor.NextAgentCentre(this.Radius * 2, this.Radius * 2);
+            //Point childCenter = FindAdjacentFreeSpace();
+
+            //Create Child
+            Agent child = new Agent(birthSpot, this, Zone);
+
+            //Clone Properties
+            //TODO: Should there be deviations on reproduction of properties? maybe.
+            child.InitializeAgentProperties(); //This initializes all the properties to their default state. Shold be clone or config
+
+            //Clone Senses
+            child.Senses = new List<SenseCluster>();
+            foreach(SenseCluster sc in Senses)
+            {
+                //TODO: Modify so these aren't "cloned"
+                child.Senses.Add(sc.CloneSense(child));
+            }
+
+            //Clone Actions
+            List<ActionCluster> acl = new List<ActionCluster>();
+            foreach(ActionCluster oldAC in Actions.Values)
+            {
+                //Note: Actions will probably never be modified. They are supposed to be the same for everyone I think.
+                acl.Add(oldAC.CloneAction(child));
+            }
+            child.Actions = CreateRODForActions(acl);
+
+            //Clone Brain
+            child.myBrain = myBrain.Reproduce(child);
+
+            //Create shadow
+            child.Shadow = new AgentShadow(child);
+
+            //Release them out into the world
+            Planet.World.AddObjectToWorld(child);
+
+            //Return them to the caller, in case the caller wants to do stuff.
+            return child;
         }
 
         public override WorldObject Clone()
@@ -205,7 +245,7 @@ namespace ALifeUni.ALife
             child.Senses = new List<SenseCluster>();
             foreach(SenseCluster sc in Senses)
             {
-                child.Senses.Add(sc.Clone(child));
+                child.Senses.Add(sc.CloneSense(child));
             }
 
             //Clone Actions

@@ -9,6 +9,7 @@ namespace ALifeUni.ALife
 {
     public sealed class Planet
     {
+        #region Static/WorldBuilder stuff
         private static Planet instance;
 
         static Planet()
@@ -84,6 +85,9 @@ namespace ALifeUni.ALife
                 instance.AddObjectToWorld(ag);
             }
         }
+        #endregion
+
+        #region Instance Stuff
 
         public AgentDistributor Distributor;
         public readonly Dictionary<String, Zone> Zones = new Dictionary<string, Zone>();
@@ -116,6 +120,7 @@ namespace ALifeUni.ALife
         }
 
         public readonly Random NumberGen;
+        
         private int turns = 0;
         public int Turns
         {
@@ -190,5 +195,6 @@ namespace ALifeUni.ALife
             AllControlledObjects.Add(toAdd);
             AllNewObjects.Add(toAdd);
         }
+        #endregion
     }
 }

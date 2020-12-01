@@ -40,14 +40,16 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
             if(!exact)
             {
                 rules.Add("*");
+                //TODO: Modification percentage hardcoded
+                int baseDeletePercent = 5;
+                int deletePercentPerRule = 2;
                 for(int i = rules.Count; i > 0; i--)
                 {
-                    //TODO: Modification percentage hardcoded
-                    double below10 = Planet.World.NumberGen.Next();
-                    if(below10 < 0.1)
+                    double percent = Planet.World.NumberGen.NextDouble() * 100;
+                    int currThreshold = baseDeletePercent + (deletePercentPerRule * i);
+                    if(percent < currThreshold)
                     {
                         rules.RemoveAt(i - 1);
-                        break;
                     }
                 }
                 rules.Add("*");

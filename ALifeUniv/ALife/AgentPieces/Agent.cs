@@ -53,7 +53,7 @@ namespace ALifeUni.ALife
 
             InitializeAgentProperties(); //Adds any agent properties custom to Agents
             Senses = GenerateSenses(); //TODO: Import senses from a config
-            Actions = GenerateActions(); //TODO: Import senses into a uiSetting thing.
+            Actions = GenerateDefaultActions(); //TODO: Import senses into a uiSetting thing.
 
             //myBrain = new RandomBrain(this);
             //myBrain = new TesterBrain(this);
@@ -81,10 +81,9 @@ namespace ALifeUni.ALife
             DebugColor = Colors.Blue;
         }
 
-        private ReadOnlyDictionary<string, ActionCluster> GenerateActions()
+        private ReadOnlyDictionary<string, ActionCluster> GenerateDefaultActions()
         {
             //TODO: Link this somehow to world-settings
-            Dictionary<string, ActionCluster> myActions = new Dictionary<string, ActionCluster>();
             List<ActionCluster> actionList = new List<ActionCluster>()
             {
                 new ColorCluster(this),
@@ -92,10 +91,17 @@ namespace ALifeUni.ALife
                 new RotateCluster(this)
             };
 
+            return CreateRODForActions(actionList);
+        }
+
+        private ReadOnlyDictionary<string, ActionCluster> CreateRODForActions(List<ActionCluster> actionList)
+        {
+            Dictionary<string, ActionCluster> myActions = new Dictionary<string, ActionCluster>();
             actionList.ForEach((ac) => myActions.Add(ac.Name, ac));
 
             return new ReadOnlyDictionary<string, ActionCluster>(myActions);
         }
+
 
         private void InitializeAgentProperties()
         {
@@ -135,9 +141,12 @@ namespace ALifeUni.ALife
         public override void ExecuteAliveTurn()
         {
             Shadow = new AgentShadow(this);
-
             myBrain.ExecuteTurn();
+
+            //TODO: Abstract this out. 
             Statistics["Age"].IncreasePropertyBy(1);
+            
+            
             //Reset all the senses. 
             Senses.ForEach((se) => se.GetShape().Reset());
             foreach(StatisticInput stat in Statistics.Values)
@@ -187,21 +196,36 @@ namespace ALifeUni.ALife
             //Create Child
             Agent child = new Agent(birthSpot, this, Zone);
 
-            child.InitializeAgentProperties(); //This initializes all the properties to their default state. 
 
+            //Clone Properties
+            child.InitializeAgentProperties(); //This initializes all the properties to their default state. Shold be clone or config
+
+
+            //Clone Senses
             child.Senses = new List<SenseCluster>();
             foreach(SenseCluster sc in Senses)
             {
                 child.Senses.Add(sc.Clone(child));
             }
 
-            child.Actions = child.GenerateActions();
+            //Clone Actions
+            List<ActionCluster> acl = new List<ActionCluster>();
+            foreach(ActionCluster oldAC in Actions.Values)
+            {
+                acl.Add(oldAC.CloneAction(child));
+            }
+            child.Actions = CreateRODForActions(acl);
 
+            //Clone Brain
             child.myBrain = myBrain.Clone(child);
 
+            //Create shadow
+            child.Shadow = new AgentShadow(child);
+
+            //Release them out into the world
             Planet.World.AddObjectToWorld(child);
 
-            child.Shadow = new AgentShadow(child);
+            //Return them to the caller, in case the caller wants to do stuff.
             return child;
         }
 

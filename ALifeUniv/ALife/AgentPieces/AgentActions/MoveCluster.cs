@@ -20,6 +20,12 @@ namespace ALifeUni.ALife
             SubActions.Add("GoRight", new ActionPart("GoRight", Name));
             SubActions.Add("StopRight", new ActionPart("StopRight", Name));
         }
+
+        public override ActionCluster CloneAction(Agent newParent)
+        {
+            return new MoveCluster(newParent);
+        }
+
         protected override bool ValidatePreconditions()
         {
             //TODO: Draw this from Config

@@ -14,6 +14,11 @@ namespace ALifeUni.ALife
             SubActions.Add("ClearBlue", new ActionPart("ClearBlue", Name));
         }
 
+        public override ActionCluster CloneAction(Agent newParent)
+        {
+            return new ColorCluster(newParent);
+        }
+
         protected override bool ValidatePreconditions()
         {
             //TODO: Draw this from Config

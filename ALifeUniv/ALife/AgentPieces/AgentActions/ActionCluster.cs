@@ -56,5 +56,6 @@ namespace ALifeUni.ALife
         protected abstract void FailureResults();
 
         public abstract string LastTurnString();
+        public abstract ActionCluster CloneAction(Agent newParent);
     }
 }

@@ -62,10 +62,12 @@ namespace ALifeUni.ALife
             //TODO: Create Special Objects from Config
             //TODO: Read new world agentnum from config
 
-            Zone red = new Zone("Start", "Random", Colors.Red, new Point(0, 0), 100, height);
-            Zone blue = new Zone("End", "Random", Colors.Blue, new Point(width - 100, 0), 100, height);
+            Zone red = new Zone("Start", "Random", Colors.Red, new Point(0, 50), 100, height);
+            Zone blue = new Zone("End", "Random", Colors.Blue, new Point(width - 50, 50), 50, height);
+            Zone rocks = new Zone("Rocks", "Random", Colors.DarkGray, new Point(100, 0), width - 150, 50);
             instance.Zones.Add(red.Name, red);
             instance.Zones.Add(blue.Name, blue);
+            instance.Zones.Add(rocks.Name, rocks);
 
             instance._collisionLevels.Add(ReferenceValues.CollisionLevelPhysical, new CollisionGrid(height, width));
 

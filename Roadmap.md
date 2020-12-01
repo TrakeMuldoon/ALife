@@ -9,19 +9,18 @@
 * [X] TEST complete BehaviourBrain with custom behaviours
 * [x] Update UI to show Behaviours in Right hand Panel
 * [x] Implement Bumping Behaviour
-* [ ] Implement First Scenario
-* [ ] Implement End of turn trigger evaluations (i.e. reproduce/death)
+* [*] Implement End of turn trigger evaluations (i.e. reproduce/death)
 * [*] View Previous Agent State to see why they did what they did
 * [*] Implement Zones (starting zones)
 * [ ] Finish/Correct Cloning / Reproduction, including location of reproduction
 * [ ] Implement Scenario Testing Harness application. 
+* [ ] Implement First Scenario
 * [ ] Implement randomized/modified sense attributes
 * [ ] Implement INumeric for every value (min, max, modmax, mod%, value, add, sub);
 * [ ] Implement ReadOnlyProperties for Internal/Mandatory values [i.e. Age, NumChildren, etc.]
 * [ ] Goal Based Features
 * [ ] Implement no movement countdown to death.
 * [ ] Implmenet running across the field scenario
-
 
 ## Goal-based Features
 The goal is provided/set to the agents; they do not decide at this time.

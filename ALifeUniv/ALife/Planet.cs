@@ -54,6 +54,7 @@ namespace ALifeUni.ALife
 
             CreateWorld(r.Next(), height, width);
         }
+        #endregion
 
         public static void CreateWorld(int seed, int height, int width)
         {
@@ -63,12 +64,14 @@ namespace ALifeUni.ALife
             //TODO: Create Special Objects from Config
             //TODO: Read new world agentnum from config
 
-            Zone red = new Zone("Start", "Random", Colors.Red, new Point(0, 50), 100, height);
-            Zone blue = new Zone("End", "Random", Colors.Blue, new Point(width - 50, 50), 50, height);
+            Zone start = new Zone("Start", "Random", Colors.Red, new Point(0, 50), 100, height - 100);
+            Zone end = new Zone("End", "Random", Colors.Blue, new Point(width - 50, 50), 50, height - 100);
             Zone rocks = new Zone("Rocks", "Random", Colors.DarkGray, new Point(100, 0), width - 150, 50);
-            instance.Zones.Add(red.Name, red);
-            instance.Zones.Add(blue.Name, blue);
+            Zone rockBottom = new Zone("Rock Bottom", "Random", Colors.Orchid, new Point(height - 50, 50), width -150, 50)
+            instance.Zones.Add(start.Name, start);
+            instance.Zones.Add(end.Name, end);
             instance.Zones.Add(rocks.Name, rocks);
+            instance.Zones.Add(rockBottom.Name, rockBottom);
 
             instance._collisionLevels.Add(ReferenceValues.CollisionLevelPhysical, new CollisionGrid(height, width));
 
@@ -80,12 +83,11 @@ namespace ALifeUni.ALife
             int agentRadius = 5;
             for(int i = 0; i < numAgents; i++)
             {
-                Point nextCP = red.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
-                Agent ag = new Agent(nextCP, red);
+                Point nextCP = start.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
+                Agent ag = new Agent(nextCP, start);
                 instance.AddObjectToWorld(ag);
             }
         }
-        #endregion
 
         #region Instance Stuff
 
@@ -162,6 +164,13 @@ namespace ALifeUni.ALife
                 AllActiveObjects.Add(AllNewObjects[0]);
                 AllNewObjects.RemoveAt(0);
             }
+
+            GlobalEndOfTurnActions();
+        }
+
+        internal void GlobalEndOfTurnActions()
+        {
+            //TODO: Pull from Config
         }
 
         internal void RemoveWorldObject(WorldObject mySelf)

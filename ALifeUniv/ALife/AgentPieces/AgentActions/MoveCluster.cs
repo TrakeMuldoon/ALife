@@ -84,8 +84,7 @@ namespace ALifeUni.ALife
             self.CentrePoint = finalPoint;
 
             ICollisionMap collider = Planet.World.CollisionLevels[self.CollisionLevel];
-            List<WorldObject> collisions = collider.QueryForBoundingBoxCollisions(self.BoundingBox, self);
-            collisions = CollisionDetector.FineGrainedCollisionDetection(collisions, self);
+            List<WorldObject> collisions = collider.DetectCollisions(self);
 
             //If there are no collisions, we propogate the move.
             if(collisions.Count == 0)

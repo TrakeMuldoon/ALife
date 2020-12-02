@@ -14,6 +14,8 @@ namespace ALifeUni.ALife
         List<WorldObject> QueryForBoundingBoxCollisions(BoundingBox queryBox);
         List<WorldObject> QueryForBoundingBoxCollisions(BoundingBox queryBox, WorldObject self);
 
+        List<WorldObject> DetectCollisions(WorldObject self);
+
         bool Insert(WorldObject newObject);
 
         void RemoveObject(WorldObject killMe);

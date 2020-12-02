@@ -67,7 +67,7 @@ namespace ALifeUni.ALife
             Zone start = new Zone("Start", "Random", Colors.Red, new Point(0, 50), 100, height - 100);
             Zone end = new Zone("End", "Random", Colors.Blue, new Point(width - 50, 50), 50, height - 100);
             Zone rocks = new Zone("Rocks", "Random", Colors.DarkGray, new Point(100, 0), width - 150, 50);
-            Zone rockBottom = new Zone("Rock Bottom", "Random", Colors.Orchid, new Point(height - 50, 50), width -150, 50)
+            Zone rockBottom = new Zone("Rock Bottom", "Random", Colors.Orchid, new Point(height - 50, 50), width - 150, 50);
             instance.Zones.Add(start.Name, start);
             instance.Zones.Add(end.Name, end);
             instance.Zones.Add(rocks.Name, rocks);

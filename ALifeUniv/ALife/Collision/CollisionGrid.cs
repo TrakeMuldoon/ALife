@@ -162,6 +162,13 @@ namespace ALifeUni.ALife
             return tempList;
         }
 
+        public List<WorldObject> DetectCollisions(WorldObject self)
+        {
+            List<WorldObject> collisions = this.QueryForBoundingBoxCollisions(self.BoundingBox, self);
+            collisions = CollisionDetector.FineGrainedCollisionDetection(collisions, self);
+            return collisions;
+        }
+
         public void RemoveObject(WorldObject killMe)
         {
             trackedObjects.Remove(killMe);
@@ -193,5 +200,6 @@ namespace ALifeUni.ALife
                 yield return ret;
             }
         }
+
     }
 }

@@ -18,27 +18,14 @@ namespace ALifeUni.ALife
             set
             {
                 //TODO: This stops agents from fallling off the world. But they don't know they're doing or not doing that.
-                double properX = value.X;
-                double properY = value.Y;
+                double diffX = value.X - centre.X;
+                double diffY = value.Y - centre.Y;
 
-                if(value.X + Radius > Planet.World.WorldWidth)
-                {
-                    properX = Planet.World.WorldWidth - Radius;
-                }
-                if(value.X - Radius < 0)
-                {
-                    properX = Radius;
-                }
-                if(value.Y + Radius > Planet.World.WorldHeight)
-                {
-                    properY = Planet.World.WorldHeight - Radius;
-                }
-                if(value.Y - Radius < 0)
-                {
-                    properY = Radius;
-                }
-                centre.X = properX;
-                centre.Y = properY;
+                BoundingBox bb = BoundingBox;
+                double halfBBX = (bb.MaxX - bb.MinX) / 2;
+                double halfBBY = (bb.MaxY - bb.MinY) / 2;
+                centre.X = Math.Clamp(value.X, halfBBX, Planet.World.WorldWidth - halfBBX);
+                centre.Y = Math.Clamp(value.Y, halfBBY, Planet.World.WorldHeight - halfBBY);
             }
         }
 

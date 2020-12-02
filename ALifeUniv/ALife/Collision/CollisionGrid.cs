@@ -69,11 +69,13 @@ namespace ALifeUni.ALife
         public bool Insert(WorldObject newObject)
         {
             //figure out xMin and xMax bucket
-            int xMaxBucket = (int)(newObject.CentrePoint.X + newObject.Radius) / GridSize;
-            int xMinBucket = (int)(newObject.CentrePoint.X - newObject.Radius) / GridSize;
+            BoundingBox bb = newObject.BoundingBox;
+
+            int xMaxBucket = (int)(bb.MaxX) / GridSize;
+            int xMinBucket = (int)(bb.MinX) / GridSize;
             //figure out yMin and yMax bucket
-            int yMaxBucket = (int)(newObject.CentrePoint.Y + newObject.Radius) / GridSize;
-            int yMinBucket = (int)(newObject.CentrePoint.Y - newObject.Radius) / GridSize;
+            int yMaxBucket = (int)(bb.MaxY) / GridSize;
+            int yMinBucket = (int)(bb.MinY) / GridSize;
 
             //This creates a list of grid buckets that the agent falls within
             List<Point> myCoords = new List<Point>();

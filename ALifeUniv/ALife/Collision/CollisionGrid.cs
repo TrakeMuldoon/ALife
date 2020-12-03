@@ -101,7 +101,7 @@ namespace ALifeUni.ALife
             //Used for counting and display logic
             trackedObjects.Add(newObject);
 
-            //TODO: If there is ever a meaningful change this coudl fail, return false
+            //TODO: If there is ever a meaningful chance this could fail, return false
             return true;
         }
 

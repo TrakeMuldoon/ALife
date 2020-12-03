@@ -146,9 +146,8 @@ namespace ALifeUni.ALife
             //TODO: Abstract this out. 
             Statistics["Age"].IncreasePropertyBy(1);
             
-            
             //Reset all the senses. 
-            Senses.ForEach((se) => se.GetShape().Reset());
+            Senses.ForEach((se) => se.Shape.Reset());
             foreach(StatisticInput stat in Statistics.Values)
             {
                 stat.Reset();

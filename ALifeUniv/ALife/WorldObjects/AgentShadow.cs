@@ -15,11 +15,11 @@ namespace ALifeUni.ALife
             Orientation = new Angle(self.Orientation.Degrees);
             foreach(SenseCluster sc in self.Senses)
             {
-                IShape shape = sc.GetShape();
-                IShape clone = shape.CloneShape();
-                if(shape is ChildSector)
+                
+                IShape clone = sc.Shape.CloneShape();
+                if(clone is ChildSector cs)
                 {
-                    ((ChildSector)clone).Parent = this;
+                    cs.Parent = this;
                 }
                 SenseShapes.Add(clone);
             }

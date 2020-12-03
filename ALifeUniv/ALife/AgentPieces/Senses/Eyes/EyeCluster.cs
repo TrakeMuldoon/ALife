@@ -7,6 +7,10 @@ namespace ALifeUni.ALife
     public class EyeCluster : SenseCluster
     {
         ChildSector myShape;
+        public override IShape Shape
+        {
+            get { return myShape; }
+        }
 
         public EyeCluster(WorldObject parent, String name) : base(parent, name)
         {
@@ -38,11 +42,6 @@ namespace ALifeUni.ALife
             newEC.myShape.Color = myShape.Color;
             newEC.myShape.DebugColor = myShape.DebugColor;
             return newEC;
-        }
-
-        public override IShape GetShape()
-        {
-            return myShape;
         }
     }
 }

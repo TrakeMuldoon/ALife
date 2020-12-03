@@ -49,7 +49,7 @@ namespace ALifeUni.UI
             {
                 foreach(IHasShape shape in ag.Senses)
                 {
-                    DrawShape(shape.GetShape(), uiSettings, args);
+                    DrawShape(shape.Shape, uiSettings, args);
                 }
             }
         }

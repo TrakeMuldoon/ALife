@@ -24,22 +24,20 @@ namespace ALifeUni.ALife
             //TODO: Factor this out. The SenseClusters shouldn't need to know the details of the collision detection
             ICollisionMap collider = Planet.World.CollisionLevels[this.CollisionLevel];
 
-            IShape myShape = this.GetShape();
-
-            myShape.Reset();
-            BoundingBox bb = myShape.BoundingBox;
+            Shape.Reset();
+            BoundingBox bb = Shape.BoundingBox;
             List<WorldObject> collisions = collider.QueryForBoundingBoxCollisions(bb, parent);
-            collisions = CollisionDetector.FineGrainedCollisionDetection(collisions, myShape);
+            collisions = CollisionDetector.FineGrainedCollisionDetection(collisions, Shape);
 
             //GetShape().DebugColor = collisions.Count > 0 ?  Colors.Red : Colors.Transparent;
-            GetShape().Color = collisions.Count > 0 ? Colors.Black : Colors.Red;
+            Shape.Color = collisions.Count > 0 ? Colors.Black : Colors.Red;
             foreach(SenseInput si in SubInputs)
             {
                 si.SetValue(collisions);
             }
         }
 
-        public abstract IShape GetShape();
+        public abstract IShape Shape { get;  }
 
         public abstract SenseCluster CloneSense(WorldObject newParent);
 

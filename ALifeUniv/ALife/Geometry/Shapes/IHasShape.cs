@@ -2,6 +2,9 @@
 {
     public interface IHasShape
     {
-        IShape GetShape();
+        IShape Shape
+        {
+            get;
+        }
     }
 }

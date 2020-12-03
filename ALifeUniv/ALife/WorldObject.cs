@@ -11,6 +11,12 @@ namespace ALifeUni.ALife
     {
         public int ExecutionOrder;
         private Point centre;
+
+        public IShape Shape
+        {
+            get { return this; }
+        }
+
         public override Point CentrePoint
         {
             get { return centre; }
@@ -100,11 +106,6 @@ namespace ALifeUni.ALife
         public virtual void TrashItem()
         {
             Planet.World.RemoveWorldObject(this);
-        }
-
-        public IShape GetShape()
-        {
-            return this;
         }
     }
 }

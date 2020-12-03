@@ -42,13 +42,6 @@
                 }
                 ac.ActivateAction();
             }
-
-            //Reset means that the bounding box cache is wiped out
-            //Until the next time it is reset (during detect) it will be using the cached one
-            foreach(SenseCluster sc in body.Senses)
-            {
-                sc.GetShape().Reset();
-            }
         }
     }
 }

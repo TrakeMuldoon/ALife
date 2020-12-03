@@ -13,6 +13,11 @@ namespace ALifeUni.ALife
         readonly string CollisionLevel = ReferenceValues.CollisionLevelPhysical;
         readonly WorldObject parent;
 
+        public virtual IShape Shape
+        {
+            get; 
+        }
+
         public SenseCluster(WorldObject parent, String name)
         {
             this.parent = parent;
@@ -29,15 +34,13 @@ namespace ALifeUni.ALife
             List<WorldObject> collisions = collider.QueryForBoundingBoxCollisions(bb, parent);
             collisions = CollisionDetector.FineGrainedCollisionDetection(collisions, Shape);
 
-            //GetShape().DebugColor = collisions.Count > 0 ?  Colors.Red : Colors.Transparent;
+            //Shape.DebugColor = collisions.Count > 0 ?  Colors.Red : Colors.Transparent;
             Shape.Color = collisions.Count > 0 ? Colors.Black : Colors.Red;
             foreach(SenseInput si in SubInputs)
             {
                 si.SetValue(collisions);
             }
         }
-
-        public abstract IShape Shape { get;  }
 
         public abstract SenseCluster CloneSense(WorldObject newParent);
 

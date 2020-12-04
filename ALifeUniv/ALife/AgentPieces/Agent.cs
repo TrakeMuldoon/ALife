@@ -56,7 +56,8 @@ namespace ALifeUni.ALife
             //myBrain = new RandomBrain(this);
             //myBrain = new TesterBrain(this);
             //TODO: Brain Behaviour is hardcoded. It should be in the config.
-            myBrain = new BehaviourBrain(this, "IF Age.Value GreaterThan [10] THEN Move.GoForward AT [0.2]");
+            //myBrain = new BehaviourBrain(this, "IF Age.Value GreaterThan [10] THEN Move.GoForward AT [0.2]");
+            myBrain = new BehaviourBrain(this, "*", "*", "*", "*", "*");
 
             Shape.DebugColor = Colors.PaleVioletRed;
             Shadow = new AgentShadow(this);
@@ -69,7 +70,7 @@ namespace ALifeUni.ALife
                   , parent.GenusLabel                                                            //Genus Label
                   , AgentIDGenerator.GetNextChildId(parent.IndividualLabel, parent.numChildren)  //Individual Label
                   , parent.CollisionLevel                                                        //Collision Level
-                  , parent.Shape.Color)                                                                //Start Color
+                  , parent.Shape.Color)                                                          //Start Color
         {
             Shape.CentrePoint = birthPosition;
             Shape.DebugColor = Colors.Blue;

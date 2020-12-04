@@ -55,6 +55,10 @@ namespace ALifeUni.ALife.UtilityClasses
             }
         }
 
+        public Angle Clone()
+        {
+            return new Angle(Degrees);
+        }
         public static Angle operator +(Angle a, Angle b)
             => new Angle(a.degrees + b.degrees);
 

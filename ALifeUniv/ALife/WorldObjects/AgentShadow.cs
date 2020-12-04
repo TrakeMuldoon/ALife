@@ -12,7 +12,7 @@ namespace ALifeUni.ALife
         {
             Color = self.Shape.Color;
             DebugColor = Colors.Yellow;
-            Orientation = new Angle(self.Shape.Orientation.Degrees);
+            Orientation = self.Shape.Orientation.Clone();
             foreach(SenseCluster sc in self.Senses)
             {
                 

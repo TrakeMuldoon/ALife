@@ -36,10 +36,11 @@ namespace ALifeUni.ALife
         public override SenseCluster CloneSense(WorldObject newParent)
         {
             EyeCluster newEC = new EyeCluster(newParent, Name);
-            newEC.myShape.OrientationAroundParent = new Angle(myShape.OrientationAroundParent.Degrees);
-            newEC.myShape.RelativeOrientation = new Angle(myShape.RelativeOrientation.Degrees);
+            newEC.myShape.OrientationAroundParent = myShape.OrientationAroundParent.Clone();
+            newEC.myShape.RelativeOrientation = myShape.RelativeOrientation.Clone();
             newEC.myShape.Radius = myShape.Radius;
-            newEC.myShape.SweepAngle = new Angle(myShape.SweepAngle.Degrees);
+            newEC.myShape.SweepAngle = myShape.SweepAngle.Clone();
+            //TODO: Fix bug with Colors being passed around and not cloned properly
             newEC.myShape.Color = myShape.Color;
             newEC.myShape.DebugColor = myShape.DebugColor;
             return newEC;

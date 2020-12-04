@@ -68,7 +68,7 @@ namespace ALifeUni.ALife
             //TODO: Create Special Objects from Config
             //TODO: Read new world agentnum from config
 
-
+            //TODO: Add Zones Propertly to their visual layer.
             //instance.AddZone(
             Zone start = new Zone("Start", "Random", Colors.Red, new Point(0, 50), 100, height - 100);
             Zone end = new Zone("End", "Random", Colors.Blue, new Point(width - 50, 50), 50, height - 100);
@@ -80,18 +80,25 @@ namespace ALifeUni.ALife
             instance.Zones.Add(rocks.Name, rocks);
             instance.Zones.Add(rockBottom.Name, rockBottom);
 
-            //instance.Distributor = new RandomAgentDistributor(red, true, ReferenceValues.CollisionLevelPhysical);
-            //StraightLineDistributorConfig config = new StraightLineDistributorConfig(new Angle(220), 12, new Point(20, 20));
-            //instance.Distributor = new StraightLineAgentDistributor(red, true, ReferenceValues.CollisionLevelPhysical, config);
+            //int numAgents = 100;
+            //int agentRadius = 5;
+            //for(int i = 0; i < numAgents; i++)
+            //{
+            //    Point nextCP = start.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
+            //    Agent ag = new Agent(nextCP, start);
+            //    instance.AddObjectToWorld(ag);
+            //}
 
-            int numAgents = 100;
-            int agentRadius = 5;
-            for(int i = 0; i < numAgents; i++)
-            {
-                Point nextCP = start.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
-                Agent ag = new Agent(nextCP, start);
-                instance.AddObjectToWorld(ag);
-            }
+            Point cp = new Point(100, 100);
+            Circle cir = new Circle(cp, 12);
+            Spinner soc = new Spinner(cp, cir, "Genie", "AAA", ReferenceValues.CollisionLevelPhysical, Colors.Blue);
+
+            Point rp = new Point(500, 500);
+            Rectangle rectangle = new Rectangle(rp, 80, 60, Colors.OldLace);
+            Spinner sor = new Spinner(rp, rectangle, "Square", "ABBA", ReferenceValues.CollisionLevelPhysical, Colors.Red);
+
+            instance.AddObjectToWorld(soc);
+            instance.AddObjectToWorld(sor);
         }
 
         #region Instance Stuff

@@ -35,7 +35,7 @@ namespace ALifeUni.ALife
             collisions = CollisionDetector.FineGrainedCollisionDetection(collisions, Shape);
 
             //Shape.DebugColor = collisions.Count > 0 ?  Colors.Red : Colors.Transparent;
-            Shape.Color = collisions.Count > 0 ? Colors.Black : Colors.Red;
+            Shape.Color = collisions.Count > 0 ? Colors.DodgerBlue : Colors.DarkBlue;
             foreach(SenseInput si in SubInputs)
             {
                 si.SetValue(collisions);

@@ -13,6 +13,5 @@
         public const double AgentMaximumTurnDegrees = 90;
 
         public const int BehaviourWaitMax = 5;
-
     }
 }

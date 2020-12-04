@@ -81,8 +81,11 @@ namespace ALifeUni.ALife
 
             Point tempPoint = ExtraMath.TranslateByVector(origin, theShape.Orientation.Radians, forwardDist);
             Point finalPoint = ExtraMath.TranslateByVector(tempPoint, theShape.Orientation.Radians + (Math.PI / 2), rightDist);
-            //TODO Add falling off the end of the world logic here.
 
+            double halfXLength = theShape.BoundingBox.XLength / 2;
+            double halfYHeight = theShape.BoundingBox.YHeight / 2;
+            finalPoint.X = Math.Clamp(finalPoint.X, halfXLength, Planet.World.WorldWidth - halfXLength);
+            finalPoint.Y = Math.Clamp(finalPoint.Y, halfYHeight, Planet.World.WorldHeight - halfYHeight);
 
             theShape.CentrePoint = finalPoint;
 

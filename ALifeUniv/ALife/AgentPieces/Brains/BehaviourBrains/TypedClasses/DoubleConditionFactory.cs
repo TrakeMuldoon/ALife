@@ -40,7 +40,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
 
         private static double GetRandomConstantValue()
         {
-            double randomDouble = Math.Round(Planet.World.NumberGen.NextDouble(), 5);
+            double randomDouble = Math.Round(Planet.World.NumberGen.NextDouble(), 4);
             return randomDouble;
         }
 

@@ -40,7 +40,7 @@ namespace ALifeUni.ALife
 
         public Agent(Point birthPosition, Zone zone)
             : base(birthPosition
-                  , new Circle((float)birthPosition.X, (float)birthPosition.Y, 5)  //current radius    //TODO: Hardcoded Agent Radius
+                  , new Circle(birthPosition, 5)  //current radius    //TODO: Hardcoded Agent Radius
                   , "Agent"                                         //Genus Label
                   , AgentIDGenerator.GetNextAgentId()               //Individual Label
                   , ReferenceValues.CollisionLevelPhysical          //Collision Level
@@ -225,8 +225,8 @@ namespace ALifeUni.ALife
         {
             numChildren += 1;
 
-            double bbLength = Shape.BoundingBox.MaxX - Shape.BoundingBox.MinX;
-            double bbHeight = Shape.BoundingBox.MaxY - Shape.BoundingBox.MinY;
+            double bbLength = Shape.BoundingBox.XLength;
+            double bbHeight = Shape.BoundingBox.YHeight;
             //Determine child position
             Point birthSpot = Zone.Distributor.NextAgentCentre(bbLength, bbHeight);
             //Point childCenter = FindAdjacentFreeSpace();

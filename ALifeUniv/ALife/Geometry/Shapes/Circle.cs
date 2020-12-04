@@ -48,11 +48,6 @@ namespace ALifeUni.ALife.UtilityClasses
             Orientation = new Angle(0);
         }
 
-        public Circle(float xVal, float yVal, float radius) : this(new Point(xVal, yVal), radius)
-        {
-
-        }
-
         public void Reset()
         {
             //Reset does nothing for Circles, because the bounding box is so easy to calculate

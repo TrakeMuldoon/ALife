@@ -11,7 +11,7 @@ namespace ALifeUni.ALife
         {
         }
         public EmptyObject(Point centrePoint, float startRadius, string collisionLevel, string name) 
-            : base(centrePoint, new Circle((float)centrePoint.X, (float)centrePoint.Y, startRadius), "Empty", name, collisionLevel, Colors.Gray)
+            : base(centrePoint, new Circle(centrePoint, startRadius), "Empty", name, collisionLevel, Colors.Gray)
         {
         }
 

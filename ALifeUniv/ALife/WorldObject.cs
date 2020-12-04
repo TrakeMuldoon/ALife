@@ -9,25 +9,6 @@ namespace ALifeUni.ALife
     //TODO: World Objects are current hardcodded to be "Circle". 
     public abstract class WorldObject : IHasShape
     {
-        //private Point centre;
-        //public Point CentrePoint
-        //{
-        //    get { return centre; }
-
-        //    set
-        //    {
-        //        //TODO: This stops agents from fallling off the world. But they don't know they're doing or not doing that.
-        //        double diffX = value.X - centre.X;
-        //        double diffY = value.Y - centre.Y;
-
-        //        BoundingBox bb = Shape.BoundingBox;
-        //        double halfBBX = (bb.MaxX - bb.MinX) / 2;
-        //        double halfBBY = (bb.MaxY - bb.MinY) / 2;
-        //        centre.X = Math.Clamp(value.X, halfBBX, Planet.World.WorldWidth - halfBBX);
-        //        centre.Y = Math.Clamp(value.Y, halfBBY, Planet.World.WorldHeight - halfBBY);
-        //    }
-        //}
-
         public IShape Shape
         {
             get;

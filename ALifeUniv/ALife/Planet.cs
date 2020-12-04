@@ -61,8 +61,8 @@ namespace ALifeUni.ALife
             instance = new Planet(seed, height, width);
 
             //Initialize collision grid
-            instance._collisionLevels.Add(ReferenceValues.CollisionLevelPhysical, new CollisionGrid(height, width));
-            instance._collisionLevels.Add(ReferenceValues.CollisionLevelZone, new CollisionGrid(height, width));
+            instance._collisionLevels.Add(ReferenceValues.CollisionLevelPhysical, new CollisionGrid<WorldObject>(height, width));
+            instance.ZoneMap = new CollisionGrid<Zone>(height, width);
 
             //TODO: Put Planet Creation into the config
             //TODO: Create Special Objects from Config
@@ -101,15 +101,16 @@ namespace ALifeUni.ALife
 
         #region Instance Stuff
 
-        public AgentDistributor Distributor;
         public readonly Dictionary<String, Zone> Zones = new Dictionary<string, Zone>();
         public readonly List<WorldObject> AllControlledObjects = new List<WorldObject>();
         public readonly List<WorldObject> AllActiveObjects = new List<WorldObject>();
         public readonly List<WorldObject> AllNewObjects = new List<WorldObject>();
         public readonly int Seed;
 
-        private Dictionary<string, ICollisionMap> _collisionLevels = new Dictionary<string, ICollisionMap>();
-        public IReadOnlyDictionary<string, ICollisionMap> CollisionLevels
+        public ICollisionMap<Zone> ZoneMap;
+
+        private Dictionary<string, ICollisionMap<WorldObject>> _collisionLevels = new Dictionary<string, ICollisionMap<WorldObject>>();
+        public IReadOnlyDictionary<string, ICollisionMap<WorldObject>> CollisionLevels
         {
             get { return _collisionLevels; }
         }
@@ -198,7 +199,7 @@ namespace ALifeUni.ALife
             CollisionLevels[currCollisionLevel].RemoveObject(mySelf);
             if(!_collisionLevels.ContainsKey(newLevel))
             {
-                _collisionLevels.Add(newLevel, new CollisionGrid(WorldHeight, WorldWidth));
+                _collisionLevels.Add(newLevel, new CollisionGrid<WorldObject>(WorldHeight, WorldWidth));
             }
             CollisionLevels[newLevel].Insert(mySelf);
         }
@@ -207,7 +208,7 @@ namespace ALifeUni.ALife
         {
             if(!_collisionLevels.ContainsKey(toAdd.CollisionLevel))
             {
-                _collisionLevels.Add(toAdd.CollisionLevel, new CollisionGrid(WorldHeight, WorldWidth));
+                _collisionLevels.Add(toAdd.CollisionLevel, new CollisionGrid<WorldObject>(WorldHeight, WorldWidth));
             }
             _collisionLevels[toAdd.CollisionLevel].Insert(toAdd);
 
@@ -218,7 +219,7 @@ namespace ALifeUni.ALife
         internal void AddZone(Zone toAdd)
         {
             Zones.Add(toAdd.Name, toAdd);
-            //_collisionLevels[ReferenceValues.CollisionLevelZone].Insert(toAdd);
+            ZoneMap.Insert(toAdd);
         }
         #endregion
     }

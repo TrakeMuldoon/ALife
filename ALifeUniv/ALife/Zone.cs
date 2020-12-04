@@ -5,12 +5,20 @@ using Windows.UI;
 
 namespace ALifeUni.ALife
 {
-    public class Zone : AARectangle
+    public class Zone : AARectangle, IHasShape
     {
         public String Name
         {
             get;
             private set;
+        }
+
+        public IShape Shape
+        {
+            get
+            {
+                return this;
+            }
         }
 
         public readonly AgentDistributor Distributor;

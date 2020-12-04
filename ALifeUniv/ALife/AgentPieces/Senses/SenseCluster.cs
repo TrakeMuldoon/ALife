@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Windows.UI;
+using System.Linq;
 
 namespace ALifeUni.ALife
 {
@@ -26,13 +27,15 @@ namespace ALifeUni.ALife
 
         public virtual void Detect()
         {
-            //TODO: Factor this out. The SenseClusters shouldn't need to know the details of the collision detection
-            ICollisionMap collider = Planet.World.CollisionLevels[this.CollisionLevel];
-
             Shape.Reset();
             BoundingBox bb = Shape.BoundingBox;
+
+            //TODO: Factor this out. The SenseClusters shouldn't need to know the details of the collision detection
+            ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[this.CollisionLevel];
             List<WorldObject> collisions = collider.QueryForBoundingBoxCollisions(bb, parent);
-            collisions = CollisionDetector.FineGrainedCollisionDetection(collisions, Shape);
+            IEnumerable<IHasShape> colShapes = collisions.Cast<IHasShape>();
+            colShapes = CollisionDetector.FineGrainedCollisionDetection(colShapes, Shape);
+            collisions = colShapes.Cast<WorldObject>().ToList();
 
             //Shape.DebugColor = collisions.Count > 0 ?  Colors.Red : Colors.Transparent;
             Shape.Color = collisions.Count > 0 ? Colors.DodgerBlue : Colors.DarkBlue;

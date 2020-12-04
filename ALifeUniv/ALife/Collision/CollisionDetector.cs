@@ -59,10 +59,10 @@ namespace ALifeUni.ALife
         }
 
 
-        public static List<WorldObject> FineGrainedCollisionDetection(List<WorldObject> toCollide, IShape me)
+        public static List<IHasShape> FineGrainedCollisionDetection(IEnumerable<IHasShape> toCollide, IShape me)
         {
-            List<WorldObject> collisions = new List<WorldObject>();
-            foreach(WorldObject wo in toCollide)
+            List<IHasShape> collisions = new List<IHasShape>();
+            foreach(IHasShape wo in toCollide)
             {
                 IShape woShape = wo.Shape;
                 if(DetectorMarshaller[me.GetShapeEnum()][woShape.GetShapeEnum()](me, woShape))

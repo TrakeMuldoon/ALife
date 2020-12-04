@@ -144,6 +144,7 @@
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorBoolInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\EyeCounterInput.cs" />
+    <Compile Include="ALife\Collision\foo.cs" />
     <Compile Include="ALife\Geometry\Shapes\AARectangle.cs" />
     <Compile Include="ALife\WorldObjects\EmptyObject.cs" />
     <Compile Include="ALife\WorldObjects\AgentShadow.cs" />

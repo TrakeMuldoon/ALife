@@ -1,20 +1,21 @@
 ﻿using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Windows.Foundation;
 
 namespace ALifeUni.ALife
 {
-    class CollisionGrid : ICollisionMap
+    class CollisionGrid<T> : ICollisionMap<T> where T : IHasShape
     {
         public readonly int Height;
         public readonly int Width;
 
         //TODO: Load from Default Configuration
         private int GridSize = 25;
-        private List<WorldObject>[,] objectGrid;
-        private List<WorldObject> trackedObjects;
-        private Dictionary<WorldObject, List<Point>> agentLocationTracker = new Dictionary<WorldObject, List<Point>>();
+        private List<T>[,] objectGrid;
+        private List<T> trackedObjects;
+        private Dictionary<T, List<Point>> agentLocationTracker = new Dictionary<T, List<Point>>();
 
         public CollisionGrid(int gridHeight, int gridWidth)
         {
@@ -38,14 +39,14 @@ namespace ALifeUni.ALife
             int numYBoxesFloor = (int)Math.Floor(numYBoxes);
 
 
-            trackedObjects = new List<WorldObject>();
+            trackedObjects = new List<T>();
 
-            objectGrid = new List<WorldObject>[numXBoxesCeil, numYBoxesCeil];
+            objectGrid = new List<T>[numXBoxesCeil, numYBoxesCeil];
             for(int x = 0; x < numXBoxesFloor; x++)
             {
                 for(int y = 0; y < numYBoxesFloor; y++)
                 {
-                    objectGrid[x, y] = new List<WorldObject>();
+                    objectGrid[x, y] = new List<T>();
                 }
             }
 
@@ -66,7 +67,7 @@ namespace ALifeUni.ALife
         }
 
 
-        public bool Insert(WorldObject newObject)
+        public bool Insert(T newObject)
         {
             //figure out xMin and xMax bucket
             BoundingBox bb = newObject.Shape.BoundingBox;
@@ -105,19 +106,19 @@ namespace ALifeUni.ALife
             return true;
         }
 
-        public void MoveObject(WorldObject moveMe)
+        public void MoveObject(T moveMe)
         {
             RemoveObject(moveMe);
             Insert(moveMe);
             //TODO: handle boolean return value
         }
 
-        public List<WorldObject> QueryForBoundingBoxCollisions(WorldObject queryObject)
+        public List<T> QueryForBoundingBoxCollisions(T queryObject)
         {
             return QueryForBoundingBoxCollisions(queryObject.Shape.BoundingBox, queryObject);
         }
 
-        public List<WorldObject> QueryForBoundingBoxCollisions(BoundingBox queryBox)
+        public List<T> QueryForBoundingBoxCollisions(BoundingBox queryBox)
         {
             //figure out xMin and xMax bucket
             int xMaxBucket = (int)(queryBox.MaxX) / GridSize;
@@ -133,20 +134,20 @@ namespace ALifeUni.ALife
             yMinBucket = Math.Clamp(yMinBucket, 0, objectGrid.GetLength(1) - 1);
 
             //This creates a list of grid buckets that the bounding box falls within
-            HashSet<WorldObject> potentialCollisions = new HashSet<WorldObject>();
+            HashSet<T> potentialCollisions = new HashSet<T>();
             for(int x = xMinBucket; x <= xMaxBucket; x++)
             {
                 for(int y = yMinBucket; y <= yMaxBucket; y++)
                 {
-                    foreach(WorldObject wo in objectGrid[x, y])
+                    foreach(T wo in objectGrid[x, y])
                     {
                         potentialCollisions.Add(wo);
                     }
                 }
             }
 
-            List<WorldObject> boundingCollisions = new List<WorldObject>();
-            foreach(WorldObject wo in potentialCollisions)
+            List<T> boundingCollisions = new List<T>();
+            foreach(T wo in potentialCollisions)
             {
                 if(wo.Shape.BoundingBox.IsCollision(queryBox))
                 {
@@ -157,21 +158,22 @@ namespace ALifeUni.ALife
             return boundingCollisions;
         }
 
-        public List<WorldObject> QueryForBoundingBoxCollisions(BoundingBox queryBox, WorldObject self)
+        public List<T> QueryForBoundingBoxCollisions(BoundingBox queryBox, T self)
         {
-            List<WorldObject> tempList = QueryForBoundingBoxCollisions(queryBox);
+            List<T> tempList = QueryForBoundingBoxCollisions(queryBox);
             tempList.Remove(self);
             return tempList;
         }
 
-        public List<WorldObject> DetectCollisions(WorldObject self)
+        public List<T> DetectCollisions(T self)
         {
-            List<WorldObject> collisions = this.QueryForBoundingBoxCollisions(self.Shape.BoundingBox, self);
-            collisions = CollisionDetector.FineGrainedCollisionDetection(collisions, self.Shape);
+            List<T> collisions = this.QueryForBoundingBoxCollisions(self.Shape.BoundingBox, self);
+            List<IHasShape> colShapes = CollisionDetector.FineGrainedCollisionDetection(collisions.Cast<IHasShape>(), self.Shape);
+            collisions = colShapes.Cast<T>().ToList();
             return collisions;
         }
 
-        public void RemoveObject(WorldObject killMe)
+        public void RemoveObject(T killMe)
         {
             trackedObjects.Remove(killMe);
             List<Point> myCoords = agentLocationTracker[killMe];
@@ -182,21 +184,22 @@ namespace ALifeUni.ALife
             agentLocationTracker.Remove(killMe);
         }
 
-        public IEnumerator<WorldObject> GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         {
             return trackedObjects.GetEnumerator();
         }
 
-        public IEnumerable<WorldObject> EnumerateItems()
+        public IEnumerable<T> EnumerateItems()
         {
             int i = 0;
             while(i < trackedObjects.Count)
             {
-                WorldObject ret = trackedObjects[0];
+                T ret = trackedObjects[0];
 
                 try { ret = trackedObjects[i++]; }
                 catch(ArgumentOutOfRangeException)
                 {
+                    //TODO Find out if this causes bugs, where some itemse are getting hit up twice.
                     /* Swallowed, it is possible that while enumerating items, the list is modified. We'll return the first item in the list */
                 }
                 yield return ret;

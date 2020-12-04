@@ -21,6 +21,8 @@
 * [ ] Goal Based Features
 * [ ] Implement no movement countdown to death.
 * [ ] Implmenet running across the field scenario
+* [ ] Differentiate between the "Visible" and "physical" layers, so that you can there are things which are visible, but no tangible (perhaps smells and fogs?)
+
 
 ## Goal-based Features
 The goal is provided/set to the agents; they do not decide at this time.

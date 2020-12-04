@@ -89,7 +89,7 @@ namespace ALifeUni.ALife
 
             theShape.CentrePoint = finalPoint;
 
-            ICollisionMap collider = Planet.World.CollisionLevels[self.CollisionLevel];
+            ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[self.CollisionLevel];
             List<WorldObject> collisions = collider.DetectCollisions(self);
 
             //If there are no collisions, we propogate the move.

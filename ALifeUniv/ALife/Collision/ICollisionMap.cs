@@ -3,26 +3,26 @@ using System.Collections.Generic;
 
 namespace ALifeUni.ALife
 {
-    public interface ICollisionMap
+    public interface ICollisionMap<T> where T : IHasShape
     {
         /// <summary>
         /// Query for collisions will examine the map and everything in it, and return a list of objects whose bounding boxes collide with the bounding box of the input
         /// </summary>
         /// <param name="queryObject">Query the collision map for this object</param>
         /// <returns></returns>
-        List<WorldObject> QueryForBoundingBoxCollisions(WorldObject queryObject);
-        List<WorldObject> QueryForBoundingBoxCollisions(BoundingBox queryBox);
-        List<WorldObject> QueryForBoundingBoxCollisions(BoundingBox queryBox, WorldObject self);
+        List<T> QueryForBoundingBoxCollisions(T queryObject);
+        List<T> QueryForBoundingBoxCollisions(BoundingBox queryBox);
+        List<T> QueryForBoundingBoxCollisions(BoundingBox queryBox, T self);
 
-        List<WorldObject> DetectCollisions(WorldObject self);
+        List<T> DetectCollisions(T self);
 
-        bool Insert(WorldObject newObject);
+        bool Insert(T newObject);
 
-        void RemoveObject(WorldObject killMe);
+        void RemoveObject(T killMe);
 
-        void MoveObject(WorldObject moveMe);
+        void MoveObject(T moveMe);
 
-        IEnumerable<WorldObject> EnumerateItems();
+        IEnumerable<T> EnumerateItems();
 
     }
 }

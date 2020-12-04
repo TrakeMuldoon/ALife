@@ -43,7 +43,7 @@ namespace ALifeUni.ALife
             double netRightTurnPercent = turnRight - turnLeft;
             netTurn = netRightTurnPercent * Settings.AgentMaximumTurnDegrees;
 
-            Angle myOrientation = self.Orientation;
+            Angle myOrientation = self.Shape.Orientation;
             myOrientation.Degrees += netTurn;
             return true;
         }

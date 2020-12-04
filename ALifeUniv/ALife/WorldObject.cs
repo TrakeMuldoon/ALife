@@ -7,77 +7,55 @@ using Windows.UI;
 namespace ALifeUni.ALife
 {
     //TODO: World Objects are current hardcodded to be "Circle". 
-    public abstract class WorldObject : Circle, IHasShape
+    public abstract class WorldObject : IHasShape
     {
-        public int ExecutionOrder;
-        private Point centre;
+        //private Point centre;
+        //public Point CentrePoint
+        //{
+        //    get { return centre; }
+
+        //    set
+        //    {
+        //        //TODO: This stops agents from fallling off the world. But they don't know they're doing or not doing that.
+        //        double diffX = value.X - centre.X;
+        //        double diffY = value.Y - centre.Y;
+
+        //        BoundingBox bb = Shape.BoundingBox;
+        //        double halfBBX = (bb.MaxX - bb.MinX) / 2;
+        //        double halfBBY = (bb.MaxY - bb.MinY) / 2;
+        //        centre.X = Math.Clamp(value.X, halfBBX, Planet.World.WorldWidth - halfBBX);
+        //        centre.Y = Math.Clamp(value.Y, halfBBY, Planet.World.WorldHeight - halfBBY);
+        //    }
+        //}
 
         public IShape Shape
         {
-            get { return this; }
-        }
-
-        public override Point CentrePoint
-        {
-            get { return centre; }
-
-            set
-            {
-                //TODO: This stops agents from fallling off the world. But they don't know they're doing or not doing that.
-                double diffX = value.X - centre.X;
-                double diffY = value.Y - centre.Y;
-
-                BoundingBox bb = BoundingBox;
-                double halfBBX = (bb.MaxX - bb.MinX) / 2;
-                double halfBBY = (bb.MaxY - bb.MinY) / 2;
-                centre.X = Math.Clamp(value.X, halfBBX, Planet.World.WorldWidth - halfBBX);
-                centre.Y = Math.Clamp(value.Y, halfBBY, Planet.World.WorldHeight - halfBBY);
-            }
-        }
-
-        public override Angle Orientation
-        {
             get;
-            set;
+            private set;
         }
 
         public readonly String GenusLabel;
         public readonly String IndividualLabel;
+
+        public int ExecutionOrder;
         protected int numChildren = 0;
-
-        private float radius;
-        public override float Radius
-        {
-            get
-            {
-                return radius;
-            }
-
-            set
-            {
-                float rad = value;
-                rad = Math.Clamp(rad, Settings.ObjectRadiusMin, Settings.ObjectRadiusMax);
-                radius = rad;
-            }
-        }
 
         //TODO: Merge PropertyInput and StatisticInput into a single "Properties" cabinet
         public Dictionary<String, PropertyInput> Properties = new Dictionary<string, PropertyInput>();
         public Dictionary<String, StatisticInput> Statistics = new Dictionary<string, StatisticInput>();
 
         public readonly string CollisionLevel;
-
         public bool Alive;
 
-        protected WorldObject(Point centrePoint, float startRadius, string genusLabel, string individualLabel, string collisionLevel, Color color)
-            : base(centrePoint, startRadius)
+        protected WorldObject(Point centrePoint, IShape shape, string genusLabel, string individualLabel, string collisionLevel, Color color)
         {
-            CentrePoint = centrePoint;
-            Radius = startRadius;
+            Shape = shape;
+            Shape.Color = color;
+            Shape.CentrePoint = centrePoint;
+
             GenusLabel = genusLabel;
             IndividualLabel = individualLabel;
             CollisionLevel = collisionLevel;
-            Color = color;
             Alive = true;
         }
 

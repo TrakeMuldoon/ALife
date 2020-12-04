@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ALifeUni.ALife.UtilityClasses;
+using System;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -9,7 +10,8 @@ namespace ALifeUni.ALife
         public EmptyObject(Point centrePoint, float startRadius, string collisionLevel) : this(centrePoint, startRadius, collisionLevel, String.Empty)
         {
         }
-        public EmptyObject(Point centrePoint, float startRadius, string collisionLevel, string name) : base(centrePoint, startRadius, "Empty", name, collisionLevel, Colors.Gray)
+        public EmptyObject(Point centrePoint, float startRadius, string collisionLevel, string name) 
+            : base(centrePoint, new Circle((float)centrePoint.X, (float)centrePoint.Y, startRadius), "Empty", name, collisionLevel, Colors.Gray)
         {
         }
 

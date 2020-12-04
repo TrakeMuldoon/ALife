@@ -7,6 +7,21 @@
         public double MinX;
         public double MinY;
 
+        public double XLength
+        {
+            get
+            {
+                return MaxX - MinX;
+            }
+        }
+        public double YHeight
+        {
+            get
+            {
+                return MaxY - MinY;
+            }
+        }
+
         public BoundingBox(double minX, double minY, double maxX, double maxY)
         {
             MinX = minX;

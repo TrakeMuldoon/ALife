@@ -20,16 +20,17 @@ namespace ALifeUni.ALife
             Angle relativeOrientation = new Angle(355);
             float radius = 80;
             Angle sweep = new Angle(25);
-            myShape = new ChildSector(orientationAroundParent, relativeOrientation, radius, sweep, parent);
+            myShape = new ChildSector(orientationAroundParent, parent.Shape, 5.0 //TODO: HUUUUUUGE BUG. Eyes are hardcoded to be 5 units from centre
+                                      , relativeOrientation, radius, sweep);
             SubInputs.Add(new EyeInput(name + ".SeeSomething"));
             SubInputs.Add(new EyeCounterInput(name + ".HowMany"));
             SubInputs.Add(new EyeIdentifierInput(name + ".WhoISee"));
-            SubInputs.Add(new ColorBoolInput(name + ".IsRed", (WorldObject wo) => wo.Color.R));
-            SubInputs.Add(new ColorBoolInput(name + ".IsBlue", (WorldObject wo) => wo.Color.B));
-            SubInputs.Add(new ColorBoolInput(name + ".IsGreen", (WorldObject wo) => wo.Color.G));
-            SubInputs.Add(new ColorInput(name + ".HowRed", (WorldObject wo) => wo.Color.R));
-            SubInputs.Add(new ColorInput(name + ".HowBlue", (WorldObject wo) => wo.Color.B));
-            SubInputs.Add(new ColorInput(name + ".HowGreen", (WorldObject wo) => wo.Color.G));
+            SubInputs.Add(new ColorBoolInput(name + ".IsRed", (WorldObject wo) => wo.Shape.Color.R));
+            SubInputs.Add(new ColorBoolInput(name + ".IsBlue", (WorldObject wo) => wo.Shape.Color.B));
+            SubInputs.Add(new ColorBoolInput(name + ".IsGreen", (WorldObject wo) => wo.Shape.Color.G));
+            SubInputs.Add(new ColorInput(name + ".HowRed", (WorldObject wo) => wo.Shape.Color.R));
+            SubInputs.Add(new ColorInput(name + ".HowBlue", (WorldObject wo) => wo.Shape.Color.B));
+            SubInputs.Add(new ColorInput(name + ".HowGreen", (WorldObject wo) => wo.Shape.Color.G));
         }
 
         public override SenseCluster CloneSense(WorldObject newParent)

@@ -1,11 +1,11 @@
 ﻿using Windows.Foundation;
 using Windows.UI;
+using System;
 
 namespace ALifeUni.ALife.UtilityClasses
 {
     public class AARectangle : IShape
     {
-
         public Point CentrePoint
         {
             get
@@ -13,6 +13,10 @@ namespace ALifeUni.ALife.UtilityClasses
                 double cpX = TopLeft.X + XWidth / 2;
                 double cpY = TopLeft.Y + YHeight / 2;
                 return new Point(cpX, cpY);
+            }
+            set
+            {
+                throw new InvalidOperationException("You cannot set the centrepoint of an AARectangle");
             }
         }
 
@@ -46,6 +50,10 @@ namespace ALifeUni.ALife.UtilityClasses
         public Angle Orientation
         {
             get { return ori; }
+            set
+            {
+                throw new InvalidOperationException("Orientation cannot be set for AARectangle");
+            }
         }
         public BoundingBox BoundingBox
         {

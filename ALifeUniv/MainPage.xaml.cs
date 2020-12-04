@@ -75,10 +75,11 @@ namespace ALifeUni
         private void animCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
 
-            if(special != null)
+            if(special != null
+                && special.Shape is Circle ssc)
             {
-                Vector2 agentCentre = new Vector2((float)special.CentrePoint.X, (float)special.CentrePoint.Y);
-                args.DrawingSession.DrawCircle(agentCentre, special.Radius + 1, Colors.Blue);
+                Vector2 agentCentre = ssc.CentrePoint.ToVector2();
+                args.DrawingSession.DrawCircle(agentCentre, ssc.Radius + 1, Colors.Blue);
             }
 
             foreach(LayerUISettings layer in UIGrid)
@@ -113,14 +114,14 @@ namespace ALifeUni
                 {
                     if(compnumber < wo.ExecutionOrder)
                     {
-                        DrawingLogic.DrawPastObject(wo, ui, args);
+                        DrawingLogic.DrawPastObject(wo.Shape, ui, args);
                         continue;
                     }
 
                     if(!(wo is Agent))
                     {
                         //TODO: Should ALL objects have shadows??
-                        DrawingLogic.DrawPastObject(wo, ui, args);
+                        DrawingLogic.DrawPastObject(wo.Shape, ui, args);
                         continue;
                     }
 

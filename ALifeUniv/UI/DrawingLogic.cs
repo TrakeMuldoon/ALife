@@ -24,7 +24,7 @@ namespace ALifeUni.UI
             if(!(wo is Agent)
                 && uiSettings.ShowObjects)
             {
-                DrawShape(wo, uiSettings, args);
+                DrawShape(wo.Shape, uiSettings, args);
             }
             else if(wo is Agent
                 && uiSettings.ShowAgents)
@@ -39,17 +39,26 @@ namespace ALifeUni.UI
 
         private static void DrawAgent(Agent ag, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
         {
-            DrawShape(ag, uiSettings, args);
+            IShape shape = ag.Shape;
+
+            DrawShape(shape, uiSettings, args);
+
+            if(!(shape is Circle))
+            {
+                throw new NotImplementedException("Only Circular Agents are supported");
+            }
 
             //Draw Orientation
-            Point ori = ExtraMath.TranslateByVector(ag.CentrePoint, ag.Orientation.Radians, ag.Radius);
-            args.DrawingSession.FillCircle(ori.ToVector2(), 1, Colors.DarkRed);
+            Circle aC = shape as Circle;
+            Point ori = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation.Radians, aC.Radius);
+            Point ori2 = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation.Radians, aC.Radius-2);
+            args.DrawingSession.DrawLine(ori.ToVector2(), ori2.ToVector2(), Colors.DarkRed, 1);
 
             if(uiSettings.ShowSenses)
             {
-                foreach(IHasShape shape in ag.Senses)
+                foreach(IHasShape iHS in ag.Senses)
                 {
-                    DrawShape(shape.Shape, uiSettings, args);
+                    DrawShape(iHS.Shape, uiSettings, args);
                 }
             }
         }

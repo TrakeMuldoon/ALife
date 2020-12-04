@@ -7,60 +7,137 @@ namespace ALifeUni.ALife
 {
     public static class CollisionDetector
     {
+        private static Dictionary<ShapesEnum, Dictionary<ShapesEnum, Func<IShape, IShape, Boolean>>> detectorMarshaller;
+        private static Dictionary<ShapesEnum, Dictionary<ShapesEnum, Func<IShape, IShape, Boolean>>> DetectorMarshaller
+        {
+            get
+            {
+                if(detectorMarshaller == null)
+                {
+                    InitializeDetectorMarshaller();
+                }
+                return detectorMarshaller;
+            }
+        }
+        private static void InitializeDetectorMarshaller()
+        {
+            var ddf = new Dictionary<ShapesEnum, Dictionary<ShapesEnum, Func<IShape, IShape, Boolean>>>();
+            ddf.Add(ShapesEnum.AARectangle
+                    , new Dictionary<ShapesEnum, Func<IShape, IShape, Boolean>>
+                    {
+                        [ShapesEnum.AARectangle] = new Func<IShape, IShape, bool>((wo1, wo2) => throw new NotImplementedException("AAR -> AAR not implemented")),
+                        [ShapesEnum.Rectangle] = new Func<IShape, IShape, bool>((wo1, wo2) => throw new NotImplementedException("AAR -> REC not implemented")),
+                        [ShapesEnum.Sector] = new Func<IShape, IShape, bool>((wo1, wo2) => throw new NotImplementedException("AAR -> SEC not implemented")),
+                        [ShapesEnum.Circle] = new Func<IShape, IShape, bool>((wo1, wo2) => throw new NotImplementedException("AAR -> CIR not implemented"))
+                    });
+
+            ddf.Add(ShapesEnum.Rectangle
+                    , new Dictionary<ShapesEnum, Func<IShape, IShape, Boolean>>
+                    {
+                        [ShapesEnum.AARectangle] = new Func<IShape, IShape, bool>((wo1, wo2) => throw new NotImplementedException("REC -> AAR not implemented")),
+                        [ShapesEnum.Rectangle] = new Func<IShape, IShape, bool>((wo1, wo2) => IndividualShapeCollision((Rectangle)wo1, (Rectangle)wo2)),
+                        [ShapesEnum.Sector] = new Func<IShape, IShape, bool>((wo1, wo2) => IndividualShapeCollision((Sector)wo2, (Rectangle)wo1)), //reversed
+                        [ShapesEnum.Circle] = new Func<IShape, IShape, bool>((wo1, wo2) => IndividualShapeCollision((Circle)wo2, (Rectangle)wo1)) //reversed
+                    });
+            ddf.Add(ShapesEnum.Sector
+                    , new Dictionary<ShapesEnum, Func<IShape, IShape, Boolean>>
+                    {
+                        [ShapesEnum.AARectangle] = new Func<IShape, IShape, bool>((wo1, wo2) => throw new NotImplementedException("SEC -> AAR not implemented")),
+                        [ShapesEnum.Rectangle] = new Func<IShape, IShape, bool>((wo1, wo2) => IndividualShapeCollision((Sector)wo1, (Rectangle)wo2)),
+                        [ShapesEnum.Sector] = new Func<IShape, IShape, bool>((wo1, wo2) => IndividualShapeCollision((Sector)wo1, (Sector)wo2)),
+                        [ShapesEnum.Circle] = new Func<IShape, IShape, bool>((wo1, wo2) => IndividualShapeCollision((Circle)wo2, (Sector)wo1)) //reversed
+                    });
+            ddf.Add(ShapesEnum.Circle
+                    , new Dictionary<ShapesEnum, Func<IShape, IShape, Boolean>>
+                    {
+                        [ShapesEnum.AARectangle] = new Func<IShape, IShape, bool>((wo1, wo2) => throw new NotImplementedException("CIR -> AAR not implemented")),
+                        [ShapesEnum.Rectangle] = new Func<IShape, IShape, bool>((wo1, wo2) => IndividualShapeCollision((Circle)wo1, (Rectangle)wo2)),
+                        [ShapesEnum.Sector] = new Func<IShape, IShape, bool>((wo1, wo2) => IndividualShapeCollision((Circle)wo1, (Sector)wo2)),
+                        [ShapesEnum.Circle] = new Func<IShape, IShape, bool>((wo1, wo2) => IndividualShapeCollision((Circle)wo1, (Circle)wo2))
+                    });
+            detectorMarshaller = ddf;
+        }
+
+
         public static List<WorldObject> FineGrainedCollisionDetection(List<WorldObject> toCollide, IShape me)
         {
-            switch(me.GetShapeEnum())
-            {
-                case ShapesEnum.Circle: return FineGrainedCollisionDetection(toCollide, (Circle)me);
-                case ShapesEnum.Sector: return FineGrainedCollisionDetection(toCollide, (Sector)me);
-                case ShapesEnum.Rectangle: return FineGrainedCollisionDetection(toCollide, (Rectangle)me);
-            }
-            return null;
-        }
-
-        public static List<WorldObject> FineGrainedCollisionDetection(List<WorldObject> toCollide, Circle me)
-        {
             List<WorldObject> collisions = new List<WorldObject>();
             foreach(WorldObject wo in toCollide)
             {
-                if(IndividualShapeCollision(wo, me))
+                IShape woShape = wo.Shape;
+                if(DetectorMarshaller[me.GetShapeEnum()][woShape.GetShapeEnum()](me, woShape))
                 {
                     collisions.Add(wo);
                 }
             }
-
             return collisions;
         }
 
-        public static List<WorldObject> FineGrainedCollisionDetection(List<WorldObject> toCollide, Rectangle me)
+        public static Boolean IndividualShapeCollision(Circle circle1, Circle circle2)
         {
-            List<WorldObject> collisions = new List<WorldObject>();
-            foreach(WorldObject wo in toCollide)
+            return CircleCircleCollision(circle1, circle2);
+        }
+        public static Boolean IndividualShapeCollision(Circle circle, Sector sector)
+        {
+            //All Collision Detection has the following cases
+            //1. a is contained by b
+            //2. b is contained by a
+            //3. a breaks one of the edges of b (and reciprocally b, to a)
+            //3a (left sector segment)
+            //3b (right sector segment)
+            //3c (rounded segment)
+            //The algorithm for circle sector collision will be as follows
+
+            //Check if the circle is within the sector or breaks the circle portion
+            //Check if any of the three points of sector are within B
+            //Check if the circle breaks the line segments
+
+            //Check if the centre point is within the sweep range
+            if(PointWithinSweep(circle.CentrePoint, sector))
             {
-                if(IndividualShapeCollision(wo, me))
-                {
-                    collisions.Add(wo);
-                }
+                //if it is, the either the target is within the radius distance or it's too far.
+                return CircleCircleCollision(circle, new Circle(sector.CentrePoint, sector.Radius));
             }
 
-            return collisions;
+            //Check the centrepoint of the Sector
+            if(PointCircleCollision(sector.CentrePoint, circle)) return true;
+
+            //Check the left point of the sector
+            Point leftPoint = ExtraMath.TranslateByVector(sector.CentrePoint, sector.AbsoluteOrientation.Radians, sector.Radius);
+            if(PointCircleCollision(leftPoint, circle)) return true;
+
+            //Check the right point of the sector
+            Point rightPoint = ExtraMath.TranslateByVector(sector.CentrePoint, (sector.AbsoluteOrientation + sector.SweepAngle).Radians, sector.Radius);
+            if(PointCircleCollision(rightPoint, circle)) return true;
+
+            //Now we're checking the line segment collisions
+            if(LineSegmentCircleCollision(sector.CentrePoint, leftPoint, circle)) return true;
+
+            if(LineSegmentCircleCollision(sector.CentrePoint, rightPoint, circle)) return true;
+
+            //All Options Exhausted
+            return false;
         }
 
-        public static List<WorldObject> FineGrainedCollisionDetection(List<WorldObject> toCollide, Sector me)
+        public static Boolean IndividualShapeCollision(Circle circle, Rectangle rectangle)
         {
-            List<WorldObject> collisions = new List<WorldObject>();
-            foreach(WorldObject wo in toCollide)
-            {
-                if(IndividualShapeCollision(wo, me))
-                {
-                    collisions.Add(wo);
-                }
-            }
-
-            return collisions;
+            throw new NotImplementedException();
+        }
+        public static Boolean IndividualShapeCollision(Sector a, Sector b)
+        {
+            throw new NotImplementedException();
         }
 
-        static Boolean PointRadiusPointRadiusCollision(Point a, float radA, Point b, float radB)
+        public static Boolean IndividualShapeCollision(Sector a, Rectangle b)
+        {
+            throw new NotImplementedException();
+        }
+        public static Boolean IndividualShapeCollision(Rectangle a, Rectangle b)
+        {
+            throw new NotImplementedException();
+        }
+        
+        private static Boolean PointRadiusPointRadiusCollision(Point a, float radA, Point b, float radB)
         {
             //If the distance between the points is closer or equal to this, then they overlap/collide
             float minimumDistance = radA + radB;
@@ -127,53 +204,6 @@ namespace ALifeUni.ALife
             return closest;
         }
 
-        public static Boolean IndividualShapeCollision(Circle a, Circle b)
-        {
-            return CircleCircleCollision(a, b);
-        }
-
-        public static Boolean IndividualShapeCollision(Circle circle, Sector sector)
-        {
-            //All Collision Detection has the following cases
-            //1. a is contained by b
-            //2. b is contained by a
-            //3. a breaks one of the edges of b (and reciprocally b, to a)
-            //3a (left sector segment)
-            //3b (right sector segment)
-            //3c (rounded segment)
-            //The algorithm for circle sector collision will be as follows
-
-            //Check if the circle is within the sector or breaks the circle portion
-            //Check if any of the three points of sector are within B
-            //Check if the circle breaks the line segments
-
-            //Check if the centre point is within the sweep range
-            if(PointWithinSweep(circle.CentrePoint, sector))
-            {
-                //if it is, the either the target is within the radius distance or it's too far.
-                return CircleCircleCollision(circle, new Circle(sector.CentrePoint, sector.Radius));
-            }
-
-            //Check the centrepoint of the Sector
-            if(PointCircleCollision(sector.CentrePoint, circle)) return true;
-
-            //Check the left point of the sector
-            Point leftPoint = ExtraMath.TranslateByVector(sector.CentrePoint, sector.AbsoluteOrientation.Radians, sector.Radius);
-            if(PointCircleCollision(leftPoint, circle)) return true;
-
-            //Check the right point of the sector
-            Point rightPoint = ExtraMath.TranslateByVector(sector.CentrePoint, (sector.AbsoluteOrientation + sector.SweepAngle).Radians, sector.Radius);
-            if(PointCircleCollision(rightPoint, circle)) return true;
-
-            //Now we're checking the line segment collisions
-            if(LineSegmentCircleCollision(sector.CentrePoint, leftPoint, circle)) return true;
-
-            if(LineSegmentCircleCollision(sector.CentrePoint, rightPoint, circle)) return true;
-
-            //All Options Exhausted
-            return false;
-        }
-
         private static bool PointWithinSweep(Point targetPoint, Sector sector)
         {
             double deltaX = targetPoint.X - sector.CentrePoint.X;
@@ -187,23 +217,6 @@ namespace ALifeUni.ALife
             Angle maximum = sector.SweepAngle;
 
             return abp.Degrees < maximum.Degrees;
-        }
-
-        public static Boolean IndividualShapeCollision(Circle a, Rectangle b)
-        {
-            throw new NotImplementedException();
-        }
-        public static Boolean IndividualShapeCollision(Sector a, Sector b)
-        {
-            throw new NotImplementedException();
-        }
-        public static Boolean IndividualShapeCollision(Sector a, Rectangle b)
-        {
-            throw new NotImplementedException();
-        }
-        public static Boolean IndividualShapeCollision(Rectangle a, Rectangle b)
-        {
-            throw new NotImplementedException();
         }
 
 

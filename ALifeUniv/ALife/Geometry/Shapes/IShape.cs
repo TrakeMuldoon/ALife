@@ -8,10 +8,12 @@ namespace ALifeUni.ALife.UtilityClasses
         Point CentrePoint
         {
             get;
+            set;
         }
         Angle Orientation
         {
             get;
+            set;
         }
         BoundingBox BoundingBox
         {

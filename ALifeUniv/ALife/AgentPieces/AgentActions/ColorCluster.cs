@@ -1,4 +1,5 @@
-﻿using Windows.UI;
+﻿using ALifeUni.ALife.UtilityClasses;
+using Windows.UI;
 
 namespace ALifeUni.ALife
 {
@@ -38,11 +39,12 @@ namespace ALifeUni.ALife
 
         protected override bool AttemptEnact()
         {
-            byte rByte = GetNewColour("Red", self.Color.R);
-            byte gByte = GetNewColour("Green", self.Color.G);
-            byte bByte = GetNewColour("Blue", self.Color.B);
+            IShape shape = self.Shape;
+            byte rByte = GetNewColour("Red", shape.Color.R);
+            byte gByte = GetNewColour("Green", shape.Color.G);
+            byte bByte = GetNewColour("Blue", shape.Color.B);
 
-            self.Color = Color.FromArgb(255, rByte, gByte, bByte);
+            shape.Color = Color.FromArgb(255, rByte, gByte, bByte);
             return true;
         }
 
@@ -82,7 +84,7 @@ namespace ALifeUni.ALife
         {
             if(ActivatedLastTurn)
             {
-                return "Set Colour to " + self.Color.ToString();
+                return "Set Colour to " + self.Shape.Color.ToString();
             }
             else
             {

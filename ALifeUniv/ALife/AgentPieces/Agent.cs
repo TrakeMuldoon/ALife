@@ -40,16 +40,13 @@ namespace ALifeUni.ALife
 
         public Agent(Point birthPosition, Zone zone)
             : base(birthPosition
-                  , 5                                               //current radius    //TODO: Hardcoded Agent Radius
+                  , new Circle((float)birthPosition.X, (float)birthPosition.Y, 5)  //current radius    //TODO: Hardcoded Agent Radius
                   , "Agent"                                         //Genus Label
                   , AgentIDGenerator.GetNextAgentId()               //Individual Label
                   , ReferenceValues.CollisionLevelPhysical          //Collision Level
                   , Colors.Green)                                   //Start Color       //TODO: Hardcoded start colour
         {
-            CentrePoint = birthPosition;
             Zone = zone;
-
-            Orientation = new Angle(0);//TODO Agent Orientation starts at zero. Is this okay?
 
             InitializeAgentProperties(); //Adds any agent properties custom to Agents
             Senses = GenerateSenses(); //TODO: Import senses from a config
@@ -60,25 +57,23 @@ namespace ALifeUni.ALife
             //TODO: Brain Behaviour is hardcoded. IT shoudl be in the config.
             myBrain = new BehaviourBrain(this,"*", "*", "*", "*", "*", "*");
 
-            this.DebugColor = Colors.PaleVioletRed;
-            this.Shadow = new AgentShadow(this);
+            Shape.DebugColor = Colors.PaleVioletRed;
+            Shadow = new AgentShadow(this);
         }
 
         //FOR REPRODUCTION/Cloning
         private Agent(Point birthPosition, Agent parent, Zone zone)
              : base(birthPosition
-                  , parent.Radius                                                                //current radius
+                  , parent.Shape.CloneShape()                                                    //shape of child is same as parent
                   , parent.GenusLabel                                                            //Genus Label
                   , AgentIDGenerator.GetNextChildId(parent.IndividualLabel, parent.numChildren)  //Individual Label
                   , parent.CollisionLevel                                                        //Collision Level
-                  , parent.Color)                                                                //Start Color
+                  , parent.Shape.Color)                                                                //Start Color
         {
-            CentrePoint = birthPosition;
+            Shape.CentrePoint = birthPosition;
+            Shape.DebugColor = Colors.Blue;
             Zone = zone;
 
-            Orientation = new Angle(0); //TODO Abstract this out?
-            
-            DebugColor = Colors.Blue;
         }
 
         private ReadOnlyDictionary<string, ActionCluster> GenerateDefaultActions()
@@ -128,8 +123,8 @@ namespace ALifeUni.ALife
 
         public override void Die()
         {
-            this.Alive = false;
-            this.DebugColor = Colors.Maroon;
+            Alive = false;
+            Shape.DebugColor = Colors.Maroon;
             Planet.World.ChangeCollisionLayerForObject(this, ReferenceValues.CollisionLevelDead);
         }
 
@@ -183,8 +178,10 @@ namespace ALifeUni.ALife
         {
             numChildren += 1;
 
+            double bbLength = Shape.BoundingBox.XLength;
+            double bbHeight = Shape.BoundingBox.YHeight;
             //Determine child position
-            Point birthSpot = Zone.Distributor.NextAgentCentre(this.Radius * 2, this.Radius * 2);
+            Point birthSpot = Zone.Distributor.NextAgentCentre(bbLength, bbHeight);
             //Point childCenter = FindAdjacentFreeSpace();
 
             //Create Child
@@ -228,17 +225,17 @@ namespace ALifeUni.ALife
         {
             numChildren += 1;
 
+            double bbLength = Shape.BoundingBox.MaxX - Shape.BoundingBox.MinX;
+            double bbHeight = Shape.BoundingBox.MaxY - Shape.BoundingBox.MinY;
             //Determine child position
-            Point birthSpot = Zone.Distributor.NextAgentCentre(this.Radius * 2, this.Radius * 2);
+            Point birthSpot = Zone.Distributor.NextAgentCentre(bbLength, bbHeight);
             //Point childCenter = FindAdjacentFreeSpace();
 
             //Create Child
             Agent child = new Agent(birthSpot, this, Zone);
 
-
             //Clone Properties
             child.InitializeAgentProperties(); //This initializes all the properties to their default state. Shold be clone or config
-
 
             //Clone Senses
             child.Senses = new List<SenseCluster>();
@@ -268,47 +265,48 @@ namespace ALifeUni.ALife
             return child;
         }
 
-        private Point FindAdjacentFreeSpace()
-        {
-            //BoundingBox pbb = this.BoundingBox;
-            EmptyObject wo = new EmptyObject(this.CentrePoint, this.Radius, this.CollisionLevel);
-            Point movingCentrePoint = new Point(wo.CentrePoint.X, wo.CentrePoint.Y);
+        //THIS IS CURRENTLY BROKEN, but also not needed. If it eventually becomes needed, it will need to be fixed.
+        //private Point FindAdjacentFreeSpace()
+        //{
+        //    //BoundingBox pbb = this.BoundingBox;
+        //    EmptyObject wo = new EmptyObject(this.CentrePoint, this.Radius, this.CollisionLevel);
+        //    Point movingCentrePoint = new Point(wo.CentrePoint.X, wo.CentrePoint.Y);
 
-            //BoundingBox childBB = new BoundingBox(pbb.MinX, pbb.MinY, pbb.MaxX, pbb.MaxY);
-            double diameter = this.Radius * 2;
+        //    //BoundingBox childBB = new BoundingBox(pbb.MinX, pbb.MinY, pbb.MaxX, pbb.MaxY);
+        //    double diameter = this.Radius * 2;
 
-            ICollisionMap collider = Planet.World.CollisionLevels[this.CollisionLevel];
-            List<WorldObject> collisions = new List<WorldObject>();
-            for(int distance = 1; distance < 5; distance++)
-            {
-                //Start checking the NE
-                movingCentrePoint.X += diameter;
-                movingCentrePoint.Y += diameter;
-                for(int direction = 0; direction < 4; direction++)
-                {
-                    for(int numSteps = 0; numSteps < distance * 2; numSteps++)
-                    {
-                        switch(direction)
-                        {
-                            case 0: movingCentrePoint.Y -= diameter; break; //south
-                            case 1: movingCentrePoint.X -= diameter; break; //west
-                            case 2: movingCentrePoint.Y += diameter; break; //north
-                            case 3: movingCentrePoint.X += diameter; break; //east
-                            default: throw new Exception("invalid direction");
-                        }
-                        wo.CentrePoint = new Point(movingCentrePoint.X, movingCentrePoint.Y);
-                        collisions = collider.QueryForBoundingBoxCollisions(wo.BoundingBox);
-                        if(collisions.Count < 1)
-                        {
-                            Point childCenter = wo.CentrePoint;
-                            return childCenter;
-                        }
-                    }
-                }
-            }
+        //    ICollisionMap collider = Planet.World.CollisionLevels[this.CollisionLevel];
+        //    List<WorldObject> collisions = new List<WorldObject>();
+        //    for(int distance = 1; distance < 5; distance++)
+        //    {
+        //        //Start checking the NE
+        //        movingCentrePoint.X += diameter;
+        //        movingCentrePoint.Y += diameter;
+        //        for(int direction = 0; direction < 4; direction++)
+        //        {
+        //            for(int numSteps = 0; numSteps < distance * 2; numSteps++)
+        //            {
+        //                switch(direction)
+        //                {
+        //                    case 0: movingCentrePoint.Y -= diameter; break; //south
+        //                    case 1: movingCentrePoint.X -= diameter; break; //west
+        //                    case 2: movingCentrePoint.Y += diameter; break; //north
+        //                    case 3: movingCentrePoint.X += diameter; break; //east
+        //                    default: throw new Exception("invalid direction");
+        //                }
+        //                wo.CentrePoint = new Point(movingCentrePoint.X, movingCentrePoint.Y);
+        //                collisions = collider.QueryForBoundingBoxCollisions(wo.BoundingBox);
+        //                if(collisions.Count < 1)
+        //                {
+        //                    Point childCenter = wo.CentrePoint;
+        //                    return childCenter;
+        //                }
+        //            }
+        //        }
+        //    }
 
-            //The only way to get here is if the search algorithm above, evaluates all 24 positions and can't find anything.
-            throw new Exception("too crowded");
-        }
+        //    //The only way to get here is if the search algorithm above, evaluates all 24 positions and can't find anything.
+        //    throw new Exception("too crowded");
+        //}
     }
 }

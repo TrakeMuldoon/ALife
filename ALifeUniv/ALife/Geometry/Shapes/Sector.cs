@@ -5,53 +5,6 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.UtilityClasses
 {
-    public class AgentSector : Sector
-    {
-        public override Point CentrePoint
-        {
-            get;
-            set;
-        }
-        public override BoundingBox BoundingBox
-        {
-            get
-            {
-                return GetBoundingBox(CentrePoint, Orientation);
-            }
-        }
-
-        public override Angle Orientation
-        {
-            get { return AbsoluteOrientation; }
-            set { AbsoluteOrientation = value; }
-        }
-
-        public override Angle RelativeOrientation
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-
-        public override Angle AbsoluteOrientation
-        {
-            get;
-            set;
-        }
-
-        public AgentSector(Point centrePoint, Angle orientation, float radius, Angle sweep) : base(radius, sweep)
-        {
-            CentrePoint = centrePoint;
-            Orientation = orientation;
-        }
-
-        public override IShape CloneShape()
-        {
-            AgentSector asec = new AgentSector(CentrePoint, Orientation, Radius, SweepAngle);
-            asec.Color = Color;
-            return asec;
-        }
-    }
-
     public class ChildSector : Sector
     {
         public override Angle Orientation
@@ -79,12 +32,19 @@ namespace ALifeUni.ALife.UtilityClasses
         }
 
         public Angle OrientationAroundParent;
-        public Circle Parent;
+        public IShape Parent;
+        private double distanceFromParentCentre;
 
-        public ChildSector(Angle orientationAroundParent, Angle relativeOrientationAngle, float radius, Angle sweep, Circle parent) : base(radius, sweep)
+        public ChildSector(Angle orientationAroundParent
+                            , IShape parent
+                            , double distFromParentCentre
+                            , Angle relativeOrientationAngle
+                            , float radius
+                            , Angle sweep) : base(radius, sweep)
         {
             Orientation = relativeOrientationAngle;
             OrientationAroundParent = orientationAroundParent;
+            distanceFromParentCentre = distFromParentCentre;
             Parent = parent;
         }
 
@@ -93,8 +53,8 @@ namespace ALifeUni.ALife.UtilityClasses
             get
             {
                 Angle startAngle = Parent.Orientation + OrientationAroundParent;
-                double myOriginX = Parent.CentrePoint.X + (Parent.Radius * Math.Cos(startAngle.Radians));
-                double myOriginY = Parent.CentrePoint.Y + (Parent.Radius * Math.Sin(startAngle.Radians));
+                double myOriginX = Parent.CentrePoint.X + (distanceFromParentCentre * Math.Cos(startAngle.Radians));
+                double myOriginY = Parent.CentrePoint.Y + (distanceFromParentCentre * Math.Sin(startAngle.Radians));
                 Point myOriginPoint = new Point(myOriginX, myOriginY);
                 return myOriginPoint;
             }
@@ -115,7 +75,8 @@ namespace ALifeUni.ALife.UtilityClasses
         //TODO: Ask Jeremy or Bryan about how to implement this properly
         public override IShape CloneShape()
         {
-            ChildSector clon = new ChildSector(OrientationAroundParent, RelativeOrientation, Radius, SweepAngle, Parent);
+            ChildSector clon = new ChildSector(OrientationAroundParent, Parent, distanceFromParentCentre
+                                                , RelativeOrientation, Radius, SweepAngle);
             clon.Color = Color;
             return clon;
         }

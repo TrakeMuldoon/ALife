@@ -45,6 +45,7 @@ namespace ALifeUni.ALife.UtilityClasses
         {
             CentrePoint = coords;
             Radius = radius;
+            Orientation = new Angle(0);
         }
 
         public Circle(float xVal, float yVal, float radius) : this(new Point(xVal, yVal), radius)

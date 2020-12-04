@@ -60,20 +60,25 @@ namespace ALifeUni.ALife
         {
             instance = new Planet(seed, height, width);
 
+            //Initialize collision grid
+            instance._collisionLevels.Add(ReferenceValues.CollisionLevelPhysical, new CollisionGrid(height, width));
+            instance._collisionLevels.Add(ReferenceValues.CollisionLevelZone, new CollisionGrid(height, width));
+
             //TODO: Put Planet Creation into the config
             //TODO: Create Special Objects from Config
             //TODO: Read new world agentnum from config
 
+
+            //instance.AddZone(
             Zone start = new Zone("Start", "Random", Colors.Red, new Point(0, 50), 100, height - 100);
             Zone end = new Zone("End", "Random", Colors.Blue, new Point(width - 50, 50), 50, height - 100);
             Zone rocks = new Zone("Rocks", "Random", Colors.DarkGray, new Point(100, 0), width - 150, 50);
             Zone rockBottom = new Zone("Rock Bottom", "Random", Colors.Orchid, new Point(height - 50, 50), width - 150, 50);
+
             instance.Zones.Add(start.Name, start);
             instance.Zones.Add(end.Name, end);
             instance.Zones.Add(rocks.Name, rocks);
             instance.Zones.Add(rockBottom.Name, rockBottom);
-
-            instance._collisionLevels.Add(ReferenceValues.CollisionLevelPhysical, new CollisionGrid(height, width));
 
             //instance.Distributor = new RandomAgentDistributor(red, true, ReferenceValues.CollisionLevelPhysical);
             //StraightLineDistributorConfig config = new StraightLineDistributorConfig(new Angle(220), 12, new Point(20, 20));
@@ -203,6 +208,13 @@ namespace ALifeUni.ALife
 
             AllControlledObjects.Add(toAdd);
             AllNewObjects.Add(toAdd);
+        }
+
+        internal void AddZone(Zone toAdd)
+        {
+            //TODO: Continue?
+            //Zones.Add(toAdd.Name, toAdd);
+            //_collisionLevels[ReferenceValues.CollisionLevelZone].Insert(toAdd);
         }
         #endregion
     }

@@ -69,7 +69,7 @@ namespace ALifeUni.ALife
         public bool Insert(WorldObject newObject)
         {
             //figure out xMin and xMax bucket
-            BoundingBox bb = newObject.BoundingBox;
+            BoundingBox bb = newObject.Shape.BoundingBox;
 
             int xMaxBucket = (int)(bb.MaxX) / GridSize;
             int xMinBucket = (int)(bb.MinX) / GridSize;
@@ -114,7 +114,7 @@ namespace ALifeUni.ALife
 
         public List<WorldObject> QueryForBoundingBoxCollisions(WorldObject queryObject)
         {
-            return QueryForBoundingBoxCollisions(queryObject.BoundingBox, queryObject);
+            return QueryForBoundingBoxCollisions(queryObject.Shape.BoundingBox, queryObject);
         }
 
         public List<WorldObject> QueryForBoundingBoxCollisions(BoundingBox queryBox)
@@ -148,7 +148,7 @@ namespace ALifeUni.ALife
             List<WorldObject> boundingCollisions = new List<WorldObject>();
             foreach(WorldObject wo in potentialCollisions)
             {
-                if(wo.BoundingBox.IsCollision(queryBox))
+                if(wo.Shape.BoundingBox.IsCollision(queryBox))
                 {
                     boundingCollisions.Add(wo);
                 }
@@ -166,8 +166,8 @@ namespace ALifeUni.ALife
 
         public List<WorldObject> DetectCollisions(WorldObject self)
         {
-            List<WorldObject> collisions = this.QueryForBoundingBoxCollisions(self.BoundingBox, self);
-            collisions = CollisionDetector.FineGrainedCollisionDetection(collisions, self);
+            List<WorldObject> collisions = this.QueryForBoundingBoxCollisions(self.Shape.BoundingBox, self);
+            collisions = CollisionDetector.FineGrainedCollisionDetection(collisions, self.Shape);
             return collisions;
         }
 

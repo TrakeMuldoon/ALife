@@ -72,16 +72,19 @@ namespace ALifeUni.ALife
 
         private bool Move(double forwardMagnitude, double rightMagnitude)
         {
-            Point origin = new Point(self.CentrePoint.X, self.CentrePoint.Y);
+            IShape theShape = self.Shape;
+            Point origin = new Point(theShape.CentrePoint.X, theShape.CentrePoint.Y);
 
             //Move forward, then move right from that point
             forwardDist = Speed * forwardMagnitude;
             rightDist = Speed * rightMagnitude;
 
-            Point tempPoint = ExtraMath.TranslateByVector(origin, self.Orientation.Radians, forwardDist);
-            Point finalPoint = ExtraMath.TranslateByVector(tempPoint, self.Orientation.Radians + (Math.PI / 2), rightDist);
+            Point tempPoint = ExtraMath.TranslateByVector(origin, theShape.Orientation.Radians, forwardDist);
+            Point finalPoint = ExtraMath.TranslateByVector(tempPoint, theShape.Orientation.Radians + (Math.PI / 2), rightDist);
+            //TODO Add falling off the end of the world logic here.
 
-            self.CentrePoint = finalPoint;
+
+            theShape.CentrePoint = finalPoint;
 
             ICollisionMap collider = Planet.World.CollisionLevels[self.CollisionLevel];
             List<WorldObject> collisions = collider.DetectCollisions(self);

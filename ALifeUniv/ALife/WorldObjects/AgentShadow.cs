@@ -8,11 +8,11 @@ namespace ALifeUni.ALife
     {
         public readonly List<IShape> SenseShapes = new List<IShape>();
 
-        public AgentShadow(Agent self) : base(self.CentrePoint, self.Radius)
+        public AgentShadow(Agent self) : base(self.Shape.CentrePoint, ((Circle)self.Shape).Radius)
         {
-            Color = self.Color;
+            Color = self.Shape.Color;
             DebugColor = Colors.Yellow;
-            Orientation = new Angle(self.Orientation.Degrees);
+            Orientation = new Angle(self.Shape.Orientation.Degrees);
             foreach(SenseCluster sc in self.Senses)
             {
                 

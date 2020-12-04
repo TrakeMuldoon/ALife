@@ -15,8 +15,6 @@ namespace ALifeUni.ALife
             Name = name;
         }
 
-
-        private bool activated;
         public bool ActivatedLastTurn
         {
             get;

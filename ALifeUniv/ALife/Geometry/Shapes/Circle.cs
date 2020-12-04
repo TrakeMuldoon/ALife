@@ -61,8 +61,8 @@ namespace ALifeUni.ALife.UtilityClasses
         public IShape CloneShape()
         {
             Circle cir = new Circle(CentrePoint, Radius);
-            cir.Orientation = Orientation;
-            cir.Color = Color;
+            cir.Orientation = new Angle(Orientation.Degrees);
+            cir.Color = Color.FromArgb(Color.A, Color.R, Color.G, Color.B);
             return cir;
         }
     }

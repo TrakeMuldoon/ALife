@@ -113,8 +113,7 @@ namespace ALifeUni.ALife
             {
                 wo.Die();
             }
-            //This says that bumping into someone means you will reproduce.
-            self.Statistics["NumChildrenWaiting"].IncreasePropertyBy(1);
+            self.Die();
         }
 
 

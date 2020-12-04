@@ -78,25 +78,14 @@ namespace ALifeUni.ALife
             instance.AddZone(rocks);
             instance.AddZone(rockBottom);
 
-            //int numAgents = 100;
-            //int agentRadius = 5;
-            //for(int i = 0; i < numAgents; i++)
-            //{
-            //    Point nextCP = start.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
-            //    Agent ag = new Agent(nextCP, start);
-            //    instance.AddObjectToWorld(ag);
-            //}
-
-            Point cp = new Point(100, 100);
-            Circle cir = new Circle(cp, 12);
-            Spinner soc = new Spinner(cp, cir, "Genie", "AAA", ReferenceValues.CollisionLevelPhysical, Colors.Blue);
-
-            Point rp = new Point(500, 500);
-            Rectangle rectangle = new Rectangle(rp, 80, 60, Colors.OldLace);
-            Spinner sor = new Spinner(rp, rectangle, "Square", "ABBA", ReferenceValues.CollisionLevelPhysical, Colors.Red);
-
-            instance.AddObjectToWorld(soc);
-            instance.AddObjectToWorld(sor);
+            int numAgents = 20;
+            int agentRadius = 5;
+            for(int i = 0; i < numAgents; i++)
+            {
+                Point nextCP = start.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
+                Agent ag = new Agent(nextCP, start);
+                instance.AddObjectToWorld(ag);
+            }
         }
 
         #region Instance Stuff

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Windows.Foundation;
 using Windows.UI;
+using System.Linq;
 
 namespace ALifeUni.ALife
 {
@@ -54,8 +55,8 @@ namespace ALifeUni.ALife
 
             //myBrain = new RandomBrain(this);
             //myBrain = new TesterBrain(this);
-            //TODO: Brain Behaviour is hardcoded. IT shoudl be in the config.
-            myBrain = new BehaviourBrain(this,"*", "*", "*", "*", "*", "*");
+            //TODO: Brain Behaviour is hardcoded. It should be in the config.
+            myBrain = new BehaviourBrain(this, "IF Age.Value GreaterThan [10] THEN Move.GoForward AT [0.2]");
 
             Shape.DebugColor = Colors.PaleVioletRed;
             Shadow = new AgentShadow(this);
@@ -73,7 +74,6 @@ namespace ALifeUni.ALife
             Shape.CentrePoint = birthPosition;
             Shape.DebugColor = Colors.Blue;
             Zone = zone;
-
         }
 
         private ReadOnlyDictionary<string, ActionCluster> GenerateDefaultActions()
@@ -101,16 +101,10 @@ namespace ALifeUni.ALife
         private void InitializeAgentProperties()
         {
             //TODO: Link this to the config generation
-            //TODO: Implement Property<int> instead of making all properties doubles.
             StatisticInput Age = new StatisticInput("Age", 0, Int32.MaxValue);
             Statistics.Add(Age.Name, Age);
-            StatisticInput NumChild = new StatisticInput("NumChildrenWaiting", 0, Int32.MaxValue);
-            Statistics.Add(NumChild.Name, NumChild);
-            StatisticInput TimeSinceRepro = new StatisticInput("TimeSinceRepro", 0, Int32.MaxValue);
-            Statistics.Add(TimeSinceRepro.Name, TimeSinceRepro);
-            StatisticInput MinimumReproWait = new StatisticInput("MinimumReproWait", 0, Int32.MaxValue);
-            MinimumReproWait.Value = 5;
-            Statistics.Add(MinimumReproWait.Name, MinimumReproWait);
+            StatisticInput DeathTimer = new StatisticInput("DeathTimer", 0, Int32.MaxValue);
+            Statistics.Add(DeathTimer.Name, DeathTimer);
         }
 
         private List<SenseCluster> GenerateSenses()
@@ -135,11 +129,14 @@ namespace ALifeUni.ALife
 
         public override void ExecuteAliveTurn()
         {
+            //TODO: Abstract this out. 
+
             Shadow = new AgentShadow(this);
             myBrain.ExecuteTurn();
 
-            //TODO: Abstract this out. 
+            //Increment or Decrement end of turn values
             Statistics["Age"].IncreasePropertyBy(1);
+            Statistics["DeathTimer"].IncreasePropertyBy(1);
             
             //Reset all the senses. 
             Senses.ForEach((se) => se.Shape.Reset());
@@ -156,17 +153,26 @@ namespace ALifeUni.ALife
 
         public void EndOfTurnTriggers()
         {
-            //TODO: Pull End of Turn triggers from Config
-            if(Statistics["NumChildrenWaiting"].Value > 0)
+            List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(Shape.BoundingBox);
+            Zone z = inZones.Where((zone) => zone.Name == "End").FirstOrDefault();
+            if(z != null)
             {
-                if(Statistics["TimeSinceRepro"].Value > Statistics["MinimumReproWait"].Value)
-                {
-                    ProduceOffspring();
-                    Statistics["NumChildrenWaiting"].DecreasePropertyBy(1);
-                    Statistics["TimeSinceRepro"].Value = 0;
-                }
+                ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[CollisionLevel];
+
+                Point myPoint = Zone.Distributor.NextAgentCentre(Shape.BoundingBox.XLength, Shape.BoundingBox.YHeight);
+                Shape.CentrePoint = myPoint;
+                collider.MoveObject(this);
+
+                this.ProduceOffspring();
+
+                //You have a new countdown
+                Statistics["DeathTimer"].Value = 0;
             }
-            Statistics["TimeSinceRepro"].IncreasePropertyBy(1);
+
+            if(Statistics["DeathTimer"].Value > 2000)
+            {
+                Die();
+            }
         }
 
         public void ProduceOffspring()
@@ -191,7 +197,7 @@ namespace ALifeUni.ALife
             //TODO: Should there be deviations on reproduction of properties? maybe.
             child.InitializeAgentProperties(); //This initializes all the properties to their default state. Shold be clone or config
 
-            //Clone Senses
+            //Reproduce Senses
             child.Senses = new List<SenseCluster>();
             foreach(SenseCluster sc in Senses)
             {
@@ -199,7 +205,7 @@ namespace ALifeUni.ALife
                 child.Senses.Add(sc.CloneSense(child));
             }
 
-            //Clone Actions
+            //Reproduce Actions
             List<ActionCluster> acl = new List<ActionCluster>();
             foreach(ActionCluster oldAC in Actions.Values)
             {
@@ -208,7 +214,7 @@ namespace ALifeUni.ALife
             }
             child.Actions = CreateRODForActions(acl);
 
-            //Clone Brain
+            //Reproduce Brain
             child.myBrain = myBrain.Reproduce(child);
 
             //Create shadow

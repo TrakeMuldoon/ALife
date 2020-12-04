@@ -1,10 +1,12 @@
 ﻿using ALifeUni.ALife.UtilityClasses;
 using System;
+using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI;
 
 namespace ALifeUni.ALife
 {
+    [DebuggerDisplay("Zone: {Name}")]
     public class Zone : AARectangle, IHasShape
     {
         public String Name

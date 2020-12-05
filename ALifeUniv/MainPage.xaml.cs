@@ -6,6 +6,7 @@ using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Text;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
@@ -70,6 +71,7 @@ namespace ALifeUni
         {
             Planet.World.ExecuteOneTurn();
             AgentPanel.updateInfo();
+            UpdateZoneInfo();
         }
 
         private void animCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
@@ -86,6 +88,16 @@ namespace ALifeUni
             {
                 DrawLayer(layer, args);
             }
+        }
+
+        private void UpdateZoneInfo()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach(Zone z in Planet.World.Zones.Values)
+            {
+                sb.AppendLine(z.Name + ":" + z.MyAgents.Count);
+            }
+            ZoneInfo.Text = sb.ToString();
         }
 
         private void DrawLayer(LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
@@ -290,6 +302,12 @@ namespace ALifeUni
 
         private void SkipFarAhead_Click(object sender, RoutedEventArgs e)
         {
+            bool restart = false;
+            if(gameTimer.IsEnabled)
+            {
+                restart = true;
+                gameTimer.Stop();
+            }
             Queue<bool> viewables = new Queue<bool>();
             foreach(LayerUISettings set in UIGrid)
             {
@@ -303,6 +321,10 @@ namespace ALifeUni
             foreach(LayerUISettings set in UIGrid)
             {
                 set.ShowLayer = viewables.Dequeue();
+            }
+            if(restart)
+            {
+                gameTimer.Start();
             }
         }
 

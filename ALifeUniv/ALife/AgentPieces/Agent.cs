@@ -52,6 +52,8 @@ namespace ALifeUni.ALife
             Zone = zone;
             TargetZone = targetZone;
             StartOrientation = startOrientation;
+            Shape.DebugColor = Colors.PaleVioletRed;
+            Shape.Orientation = new Angle(startOrientation);
 
             InitializeAgentProperties(); //Adds any agent properties custom to Agents
             Senses = GenerateSenses(); //TODO: Import senses from a config
@@ -63,9 +65,8 @@ namespace ALifeUni.ALife
             //myBrain = new BehaviourBrain(this, "IF Age.Value GreaterThan [10] THEN Move.GoForward AT [0.2]");
             myBrain = new BehaviourBrain(this, "*", "*", "*", "*", "*");
 
-            Shape.DebugColor = Colors.PaleVioletRed;
             Shadow = new AgentShadow(this);
-            Shape.Orientation = new Angle(startOrientation);
+            Zone.MyAgents.Add(this);
         }
 
         //FOR REPRODUCTION/Cloning
@@ -78,10 +79,12 @@ namespace ALifeUni.ALife
                   , Color.FromArgb(parent.Shape.Color.A, parent.Shape.Color.R, parent.Shape.Color.G, parent.Shape.Color.B))  //Start Color
         {
             Shape.CentrePoint = birthPosition;
-            Zone = parent.Zone;
-            TargetZone = parent.TargetZone;
             StartOrientation = parent.StartOrientation;
             Shape.Orientation = new Angle(StartOrientation);
+            Zone = parent.Zone;
+            TargetZone = parent.TargetZone;
+
+            Zone.MyAgents.Add(this);
         }
 
         private ReadOnlyDictionary<string, ActionCluster> GenerateDefaultActions()
@@ -127,6 +130,7 @@ namespace ALifeUni.ALife
         {
             Alive = false;
             Shape.DebugColor = Colors.Maroon;
+            Zone.MyAgents.Remove(this);
             Planet.World.ChangeCollisionLayerForObject(this, ReferenceValues.CollisionLevelDead);
         }
 

@@ -1,5 +1,6 @@
 ﻿using ALifeUni.ALife.UtilityClasses;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI;
@@ -24,6 +25,7 @@ namespace ALifeUni.ALife
         }
 
         public readonly AgentDistributor Distributor;
+        public readonly List<Agent> MyAgents = new List<Agent>();
 
         public Zone(String name, String distributorType, Color color
                     ,  Point topLeft, double xWidth, double yHeight) : base(topLeft, xWidth, yHeight, color)

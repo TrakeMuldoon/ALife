@@ -106,11 +106,9 @@
                                                      HeaderStyle="{StaticResource headStyle}"
                                                      CellStyle="{StaticResource CBStyle}"
                                                      Width="32"/>
-
-
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
-
+            <TextBlock x:Name="ZoneInfo"></TextBlock>
         </StackPanel>
         <local:AgentInfoPanel x:Name="AgentPanel"></local:AgentInfoPanel>
     </StackPanel>

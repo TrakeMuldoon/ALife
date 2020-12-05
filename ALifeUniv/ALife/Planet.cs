@@ -45,7 +45,7 @@ namespace ALifeUni.ALife
         {
             Random r = new Random();
             //TODO Hardcoded world size
-            CreateWorld(r.Next(), 1000, 800);
+            CreateWorld(r.Next(), 1000, 880);
         }
 
         public static void CreateWorld(int height, int width)
@@ -108,10 +108,10 @@ namespace ALifeUni.ALife
         public readonly List<WorldObject> AllNewObjects = new List<WorldObject>();
         public readonly int Seed;
 
-        public ICollisionMap<Zone> ZoneMap;
+        internal ICollisionMap<Zone> ZoneMap;
 
         private Dictionary<string, ICollisionMap<WorldObject>> _collisionLevels = new Dictionary<string, ICollisionMap<WorldObject>>();
-        public IReadOnlyDictionary<string, ICollisionMap<WorldObject>> CollisionLevels
+        internal IReadOnlyDictionary<string, ICollisionMap<WorldObject>> CollisionLevels
         {
             get { return _collisionLevels; }
         }
@@ -133,7 +133,7 @@ namespace ALifeUni.ALife
             }
         }
 
-        public readonly Random NumberGen;
+        internal readonly Random NumberGen;
         
         private int turns = 0;
         public int Turns
@@ -154,7 +154,7 @@ namespace ALifeUni.ALife
             }
         }
 
-        internal void ExecuteManyTurns(int numTurns)
+        public void ExecuteManyTurns(int numTurns)
         {
             for(int i = 0; i < numTurns; i++)
             {
@@ -162,7 +162,7 @@ namespace ALifeUni.ALife
             }
         }
 
-        internal void ExecuteOneTurn()
+        public void ExecuteOneTurn()
         {
             turns++;
             int order = 0;

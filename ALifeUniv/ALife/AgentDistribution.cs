@@ -165,7 +165,7 @@ namespace ALifeUni.ALife
                 collisions = Planet.World.CollisionLevels[CollisionLevel].QueryForBoundingBoxCollisions(bb);
                 attempts++;
             } while(collisions.Count > 0
-                    && attempts < 10); //TODO: number of attempts is hardcoded here
+                    && attempts < 15); //TODO: number of attempts is hardcoded here
 
             if(collisions.Count == 0)
             {

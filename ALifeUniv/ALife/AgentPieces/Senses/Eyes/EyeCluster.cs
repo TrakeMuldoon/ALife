@@ -24,13 +24,13 @@ namespace ALifeUni.ALife
                                       , relativeOrientation, radius, sweep);
             SubInputs.Add(new EyeInput(name + ".SeeSomething"));
             SubInputs.Add(new EyeCounterInput(name + ".HowMany"));
-            SubInputs.Add(new EyeIdentifierInput(name + ".WhoISee"));
+            //SubInputs.Add(new EyeIdentifierInput(name + ".WhoISee"));
             SubInputs.Add(new ColorBoolInput(name + ".IsRed", (WorldObject wo) => wo.Shape.Color.R));
             SubInputs.Add(new ColorBoolInput(name + ".IsBlue", (WorldObject wo) => wo.Shape.Color.B));
             SubInputs.Add(new ColorBoolInput(name + ".IsGreen", (WorldObject wo) => wo.Shape.Color.G));
-            SubInputs.Add(new ColorInput(name + ".HowRed", (WorldObject wo) => wo.Shape.Color.R));
-            SubInputs.Add(new ColorInput(name + ".HowBlue", (WorldObject wo) => wo.Shape.Color.B));
-            SubInputs.Add(new ColorInput(name + ".HowGreen", (WorldObject wo) => wo.Shape.Color.G));
+            //SubInputs.Add(new ColorInput(name + ".HowRed", (WorldObject wo) => wo.Shape.Color.R));
+            //SubInputs.Add(new ColorInput(name + ".HowBlue", (WorldObject wo) => wo.Shape.Color.B));
+            //SubInputs.Add(new ColorInput(name + ".HowGreen", (WorldObject wo) => wo.Shape.Color.G));
         }
 
         public override SenseCluster CloneSense(WorldObject newParent)

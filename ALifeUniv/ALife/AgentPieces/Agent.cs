@@ -38,16 +38,20 @@ namespace ALifeUni.ALife
         }
 
         public readonly Zone Zone;
+        public readonly Zone TargetZone;
+        public readonly double StartOrientation;
 
-        public Agent(Point birthPosition, Zone zone)
+        public Agent(Point birthPosition, Zone zone, Zone targetZone, Color color, double startOrientation)
             : base(birthPosition
                   , new Circle(birthPosition, 5)  //current radius    //TODO: Hardcoded Agent Radius
                   , "Agent"                                         //Genus Label
                   , AgentIDGenerator.GetNextAgentId()               //Individual Label
                   , ReferenceValues.CollisionLevelPhysical          //Collision Level
-                  , Colors.Green)                                   //Start Color       //TODO: Hardcoded start colour
+                  , color)                                          //Start Color
         {
             Zone = zone;
+            TargetZone = targetZone;
+            StartOrientation = startOrientation;
 
             InitializeAgentProperties(); //Adds any agent properties custom to Agents
             Senses = GenerateSenses(); //TODO: Import senses from a config
@@ -61,20 +65,23 @@ namespace ALifeUni.ALife
 
             Shape.DebugColor = Colors.PaleVioletRed;
             Shadow = new AgentShadow(this);
+            Shape.Orientation = new Angle(startOrientation);
         }
 
         //FOR REPRODUCTION/Cloning
-        private Agent(Point birthPosition, Agent parent, Zone zone)
+        private Agent(Point birthPosition, Agent parent)
              : base(birthPosition
                   , parent.Shape.CloneShape()                                                    //shape of child is same as parent
                   , parent.GenusLabel                                                            //Genus Label
                   , AgentIDGenerator.GetNextChildId(parent.IndividualLabel, parent.numChildren)  //Individual Label
                   , parent.CollisionLevel                                                        //Collision Level
-                  , parent.Shape.Color)                                                          //Start Color
+                  , Color.FromArgb(parent.Shape.Color.A, parent.Shape.Color.R, parent.Shape.Color.G, parent.Shape.Color.B))  //Start Color
         {
             Shape.CentrePoint = birthPosition;
-            Shape.DebugColor = Colors.Blue;
-            Zone = zone;
+            Zone = parent.Zone;
+            TargetZone = parent.TargetZone;
+            StartOrientation = parent.StartOrientation;
+            Shape.Orientation = new Angle(StartOrientation);
         }
 
         private ReadOnlyDictionary<string, ActionCluster> GenerateDefaultActions()
@@ -82,7 +89,7 @@ namespace ALifeUni.ALife
             //TODO: Link this somehow to world-settings
             List<ActionCluster> actionList = new List<ActionCluster>()
             {
-                new ColorCluster(this),
+                //new ColorCluster(this),
                 new MoveCluster(this),
                 new RotateCluster(this)
             };
@@ -130,11 +137,10 @@ namespace ALifeUni.ALife
 
         public override void ExecuteAliveTurn()
         {
-            //TODO: Abstract this out. 
-
             Shadow = new AgentShadow(this);
             myBrain.ExecuteTurn();
 
+            //TODO: Abstract this out.
             //Increment or Decrement end of turn values
             Statistics["Age"].IncreasePropertyBy(1);
             Statistics["DeathTimer"].IncreasePropertyBy(1);
@@ -155,7 +161,7 @@ namespace ALifeUni.ALife
         public void EndOfTurnTriggers()
         {
             List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(Shape.BoundingBox);
-            Zone z = inZones.Where((zone) => zone.Name == "End").FirstOrDefault();
+            Zone z = inZones.Where((zone) => zone.Name == TargetZone.Name).FirstOrDefault();
             if(z != null)
             {
                 ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[CollisionLevel];
@@ -192,7 +198,7 @@ namespace ALifeUni.ALife
             //Point childCenter = FindAdjacentFreeSpace();
 
             //Create Child
-            Agent child = new Agent(birthSpot, this, Zone);
+            Agent child = new Agent(birthSpot, this);
 
             //Clone Properties
             //TODO: Should there be deviations on reproduction of properties? maybe.
@@ -239,7 +245,7 @@ namespace ALifeUni.ALife
             //Point childCenter = FindAdjacentFreeSpace();
 
             //Create Child
-            Agent child = new Agent(birthSpot, this, Zone);
+            Agent child = new Agent(birthSpot, this);
 
             //Clone Properties
             child.InitializeAgentProperties(); //This initializes all the properties to their default state. Shold be clone or config

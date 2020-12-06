@@ -93,7 +93,8 @@ namespace ScenarioTestHarness
                 string results = "";
                 foreach(Zone z in Planet.World.Zones.Values)
                 {
-                    results += z.Name + ":" + z.MyAgents.Count + "\t\t";
+                    String thisZone = string.Format("{0}:{1}\t", z.Name, z.MyAgents.Count);
+                    results += thisZone;
                     if(z.MyAgents.Count == 0)
                     {
                         dontBother = true;

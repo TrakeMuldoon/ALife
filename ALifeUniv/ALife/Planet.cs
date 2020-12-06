@@ -68,17 +68,16 @@ namespace ALifeUni.ALife
             //TODO: Create Special Objects from Config
             //TODO: Read new world agentnum from config
 
-            //TODO: Add Zones Propertly to their visual layer.
-            Zone red = new Zone("Red", "Random", Colors.Red, new Point(0, 0), 50, height);
-            Zone blue = new Zone("Blue", "Random", Colors.Blue, new Point(width - 50, 0), 50, height);
-            Zone green = new Zone("Green", "Random", Colors.Green, new Point(0, 0), width, 50);
-            Zone orange = new Zone("Orange", "Random", Colors.Orange, new Point(0, height - 50), width, 50);
+            Zone red = new Zone("Red(Blue)", "Random", Colors.Red, new Point(0, 0), 50, height);
+            Zone blue = new Zone("Blue(Red)", "Random", Colors.Blue, new Point(width - 50, 0), 50, height);
+            Zone green = new Zone("Green(Orange)", "Random", Colors.Green, new Point(0, 0), width, 50);
+            Zone orange = new Zone("Orange(Green)", "Random", Colors.Orange, new Point(0, height - 50), width, 50);
             instance.AddZone(red);
             instance.AddZone(blue);
             instance.AddZone(green);
             instance.AddZone(orange);
 
-            int numAgents = 40;
+            int numAgents = 50;
             int agentRadius = 5;
             for(int i = 0; i < numAgents; i++)
             {

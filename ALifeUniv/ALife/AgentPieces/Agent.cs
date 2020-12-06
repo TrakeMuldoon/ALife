@@ -143,7 +143,10 @@ namespace ALifeUni.ALife
         {
             Shadow = new AgentShadow(this);
             myBrain.ExecuteTurn();
-
+            if(!Alive)
+            {
+                return;
+            }
             //TODO: Abstract this out.
             //Increment or Decrement end of turn values
             Statistics["Age"].IncreasePropertyBy(1);

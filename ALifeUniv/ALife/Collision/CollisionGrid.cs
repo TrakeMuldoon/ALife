@@ -167,7 +167,7 @@ namespace ALifeUni.ALife
 
         public List<T> DetectCollisions(T self)
         {
-            List<T> collisions = this.QueryForBoundingBoxCollisions(self.Shape.BoundingBox, self);
+            List<T> collisions = QueryForBoundingBoxCollisions(self.Shape.BoundingBox, self);
             List<IHasShape> colShapes = CollisionDetector.FineGrainedCollisionDetection(collisions.Cast<IHasShape>(), self.Shape);
             collisions = colShapes.Cast<T>().ToList();
             return collisions;

@@ -14,7 +14,7 @@ namespace ALifeUni.ALife
         readonly string CollisionLevel = ReferenceValues.CollisionLevelPhysical;
         readonly WorldObject parent;
 
-        public virtual IShape Shape
+        public abstract IShape Shape
         {
             get; 
         }

@@ -48,6 +48,12 @@ namespace ALifeUni.ALife.UtilityClasses
             Orientation = new Angle(0);
         }
 
+        internal Circle(float radius)
+        {
+            Radius = radius;
+            Orientation = new Angle(0);
+        }
+
         public void Reset()
         {
             //Reset does nothing for Circles, because the bounding box is so easy to calculate

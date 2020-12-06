@@ -123,6 +123,7 @@ namespace ALifeUni.ALife
             List<SenseCluster> mySenses = new List<SenseCluster>();
             //TODO: Hardcoded Sense creation. This should be in config;
             mySenses.Add(new EyeCluster(this, "Eye1"));
+            mySenses.Add(new ProximityCluster(this, "Proximity1"));
             return mySenses;
         }
 

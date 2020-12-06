@@ -78,7 +78,7 @@ namespace ALifeUni.ALife
             instance.AddZone(green);
             instance.AddZone(orange);
 
-            int numAgents = 20;
+            int numAgents = 40;
             int agentRadius = 5;
             for(int i = 0; i < numAgents; i++)
             {

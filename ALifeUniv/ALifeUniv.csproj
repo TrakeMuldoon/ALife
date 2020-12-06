@@ -150,6 +150,7 @@
     <Compile Include="ALife\WorldObjects\AgentShadow.cs" />
     <Compile Include="ALife\WorldObject.cs" />
     <Compile Include="ALife\Geometry\Shapes\Rectangle.cs" />
+    <Compile Include="ALife\WorldObjects\FallingRock.cs" />
     <Compile Include="ALife\WorldObjects\Spinner.cs" />
     <Compile Include="ALife\Zone.cs" />
     <Compile Include="UI\DrawingLogic.cs" />

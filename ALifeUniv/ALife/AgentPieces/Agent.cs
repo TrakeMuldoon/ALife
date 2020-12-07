@@ -184,7 +184,7 @@ namespace ALifeUni.ALife
                 Statistics["DeathTimer"].Value = 0;
             }
 
-            if(Statistics["DeathTimer"].Value > 2000)
+            if(Statistics["DeathTimer"].Value > 1500)
             {
                 Die();
             }

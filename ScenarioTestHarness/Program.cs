@@ -25,7 +25,7 @@ namespace ScenarioTestHarness
             int height = 880;
             int width = 1000;
             Random r = new Random();
-            for(int i = 0; i < 100; i++)
+            for(int i = 0; i < 200; i++)
             {
                 Console.Write(i + "-> ");
                 int seedValue = r.Next();

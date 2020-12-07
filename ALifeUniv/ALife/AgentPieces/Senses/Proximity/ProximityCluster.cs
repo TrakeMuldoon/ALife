@@ -18,7 +18,7 @@ namespace ALifeUni.ALife
             }
         }
 
-        public ProximityCluster(WorldObject parent, string name) : this(parent, name, 8) //TODO: Hardcoded proximity length
+        public ProximityCluster(WorldObject parent, string name) : this(parent, name, 30) //TODO: Hardcoded proximity length
         {
         }
 

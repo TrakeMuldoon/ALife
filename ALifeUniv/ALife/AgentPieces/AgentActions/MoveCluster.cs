@@ -111,7 +111,7 @@ namespace ALifeUni.ALife
             //Collision means death right now
             foreach(WorldObject wo in collisions)
             {
-                //wo.Die();
+                wo.Die();
             }
             self.Die();
         }

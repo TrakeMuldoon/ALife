@@ -24,7 +24,7 @@ namespace ALifeUni.UI
             if(!(wo is Agent)
                 && uiSettings.ShowObjects)
             {
-                DrawShape(wo.Shape, uiSettings, args);
+                DrawShape(wo.Shape, uiSettings, args, true);
             }
             else if(wo is Agent
                 && uiSettings.ShowAgents)
@@ -41,7 +41,7 @@ namespace ALifeUni.UI
         {
             IShape shape = ag.Shape;
 
-            DrawShape(shape, uiSettings, args);
+            DrawShape(shape, uiSettings, args, true);
 
             if(!(shape is Circle))
             {
@@ -52,7 +52,7 @@ namespace ALifeUni.UI
             {
                 foreach(IHasShape iHS in ag.Senses)
                 {
-                    DrawShape(iHS.Shape, uiSettings, args);
+                    DrawShape(iHS.Shape, uiSettings, args, false);
                 }
             }
 
@@ -71,13 +71,13 @@ namespace ALifeUni.UI
         {
             Color orig = shadow.DebugColor;
             shadow.DebugColor = Colors.White;
-            DrawCircle(shadow, uiSettings, args);
+            DrawCircle(shadow, uiSettings, args, true);
             shadow.DebugColor = orig;
             //Draw Orientation
             DrawOrientation(args, shadow);
             foreach(IShape shape in shadow.SenseShapes)
             {
-                DrawShape(shape, uiSettings, args);
+                DrawShape(shape, uiSettings, args, false);
             }
         }
 
@@ -85,23 +85,23 @@ namespace ALifeUni.UI
         {
             Color pastDebug = shape.DebugColor;
             shape.DebugColor = Colors.White;
-            DrawShape(shape, uiSettings, args);
+            DrawShape(shape, uiSettings, args, true);
             shape.DebugColor = pastDebug;
         }
 
-        private static void DrawShape(IShape shape, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
+        private static void DrawShape(IShape shape, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args, bool fillIn)
         {
             switch(shape)
             {
-                case Circle cir: DrawCircle(cir, uiSettings, args); break;
-                case Sector sec: DrawSector(sec, uiSettings, args); break;
-                case Rectangle rect: DrawRectangle(rect, uiSettings, args); break;
+                case Circle cir: DrawCircle(cir, uiSettings, args, fillIn); break;
+                case Sector sec: DrawSector(sec, uiSettings, args, fillIn); break;
+                case Rectangle rect: DrawRectangle(rect, uiSettings, args, fillIn); break;
                 case AARectangle aar: DrawAARectangle(aar, args); break;
                 default: throw new NotImplementedException("What the heck shape is this?");
             }
         }
 
-        private static void DrawSector(IShape currShape, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
+        private static void DrawSector(IShape currShape, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args, bool fillIn)
         {
             ChildSector sec = (ChildSector)currShape;
             if(uiSettings.ShowBoundingBoxes)
@@ -117,17 +117,33 @@ namespace ALifeUni.UI
             pathBuilder.EndFigure(CanvasFigureLoop.Closed);
             CanvasGeometry cg = CanvasGeometry.CreatePath(pathBuilder);
 
-            args.DrawingSession.FillGeometry(cg, sec.DebugColor);
-            args.DrawingSession.DrawGeometry(cg, sec.Color, 1);
 
+            //args.DrawingSession.FillGeometry(cg, sec.DebugColor);
+            if(fillIn)
+            {
+                args.DrawingSession.FillGeometry(cg, sec.Color);
+            }
+            else
+            {
+                args.DrawingSession.DrawGeometry(cg, sec.Color, 1);
+            }
+            
             DrawOrientation(args, currShape);
         }
 
-        private static void DrawCircle(Circle wo, LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
+        private static void DrawCircle(Circle wo, LayerUISettings ui, CanvasAnimatedDrawEventArgs args, bool fillIn)
         {
             Vector2 objectCentre = wo.CentrePoint.ToVector2();
             //World Object Body
-            args.DrawingSession.FillCircle(objectCentre, wo.Radius, wo.Color);
+            if(fillIn)
+            {
+                args.DrawingSession.FillCircle(objectCentre, wo.Radius, wo.Color);
+            }
+            else
+            {
+                args.DrawingSession.DrawCircle(objectCentre, wo.Radius, wo.Color);
+            }
+            
             //Core of the body is the debug colour
             args.DrawingSession.FillCircle(objectCentre, 2, wo.DebugColor);
 
@@ -139,7 +155,7 @@ namespace ALifeUni.UI
             DrawOrientation(args, wo);
         }
 
-        private static void DrawRectangle(Rectangle rec, LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
+        private static void DrawRectangle(Rectangle rec, LayerUISettings ui, CanvasAnimatedDrawEventArgs args, bool fillIn)
         {
             Point rovingPoint = rec.CentrePoint;
             rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians, rec.FBLength / 2);
@@ -160,7 +176,15 @@ namespace ALifeUni.UI
             cpb.EndFigure(CanvasFigureLoop.Closed);
             CanvasGeometry cg = CanvasGeometry.CreatePath(cpb);
 
-            args.DrawingSession.DrawGeometry(cg, rec.Color);
+            if(fillIn)
+            {
+                args.DrawingSession.FillGeometry(cg, rec.Color);
+            }
+            else
+            {
+                args.DrawingSession.DrawGeometry(cg, rec.Color, 1);
+            }
+
             args.DrawingSession.FillCircle(rec.CentrePoint.ToVector2(), 2, rec.DebugColor);
 
             if(ui.ShowBoundingBoxes)

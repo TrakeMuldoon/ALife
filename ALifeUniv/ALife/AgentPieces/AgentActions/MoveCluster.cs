@@ -100,6 +100,7 @@ namespace ALifeUni.ALife
             }
             else
             {
+                theShape.CentrePoint = origin; //cancel the move
                 CollisionBehvaviour(collisions);
                 return false;
             }
@@ -111,7 +112,10 @@ namespace ALifeUni.ALife
             //Collision means death right now
             foreach(WorldObject wo in collisions)
             {
-                wo.Die();
+                if(wo is Agent ag)
+                {
+                    ag.Die();
+                }
             }
             self.Die();
         }

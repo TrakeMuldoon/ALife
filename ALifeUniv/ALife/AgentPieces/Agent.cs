@@ -63,7 +63,7 @@ namespace ALifeUni.ALife
             //myBrain = new TesterBrain(this);
             //TODO: Brain Behaviour is hardcoded. It should be in the config.
             //myBrain = new BehaviourBrain(this, "IF Age.Value GreaterThan [10] THEN Move.GoForward AT [0.2]");
-            myBrain = new BehaviourBrain(this, "*", "*", "*", "*", "*");
+            myBrain = new BehaviourBrain(this, "IF Age.Value GreaterThan [10] THEN Move.GoForward AT [0.2]", "*", "*", "*", "*");
 
             Shadow = new AgentShadow(this);
             Zone.MyAgents.Add(this);
@@ -184,7 +184,7 @@ namespace ALifeUni.ALife
                 Statistics["DeathTimer"].Value = 0;
             }
 
-            if(Statistics["DeathTimer"].Value > 1500)
+            if(Statistics["DeathTimer"].Value > 1200)
             {
                 Die();
             }

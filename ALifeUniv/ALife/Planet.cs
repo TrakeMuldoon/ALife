@@ -70,8 +70,8 @@ namespace ALifeUni.ALife
 
             Zone red = new Zone("Red(Blue)", "Random", Colors.Red, new Point(0, 0), 50, height);
             Zone blue = new Zone("Blue(Red)", "Random", Colors.Blue, new Point(width - 50, 0), 50, height);
-            Zone green = new Zone("Green(Orange)", "Random", Colors.Green, new Point(0, 0), width, 50);
-            Zone orange = new Zone("Orange(Green)", "Random", Colors.Orange, new Point(0, height - 50), width, 50);
+            Zone green = new Zone("Green(Orange)", "Random", Colors.Green, new Point(0, 0), width, 100);
+            Zone orange = new Zone("Orange(Green)", "Random", Colors.Orange, new Point(0, height - 40), width, 40);
             instance.AddZone(red);
             instance.AddZone(blue);
             instance.AddZone(green);
@@ -85,17 +85,38 @@ namespace ALifeUni.ALife
                 Agent rag = new Agent(redCP, red, blue, Colors.Blue, 0);
                 instance.AddObjectToWorld(rag);
                 
-                Point blueCP = blue.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
-                Agent bag = new Agent(blueCP, blue, red, Colors.Red, 180);
-                instance.AddObjectToWorld(bag);
+                //Point blueCP = blue.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
+                //Agent bag = new Agent(blueCP, blue, red, Colors.Red, 180);
+                //instance.AddObjectToWorld(bag);
                 
-                Point greenCP = green.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
-                Agent gag = new Agent(greenCP, green, orange, Colors.Orange, 90);
-                instance.AddObjectToWorld(gag);
+                //Point greenCP = green.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
+                //Agent gag = new Agent(greenCP, green, orange, Colors.Orange, 90);
+                //instance.AddObjectToWorld(gag);
                 
-                Point orangeCP = orange.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
-                Agent oag = new Agent(orangeCP, orange, green, Colors.Green, 270);
-                instance.AddObjectToWorld(oag);
+                //Point orangeCP = orange.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
+                //Agent oag = new Agent(orangeCP, orange, green, Colors.Green, 270);
+                //instance.AddObjectToWorld(oag);
+            }
+
+            //for(int j = 0; j < 3; j++)
+            //{
+            //    int frwidth = Planet.World.NumberGen.Next(5, 30);
+            //    int frheight = Planet.World.NumberGen.Next(4, 20);
+
+            //    Point rockCP = green.Distributor.NextAgentCentre(frwidth, frheight);
+            //    Rectangle rec = new Rectangle(rockCP, frheight, frwidth, Colors.ForestGreen);
+            //    FallingRock fr = new FallingRock(rockCP, rec, Colors.ForestGreen, green, orange);
+            //    instance.AddObjectToWorld(fr);
+            //}
+
+            for(int j = 0; j < 5; j++)
+            {
+                int frRadius = Planet.World.NumberGen.Next(10, 23);
+
+                Point rockCP = green.Distributor.NextAgentCentre(frRadius * 2, frRadius * 2);
+                Circle cir = new Circle(rockCP, frRadius);
+                FallingRock fr = new FallingRock(rockCP, cir, Colors.DarkOliveGreen, green, orange);
+                instance.AddObjectToWorld(fr);
             }
         }
 

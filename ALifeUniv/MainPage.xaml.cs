@@ -331,68 +331,48 @@ namespace ALifeUni
         #endregion
 
         #region Zoom controls
-        private void ZoomFactor_TextChanged(object sender, TextChangedEventArgs e)
+
+        private List<String> ZoomFactors = new List<String>() { "0.1", "0.25", "0.5", "0.75", "0.9", "1", "2", "3", "4", "5", "6", "7", "8" };
+        private int ZoomIndex = 6;
+        private float CurrentZoom = 1;
+
+        private void ChangeZoomLevel()
         {
             //Increase the zoom
-            TextBox sen = (TextBox)sender;
-            float newZoom;
-            if(float.TryParse(sen.Text, out newZoom))
-            {
-                if(newZoom > 8)
-                {
-                    sen.Text = "8";
-                    return;
-                }
-                if(newZoom < 1)
-                {
-                    sen.Text = "1";
-                    return;
-                }
+            ZoomIndex = Math.Clamp(ZoomIndex, 0, ZoomFactors.Count);
+            float newZoom = float.Parse(ZoomFactors[ZoomIndex]);
 
-                double newHeight = Zoomer.ActualHeight * newZoom;
-                double newVert = Zoomer.VerticalOffset / Zoomer.ExtentHeight * newHeight;
-                double newHorz = Zoomer.HorizontalOffset / Zoomer.ExtentWidth * newHeight;
+            double newHeight = Zoomer.ActualHeight * newZoom;
+            double newVert = Zoomer.VerticalOffset / Zoomer.ExtentHeight * newHeight;
+            double newHorz = Zoomer.HorizontalOffset / Zoomer.ExtentWidth * newHeight;
 
-                animCanvas.DpiScale = (int)newZoom;
-                Zoomer.ChangeView(newHorz, newVert, newZoom);
-            }
+            animCanvas.DpiScale = Math.Clamp(newZoom, 1, 8);
+            Zoomer.ChangeView(newHorz, newVert, newZoom);
+            CurrentZoom = newZoom;
+            ZoomDisplay.Text = newZoom.ToString();
+        }
+
+
+        private void ZoomOut_Click(object sender, RoutedEventArgs e)
+        {
+            DecreaseZoom();
+        }
+
+        private void ZoomIn_Click(object sender, RoutedEventArgs e)
+        {
+            IncreaseZoom();
         }
 
         private void IncreaseZoom()
         {
-            float newZoom;
-            if(float.TryParse(ZoomFactor.Text, out newZoom))
-            {
-                ZoomFactor.Text = (newZoom + 1).ToString();
-            }
+            ZoomIndex += 1;
+            ChangeZoomLevel();
         }
 
         private void DecreaseZoom()
         {
-            float newZoom;
-            if(float.TryParse(ZoomFactor.Text, out newZoom))
-            {
-                ZoomFactor.Text = (newZoom - 1).ToString();
-            }
-        }
-
-        private void MatchDPI_Checked(object sender, RoutedEventArgs e)
-        {
-            //Increase the DPI as the zoom increases, to a maximum of 8, otherwise it breaks
-            float newZoom;
-            if(float.TryParse(ZoomFactor.Text, out newZoom))
-            {
-                float DpiValue = Math.Min(newZoom, 8);
-                DpiValue = Math.Max(DpiValue, 0);
-
-                animCanvas.DpiScale = DpiValue;
-            }
-        }
-
-        private void MatchDPI_Unchecked(object sender, RoutedEventArgs e)
-        {
-            //When the check gets unchecked, just set the DPI scale to 1, which is shitty when zoomed in.
-            animCanvas.DpiScale = 1;
+            ZoomIndex -= 1;
+            ChangeZoomLevel();
         }
         #endregion
 
@@ -408,11 +388,7 @@ namespace ALifeUni
         {
 
             int panMagnifyFactor = 0;
-            float newZoom;
-            if(float.TryParse(ZoomFactor.Text, out newZoom))
-            {
-                panMagnifyFactor = (int)(8 * newZoom);
-            }
+            panMagnifyFactor = (int)(8 * CurrentZoom);
 
             //Constantly updates the position the pan window should be as you drag along. 
             //Each time this is called constitutes a new drag.
@@ -461,5 +437,6 @@ namespace ALifeUni
             }
         }
         #endregion
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ALifeUni.ALife;
+using ALifeUni.ALife.Brains.BehaviourBrains;
 using ALifeUni.ALife.UtilityClasses;
 using ALifeUni.UI;
 using Microsoft.Graphics.Canvas.Brushes;
@@ -6,6 +7,7 @@ using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Text;
 using Windows.Foundation;
@@ -83,7 +85,7 @@ namespace ALifeUni
                 && special.Shape is Circle ssc)
             {
                 Vector2 agentCentre = ssc.CentrePoint.ToVector2();
-                args.DrawingSession.DrawCircle(agentCentre, ssc.Radius + 1, Colors.Blue);
+                args.DrawingSession.DrawCircle(agentCentre, ssc.Radius + 1, Colors.Red);
             }
 
             foreach(LayerUISettings layer in UIGrid)
@@ -426,5 +428,74 @@ namespace ALifeUni
         }
         #endregion
 
+        int oldestIndex = -1;
+        private void LongestLived_Click(object sender, RoutedEventArgs e)
+        {
+            int oldest = int.MinValue;
+            List<Agent> elderly = new List<Agent>();
+
+            for(int i = 0; i < Planet.World.AllControlledObjects.Count; i++)
+            {
+                WorldObject wo = Planet.World.AllControlledObjects[i];
+                if(wo is Agent ag
+                    && ag.Alive)
+                {
+                    int age = ag.Statistics["Age"].Value;
+                    if(age == oldest)
+                    {
+                        elderly.Add(ag);
+                    }
+                    else if(age > oldest)
+                    {
+                        elderly.Clear();
+                        oldest = age;
+                        elderly.Add(ag);
+                    }
+                }
+            }
+
+
+            if(++oldestIndex >= elderly.Count)
+            {
+                oldestIndex = 0;
+            }
+            special = elderly[oldestIndex];
+            AgentPanel.TheAgent = elderly[oldestIndex];
+        }
+
+        int shortBrainIndex = -1;
+        private void ShortestBrain_Click(object sender, RoutedEventArgs e)
+        {
+            int brainLength = int.MaxValue;
+            List<Agent> shortBrains = new List<Agent>();
+
+            for(int i = 0; i < Planet.World.AllControlledObjects.Count; i++)
+            {
+                WorldObject wo = Planet.World.AllControlledObjects[i];
+                if(wo is Agent ag
+                    && ag.Alive)
+                {
+                    BehaviourBrain bb = (BehaviourBrain)ag.myBrain;
+                    int bCount = bb.Behaviours.Count();
+                    if(bCount == brainLength)
+                    {
+                        shortBrains.Add(ag);
+                    } 
+                    else if(bCount < brainLength) 
+                    {
+                        shortBrains.Clear();
+                        brainLength = bCount;
+                        shortBrains.Add(ag);
+                    }
+                }
+            }
+
+            if(++shortBrainIndex >= shortBrains.Count)
+            {
+                shortBrainIndex = 0;
+            }
+            special = shortBrains[shortBrainIndex];
+            AgentPanel.TheAgent = shortBrains[shortBrainIndex];
+        }
     }
 }

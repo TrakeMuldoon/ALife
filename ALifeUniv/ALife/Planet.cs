@@ -58,7 +58,8 @@ namespace ALifeUni.ALife
 
         public static void CreateWorld(int seed, int height, int width)
         {
-            instance = new Planet(seed, height, width);
+            //1622137501
+            instance = new Planet(seed, height, width); 
 
             //Initialize collision grid
             instance._collisionLevels.Add(ReferenceValues.CollisionLevelPhysical, new CollisionGrid<WorldObject>(height, width));

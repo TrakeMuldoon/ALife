@@ -56,7 +56,7 @@ namespace ALifeUni.UI
                     if(ag.LivingAncestor == null)
                     {
                         Circle c = (Circle)ag.Shape;
-                        args.DrawingSession.DrawCircle(ag.Shape.CentrePoint.ToVector2(), c.Radius + 3, Colors.Red);
+                        args.DrawingSession.DrawCircle(ag.Shape.CentrePoint.ToVector2(), c.Radius + 3, Colors.Blue);
                     }
 
                     else

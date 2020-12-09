@@ -1,6 +1,7 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.UtilityClasses;
 using ALifeUni.UI;
+using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
@@ -92,17 +93,33 @@ namespace ALifeUni
 
             if(showParents)
             {
-                foreach(WorldObject wo in Planet.World.AllActiveObjects)
+                for(int index = 0; index < Planet.World.AllActiveObjects.Count; index++)
                 {
+                    WorldObject wo = Planet.World.AllActiveObjects[index];
                     if(wo is Agent ag
-                        && ag.Alive
-                        && (ag.Parent != null
-                            || ag.Grandparent != null))
+                        && ag.Alive)
                     {
-                        Agent target = ag.Parent ?? ag.Grandparent;
-                        args.DrawingSession.DrawLine(ag.Shape.CentrePoint.ToVector2()
-                                                     , target.Shape.CentrePoint.ToVector2()
-                                                     , Colors.Red, 1);
+                        while(ag.LivingAncestor != null
+                             && !ag.LivingAncestor.Alive)
+                        {
+                            ag.LivingAncestor = ag.LivingAncestor.LivingAncestor;
+                        }
+
+                        if(ag.LivingAncestor == null)
+                        {
+                            Circle c = (Circle)ag.Shape;
+                            args.DrawingSession.DrawCircle(ag.Shape.CentrePoint.ToVector2(), c.Radius + 2, Colors.Red);
+                        }
+
+                        else
+                        {
+                            CanvasLinearGradientBrush gradientBrush = new CanvasLinearGradientBrush(args.DrawingSession, Colors.Red, Colors.Black);
+                            gradientBrush.StartPoint = ag.Shape.CentrePoint.ToVector2();
+                            gradientBrush.EndPoint = ag.LivingAncestor.Shape.CentrePoint.ToVector2();
+                            args.DrawingSession.DrawLine(ag.Shape.CentrePoint.ToVector2()
+                                                         , ag.LivingAncestor.Shape.CentrePoint.ToVector2()
+                                                         , gradientBrush);
+                        }
                     }
                 }
             }

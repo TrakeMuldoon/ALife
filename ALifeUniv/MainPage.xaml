@@ -114,7 +114,7 @@
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
             <TextBlock x:Name="ZoneInfo"></TextBlock>
-            <CheckBox x:Name="ShowGeneology" Checked="ShowGeneology_Checked">Show Ancestry</CheckBox>
+            <CheckBox x:Name="ShowGeneology" Click="ShowGeneology_Checked">Show Ancestry</CheckBox>
         </StackPanel>
         <local:AgentInfoPanel x:Name="AgentPanel"></local:AgentInfoPanel>
     </StackPanel>

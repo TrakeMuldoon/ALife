@@ -109,7 +109,7 @@ namespace ALifeUni.ALife
             //    instance.AddObjectToWorld(fr);
             //}
 
-            for(int j = 0; j < 5; j++)
+            for(int j = 0; j < 4; j++)
             {
                 int frRadius = Planet.World.NumberGen.Next(10, 23);
 

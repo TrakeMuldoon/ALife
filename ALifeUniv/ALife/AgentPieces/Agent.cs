@@ -43,12 +43,11 @@ namespace ALifeUni.ALife
             get;
             set;
         }
-        public Agent Grandparent
+        public Agent LivingAncestor
         {
             get;
             set;
         }
-        public readonly List<Agent> Children = new List<Agent>();
 
         public readonly int Generation;
         public readonly Zone Zone;
@@ -83,7 +82,7 @@ namespace ALifeUni.ALife
             Zone.MyAgents.Add(this);
             Generation = 1;
             Parent = null;
-            Grandparent = null;
+            LivingAncestor = null;
         }
 
         //FOR REPRODUCTION/Cloning
@@ -104,7 +103,7 @@ namespace ALifeUni.ALife
             Zone.MyAgents.Add(this);
             Generation = parent.Generation + 1;
             Parent = parent;
-            Grandparent = null;
+            LivingAncestor = parent;
         }
 
         private ReadOnlyDictionary<string, ActionCluster> GenerateDefaultActions()
@@ -153,20 +152,6 @@ namespace ALifeUni.ALife
             Shape.DebugColor = Colors.Maroon;
             Zone.MyAgents.Remove(this);
             Planet.World.ChangeCollisionLayerForObject(this, ReferenceValues.CollisionLevelDead);
-
-            for(int i = Children.Count - 1; i > -1; i--)
-            {
-                Agent ag = Children[i];
-                if(!ag.Alive)
-                {
-                    Children.RemoveAt(i);
-                }
-                else
-                {
-                    ag.Parent = null;
-                    ag.Grandparent = Parent ?? Grandparent;
-                }
-            }
         }
 
         public override void ExecuteDeadTurn()
@@ -203,24 +188,28 @@ namespace ALifeUni.ALife
         public void EndOfTurnTriggers()
         {
             List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(Shape.BoundingBox);
-            Zone z = inZones.Where((zone) => zone.Name == TargetZone.Name).FirstOrDefault();
-            if(z != null)
+            foreach(Zone z in inZones)
             {
-                ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[CollisionLevel];
+                if(z.Name == Zone.Name)
+                {
+                    if(Statistics["DeathTimer"].Value > 200)
+                    {
+                        Die();
+                    }
+                }
+                else if(z.Name == TargetZone.Name)
+                {
+                    ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[CollisionLevel];
 
-                Point myPoint = Zone.Distributor.NextAgentCentre(Shape.BoundingBox.XLength, Shape.BoundingBox.YHeight);
-                Shape.CentrePoint = myPoint;
-                collider.MoveObject(this);
+                    Point myPoint = Zone.Distributor.NextAgentCentre(Shape.BoundingBox.XLength, Shape.BoundingBox.YHeight);
+                    Shape.CentrePoint = myPoint;
+                    collider.MoveObject(this);
 
-                this.ProduceOffspring();
+                    this.ProduceOffspring();
 
-                //You have a new countdown
-                Statistics["DeathTimer"].Value = 0;
-            }
-
-            if(Statistics["DeathTimer"].Value > 1200)
-            {
-                Die();
+                    //You have a new countdown
+                    Statistics["DeathTimer"].Value = 0;
+                }
             }
         }
 
@@ -241,7 +230,6 @@ namespace ALifeUni.ALife
 
             //Create Child
             Agent child = new Agent(birthSpot, this);
-            Children.Add(child);
 
             //Clone Properties
             //TODO: Should there be deviations on reproduction of properties? maybe.
@@ -289,7 +277,6 @@ namespace ALifeUni.ALife
 
             //Create Child
             Agent child = new Agent(birthSpot, this);
-            Children.Add(child);
 
             //Clone Properties
             child.InitializeAgentProperties(); //This initializes all the properties to their default state. Shold be clone or config

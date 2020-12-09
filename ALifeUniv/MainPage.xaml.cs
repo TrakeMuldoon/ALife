@@ -430,42 +430,33 @@ namespace ALifeUni
         int oldestIndex = -1;
         private void LongestLived_Click(object sender, RoutedEventArgs e)
         {
-            int oldest = int.MinValue;
-            List<Agent> elderly = new List<Agent>();
-
-            for(int i = 0; i < Planet.World.AllControlledObjects.Count; i++)
-            {
-                WorldObject wo = Planet.World.AllControlledObjects[i];
-                if(wo is Agent ag
-                    && ag.Alive)
-                {
-                    int age = ag.Statistics["Age"].Value;
-                    if(age == oldest)
-                    {
-                        elderly.Add(ag);
-                    }
-                    else if(age > oldest)
-                    {
-                        elderly.Clear();
-                        oldest = age;
-                        elderly.Add(ag);
-                    }
-                }
-            }
-
-            if(++oldestIndex >= elderly.Count)
-            {
-                oldestIndex = 0;
-            }
-            special = elderly[oldestIndex];
-            AgentPanel.TheAgent = elderly[oldestIndex];
+            oldestIndex = FindAndSelect(oldestIndex
+                                        , (ag) => ag.Statistics["Age"].Value
+                                        , true);
         }
+
+
 
         int shortBrainIndex = -1;
         private void ShortestBrain_Click(object sender, RoutedEventArgs e)
         {
-            int brainLength = int.MaxValue;
-            List<Agent> shortBrains = new List<Agent>();
+            shortBrainIndex = FindAndSelect(shortBrainIndex
+                                            , (ag) => ((BehaviourBrain)ag.myBrain).Behaviours.Count()
+                                            , false);
+        }
+
+        int mostChildrenIndex = -1;
+        private void MostChildren_Click(object sender, RoutedEventArgs e)
+        {
+            mostChildrenIndex = FindAndSelect(mostChildrenIndex
+                                              , (ag) => ag.NumChildren
+                                              , true);
+        }
+
+        private int FindAndSelect(int currentIndex, Func<Agent, int> testerFunction, bool greaterThan)
+        {
+            int compValue = greaterThan ? int.MinValue : int.MaxValue;
+            List<Agent> options = new List<Agent>();
 
             for(int i = 0; i < Planet.World.AllControlledObjects.Count; i++)
             {
@@ -473,27 +464,31 @@ namespace ALifeUni
                 if(wo is Agent ag
                     && ag.Alive)
                 {
-                    BehaviourBrain bb = (BehaviourBrain)ag.myBrain;
-                    int bCount = bb.Behaviours.Count();
-                    if(bCount == brainLength)
+                    int currentValue = testerFunction(ag);
+                    if(currentValue == compValue)
                     {
-                        shortBrains.Add(ag);
+                        options.Add(ag);
                     }
-                    else if(bCount < brainLength)
+                    else if((greaterThan
+                             && currentValue > compValue)
+                             || (!greaterThan
+                                 && currentValue < compValue))
                     {
-                        shortBrains.Clear();
-                        brainLength = bCount;
-                        shortBrains.Add(ag);
+                        options.Clear();
+                        compValue = currentValue;
+                        options.Add(ag);
                     }
                 }
             }
 
-            if(++shortBrainIndex >= shortBrains.Count)
+            if(++currentIndex >= options.Count)
             {
-                shortBrainIndex = 0;
+                currentIndex = 0;
             }
-            special = shortBrains[shortBrainIndex];
-            AgentPanel.TheAgent = shortBrains[shortBrainIndex];
+            special = options[currentIndex];
+            AgentPanel.TheAgent = options[currentIndex];
+
+            return currentIndex;
         }
     }
 }

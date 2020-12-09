@@ -57,7 +57,7 @@
                                                   PointerPressed="AnimCanvas_PointerPressed"
                                                   PointerMoved="AnimCanvas_PointerMoved"
                                                   PointerReleased="AnimCanvas_PointerReleased"
-                                                  Width="1500" Height="880">
+                                                  Width="2000" Height="1500">
 
                 </canvas:CanvasAnimatedControl>
             </Border>
@@ -117,6 +117,7 @@
             <CheckBox x:Name="ShowGeneology" Click="ShowGeneology_Checked">Show Ancestry</CheckBox>
             <Button x:Name="LongestLived" Click="LongestLived_Click">Oldest</Button>
             <Button x:Name="ShortestBrain" Click="ShortestBrain_Click">Smallest Brain</Button>
+            <Button x:Name="MostChildren" Click="MostChildren_Click">Most Children</Button>
         </StackPanel>
         <local:AgentInfoPanel x:Name="AgentPanel"></local:AgentInfoPanel>
     </StackPanel>

@@ -19,7 +19,11 @@ namespace ALifeUni.ALife
         public readonly String IndividualLabel;
 
         public int ExecutionOrder;
-        protected int numChildren = 0;
+        public int NumChildren
+        {
+            get;
+            protected set;
+        }
 
         //TODO: Merge PropertyInput and StatisticInput into a single "Properties" cabinet
         public Dictionary<String, PropertyInput> Properties = new Dictionary<string, PropertyInput>();
@@ -30,6 +34,7 @@ namespace ALifeUni.ALife
 
         protected WorldObject(Point centrePoint, IShape shape, string genusLabel, string individualLabel, string collisionLevel, Color color)
         {
+            NumChildren = 0;
             Shape = shape;
             Shape.Color = color;
             Shape.CentrePoint = centrePoint;

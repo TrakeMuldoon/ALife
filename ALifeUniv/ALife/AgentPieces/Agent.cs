@@ -88,7 +88,7 @@ namespace ALifeUni.ALife
              : base(birthPosition
                   , parent.Shape.CloneShape()                                                    //shape of child is same as parent
                   , parent.GenusLabel                                                            //Genus Label
-                  , AgentIDGenerator.GetNextChildId(parent.IndividualLabel, parent.numChildren)  //Individual Label
+                  , AgentIDGenerator.GetNextChildId(parent.IndividualLabel, parent.NumChildren)  //Individual Label
                   , parent.CollisionLevel                                                        //Collision Level
                   , Color.FromArgb(parent.Shape.Color.A, parent.Shape.Color.R, parent.Shape.Color.G, parent.Shape.Color.B))  //Start Color
         {
@@ -218,7 +218,7 @@ namespace ALifeUni.ALife
 
         public override WorldObject Reproduce()
         {
-            numChildren += 1;
+            ++NumChildren;
 
             double bbLength = Shape.BoundingBox.XLength;
             double bbHeight = Shape.BoundingBox.YHeight;
@@ -265,7 +265,7 @@ namespace ALifeUni.ALife
 
         public override WorldObject Clone()
         {
-            numChildren += 1;
+            ++NumChildren;
 
             double bbLength = Shape.BoundingBox.XLength;
             double bbHeight = Shape.BoundingBox.YHeight;

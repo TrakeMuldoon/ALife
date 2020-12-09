@@ -33,7 +33,7 @@ namespace ALifeUni
             }
             AgentName.Text = theAgent.IndividualLabel;
             AgentLocation.Text = Math.Round(theAgent.Shape.CentrePoint.X, 4) + "," + Math.Round(theAgent.Shape.CentrePoint.Y, 4) + "::" + theAgent.Shape.Orientation.Degrees
-                + Environment.NewLine + "Generation:" + theAgent.Generation;
+                + Environment.NewLine + "Generation:" + theAgent.Generation + "  Children: " + theAgent.NumChildren;
             senseBuilder();
             propertiesBuilder();
             actionsBuilder();

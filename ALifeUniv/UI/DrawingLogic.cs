@@ -21,19 +21,20 @@ namespace ALifeUni.UI
 
         internal static void DrawWorldObject(WorldObject wo, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
         {
-            if(!(wo is Agent)
-                && uiSettings.ShowObjects)
+            if(wo is Agent ag)
             {
-                DrawShape(wo.Shape, uiSettings, args, true);
+                if(uiSettings.ShowAgents)
+                {
+                    DrawAgent(ag, uiSettings, args);
+                }
             }
-            else if(wo is Agent
-                && uiSettings.ShowAgents)
-            {
-                DrawAgent((Agent)wo, uiSettings, args);
-            }
+            //else it is a standard WorldObject, as there are no other "cases"
             else
             {
-                throw new Exception("What the hell is this??");
+                if(uiSettings.ShowObjects)
+                {
+                    DrawShape(wo.Shape, uiSettings, args, true);
+                }
             }
         }
 

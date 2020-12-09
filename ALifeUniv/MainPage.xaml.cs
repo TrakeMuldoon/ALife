@@ -74,6 +74,7 @@ namespace ALifeUni
             UpdateZoneInfo();
         }
 
+        private Boolean showParents;
         private void animCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
 
@@ -88,6 +89,29 @@ namespace ALifeUni
             {
                 DrawLayer(layer, args);
             }
+
+            if(showParents)
+            {
+                foreach(WorldObject wo in Planet.World.AllActiveObjects)
+                {
+                    if(wo is Agent ag
+                        && ag.Alive
+                        && (ag.Parent != null
+                            || ag.Grandparent != null))
+                    {
+                        Agent target = ag.Parent ?? ag.Grandparent;
+                        args.DrawingSession.DrawLine(ag.Shape.CentrePoint.ToVector2()
+                                                     , target.Shape.CentrePoint.ToVector2()
+                                                     , Colors.Red, 1);
+                    }
+                }
+            }
+        }
+
+
+        private void ShowGeneology_Checked(object sender, RoutedEventArgs e)
+        {
+            showParents = ((CheckBox)sender).IsChecked.Value;
         }
 
         private void UpdateZoneInfo()

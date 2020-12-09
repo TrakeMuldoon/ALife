@@ -37,6 +37,20 @@ namespace ALifeUni.ALife
             private set;
         }
 
+
+        public Agent Parent
+        {
+            get;
+            set;
+        }
+        public Agent Grandparent
+        {
+            get;
+            set;
+        }
+        public readonly List<Agent> Children = new List<Agent>();
+
+        public readonly int Generation;
         public readonly Zone Zone;
         public readonly Zone TargetZone;
         public readonly double StartOrientation;
@@ -67,6 +81,9 @@ namespace ALifeUni.ALife
 
             Shadow = new AgentShadow(this);
             Zone.MyAgents.Add(this);
+            Generation = 1;
+            Parent = null;
+            Grandparent = null;
         }
 
         //FOR REPRODUCTION/Cloning
@@ -85,6 +102,9 @@ namespace ALifeUni.ALife
             TargetZone = parent.TargetZone;
 
             Zone.MyAgents.Add(this);
+            Generation = parent.Generation + 1;
+            Parent = parent;
+            Grandparent = null;
         }
 
         private ReadOnlyDictionary<string, ActionCluster> GenerateDefaultActions()
@@ -133,6 +153,20 @@ namespace ALifeUni.ALife
             Shape.DebugColor = Colors.Maroon;
             Zone.MyAgents.Remove(this);
             Planet.World.ChangeCollisionLayerForObject(this, ReferenceValues.CollisionLevelDead);
+
+            for(int i = Children.Count - 1; i > -1; i--)
+            {
+                Agent ag = Children[i];
+                if(!ag.Alive)
+                {
+                    Children.RemoveAt(i);
+                }
+                else
+                {
+                    ag.Parent = null;
+                    ag.Grandparent = Parent ?? Grandparent;
+                }
+            }
         }
 
         public override void ExecuteDeadTurn()
@@ -207,6 +241,7 @@ namespace ALifeUni.ALife
 
             //Create Child
             Agent child = new Agent(birthSpot, this);
+            Children.Add(child);
 
             //Clone Properties
             //TODO: Should there be deviations on reproduction of properties? maybe.
@@ -254,6 +289,7 @@ namespace ALifeUni.ALife
 
             //Create Child
             Agent child = new Agent(birthSpot, this);
+            Children.Add(child);
 
             //Clone Properties
             child.InitializeAgentProperties(); //This initializes all the properties to their default state. Shold be clone or config

@@ -1,9 +1,5 @@
 ﻿using ALifeUni.ALife.UtilityClasses;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -11,7 +7,7 @@ namespace ALifeUni.ALife
 {
     class Spinner : WorldObject
     {
-        public Spinner(Point centrePoint, IShape shape, string genusLabel, string individualLabel, string collisionLevel, Color color) 
+        public Spinner(Point centrePoint, IShape shape, string genusLabel, string individualLabel, string collisionLevel, Color color)
             : base(centrePoint, shape, genusLabel, individualLabel, collisionLevel, color)
         {
         }

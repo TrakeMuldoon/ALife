@@ -136,7 +136,7 @@ namespace ALifeUni.ALife
         {
             throw new NotImplementedException();
         }
-        
+
         private static Boolean PointRadiusPointRadiusCollision(Point a, float radA, Point b, float radB)
         {
             //If the distance between the points is closer or equal to this, then they overlap/collide

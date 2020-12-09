@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 
 namespace ALifeUni.ALife.UtilityClasses
@@ -27,7 +23,7 @@ namespace ALifeUni.ALife.UtilityClasses
         }
 
         public ChildCircle(IShape parent, Angle orientationAroundParent, double distFromParentCentre
-                           , float radius) 
+                           , float radius)
             : base(radius)
         {
             Orientation = new Angle(0);

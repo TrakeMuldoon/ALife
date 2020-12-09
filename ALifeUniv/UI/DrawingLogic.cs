@@ -191,7 +191,7 @@ namespace ALifeUni.UI
             {
                 args.DrawingSession.DrawGeometry(cg, sec.Color, 1);
             }
-            
+
             DrawOrientation(args, currShape);
         }
 
@@ -207,7 +207,7 @@ namespace ALifeUni.UI
             {
                 args.DrawingSession.DrawCircle(objectCentre, wo.Radius, wo.Color);
             }
-            
+
             //Core of the body is the debug colour
             args.DrawingSession.FillCircle(objectCentre, 2, wo.DebugColor);
 

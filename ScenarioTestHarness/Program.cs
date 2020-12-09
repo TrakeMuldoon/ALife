@@ -2,7 +2,6 @@
 using Serilog;
 using System;
 using System.IO;
-using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 
 // This example code shows how you could implement the required main function for a 

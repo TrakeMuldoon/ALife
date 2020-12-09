@@ -2,7 +2,6 @@
 using ALifeUni.ALife.Brains.BehaviourBrains;
 using ALifeUni.ALife.UtilityClasses;
 using ALifeUni.UI;
-using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
@@ -454,7 +453,6 @@ namespace ALifeUni
                 }
             }
 
-
             if(++oldestIndex >= elderly.Count)
             {
                 oldestIndex = 0;
@@ -480,8 +478,8 @@ namespace ALifeUni
                     if(bCount == brainLength)
                     {
                         shortBrains.Add(ag);
-                    } 
-                    else if(bCount < brainLength) 
+                    }
+                    else if(bCount < brainLength)
                     {
                         shortBrains.Clear();
                         brainLength = bCount;

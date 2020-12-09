@@ -1,6 +1,6 @@
-﻿using Windows.Foundation;
+﻿using System;
+using Windows.Foundation;
 using Windows.UI;
-using System;
 
 namespace ALifeUni.ALife.UtilityClasses
 {

@@ -59,7 +59,7 @@ namespace ALifeUni.ALife
         public static void CreateWorld(int seed, int height, int width)
         {
             //1622137501
-            instance = new Planet(seed, height, width); 
+            instance = new Planet(seed, height, width);
 
             //Initialize collision grid
             instance._collisionLevels.Add(ReferenceValues.CollisionLevelPhysical, new CollisionGrid<WorldObject>(height, width));
@@ -85,15 +85,15 @@ namespace ALifeUni.ALife
                 Point redCP = red.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
                 Agent rag = new Agent(redCP, red, blue, Colors.Blue, 0);
                 instance.AddObjectToWorld(rag);
-                
+
                 //Point blueCP = blue.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
                 //Agent bag = new Agent(blueCP, blue, red, Colors.Red, 180);
                 //instance.AddObjectToWorld(bag);
-                
+
                 //Point greenCP = green.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
                 //Agent gag = new Agent(greenCP, green, orange, Colors.Orange, 90);
                 //instance.AddObjectToWorld(gag);
-                
+
                 //Point orangeCP = orange.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
                 //Agent oag = new Agent(orangeCP, orange, green, Colors.Green, 270);
                 //instance.AddObjectToWorld(oag);
@@ -155,7 +155,7 @@ namespace ALifeUni.ALife
         }
 
         internal readonly Random NumberGen;
-        
+
         private int turns = 0;
         public int Turns
         {

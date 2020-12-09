@@ -3,8 +3,6 @@ using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -39,8 +37,8 @@ namespace ALifeUni.ALife
         {
             Point origin = new Point(Shape.CentrePoint.X, Shape.CentrePoint.Y);
             Angle turnRotation = new Angle(10);
-            
-            Point newCentre = ExtraMath.TranslateByVector(Shape.CentrePoint, Math.PI/2,  5);
+
+            Point newCentre = ExtraMath.TranslateByVector(Shape.CentrePoint, Math.PI / 2, 5);
             Shape.CentrePoint = newCentre;
 
             Shape.Orientation += turnRotation;

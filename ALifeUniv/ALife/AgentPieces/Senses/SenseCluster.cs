@@ -1,8 +1,8 @@
 ﻿using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
-using Windows.UI;
 using System.Linq;
+using Windows.UI;
 
 namespace ALifeUni.ALife
 {
@@ -16,7 +16,7 @@ namespace ALifeUni.ALife
 
         public abstract IShape Shape
         {
-            get; 
+            get;
         }
 
         public SenseCluster(WorldObject parent, String name)

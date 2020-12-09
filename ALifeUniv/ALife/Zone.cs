@@ -28,7 +28,7 @@ namespace ALifeUni.ALife
         public readonly List<Agent> MyAgents = new List<Agent>();
 
         public Zone(String name, String distributorType, Color color
-                    ,  Point topLeft, double xWidth, double yHeight) : base(topLeft, xWidth, yHeight, color)
+                    , Point topLeft, double xWidth, double yHeight) : base(topLeft, xWidth, yHeight, color)
         {
             Color lowAlpha = Color;
             lowAlpha.A = 50;

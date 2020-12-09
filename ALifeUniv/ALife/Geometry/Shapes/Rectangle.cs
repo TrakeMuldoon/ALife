@@ -99,7 +99,7 @@ namespace ALifeUni.ALife.UtilityClasses
         public IShape CloneShape()
         {
             Point cp = new Point(CentrePoint.X, CentrePoint.Y);
-            Rectangle rec =  new Rectangle(cp, FBLength, RLWidth, Color.FromArgb(Color.A, Color.R, Color.G, Color.B));
+            Rectangle rec = new Rectangle(cp, FBLength, RLWidth, Color.FromArgb(Color.A, Color.R, Color.G, Color.B));
             rec.Orientation = Orientation.Clone();
             return rec;
         }

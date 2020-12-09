@@ -1,6 +1,5 @@
 ﻿using ALifeUni.ALife.AgentPieces;
 using ALifeUni.ALife.AgentPieces.Brains;
-using ALifeUni.ALife.AgentPieces.Brains.RandomBrains;
 using ALifeUni.ALife.Brains.BehaviourBrains;
 using ALifeUni.ALife.UtilityClasses;
 using System;
@@ -8,7 +7,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Windows.Foundation;
 using Windows.UI;
-using System.Linq;
 
 namespace ALifeUni.ALife
 {
@@ -171,7 +169,7 @@ namespace ALifeUni.ALife
             //Increment or Decrement end of turn values
             Statistics["Age"].IncreasePropertyBy(1);
             Statistics["DeathTimer"].IncreasePropertyBy(1);
-            
+
             //Reset all the senses. 
             Senses.ForEach((se) => se.Shape.Reset());
             foreach(StatisticInput stat in Statistics.Values)

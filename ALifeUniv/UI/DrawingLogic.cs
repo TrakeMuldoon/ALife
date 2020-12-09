@@ -1,5 +1,6 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.UtilityClasses;
+using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
@@ -35,6 +36,68 @@ namespace ALifeUni.UI
                 {
                     DrawShape(wo.Shape, uiSettings, args, true);
                 }
+            }
+        }
+
+        public static void DrawAncestry(CanvasAnimatedDrawEventArgs args)
+        {
+            for(int index = 0; index < Planet.World.AllActiveObjects.Count; index++)
+            {
+                WorldObject wo = Planet.World.AllActiveObjects[index];
+                if(wo is Agent ag
+                    && ag.Alive)
+                {
+                    while(ag.LivingAncestor != null
+                         && !ag.LivingAncestor.Alive)
+                    {
+                        ag.LivingAncestor = ag.LivingAncestor.LivingAncestor;
+                    }
+
+                    if(ag.LivingAncestor == null)
+                    {
+                        Circle c = (Circle)ag.Shape;
+                        args.DrawingSession.DrawCircle(ag.Shape.CentrePoint.ToVector2(), c.Radius + 3, Colors.Red);
+                    }
+
+                    else
+                    {
+                        CanvasLinearGradientBrush gradientBrush = new CanvasLinearGradientBrush(args.DrawingSession, Colors.Red, Colors.Black);
+                        gradientBrush.StartPoint = ag.Shape.CentrePoint.ToVector2();
+                        gradientBrush.EndPoint = ag.LivingAncestor.Shape.CentrePoint.ToVector2();
+                        args.DrawingSession.DrawLine(ag.Shape.CentrePoint.ToVector2()
+                                                     , ag.LivingAncestor.Shape.CentrePoint.ToVector2()
+                                                     , gradientBrush);
+                    }
+                }
+            }
+        }
+
+        public static void DrawPastState(LayerUISettings ui, CanvasAnimatedDrawEventArgs args, int compnumber)
+        {
+            foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
+            {
+                if(compnumber < wo.ExecutionOrder)
+                {
+                    DrawingLogic.DrawPastObject(wo.Shape, ui, args);
+                    continue;
+                }
+
+                if(!(wo is Agent))
+                {
+                    //TODO: Should ALL objects have shadows??
+                    DrawingLogic.DrawPastObject(wo.Shape, ui, args);
+                    continue;
+                }
+
+                Agent ag = (Agent)wo;
+
+                if(compnumber == wo.ExecutionOrder)
+                {
+                    DrawingLogic.DrawAgentShadow(ag.Shadow, ui, args);
+                    continue;
+                }
+
+                DrawingLogic.DrawPastObject(ag.Shadow, ui, args);
             }
         }
 

@@ -48,9 +48,13 @@ namespace ALifeUni.ALife
         }
 
         public readonly int Generation;
-        public readonly Zone Zone;
-        public readonly Zone TargetZone;
-        public readonly double StartOrientation;
+        public Zone Zone;
+        public Zone TargetZone;
+        public double StartOrientation
+        {
+            get;
+            private set;
+        }
 
         public Agent(Point birthPosition, Zone zone, Zone targetZone, Color color, double startOrientation)
             : base(birthPosition
@@ -203,7 +207,13 @@ namespace ALifeUni.ALife
                     Shape.CentrePoint = myPoint;
                     collider.MoveObject(this);
 
-                    this.ProduceOffspring();
+                    foreach(Zone zon in Planet.World.Zones.Values)
+                    {
+                        if(zon.Name != Zone.Name)
+                        {
+                            Reproduce(zon, zon.OppositeZone, new Angle(zon.OrientationDegrees), zon.OppositeZone.Color);
+                        }
+                    }
 
                     //You have a new countdown
                     Statistics["DeathTimer"].Value = 0;
@@ -213,22 +223,43 @@ namespace ALifeUni.ALife
 
         public void ProduceOffspring()
         {
-            Reproduce();
+            //Reproduce();
         }
 
         public override WorldObject Reproduce()
         {
-            ++NumChildren;
-
             double bbLength = Shape.BoundingBox.XLength;
             double bbHeight = Shape.BoundingBox.YHeight;
             //Determine child position
             Point birthSpot = Zone.Distributor.NextAgentCentre(bbLength, bbHeight);
             //Point childCenter = FindAdjacentFreeSpace();
-
+            
+            ++NumChildren;
             //Create Child
             Agent child = new Agent(birthSpot, this);
+            return Reproduce(child);
+        }
 
+        protected WorldObject Reproduce(Zone startZone, Zone targetZone, Angle orientation, Color color)
+        {
+            double bbLength = Shape.BoundingBox.XLength;
+            double bbHeight = Shape.BoundingBox.YHeight;
+            //Determine child position
+            Point birthSpot = startZone.Distributor.NextAgentCentre(bbLength, bbHeight);
+
+            ++NumChildren;
+            //Create Child
+            Agent child = new Agent(birthSpot, this);
+            child.StartOrientation = orientation.Degrees;
+            child.Shape.Orientation = orientation;
+            child.Zone = startZone;
+            child.TargetZone = targetZone;
+            child.Shape.Color = Color.FromArgb(255, color.R, color.G, color.B);
+            return Reproduce(child);
+        }
+
+        private WorldObject Reproduce(Agent child)
+        {
             //Clone Properties
             //TODO: Should there be deviations on reproduction of properties? maybe.
             child.InitializeAgentProperties(); //This initializes all the properties to their default state. Shold be clone or config

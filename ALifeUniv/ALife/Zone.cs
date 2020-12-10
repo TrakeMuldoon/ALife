@@ -24,6 +24,9 @@ namespace ALifeUni.ALife
             }
         }
 
+        public Zone OppositeZone;
+        public double OrientationDegrees;
+
         public readonly AgentDistributor Distributor;
         public readonly List<Agent> MyAgents = new List<Agent>();
 

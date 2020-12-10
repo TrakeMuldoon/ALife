@@ -57,7 +57,7 @@
                                                   PointerPressed="AnimCanvas_PointerPressed"
                                                   PointerMoved="AnimCanvas_PointerMoved"
                                                   PointerReleased="AnimCanvas_PointerReleased"
-                                                  Width="2000" Height="1500">
+                                                  Width="2000" Height="2000">
 
                 </canvas:CanvasAnimatedControl>
             </Border>

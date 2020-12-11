@@ -20,7 +20,12 @@ namespace ALifeUni.ALife
             Shape.Orientation = new Angle(90);
             start = startZone;
             finish = targetZone;
+        }
 
+        public FallingRock(Point centrePoint, IShape shape, Color color)
+            : base(centrePoint, shape, "Rock", AgentIDGenerator.GetNextAgentId(), ReferenceValues.CollisionLevelPhysical, color)
+        {
+            Shape.Orientation = new Angle(90);
         }
 
         public override WorldObject Clone()
@@ -36,9 +41,9 @@ namespace ALifeUni.ALife
         public override void ExecuteAliveTurn()
         {
             Point origin = new Point(Shape.CentrePoint.X, Shape.CentrePoint.Y);
-            Angle turnRotation = new Angle(10);
-
-            Point newCentre = ExtraMath.TranslateByVector(Shape.CentrePoint, Math.PI / 2, 5);
+            Angle turnRotation = new Angle(2);
+                        
+            Point newCentre = ExtraMath.TranslateByVector(Shape.CentrePoint, Shape.Orientation.Radians, 15);
             Shape.CentrePoint = newCentre;
 
             Shape.Orientation += turnRotation;
@@ -57,15 +62,14 @@ namespace ALifeUni.ALife
             }
             collider.MoveObject(this);
 
-
-            List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(Shape.BoundingBox);
-            Zone z = inZones.Where((zone) => zone.Name == finish.Name).FirstOrDefault();
-            if(z != null)
-            {
-                Point myPoint = start.Distributor.NextAgentCentre(Shape.BoundingBox.XLength, Shape.BoundingBox.YHeight);
-                Shape.CentrePoint = myPoint;
-                collider.MoveObject(this);
-            }
+            //List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(Shape.BoundingBox);
+            //Zone z = inZones.Where((zone) => zone.Name == finish.Name).FirstOrDefault();
+            //if(z != null)
+            //{
+            //    Point myPoint = start.Distributor.NextAgentCentre(Shape.BoundingBox.XLength, Shape.BoundingBox.YHeight);
+            //    Shape.CentrePoint = myPoint;
+            //    collider.MoveObject(this);
+            //}
         }
 
         public override void ExecuteDeadTurn()

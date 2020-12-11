@@ -81,7 +81,6 @@ namespace ALifeUni.ALife
             myBrain = new BehaviourBrain(this, "IF Age.Value GreaterThan [10] THEN Move.GoForward AT [0.2]", "*", "*", "*", "*");
 
             Shadow = new AgentShadow(this);
-            Zone.MyAgents.Add(this);
             Generation = 1;
             Parent = null;
             LivingAncestor = null;
@@ -102,7 +101,6 @@ namespace ALifeUni.ALife
             Zone = parent.Zone;
             TargetZone = parent.TargetZone;
 
-            Zone.MyAgents.Add(this);
             Generation = parent.Generation + 1;
             Parent = parent;
             LivingAncestor = parent;
@@ -152,13 +150,14 @@ namespace ALifeUni.ALife
         {
             Alive = false;
             Shape.DebugColor = Colors.Maroon;
-            Zone.MyAgents.Remove(this);
             Planet.World.ChangeCollisionLayerForObject(this, ReferenceValues.CollisionLevelDead);
+            CollisionLevel = ReferenceValues.CollisionLevelDead;
         }
 
         public override void ExecuteDeadTurn()
         {
             //TODO: Abstract this out
+            Planet.World.RemoveWorldObject(this);
         }
 
         public override void ExecuteAliveTurn()

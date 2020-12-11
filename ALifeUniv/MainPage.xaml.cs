@@ -105,11 +105,26 @@ namespace ALifeUni
 
         private void UpdateZoneInfo()
         {
-            StringBuilder sb = new StringBuilder();
+            Dictionary<string, int> zoneCount = new Dictionary<string, int>();
             foreach(Zone z in Planet.World.Zones.Values)
             {
-                sb.AppendLine(z.Name + ":" + z.MyAgents.Count);
+                zoneCount.Add(z.Name, 0);
             }
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
+            {
+                WorldObject wo = Planet.World.AllActiveObjects[i];
+                if(wo is Agent ag
+                    && ag.Alive)
+                {
+                    zoneCount[ag.Zone.Name]++;
+                }
+            }
+            foreach(string name in zoneCount.Keys)
+            {
+                sb.AppendLine(name + ":" + zoneCount[name]);
+            }
+            sb.AppendLine("WOOOORDL: " + Planet.World.AllActiveObjects.Where(wo => wo.Alive).Count());
             ZoneInfo.Text = sb.ToString();
         }
 
@@ -458,9 +473,9 @@ namespace ALifeUni
             int compValue = greaterThan ? int.MinValue : int.MaxValue;
             List<Agent> options = new List<Agent>();
 
-            for(int i = 0; i < Planet.World.AllControlledObjects.Count; i++)
+            for(int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
             {
-                WorldObject wo = Planet.World.AllControlledObjects[i];
+                WorldObject wo = Planet.World.AllActiveObjects[i];
                 if(wo is Agent ag
                     && ag.Alive)
                 {

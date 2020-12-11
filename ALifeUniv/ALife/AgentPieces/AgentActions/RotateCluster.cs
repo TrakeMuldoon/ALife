@@ -1,4 +1,6 @@
 ﻿using ALifeUni.ALife.UtilityClasses;
+using System;
+using System.Collections.Generic;
 
 namespace ALifeUni.ALife
 {
@@ -45,6 +47,17 @@ namespace ALifeUni.ALife
 
             Angle myOrientation = self.Shape.Orientation;
             myOrientation.Degrees += netTurn;
+
+            if(!(self.Shape is Circle))
+            {
+                ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[self.CollisionLevel];
+                List<WorldObject> collisions = collider.DetectCollisions(self);
+
+                if(collisions.Count > 0)
+                {
+                    throw new Exception("Unhandled Collision state (rotation collision)");
+                }
+            }
             return true;
         }
 

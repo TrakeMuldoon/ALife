@@ -41,9 +41,9 @@ namespace ALifeUni.UI
 
         public static void DrawAncestry(CanvasAnimatedDrawEventArgs args)
         {
-            for(int index = 0; index < Planet.World.AllActiveObjects.Count; index++)
+            for(int index = 0; index < Planet.World.StableActiveObjects.Count; index++)
             {
-                WorldObject wo = Planet.World.AllActiveObjects[index];
+                WorldObject wo = Planet.World.StableActiveObjects[index];
                 if(wo is Agent ag
                     && ag.Alive)
                 {

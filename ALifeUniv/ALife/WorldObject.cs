@@ -29,7 +29,11 @@ namespace ALifeUni.ALife
         public Dictionary<String, PropertyInput> Properties = new Dictionary<string, PropertyInput>();
         public Dictionary<String, StatisticInput> Statistics = new Dictionary<string, StatisticInput>();
 
-        public readonly string CollisionLevel;
+        public string CollisionLevel
+        {
+            get;
+            protected set;
+        }
         public bool Alive;
 
         protected WorldObject(Point centrePoint, IShape shape, string genusLabel, string individualLabel, string collisionLevel, Color color)

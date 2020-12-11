@@ -48,23 +48,22 @@ namespace ScenarioTestHarness
             string error = null;
             try
             {
-                bool endEarly = false;
                 for(int i = 0; i < 5; i++)
                 {
                     Planet.World.ExecuteManyTurns(1000);
                     Console.Write(".");
-                    foreach(Zone z in Planet.World.Zones.Values)
-                    {
-                        if(z.MyAgents.Count == 0)
-                        {
-                            endEarly = true;
-                            break;
-                        }
-                    }
-                    if(endEarly)
-                    {
-                        break;
-                    }
+                    //foreach(Zone z in Planet.World.Zones.Values)
+                    //{
+                    //    if(z.MyAgents.Count == 0)
+                    //    {
+                    //        endEarly = true;
+                    //        break;
+                    //    }
+                    //}
+                    //if(endEarly)
+                    //{
+                    //    break;
+                    //}
                 }
             }
             catch(Exception ex)
@@ -88,25 +87,7 @@ namespace ScenarioTestHarness
             }
             else
             {
-                bool dontBother = false;
-                string results = "";
-                foreach(Zone z in Planet.World.Zones.Values)
-                {
-                    String thisZone = string.Format("{0}:{1}\t", z.Name, z.MyAgents.Count);
-                    results += thisZone;
-                    if(z.MyAgents.Count == 0)
-                    {
-                        dontBother = true;
-                    }
-                }
-                Console.WriteLine(results);
 
-                if(!dontBother)
-                {
-                    string nl = Environment.NewLine;
-                    string message = topLine + nl + results;
-                    Log.Information(message);
-                }
             }
             Console.WriteLine();
         }

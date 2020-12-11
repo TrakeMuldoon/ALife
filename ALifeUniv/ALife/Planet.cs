@@ -109,6 +109,12 @@ namespace ALifeUni.ALife
                 instance.AddObjectToWorld(oag);
             }
 
+            Point rockCP = new Point((width / 2) + (width / 15), height / 2);
+            Circle cir = new Circle(rockCP, 30);
+            FallingRock fr = new FallingRock(rockCP, cir, Colors.Black);
+            instance.AddObjectToWorld(fr);
+
+
             //for(int j = 0; j < 4; j++)
             //{
             //    int frRadius = Planet.World.NumberGen.Next(10, 23);
@@ -123,9 +129,11 @@ namespace ALifeUni.ALife
         #region Instance Stuff
 
         public readonly Dictionary<String, Zone> Zones = new Dictionary<string, Zone>();
-        public readonly List<WorldObject> AllControlledObjects = new List<WorldObject>();
         public readonly List<WorldObject> AllActiveObjects = new List<WorldObject>();
-        public readonly List<WorldObject> AllNewObjects = new List<WorldObject>();
+        public readonly List<WorldObject> StableActiveObjects = new List<WorldObject>();
+        public readonly List<WorldObject> NewActiveObjects = new List<WorldObject>();
+        public readonly List<WorldObject> InactiveObjects = new List<WorldObject>();
+        public readonly List<WorldObject> ToRemoveObjects = new List<WorldObject>();
         public readonly int Seed;
 
         internal ICollisionMap<Zone> ZoneMap;
@@ -186,16 +194,22 @@ namespace ALifeUni.ALife
         {
             turns++;
             int order = 0;
-            foreach(WorldObject wo in AllActiveObjects)
+            foreach(WorldObject wo in StableActiveObjects)
             {
                 wo.ExecutionOrder = order++;
                 wo.ExecuteTurn();
             }
-            while(AllNewObjects.Count > 0)
+            while(NewActiveObjects.Count > 0)
             {
-                AllActiveObjects.Add(AllNewObjects[0]);
-                AllNewObjects.RemoveAt(0);
+                StableActiveObjects.Add(NewActiveObjects[0]);
+                NewActiveObjects.RemoveAt(0);
             }
+            while(ToRemoveObjects.Count > 0)
+            {
+                StableActiveObjects.Remove(ToRemoveObjects[0]);
+                InactiveObjects.Add(ToRemoveObjects[0]);
+                ToRemoveObjects.RemoveAt(0);
+            }    
 
             GlobalEndOfTurnActions();
         }
@@ -209,9 +223,8 @@ namespace ALifeUni.ALife
         {
             string collisionLevel = mySelf.CollisionLevel;
             CollisionLevels[collisionLevel].RemoveObject(mySelf);
-            AllControlledObjects.Remove(mySelf);
-            AllNewObjects.Remove(mySelf);
-            AllActiveObjects.Remove(mySelf);
+            NewActiveObjects.Remove(mySelf);
+            ToRemoveObjects.Add(mySelf);
         }
 
         internal void ChangeCollisionLayerForObject(WorldObject mySelf, string newLevel)
@@ -233,8 +246,8 @@ namespace ALifeUni.ALife
             }
             _collisionLevels[toAdd.CollisionLevel].Insert(toAdd);
 
-            AllControlledObjects.Add(toAdd);
-            AllNewObjects.Add(toAdd);
+            AllActiveObjects.Add(toAdd);
+            NewActiveObjects.Add(toAdd);
         }
 
         internal void AddZone(Zone toAdd)

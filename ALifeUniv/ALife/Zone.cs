@@ -28,7 +28,6 @@ namespace ALifeUni.ALife
         public double OrientationDegrees;
 
         public readonly AgentDistributor Distributor;
-        public readonly List<Agent> MyAgents = new List<Agent>();
 
         public Zone(String name, String distributorType, Color color
                     , Point topLeft, double xWidth, double yHeight) : base(topLeft, xWidth, yHeight, color)

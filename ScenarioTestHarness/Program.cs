@@ -3,6 +3,7 @@ using Serilog;
 using System;
 using System.IO;
 using Windows.Storage;
+using System.Linq;
 
 // This example code shows how you could implement the required main function for a 
 // Console UWP Application. You can replace all the code inside Main with your own custom code.
@@ -21,10 +22,10 @@ namespace ScenarioTestHarness
             Log.Logger = new LoggerConfiguration().WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day).CreateLogger();
             Log.Information("<---StartRun");
 
-            int height = 880;
-            int width = 1000;
+            int height = 2000;
+            int width = 2000;
             Random r = new Random();
-            for(int i = 0; i < 200; i++)
+            for(int i = 0; i < 10; i++)
             {
                 Console.Write(i + "-> ");
                 int seedValue = r.Next();
@@ -48,22 +49,10 @@ namespace ScenarioTestHarness
             string error = null;
             try
             {
-                for(int i = 0; i < 5; i++)
+                for(int i = 0; i < 15; i++)
                 {
                     Planet.World.ExecuteManyTurns(1000);
                     Console.Write(".");
-                    //foreach(Zone z in Planet.World.Zones.Values)
-                    //{
-                    //    if(z.MyAgents.Count == 0)
-                    //    {
-                    //        endEarly = true;
-                    //        break;
-                    //    }
-                    //}
-                    //if(endEarly)
-                    //{
-                    //    break;
-                    //}
                 }
             }
             catch(Exception ex)
@@ -87,7 +76,15 @@ namespace ScenarioTestHarness
             }
             else
             {
-
+                int count = Planet.World.AllActiveObjects.Where(wo => wo.Alive).Count();
+                if(count > 200)
+                {
+                    Console.WriteLine(count);
+                    string nl = Environment.NewLine;
+                    string message = topLine + nl + count + nl;
+                    Log.Information(message);
+                }
+                Console.WriteLine("Boring");
             }
             Console.WriteLine();
         }

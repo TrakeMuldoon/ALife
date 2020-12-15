@@ -1,0 +1,60 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ALifeUni.ALife
+{ 
+    public class BoundedNumber
+    {
+        private double val;
+        public virtual double Value
+        {
+            get { return val; }
+
+            set
+            {
+                if(ManualClamp)
+                {
+                    val = value;
+                }
+                else
+                {
+                    val = Math.Clamp(value, ValueMin, ValueMax);
+                }
+            }
+        }
+        public virtual double ValueMin
+        {
+            get;
+            set;
+        }
+        public virtual double ValueMax
+        {
+            get;
+            set;
+        }
+        public double Increment
+        {
+            get;
+        }
+
+        public bool ManualClamp;
+
+        public BoundedNumber(double value, double minValue, double maxValue, double increment, bool manualClamp)
+        {
+            Value = value;
+            ValueMin = minValue;
+            ValueMax = maxValue;
+            Increment = increment;
+            ManualClamp = manualClamp;
+        }
+
+        public double Clamp()
+        {
+            val = Math.Clamp(val, ValueMin, ValueMax);
+            return val;
+        }
+    }
+}

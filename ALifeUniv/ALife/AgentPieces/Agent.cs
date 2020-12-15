@@ -1,8 +1,10 @@
 ﻿using ALifeUni.ALife.AgentPieces;
 using ALifeUni.ALife.AgentPieces.Brains;
+using ALifeUni.ALife.AgentPieces.Brains.TesterBrain;
 using ALifeUni.ALife.Brains.BehaviourBrains;
 using ALifeUni.ALife.UtilityClasses;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Windows.Foundation;
@@ -77,7 +79,6 @@ namespace ALifeUni.ALife
             //myBrain = new RandomBrain(this);
             //myBrain = new TesterBrain(this);
             //TODO: Brain Behaviour is hardcoded. It should be in the config.
-            //myBrain = new BehaviourBrain(this, "IF Age.Value GreaterThan [10] THEN Move.GoForward AT [0.2]");
             myBrain = new BehaviourBrain(this, "IF Age.Value GreaterThan [10] THEN Move.GoForward AT [0.2]", "*", "*", "*", "*");
 
             Shadow = new AgentShadow(this);
@@ -135,6 +136,7 @@ namespace ALifeUni.ALife
             Statistics.Add(Age.Name, Age);
             StatisticInput DeathTimer = new StatisticInput("DeathTimer", 0, Int32.MaxValue);
             Statistics.Add(DeathTimer.Name, DeathTimer);
+            StatisticInput ZoneEscapeTimer = new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue);
         }
 
         private List<SenseCluster> GenerateSenses()
@@ -172,6 +174,7 @@ namespace ALifeUni.ALife
             //Increment or Decrement end of turn values
             Statistics["Age"].IncreasePropertyBy(1);
             Statistics["DeathTimer"].IncreasePropertyBy(1);
+            Statistics["ZoneEscapeTimer"].IncreasePropertyBy(1);
 
             //Reset all the senses. 
             Senses.ForEach((se) => se.Shape.Reset());
@@ -188,12 +191,16 @@ namespace ALifeUni.ALife
 
         public void EndOfTurnTriggers()
         {
+            if(Statistics["DeathTimer"].Value > 999)
+            {
+                Die();
+            }
             List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(Shape.BoundingBox);
             foreach(Zone z in inZones)
             {
                 if(z.Name == Zone.Name)
                 {
-                    if(Statistics["DeathTimer"].Value > 200)
+                    if(Statistics["ZoneEscapeTimer"].Value > 200)
                     {
                         Die();
                     }
@@ -216,6 +223,7 @@ namespace ALifeUni.ALife
 
                     //You have a new countdown
                     Statistics["DeathTimer"].Value = 0;
+                    Statistics["ZoneEscapeTimer"].Value = 0;
                 }
             }
         }

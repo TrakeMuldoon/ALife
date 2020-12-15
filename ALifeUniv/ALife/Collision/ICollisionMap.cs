@@ -15,6 +15,7 @@ namespace ALifeUni.ALife
         List<T> QueryForBoundingBoxCollisions(BoundingBox queryBox, T self);
 
         List<T> DetectCollisions(T self);
+        List<T> DetectCollisions(IHasShape detector, T self);
 
         bool Insert(T newObject);
 

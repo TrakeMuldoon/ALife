@@ -173,6 +173,14 @@ namespace ALifeUni.ALife
             return collisions;
         }
 
+        public List<T> DetectCollisions(IHasShape detector, T self)
+        {
+            List<T> collisions = QueryForBoundingBoxCollisions(detector.Shape.BoundingBox, self);
+            List<IHasShape> colShapes = CollisionDetector.FineGrainedCollisionDetection(collisions.Cast<IHasShape>(), detector.Shape);
+            collisions = colShapes.Cast<T>().ToList();
+            return collisions;
+        }
+
         public void RemoveObject(T killMe)
         {
             trackedObjects.Remove(killMe);

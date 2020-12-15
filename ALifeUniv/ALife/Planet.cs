@@ -69,6 +69,19 @@ namespace ALifeUni.ALife
             //TODO: Create Special Objects from Config
             //TODO: Read new world agentnum from config
 
+            #region SQUARE TEST
+            //Zone nullZone = new Zone("Null", "random", Colors.Black, new Point(0, 0), 1, 1);
+            //instance.AddZone(nullZone);
+
+            //Point ap = new Point(20, 20);
+            //Agent a = new Agent(ap, nullZone, null, Colors.Red, 0);
+            //instance.AddObjectToWorld(a);
+
+            //Point bp = new Point(40, 20);
+            //Agent b = new Agent(bp, nullZone, null, Colors.Red, 0);
+            //instance.AddObjectToWorld(b);
+            #endregion
+
             Zone red = new Zone("Red(Blue)", "Random", Colors.Red, new Point(0, 0), 50, height);
             Zone blue = new Zone("Blue(Red)", "Random", Colors.Blue, new Point(width - 50, 0), 50, height);
             red.OppositeZone = blue;
@@ -118,7 +131,6 @@ namespace ALifeUni.ALife
             //for(int j = 0; j < 4; j++)
             //{
             //    int frRadius = Planet.World.NumberGen.Next(10, 23);
-
             //    Point rockCP = green.Distributor.NextAgentCentre(frRadius * 2, frRadius * 2);
             //    Circle cir = new Circle(rockCP, frRadius);
             //    FallingRock fr = new FallingRock(rockCP, cir, Colors.DarkOliveGreen, green, orange);

@@ -32,7 +32,7 @@ namespace ALifeUni.ALife
 
             //TODO: Factor this out. The SenseClusters shouldn't need to know the details of the collision detection
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[this.CollisionLevel];
-            List<WorldObject> collisions = collider.DetectCollisions(parent);
+            List<WorldObject> collisions = collider.DetectCollisions(this, parent);
 
             //Shape.DebugColor = collisions.Count > 0 ?  Colors.Red : Colors.Transparent;
             Shape.Color = collisions.Count > 0 ? Colors.DodgerBlue : Colors.DarkBlue;

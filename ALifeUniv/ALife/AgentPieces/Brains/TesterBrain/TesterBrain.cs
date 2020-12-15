@@ -1,4 +1,4 @@
-﻿namespace ALifeUni.ALife.AgentPieces.Brains.RandomBrains
+﻿namespace ALifeUni.ALife.AgentPieces.Brains.TesterBrain
 {
     class TesterBrain : IBrain
     {

@@ -24,7 +24,6 @@ namespace ALifeUni.ALife
             SubInputs.Add(new ProximityInput(name + ".SomethingClose"));
         }
 
-
         public override SenseCluster CloneSense(WorldObject newParent)
         {
             return new ProximityCluster(newParent, Name, myShape.Radius);

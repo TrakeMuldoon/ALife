@@ -12,15 +12,15 @@
 * [*] Implement End of turn trigger evaluations (i.e. reproduce/death)
 * [*] View Previous Agent State to see why they did what they did
 * [*] Implement Zones (starting zones)
-* [ ] Finish/Correct Cloning / Reproduction, including location of reproduction
-* [ ] Implement Scenario Testing Harness application. 
-* [ ] Implement First Scenario
+* [*] Finish/Correct Cloning / Reproduction, including location of reproduction
+* [*] Implement Scenario Testing Harness application. 
+* [*] Implement First Scenario
 * [ ] Implement randomized/modified sense attributes
 * [ ] Implement INumeric for every value (min, max, modmax, mod%, value, add, sub);
 * [ ] Implement ReadOnlyProperties for Internal/Mandatory values [i.e. Age, NumChildren, etc.]
 * [ ] Goal Based Features
-* [ ] Implement no movement countdown to death.
-* [ ] Implmenet running across the field scenario
+* [*] Implement no movement countdown to death.
+* [*] Implmenet running across the field scenario
 * [ ] Differentiate between the "Visible" and "physical" layers, so that you can there are things which are visible, but no tangible (perhaps smells and fogs?)
 
 
@@ -47,7 +47,7 @@ Required to start running simulations; currently, these are configured/provided.
    * [ ] "Variable mutability" - each agent is determining how mutable its offspring is
 
 ## End Goals
-* [ ] Run Foot Traffic Simulation - requires: Goals, Death Condition, and Base Clone Functionality (with custom start point)
+* [*] Run Foot Traffic Simulation - requires: Goals, Death Condition, and Base Clone Functionality (with custom start point)
 
 ## End-of-Run Tasks
 * [ ] Inspect End Of Run - some meaningful report at end of run (TBD); e.g., might include ability to export the best agent(s), or a selection based on some criterion/-ia
@@ -56,7 +56,7 @@ Required to start running simulations; currently, these are configured/provided.
 * [x] Inspect Individual Agent - window to show agent stats
 
 ## Senses and Behaviours
-* [ ] ProximityDetectorInput
+* [*] ProximityDetectorInput
 * [ ] SenseClusters: Most senses are composites of multiple values (0-255); e.g., ears could be "volume of sound", "pitch of sound" and "calibre/timbre of sound". This could include some optimizations about detection. Senses we want to target:
    * [x] Eyes
    * [ ] Ears

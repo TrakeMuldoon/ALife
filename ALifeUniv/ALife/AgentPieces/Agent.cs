@@ -137,6 +137,7 @@ namespace ALifeUni.ALife
             StatisticInput DeathTimer = new StatisticInput("DeathTimer", 0, Int32.MaxValue);
             Statistics.Add(DeathTimer.Name, DeathTimer);
             StatisticInput ZoneEscapeTimer = new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue);
+            Statistics.Add(ZoneEscapeTimer.Name, ZoneEscapeTimer);
         }
 
         private List<SenseCluster> GenerateSenses()

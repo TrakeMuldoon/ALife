@@ -117,12 +117,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ALife\AgentDistribution.cs" />
+    <None Include="ALife\AgentPieces\OldAgent.cs" />
     <Compile Include="ALife\AgentPieces\AgentActions\ActionCluster.cs" />
     <Compile Include="ALife\AgentPieces\AgentActions\ActionPart.cs" />
     <Compile Include="ALife\AgentPieces\AgentActions\ColorCluster.cs" />
     <Compile Include="ALife\AgentPieces\AgentActions\MoveCluster.cs" />
     <Compile Include="ALife\AgentPieces\Agent.cs" />
     <Compile Include="ALife\AgentPieces\AgentActions\RotateCluster.cs" />
+    <Compile Include="ALife\AgentPieces\AgentFactory.cs" />
     <Compile Include="ALife\AgentPieces\AgentIDGenerator.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourCondition.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourInput.cs" />

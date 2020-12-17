@@ -32,11 +32,7 @@ AGENTS
 			VALUEEVODELTAMIN
 			VALUEDELTAMAX
 
-		ReproductionRules 
-			ReproductionTrigger : <ReproductionTrigger>
-			ReproductionEffect : <ReproductionEffect>
-
-		NAME: (STRING)
+		GENUS: (STRING)
 		SHAPE:
 			TYPE
 			(CIRCLE):
@@ -47,7 +43,10 @@ AGENTS
 						VALUEEVODELTAMAX
 						VALUEEVODELTAMIN
 		SENSES:
+			NumEyes: EVONUMBUER
 
+		Senses:
+			NumEyes: { 1, 0, 3, 1, 1, }
 		ACTIONS:
 		
 		PROPERTIES:
@@ -56,6 +55,10 @@ AGENTS
 			TYPE
 				Behaviours Min
 				Behaviours Max
+
+		ReproductionRules 
+			ReproductionTrigger : <ReproductionTrigger>
+			ReproductionEffect : <ReproductionEffect>
 
 		ENDOFTURNTRIGGERS
 

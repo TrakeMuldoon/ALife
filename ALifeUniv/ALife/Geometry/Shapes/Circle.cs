@@ -66,8 +66,7 @@ namespace ALifeUni.ALife.UtilityClasses
 
         public IShape CloneShape()
         {
-            //TODO: Check if the CentrePoints are a problem;
-            Circle cir = new Circle(CentrePoint, Radius);
+            Circle cir = new Circle(new Point(CentrePoint.X, CentrePoint.Y), Radius);
             cir.Orientation = Orientation.Clone();
             cir.Color = Color.FromArgb(Color.A, Color.R, Color.G, Color.B);
             return cir;

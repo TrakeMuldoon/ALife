@@ -19,6 +19,8 @@
 * [ ] Implement INumeric for every value (min, max, modmax, mod%, value, add, sub);
 * [ ] Implement ReadOnlyProperties for Internal/Mandatory values [i.e. Age, NumChildren, etc.]
 * [ ] Goal Based Features
+* [ ] Finish Collision detection for circle/rectangle
+* [ ] Implement rectangular agents
 * [*] Implement no movement countdown to death.
 * [*] Implmenet running across the field scenario
 * [ ] Differentiate between the "Visible" and "physical" layers, so that you can there are things which are visible, but no tangible (perhaps smells and fogs?)

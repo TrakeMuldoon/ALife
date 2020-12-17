@@ -12,7 +12,7 @@ namespace ALifeUni.ALife
         public IShape Shape
         {
             get;
-            private set;
+            protected set;
         }
 
         public readonly String GenusLabel;
@@ -46,6 +46,15 @@ namespace ALifeUni.ALife
             GenusLabel = genusLabel;
             IndividualLabel = individualLabel;
             CollisionLevel = collisionLevel;
+            Alive = true;
+        }
+
+        protected WorldObject(String genusLabel, string individualLabel, string collisionLevel)
+        {
+            GenusLabel = genusLabel;
+            IndividualLabel = individualLabel;
+            CollisionLevel = collisionLevel;
+            NumChildren = 0;
             Alive = true;
         }
 

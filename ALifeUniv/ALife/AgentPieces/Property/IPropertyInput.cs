@@ -5,6 +5,8 @@ namespace ALifeUni.ALife
     public interface IPropertyInput
     {
         Type GetMyType();
+
+        IPropertyInput Clone();
     }
 
     public interface IPropertyInput<T> : IPropertyInput

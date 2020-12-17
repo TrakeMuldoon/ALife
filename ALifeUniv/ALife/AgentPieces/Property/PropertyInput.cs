@@ -80,5 +80,15 @@ namespace ALifeUni.ALife
             return typeof(double);
         }
 
+        public PropertyInput ClonePropertyInput()
+        {
+            return new PropertyInput(Name, PropertyMinimum, PropertyMaximum);
+        }
+
+        public IPropertyInput Clone()
+        {
+            return ClonePropertyInput();
+        }
+
     }
 }

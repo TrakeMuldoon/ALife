@@ -50,20 +50,21 @@ namespace ALifeUni.ALife
             }
         }
 
-        double valueMax;
-        public override double ValueMax
-        {
-            get { return valueMax; }
-            set { valueMax = value <= ValueHardMax ? value : ValueHardMax; }
-        }
         double valueMin;
         public override double ValueMin
         {
             get { return valueMin; }
             set { valueMin = value >= ValueHardMin ? value : ValueHardMin; }
         }
-        public double ValueHardMax;
+        double valueMax;
+        public override double ValueMax
+        {
+            get { return valueMax; }
+            set { valueMax = value <= ValueHardMax ? value : ValueHardMax; }
+        }
         public double ValueHardMin;
+        public double ValueHardMax;
+        public double ValueMinMaxEvoMax;
 
         double deltaMax;
         public double DeltaMax
@@ -81,7 +82,7 @@ namespace ALifeUni.ALife
         public double DeltaHardMax;
 
         public EvoNumber(double startValue, double startValueEvoDeltaMax
-                        , double valueMin, double valueMax, double valueHardMin, double valueHardMax
+                        , double valueMin, double valueMax, double valueHardMin, double valueHardMax, double valueMinMaxEvoMax
                         , double deltaMax, double deltaEvoMax, double deltaHardMax
                         , double increment, bool manualClamp)
             : base(startValue, valueMin, valueMax, increment, manualClamp)
@@ -90,6 +91,7 @@ namespace ALifeUni.ALife
             DeltaEvoMax = deltaEvoMax;
             this.deltaMax = deltaMax;
 
+            ValueMinMaxEvoMax = valueMinMaxEvoMax;
             ValueHardMin = valueHardMin;
             ValueHardMax = valueHardMax;
             ValueMin = valueMin;

@@ -75,5 +75,15 @@ namespace ALifeUni.ALife
         {
             return typeof(int);
         }
+
+        public StatisticInput CloneStatisticInput()
+        {
+            return new StatisticInput(Name, StatisticMinimum, StatisticMaximum);
+        }
+
+        public IPropertyInput Clone()
+        {
+            return CloneStatisticInput();
+        }
     }
 }

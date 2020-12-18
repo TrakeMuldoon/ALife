@@ -1,6 +1,7 @@
 ﻿using ALifeUni.ALife.Inputs.SenseClusters;
 using ALifeUni.ALife.UtilityClasses;
 using System;
+using Windows.UI;
 
 namespace ALifeUni.ALife
 {
@@ -11,15 +12,38 @@ namespace ALifeUni.ALife
         {
             get { return myShape; }
         }
-
-        public EyeCluster(WorldObject parent, String name) : base(parent, name)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="name"></param>
+        [Obsolete("EyeClusterDefault is deprecated, please use EyeCluster with EvoNumbers instead.")]
+        public EyeCluster(WorldObject parent, String name) : this(parent, name
+                                                                    , new EvoNumber(5,0,5,5,5,5,0,0,0,0,true)
+                                                                    , new EvoNumber(355, 0, 355, 355, 355, 355, 0, 0, 0, 0, true)
+                                                                    , new EvoNumber(80, 0, 80, 80, 80, 80, 0, 0, 0, 0, true)
+                                                                    , new EvoNumber(25, 0, 25, 25, 25, 25, 0, 0, 0, 0, true))
         {
-            //TODO: Hardcoded sweep and orientation angles here. They should be linked to parent or to configuration
-            //TODO: Hardcoded other angles here too. All bad. BAD
-            Angle orientationAroundParent = new Angle(5);
-            Angle relativeOrientation = new Angle(355);
-            float radius = 80;
-            Angle sweep = new Angle(25);
+        }
+
+        private EvoNumber EvoOrientationAroundParent;
+        private EvoNumber EvoRelativeOrientation;
+        private EvoNumber EvoRadius;
+        private EvoNumber EvoSweep;
+
+        public EyeCluster(WorldObject parent, String name
+                          , EvoNumber eOrientationAroundParent, EvoNumber eRelativeOrientation, EvoNumber eRadius, EvoNumber eSweep) 
+            : base(parent, name)
+        {
+            EvoOrientationAroundParent = eOrientationAroundParent;
+            EvoRelativeOrientation = eRelativeOrientation;
+            EvoRadius = eRadius;
+            EvoSweep = eSweep;
+
+            Angle orientationAroundParent = new Angle(eOrientationAroundParent.StartValue);
+            Angle relativeOrientation = new Angle(eRelativeOrientation.StartValue);
+            float radius = (float)eRadius.StartValue;
+            Angle sweep = new Angle(eSweep.StartValue);
             myShape = new ChildSector(orientationAroundParent, parent.Shape, 5.0 //TODO: HUUUUUUGE BUG. Eyes are hardcoded to be 5 units from centre
                                       , relativeOrientation, radius, sweep);
             SubInputs.Add(new EyeInput(name + ".SeeSomething"));
@@ -35,14 +59,11 @@ namespace ALifeUni.ALife
 
         public override SenseCluster CloneSense(WorldObject newParent)
         {
-            EyeCluster newEC = new EyeCluster(newParent, Name);
-            newEC.myShape.OrientationAroundParent = myShape.OrientationAroundParent.Clone();
-            newEC.myShape.RelativeOrientation = myShape.RelativeOrientation.Clone();
-            newEC.myShape.Radius = myShape.Radius;
-            newEC.myShape.SweepAngle = myShape.SweepAngle.Clone();
+            EyeCluster newEC = new EyeCluster(newParent, Name,
+                                              EvoOrientationAroundParent.Clone(), EvoRelativeOrientation.Clone(), EvoRadius.Clone(), EvoSweep.Clone());
             //TODO: Fix bug with Colors being passed around and not cloned properly
-            newEC.myShape.Color = myShape.Color;
-            newEC.myShape.DebugColor = myShape.DebugColor;
+            newEC.myShape.Color = Color.FromArgb(myShape.Color.A, myShape.Color.R, myShape.Color.G, myShape.Color.B);
+            newEC.myShape.DebugColor = Color.FromArgb(myShape.DebugColor.A, myShape.DebugColor.R, myShape.DebugColor.G, myShape.DebugColor.B);
             return newEC;
         }
     }

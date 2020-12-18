@@ -42,12 +42,11 @@ namespace ALifeUni.ALife
 
         public bool ManualClamp;
 
-        public BoundedNumber(double value, double minValue, double maxValue, double increment, bool manualClamp)
+        public BoundedNumber(double value, double minValue, double maxValue, bool manualClamp)
         {
-            Value = value;
+            val = value;
             ValueMin = minValue;
             ValueMax = maxValue;
-            Increment = increment;
             ManualClamp = manualClamp;
         }
 

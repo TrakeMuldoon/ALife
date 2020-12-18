@@ -84,8 +84,8 @@ namespace ALifeUni.ALife
         public EvoNumber(double startValue, double startValueEvoDeltaMax
                         , double valueMin, double valueMax, double valueHardMin, double valueHardMax, double valueMinMaxEvoMax
                         , double deltaMax, double deltaEvoMax, double deltaHardMax
-                        , double increment, bool manualClamp)
-            : base(startValue, valueMin, valueMax, increment, manualClamp)
+                        , bool manualClamp)
+            : base(startValue, valueMin, valueMax, manualClamp)
         {
             DeltaHardMax = deltaHardMax;
             DeltaEvoMax = deltaEvoMax;
@@ -96,10 +96,15 @@ namespace ALifeUni.ALife
             ValueHardMax = valueHardMax;
             ValueMin = valueMin;
             ValueMax = valueMax;
-            Value = startValue;
+            val = startValue;
 
             StartValue = startValue;
             StartValueEvoDeltaMax = startValueEvoDeltaMax;
+        }
+
+        public EvoNumber Clone()
+        {
+            return new EvoNumber(StartValue, StartValueEvoDeltaMax, ValueMin, ValueMax, ValueHardMin, ValueHardMax, ValueMinMaxEvoMax, DeltaMax, DeltaEvoMax, DeltaHardMax, ManualClamp);
         }
     }
 }

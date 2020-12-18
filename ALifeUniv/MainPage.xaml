@@ -114,6 +114,7 @@
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
             <TextBlock x:Name="ZoneInfo"></TextBlock>
+            <TextBlock x:Name="Turns"></TextBlock>
             <CheckBox x:Name="ShowGeneology" Click="ShowGeneology_Checked">Show Ancestry</CheckBox>
             <Button x:Name="LongestLived" Click="LongestLived_Click">Oldest</Button>
             <Button x:Name="ShortestBrain" Click="ShortestBrain_Click">Smallest Brain</Button>

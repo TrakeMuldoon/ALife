@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ALifeUni.ALife.Utility;
+using System;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -73,7 +74,7 @@ namespace ALifeUni.ALife.UtilityClasses
         {
             ChildSector clon = new ChildSector(OrientationAroundParent, Parent, distanceFromParentCentre
                                                 , RelativeOrientation, Radius, SweepAngle);
-            clon.Color = Color.FromArgb(Color.A, Color.R, Color.G, Color.B);
+            clon.Color = Color.Clone();
             return clon;
         }
     }

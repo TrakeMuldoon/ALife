@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Windows.Foundation;
 using Windows.UI;
+using ALifeUni.ALife.Utility;
 
 namespace ALifeUni.ALife
 {
@@ -82,7 +83,7 @@ namespace ALifeUni.ALife
         }
 
         internal void CompleteInitialization(Agent parent, int generation, IBrain newBrain)
-        {
+        {         
             Generation = generation;
             myBrain = newBrain;
 
@@ -153,7 +154,7 @@ namespace ALifeUni.ALife
 
         public void EndOfTurnTriggers()
         {
-            if(Statistics["DeathTimer"].Value > 999)
+            if(Statistics["DeathTimer"].Value > 1499)
             {
                 Die();
             }

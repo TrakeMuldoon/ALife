@@ -126,6 +126,7 @@ namespace ALifeUni
             }
             sb.AppendLine("WOOOORDL: " + Planet.World.AllActiveObjects.Where(wo => wo.Alive).Count());
             ZoneInfo.Text = sb.ToString();
+            Turns.Text = Planet.World.Turns.ToString();
         }
 
         private void DrawLayer(LayerUISettings ui, CanvasAnimatedDrawEventArgs args)

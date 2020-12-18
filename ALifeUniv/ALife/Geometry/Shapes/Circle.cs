@@ -1,4 +1,5 @@
-﻿using Windows.Foundation;
+﻿using ALifeUni.ALife.Utility;
+using Windows.Foundation;
 using Windows.UI;
 
 namespace ALifeUni.ALife.UtilityClasses
@@ -68,7 +69,7 @@ namespace ALifeUni.ALife.UtilityClasses
         {
             Circle cir = new Circle(new Point(CentrePoint.X, CentrePoint.Y), Radius);
             cir.Orientation = Orientation.Clone();
-            cir.Color = Color.FromArgb(Color.A, Color.R, Color.G, Color.B);
+            cir.Color = Color.Clone();
             return cir;
         }
     }

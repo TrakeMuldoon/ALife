@@ -94,7 +94,7 @@ namespace ALifeUni.ALife
                   , parent.GenusLabel                                                            //Genus Label
                   , AgentIDGenerator.GetNextChildId(parent.IndividualLabel, parent.NumChildren)  //Individual Label
                   , parent.CollisionLevel                                                        //Collision Level
-                  , Color.FromArgb(parent.Shape.Color.A, parent.Shape.Color.R, parent.Shape.Color.G, parent.Shape.Color.B))  //Start Color
+                  , parent.Shape.Color.Clone())                                                  //Start Color
         {
             Shape.CentrePoint = birthPosition;
             StartOrientation = parent.StartOrientation;
@@ -262,7 +262,8 @@ namespace ALifeUni.ALife
             child.Shape.Orientation = orientation;
             child.Zone = startZone;
             child.TargetZone = targetZone;
-            child.Shape.Color = Color.FromArgb(255, color.R, color.G, color.B);
+            child.Shape.Color = color.Clone();
+            child.Shape.Color.A = 255;
             return Reproduce(child);
         }
 

@@ -1,4 +1,5 @@
 ﻿using ALifeUni.ALife.Inputs.SenseClusters;
+using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.UtilityClasses;
 using System;
 using Windows.UI;
@@ -62,8 +63,8 @@ namespace ALifeUni.ALife
             EyeCluster newEC = new EyeCluster(newParent, Name,
                                               EvoOrientationAroundParent.Clone(), EvoRelativeOrientation.Clone(), EvoRadius.Clone(), EvoSweep.Clone());
             //TODO: Fix bug with Colors being passed around and not cloned properly
-            newEC.myShape.Color = Color.FromArgb(myShape.Color.A, myShape.Color.R, myShape.Color.G, myShape.Color.B);
-            newEC.myShape.DebugColor = Color.FromArgb(myShape.DebugColor.A, myShape.DebugColor.R, myShape.DebugColor.G, myShape.DebugColor.B);
+            newEC.myShape.Color = myShape.Color.Clone();
+            newEC.myShape.DebugColor = myShape.Color.Clone();
             return newEC;
         }
     }

@@ -102,31 +102,18 @@ namespace ALifeUni.ALife
             instance.AddZone(orange);
 
             int numAgents = 50;
-            int agentRadius = 5;
             for(int i = 0; i < numAgents; i++)
             {
-                Point redCP = red.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
-                Agent rag = new Agent(redCP, red, blue, Colors.Blue, 0);
-                instance.AddObjectToWorld(rag);
-
-                Point blueCP = blue.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
-                Agent bag = new Agent(blueCP, blue, red, Colors.Red, 180);
-                instance.AddObjectToWorld(bag);
-
-                Point greenCP = green.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
-                Agent gag = new Agent(greenCP, green, orange, Colors.Orange, 90);
-                instance.AddObjectToWorld(gag);
-
-                Point orangeCP = orange.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
-                Agent oag = new Agent(orangeCP, orange, green, Colors.Green, 270);
-                instance.AddObjectToWorld(oag);
+                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
+                Agent bag = AgentFactory.CreateAgent("Agent", blue, red, Colors.Red, 180);
+                Agent gag = AgentFactory.CreateAgent("Agent", green, orange, Colors.Orange, 90);
+                Agent oag = AgentFactory.CreateAgent("Agent", orange, green, Colors.Green, 270);
             }
 
             Point rockCP = new Point((width / 2) + (width / 15), height / 2);
             Circle cir = new Circle(rockCP, 30);
             FallingRock fr = new FallingRock(rockCP, cir, Colors.Black);
             instance.AddObjectToWorld(fr);
-
 
             //for(int j = 0; j < 4; j++)
             //{

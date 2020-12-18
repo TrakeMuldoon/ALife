@@ -63,21 +63,51 @@ namespace ALifeUni.ALife
             set;
         }
 
-        public Agent(String genusLabel)
-            : base(genusLabel
-                  , AgentIDGenerator.GetNextAgentId()
-                  , ReferenceValues.CollisionLevelPhysical)
+        public void SetShape(IShape newShape)
         {
-
+            Shape = newShape;
         }
+        //public Agent(String genusLabel)
+        //    : base(genusLabel
+        //          , AgentIDGenerator.GetNextAgentId()
+        //          , ReferenceValues.CollisionLevelPhysical)
+        //{
+
+        //}
 
         public Agent(String genusLabel, string individualLabel, string collisionLevel)
             : base(genusLabel, individualLabel, collisionLevel)
         {
-            Parent = null;
-            LivingAncestor = null;
+
         }
 
+        internal void CompleteInitialization(Agent parent, int generation, IBrain newBrain)
+        {
+            Generation = generation;
+            myBrain = newBrain;
+
+            Parent = parent;
+            LivingAncestor = parent;
+            Shadow = new AgentShadow(this);
+            //Release them out into the world
+            Planet.World.AddObjectToWorld(this);
+        }
+
+        internal void AttachAttributes(List<SenseCluster> senses, List<PropertyInput> properties, List<StatisticInput> statistics, List<ActionCluster> actions)
+        {
+            Senses = senses;
+            properties.ForEach((p) => Properties.Add(p.Name, p));
+            statistics.ForEach((s) => Statistics.Add(s.Name, s));
+            Actions = CreateRODForActions(actions);
+        }
+
+        private ReadOnlyDictionary<string, ActionCluster> CreateRODForActions(List<ActionCluster> actionList)
+        {
+            Dictionary<string, ActionCluster> myActions = new Dictionary<string, ActionCluster>();
+            actionList.ForEach((ac) => myActions.Add(ac.Name, ac));
+
+            return new ReadOnlyDictionary<string, ActionCluster>(myActions);
+        }
 
         public override void Die()
         {
@@ -120,29 +150,6 @@ namespace ALifeUni.ALife
             EndOfTurnTriggers();
         }
 
-        internal void SetStaticInfo(int generation)
-        {
-            Generation = generation;
-            Parent = null;
-            LivingAncestor = null;
-        }
-
-        internal void AttachAttributes(IShape newShape, List<SenseCluster> senses, List<PropertyInput> properties, List<StatisticInput> statistics, List<ActionCluster> actions)
-        {
-            Shape = newShape;
-            Senses = senses;
-            properties.ForEach((p) => Properties.Add(p.Name, p));
-            statistics.ForEach((s) => Statistics.Add(s.Name, s));
-            Actions = CreateRODForActions(actions);
-        }
-
-        private ReadOnlyDictionary<string, ActionCluster> CreateRODForActions(List<ActionCluster> actionList)
-        {
-            Dictionary<string, ActionCluster> myActions = new Dictionary<string, ActionCluster>();
-            actionList.ForEach((ac) => myActions.Add(ac.Name, ac));
-
-            return new ReadOnlyDictionary<string, ActionCluster>(myActions);
-        }
 
         public void EndOfTurnTriggers()
         {
@@ -168,13 +175,14 @@ namespace ALifeUni.ALife
                     Shape.CentrePoint = myPoint;
                     collider.MoveObject(this);
 
-                    foreach(Zone zon in Planet.World.Zones.Values)
-                    {
-                        if(zon.Name != Zone.Name)
-                        {
-                            Reproduce(zon, zon.OppositeZone, new Angle(zon.OrientationDegrees), zon.OppositeZone.Color);
-                        }
-                    }
+                    AgentFactory.ReproduceFromAgent(this);
+                    //foreach(Zone zon in Planet.World.Zones.Values)
+                    //{
+                    //    if(zon.Name != Zone.Name)
+                    //    {
+                    //        //Reproduce(zon, zon.OppositeZone, new Angle(zon.OrientationDegrees), zon.OppositeZone.Color);
+                    //    }
+                    //}
 
                     //You have a new countdown
                     Statistics["DeathTimer"].Value = 0;
@@ -191,11 +199,13 @@ namespace ALifeUni.ALife
 
         public override WorldObject Clone()
         {
+            NumChildren++;
             return AgentFactory.CloneAgent(this);
         }
 
         public override WorldObject Reproduce()
         {
+            NumChildren++;
             return AgentFactory.ReproduceFromAgent(this);
         }
     }

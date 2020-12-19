@@ -64,6 +64,57 @@ namespace ALifeUni.ALife.UtilityClasses
         }
 
         private BoundingBox? myBox;
+
+        private Point topLeft, topRight, bottomLeft, bottomRight;
+        public Point TopLeft
+        {
+            get
+            {
+                if(myBox == null)
+                {
+                    GetBoundingBox();
+                }
+                return topLeft;
+            }
+            private set { topLeft = value; }
+        }
+        public Point TopRight
+        {
+            get
+            {
+                if(myBox == null)
+                {
+                    GetBoundingBox();
+                }
+                return topRight;
+            }
+            private set { topRight = value; }
+        }
+        public Point BottomRight
+        {
+            get
+            {
+                if(myBox == null)
+                {
+                    GetBoundingBox();
+                }
+                return bottomRight;
+            }
+            private set { bottomRight = value; }
+        }
+        public Point BottomLeft
+        {
+            get
+            {
+                if(myBox == null)
+                {
+                    GetBoundingBox();
+                }
+                return bottomLeft;
+            }
+            private set { bottomLeft = value; }
+        }
+
         private BoundingBox GetBoundingBox()
         {
             if(myBox != null)
@@ -78,19 +129,17 @@ namespace ALifeUni.ALife.UtilityClasses
                 }
             }
 
-
             Point tempPoint = CentrePoint;
             tempPoint = ExtraMath.TranslateByVector(tempPoint, Orientation.Radians, FBLength / 2);
-            Point topLeft = ExtraMath.TranslateByVector(tempPoint, Orientation.Radians - (Math.PI / 2), RLWidth / 2);
+            TopLeft = ExtraMath.TranslateByVector(tempPoint, Orientation.Radians - (Math.PI / 2), RLWidth / 2);
+            TopRight = ExtraMath.TranslateByVector(TopLeft, Orientation.Radians + (Math.PI / 2), RLWidth);
+            BottomRight = ExtraMath.TranslateByVector(TopRight, Orientation.Radians + Math.PI, FBLength);
+            BottomLeft = ExtraMath.TranslateByVector(BottomRight, Orientation.Radians + (Math.PI * 3 / 2), RLWidth);
 
-            Point topRight = ExtraMath.TranslateByVector(topLeft, Orientation.Radians + (Math.PI / 2), RLWidth);
-            Point bottomRight = ExtraMath.TranslateByVector(topRight, Orientation.Radians + Math.PI, FBLength);
-            Point bottomLeft = ExtraMath.TranslateByVector(bottomRight, Orientation.Radians + (Math.PI * 3 / 2), RLWidth);
-
-            double maxX = ExtraMath.MultiMax(topLeft.X, topRight.X, bottomLeft.X, bottomRight.X);
-            double minX = ExtraMath.MultiMin(topLeft.X, topRight.X, bottomLeft.X, bottomRight.X);
-            double maxY = ExtraMath.MultiMax(topLeft.Y, topRight.Y, bottomLeft.Y, bottomRight.Y);
-            double minY = ExtraMath.MultiMin(topLeft.Y, topRight.Y, bottomLeft.Y, bottomRight.Y);
+            double maxX = ExtraMath.MultiMax(TopLeft.X, TopRight.X, BottomLeft.X, BottomRight.X);
+            double minX = ExtraMath.MultiMin(TopLeft.X, TopRight.X, BottomLeft.X, BottomRight.X);
+            double maxY = ExtraMath.MultiMax(TopLeft.Y, TopRight.Y, BottomLeft.Y, BottomRight.Y);
+            double minY = ExtraMath.MultiMin(TopLeft.Y, TopRight.Y, BottomLeft.Y, BottomRight.Y);
 
             BoundingBox bb = new BoundingBox(minX, minY, maxX, maxY);
             myBox = bb;

@@ -44,6 +44,8 @@ namespace ALifeUni.ALife
 
         public abstract SenseCluster CloneSense(WorldObject newParent);
 
+        public abstract SenseCluster ReproduceSense(WorldObject newParent);
+
         //On/Off
         //How Many (0-255 for each)
         //Detect Magnitude (Volume for sound, power for smell, Vibrance for sight)

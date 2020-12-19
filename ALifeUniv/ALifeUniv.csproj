@@ -150,11 +150,11 @@
     <Compile Include="ALife\AgentPieces\Senses\Proximity\ProximityCluster.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Proximity\ProximityInput.cs" />
     <Compile Include="ALife\Collision\foo.cs" />
-    <Compile Include="ALife\EvoNumber.cs" />
+    <Compile Include="ALife\Utility\EvoNumber.cs" />
     <Compile Include="ALife\Geometry\Shapes\AARectangle.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildCircle.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildSector.cs" />
-    <Compile Include="ALife\BoundedNumber.cs" />
+    <Compile Include="ALife\Utility\BoundedNumber.cs" />
     <Compile Include="ALife\Utility\Extensions.cs" />
     <Compile Include="ALife\WorldObjects\EmptyObject.cs" />
     <Compile Include="ALife\WorldObjects\AgentShadow.cs" />

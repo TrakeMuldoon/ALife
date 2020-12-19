@@ -20,7 +20,7 @@ namespace ALifeUni.ALife
         /// <param name="name"></param>
         [Obsolete("EyeClusterDefault is deprecated, please use EyeCluster with EvoNumbers instead.")]
         public EyeCluster(WorldObject parent, String name) : this(parent, name
-                                                                    , new EvoNumber(5,0,5,5,5,5,0,0,0,0,true)
+                                                                    , new EvoNumber(5, 0, 5, 5, 5, 5, 0, 0, 0, 0,true)
                                                                     , new EvoNumber(355, 0, 355, 355, 355, 355, 0, 0, 0, 0, true)
                                                                     , new EvoNumber(80, 0, 80, 80, 80, 80, 0, 0, 0, 0, true)
                                                                     , new EvoNumber(25, 0, 25, 25, 25, 25, 0, 0, 0, 0, true))
@@ -62,6 +62,16 @@ namespace ALifeUni.ALife
         {
             EyeCluster newEC = new EyeCluster(newParent, Name,
                                               EvoOrientationAroundParent.Clone(), EvoRelativeOrientation.Clone(), EvoRadius.Clone(), EvoSweep.Clone());
+            //TODO: Fix bug with Colors being passed around and not cloned properly
+            newEC.myShape.Color = myShape.Color.Clone();
+            newEC.myShape.DebugColor = myShape.Color.Clone();
+            return newEC;
+        }
+
+        public override SenseCluster ReproduceSense(WorldObject newParent)
+        {
+            EyeCluster newEC = new EyeCluster(newParent, Name,
+                                              EvoOrientationAroundParent.Evolve(), EvoRelativeOrientation.Evolve(), EvoRadius.Evolve(), EvoSweep.Evolve());
             //TODO: Fix bug with Colors being passed around and not cloned properly
             newEC.myShape.Color = myShape.Color.Clone();
             newEC.myShape.DebugColor = myShape.Color.Clone();

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ALifeUni.ALife
+namespace ALifeUni.ALife.Utility
 {
 
     public class EvoNumber : BoundedNumber
@@ -104,7 +104,30 @@ namespace ALifeUni.ALife
 
         public EvoNumber Clone()
         {
-            return new EvoNumber(StartValue, StartValueEvoDeltaMax, ValueMin, ValueMax, ValueHardMin, ValueHardMax, ValueMinMaxEvoMax, DeltaMax, DeltaEvoMax, DeltaHardMax, ManualClamp);
+            return new EvoNumber(StartValue, StartValueEvoDeltaMax
+                                , ValueMin, ValueMax, ValueHardMin, ValueHardMax, ValueMinMaxEvoMax
+                                , DeltaMax, DeltaEvoMax, DeltaHardMax
+                                , ManualClamp);
+        }
+
+        public EvoNumber Evolve()
+        {
+            double newStartValue = EvolveANumber(StartValue, StartValueEvoDeltaMax, ValueMin, ValueMax);
+            double newValueMin = EvolveANumber(ValueMin, ValueMinMaxEvoMax, ValueHardMin, ValueHardMax);
+            double newValueMax = EvolveANumber(ValueMax, ValueMinMaxEvoMax, newValueMin, ValueHardMax);
+            double newDeltaMax = EvolveANumber(DeltaMax, DeltaEvoMax, 0, DeltaHardMax);
+
+            return new EvoNumber(newStartValue, StartValueEvoDeltaMax
+                                , newValueMin, newValueMax, ValueHardMin, ValueHardMax, ValueMinMaxEvoMax
+                                , newDeltaMax, DeltaEvoMax, DeltaHardMax
+                                , ManualClamp);
+        }
+
+        private double EvolveANumber(double current, double deltaMax, double hardMin, double hardMax)
+        {
+            double moddedValue = current + (Planet.World.NumberGen.NextDouble() * deltaMax * 2) - deltaMax;
+            double clampedValue = Math.Clamp(moddedValue, hardMin, hardMax);
+            return clampedValue;
         }
     }
 }

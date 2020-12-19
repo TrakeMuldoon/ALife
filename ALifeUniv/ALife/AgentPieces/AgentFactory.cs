@@ -1,5 +1,6 @@
 ﻿using ALifeUni.ALife.AgentPieces.Brains;
 using ALifeUni.ALife.Brains.BehaviourBrains;
+using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,11 @@ namespace ALifeUni.ALife.AgentPieces
 
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {
-                new EyeCluster(agent, "Eye1"),
+                new EyeCluster(agent, "Eye1"
+                                , new EvoNumber(0, 20, -360, 360, -360, 360, 0, 0, 0, 0,true)   //Orientation Around Parent
+                                , new EvoNumber(0, 30, -360, 360, -360, 360, 0, 0, 0, 0, true)  //Relative Orientation
+                                , new EvoNumber(80, 3, 40, 120, 40, 120, 0, 0, 0, 0, true)      //Radius
+                                , new EvoNumber(25, 1, 15, 40, 15, 40, 0, 0, 0, 0, true)),      //Sweep
                 new ProximityCluster(agent, "Proximity1")
             };
 
@@ -116,7 +121,7 @@ namespace ALifeUni.ALife.AgentPieces
             evolvedShape.CentrePoint = newCentrePoint;
 
             List<SenseCluster> evolvedSenses = new List<SenseCluster>();
-            newParent.Senses.ForEach((sc) => evolvedSenses.Add(sc.CloneSense(newChild))); //TODO: EVOLVE THIS
+            newParent.Senses.ForEach((sc) => evolvedSenses.Add(sc.ReproduceSense(newChild)));
 
             List<PropertyInput> evolvedProperties = new List<PropertyInput>();
             foreach(PropertyInput pi in newParent.Properties.Values) evolvedProperties.Add(pi.ClonePropertyInput()); //TODO: EVOLVE THIS

@@ -154,7 +154,7 @@ namespace ALifeUni.ALife
 
         public void EndOfTurnTriggers()
         {
-            if(Statistics["DeathTimer"].Value > 1499)
+            if(Statistics["DeathTimer"].Value > 1899)
             {
                 Die();
             }

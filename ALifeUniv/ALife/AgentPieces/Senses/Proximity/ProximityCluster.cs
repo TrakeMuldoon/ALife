@@ -28,5 +28,10 @@ namespace ALifeUni.ALife
         {
             return new ProximityCluster(newParent, Name, myShape.Radius);
         }
+
+        public override SenseCluster ReproduceSense(WorldObject newParent)
+        {
+            return new ProximityCluster(newParent, Name, myShape.Radius);
+        }
     }
 }

@@ -176,7 +176,7 @@ namespace ALifeUni.ALife
                     Shape.CentrePoint = myPoint;
                     collider.MoveObject(this);
 
-                    AgentFactory.ReproduceFromAgent(this);
+                    Reproduce();
                     //foreach(Zone zon in Planet.World.Zones.Values)
                     //{
                     //    if(zon.Name != Zone.Name)

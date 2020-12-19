@@ -20,10 +20,10 @@ namespace ALifeUni.ALife
         /// <param name="name"></param>
         [Obsolete("EyeClusterDefault is deprecated, please use EyeCluster with EvoNumbers instead.")]
         public EyeCluster(WorldObject parent, String name) : this(parent, name
-                                                                    , new EvoNumber(5, 0, 5, 5, 5, 5, 0, 0, 0, 0,true)
-                                                                    , new EvoNumber(355, 0, 355, 355, 355, 355, 0, 0, 0, 0, true)
-                                                                    , new EvoNumber(80, 0, 80, 80, 80, 80, 0, 0, 0, 0, true)
-                                                                    , new EvoNumber(25, 0, 25, 25, 25, 25, 0, 0, 0, 0, true))
+                                                                    , new ROEvoNumber(5, 0, 5, 5, 5, 5, 0)
+                                                                    , new ROEvoNumber(355, 0, 355, 355, 355, 355, 0)
+                                                                    , new ROEvoNumber(80, 0, 80, 80, 80, 80, 0)
+                                                                    , new ROEvoNumber(25, 0, 25, 25, 25, 25, 0))
         {
         }
 

@@ -34,10 +34,10 @@ namespace ALifeUni.ALife.AgentPieces
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {
                 new EyeCluster(agent, "Eye1"
-                                , new EvoNumber(0, 20, -360, 360, -360, 360, 0, 0, 0, 0,true)   //Orientation Around Parent
-                                , new EvoNumber(0, 30, -360, 360, -360, 360, 0, 0, 0, 0, true)  //Relative Orientation
-                                , new EvoNumber(80, 3, 40, 120, 40, 120, 0, 0, 0, 0, true)      //Radius
-                                , new EvoNumber(25, 1, 15, 40, 15, 40, 0, 0, 0, 0, true)),      //Sweep
+                                , new ROEvoNumber(0, 20, -360, 360, -360, 360, 0)  //Orientation Around Parent
+                                , new ROEvoNumber(0, 30, -360, 360, -360, 360, 0)  //Relative Orientation
+                                , new ROEvoNumber(80, 3, 40, 120, 40, 120, 0)      //Radius
+                                , new ROEvoNumber(25, 1, 15, 40, 15, 40, 0)),      //Sweep
                 new ProximityCluster(agent, "Proximity1")
             };
 

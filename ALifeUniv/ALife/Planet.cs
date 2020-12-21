@@ -110,19 +110,15 @@ namespace ALifeUni.ALife
                 Agent oag = AgentFactory.CreateAgent("Agent", orange, green, Colors.Green, 270);
             }
 
-            Point rockCP = new Point((width / 2) + (width / 15), height / 2);
+            Point rockCP = new Point((width / 2) - (width / 15), height / 2);
             Circle cir = new Circle(rockCP, 30);
             FallingRock fr = new FallingRock(rockCP, cir, Colors.Black);
             instance.AddObjectToWorld(fr);
 
-            //for(int j = 0; j < 4; j++)
-            //{
-            //    int frRadius = Planet.World.NumberGen.Next(10, 23);
-            //    Point rockCP = green.Distributor.NextAgentCentre(frRadius * 2, frRadius * 2);
-            //    Circle cir = new Circle(rockCP, frRadius);
-            //    FallingRock fr = new FallingRock(rockCP, cir, Colors.DarkOliveGreen, green, orange);
-            //    instance.AddObjectToWorld(fr);
-            //}
+            Point rockRCP = new Point((width / 2), (height / 2) - (height / 15));
+            Rectangle rec = new Rectangle(rockRCP, 10, 30, Colors.BurlyWood);
+            FallingRock frR = new FallingRock(rockRCP, rec, Colors.BurlyWood);
+            instance.AddObjectToWorld(frR);
         }
 
         #region Instance Stuff

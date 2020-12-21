@@ -70,6 +70,7 @@ namespace ALifeUni.ALife
             //    Shape.CentrePoint = myPoint;
             //    collider.MoveObject(this);
             //}
+            Shape.Reset();
         }
 
         public override void ExecuteDeadTurn()

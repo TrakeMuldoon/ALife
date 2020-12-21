@@ -65,7 +65,7 @@ namespace ALifeUni.ALife.UtilityClasses
             return ShapesEnum.Circle;
         }
 
-        public IShape CloneShape()
+        public virtual IShape CloneShape()
         {
             Circle cir = new Circle(new Point(CentrePoint.X, CentrePoint.Y), Radius);
             cir.Orientation = Orientation.Clone();

@@ -5,7 +5,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.UtilityClasses
 {
-    public class ChildRectangle : Rectangle
+    public class ChildRectangle : Rectangle, IChildShape
     {
         public readonly IShape Parent;
         public readonly Angle RelativeToParentOrientation;
@@ -44,15 +44,19 @@ namespace ALifeUni.ALife.UtilityClasses
             myCentrePoint = centre;
         }
 
-        public override IShape CloneShape()
-        {
-            throw new NotImplementedException("Cannot clone a childshape");
-        }
-
         public override void Reset()
         {
             myCentrePoint = null;
             base.Reset();
+        }
+
+        public override IShape CloneShape()
+        {
+            throw new NotImplementedException("Cannot clone a childshape");
+        }
+        public IShape CloneChildShape(IShape parent)
+        {
+            return new ChildRectangle(parent, RelativeToParentOrientation.Clone(), DistFromParentCentre, FBLength, RLWidth);
         }
     }
 }

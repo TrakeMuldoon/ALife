@@ -5,7 +5,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.UtilityClasses
 {
-    public class ChildSector : Sector
+    public class ChildSector : Sector, IChildShape
     {
         public override Angle Orientation
         {
@@ -35,8 +35,8 @@ namespace ALifeUni.ALife.UtilityClasses
         public IShape Parent;
         private double distanceFromParentCentre;
 
-        public ChildSector(Angle orientationAroundParent
-                            , IShape parent
+        public ChildSector(IShape parent
+                            , Angle orientationAroundParent
                             , double distFromParentCentre
                             , Angle relativeOrientationAngle
                             , float radius
@@ -73,6 +73,10 @@ namespace ALifeUni.ALife.UtilityClasses
         public override IShape CloneShape()
         {
             throw new NotImplementedException("Cannot clone a ChildShape");
+        }
+        public IShape CloneChildShape(IShape parent)
+        {
+            return new ChildSector(parent, OrientationAroundParent.Clone(), distanceFromParentCentre, RelativeOrientation.Clone(), Radius, SweepAngle.Clone());
         }
     }
 }

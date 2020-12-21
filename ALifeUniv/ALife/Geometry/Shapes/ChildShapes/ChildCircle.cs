@@ -3,7 +3,7 @@ using Windows.Foundation;
 
 namespace ALifeUni.ALife.UtilityClasses
 {
-    public class ChildCircle : Circle
+    public class ChildCircle : Circle, IChildShape
     {
         public readonly IShape Parent;
         public readonly Angle OrientationAroundParent;
@@ -30,6 +30,15 @@ namespace ALifeUni.ALife.UtilityClasses
             OrientationAroundParent = orientationAroundParent;
             DistFromParentCentre = distFromParentCentre;
             Parent = parent;
+        }
+
+        public override IShape CloneShape()
+        {
+            throw new NotImplementedException("Cannot clone a ChildShape");
+        }
+        public IShape CloneChildShape(IShape parent)
+        {
+            return new ChildCircle(parent, OrientationAroundParent.Clone(), DistFromParentCentre, Radius);
         }
     }
 }

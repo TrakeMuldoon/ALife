@@ -15,12 +15,9 @@ namespace ALifeUni.ALife
             Orientation = self.Shape.Orientation.Clone();
             foreach(SenseCluster sc in self.Senses)
             {
+                IChildShape cs = sc.Shape as IChildShape;
 
-                IShape clone = sc.Shape.CloneShape();
-                if(clone is ChildSector cs)
-                {
-                    cs.Parent = this;
-                }
+                IShape clone = cs.CloneChildShape(this);
                 SenseShapes.Add(clone);
             }
         }

@@ -45,7 +45,8 @@ namespace ALifeUni.ALife
             Angle relativeOrientation = new Angle(eRelativeOrientation.StartValue);
             float radius = (float)eRadius.StartValue;
             Angle sweep = new Angle(eSweep.StartValue);
-            myShape = new ChildSector(orientationAroundParent, parent.Shape, 5.0 //TODO: HUUUUUUGE BUG. Eyes are hardcoded to be 5 units from centre
+            myShape = new ChildSector(parent.Shape, orientationAroundParent
+                                      , 5.0 //TODO: HUUUUUUGE BUG. Eyes are hardcoded to be 5 units from centre
                                       , relativeOrientation, radius, sweep);
             SubInputs.Add(new EyeInput(name + ".SeeSomething"));
             SubInputs.Add(new EyeCounterInput(name + ".HowMany"));

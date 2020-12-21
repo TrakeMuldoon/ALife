@@ -1,4 +1,5 @@
 ﻿using ALifeUni.ALife.AgentPieces;
+using ALifeUni.ALife.Scenarios;
 using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,13 @@ namespace ALifeUni.ALife
 
         }
 
-        private Planet(int seed, int height, int width)
+        private Planet(int seed, int height, int width, IScenario theScenario)
         {
             worldWidth = width;
             worldHeight = height;
             Seed = seed;
             NumberGen = new Random(seed);
+            Scenario = theScenario;
             AgentIDGenerator.Reset();
         }
 
@@ -59,7 +61,7 @@ namespace ALifeUni.ALife
         public static void CreateWorld(int seed, int height, int width)
         {
             //1622137501
-            instance = new Planet(seed, height, width);
+            instance = new Planet(seed, height, width, new ZoneRunnerScenario());
 
             //Initialize collision grid
             instance._collisionLevels.Add(ReferenceValues.CollisionLevelPhysical, new CollisionGrid<WorldObject>(height, width));
@@ -69,6 +71,7 @@ namespace ALifeUni.ALife
             //TODO: Create Special Objects from Config
             //TODO: Read new world agentnum from config
 
+            instance.Scenario.PlanetSetup();
             #region SQUARE TEST
             //Zone nullZone = new Zone("Null", "random", Colors.Black, new Point(0, 0), 1, 1);
             //instance.AddZone(nullZone);
@@ -81,44 +84,6 @@ namespace ALifeUni.ALife
             //Agent b = new Agent(bp, nullZone, null, Colors.Red, 0);
             //instance.AddObjectToWorld(b);
             #endregion
-
-            Zone red = new Zone("Red(Blue)", "Random", Colors.Red, new Point(0, 0), 50, height);
-            Zone blue = new Zone("Blue(Red)", "Random", Colors.Blue, new Point(width - 50, 0), 50, height);
-            red.OppositeZone = blue;
-            red.OrientationDegrees = 0;
-            blue.OppositeZone = red;
-            blue.OrientationDegrees = 180;
-
-            Zone green = new Zone("Green(Orange)", "Random", Colors.Green, new Point(0, 0), width, 100);
-            Zone orange = new Zone("Orange(Green)", "Random", Colors.Orange, new Point(0, height - 40), width, 40);
-            green.OppositeZone = orange;
-            green.OrientationDegrees = 90;
-            orange.OppositeZone = green;
-            orange.OrientationDegrees = 270;
-
-            instance.AddZone(red);
-            instance.AddZone(blue);
-            instance.AddZone(green);
-            instance.AddZone(orange);
-
-            int numAgents = 50;
-            for(int i = 0; i < numAgents; i++)
-            {
-                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
-                Agent bag = AgentFactory.CreateAgent("Agent", blue, red, Colors.Red, 180);
-                Agent gag = AgentFactory.CreateAgent("Agent", green, orange, Colors.Orange, 90);
-                Agent oag = AgentFactory.CreateAgent("Agent", orange, green, Colors.Green, 270);
-            }
-
-            //Point rockCP = new Point((width / 2) - (width / 15), height / 2);
-            //Circle cir = new Circle(rockCP, 30);
-            //FallingRock fr = new FallingRock(rockCP, cir, Colors.Black);
-            //instance.AddObjectToWorld(fr);
-
-            Point rockRCP = new Point((width / 2), (height / 2) - (height / 10));
-            Rectangle rec = new Rectangle(rockRCP, 80, 40, Colors.Black);
-            FallingRock frR = new FallingRock(rockRCP, rec, Colors.Black);
-            instance.AddObjectToWorld(frR);
         }
 
         #region Instance Stuff
@@ -130,6 +95,7 @@ namespace ALifeUni.ALife
         public readonly List<WorldObject> InactiveObjects = new List<WorldObject>();
         public readonly List<WorldObject> ToRemoveObjects = new List<WorldObject>();
         public readonly int Seed;
+        public readonly IScenario Scenario;
 
         internal ICollisionMap<Zone> ZoneMap;
 

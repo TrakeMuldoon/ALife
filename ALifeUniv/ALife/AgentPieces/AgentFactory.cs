@@ -16,54 +16,7 @@ namespace ALifeUni.ALife.AgentPieces
     {
         public static Agent CreateAgent(String genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
-            Agent agent = new Agent(genusName
-                                    , AgentIDGenerator.GetNextAgentId()
-                                    , ReferenceValues.CollisionLevelPhysical);
-            agent.Zone = parentZone;
-            agent.TargetZone = targetZone;
-
-            //TODO: FIX SO THAT THE SHAPE IS A PARAMETER
-            Point centrePoint = parentZone.Distributor.NextAgentCentre(10, 10); //TODO: HARDCODED AGENT RADIUS
-
-            IShape myShape = new Circle(centrePoint, 5);                        //TODO: HARDCODED AGENT RADIUS
-            agent.StartOrientation = startOrientation;
-            myShape.Orientation.Degrees = startOrientation;
-            myShape.Color = color;
-            agent.SetShape(myShape);
-
-            List<SenseCluster> agentSenses = new List<SenseCluster>()
-            {
-                //new EyeCluster(agent, "Eye1"
-                //                , new ROEvoNumber(0, 20, -360, 360, -360, 360, 0)  //Orientation Around Parent
-                //                , new ROEvoNumber(0, 30, -360, 360, -360, 360, 0)  //Relative Orientation
-                //                , new ROEvoNumber(80, 3, 40, 120, 40, 120, 0)      //Radius
-                //                , new ROEvoNumber(25, 1, 15, 40, 15, 40, 0)),      //Sweep
-                new ProximityCluster(agent, "Proximity1")
-            };
-
-            List<PropertyInput> agentProperties = new List<PropertyInput>();
-
-            List<StatisticInput> agentStatistics = new List<StatisticInput>()
-            {
-                new StatisticInput("Age", 0, Int32.MaxValue),
-                new StatisticInput("DeathTimer", 0, Int32.MaxValue),
-                new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue)
-            };
-
-            List<ActionCluster> agentActions = new List<ActionCluster>()
-            {
-                //new ColorCluster(agent),
-                new MoveCluster(agent),
-                new RotateCluster(agent)
-            };
-
-            CompleteAgentInitialization(agent, agentSenses, agentProperties, agentStatistics, agentActions);
-
-            IBrain newBrain = new BehaviourBrain(agent, "IF Age.Value GreaterThan [10] THEN Move.GoForward AT [0.2]", "*", "*", "*", "*");
-
-            agent.CompleteInitialization(null, 1, newBrain);
-
-            return agent;
+            return Planet.World.Scenario.CreateAgent(genusName, parentZone, targetZone, color, startOrientation);
         }
 
         public static Agent CloneAgent(Agent toClone)

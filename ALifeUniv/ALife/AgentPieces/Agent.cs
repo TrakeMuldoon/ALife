@@ -132,11 +132,8 @@ namespace ALifeUni.ALife
             {
                 return;
             }
-            //TODO: Abstract this out.
-            //Increment or Decrement end of turn values
-            Statistics["Age"].IncreasePropertyBy(1);
-            Statistics["DeathTimer"].IncreasePropertyBy(1);
-            Statistics["ZoneEscapeTimer"].IncreasePropertyBy(1);
+
+            Planet.World.Scenario.AgentUpkeep(this);
 
             //Reset all the senses. 
             Senses.ForEach((se) => se.Shape.Reset());
@@ -154,42 +151,7 @@ namespace ALifeUni.ALife
 
         public void EndOfTurnTriggers()
         {
-            if(Statistics["DeathTimer"].Value > 1899)
-            {
-                Die();
-            }
-            List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(Shape.BoundingBox);
-            foreach(Zone z in inZones)
-            {
-                if(z.Name == Zone.Name)
-                {
-                    if(Statistics["ZoneEscapeTimer"].Value > 200)
-                    {
-                        Die();
-                    }
-                }
-                else if(z.Name == TargetZone.Name)
-                {
-                    ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[CollisionLevel];
-
-                    Point myPoint = Zone.Distributor.NextAgentCentre(Shape.BoundingBox.XLength, Shape.BoundingBox.YHeight);
-                    Shape.CentrePoint = myPoint;
-                    collider.MoveObject(this);
-
-                    Reproduce();
-                    //foreach(Zone zon in Planet.World.Zones.Values)
-                    //{
-                    //    if(zon.Name != Zone.Name)
-                    //    {
-                    //        //Reproduce(zon, zon.OppositeZone, new Angle(zon.OrientationDegrees), zon.OppositeZone.Color);
-                    //    }
-                    //}
-
-                    //You have a new countdown
-                    Statistics["DeathTimer"].Value = 0;
-                    Statistics["ZoneEscapeTimer"].Value = 0;
-                }
-            }
+            Planet.World.Scenario.EndOfTurnTriggers(this);
         }
 
 

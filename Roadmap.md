@@ -15,15 +15,23 @@
 * [*] Finish/Correct Cloning / Reproduction, including location of reproduction
 * [*] Implement Scenario Testing Harness application. 
 * [*] Implement First Scenario
-* [ ] Implement randomized/modified sense attributes
+* [*] Implement randomized/modified sense attributes
 * [ ] Implement INumeric for every value (min, max, modmax, mod%, value, add, sub);
 * [ ] Implement ReadOnlyProperties for Internal/Mandatory values [i.e. Age, NumChildren, etc.]
 * [ ] Goal Based Features
-* [ ] Finish Collision detection for circle/rectangle
+* [*] Finish Collision detection for circle/rectangle
 * [ ] Implement rectangular agents
+* [ ] Implmenet Arc / Rectangle collision detection (hard)
 * [*] Implement no movement countdown to death.
 * [*] Implmenet running across the field scenario
 * [ ] Differentiate between the "Visible" and "physical" layers, so that you can there are things which are visible, but no tangible (perhaps smells and fogs?)
+* [ ] Implement Keegan's maze concept
+* [ ] Implement Testing Framework / Scenario concept
+
+
+##Immediate things to be tested
+* [ ] LineSegment LineSegment Collision
+* [ ] Rectangles and Rectangle Collision
 
 
 ## Goal-based Features

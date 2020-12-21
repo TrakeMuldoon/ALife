@@ -72,10 +72,7 @@ namespace ALifeUni.ALife.UtilityClasses
         //TODO: Ask Jeremy or Bryan about how to implement this properly
         public override IShape CloneShape()
         {
-            ChildSector clon = new ChildSector(OrientationAroundParent, Parent, distanceFromParentCentre
-                                                , RelativeOrientation, Radius, SweepAngle);
-            clon.Color = Color.Clone();
-            return clon;
+            throw new NotImplementedException("Cannot clone a ChildShape");
         }
     }
 }

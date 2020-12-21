@@ -21,6 +21,16 @@ namespace ALifeUni.ALife.UtilityClasses
             Orientation = new Angle(0);
         }
 
+        internal Rectangle(double fbLength, double rlWidth, Color color)
+        {
+            FBLength = fbLength;
+            RLWidth = rlWidth;
+            Color = color;
+            DebugColor = Colors.IndianRed;
+
+            Orientation = new Angle(0);
+        }
+
         public virtual Point CentrePoint
         {
             get;
@@ -146,7 +156,7 @@ namespace ALifeUni.ALife.UtilityClasses
             return bb;
         }
 
-        public IShape CloneShape()
+        public virtual IShape CloneShape()
         {
             Point cp = new Point(CentrePoint.X, CentrePoint.Y);
             Rectangle rec = new Rectangle(cp, FBLength, RLWidth, Color.Clone());

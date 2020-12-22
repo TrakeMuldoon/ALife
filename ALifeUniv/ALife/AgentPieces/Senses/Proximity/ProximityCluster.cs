@@ -21,7 +21,7 @@ namespace ALifeUni.ALife
         {
             myShape = new ChildCircle(parent.Shape, new Angle(0), 0, (float)radius);
 
-            SubInputs.Add(new ProximityInput(name + ".SomethingClose"));
+            SubInputs.Add(new AnyInput(name + ".SomethingClose"));
         }
 
         public override SenseCluster CloneSense(WorldObject newParent)

@@ -2,15 +2,15 @@
 
 namespace ALifeUni.ALife
 {
-    public class ProximityInput : SenseInput<bool>
+    public class CountInput : SenseInput<int>
     {
-        public ProximityInput(string name) : base(name)
+        public CountInput(string name) : base(name)
         {
         }
 
         public override void SetValue(List<WorldObject> collisions)
         {
-            Value = collisions.Count > 0;
+            Value = collisions.Count;
         }
     }
 }

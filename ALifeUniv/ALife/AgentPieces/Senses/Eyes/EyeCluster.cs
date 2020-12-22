@@ -1,4 +1,4 @@
-﻿using ALifeUni.ALife.Inputs.SenseClusters;
+﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.UtilityClasses;
 using System;
@@ -48,8 +48,8 @@ namespace ALifeUni.ALife
             myShape = new ChildSector(parent.Shape, orientationAroundParent
                                       , 5.0 //TODO: HUUUUUUGE BUG. Eyes are hardcoded to be 5 units from centre
                                       , relativeOrientation, radius, sweep);
-            SubInputs.Add(new EyeInput(name + ".SeeSomething"));
-            SubInputs.Add(new EyeCounterInput(name + ".HowMany"));
+            SubInputs.Add(new AnyInput(name + ".SeeSomething"));
+            SubInputs.Add(new CountInput(name + ".HowMany"));
             //SubInputs.Add(new EyeIdentifierInput(name + ".WhoISee"));
             SubInputs.Add(new ColorBoolInput(name + ".IsRed", (WorldObject wo) => wo.Shape.Color.R));
             SubInputs.Add(new ColorBoolInput(name + ".IsBlue", (WorldObject wo) => wo.Shape.Color.B));

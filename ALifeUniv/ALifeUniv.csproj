@@ -147,9 +147,8 @@
     <Compile Include="ALife\AgentPieces\Senses\Eyes\EyeIdentifierInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorBoolInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\ColorInput.cs" />
-    <Compile Include="ALife\AgentPieces\Senses\Eyes\EyeCounterInput.cs" />
+    <Compile Include="ALife\AgentPieces\Senses\GenericInputs\CountInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Proximity\ProximityCluster.cs" />
-    <Compile Include="ALife\AgentPieces\Senses\Proximity\ProximityInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\SquareSense\SquareSenseCluster.cs" />
     <Compile Include="ALife\Collision\foo.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildRectangle.cs" />
@@ -183,7 +182,7 @@
     <Compile Include="ALife\AgentPieces\Senses\SenseCluster.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Eyes\EyeCluster.cs" />
     <Compile Include="ALife\AgentPieces\Senses\SenseInput.cs" />
-    <Compile Include="ALife\AgentPieces\Senses\Eyes\EyeInput.cs" />
+    <Compile Include="ALife\AgentPieces\Senses\GenericInputs\AnyInput.cs" />
     <Compile Include="ALife\Geometry\Angle.cs" />
     <Compile Include="ALife\Geometry\BoundingBox.cs" />
     <Compile Include="ALife\ReferenceValues.cs" />

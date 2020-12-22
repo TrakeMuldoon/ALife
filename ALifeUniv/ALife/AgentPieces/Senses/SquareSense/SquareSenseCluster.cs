@@ -6,23 +6,38 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ALifeUni.ALife
-{ 
+{
     class SquareSenseCluster : SenseCluster
     {
-        public SquareSenseCluster(WorldObject parent, string name) : base(parent, name)
+        private ChildRectangle myShape;
+        public override IShape Shape
+        {
+            get
+            {
+                return myShape;
+            }
+        }
+
+        public SquareSenseCluster(WorldObject parent, string name) : this(parent, name, 30, 80) //TODO: Hardcoded proximity length
         {
         }
 
-        public override IShape Shape => throw new NotImplementedException();
+        public SquareSenseCluster(WorldObject parent, string name, double FBLength, double RLWidth) : base(parent, name)
+        {
+            myShape = new ChildRectangle(parent.Shape, new Angle(45), 5.0, FBLength, RLWidth);
+
+            SubInputs.Add(new AnyInput(name + ".SomethingClose"));
+            SubInputs.Add(new CountInput(name + ".HowMany"));
+        }
 
         public override SenseCluster CloneSense(WorldObject newParent)
         {
-            throw new NotImplementedException();
+            return new SquareSenseCluster(newParent, Name, myShape.FBLength, myShape.RLWidth);
         }
 
         public override SenseCluster ReproduceSense(WorldObject newParent)
         {
-            throw new NotImplementedException();
+            return new SquareSenseCluster(newParent, Name, myShape.FBLength, myShape.RLWidth);
         }
     }
 }

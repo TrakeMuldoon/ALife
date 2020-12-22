@@ -11,6 +11,14 @@ namespace ALifeUni.ALife.UtilityClasses
         public readonly Angle RelativeToParentOrientation;
         public readonly double DistFromParentCentre;
 
+        public override Angle Orientation
+        {
+            get
+            {
+                return RelativeToParentOrientation + Parent.Orientation;
+            }
+        }
+
         public ChildRectangle(IShape parent, Angle relativeToParentOrientation, double distFromParentCentre
                                 , double FBLength, double RLWidth)
             : base(FBLength, RLWidth, Colors.Red)

@@ -308,13 +308,13 @@ namespace ALifeUni.ALife
 
             //    return oddNodes;
 
-            bool oddCollisions = false;
-            oddCollisions ^= LinePointSubCollision(p, rect.TopLeft, rect.TopRight);
-            oddCollisions ^= LinePointSubCollision(p, rect.TopRight, rect.BottomRight);
-            oddCollisions ^= LinePointSubCollision(p, rect.BottomRight, rect.BottomLeft);
-            oddCollisions ^= LinePointSubCollision(p, rect.BottomLeft, rect.TopLeft);
+            
+            bool tltr = LinePointSubCollision(p, rect.TopLeft, rect.TopRight);
+            bool trbr = LinePointSubCollision(p, rect.TopRight, rect.BottomRight);
+            bool brbl = LinePointSubCollision(p, rect.BottomRight, rect.BottomLeft);
+            bool bltl = LinePointSubCollision(p, rect.BottomLeft, rect.TopLeft);
 
-            return oddCollisions;
+            return tltr ^= trbr ^= brbl ^= bltl;
         }
 
         private static bool LinePointSubCollision(Point p, Point a1, Point a2)
@@ -323,7 +323,7 @@ namespace ALifeUni.ALife
             bool yCollision = (a1.Y < p.Y && a2.Y >= p.Y)
                                || (a2.Y < p.Y && a1.Y >= p.Y);
             //Check if the X value is to the left. (we're only checking one direction)
-            bool xCollision = (a1.X <= p.X || a1.X <= p.X);
+            bool xCollision = (a1.X <= p.X || a2.X <= p.X);
             if(yCollision && xCollision)
             {
                 if(a1.X + (p.Y - a1.Y) / (a2.Y - a1.Y) * (a2.X - a1.X) < p.X)

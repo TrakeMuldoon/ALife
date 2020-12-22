@@ -126,7 +126,11 @@ namespace ALifeUni.ALife
             //Then check if the circle is entirely within the rectangle.
 
             //First check if any arbitrary rectangle point is within the circle.
-            if(PointCircleCollision(rectangle.TopLeft, circle))
+            //DNB: Check all four points, because the corner detection isn't perfect.
+            if(PointCircleCollision(rectangle.TopLeft, circle)
+                || PointCircleCollision(rectangle.TopRight, circle)
+                || PointCircleCollision(rectangle.BottomRight, circle)
+                || PointCircleCollision(rectangle.BottomLeft, circle))
             {
                 return true;
             }

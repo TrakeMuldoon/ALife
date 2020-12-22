@@ -119,6 +119,9 @@
             <Button x:Name="LongestLived" Click="LongestLived_Click">Oldest</Button>
             <Button x:Name="ShortestBrain" Click="ShortestBrain_Click">Smallest Brain</Button>
             <Button x:Name="MostChildren" Click="MostChildren_Click">Most Children</Button>
+
+            <TextBox x:Name="Coords"/>
+            <Button x:Name="DotMaker" Click="DotMaker_Click">Dot</Button>
         </StackPanel>
         <local:AgentInfoPanel x:Name="AgentPanel"></local:AgentInfoPanel>
     </StackPanel>

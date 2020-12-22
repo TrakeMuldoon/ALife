@@ -96,6 +96,11 @@ namespace ALifeUni
             {
                 DrawingLogic.DrawAncestry(args);
             }
+
+            foreach(Point p in taps)
+            {
+                args.DrawingSession.FillCircle(new Vector2((float)p.X, (float)p.Y), 1, Colors.Peru);
+            }
         }
 
         private void ShowGeneology_Checked(object sender, RoutedEventArgs e)
@@ -344,7 +349,7 @@ namespace ALifeUni
         private void ChangeZoomLevel()
         {
             //Increase the zoom
-            ZoomIndex = Math.Clamp(ZoomIndex, 0, ZoomFactors.Count);
+            ZoomIndex = Math.Clamp(ZoomIndex, 0, ZoomFactors.Count-1);
             float newZoom = float.Parse(ZoomFactors[ZoomIndex]);
 
             double newHeight = Zoomer.ActualHeight * newZoom;
@@ -505,6 +510,24 @@ namespace ALifeUni
             AgentPanel.TheAgent = options[currentIndex];
 
             return currentIndex;
+        }
+
+        List<Point> taps = new List<Point>();
+        private void DotMaker_Click(object sender, RoutedEventArgs e)
+        {
+            string tex = Coords.Text;
+            string[] coords = tex.Split(',');
+            if(coords.Length != 2) return;
+
+            coords[0] = coords[0].Trim();
+            coords[1] = coords[1].Trim();
+
+            double x = double.Parse(coords[0]);
+            double y = double.Parse(coords[1]);
+
+            Point p = new Point(x, y);
+            taps.Clear();
+            taps.Add(p);
         }
     }
 }

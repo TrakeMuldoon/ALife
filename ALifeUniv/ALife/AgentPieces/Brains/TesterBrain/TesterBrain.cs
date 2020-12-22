@@ -29,8 +29,8 @@
                 sc.Detect();
             }
 
-            body.Actions["Rotate"].SubActions["TurnLeft"].Intensity = 0.1;
-            body.Actions["Move"].SubActions["GoForward"].Intensity = 0.5;
+            //body.Actions["Rotate"].SubActions["TurnLeft"].Intensity = 0.1;
+            //body.Actions["Move"].SubActions["GoForward"].Intensity = 0.5;
 
             foreach(ActionCluster ac in body.Actions.Values)
             {

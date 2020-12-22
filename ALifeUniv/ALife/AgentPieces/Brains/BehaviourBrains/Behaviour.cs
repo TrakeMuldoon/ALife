@@ -93,6 +93,11 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
 
         private void ParseConditions(String conditionsString, BehaviourCabinet cabinet)
         {
+            if(conditionsString == "ALWAYS")
+            {
+                Conditions.Add(new AlwaysTrueBehaviourCondition());
+                return;
+            }
             string[] conditions = Regex.Split(conditionsString, " AND ");
             foreach(string condition in conditions)
             {

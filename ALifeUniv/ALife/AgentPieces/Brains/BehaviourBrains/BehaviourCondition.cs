@@ -4,7 +4,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
 {
     public class BehaviourCondition<T> : BehaviourCondition
     {
-        public String text;
+        public String Text;
         public bool LastState;
         private BehaviourInput origin;
         private Func<T, T, bool> comparator;
@@ -18,7 +18,11 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
             compareTo = rightSide;
             comparatorString = opString;
 
-            text = origin.FullName + " " + opString + " " + rightSide.FullName;
+            Text = origin.FullName + " " + opString + " " + rightSide.FullName;
+        }
+        protected BehaviourCondition()
+        {
+
         }
 
         public override bool EvaluateSuccess()
@@ -33,7 +37,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
 
         public override string ToString()
         {
-            return text;
+            return Text;
         }
     }
 

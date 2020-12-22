@@ -126,6 +126,7 @@
     <Compile Include="ALife\AgentPieces\AgentActions\RotateCluster.cs" />
     <Compile Include="ALife\AgentPieces\AgentFactory.cs" />
     <Compile Include="ALife\AgentPieces\AgentIDGenerator.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\AlwaysTrueBehaviourCondition.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourCondition.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourInput.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourCabinet.cs" />
@@ -153,7 +154,9 @@
     <Compile Include="ALife\Collision\foo.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildRectangle.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\IChildShape.cs" />
+    <Compile Include="ALife\Scenarios\RectangleScenario.cs" />
     <Compile Include="ALife\Scenarios\IScenario.cs" />
+    <Compile Include="ALife\Scenarios\BaseScenario.cs" />
     <Compile Include="ALife\Scenarios\ZoneRunnerScenario.cs" />
     <Compile Include="ALife\Utility\EvoNumber.cs" />
     <Compile Include="ALife\Geometry\Shapes\AARectangle.cs" />

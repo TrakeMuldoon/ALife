@@ -61,7 +61,7 @@ namespace ALifeUni.ALife
         public static void CreateWorld(int seed, int height, int width)
         {
             //1622137501
-            instance = new Planet(seed, height, width, new ZoneRunnerScenario());
+            instance = new Planet(seed, height, width, new RectangleScenario());
 
             //Initialize collision grid
             instance._collisionLevels.Add(ReferenceValues.CollisionLevelPhysical, new CollisionGrid<WorldObject>(height, width));
@@ -72,18 +72,6 @@ namespace ALifeUni.ALife
             //TODO: Read new world agentnum from config
 
             instance.Scenario.PlanetSetup();
-            #region SQUARE TEST
-            //Zone nullZone = new Zone("Null", "random", Colors.Black, new Point(0, 0), 1, 1);
-            //instance.AddZone(nullZone);
-
-            //Point ap = new Point(20, 20);
-            //Agent a = new Agent(ap, nullZone, null, Colors.Red, 0);
-            //instance.AddObjectToWorld(a);
-
-            //Point bp = new Point(40, 20);
-            //Agent b = new Agent(bp, nullZone, null, Colors.Red, 0);
-            //instance.AddObjectToWorld(b);
-            #endregion
         }
 
         #region Instance Stuff

@@ -155,9 +155,21 @@ namespace ALifeUni.ALife
             throw new NotImplementedException();
         }
 
-        public static Boolean IndividualShapeCollision(Sector a, Rectangle b)
+        public static Boolean IndividualShapeCollision(Sector sector, Rectangle rectangle)
         {
-            throw new NotImplementedException();
+            //Very annoying.
+            //First we need to check if any arbitrary point is within the Sector
+            if(IsPointWithinSweep(rectangle.TopLeft, sector)
+                || IsPointWithinRectangle(sector.CentrePoint, rectangle))
+            {
+                return true;
+            }
+
+            for(int i = 0; i < sector.SweepAngle.Degrees; i += 15)
+            {
+
+            }
+
         }
         public static Boolean IndividualShapeCollision(Rectangle a, Rectangle b)
         {

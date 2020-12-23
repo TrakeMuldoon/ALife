@@ -65,7 +65,7 @@ namespace ALifeUni.ALife.UtilityClasses
         {
             get
             {
-                return GetBoundingBox(CentrePoint, AbsoluteOrientation);
+                return GetBoundingBox(AbsoluteOrientation);
             }
         }
 

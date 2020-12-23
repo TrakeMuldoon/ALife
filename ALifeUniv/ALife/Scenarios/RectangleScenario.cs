@@ -35,6 +35,7 @@ namespace ALifeUni.ALife.Scenarios
 
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {
+                new EyeCluster(agent, "Eye1"),
                 new SquareSenseCluster(agent, "Square")
             };
 

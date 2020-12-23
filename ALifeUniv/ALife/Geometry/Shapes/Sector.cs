@@ -16,7 +16,7 @@ namespace ALifeUni.ALife.UtilityClasses
         {
             get
             {
-                return GetBoundingBox(CentrePoint, Orientation);
+                return GetBoundingBox(Orientation);
             }
         }
 
@@ -94,6 +94,33 @@ namespace ALifeUni.ALife.UtilityClasses
             set;
         }
 
+        private Point leftPoint;
+        public Point LeftPoint
+        {
+            get
+            {
+                if(myBox == null)
+                {
+                    var dummy = BoundingBox;
+                }
+                return leftPoint;
+            }
+        }
+
+        private Point rightPoint;
+        public Point RightPoint 
+        {
+            get
+            {
+                if(myBox == null)
+                {
+                    var dummy = BoundingBox;
+                }
+                return rightPoint;
+            } 
+        }
+
+
         private BoundingBox? myBox = null;
 
         protected Sector(float radius, Angle sweepAngle)
@@ -107,7 +134,7 @@ namespace ALifeUni.ALife.UtilityClasses
             myBox = null;
         }
 
-        public BoundingBox GetBoundingBox(Point xyTranslationFromZero, Angle rotation)
+        public BoundingBox GetBoundingBox(Angle rotation)
         {
             if(myBox != null)
             {
@@ -121,7 +148,7 @@ namespace ALifeUni.ALife.UtilityClasses
                 }
             }
             Angle absOrientationAngle = rotation;
-            Point myOriginPoint = xyTranslationFromZero;
+            Point myOriginPoint = CentrePoint;
 
             List<double> xValues = new List<double>();
             List<double> yValues = new List<double>();
@@ -130,16 +157,14 @@ namespace ALifeUni.ALife.UtilityClasses
             yValues.Add(myOriginPoint.Y);
 
             //Get the points that are the edges of the sector
-            double startX = myOriginPoint.X + (Radius * Math.Cos(absOrientationAngle.Radians));
-            double startY = myOriginPoint.Y + (Radius * Math.Sin(absOrientationAngle.Radians));
-            xValues.Add(startX);
-            yValues.Add(startY);
+            leftPoint = ExtraMath.TranslateByVector(myOriginPoint, absOrientationAngle.Radians, Radius);
+            xValues.Add(leftPoint.X);
+            yValues.Add(leftPoint.Y);
 
             Angle endAngle = absOrientationAngle + SweepAngle;
-            double endX = myOriginPoint.X + (Radius * Math.Cos(endAngle.Radians));
-            double endY = myOriginPoint.Y + (Radius * Math.Sin(endAngle.Radians));
-            xValues.Add(endX);
-            yValues.Add(endY);
+            rightPoint = ExtraMath.TranslateByVector(myOriginPoint, endAngle.Radians, Radius);
+            xValues.Add(rightPoint.X);
+            yValues.Add(rightPoint.Y);
 
             //determine which axis lines the sweep crosses, (ie. positive X axis, Positive Y, negative X, negative y)
             if(absOrientationAngle.Degrees + SweepAngle.Degrees < 360)

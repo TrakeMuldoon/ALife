@@ -15,22 +15,22 @@ namespace ALifeUni.ALife.Scenarios
 {
     class ZoneRunnerScenario : BaseScenario
     {
-        public Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
+        public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             return base.CreateAgent(genusName, parentZone, targetZone, color, startOrientation);
         }
 
-        public void EndOfTurnTriggers(Agent me)
+        public override void EndOfTurnTriggers(Agent me)
         {
             base.EndOfTurnTriggers(me);
         }
 
-        public void AgentUpkeep(Agent me)
+        public override void AgentUpkeep(Agent me)
         {
             base.AgentUpkeep(me);
         }
 
-        public void PlanetSetup()
+        public override void PlanetSetup()
         {
             base.PlanetSetup();
         }

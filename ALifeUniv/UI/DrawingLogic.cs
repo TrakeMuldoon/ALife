@@ -216,22 +216,26 @@ namespace ALifeUni.UI
 
         private static void DrawRectangle(Rectangle rec, LayerUISettings ui, CanvasAnimatedDrawEventArgs args, bool fillIn)
         {
-            Point rovingPoint = rec.CentrePoint;
-            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians, rec.FBLength / 2);
-            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians - (Math.PI / 2), rec.RLWidth / 2);
+            //Point rovingPoint = rec.CentrePoint;
+            //rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians, rec.FBLength / 2);
+            //rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians - (Math.PI / 2), rec.RLWidth / 2);
 
+            //CanvasPathBuilder cpb = new CanvasPathBuilder(args.DrawingSession.Device);
+            //cpb.BeginFigure(rovingPoint.ToVector2());
+
+            //rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians + (Math.PI / 2), rec.RLWidth);
+            //cpb.AddLine(rovingPoint.ToVector2());
+
+            //rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians + Math.PI, rec.FBLength);
+            //cpb.AddLine(rovingPoint.ToVector2());
+
+            //rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians + (Math.PI * 3 / 2), rec.RLWidth);
+            //cpb.AddLine(rovingPoint.ToVector2());
             CanvasPathBuilder cpb = new CanvasPathBuilder(args.DrawingSession.Device);
-            cpb.BeginFigure(rovingPoint.ToVector2());
-
-            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians + (Math.PI / 2), rec.RLWidth);
-            cpb.AddLine(rovingPoint.ToVector2());
-
-            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians + Math.PI, rec.FBLength);
-            cpb.AddLine(rovingPoint.ToVector2());
-
-            rovingPoint = ExtraMath.TranslateByVector(rovingPoint, rec.Orientation.Radians + (Math.PI * 3 / 2), rec.RLWidth);
-            cpb.AddLine(rovingPoint.ToVector2());
-
+            cpb.BeginFigure(rec.TopLeft.ToVector2());
+            cpb.AddLine(rec.TopRight.ToVector2());
+            cpb.AddLine(rec.BottomRight.ToVector2());
+            cpb.AddLine(rec.BottomLeft.ToVector2());
             cpb.EndFigure(CanvasFigureLoop.Closed);
             CanvasGeometry cg = CanvasGeometry.CreatePath(cpb);
 

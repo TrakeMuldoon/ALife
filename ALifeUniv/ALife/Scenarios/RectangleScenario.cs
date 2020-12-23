@@ -72,16 +72,16 @@ namespace ALifeUni.ALife.Scenarios
             Zone nullZone = new Zone("Null", "random", Colors.Black, new Point(0, 0), 1000, 1000);
             Planet.World.AddZone(nullZone);
 
-            Point ap = new Point(30, 30);
-            Agent a = AgentFactory.CreateAgent("Agent", nullZone, nullZone, Colors.Red, 0);
-            a.Shape.CentrePoint = ap;
-
+            //Point ap = new Point(30, 30);
+            //Agent a = AgentFactory.CreateAgent("Agent", nullZone, nullZone, Colors.Red, 0);
+            //a.Shape.CentrePoint = ap;
+            
             Point bp = new Point(60, 60);
             Agent b = AgentFactory.CreateAgent("Agent", nullZone, nullZone, Colors.Red, 0);
             b.Shape.CentrePoint = bp;
 
-            ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[a.CollisionLevel];
-            collider.MoveObject(a);
+            ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[b.CollisionLevel];
+            //collider.MoveObject(a);
             collider.MoveObject(b);
         }
     }

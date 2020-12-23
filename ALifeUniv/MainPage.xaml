@@ -63,7 +63,7 @@
             </Border>
 
         </ScrollViewer>
-        <StackPanel Width="220" Background="White">
+        <StackPanel Width="220" Background="LightCoral">
             <TextBox x:Name="SimSeed" HorizontalAlignment="Stretch" TextChanged="SimSeed_TextChanged"/>
             <Button x:Name="ResetSim" HorizontalAlignment="Stretch" Click="ResetSim_Click">RESET</Button>
             <Button x:Name="PauseSim" HorizontalAlignment="Stretch" Click="PauseSim_Click">Pause</Button>

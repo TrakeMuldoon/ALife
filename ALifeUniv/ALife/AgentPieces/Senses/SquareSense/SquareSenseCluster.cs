@@ -18,7 +18,7 @@ namespace ALifeUni.ALife
             }
         }
 
-        public SquareSenseCluster(WorldObject parent, string name) : this(parent, name, 30, 80) //TODO: Hardcoded proximity length
+        public SquareSenseCluster(WorldObject parent, string name) : this(parent, name, 80, 30) //TODO: Hardcoded proximity length
         {
         }
 

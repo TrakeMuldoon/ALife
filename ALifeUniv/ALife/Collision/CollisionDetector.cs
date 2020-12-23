@@ -160,17 +160,25 @@ namespace ALifeUni.ALife
             //Very annoying.
             //First we need to check if any arbitrary point is within the Sector
             if(IsPointWithinSweep(rectangle.TopLeft, sector)
-                || IsPointWithinRectangle(sector.CentrePoint, rectangle))
+                || IsPointWithinRectangle(sector.LeftPoint, rectangle))
             {
                 return true;
             }
 
-            for(int i = 0; i < sector.SweepAngle.Degrees; i += 15)
-            {
+            Sector s = sector;
+            //then we check if the lengths intersect the rectangle
+            bool segmentCollision = (DoesLineSegmentIntersectRectangle(s.CentrePoint, s.LeftPoint, rectangle)
+                                     || DoesLineSegmentIntersectRectangle(s.CentrePoint, s.RightPoint, rectangle));
+            if(segmentCollision)
+                return true;
 
-            }
-
+            //then we check if the linesegments intersect the circle, and if they do, if the points are within the sweep.
+            bool RecArcCollision = DoesRectangleIntersectArc(sector, rectangle);
+            
+            return RecArcCollision;
         }
+
+
         public static Boolean IndividualShapeCollision(Rectangle a, Rectangle b)
         {
             bool segmentCollision = (DoesLineSegmentIntersectRectangle(a.TopLeft, a.TopRight, b)
@@ -183,6 +191,31 @@ namespace ALifeUni.ALife
             //No line segments collide, now we check if one is inside the other.
             return IsPointWithinRectangle(a.TopLeft, b)
                   || IsPointWithinRectangle(b.TopLeft, a);
+        }
+
+        private static Boolean DoesRectangleIntersectArc(Sector sector, Rectangle rectangle)
+        {
+            Rectangle r = rectangle;
+            return (DoesLineSegmentIntersectSector(r.TopLeft, r.TopRight, sector)
+                    || DoesLineSegmentIntersectSector(r.TopRight, r.BottomRight, sector)
+                    || DoesLineSegmentIntersectSector(r.BottomRight, r.BottomLeft, sector)
+                    || DoesLineSegmentIntersectSector(r.BottomLeft, r.TopLeft, sector));
+        }
+
+        private static Boolean DoesLineSegmentIntersectSector(Point a1, Point a2, Sector sector)
+        {
+            Circle sectorAsCircle = new Circle(sector.CentrePoint, sector.Radius);
+            List<Point> potentialPoints = FindLineCircleIntersections(sectorAsCircle, a1, a2);
+            
+            foreach(Point px in potentialPoints)
+            {
+                if(IsPointWithinSweep(px, sector))
+                {
+                    return true;
+                }
+            }
+            //includes the no points case.
+            return false;
         }
 
         private static Boolean DoesLineSegmentIntersectRectangle(Point a1, Point a2, Rectangle rectangle)
@@ -227,6 +260,55 @@ namespace ALifeUni.ALife
             if(!onLine) return false;
 
             return PointCircleCollision(closest, c);
+        }
+
+        //Stolen wholesale from this location
+        ///http://csharphelper.com/blog/2014/09/determine-where-a-line-intersects-a-circle-in-c/
+        private static List<Point> FindLineCircleIntersections(Circle circle, Point p1, Point p2)
+        {
+            Point cp = circle.CentrePoint;
+            double radius = circle.Radius;
+            double deltaX = p2.X - p1.X;
+            double deltaY = p2.Y - p1.Y;
+
+            double A = deltaX * deltaX + deltaY * deltaY;
+            double B = 2 * (deltaX * (p1.X - cp.X) + deltaY * (p1.Y - cp.Y));
+            double C = (p1.X - cp.X) * (p1.X - cp.X)
+                        + (p1.Y - cp.Y) * (p1.Y - cp.Y)
+                        - radius * radius;
+
+            double determinant = B * B - 4 * A * C;
+            List<Point> intersections = new List<Point>();
+            if((A <= 0.0000001) || (determinant < 0))
+            {
+                return intersections;
+            }
+            else if(determinant == 0)
+            {
+                // One solution.
+                double t = -B / (2 * A);
+                double iX = p1.X + t * deltaX;
+                double iY = p1.Y + t * deltaY;
+                intersections.Add(new Point(iX, iY));
+                return intersections;
+            }
+            else
+            {
+                // Two solutions.
+                double tPos = ((-B + Math.Sqrt(determinant)) / (2 * A));
+                double tNeg = ((-B - Math.Sqrt(determinant)) / (2 * A));
+                
+                double i1X = p1.X + tPos * deltaX;
+                double i1Y = p1.Y + tPos * deltaY;
+                intersections.Add(new Point(i1X, i1Y));
+
+                double i2X = p1.X + tNeg * deltaX;
+                double i2Y = p1.Y + tNeg * deltaY;
+                intersections.Add(new Point(i2X, i2Y));
+                
+                return intersections;
+            }
+            throw new Exception("Impossible to get here.");
         }
 
         private static Boolean IsPointOnLine(Point pt, Point line1, Point line2)

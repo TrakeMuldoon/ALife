@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALifeUni.ALife.Utility
 {
@@ -28,7 +24,7 @@ namespace ALifeUni.ALife.Utility
         public override double Value
         {
             get { return val; }
-            set 
+            set
             {
                 //Cannot change more than the deltaMax
                 double delta = value - val;
@@ -70,8 +66,8 @@ namespace ALifeUni.ALife.Utility
         public double DeltaMax
         {
             get { return deltaMax; }
-            set 
-            { 
+            set
+            {
                 double delta = value - val;
                 double realDelta = Math.Clamp(delta, -DeltaEvoMax, DeltaEvoMax);
                 double newVal = val + realDelta;

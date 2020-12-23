@@ -1,8 +1,6 @@
-﻿using ALifeUni.ALife;
-using ALifeUni.ALife.Utility;
+﻿using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.UtilityClasses;
 using System;
-using Windows.UI;
 
 namespace ALifeUni.ALife
 {
@@ -33,7 +31,7 @@ namespace ALifeUni.ALife
         private EvoNumber EvoSweep;
 
         public EyeCluster(WorldObject parent, String name
-                          , EvoNumber eOrientationAroundParent, EvoNumber eRelativeOrientation, EvoNumber eRadius, EvoNumber eSweep) 
+                          , EvoNumber eOrientationAroundParent, EvoNumber eRelativeOrientation, EvoNumber eRadius, EvoNumber eSweep)
             : base(parent, name)
         {
             EvoOrientationAroundParent = eOrientationAroundParent;

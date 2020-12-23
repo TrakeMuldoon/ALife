@@ -1,6 +1,5 @@
 ﻿using ALifeUni.ALife.UtilityClasses;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI;

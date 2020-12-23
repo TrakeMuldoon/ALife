@@ -1,14 +1,8 @@
 ﻿using ALifeUni.ALife.AgentPieces;
 using ALifeUni.ALife.AgentPieces.Brains;
-using ALifeUni.ALife.AgentPieces.Brains.TesterBrain;
 using ALifeUni.ALife.Brains.BehaviourBrains;
-using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.UtilityClasses;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -76,7 +70,7 @@ namespace ALifeUni.ALife.Scenarios
             //Point ap = new Point(30, 30);
             //Agent a = AgentFactory.CreateAgent("Agent", nullZone, nullZone, Colors.Red, 0);
             //a.Shape.CentrePoint = ap;
-            
+
             Point bp = new Point(60, 60);
             Agent b = AgentFactory.CreateAgent("Agent", nullZone, nullZone, Colors.Red, 0);
             b.Shape.CentrePoint = bp;

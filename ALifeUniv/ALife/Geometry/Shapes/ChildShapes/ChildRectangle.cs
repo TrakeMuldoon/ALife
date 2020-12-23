@@ -1,5 +1,4 @@
-﻿using ALifeUni.ALife.Utility;
-using System;
+﻿using System;
 using Windows.Foundation;
 using Windows.UI;
 

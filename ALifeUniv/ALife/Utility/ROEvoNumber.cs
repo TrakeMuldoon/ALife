@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALifeUni.ALife.Utility
 {
     public class ROEvoNumber : EvoNumber
     {
-        public override double Value 
-        { 
+        public override double Value
+        {
             get => base.Value;
-            set => throw new NotImplementedException("Do Not Set ReadOnly EvoNumber Values"); 
+            set => throw new NotImplementedException("Do Not Set ReadOnly EvoNumber Values");
         }
 
         public ROEvoNumber(double startValue, double startValueEvoDeltaMax

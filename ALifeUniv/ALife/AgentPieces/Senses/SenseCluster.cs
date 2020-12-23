@@ -1,7 +1,6 @@
 ﻿using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Windows.UI;
 
 namespace ALifeUni.ALife

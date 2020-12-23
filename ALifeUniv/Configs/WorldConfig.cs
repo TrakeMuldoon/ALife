@@ -1,9 +1,6 @@
 ﻿using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 
 namespace ALifeUni.Configs
@@ -63,7 +60,7 @@ namespace ALifeUni.Configs
         String Genus; //TypeNAme 
         String Color; //STRING || R,G,B
         Evo<Byte> r, g, b;
-        
+
         ShapeConfig Shape;
 
         List<SenseConfig> Senses;

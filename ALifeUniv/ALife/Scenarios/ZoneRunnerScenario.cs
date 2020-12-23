@@ -1,13 +1,5 @@
 ﻿using ALifeUni.ALife.AgentPieces;
-using ALifeUni.ALife.AgentPieces.Brains;
-using ALifeUni.ALife.Brains.BehaviourBrains;
-using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.UtilityClasses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 

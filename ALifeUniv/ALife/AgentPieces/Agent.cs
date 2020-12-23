@@ -1,15 +1,10 @@
 ﻿using ALifeUni.ALife.AgentPieces;
 using ALifeUni.ALife.AgentPieces.Brains;
-using ALifeUni.ALife.AgentPieces.Brains.TesterBrain;
-using ALifeUni.ALife.Brains.BehaviourBrains;
 using ALifeUni.ALife.UtilityClasses;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Windows.Foundation;
 using Windows.UI;
-using ALifeUni.ALife.Utility;
 
 namespace ALifeUni.ALife
 {
@@ -76,7 +71,7 @@ namespace ALifeUni.ALife
         }
 
         internal void CompleteInitialization(Agent parent, int generation, IBrain newBrain)
-        {         
+        {
             Generation = generation;
             myBrain = newBrain;
 

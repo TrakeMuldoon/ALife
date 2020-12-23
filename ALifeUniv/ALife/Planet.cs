@@ -1,10 +1,7 @@
 ﻿using ALifeUni.ALife.AgentPieces;
 using ALifeUni.ALife.Scenarios;
-using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
-using Windows.Foundation;
-using Windows.UI;
 
 namespace ALifeUni.ALife
 {
@@ -158,7 +155,7 @@ namespace ALifeUni.ALife
                 StableActiveObjects.Remove(ToRemoveObjects[0]);
                 InactiveObjects.Add(ToRemoveObjects[0]);
                 ToRemoveObjects.RemoveAt(0);
-            }    
+            }
 
             GlobalEndOfTurnActions();
         }

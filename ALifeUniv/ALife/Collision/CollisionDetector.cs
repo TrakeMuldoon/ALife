@@ -174,7 +174,7 @@ namespace ALifeUni.ALife
 
             //then we check if the linesegments intersect the circle, and if they do, if the points are within the sweep.
             bool RecArcCollision = DoesRectangleIntersectArc(sector, rectangle);
-            
+
             return RecArcCollision;
         }
 
@@ -206,7 +206,7 @@ namespace ALifeUni.ALife
         {
             Circle sectorAsCircle = new Circle(sector.CentrePoint, sector.Radius);
             List<Point> potentialPoints = FindLineCircleIntersections(sectorAsCircle, a1, a2);
-            
+
             foreach(Point px in potentialPoints)
             {
                 if(IsPointWithinSweep(px, sector))
@@ -297,7 +297,7 @@ namespace ALifeUni.ALife
                 // Two solutions.
                 double tPos = ((-B + Math.Sqrt(determinant)) / (2 * A));
                 double tNeg = ((-B - Math.Sqrt(determinant)) / (2 * A));
-                
+
                 double i1X = p1.X + tPos * deltaX;
                 double i1Y = p1.Y + tPos * deltaY;
                 intersections.Add(new Point(i1X, i1Y));
@@ -305,7 +305,7 @@ namespace ALifeUni.ALife
                 double i2X = p1.X + tNeg * deltaX;
                 double i2Y = p1.Y + tNeg * deltaY;
                 intersections.Add(new Point(i2X, i2Y));
-                
+
                 return intersections;
             }
             throw new Exception("Impossible to get here.");
@@ -382,10 +382,8 @@ namespace ALifeUni.ALife
             //  by the "if" clause which surrounds it.
             //http://www.alienryderflex.com/polygon/
 
-
             //int i, j = polyCorners - 1;
             //    bool oddNodes = NO;
-
             //    for(i = 0; i < polyCorners; i++)
             //    {
             //        if((polyY[i] < y && polyY[j] >= y
@@ -399,10 +397,8 @@ namespace ALifeUni.ALife
             //        }
             //        j = i;
             //    }
-
             //    return oddNodes;
 
-            
             bool tltr = LinePointSubCollision(p, rect.TopLeft, rect.TopRight);
             bool trbr = LinePointSubCollision(p, rect.TopRight, rect.BottomRight);
             bool brbl = LinePointSubCollision(p, rect.BottomRight, rect.BottomLeft);
@@ -450,7 +446,7 @@ namespace ALifeUni.ALife
 
             double ub = (deltaAX * deltaABY) - (deltaAY * deltaABX) / denom;
 
-            if(ua < 0 
+            if(ua < 0
                 || ua > 1
                 || ub < 0
                 || ub > 1)

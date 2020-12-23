@@ -2,8 +2,8 @@
 using Serilog;
 using System;
 using System.IO;
-using Windows.Storage;
 using System.Linq;
+using Windows.Storage;
 
 // This example code shows how you could implement the required main function for a 
 // Console UWP Application. You can replace all the code inside Main with your own custom code.

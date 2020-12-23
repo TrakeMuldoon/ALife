@@ -108,7 +108,7 @@ namespace ALifeUni.ALife.UtilityClasses
         }
 
         private Point rightPoint;
-        public Point RightPoint 
+        public Point RightPoint
         {
             get
             {
@@ -117,7 +117,7 @@ namespace ALifeUni.ALife.UtilityClasses
                     var dummy = BoundingBox;
                 }
                 return rightPoint;
-            } 
+            }
         }
 
 

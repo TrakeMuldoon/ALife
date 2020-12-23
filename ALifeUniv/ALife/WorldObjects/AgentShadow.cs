@@ -4,22 +4,27 @@ using Windows.UI;
 
 namespace ALifeUni.ALife
 {
-    public class AgentShadow : Circle
+    public class AgentShadow : IHasShape
     {
         public readonly List<IShape> SenseShapes = new List<IShape>();
 
-        public AgentShadow(Agent self) : base(self.Shape.CentrePoint, ((Circle)self.Shape).Radius)
+        public AgentShadow(Agent self)
         {
-            Color = self.Shape.Color;
-            DebugColor = Colors.Yellow;
-            Orientation = self.Shape.Orientation.Clone();
+            shape = self.Shape.CloneShape();
+            shape.DebugColor = Colors.Yellow;
+            shape.Orientation = self.Shape.Orientation.Clone();
             foreach(SenseCluster sc in self.Senses)
             {
                 IChildShape cs = sc.Shape as IChildShape;
 
-                IShape clone = cs.CloneChildShape(this);
+                IShape clone = cs.CloneChildShape(shape);
                 SenseShapes.Add(clone);
             }
+        }
+        private IShape shape;
+        public IShape Shape
+        {
+            get { return shape; }
         }
     }
 }

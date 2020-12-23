@@ -68,13 +68,6 @@ namespace ALifeUni.ALife
         {
             Shape = newShape;
         }
-        //public Agent(String genusLabel)
-        //    : base(genusLabel
-        //          , AgentIDGenerator.GetNextAgentId()
-        //          , ReferenceValues.CollisionLevelPhysical)
-        //{
-
-        //}
 
         public Agent(String genusLabel, string individualLabel, string collisionLevel)
             : base(genusLabel, individualLabel, collisionLevel)
@@ -146,6 +139,7 @@ namespace ALifeUni.ALife
                 prop.Reset();
             }
             EndOfTurnTriggers();
+            Shape.Reset();
         }
 
 
@@ -154,10 +148,18 @@ namespace ALifeUni.ALife
             Planet.World.Scenario.EndOfTurnTriggers(this);
         }
 
-
-        public void ProduceOffspring()
+        public void CollisionBehvaviour(List<WorldObject> collisions)
         {
-            //Reproduce();
+            //TODO: Somehow abstract out "Collision behaviour"
+            //Collision means death right now
+            foreach(WorldObject wo in collisions)
+            {
+                if(wo is Agent ag)
+                {
+                    ag.Die();
+                }
+            }
+            Die();
         }
 
         public override WorldObject Clone()

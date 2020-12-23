@@ -53,9 +53,17 @@ namespace ALifeUni.ALife
                 ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[self.CollisionLevel];
                 List<WorldObject> collisions = collider.DetectCollisions(self);
 
-                if(collisions.Count > 0)
+                //If there are no collisions, we propogate the move.
+                if(collisions.Count == 0)
                 {
-                    throw new Exception("Unhandled Collision state (rotation collision)");
+                    collider.MoveObject(self);
+                    return true;
+                }
+                else
+                {
+                    myOrientation.Degrees -= netTurn; //cancel the move
+                    self.CollisionBehvaviour(collisions);
+                    return false;
                 }
             }
             return true;

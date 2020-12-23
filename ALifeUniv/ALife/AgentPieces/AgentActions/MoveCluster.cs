@@ -101,25 +101,10 @@ namespace ALifeUni.ALife
             else
             {
                 theShape.CentrePoint = origin; //cancel the move
-                CollisionBehvaviour(collisions);
+                self.CollisionBehvaviour(collisions);
                 return false;
             }
         }
-
-        private void CollisionBehvaviour(List<WorldObject> collisions)
-        {
-            //TODO: Somehow abstract out "Collision behaviour"
-            //Collision means death right now
-            foreach(WorldObject wo in collisions)
-            {
-                if(wo is Agent ag)
-                {
-                    ag.Die();
-                }
-            }
-            self.Die();
-        }
-
 
         protected override void FailureResults()
         {

@@ -97,7 +97,7 @@ namespace ALifeUni.UI
                     continue;
                 }
 
-                DrawingLogic.DrawPastObject(ag.Shadow, ui, args);
+                DrawingLogic.DrawPastObject(ag.Shadow.Shape, ui, args);
             }
         }
 
@@ -106,11 +106,6 @@ namespace ALifeUni.UI
             IShape shape = ag.Shape;
 
             DrawShape(shape, uiSettings, args, true);
-
-            if(!(shape is Circle))
-            {
-                throw new NotImplementedException("Only Circular Agents are supported");
-            }
 
             if(uiSettings.ShowSenses)
             {
@@ -133,12 +128,12 @@ namespace ALifeUni.UI
 
         internal static void DrawAgentShadow(AgentShadow shadow, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
         {
-            Color orig = shadow.DebugColor;
-            shadow.DebugColor = Colors.White;
-            DrawCircle(shadow, uiSettings, args, true);
-            shadow.DebugColor = orig;
+            Color orig = shadow.Shape.DebugColor;
+            shadow.Shape.DebugColor = Colors.White;
+            DrawShape(shadow.Shape, uiSettings, args, true);
+            shadow.Shape.DebugColor = orig;
             //Draw Orientation
-            DrawOrientation(args, shadow);
+            DrawOrientation(args, shadow.Shape);
             foreach(IShape shape in shadow.SenseShapes)
             {
                 DrawShape(shape, uiSettings, args, false);

@@ -11,5 +11,7 @@ namespace ALifeUni.ALife
         void EndOfTurnTriggers(Agent me);
 
         void PlanetSetup();
+
+        void GlobalEndOfTurnActions();
     }
 }

@@ -4,10 +4,12 @@ using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using Windows.UI;
 
 namespace ALifeUni.ALife
 {
+    [DebuggerDisplay("AgentX:{Shape.CentrePoint.X}")]
     public class Agent : WorldObject
     {
         public IBrain myBrain
@@ -152,9 +154,11 @@ namespace ALifeUni.ALife
                 if(wo is Agent ag)
                 {
                     ag.Die();
+                    Planet.World.ReproduceBest();
                 }
             }
             Die();
+            Planet.World.ReproduceBest();
         }
 
         public override WorldObject Clone()

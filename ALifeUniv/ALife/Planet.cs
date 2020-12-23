@@ -57,18 +57,14 @@ namespace ALifeUni.ALife
 
         public static void CreateWorld(int seed, int height, int width)
         {
-            //1622137501
-            instance = new Planet(seed, height, width, new ZoneRunnerScenario());
+            instance = new Planet(seed, height, width, new MazeScenario());
 
             //Initialize collision grid
             instance._collisionLevels.Add(ReferenceValues.CollisionLevelPhysical, new CollisionGrid<WorldObject>(height, width));
             instance.ZoneMap = new CollisionGrid<Zone>(height, width);
 
-            //TODO: Put Planet Creation into the config
-            //TODO: Create Special Objects from Config
-            //TODO: Read new world agentnum from config
-
             instance.Scenario.PlanetSetup();
+            
         }
 
         #region Instance Stuff
@@ -162,7 +158,23 @@ namespace ALifeUni.ALife
 
         internal void GlobalEndOfTurnActions()
         {
-            //TODO: Pull from Config
+            Scenario.GlobalEndOfTurnActions();
+        }
+
+        public List<Agent> BestXAgents = new List<Agent>();
+        private int bestAgentCounter = 0;
+        public void ReproduceBest()
+        {
+            if(BestXAgents.Count == 0)
+            {
+                return;
+            }
+            if(bestAgentCounter >= BestXAgents.Count)
+            {
+                bestAgentCounter = 0;
+            }
+            BestXAgents[bestAgentCounter].Reproduce();
+            bestAgentCounter++;
         }
 
         internal void RemoveWorldObject(WorldObject mySelf)

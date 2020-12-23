@@ -64,10 +64,10 @@ namespace ALifeUni.ALife.Scenarios
                 Agent oag = AgentFactory.CreateAgent("Agent", orange, green, Colors.Green, 270);
             }
 
-            Point rockCP = new Point((width / 2) + (width / 15), height / 2);
-            Circle cir = new Circle(rockCP, 30);
-            FallingRock fr = new FallingRock(rockCP, cir, Colors.Black);
-            instance.AddObjectToWorld(fr);
+            //Point rockCP = new Point((width / 2) + (width / 15), height / 2);
+            //Circle cir = new Circle(rockCP, 30);
+            //FallingRock fr = new FallingRock(rockCP, cir, Colors.Black);
+            //instance.AddObjectToWorld(fr);
 
             Point rockRCP = new Point((width / 2), (height / 2) - (height / 10));
             Rectangle rec = new Rectangle(rockRCP, 100, 40, Colors.Black);

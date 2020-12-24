@@ -183,8 +183,10 @@ namespace ALifeUni
             {
                 if(colls.Count == 0)
                 {
-                    EmptyObject eo = new EmptyObject(tapPoint, 5, ReferenceValues.CollisionLevelPhysical, (numSpecialItemsCreated++).ToString());
-                    Planet.World.AddObjectToWorld(eo);
+                    //EmptyObject eo = new EmptyObject(tapPoint, 5, ReferenceValues.CollisionLevelPhysical, (numSpecialItemsCreated++).ToString());
+                    //Planet.World.AddObjectToWorld(eo);
+                    Wall w = new Wall(tapPoint, 200, new Angle(0), "W" + numSpecialItemsCreated++);
+                    Planet.World.AddObjectToWorld(w);
                 }
                 else
                 {
@@ -206,10 +208,15 @@ namespace ALifeUni
             WorldObject clicked = colls[0];
             if(clicked != special)
             {
+                AgentPanel.TheAgent = null;
                 special = clicked;
                 if(clicked is Agent)
                 {
                     AgentPanel.TheAgent = (Agent)clicked;
+                }
+                else if (clicked is Wall)
+                {
+                    WallPane.TheWall = (Wall)clicked;
                 }
             }
             else

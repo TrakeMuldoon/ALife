@@ -124,5 +124,6 @@
             <Button x:Name="DotMaker" Click="DotMaker_Click">Dot</Button>
         </StackPanel>
         <local:AgentInfoPanel x:Name="AgentPanel"></local:AgentInfoPanel>
+        <local:WallPanel x:Name="WallPane"></local:WallPanel>
     </StackPanel>
 </Page>

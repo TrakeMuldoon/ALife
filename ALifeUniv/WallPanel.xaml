@@ -1,0 +1,29 @@
+﻿<UserControl
+    x:Class="ALifeUni.WallPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ALifeUni"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="100"
+    d:DesignWidth="200">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30px" />
+            <RowDefinition Height="30px" />
+            <RowDefinition Height="30px" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0">X</TextBlock>
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="WallXPos" TextChanged="WallXPos_TextChanged"/>
+        <TextBlock Grid.Row="1" Grid.Column="0">Y</TextBlock>
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="WallYPos" TextChanged="WallYPos_TextChanged"/>
+        <TextBlock Grid.Row="2" Grid.Column="0">Orientation</TextBlock>
+        <TextBox Grid.Row="2" Grid.Column="1" x:Name="WallOrientation" TextChanged="WallOrientation_TextChanged"/>
+    </Grid>
+</UserControl>

@@ -64,7 +64,6 @@ namespace ALifeUni.ALife
             instance.ZoneMap = new CollisionGrid<Zone>(height, width);
 
             instance.Scenario.PlanetSetup();
-            
         }
 
         #region Instance Stuff

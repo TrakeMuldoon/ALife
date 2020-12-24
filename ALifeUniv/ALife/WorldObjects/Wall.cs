@@ -1,18 +1,22 @@
 ﻿using ALifeUni.ALife.UtilityClasses;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 
 namespace ALifeUni.ALife.Objects
 {
-    public class EmptyObject : WorldObject
+    public class Wall : WorldObject
     {
-        public EmptyObject(Point centrePoint, float startRadius, string collisionLevel) : this(centrePoint, startRadius, collisionLevel, String.Empty)
+        public Wall(Point centrePoint, double Length, Angle orientation, string individualLabel)
+            : base("Wall", individualLabel, ReferenceValues.CollisionLevelPhysical)
         {
-        }
-        public EmptyObject(Point centrePoint, float startRadius, string collisionLevel, string name)
-            : base(centrePoint, new Circle(centrePoint, startRadius), "Empty", name, collisionLevel, Colors.Gray)
-        {
+            Shape = new Rectangle(Length, 5, Colors.DarkKhaki);
+            Shape.CentrePoint = centrePoint;
+            Shape.Orientation = orientation;
         }
 
         public override void Die()
@@ -22,7 +26,7 @@ namespace ALifeUni.ALife.Objects
 
         public override void ExecuteAliveTurn()
         {
-            //Do Nothing
+            //Do nothing. It's a wall.
         }
 
         public override void ExecuteDeadTurn()
@@ -34,7 +38,6 @@ namespace ALifeUni.ALife.Objects
         {
             throw new NotImplementedException();
         }
-
         public override WorldObject Clone()
         {
             throw new NotImplementedException();

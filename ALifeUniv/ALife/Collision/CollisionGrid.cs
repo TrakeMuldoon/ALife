@@ -91,6 +91,14 @@ namespace ALifeUni.ALife
             //insert into all applicable buckets
             foreach(Point gc in myCoords)
             {
+                if(gc.X < 0 
+                   || gc.Y < 0
+                   || gc.X >= xMaxBucket
+                   || gc.Y >= yMaxBucket)
+                {
+                    continue;
+                }
+               
                 objectGrid[(int)gc.X, (int)gc.Y].Add(newObject);
             }
 

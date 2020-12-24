@@ -6,7 +6,7 @@ using System.Linq;
 using Windows.Foundation;
 using Windows.UI;
 
-namespace ALifeUni.ALife
+namespace ALifeUni.ALife.Objects
 {
     class FallingRock : WorldObject
     {

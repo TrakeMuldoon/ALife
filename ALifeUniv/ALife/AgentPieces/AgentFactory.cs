@@ -55,7 +55,7 @@ namespace ALifeUni.ALife.AgentPieces
         {
             Agent newChild = new Agent(newParent.GenusLabel
                            , AgentIDGenerator.GetNextChildId(newParent.IndividualLabel, newParent.NumChildren)
-                           , newParent.CollisionLevel);
+                           , ReferenceValues.CollisionLevelPhysical); //TODO: This is a bug when you use "ReproduceBest" or reproduce anything that is already dead. 
 
             newChild.Zone = newParent.Zone;
             newChild.TargetZone = newParent.TargetZone;

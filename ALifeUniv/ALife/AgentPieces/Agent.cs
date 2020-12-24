@@ -102,6 +102,7 @@ namespace ALifeUni.ALife
 
         public override void Die()
         {
+            Planet.World.ReproduceBest();
             Alive = false;
             Shape.DebugColor = Colors.Maroon;
             Planet.World.ChangeCollisionLayerForObject(this, ReferenceValues.CollisionLevelDead);
@@ -154,11 +155,9 @@ namespace ALifeUni.ALife
                 if(wo is Agent ag)
                 {
                     ag.Die();
-                    Planet.World.ReproduceBest();
                 }
             }
             Die();
-            Planet.World.ReproduceBest();
         }
 
         public override WorldObject Clone()

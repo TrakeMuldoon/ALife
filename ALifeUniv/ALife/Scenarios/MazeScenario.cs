@@ -80,7 +80,6 @@ namespace ALifeUni.ALife.Scenarios
                     if(me.Statistics["ZoneEscapeTimer"].Value > 200)
                     {
                         me.Die();
-                        Planet.World.ReproduceBest();
                     }
                 }
                 else if(z.Name == me.TargetZone.Name)
@@ -125,7 +124,7 @@ namespace ALifeUni.ALife.Scenarios
             int numAgents = 50;
             for(int i = 0; i < numAgents; i++)
             {
-                //Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
+                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
             }
 
             List<Wall> walls = new List<Wall>();
@@ -133,6 +132,28 @@ namespace ALifeUni.ALife.Scenarios
             walls.Add(new Wall(new Point(260, 1550), 1000, new Angle(105), "w2"));
             walls.Add(new Wall(new Point(520, 450), 1000, new Angle(105), "w3"));
             walls.Add(new Wall(new Point(520, 1550), 1000, new Angle(75), "w4"));
+
+            walls.Add(new Wall(new Point(735, 200), 200, new Angle(80), "w5"));
+            walls.Add(new Wall(new Point(735, 500), 200, new Angle(100), "w6"));
+            walls.Add(new Wall(new Point(735, 800), 200, new Angle(80), "w7"));
+            walls.Add(new Wall(new Point(735, 1100), 200, new Angle(100), "w8"));
+            walls.Add(new Wall(new Point(735, 1400), 200, new Angle(80), "w9"));
+            walls.Add(new Wall(new Point(735, 1700), 200, new Angle(100), "w10"));
+
+            walls.Add(new Wall(new Point(900, 200),  175, new Angle(20),    "w11"));
+            walls.Add(new Wall(new Point(900, 400),  175, new Angle(50),    "w12"));
+            walls.Add(new Wall(new Point(900, 600),  175, new Angle(340),   "w13"));
+            walls.Add(new Wall(new Point(900, 800),  175, new Angle(20),    "w14"));
+            walls.Add(new Wall(new Point(900, 1000), 175, new Angle(50),    "w15"));
+            walls.Add(new Wall(new Point(900, 1200), 175, new Angle(340),   "w16"));
+            walls.Add(new Wall(new Point(900, 1400), 175, new Angle(20),    "w17"));
+            walls.Add(new Wall(new Point(900, 1600), 175, new Angle(50),    "w18"));
+            walls.Add(new Wall(new Point(900, 1800), 175, new Angle(340),   "w19"));
+            
+            walls.Add(new Wall(new Point(1100, 390), 800, new Angle(80),    "w20"));
+            walls.Add(new Wall(new Point(1120, 1450), 1100, new Angle(95),  "w21"));
+            walls.Add(new Wall(new Point(1240, 390), 800, new Angle(100),   "w22"));
+            walls.Add(new Wall(new Point(1220, 1450), 1100, new Angle(85),  "w23"));
 
             foreach(Wall w in walls)
             {

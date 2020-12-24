@@ -9,21 +9,20 @@
     d:DesignHeight="100"
     d:DesignWidth="200">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30px" />
-            <RowDefinition Height="30px" />
-            <RowDefinition Height="30px" />
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0">X</TextBlock>
-        <TextBox Grid.Row="0" Grid.Column="1" x:Name="WallXPos" TextChanged="WallXPos_TextChanged"/>
-        <TextBlock Grid.Row="1" Grid.Column="0">Y</TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="1" x:Name="WallYPos" TextChanged="WallYPos_TextChanged"/>
-        <TextBlock Grid.Row="2" Grid.Column="0">Orientation</TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="1" x:Name="WallOrientation" TextChanged="WallOrientation_TextChanged"/>
-    </Grid>
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock>X</TextBlock>
+            <TextBox x:Name="WallXPos" TextChanged="WallXPos_TextChanged"/>
+            <TextBlock>Y</TextBlock>
+            <TextBox x:Name="WallYPos" TextChanged="WallYPos_TextChanged"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock>Length</TextBlock>
+            <TextBox x:Name="WallLength" TextChanged="WallLength_TextChanged"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock>Orienta</TextBlock>
+            <TextBox x:Name="WallOrientation" TextChanged="WallOrientation_TextChanged"/>
+        </StackPanel>
+    </StackPanel>
 </UserControl>

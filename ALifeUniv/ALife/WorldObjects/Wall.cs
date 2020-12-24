@@ -17,6 +17,7 @@ namespace ALifeUni.ALife.Objects
             Shape = new Rectangle(Length, 5, Colors.DarkKhaki);
             Shape.CentrePoint = centrePoint;
             Shape.Orientation = orientation;
+            Shape.Reset();
         }
 
         public override void Die()

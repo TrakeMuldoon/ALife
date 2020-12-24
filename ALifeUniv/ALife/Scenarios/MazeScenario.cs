@@ -8,6 +8,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI;
+using ALifeUni.ALife.Objects;
 
 namespace ALifeUni.ALife.Scenarios
 {
@@ -124,13 +125,19 @@ namespace ALifeUni.ALife.Scenarios
             int numAgents = 50;
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
+                //Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
             }
 
-            //Point rockRCP = new Point((width / 2), (height / 2) - (height / 10));
-            //Rectangle rec = new Rectangle(rockRCP, 80, 40, Colors.Black);
-            //FallingRock frR = new FallingRock(rockRCP, rec, Colors.Black);
-            //instance.AddObjectToWorld(frR);
+            List<Wall> walls = new List<Wall>();
+            walls.Add(new Wall(new Point(260, 450), 1000, new Angle(75), "w1"));
+            walls.Add(new Wall(new Point(260, 1550), 1000, new Angle(105), "w2"));
+            walls.Add(new Wall(new Point(520, 450), 1000, new Angle(105), "w3"));
+            walls.Add(new Wall(new Point(520, 1550), 1000, new Angle(75), "w4"));
+
+            foreach(Wall w in walls)
+            {
+                Planet.World.AddObjectToWorld(w);
+            }
         }
 
         int bestXNum = 5;

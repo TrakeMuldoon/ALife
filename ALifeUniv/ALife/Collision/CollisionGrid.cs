@@ -12,6 +12,8 @@ namespace ALifeUni.ALife
         public readonly int Width;
 
         //TODO: Load from Default Configuration
+        private int GridXMax;
+        private int GridYMax;
         private int GridSize = 25;
         private List<T>[,] objectGrid;
         private List<T> trackedObjects;
@@ -37,7 +39,8 @@ namespace ALifeUni.ALife
             int numYBoxesCeil = (int)Math.Ceiling(numYBoxes);
             int numXBoxesFloor = (int)Math.Floor(numXBoxes);
             int numYBoxesFloor = (int)Math.Floor(numYBoxes);
-
+            GridXMax = numXBoxesCeil;
+            GridYMax = numYBoxesCeil;
 
             trackedObjects = new List<T>();
 
@@ -93,8 +96,8 @@ namespace ALifeUni.ALife
             {
                 if(gc.X < 0 
                    || gc.Y < 0
-                   || gc.X >= xMaxBucket
-                   || gc.Y >= yMaxBucket)
+                   || gc.X >= GridXMax
+                   || gc.Y >= GridYMax)
                 {
                     continue;
                 }
@@ -195,6 +198,14 @@ namespace ALifeUni.ALife
             List<Point> myCoords = agentLocationTracker[killMe];
             foreach(Point coord in myCoords)
             {
+                //In case some objects go out of bounds.
+                if(coord.X < 0
+                   || coord.Y < 0
+                   || coord.X >= GridXMax
+                   || coord.Y >= GridYMax)
+                {
+                    continue;
+                }
                 objectGrid[(int)coord.X, (int)coord.Y].Remove(killMe);
             }
             agentLocationTracker.Remove(killMe);

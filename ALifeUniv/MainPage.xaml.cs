@@ -173,7 +173,7 @@ namespace ALifeUni
         private void AnimCanvas_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Point tapPoint = e.GetPosition(animCanvas);
-            BoundingBox bb = new BoundingBox(tapPoint.X, tapPoint.Y, tapPoint.X, tapPoint.Y);
+            BoundingBox bb = new BoundingBox(tapPoint.X-5, tapPoint.Y-5, tapPoint.X+5, tapPoint.Y+5);
             List<WorldObject> colls = Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].QueryForBoundingBoxCollisions(bb);
 
             CoreWindow cw = Window.Current.CoreWindow;
@@ -185,7 +185,7 @@ namespace ALifeUni
                 {
                     //EmptyObject eo = new EmptyObject(tapPoint, 5, ReferenceValues.CollisionLevelPhysical, (numSpecialItemsCreated++).ToString());
                     //Planet.World.AddObjectToWorld(eo);
-                    Wall w = new Wall(tapPoint, 200, new Angle(0), "W" + numSpecialItemsCreated++);
+                    Wall w = new Wall(tapPoint, 200, new Angle(10), "W" + numSpecialItemsCreated++);
                     Planet.World.AddObjectToWorld(w);
                 }
                 else

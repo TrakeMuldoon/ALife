@@ -24,5 +24,7 @@
             <TextBlock>Orienta</TextBlock>
             <TextBox x:Name="WallOrientation" TextChanged="WallOrientation_TextChanged"/>
         </StackPanel>
+        <Button x:Name="Copy" Click="Copy_Click">Copy</Button>
+        <TextBlock x:Name="NewDeclaration"></TextBlock>
     </StackPanel>
 </UserControl>

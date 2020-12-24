@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -49,6 +50,7 @@ namespace ALifeUni
             WallYPos.Text = theWall.Shape.CentrePoint.Y.ToString();
             WallLength.Text = (theWall.Shape as Rectangle).FBLength.ToString();
             WallOrientation.Text = theWall.Shape.Orientation.Degrees.ToString();
+            UpdateDeclaration();
             inUpdate = false;
         }
 
@@ -59,6 +61,29 @@ namespace ALifeUni
             WallYPos.Text = "";
             WallOrientation.Text = "";
             inUpdate = false;
+        }
+
+        private void UpdateDeclaration()
+        {
+            String newdec = String.Format("walls.Add(new Wall(new Point({0}, {1}), {2}, new Angle({3}), ));"
+                                            , WallXPos.Text
+                                            , WallYPos.Text
+                                            , WallLength.Text
+                                            , WallOrientation.Text);
+            NewDeclaration.Text = newdec;
+        }
+
+
+        private void Copy_Click(object sender, RoutedEventArgs e)
+        {
+            String newdec = String.Format("walls.Add(new Wall(new Point({0}, {1}), {2}, new Angle({3}), ));"
+                                , WallXPos.Text
+                                , WallYPos.Text
+                                , WallLength.Text
+                                , WallOrientation.Text);
+            DataPackage dp = new DataPackage();
+            dp.SetText(newdec);
+            Clipboard.SetContent(dp);
         }
 
         public WallPanel()
@@ -138,6 +163,7 @@ namespace ALifeUni
             theWall.Shape.Reset();
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[theWall.CollisionLevel];
             collider.MoveObject(theWall);
+            UpdateDeclaration();
         }
     }
 }

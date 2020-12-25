@@ -140,6 +140,15 @@ namespace ALifeUni.UI
             }
         }
 
+        internal static void DrawInactiveObject(WorldObject wo, LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
+        {
+            Color color = wo.Shape.Color;
+            DrawShape(wo.Shape, ui, args, true);
+            wo.Shape.Color = Colors.Red;
+            DrawShape(wo.Shape, ui, args, false);
+            wo.Shape.Color = color;
+        }
+
         internal static void DrawPastObject(IShape shape, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
         {
             Color pastDebug = shape.DebugColor;

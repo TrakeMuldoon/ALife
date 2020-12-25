@@ -137,8 +137,13 @@ namespace ALifeUni
 
         private void DrawLayer(LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
         {
-            if(ui.LayerName == ReferenceValues.CollisionLevelZone
-                && ui.ShowLayer)
+            if(!ui.ShowLayer)
+            {
+                return;
+            }
+
+            //Special Layer, Zones draw different
+            if(ui.LayerName == ReferenceValues.CollisionLevelZone)
             {
                 foreach(Zone z in Planet.World.Zones.Values)
                 {
@@ -146,9 +151,18 @@ namespace ALifeUni
                 }
                 return;
             }
+            if(ui.LayerName == ReferenceValues.CollisionLevelDead)
+            {
+                for(int i = 0; i < Planet.World.InactiveObjects.Count; i++)
+                {
+                    WorldObject obj = Planet.World.InactiveObjects[i];
+                    DrawingLogic.DrawInactiveObject(obj, ui, args);
 
-            if(!ui.ShowLayer                                                       //Not showing it
-                || !Planet.World.CollisionLevels.ContainsKey(ui.LayerName))        //Layer doesn't exist
+                }
+                return;
+            }
+
+            if(!Planet.World.CollisionLevels.ContainsKey(ui.LayerName))        //Layer doesn't exist
             {
                 return;
             }
@@ -161,6 +175,7 @@ namespace ALifeUni
             }
             else
             {
+                //Default Draw Normal case
                 foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
                 {
                     DrawingLogic.DrawWorldObject(wo, ui, args);

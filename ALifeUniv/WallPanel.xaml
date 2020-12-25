@@ -10,6 +10,7 @@
     d:DesignWidth="200">
 
     <StackPanel Orientation="Vertical">
+        <TextBlock x:Name="WallName"></TextBlock>
         <StackPanel Orientation="Horizontal">
             <TextBlock>X</TextBlock>
             <TextBox x:Name="WallXPos" TextChanged="WallXPos_TextChanged"/>

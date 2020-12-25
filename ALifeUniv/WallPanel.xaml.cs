@@ -46,9 +46,10 @@ namespace ALifeUni
                 return;
             }
             inUpdate = true;
+            WallName.Text = theWall.IndividualLabel;
             WallXPos.Text = theWall.Shape.CentrePoint.X.ToString();
             WallYPos.Text = theWall.Shape.CentrePoint.Y.ToString();
-            WallLength.Text = (theWall.Shape as Rectangle).FBLength.ToString();
+            WallLength.Text = theWall.RShape.FBLength.ToString();
             WallOrientation.Text = theWall.Shape.Orientation.Degrees.ToString();
             UpdateDeclaration();
             inUpdate = false;
@@ -57,8 +58,10 @@ namespace ALifeUni
         private void clearInfo()
         {
             inUpdate = true;
+            WallName.Text = "";
             WallXPos.Text = "";
             WallYPos.Text = "";
+            WallLength.Text = "";
             WallOrientation.Text = "";
             inUpdate = false;
         }
@@ -146,7 +149,7 @@ namespace ALifeUni
             if(inUpdate) return;
             
             TextBox tb = (TextBox)sender;
-            Rectangle rec = (Rectangle)theWall.Shape;
+            Rectangle rec = theWall.RShape;
             if(rec.FBLength.ToString() == tb.Text) return;
             if(String.IsNullOrEmpty(tb.Text)) return;
 

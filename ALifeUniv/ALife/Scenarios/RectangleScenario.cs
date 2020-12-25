@@ -45,7 +45,7 @@ namespace ALifeUni.ALife.Scenarios
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
             //IBrain newBrain = new TesterBrain(agent);
-            IBrain newBrain = new BehaviourBrain(agent, "IF ALWAYS THEN Rotate.TurnRight AT [0.1]");
+            IBrain newBrain = new BehaviourBrain(agent);
 
             agent.CompleteInitialization(null, 1, newBrain);
 

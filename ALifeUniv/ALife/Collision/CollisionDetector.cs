@@ -159,7 +159,7 @@ namespace ALifeUni.ALife
         {
             //Very annoying.
             //First we need to check if any arbitrary point is within the Sector
-            if(IsPointWithinSweep(rectangle.TopLeft, sector)
+            if(IsPointWithinSector(rectangle.TopLeft, sector)
                 || IsPointWithinRectangle(sector.LeftPoint, rectangle))
             {
                 return true;
@@ -344,6 +344,14 @@ namespace ALifeUni.ALife
             return closest;
         }
 
+        private static bool IsPointWithinSector(Point targetPoint, Sector sector)
+        {
+            if(!PointCircleCollision(targetPoint, new Circle(sector.CentrePoint, sector.Radius)))
+                return false;
+
+            return IsPointWithinSweep(targetPoint, sector);
+        }
+
         private static bool IsPointWithinSweep(Point targetPoint, Sector sector)
         {
             double deltaX = targetPoint.X - sector.CentrePoint.X;
@@ -442,9 +450,9 @@ namespace ALifeUni.ALife
             if(denom == 0)
                 return false; //parallel
 
-            double ua = (deltaBX * deltaABY) - (deltaBY * deltaABX) / denom;
+            double ua = ((deltaBX * deltaABY) - (deltaBY * deltaABX)) / denom;
 
-            double ub = (deltaAX * deltaABY) - (deltaAY * deltaABX) / denom;
+            double ub = ((deltaAX * deltaABY) - (deltaAY * deltaABX)) / denom;
 
             if(ua < 0
                 || ua > 1

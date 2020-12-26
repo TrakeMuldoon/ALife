@@ -34,17 +34,34 @@ namespace ALifeUni.ALife.AgentPieces
             return ret;
         }
 
+
+        internal static int tierOne = ChildIDCharsSetOne.Length * ChildIDCharsSetTwo.Length;
         internal static string GetNextChildId(string id, int numChildren)
         {
-            int valueOne = numChildren / ChildIDCharsSetTwo.Length;
-            int valueTwo = numChildren % ChildIDCharsSetTwo.Length;
-
-            if(valueOne > ChildIDCharsSetOne.Length)
+            string newId = String.Empty;
+            if(numChildren < ChildIDCharsSetOne.Length)
             {
-                throw new Exception("Too Many Children");
+                newId = ChildIDCharsSetOne[numChildren - 1].ToString();
+            }
+            else if(numChildren < tierOne)
+            {
+                int childrenCounter = numChildren - ChildIDCharsSetOne.Length;
+                int valueOne = childrenCounter / ChildIDCharsSetTwo.Length;
+                int valueTwo = childrenCounter % ChildIDCharsSetTwo.Length;
+
+                newId = String.Empty + ChildIDCharsSetOne[valueOne] + ChildIDCharsSetTwo[valueTwo];
+            }
+            else if(numChildren < tierOne * ChildIDCharsSetTwo.Length)
+            {
+                int childrenCounter = numChildren - tierOne;
+                int valueOne = childrenCounter / (ChildIDCharsSetTwo.Length * ChildIDCharsSetTwo.Length);
+                int valueTwo = (childrenCounter / ChildIDCharsSetTwo.Length) % ChildIDCharsSetTwo.Length;
+                int valueThree = childrenCounter % ChildIDCharsSetTwo.Length;
+
+                newId = String.Empty + ChildIDCharsSetOne[valueOne] + ChildIDCharsSetTwo[valueTwo] + ChildIDCharsSetTwo[valueThree];
             }
 
-            return id + ChildIDCharsSetOne[valueOne] + ChildIDCharsSetTwo[valueTwo];
+            return id + newId;
         }
     }
 }

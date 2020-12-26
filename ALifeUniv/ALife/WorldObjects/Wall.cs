@@ -80,7 +80,7 @@ namespace ALifeUni.ALife.Objects
                 double indexer = i - ((numSplits + 1) / 2.0);
 
                 Point p = ExtraMath.TranslateByVector(wall.Shape.CentrePoint, ori.Radians, segmentLength * indexer);
-                Wall w = new Wall(p, segmentLength, ori, wall.IndividualLabel + (i + 1));
+                Wall w = new Wall(p, segmentLength, ori, wall.IndividualLabel + "~" + (i + 1));
                 segments.Add(w);
             }
             return segments;

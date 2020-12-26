@@ -129,10 +129,10 @@ namespace ALifeUni.ALife.Scenarios
             }
 
             List<Wall> walls = new List<Wall>();
-            walls.Add(new Wall(new Point(260, 450), 1000, new Angle(75),    "w1"));
-            walls.Add(new Wall(new Point(260, 1550), 1000, new Angle(105),  "w2"));
-            walls.Add(new Wall(new Point(520, 450), 1000, new Angle(105),   "w3"));
-            walls.Add(new Wall(new Point(520, 1550), 1000, new Angle(75),   "w4"));
+            walls.Add(new Wall(new Point(260, 410), 850, new Angle(75),     "w1-1"));
+            walls.Add(new Wall(new Point(260, 1590), 850, new Angle(105),   "w1-2"));
+            walls.Add(new Wall(new Point(480, 410), 850, new Angle(105),    "w1-3"));
+            walls.Add(new Wall(new Point(480, 1590), 850, new Angle(75),    "w1-4"));
 
             walls.Add(new Wall(new Point(735, 200), 200, new Angle(80),     "w5"));
             walls.Add(new Wall(new Point(735, 500), 200, new Angle(100),    "w6"));
@@ -179,7 +179,35 @@ namespace ALifeUni.ALife.Scenarios
             walls.Add(new Wall(new Point(1550, 740), 1500, new Angle(85),   "w4-1"));
             walls.Add(new Wall(new Point(1560, 1800), 450, new Angle(105),  "w4-2"));
             walls.Add(new Wall(new Point(1680, 1800), 450, new Angle(75),   "w4-3"));
-            walls.Add(new Wall(new Point(1660, 740), 1500, new Angle(95),   "w4-4"));
+            walls.Add(new Wall(new Point(1680, 740), 1500, new Angle(95),   "w4-4"));
+
+            walls.Add(new Wall(new Point(1810, 100), 100, new Angle(340),    "w5-1"));
+            walls.Add(new Wall(new Point(1810, 180), 100, new Angle(20),     "w5-2"));
+            walls.Add(new Wall(new Point(1810, 300), 100, new Angle(340),    "w5-3"));
+            walls.Add(new Wall(new Point(1810, 380), 100, new Angle(20),     "w5-4"));
+            walls.Add(new Wall(new Point(1810, 500), 100, new Angle(340),    "w5-5"));
+            walls.Add(new Wall(new Point(1810, 580), 100, new Angle(20),     "w5-6"));
+            walls.Add(new Wall(new Point(1810, 700), 100, new Angle(340),    "w5-7"));
+            walls.Add(new Wall(new Point(1810, 780), 100, new Angle(20),     "w5-8"));
+            walls.Add(new Wall(new Point(1810, 900), 100, new Angle(340),    "w5-9"));
+            walls.Add(new Wall(new Point(1810, 980), 100, new Angle(20),     "w5-10"));
+            walls.Add(new Wall(new Point(1810, 1100), 100, new Angle(340),   "w5-11"));
+            walls.Add(new Wall(new Point(1810, 1180), 100, new Angle(20),    "w5-12"));
+            walls.Add(new Wall(new Point(1810, 1300), 100, new Angle(340),   "w5-13"));
+            walls.Add(new Wall(new Point(1810, 1380), 100, new Angle(20),    "w5-14"));
+            walls.Add(new Wall(new Point(1810, 1500), 100, new Angle(340),   "w5-15"));
+            walls.Add(new Wall(new Point(1810, 1580), 100, new Angle(20),    "w5-16"));
+            walls.Add(new Wall(new Point(1810, 1700), 100, new Angle(340),   "w5-17"));
+            walls.Add(new Wall(new Point(1810, 1780), 100, new Angle(20),    "w5-18"));
+            walls.Add(new Wall(new Point(1810, 1900), 100, new Angle(340),   "w5-19"));
+            walls.Add(new Wall(new Point(1810, 1980), 100, new Angle(200),   "w5-20"));
+
+            for(int i = 0; i < 20; i++)
+            {
+                int val = i * 100;
+                walls.Add(new Wall(new Point(1930, val + 23), 100, new Angle(342), "w6-" + val));
+                walls.Add(new Wall(new Point(1930, val + 57), 100, new Angle(18),  "w6-" + val + ".1"));
+            }
 
 
             foreach(Wall w in walls)

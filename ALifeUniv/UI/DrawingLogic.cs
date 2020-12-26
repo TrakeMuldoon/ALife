@@ -143,8 +143,9 @@ namespace ALifeUni.UI
         internal static void DrawInactiveObject(WorldObject wo, LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
         {
             Color color = wo.Shape.Color;
+            wo.Shape.Color = Color.FromArgb(50, color.R, color.G, color.B);
             DrawShape(wo.Shape, ui, args, true);
-            wo.Shape.Color = Colors.Red;
+            wo.Shape.Color = Color.FromArgb(50, 255, 0, 0);
             DrawShape(wo.Shape, ui, args, false);
             wo.Shape.Color = color;
         }

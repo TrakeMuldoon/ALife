@@ -47,11 +47,11 @@ namespace ALifeUni.ALife
                                       , 5.0 //TODO: HUUUUUUGE BUG. Eyes are hardcoded to be 5 units from centre
                                       , relativeOrientation, radius, sweep);
             SubInputs.Add(new AnyInput(name + ".SeeSomething"));
-            SubInputs.Add(new CountInput(name + ".HowMany"));
+            //SubInputs.Add(new CountInput(name + ".HowMany"));
             //SubInputs.Add(new EyeIdentifierInput(name + ".WhoISee"));
-            SubInputs.Add(new ColorBoolInput(name + ".IsRed", (WorldObject wo) => wo.Shape.Color.R));
-            SubInputs.Add(new ColorBoolInput(name + ".IsBlue", (WorldObject wo) => wo.Shape.Color.B));
-            SubInputs.Add(new ColorBoolInput(name + ".IsGreen", (WorldObject wo) => wo.Shape.Color.G));
+            //SubInputs.Add(new ColorBoolInput(name + ".IsRed", (WorldObject wo) => wo.Shape.Color.R));
+            //SubInputs.Add(new ColorBoolInput(name + ".IsBlue", (WorldObject wo) => wo.Shape.Color.B));
+            //SubInputs.Add(new ColorBoolInput(name + ".IsGreen", (WorldObject wo) => wo.Shape.Color.G));
             //SubInputs.Add(new ColorInput(name + ".HowRed", (WorldObject wo) => wo.Shape.Color.R));
             //SubInputs.Add(new ColorInput(name + ".HowBlue", (WorldObject wo) => wo.Shape.Color.B));
             //SubInputs.Add(new ColorInput(name + ".HowGreen", (WorldObject wo) => wo.Shape.Color.G));

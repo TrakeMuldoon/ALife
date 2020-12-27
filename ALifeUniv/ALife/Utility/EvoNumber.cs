@@ -121,7 +121,21 @@ namespace ALifeUni.ALife.Utility
 
         private double EvolveANumber(double current, double deltaMax, double hardMin, double hardMax)
         {
-            double moddedValue = current + (Planet.World.NumberGen.NextDouble() * deltaMax * 2) - deltaMax;
+            double mean = 0;
+            double stdDev = 0.2;
+
+            double u1 = 1.0 - Planet.World.NumberGen.NextDouble(); //uniform(0,1] random doubles
+            double u2 = 1.0 - Planet.World.NumberGen.NextDouble();
+            double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1))
+                                   * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
+            double randNormal = mean + stdDev * randStdNormal;      //random normal(mean,stdDev^2)
+
+            double delta = randNormal * deltaMax;
+                //double delta = (Planet.World.NumberGen.NextDouble() * deltaMax)
+                //               + (Planet.World.NumberGen.NextDouble() * deltaMax)
+                //               - deltaMax;
+
+            double moddedValue = current + delta;
             double clampedValue = Math.Clamp(moddedValue, hardMin, hardMax);
             return clampedValue;
         }

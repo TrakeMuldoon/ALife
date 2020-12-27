@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace ALifeUni.ALife
 {
@@ -7,10 +8,11 @@ namespace ALifeUni.ALife
         public int StatisticMaximum;
         public int StatisticMinimum;
 
-        public StatisticInput(string name, int statisticMinimum, int statisticMaximum) : base(name)
+        public StatisticInput(string name, int statisticMinimum, int statisticMaximum, [Optional] int startValue) : base(name)
         {
             StatisticMaximum = statisticMaximum;
             StatisticMinimum = statisticMinimum;
+            Value = startValue;
         }
 
         public int GetValue()

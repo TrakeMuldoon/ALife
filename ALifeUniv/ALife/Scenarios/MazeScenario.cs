@@ -109,6 +109,10 @@ namespace ALifeUni.ALife.Scenarios
             {
                 me.Statistics["MaximumX"].Value = roundedX;
                 me.Statistics["MaxXTimer"].Value = 0;
+                if(roundedX % 300 == 0)
+                {
+                    me.Reproduce();
+                }
             }
         }
 
@@ -235,6 +239,20 @@ namespace ALifeUni.ALife.Scenarios
                     //This means it made it through the forloop and is the best.
                     winners.Insert(j + 1, ag);
                     winners.RemoveAt(bestXNum);
+                }
+            }
+
+            Zone red = Planet.World.Zones["Red(Blue)"];
+            Zone blue = Planet.World.Zones["Blue(Red)"];
+            if(Planet.World.AllActiveObjects.OfType<Agent>().Count() < 50)
+            {
+                Planet.World.ReproduceBest();
+                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
+
+                var weaklings = Planet.World.InactiveObjects.Where((wo) => wo.Shape.CentrePoint.X < 50).ToList();
+                foreach(WorldObject wo in weaklings)
+                {
+                    Planet.World.InactiveObjects.Remove(wo);
                 }
             }
         }

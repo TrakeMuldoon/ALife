@@ -69,11 +69,21 @@ namespace ALifeUni.ALife
         #region Instance Stuff
 
         public readonly Dictionary<String, Zone> Zones = new Dictionary<string, Zone>();
+
+
+        //All objects which are active (This includes "dead" objects, which have not yet finished their activity (i.e. corpses are "active")
         public readonly List<WorldObject> AllActiveObjects = new List<WorldObject>();
+        //All objects which were active last turn
         public readonly List<WorldObject> StableActiveObjects = new List<WorldObject>();
+        //All new objects. Should be added to Stable Active Objects, should already be in AllActiveObjects
         public readonly List<WorldObject> NewActiveObjects = new List<WorldObject>();
+        
+        //All objects which have falled out of all active object scope
         public readonly List<WorldObject> InactiveObjects = new List<WorldObject>();
+        //Objects which at the end of the turn should be removed from "AllActive", "StableActive" and "NewActive"
         public readonly List<WorldObject> ToRemoveObjects = new List<WorldObject>();
+        
+        
         public readonly int Seed;
         public readonly IScenario Scenario;
 
@@ -143,12 +153,17 @@ namespace ALifeUni.ALife
             while(NewActiveObjects.Count > 0)
             {
                 StableActiveObjects.Add(NewActiveObjects[0]);
+                
                 NewActiveObjects.RemoveAt(0);
             }
             while(ToRemoveObjects.Count > 0)
             {
+                AllActiveObjects.Remove(ToRemoveObjects[0]);
                 StableActiveObjects.Remove(ToRemoveObjects[0]);
+                NewActiveObjects.Remove(ToRemoveObjects[0]);
+
                 InactiveObjects.Add(ToRemoveObjects[0]);
+                
                 ToRemoveObjects.RemoveAt(0);
             }
 

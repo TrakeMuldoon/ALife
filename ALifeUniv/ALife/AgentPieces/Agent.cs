@@ -102,7 +102,6 @@ namespace ALifeUni.ALife
 
         public override void Die()
         {
-            Planet.World.ReproduceBest();
             Alive = false;
             Shape.DebugColor = Colors.Maroon;
             Planet.World.ChangeCollisionLayerForObject(this, ReferenceValues.CollisionLevelDead);

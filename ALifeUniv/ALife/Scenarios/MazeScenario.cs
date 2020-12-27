@@ -51,7 +51,8 @@ namespace ALifeUni.ALife.Scenarios
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
                 new StatisticInput("Age", 0, Int32.MaxValue),
-                new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue)
+                new StatisticInput("MaximumX", 0, Int32.MaxValue),
+                new StatisticInput("MaxXTimer", 0, Int32.MaxValue)
             };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
@@ -72,17 +73,15 @@ namespace ALifeUni.ALife.Scenarios
 
         public override void EndOfTurnTriggers(Agent me)
         {
+            if(me.Statistics["MaxXTimer"].Value > 300)
+            {
+                me.Die();
+                return;
+            }
             List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(me.Shape.BoundingBox);
             foreach(Zone z in inZones)
             {
-                if(z.Name == me.Zone.Name)
-                {
-                    if(me.Statistics["ZoneEscapeTimer"].Value > 200)
-                    {
-                        me.Die();
-                    }
-                }
-                else if(z.Name == me.TargetZone.Name)
+                if(z.Name == me.TargetZone.Name)
                 {
                     throw new Exception("SUCCESS!!!!!!!!?");
                     ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[me.CollisionLevel];
@@ -104,7 +103,13 @@ namespace ALifeUni.ALife.Scenarios
         {
             //Increment or Decrement end of turn values
             me.Statistics["Age"].IncreasePropertyBy(1);
-            me.Statistics["ZoneEscapeTimer"].IncreasePropertyBy(1);
+            me.Statistics["MaxXTimer"].IncreasePropertyBy(1);
+            int roundedX = (int)(me.Shape.CentrePoint.X / 100) * 100;
+            if(roundedX > me.Statistics["MaximumX"].Value)
+            {
+                me.Statistics["MaximumX"].Value = roundedX;
+                me.Statistics["MaxXTimer"].Value = 0;
+            }
         }
 
         public override void PlanetSetup()
@@ -173,9 +178,9 @@ namespace ALifeUni.ALife.Scenarios
                 walls.Add(new Wall(new Point(1810, val + 80), 100, new Angle(20),   "w7-" + m + "_1"));
             }
 
-            for(int n = 1; n < 19; n++)
+            for(int n = 1; n < 20; n++)
             {
-                int val = n * 100;
+                int val = (n * 100) - 50;
                 walls.Add(new Wall(new Point(1930, val + 23), 100, new Angle(342), "w8-" + n));
                 walls.Add(new Wall(new Point(1930, val + 57), 100, new Angle(18),  "w8-" + n + "_1"));
             }

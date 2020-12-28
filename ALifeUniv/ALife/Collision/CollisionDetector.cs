@@ -206,8 +206,16 @@ namespace ALifeUni.ALife
         {
             Circle sectorAsCircle = new Circle(sector.CentrePoint, sector.Radius);
             List<Point> potentialPoints = FindLineCircleIntersections(sectorAsCircle, a1, a2);
+            List<Point> pointsInLineSegment = new List<Point>();
+            foreach(Point p in potentialPoints)
+            {
+                if(IsValueBetweenValues(p.X, a1.X, a2.X))
+                {
+                    pointsInLineSegment.Add(p);
+                }
+            }
 
-            foreach(Point px in potentialPoints)
+            foreach(Point px in pointsInLineSegment)
             {
                 if(IsPointWithinSweep(px, sector))
                 {
@@ -216,6 +224,20 @@ namespace ALifeUni.ALife
             }
             //includes the no points case.
             return false;
+        }
+
+        private static Boolean IsValueBetweenValues(double eval, double a, double b)
+        {
+            if(a < b)
+            {
+                return a <= eval
+                        && eval <= b;
+            }
+            else
+            {
+                return b <= eval
+                        && eval <= a;
+            }
         }
 
         private static Boolean DoesLineSegmentIntersectRectangle(Point a1, Point a2, Rectangle rectangle)

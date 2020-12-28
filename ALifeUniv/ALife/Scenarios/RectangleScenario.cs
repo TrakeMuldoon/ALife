@@ -1,7 +1,10 @@
 ﻿using ALifeUni.ALife.AgentPieces;
 using ALifeUni.ALife.AgentPieces.Brains;
 using ALifeUni.ALife.Brains.BehaviourBrains;
+using ALifeUni.ALife.Objects;
+using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.UtilityClasses;
+using ALifeUni.ALife.WorldObjects;
 using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI;
@@ -29,7 +32,11 @@ namespace ALifeUni.ALife.Scenarios
 
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {
-                new EyeCluster(agent, "Eye1"),
+                new EyeCluster(agent, "Eye1"
+                                , new ROEvoNumber(0, 20, -360, 360)  //Orientation Around Parent
+                                , new ROEvoNumber(0, 30, -360, 360)  //Relative Orientation
+                                , new ROEvoNumber(80, 3, 40, 120)      //Radius
+                                , new ROEvoNumber(25, 1, 15, 40)),      //Sweep
                 new SquareSenseCluster(agent, "Square")
             };
 
@@ -71,13 +78,20 @@ namespace ALifeUni.ALife.Scenarios
             //Agent a = AgentFactory.CreateAgent("Agent", nullZone, nullZone, Colors.Red, 0);
             //a.Shape.CentrePoint = ap;
 
-            Point bp = new Point(60, 60);
-            Agent b = AgentFactory.CreateAgent("Agent", nullZone, nullZone, Colors.Red, 0);
-            b.Shape.CentrePoint = bp;
+            //Point bp = new Point(60, 100);
+            //Agent b = AgentFactory.CreateAgent("Agent", nullZone, nullZone, Colors.Red, 0);
+            //b.Shape.CentrePoint = bp;
 
-            ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[b.CollisionLevel];
-            //collider.MoveObject(a);
-            collider.MoveObject(b);
+            Point mp = new Point(60, 60);
+            MazeRunner mr = new MazeRunner(nullZone, nullZone);
+
+            mr.Shape.CentrePoint = mp;
+
+            ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[mr.CollisionLevel];
+            //collider.MoveObject(b);
+            collider.MoveObject(mr);
+
+            Planet.World.AddObjectToWorld(new Wall(new Point(299, 78), 200, new Angle(35), "wa"));
         }
     }
 }

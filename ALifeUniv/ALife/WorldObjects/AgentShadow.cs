@@ -18,6 +18,7 @@ namespace ALifeUni.ALife
                 IChildShape cs = sc.Shape as IChildShape;
 
                 IShape clone = cs.CloneChildShape(shape);
+                clone.Color = Colors.White;
                 SenseShapes.Add(clone);
             }
         }

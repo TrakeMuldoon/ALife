@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.Foundation;
+using Windows.UI;
 
 namespace ALifeUni.ALife.UtilityClasses
 {
@@ -44,6 +45,7 @@ namespace ALifeUni.ALife.UtilityClasses
             OrientationAroundParent = orientationAroundParent;
             distanceFromParentCentre = distFromParentCentre;
             Parent = parent;
+            Color = Colors.White;
         }
 
         public override Point CentrePoint
@@ -67,14 +69,15 @@ namespace ALifeUni.ALife.UtilityClasses
             }
         }
 
-        //TODO: Ask Jeremy or Bryan about how to implement this properly
         public override IShape CloneShape()
         {
             throw new NotImplementedException("Cannot clone a ChildShape");
         }
         public IShape CloneChildShape(IShape parent)
         {
-            return new ChildSector(parent, OrientationAroundParent.Clone(), distanceFromParentCentre, RelativeOrientation.Clone(), Radius, SweepAngle.Clone());
+            ChildSector cs = new ChildSector(parent, OrientationAroundParent.Clone(), distanceFromParentCentre, RelativeOrientation.Clone(), Radius, SweepAngle.Clone());
+            cs.Color = this.Color;
+            return cs;
         }
     }
 }

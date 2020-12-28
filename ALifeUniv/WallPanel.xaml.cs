@@ -97,6 +97,7 @@ namespace ALifeUni
         private void WallXPos_TextChanged(object sender, TextChangedEventArgs e)
         {
             if(inUpdate) return;
+            if(theWall == null) return;
 
             TextBox tb = (TextBox)sender;
             if(theWall.Shape.CentrePoint.X.ToString() == tb.Text) return;
@@ -113,7 +114,8 @@ namespace ALifeUni
         private void WallYPos_TextChanged(object sender, TextChangedEventArgs e)
         {
             if(inUpdate) return;
-            
+            if(theWall == null) return;
+
             TextBox tb = (TextBox)sender;
             if(theWall.Shape.CentrePoint.Y.ToString() == tb.Text) return;
             if(String.IsNullOrEmpty(tb.Text)) return;
@@ -129,6 +131,7 @@ namespace ALifeUni
         private void WallOrientation_TextChanged(object sender, TextChangedEventArgs e)
         {
             if(inUpdate) return;
+            if(theWall == null) return;
 
             TextBox tb = (TextBox)sender;
             if(theWall.Shape.Orientation.Degrees.ToString() == tb.Text) return;
@@ -147,7 +150,8 @@ namespace ALifeUni
         private void WallLength_TextChanged(object sender, TextChangedEventArgs e)
         {
             if(inUpdate) return;
-            
+            if(theWall == null) return;
+
             TextBox tb = (TextBox)sender;
             Rectangle rec = theWall.RShape;
             if(rec.FBLength.ToString() == tb.Text) return;

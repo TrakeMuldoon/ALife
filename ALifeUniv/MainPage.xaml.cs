@@ -210,35 +210,36 @@ namespace ALifeUni
             }
             else
             {
-                if(colls.Count > 0)
-                {
-                    MakeSpecial(colls);
-                }
+                MakeSpecial(colls);
             }
         }
 
+
+        int SpecialSelectorIndex = -1;
         private void MakeSpecial(List<WorldObject> colls)
         {
-            //If we do have a collisions, then set that agent to be "Special"
-            WorldObject clicked = colls[0];
-            if(clicked != special)
+            if(colls.Count < 1)
             {
-                AgentPanel.TheAgent = null;
-                special = clicked;
-                if(clicked is Agent)
-                {
-                    AgentPanel.TheAgent = (Agent)clicked;
-                }
-                else if (clicked is Wall)
-                {
-                    WallPane.TheWall = (Wall)clicked;
-                }
+                return;
             }
-            else
+
+            //Reset the Special related stuff
+            AgentPanel.TheAgent = null;
+            WallPane.TheWall = null;
+            special = null;
+
+            if(++SpecialSelectorIndex >= colls.Count)
             {
-                //click again to unselect
-                special = null;
-                AgentPanel.TheAgent = null;
+                SpecialSelectorIndex = 0;
+            }
+            //If we do have a collisions, then set that agent to be "Special"
+            special = colls[SpecialSelectorIndex];
+            
+            switch(special)
+            {
+                case Agent ag: AgentPanel.TheAgent = ag; break;
+                case Wall wall: WallPane.TheWall = wall; break;
+                default: break;
             }
         }
 

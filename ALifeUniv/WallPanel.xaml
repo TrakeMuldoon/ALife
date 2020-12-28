@@ -13,7 +13,7 @@
         <TextBlock x:Name="WallName"></TextBlock>
         <StackPanel Orientation="Horizontal">
             <TextBlock>X</TextBlock>
-            <TextBox x:Name="WallXPos" TextChanged="WallXPos_TextChanged"/>
+            <TextBox x:Name="WallXPos"   TextChanged="WallXPos_TextChanged"/>
             <TextBlock>Y</TextBlock>
             <TextBox x:Name="WallYPos" TextChanged="WallYPos_TextChanged"/>
         </StackPanel>

@@ -130,8 +130,7 @@ namespace ALifeUni.ALife.Scenarios
             instance.AddZone(red);
             instance.AddZone(blue);
 
-            //int numAgents = 50;
-            int numAgents = 50;
+            int numAgents = 40;
             for(int i = 0; i < numAgents; i++)
             {
                 Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
@@ -244,7 +243,7 @@ namespace ALifeUni.ALife.Scenarios
 
             Zone red = Planet.World.Zones["Red(Blue)"];
             Zone blue = Planet.World.Zones["Blue(Red)"];
-            if(Planet.World.AllActiveObjects.OfType<Agent>().Count() < 50)
+            if(Planet.World.AllActiveObjects.OfType<Agent>().Count() < 30)
             {
                 Planet.World.ReproduceBest();
                 Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);

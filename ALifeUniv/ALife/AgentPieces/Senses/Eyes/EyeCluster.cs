@@ -11,11 +11,7 @@ namespace ALifeUni.ALife
         {
             get { return myShape; }
         }
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="parent"></param>
-        /// <param name="name"></param>
+
         [Obsolete("EyeClusterDefault is deprecated, please use EyeCluster with EvoNumbers instead.")]
         public EyeCluster(WorldObject parent, String name) : this(parent, name
                                                                     , new ROEvoNumber(5, 0, 5, 5, 5, 5, 0)

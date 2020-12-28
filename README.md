@@ -13,10 +13,13 @@ Obscenely Fast does 5000 turns without pausing and usually takes 5-10 seconds. T
 Show Ancestry tickbox will show the ancestry of each living agent. It highlights the "Eldest Living" in a blue circle.
 
 The Smallest Brain, Oldest, and Most Children buttons will CYCLE through any tied agents who match that description and Select them.
+The "Dot" button will add a dot to the map. You enter the coordinates in the box above in the format "{double},{double}" which will be parsed as "x,y"
 
 Clicking on an agent will "Select" them. They will be circled in Red and their information displayed in the Agent Ifnromation display on the right.
 
 Holding "X" while an agent is selected will show the "shadow world" which is what the agent saw last turn. This is really only useful when the simulation is paused.
 
 CTRL-Clicking on empty space will create a "rock" in that space. This sometimes causes bugs, because most things don't know what to do when they collide with rocks. 
-CTRL-Clicking on an object will kill that object. KILL.
+CTRL-Clicking on an object will kill that object. KILL. This is also buggy, because it doesn't always remove them correctly
+
+

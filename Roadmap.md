@@ -1,42 +1,19 @@
 # Current Roadmap
 ## Short term tasks
-* [x] Implement Actions in BehaviourBrain
-* [x] Implement Constants in BehaviourBrain
-* [x] Refactor all Actions into "ActionClusters"
-* [x] Add Actions into BehaviourCabinet
-* [x] Implement "WAIT" Action
-* [x] Implement Random BehaviourBrain creation
-* [X] TEST complete BehaviourBrain with custom behaviours
-* [x] Update UI to show Behaviours in Right hand Panel
-* [x] Implement Bumping Behaviour
-* [*] Implement End of turn trigger evaluations (i.e. reproduce/death)
-* [*] View Previous Agent State to see why they did what they did
-* [*] Implement Zones (starting zones)
-* [*] Finish/Correct Cloning / Reproduction, including location of reproduction
-* [*] Implement Scenario Testing Harness application. 
-* [*] Implement First Scenario
-* [*] Implement randomized/modified sense attributes
-* [ ] Implement INumeric for every value (min, max, modmax, mod%, value, add, sub);
-* [ ] Implement ReadOnlyProperties for Internal/Mandatory values [i.e. Age, NumChildren, etc.]
-* [ ] Goal Based Features
-* [*] Finish Collision detection for circle/rectangle
-* [*] Implement rectangular agents
-* [*] Implmenet Arc / Rectangle collision detection (hard)
+* [ ] Implmenet Arc / Rectangle collision detection (hard)
 * [*] Implement no movement countdown to death.
 * [*] Implmenet running across the field scenario
+* [*] Fix Dead Things View not working
+* [*] Implement Keegan's maze concept
+* [*] Create Wall Splitter
 * [ ] Differentiate between the "Visible" and "physical" layers, so that you can there are things which are visible, but no tangible (perhaps smells and fogs?)
-* [ ] Implement Keegan's maze concept
 * [ ] Implement Testing Framework / Scenario concept
 * [ ] Write list of all possible tests
 * [ ] Investigate why Sector/Rectangle Collision Detection isn't working consistently
-* [ ] Create Wall Splitter
-* [ ] Fix Dead Things View not working
-
-
-##Immediate things to be tested
-* [*] LineSegment LineSegment Collision
-* [*] Rectangles and Rectangle Collision
-
+* [ ] Implement INumeric for every value (min, max, modmax, mod%, value, add, sub);
+* [ ] Implement ReadOnlyProperties for Internal/Mandatory values [i.e. Age, NumChildren, etc.]
+* [ ] Goal Based Features
+* [ ] Refactor Environment size into Scenarios
 
 ## Goal-based Features
 The goal is provided/set to the agents; they do not decide at this time.

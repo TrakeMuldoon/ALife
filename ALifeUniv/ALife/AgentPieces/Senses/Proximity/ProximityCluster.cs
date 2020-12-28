@@ -17,7 +17,7 @@ namespace ALifeUni.ALife
         }
 
         [Obsolete("EyeClusterDefault is deprecated, please use EyeCluster with EvoNumbers instead.")]
-        public ProximityCluster(WorldObject parent, string name) : this(parent, name, new ROEvoNumber(30, 2, 6, 40, 5, 50, 1))
+        public ProximityCluster(WorldObject parent, string name) : this(parent, name, new ROEvoNumber(30, 2, 5, 50))
         {
         }
 

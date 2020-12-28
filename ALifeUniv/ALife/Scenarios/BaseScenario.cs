@@ -33,11 +33,12 @@ namespace ALifeUni.ALife.Scenarios
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {
                 new EyeCluster(agent, "Eye1"
-                                , new ROEvoNumber(0, 20, -360, 360, -360, 360, 0)  //Orientation Around Parent
-                                , new ROEvoNumber(0, 30, -360, 360, -360, 360, 0)  //Relative Orientation
-                                , new ROEvoNumber(80, 3, 40, 120, 40, 120, 0)      //Radius
-                                , new ROEvoNumber(25, 1, 15, 40, 15, 40, 0)),      //Sweep
-                new ProximityCluster(agent, "Proximity1")
+                                , new ROEvoNumber(0, 20, -360, 360)  //Orientation Around Parent
+                                , new ROEvoNumber(0, 30, -360, 360)  //Relative Orientation
+                                , new ROEvoNumber(80, 3, 40, 120)      //Radius
+                                , new ROEvoNumber(25, 1, 15, 40)),      //Sweep
+                new ProximityCluster(agent, "Proximity1"
+                                , new ROEvoNumber(20, 4, 10, 40))        //Radius
             };
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();

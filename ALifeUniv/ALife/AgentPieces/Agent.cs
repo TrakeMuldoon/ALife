@@ -123,7 +123,8 @@ namespace ALifeUni.ALife
                 return;
             }
 
-            Planet.World.Scenario.AgentUpkeep(this);
+            AgentUpkeep();
+
 
             //Reset all the senses. 
             Senses.ForEach((se) => se.Shape.Reset());
@@ -139,8 +140,13 @@ namespace ALifeUni.ALife
             Shape.Reset();
         }
 
+        public virtual void AgentUpkeep()
+        {
+            Planet.World.Scenario.AgentUpkeep(this);
+        }
 
-        public void EndOfTurnTriggers()
+
+        public virtual void EndOfTurnTriggers()
         {
             Planet.World.Scenario.EndOfTurnTriggers(this);
         }

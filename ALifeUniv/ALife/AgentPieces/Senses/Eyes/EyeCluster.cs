@@ -14,10 +14,10 @@ namespace ALifeUni.ALife
 
         [Obsolete("EyeClusterDefault is deprecated, please use EyeCluster with EvoNumbers instead.")]
         public EyeCluster(WorldObject parent, String name) : this(parent, name
-                                                                    , new ROEvoNumber(5, 0, 5, 5, 5, 5, 0)
-                                                                    , new ROEvoNumber(355, 0, 355, 355, 355, 355, 0)
-                                                                    , new ROEvoNumber(80, 0, 80, 80, 80, 80, 0)
-                                                                    , new ROEvoNumber(25, 0, 25, 25, 25, 25, 0))
+                                                                    , new ROEvoNumber(startValue: 5,   evoDeltaMax: 0, hardMin: 5,   hardMax: 5)
+                                                                    , new ROEvoNumber(startValue: 355, evoDeltaMax: 0, hardMin: 355, hardMax: 355)
+                                                                    , new ROEvoNumber(startValue: 80,  evoDeltaMax: 0, hardMin: 80,  hardMax: 80)
+                                                                    , new ROEvoNumber(startValue: 25,  evoDeltaMax: 0, hardMin: 25,  hardMax: 25))
         {
         }
 

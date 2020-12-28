@@ -121,6 +121,10 @@ namespace ALifeUni.ALife.Utility
 
         private double EvolveANumber(double current, double deltaMax, double hardMin, double hardMax)
         {
+            if(deltaMax == 0)
+            {
+                return current;
+            }
             double mean = 0;
             double stdDev = 0.2;
 

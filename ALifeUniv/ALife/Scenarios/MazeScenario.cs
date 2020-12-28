@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI;
 using ALifeUni.ALife.Objects;
+using ALifeUni.ALife.WorldObjects;
 
 namespace ALifeUni.ALife.Scenarios
 {
@@ -34,16 +35,17 @@ namespace ALifeUni.ALife.Scenarios
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {
                 new EyeCluster(agent, "EyeLeft"
-                                , new ROEvoNumber(-30, 20, -360, 360, -360, 360, 0)  //Orientation Around Parent
-                                , new ROEvoNumber(10, 30, -360, 360, -360, 360, 0)   //Relative Orientation
-                                , new ROEvoNumber(80, 3, 40, 120, 40, 120, 0)        //Radius
-                                , new ROEvoNumber(25, 1, 15, 40, 15, 40, 0)),        //Sweep
+                                , new ROEvoNumber(startValue: -30, evoDeltaMax: 20, hardMin:-360, hardMax: 360)    //Orientation Around Parent
+                                , new ROEvoNumber(startValue: 10, evoDeltaMax:30, hardMin:-360, hardMax: 360)     //Relative Orientation
+                                , new ROEvoNumber(startValue: 80, evoDeltaMax:3, hardMin:40, hardMax:120)        //Radius
+                                , new ROEvoNumber(startValue: 25, evoDeltaMax:1, hardMin:15, hardMax:40)),       //Sweep
                 new EyeCluster(agent, "EyeRight"
-                                , new ROEvoNumber(30, 20, -360, 360, -360, 360, 0)   //Orientation Around Parent
-                                , new ROEvoNumber(-10, 30, -360, 360, -360, 360, 0)  //Relative Orientation
-                                , new ROEvoNumber(80, 3, 40, 120, 40, 120, 0)        //Radius
-                                , new ROEvoNumber(25, 1, 15, 40, 15, 40, 0)),        //Sweep
-                new ProximityCluster(agent, "Proximity1")
+                                , new ROEvoNumber(startValue: 30, evoDeltaMax: 20, hardMin:-360, hardMax: 360)    //Orientation Around Parent
+                                , new ROEvoNumber(startValue: -10, evoDeltaMax:30, hardMin:-360, hardMax: 360)     //Relative Orientation
+                                , new ROEvoNumber(startValue: 80, evoDeltaMax:3, hardMin:40, hardMax:120)        //Radius
+                                , new ROEvoNumber(startValue: 25, evoDeltaMax:1, hardMin:15, hardMax:40)),       //Sweep
+                new ProximityCluster(agent, "Proximity1"
+                                , new ROEvoNumber(20, 4, 10, 40))        //Radius
             };
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
@@ -84,17 +86,6 @@ namespace ALifeUni.ALife.Scenarios
                 if(z.Name == me.TargetZone.Name)
                 {
                     throw new Exception("SUCCESS!!!!!!!!?");
-                    ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[me.CollisionLevel];
-
-                    Point myPoint = me.Zone.Distributor.NextAgentCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
-                    me.Shape.CentrePoint = myPoint;
-                    collider.MoveObject(me);
-
-                    me.Reproduce();
-
-                    //You have a new countdown
-                    me.Statistics["DeathTimer"].Value = 0;
-                    me.Statistics["ZoneEscapeTimer"].Value = 0;
                 }
             }
         }
@@ -130,11 +121,12 @@ namespace ALifeUni.ALife.Scenarios
             instance.AddZone(red);
             instance.AddZone(blue);
 
-            int numAgents = 40;
+            int numAgents = 10;
             for(int i = 0; i < numAgents; i++)
             {
                 Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
             }
+            MazeRunner mr = new MazeRunner(red, blue);
 
             List<Wall> walls = new List<Wall>();
             walls.Add(new Wall(new Point(260, 410), 850, new Angle(75),     "w1-1"));
@@ -243,7 +235,7 @@ namespace ALifeUni.ALife.Scenarios
 
             Zone red = Planet.World.Zones["Red(Blue)"];
             Zone blue = Planet.World.Zones["Blue(Red)"];
-            if(Planet.World.AllActiveObjects.OfType<Agent>().Count() < 30)
+            if(Planet.World.AllActiveObjects.OfType<Agent>().Count() < 10)
             {
                 Planet.World.ReproduceBest();
                 Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);

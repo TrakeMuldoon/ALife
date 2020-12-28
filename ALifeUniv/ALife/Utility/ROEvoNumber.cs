@@ -10,10 +10,10 @@ namespace ALifeUni.ALife.Utility
             set => throw new NotImplementedException("Do Not Set ReadOnly EvoNumber Values");
         }
 
-        public ROEvoNumber(double startValue, double startValueEvoDeltaMax
-                            , double valueMin, double valueMax, double valueHardMin, double valueHardMax, double valueMinMaxEvoMax)
-            : base(startValue, startValueEvoDeltaMax
-                   , valueMin, valueMax, valueHardMin, valueHardMax, valueMinMaxEvoMax
+        public ROEvoNumber(double startValue, double evoDeltaMax
+                           , double hardMin, double hardMax)
+            : base(startValue, evoDeltaMax
+                   , hardMin, hardMax, hardMin, hardMax, 0
                    , 0, 0, 0, true)
         {
 

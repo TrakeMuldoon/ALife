@@ -75,7 +75,7 @@ namespace ALifeUni.ALife.Scenarios
 
         public override void EndOfTurnTriggers(Agent me)
         {
-            if(me.Statistics["MaxXTimer"].Value > 300)
+            if(me.Statistics["MaxXTimer"].Value > 600)
             {
                 me.Die();
                 return;
@@ -189,6 +189,18 @@ namespace ALifeUni.ALife.Scenarios
                     Planet.World.AddObjectToWorld(smallWall);
                 }
                 //Planet.World.AddObjectToWorld(w);
+            }
+
+            List<Wall> borderWalls = new List<Wall>()
+            {
+                new Wall(new Point(3000, 3), 6000, new Angle(0), "bNorth"),
+                new Wall(new Point(3000, 1997), 6000, new Angle(0), "bSouth"),
+                new Wall(new Point(1, 1000), 2000, new Angle(90), "bSouth"),
+            };
+
+            foreach(Wall w in borderWalls)
+            {
+                Planet.World.AddObjectToWorld(w);
             }
         }
 

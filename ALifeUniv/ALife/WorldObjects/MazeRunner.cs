@@ -59,14 +59,14 @@ namespace ALifeUni.ALife.WorldObjects
 
             this.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
-            IBrain newBrain = new BehaviourBrain(this, "IF EyeLeft.SeeSomething.Value Equals [True] THEN Rotate.TurnRight AT [0.1]"
-                                                     , "IF EyeRight.SeeSomething.Value Equals [True] THEN Rotate.TurnLeft AT [0.1]"
+            IBrain newBrain = new BehaviourBrain(this, "IF EyeLeft.SeeSomething.Value Equals [True] THEN Rotate.TurnRight AT [0.04]"
+                                                     , "IF EyeRight.SeeSomething.Value Equals [True] THEN Rotate.TurnLeft AT [0.04]"
                                                      , "IF EyeRight.SeeSomething.Value Equals [False] AND " +
-                                                          "EyeLeft.SeeSomething.Value Equals [False] THEN Move.GoForward AT [3.0]"
+                                                          "EyeLeft.SeeSomething.Value Equals [False] THEN Move.GoForward AT [0.4]"
                                                      , "IF EyeRight.SeeSomething.Value Equals [True] AND " +
-                                                          "EyeLeft.SeeSomething.Value Equals [True] THEN Move.GoBackward AT [5.0]"
+                                                          "EyeLeft.SeeSomething.Value Equals [True] THEN Move.GoBackward AT [1.0]"
                                                      , "IF EyeRight.SeeSomething.Value Equals [True] AND " +
-                                                          "EyeLeft.SeeSomething.Value Equals [True] THEN Rotate.TurnRight AT [0.05]");
+                                                          "EyeLeft.SeeSomething.Value Equals [True] THEN Rotate.TurnRight AT [0.5]");
             //IBrain newBrain = new BehaviourBrain(this, "IF ALWAYS THEN Rotate.TurnRight AT [0.1]");
 
             this.CompleteInitialization(null, 1, newBrain);

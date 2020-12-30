@@ -14,6 +14,8 @@
 * [ ] Implement ReadOnlyProperties for Internal/Mandatory values [i.e. Age, NumChildren, etc.]
 * [ ] Goal Based Features
 * [ ] Refactor Environment size into Scenarios
+* [ ] Give each WorldObject access to its collider
+
 
 ## Goal-based Features
 The goal is provided/set to the agents; they do not decide at this time.

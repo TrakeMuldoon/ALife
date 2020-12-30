@@ -57,7 +57,7 @@ namespace ALifeUni.ALife
 
         public static void CreateWorld(int seed, int height, int width)
         {
-            instance = new Planet(seed, height, width, new MazeScenario());
+            instance = new Planet(seed, height, width, new GoalsTestScenario());
 
             //Initialize collision grid
             instance._collisionLevels.Add(ReferenceValues.CollisionLevelPhysical, new CollisionGrid<WorldObject>(height, width));

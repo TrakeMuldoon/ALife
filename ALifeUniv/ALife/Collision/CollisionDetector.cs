@@ -376,10 +376,7 @@ namespace ALifeUni.ALife
 
         private static bool IsPointWithinSweep(Point targetPoint, Sector sector)
         {
-            double deltaX = targetPoint.X - sector.CentrePoint.X;
-            double deltaY = targetPoint.Y - sector.CentrePoint.Y;
-
-            double angleBetweenPoints = Math.Atan2(deltaY, deltaX);
+            double angleBetweenPoints = ExtraMath.AngleBetweenPoints(targetPoint, sector.CentrePoint);
             Angle abp = new Angle(angleBetweenPoints, true);
 
             Angle minimum = new Angle(0);

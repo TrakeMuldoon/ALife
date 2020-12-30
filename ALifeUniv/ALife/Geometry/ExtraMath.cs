@@ -97,5 +97,24 @@ namespace ALifeUni.ALife.UtilityClasses
 
             return new Point(newX, newY);
         }
+
+        public static double DistanceBetweenTwoPoints(Point a, Point b)
+        {
+            //pythagorean theorem c^2 = a^2 + b^2
+            //thus c = square root(a^2 + b^2)
+            double delX = (double)(a.X - b.X);
+            double delY = (double)(a.Y - b.Y);
+
+            return Math.Sqrt((delX * delX) + (delY * delY));
+        }
+
+        public static double AngleBetweenPoints(Point target, Point source)
+        {
+            double deltaX = target.X - source.X;
+            double deltaY = target.Y - source.Y;
+
+            double angleBetweenPoints = Math.Atan2(deltaY, deltaX);
+            return angleBetweenPoints;
+        }
     }
 }

@@ -144,12 +144,13 @@ namespace ALifeUni.ALife
 
         public override SenseCluster CloneSense(WorldObject newParent)
         {
-            throw new NotImplementedException();
+            return new GoalSenseCluster(newParent, this.Name, this.targetShape);
         }
 
         public override SenseCluster ReproduceSense(WorldObject newParent)
         {
-            throw new NotImplementedException();
+            //There is no evolution here. It always targets in the same way.
+            return new GoalSenseCluster(newParent, this.Name, this.targetShape);
         }
     }
 }

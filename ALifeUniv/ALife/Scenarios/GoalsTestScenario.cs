@@ -21,9 +21,9 @@ namespace ALifeUni.ALife.Scenarios
             agent.Zone = parentZone;
             agent.TargetZone = targetZone;
 
-            Point centrePoint = parentZone.Distributor.NextAgentCentre(10, 10); //TODO: HARDCODED AGENT RADIUS
+            Point centrePoint = parentZone.Distributor.NextAgentCentre(10, 10);
 
-            IShape myShape = new Circle(centrePoint, 5);                        //TODO: HARDCODED AGENT RADIUS
+            IShape myShape = new Circle(centrePoint, 5);
             agent.StartOrientation = startOrientation;
             myShape.Orientation.Degrees = startOrientation;
             myShape.Color = color;

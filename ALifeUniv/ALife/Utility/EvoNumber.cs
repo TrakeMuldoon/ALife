@@ -31,7 +31,7 @@ namespace ALifeUni.ALife.Utility
                 double realDelta = Math.Clamp(delta, -DeltaMax, DeltaMax);
                 if(realDelta != delta)
                 {
-                    //TODO: REmove this if statement, it's only for debugging.
+                    //TODO: Remove this if statement, it's only for debugging.
                     throw new Exception("BLAHBLAHBLAH");
                 }
                 double newVal = val + realDelta;

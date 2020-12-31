@@ -6,7 +6,6 @@ using Windows.UI;
 
 namespace ALifeUni.ALife
 {
-    //TODO: World Objects are current hardcodded to be "Circle". 
     public abstract class WorldObject : IHasShape
     {
         public virtual IShape Shape

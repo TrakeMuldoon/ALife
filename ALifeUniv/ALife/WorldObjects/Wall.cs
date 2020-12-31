@@ -79,7 +79,7 @@ namespace ALifeUni.ALife.Objects
                 Angle ori = wall.Shape.Orientation.Clone();
                 double indexer = i - ((numSplits + 1) / 2.0);
 
-                Point p = ExtraMath.TranslateByVector(wall.Shape.CentrePoint, ori.Radians, segmentLength * indexer);
+                Point p = ExtraMath.TranslateByVector(wall.Shape.CentrePoint, ori, segmentLength * indexer);
                 Wall w = new Wall(p, segmentLength, ori, wall.IndividualLabel + "~" + (i + 1));
                 segments.Add(w);
             }

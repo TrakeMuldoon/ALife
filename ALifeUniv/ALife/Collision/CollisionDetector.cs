@@ -103,11 +103,11 @@ namespace ALifeUni.ALife
             if(PointCircleCollision(sector.CentrePoint, circle)) return true;
 
             //Check the left point of the sector
-            Point leftPoint = ExtraMath.TranslateByVector(sector.CentrePoint, sector.AbsoluteOrientation.Radians, sector.Radius);
+            Point leftPoint = ExtraMath.TranslateByVector(sector.CentrePoint, sector.AbsoluteOrientation, sector.Radius);
             if(PointCircleCollision(leftPoint, circle)) return true;
 
             //Check the right point of the sector
-            Point rightPoint = ExtraMath.TranslateByVector(sector.CentrePoint, (sector.AbsoluteOrientation + sector.SweepAngle).Radians, sector.Radius);
+            Point rightPoint = ExtraMath.TranslateByVector(sector.CentrePoint, (sector.AbsoluteOrientation + sector.SweepAngle), sector.Radius);
             if(PointCircleCollision(rightPoint, circle)) return true;
 
             //Now we're checking the line segment collisions

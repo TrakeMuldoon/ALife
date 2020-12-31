@@ -140,7 +140,7 @@ namespace ALifeUni.ALife.UtilityClasses
             }
 
             Point tempPoint = CentrePoint;
-            tempPoint = ExtraMath.TranslateByVector(tempPoint, Orientation.Radians, FBLength / 2);
+            tempPoint = ExtraMath.TranslateByVector(tempPoint, Orientation, FBLength / 2);
             topLeft = ExtraMath.TranslateByVector(tempPoint, Orientation.Radians - (Math.PI / 2), RLWidth / 2);
             topRight = ExtraMath.TranslateByVector(topLeft, Orientation.Radians + (Math.PI / 2), RLWidth);
             bottomRight = ExtraMath.TranslateByVector(topRight, Orientation.Radians + Math.PI, FBLength);

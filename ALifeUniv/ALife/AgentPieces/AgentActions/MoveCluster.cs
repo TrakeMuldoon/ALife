@@ -79,7 +79,7 @@ namespace ALifeUni.ALife
             forwardDist = Speed * forwardMagnitude;
             rightDist = Speed * rightMagnitude;
 
-            Point tempPoint = ExtraMath.TranslateByVector(origin, theShape.Orientation.Radians, forwardDist);
+            Point tempPoint = ExtraMath.TranslateByVector(origin, theShape.Orientation, forwardDist);
             Point finalPoint = ExtraMath.TranslateByVector(tempPoint, theShape.Orientation.Radians + (Math.PI / 2), rightDist);
 
             double halfXLength = theShape.BoundingBox.XLength / 2;

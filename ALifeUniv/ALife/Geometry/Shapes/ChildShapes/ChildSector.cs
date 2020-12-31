@@ -53,7 +53,7 @@ namespace ALifeUni.ALife.UtilityClasses
             get
             {
                 Angle startAngle = Parent.Orientation + OrientationAroundParent;
-                return ExtraMath.TranslateByVector(Parent.CentrePoint, startAngle.Radians, distanceFromParentCentre);
+                return ExtraMath.TranslateByVector(Parent.CentrePoint, startAngle, distanceFromParentCentre);
             }
             set
             {

@@ -121,8 +121,8 @@ namespace ALifeUni.UI
 
         private static void DrawOrientation(CanvasAnimatedDrawEventArgs args, IShape shape)
         {
-            Point ori = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation.Radians, 4);
-            Point ori2 = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation.Radians, 1);
+            Point ori = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 4);
+            Point ori2 = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 1);
             args.DrawingSession.DrawLine(ori.ToVector2(), ori2.ToVector2(), Colors.DarkRed, 1);
         }
 

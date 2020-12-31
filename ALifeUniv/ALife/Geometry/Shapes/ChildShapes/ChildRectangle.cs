@@ -46,8 +46,8 @@ namespace ALifeUni.ALife.UtilityClasses
 
         private void GenerateCentrePoint()
         {
-            Angle relative = Parent.Orientation + RelativeToParentOrientation;
-            Point centre = ExtraMath.TranslateByVector(Parent.CentrePoint, relative.Radians, DistFromParentCentre + (FBLength / 2));
+            Angle relativeAngle = Parent.Orientation + RelativeToParentOrientation;
+            Point centre = ExtraMath.TranslateByVector(Parent.CentrePoint, relativeAngle, DistFromParentCentre + (FBLength / 2));
             myCentrePoint = centre;
         }
 

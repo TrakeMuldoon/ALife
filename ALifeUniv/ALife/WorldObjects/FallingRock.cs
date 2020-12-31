@@ -43,7 +43,7 @@ namespace ALifeUni.ALife.Objects
             Point origin = new Point(Shape.CentrePoint.X, Shape.CentrePoint.Y);
             Angle turnRotation = new Angle(2);
 
-            Point newCentre = ExtraMath.TranslateByVector(Shape.CentrePoint, Shape.Orientation.Radians, 15);
+            Point newCentre = ExtraMath.TranslateByVector(Shape.CentrePoint, Shape.Orientation, 15);
             Shape.CentrePoint = newCentre;
 
             Shape.Orientation += turnRotation;

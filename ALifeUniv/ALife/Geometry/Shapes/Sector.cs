@@ -157,12 +157,12 @@ namespace ALifeUni.ALife.UtilityClasses
             yValues.Add(myOriginPoint.Y);
 
             //Get the points that are the edges of the sector
-            leftPoint = ExtraMath.TranslateByVector(myOriginPoint, absOrientationAngle.Radians, Radius);
+            leftPoint = ExtraMath.TranslateByVector(myOriginPoint, absOrientationAngle, Radius);
             xValues.Add(leftPoint.X);
             yValues.Add(leftPoint.Y);
 
             Angle endAngle = absOrientationAngle + SweepAngle;
-            rightPoint = ExtraMath.TranslateByVector(myOriginPoint, endAngle.Radians, Radius);
+            rightPoint = ExtraMath.TranslateByVector(myOriginPoint, endAngle, Radius);
             xValues.Add(rightPoint.X);
             yValues.Add(rightPoint.Y);
 

@@ -74,7 +74,7 @@ namespace ALifeUni.ALife
                 throw new ArgumentOutOfRangeException("StartPoint is outside of the zone.");
             }
 
-            Point nextPoint = ExtraMath.TranslateByVector(config.StartPoint, config.Direction.Radians, config.Separation);
+            Point nextPoint = ExtraMath.TranslateByVector(config.StartPoint, config.Direction, config.Separation);
             separationPoint = new Point(nextPoint.X - config.StartPoint.X, nextPoint.Y - config.StartPoint.Y);
             deltaStart = new Point(config.StartPoint.X - startZone.TopLeft.X, config.StartPoint.Y - startZone.TopLeft.Y);
         }

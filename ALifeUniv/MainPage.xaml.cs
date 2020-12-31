@@ -372,25 +372,18 @@ namespace ALifeUni
 
         private void ChangeZoomLevel()
         {
-            try
-            {
-                //Increase the zoom
-                ZoomIndex = Math.Clamp(ZoomIndex, 0, ZoomFactors.Count - 1);
-                float newZoom = float.Parse(ZoomFactors[ZoomIndex]);
+            //Increase the zoom
+            ZoomIndex = Math.Clamp(ZoomIndex, 0, ZoomFactors.Count - 1);
+            float newZoom = float.Parse(ZoomFactors[ZoomIndex]);
 
-                double newHeight = Zoomer.ActualHeight * newZoom;
-                double newVert = Zoomer.VerticalOffset / Zoomer.ExtentHeight * newHeight;
-                double newHorz = Zoomer.HorizontalOffset / Zoomer.ExtentWidth * newHeight;
+            double newHeight = Zoomer.ActualHeight * newZoom;
+            double newVert = Zoomer.VerticalOffset / Zoomer.ExtentHeight * newHeight;
+            double newHorz = Zoomer.HorizontalOffset / Zoomer.ExtentWidth * newHeight;
 
-                animCanvas.DpiScale = Math.Clamp(newZoom, 1, 8);
-                Zoomer.ChangeView(newHorz, newVert, newZoom);
-                CurrentZoom = newZoom;
-                ZoomDisplay.Text = newZoom.ToString();
-            }
-            catch(Exception ex)
-            {
-                //Whatdo?
-            }
+            animCanvas.DpiScale = Math.Clamp(newZoom, 1, 8);
+            Zoomer.ChangeView(newHorz, newVert, newZoom);
+            CurrentZoom = newZoom;
+            ZoomDisplay.Text = newZoom.ToString();
         }
 
 

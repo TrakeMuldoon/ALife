@@ -46,7 +46,6 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
                 }
             }
             totalInputs = StringToBI.Count;
-
         }
 
         private void AddInputsFromInputList(List<BehaviourInput> behaviours)

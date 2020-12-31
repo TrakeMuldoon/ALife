@@ -27,8 +27,6 @@ namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
 
         public override bool EvaluateSuccess()
         {
-            //TODO: potentially create an "initialized" variable. 
-            //Not worth it right now, because it will cost CPU cycles, and would still throw an error.
             Func<T> ogFunc = ((BehaviourInput<T>)origin).MyFunc;
             Func<T> ctFunc = ((BehaviourInput<T>)compareTo).MyFunc;
             LastState = comparator(ogFunc(), ctFunc());

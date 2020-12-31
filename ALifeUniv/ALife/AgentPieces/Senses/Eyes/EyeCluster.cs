@@ -1,6 +1,7 @@
 ﻿using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.UtilityClasses;
 using System;
+using Windows.UI;
 
 namespace ALifeUni.ALife
 {
@@ -53,23 +54,29 @@ namespace ALifeUni.ALife
             //SubInputs.Add(new ColorInput(name + ".HowGreen", (WorldObject wo) => wo.Shape.Color.G));
         }
 
+        public EyeCluster(WorldObject parent, String name
+                          , EvoNumber eOrientationAroundParent, EvoNumber eRelativeOrientation, EvoNumber eRadius, EvoNumber eSweep
+                          , Color myColor, Color myDebugColor)
+            : this(parent, name
+                  , eOrientationAroundParent, eRelativeOrientation, eRadius, eSweep)
+        {
+            this.myShape.DebugColor = myDebugColor;
+            this.myShape.Color = myColor;
+        }
+
         public override SenseCluster CloneSense(WorldObject newParent)
         {
             EyeCluster newEC = new EyeCluster(newParent, Name,
-                                              EvoOrientationAroundParent.Clone(), EvoRelativeOrientation.Clone(), EvoRadius.Clone(), EvoSweep.Clone());
-            //TODO: Fix bug with Colors being passed around and not cloned properly
-            newEC.myShape.Color = myShape.Color.Clone();
-            newEC.myShape.DebugColor = myShape.Color.Clone();
+                                              EvoOrientationAroundParent.Clone(), EvoRelativeOrientation.Clone(), EvoRadius.Clone(), EvoSweep.Clone()
+                                              , myShape.Color.Clone(), myShape.DebugColor.Clone());
             return newEC;
         }
 
         public override SenseCluster ReproduceSense(WorldObject newParent)
         {
             EyeCluster newEC = new EyeCluster(newParent, Name,
-                                              EvoOrientationAroundParent.Evolve(), EvoRelativeOrientation.Evolve(), EvoRadius.Evolve(), EvoSweep.Evolve());
-            //TODO: Fix bug with Colors being passed around and not cloned properly
-            newEC.myShape.Color = myShape.Color.Clone();
-            newEC.myShape.DebugColor = myShape.Color.Clone();
+                                              EvoOrientationAroundParent.Evolve(), EvoRelativeOrientation.Evolve(), EvoRadius.Evolve(), EvoSweep.Evolve()
+                                              , myShape.Color.Clone(), myShape.DebugColor.Clone());
             return newEC;
         }
     }

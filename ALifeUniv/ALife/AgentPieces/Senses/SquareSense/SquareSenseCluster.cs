@@ -1,4 +1,7 @@
-﻿using ALifeUni.ALife.UtilityClasses;
+﻿using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.UtilityClasses;
+using System;
+using Windows.UI;
 
 namespace ALifeUni.ALife
 {
@@ -13,11 +16,8 @@ namespace ALifeUni.ALife
             }
         }
 
-        public SquareSenseCluster(WorldObject parent, string name) : this(parent, name, 80, 30) //TODO: Hardcoded proximity length
-        {
-        }
-
-        public SquareSenseCluster(WorldObject parent, string name, double FBLength, double RLWidth) : base(parent, name)
+        public SquareSenseCluster(WorldObject parent, string name, double FBLength, double RLWidth) 
+            : base(parent, name)
         {
             myShape = new ChildRectangle(parent.Shape, new Angle(45), 5.0, FBLength, RLWidth);
 
@@ -25,14 +25,26 @@ namespace ALifeUni.ALife
             SubInputs.Add(new CountInput(name + ".HowMany"));
         }
 
+        [Obsolete("SuqareSenseClusterDefault is deprecated, please use SquareSenseCluster with EvoNumbers instead.")]
+        public SquareSenseCluster(WorldObject parent, string name)
+            : this(parent, name, 80, 30)
+        {
+        }
+
+        public SquareSenseCluster(WorldObject parent, string name, double FBLength, double RLWidth, Color myColor)
+            : this(parent, name, FBLength, RLWidth)
+        {
+            myShape.Color = myColor;
+        }
+
         public override SenseCluster CloneSense(WorldObject newParent)
         {
-            return new SquareSenseCluster(newParent, Name, myShape.FBLength, myShape.RLWidth);
+            return new SquareSenseCluster(newParent, Name, myShape.FBLength, myShape.RLWidth, myShape.Color.Clone());
         }
 
         public override SenseCluster ReproduceSense(WorldObject newParent)
         {
-            return new SquareSenseCluster(newParent, Name, myShape.FBLength, myShape.RLWidth);
+            return new SquareSenseCluster(newParent, Name, myShape.FBLength, myShape.RLWidth, myShape.Color.Clone());
         }
     }
 }

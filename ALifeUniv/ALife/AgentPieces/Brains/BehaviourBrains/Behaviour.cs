@@ -53,12 +53,12 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
 
             //Generate between 1 and 3 conditions
             //TODO: There's a magic number thing going on here
-            int conditionsInt = Planet.World.NumberGen.Next(1, 6);
-            if(conditionsInt > 5)
+            int conditionsInt = Planet.World.NumberGen.Next(1, 10);
+            if(conditionsInt > 8)
             {
                 Conditions.Add(GenerateRandomBehaviourCondition(cabinet));
             }
-            if(conditionsInt > 3)
+            if(conditionsInt > 6)
             {
                 Conditions.Add(GenerateRandomBehaviourCondition(cabinet));
             }
@@ -70,7 +70,7 @@ namespace ALifeUni.ALife.Brains.BehaviourBrains
             int addWaitOn6 = Planet.World.NumberGen.Next(1, 6);
             if(addWaitOn6 == 6)
             {
-                waitTurns = Planet.World.NumberGen.Next(0, Settings.BehaviourWaitMax);
+                waitTurns = Planet.World.NumberGen.Next(1, Settings.BehaviourWaitMax);
             }
             //select action
             SuccessAction = cabinet.GetRandomAction();

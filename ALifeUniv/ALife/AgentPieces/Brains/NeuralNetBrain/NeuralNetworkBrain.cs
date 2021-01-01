@@ -8,92 +8,96 @@ namespace ALifeUni.ALife.AgentPieces.Brains.NeuralNetBrain
 {
     class NeuralNetworkBrain : IBrain
     {
-        //public List<Layer> Layers { get; set; }
-        //public double LearningRate { get; set; }
-        //public int LayerCount
-        //{
-        //    get
-        //    {
-        //        return Layers.Count;
-        //    }
-        //}
+        private Agent self;
+        public double LearningRate;
+        public List<Layer> Layers;
 
-        //public NeuralNetwork(double learningRate, int[] layers)
-        //{
-        //    if(layers.Length < 2) return;
+        public NeuralNetworkBrain(Agent self, List<int> layers)
+            : this(self, 0.1, layers)
+        { 
+        }
 
-        //    LearningRate = learningRate;
-        //    Layers = new List<Layer>();
+        public NeuralNetworkBrain(Agent self, double learningRate, List<int> layers)
+        {
+            if(layers.Count < 1) throw new ArgumentOutOfRangeException("Not enough layers for a Neural Network Brain");
 
-        //    for(int j = 0; j < layers.Length; j++)
-        //    {
-        //        Layer layer = new Layer(layers[j]);
-        //        Layers.Add(layer);
+            this.self = self;
+            LearningRate = learningRate;
 
-        //        for(int n = 0; n < layers[j]; n++)
-        //            layer.Neurons.Add(new Neuron());
+            //First we initialize the Top Layer to have all the inputs available.
+            throw new NotImplementedException("Have not implemented converting 'Inputs' to Neurons");
 
-        //        foreach(Neuron nn in layer.Neurons)
-        //        {
-        //            if(j == 0)
-        //            {
-        //                nn.Bias = 0;
-        //            }
-        //            else
-        //            {
-        //                for(int d = 0; d < layers[j - 1]; d++)
-        //                {
-        //                    nn.Dendrites.Add(new Dendrite());
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
+            //Add the "number of outputs" as an extra layer (the bottom one)
+            layers.Add(self.Actions.Count);
 
-        //private double Sigmoid(double x)
-        //{
-        //    return 1 / (1 + Math.Exp(-x));
-        //}
+            for(int i = 0; i < layers.Count; i++)
+            {
+                //Next we implement all the middle layers
+                Layer newLayer = new Layer(layers[i]);
+                Layers.Add(newLayer);
 
-        //public double[] Run(List<double> input)
-        //{
-        //    if(input.Count != this.Layers[0].NeuronCount) return null;
+                for(int n = 0; n < layers[i]; n++)
+                {
+                    //Add a neuron
+                    Neuron neu = new Neuron();
+                    newLayer.Neurons.Add(neu);
+                    //This works because we know that there is always a layer above us.
+                    Layer aboveLayer = Layers[i];
+                    for(int d = 0; d < aboveLayer.NeuronCount; d++)
+                    {
+                        neu.Dendrites.Add(new Dendrite());
+                    }
+                }
+            }
 
-        //    for(int j = 0; j < Layers.Count; j++)
-        //    {
-        //        Layer layer = Layers[j];
+            //Next attach the ActionClusters to the outputs we created for them.
+            throw new NotImplementedException("Have not implemented converting 'Actions' to Neurons");
+        }
 
-        //        for(int n = 0; n < layer.Neurons.Count; n++)
-        //        {
-        //            Neuron neuron = layer.Neurons[n];
+        public void ExecuteTurn()
+        {
+            //Detect all the things.
+            foreach(SenseCluster sc in self.Senses)
+            {
+                sc.Detect();
+            }
+            //Set the values within the neurons
+            foreach(FuncNeuron fn in Layers[0].Neurons)
+            {
+                fn.RefreshValue();
+            }
+            //Plinko the values through the NN
+            PermeateValues();
+            //Then set the values into the ActionCluster
+            throw new NotImplementedException("Have not yet written how to 'set the values into the ActionClusters'");
+        }
 
-        //            if(j == 0)
-        //            {
-        //                neuron.Value = input[n];
-        //            }
-        //            else
-        //            {
-        //                neuron.Value = 0;
-        //                for(int np = 0; np < this.Layers[j - 1].Neurons.Count; np++)
-        //                {
-        //                    neuron.Value += this.Layers[j - 1].Neurons[np].Value * neuron.Dendrites[np].Weight;
-        //                }
+        public void PermeateValues()
+        {
+            //We start with the "second" layer, becasue the top layer's value is set by the "Detecting" from the senses
 
-        //                neuron.Value = Sigmoid(neuron.Value + neuron.Bias);
-        //            }
-        //        }
-        //    }
+            for(int i = 1; i < Layers.Count; i++)
+            {
+                Layer layer = Layers[i];
+                foreach(Neuron neuron in layer.Neurons)
+                {
+                    neuron.Value = 0;
+                    //Read the values of the layer above me;
+                    List<Neuron> aboveNeurons = Layers[i - 1].Neurons;
+                    for(int np = 0; np < aboveNeurons.Count; np++)
+                    {
+                        neuron.Value += (aboveNeurons[np].Value * neuron.Dendrites[np].Weight);
+                    }
 
-        //    Layer last = this.Layers[this.Layers.Count - 1];
-        //    int numOutput = last.Neurons.Count;
-        //    double[] output = new double[numOutput];
-        //    for(int i = 0; i < last.Neurons.Count; i++)
-        //    {
-        //        output[i] = last.Neurons[i].Value;
-        //    }
+                    neuron.Value = Sigmoid(neuron.Value + neuron.Bias);
+                }
+            }
+        }
 
-        //    return output;
-        //}
+        private double Sigmoid(double x)
+        {
+            return 1 / (1 + Math.Exp(-x));
+        }
 
         //public bool Train(List<double> input, List<double> output)
         //{
@@ -141,12 +145,9 @@ namespace ALifeUni.ALife.AgentPieces.Brains.NeuralNetBrain
 
         //    return true;
         //}
-        public IBrain Clone(Agent self)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void ExecuteTurn()
+
+        public IBrain Clone(Agent self)
         {
             throw new NotImplementedException();
         }

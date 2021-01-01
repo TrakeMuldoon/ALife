@@ -11,7 +11,10 @@ namespace ALifeUni.ALife.AgentPieces.Brains.NeuralNetBrain
         public List<Dendrite> Dendrites { get; set; }
         public double Bias { get; set; }
         public double Delta { get; set; }
-        public double Value { get; set; }
+        public virtual double Value { 
+            get; 
+            set; 
+        }
 
         public int DendriteCount
         {

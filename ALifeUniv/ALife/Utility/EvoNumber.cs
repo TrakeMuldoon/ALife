@@ -119,14 +119,14 @@ namespace ALifeUni.ALife.Utility
                                 , ManualClamp);
         }
 
-        private double EvolveANumber(double current, double deltaMax, double hardMin, double hardMax)
+        private static double EvolveANumber(double current, double deltaMax, double hardMin, double hardMax)
         {
             if(deltaMax == 0)
             {
                 return current;
             }
             double mean = 0;
-            double stdDev = 0.2;
+            double stdDev = 0.2; //TODO: This is a magic number to approximate the distribution I like.
 
             double u1 = 1.0 - Planet.World.NumberGen.NextDouble(); //uniform(0,1] random doubles
             double u2 = 1.0 - Planet.World.NumberGen.NextDouble();

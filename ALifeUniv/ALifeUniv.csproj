@@ -143,6 +143,7 @@
     <Compile Include="ALife\AgentPieces\Brains\NeuralNetBrain\NeuralNetwork.cs" />
     <Compile Include="ALife\AgentPieces\Brains\NeuralNetBrain\NeuralNetworkBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\NeuralNetBrain\Neuron.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\NeuralNetBrain\FuncNeuron.cs" />
     <Compile Include="ALife\AgentPieces\Brains\RandomBrain\RandomBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\TesterBrain\TesterBrain.cs" />
     <Compile Include="ALife\AgentPieces\Property\IPropertyInput.cs" />

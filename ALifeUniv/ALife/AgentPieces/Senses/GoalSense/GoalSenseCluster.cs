@@ -24,8 +24,8 @@ namespace ALifeUni.ALife
                                       orientationAroundParent: new Angle(0),
                                       distFromParentCentre: 0,
                                       relativeOrientationAngle: new Angle(0),
-                                      radius: 10,
-                                      sweep: new Angle(2));
+                                      radius: 6,
+                                      sweep: new Angle(1));
             distanceInput = new DistanceToObjectInput(name + ".HowFar");
             rotationInput = new RotationToObjectInput(name + ".RelativeAngle");
             SubInputs.Add(distanceInput);
@@ -51,8 +51,8 @@ namespace ALifeUni.ALife
             Point myCP = myShape.CentrePoint;
             BoundingBox targBB = aar.BoundingBox;
 
-            //double clampX = Math.Clamp(myCP.X, targBB.MinX, targBB.MaxX);
-            //double clampY = Math.Clamp(myCP.Y, targBB.MinY, targBB.MaxY);
+            int distanceValue = 0;
+            int rotationValue = 0;
 
             if(targBB.MinX <= myCP.X 
                 && myCP.X <= targBB.MaxX)
@@ -61,26 +61,20 @@ namespace ALifeUni.ALife
                     && myCP.Y <= targBB.MaxY)
                 {
                     //I am within
-                    distanceInput.SetValue(0);
-                    rotationInput.SetValue(0);
-                    return;
+                    distanceValue = 0;
+                    rotationValue = 0;
                 }
                 if(myCP.Y < targBB.MinY)
                 {
                     //below
-                    distanceInput.SetValue((int)(targBB.MinY - myCP.Y));
-                    int rotVal = CalculateRotationFrom(270);
-                    rotationInput.SetValue(rotVal);
-                    return;
+                    distanceValue = (int)(targBB.MinY - myCP.Y);
+                    rotationValue = CalculateRotationFrom(270);
                 }
                 else //I am above it
                 {
-                    distanceInput.SetValue((int)(myCP.Y - targBB.MaxY));
-                    int rotVal = CalculateRotationFrom(90);
-                    rotationInput.SetValue(rotVal);
-                    return;
+                    distanceValue = (int)(myCP.Y - targBB.MaxY);
+                    rotationValue = CalculateRotationFrom(90);
                 }
-                //I am above or below it
             }
             else if(targBB.MinY <= myCP.Y
                     && myCP.Y <= targBB.MaxY)
@@ -89,17 +83,13 @@ namespace ALifeUni.ALife
                 if(myCP.X < targBB.MinX)
                 {
                     //below
-                    distanceInput.SetValue((int)(targBB.MinX - myCP.X));
-                    int rotVal = CalculateRotationFrom(0);
-                    rotationInput.SetValue(rotVal);
-                    return;
+                    distanceValue = (int)(targBB.MinX - myCP.X);
+                    rotationValue = CalculateRotationFrom(0);
                 }
                 else //I am above it
                 {
-                    distanceInput.SetValue((int)(myCP.X - targBB.MaxX));
-                    int rotVal = CalculateRotationFrom(180);
-                    rotationInput.SetValue(rotVal);
-                    return;
+                    distanceValue = (int)(myCP.X - targBB.MaxX);
+                    rotationValue = CalculateRotationFrom(180);
                 }
             }
             else
@@ -109,27 +99,21 @@ namespace ALifeUni.ALife
                 double yTarg = myCP.Y < targBB.MinY ? targBB.MinY : targBB.MaxY;
                 Point target = new Point(xTarg, yTarg);
 
-                double length = ExtraMath.DistanceBetweenTwoPoints(target, myCP);
+                distanceValue = (int) ExtraMath.DistanceBetweenTwoPoints(target, myCP);
+                
                 double angleBetweenPoints = ExtraMath.AngleBetweenPoints(target, myCP);
                 Angle abp = new Angle(angleBetweenPoints, true);
-
-                distanceInput.SetValue((int)length);
-                int rotVal = CalculateRotationFrom((int)abp.Degrees);
-                rotationInput.SetValue(rotVal);
-                return;
+                rotationValue = CalculateRotationFrom((int)abp.Degrees);
             }
+
+            distanceInput.SetValue(distanceValue);
+            rotationInput.SetValue(rotationValue);
+
+            myShape.Orientation.Degrees = rotationValue;
         }
 
         private int CalculateRotationFrom(int v)
         {
-            //me (45) targ (5) exp(-40) t-m = -40
-            //me (355) targ (310) exp(-40) t-m = -40
-            //me (5) targ(355) exp (-10) t-m = 350
-            //me (300) targ(0) exp(60) t-m = -300
-            //me (300) targ(355) exp(55) t-m = 55
-            //me (0) targ (175) exp(175) t-m = 175
-            //me (0) targ (185) exp(-175) t-m = 185
-
             double rotationdelta = v - myParent.Shape.Orientation.Degrees;
             double finalVal;
             if(rotationdelta < -180) 

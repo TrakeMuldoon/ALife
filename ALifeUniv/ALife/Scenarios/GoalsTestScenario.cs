@@ -45,8 +45,8 @@ namespace ALifeUni.ALife.Scenarios
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
-            IBrain newBrain = new BehaviourBrain(agent, "IF ALWAYS THEN Rotate.TurnRight AT [0.05]"
-                                                      , "IF ALWAYS THEN Move.GoLeft AT [0.8]");
+            IBrain newBrain = new BehaviourBrain(agent, "IF ALWAYS THEN Rotate.TurnRight AT [0.02]"
+                                                      , "IF ALWAYS THEN Move.GoLeft AT [0.9]");
 
             agent.CompleteInitialization(null, 1, newBrain);
 

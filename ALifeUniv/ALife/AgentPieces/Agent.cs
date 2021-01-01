@@ -155,13 +155,13 @@ namespace ALifeUni.ALife
         {
             //TODO: Somehow abstract out "Collision behaviour"
             //Collision means death right now
-            foreach(WorldObject wo in collisions)
-            {
-                if(wo is Agent ag)
-                {
-                    ag.Die();
-                }
-            }
+            //foreach(WorldObject wo in collisions)
+            //{
+            //    if(wo is Agent ag)
+            //    {
+            //        ag.Die();
+            //    }
+            //}
             Die();
         }
 

@@ -380,7 +380,7 @@ namespace ALifeUni
             double newVert = Zoomer.VerticalOffset / Zoomer.ExtentHeight * newHeight;
             double newHorz = Zoomer.HorizontalOffset / Zoomer.ExtentWidth * newHeight;
 
-            animCanvas.DpiScale = Math.Clamp(newZoom, 1, 8);
+            animCanvas.DpiScale = Math.Clamp(newZoom, 0.01f, 2.5f);
             Zoomer.ChangeView(newHorz, newVert, newZoom);
             CurrentZoom = newZoom;
             ZoomDisplay.Text = newZoom.ToString();

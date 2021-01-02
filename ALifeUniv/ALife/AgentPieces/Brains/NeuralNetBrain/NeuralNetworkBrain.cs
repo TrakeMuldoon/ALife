@@ -9,41 +9,45 @@ namespace ALifeUni.ALife.AgentPieces.Brains.NeuralNetBrain
     class NeuralNetworkBrain : IBrain
     {
         private Agent self;
-        public double LearningRate;
-        public List<Layer> Layers;
+        public double ModificationRate;
+        public double MutabilityRate;
+        public List<Layer> Layers = new List<Layer>();
 
         public NeuralNetworkBrain(Agent self, List<int> layers)
-            : this(self, 0.1, layers)
+            : this(self, 0.1, 0.5, layers)
         { 
         }
 
-        public NeuralNetworkBrain(Agent self, double learningRate, List<int> layers)
+        public NeuralNetworkBrain(Agent self, double modificationRate, double mutabilityRate, List<int> layerNeuronCounts)
         {
-            if(layers.Count < 1) throw new ArgumentOutOfRangeException("Not enough layers for a Neural Network Brain");
+            if(layerNeuronCounts.Count < 1) throw new ArgumentOutOfRangeException("Not enough layers for a Neural Network Brain");
 
             this.self = self;
-            LearningRate = learningRate;
+            ModificationRate = modificationRate;
+            MutabilityRate = mutabilityRate;
 
             //First we initialize the Top Layer to have all the inputs available.
-            throw new NotImplementedException("Have not implemented converting 'Inputs' to Neurons");
+            Layer senseLayer = CreateSenseLayer(self);
+            Layers.Add(senseLayer);
 
             //Add the "number of outputs" as an extra layer (the bottom one)
-            layers.Add(self.Actions.Count);
+            layerNeuronCounts.Add(self.Actions.Count);
 
-            for(int i = 0; i < layers.Count; i++)
+            for(int i = 0; i < layerNeuronCounts.Count; i++)
             {
                 //Next we implement all the middle layers
-                Layer newLayer = new Layer(layers[i]);
+                Layer newLayer = new Layer(layerNeuronCounts[i]);
                 Layers.Add(newLayer);
 
-                for(int n = 0; n < layers[i]; n++)
+                //This works because we know that there is always a layer above us.
+                int aboveLayerCount = Layers[i].NeuronCount;
+
+                for(int n = 0; n < layerNeuronCounts[i]; n++)
                 {
                     //Add a neuron
-                    Neuron neu = new Neuron();
+                    Neuron neu = new Neuron("HN:" + (i + 1) + "." + (n + 1));
                     newLayer.Neurons.Add(neu);
-                    //This works because we know that there is always a layer above us.
-                    Layer aboveLayer = Layers[i];
-                    for(int d = 0; d < aboveLayer.NeuronCount; d++)
+                    for(int d = 0; d < aboveLayerCount; d++)
                     {
                         neu.Dendrites.Add(new Dendrite());
                     }
@@ -52,6 +56,22 @@ namespace ALifeUni.ALife.AgentPieces.Brains.NeuralNetBrain
 
             //Next attach the ActionClusters to the outputs we created for them.
             throw new NotImplementedException("Have not implemented converting 'Actions' to Neurons");
+        }
+
+        private static Layer CreateSenseLayer(Agent self)
+        {
+            List<FuncNeuron> senseNeurons = new List<FuncNeuron>();
+            foreach(SenseCluster sc in self.Senses)
+            {
+                foreach(SenseInput si in sc.SubInputs)
+                {
+                    List<FuncNeuron> siNeurons = FuncNeuronFactory.GenerateFuncNeuronsForSenseInput(si);
+                    senseNeurons.AddRange(siNeurons);
+                }
+            }
+
+            Layer senseLayer = new Layer(senseNeurons.Count);
+            return senseLayer;
         }
 
         public void ExecuteTurn()
@@ -101,12 +121,6 @@ namespace ALifeUni.ALife.AgentPieces.Brains.NeuralNetBrain
 
         //public bool Train(List<double> input, List<double> output)
         //{
-        //    if((input.Count != this.Layers[0].Neurons.Count)
-        //        || (output.Count != this.Layers[this.Layers.Count - 1].Neurons.Count))
-        //    {
-        //        return false;
-        //    }
-
         //    Run(input);
 
         //    for(int i = 0; i < Layers[Layers.Count - 1].Neurons.Count; i++)

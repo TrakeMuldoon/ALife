@@ -12,7 +12,12 @@ namespace ALifeUni.ALife.AgentPieces.Brains.NeuralNetBrain
 
         public Dendrite()
         {
-            this.Weight = Planet.World.NumberGen.NextDouble();
+            Weight = Planet.World.NumberGen.NextDouble();
+        }
+
+        public Dendrite(double weight)
+        {
+            Weight = weight;
         }
     }
 }

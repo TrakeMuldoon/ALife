@@ -31,7 +31,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.NeuralNetBrain
                 Layers.Add(layer);
 
                 for(int n = 0; n < layers[j]; n++)
-                    layer.Neurons.Add(new Neuron());
+                    layer.Neurons.Add(new Neuron(j + "." + n));
 
                 foreach(Neuron nn in layer.Neurons)
                 {

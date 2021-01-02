@@ -12,7 +12,8 @@ namespace ALifeUni.ALife.AgentPieces.Brains.NeuralNetBrain
 
         private double theVal;
 
-        public FuncNeuron(Func<double> getValueFunction)
+        public FuncNeuron(String name, Func<double> getValueFunction)
+            : base(name)
         {
             GetValue = getValueFunction;
         }
@@ -25,7 +26,7 @@ namespace ALifeUni.ALife.AgentPieces.Brains.NeuralNetBrain
             }
             set
             {
-                throw new Exception("Do Not Sense FuncNeuron Value");
+                throw new Exception("Do Not Set FuncNeuron Value");
             }
         }
 

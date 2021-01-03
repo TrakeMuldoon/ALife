@@ -31,7 +31,12 @@ namespace ALifeUni.ALife.AgentPieces.Brains.NeuralNetBrain
             Layers.Add(senseLayer);
 
             //Add the "number of outputs" as an extra layer (the bottom one)
-            layerNeuronCounts.Add(self.Actions.Count);
+            int subActionCount = 0;
+            foreach(ActionCluster ac in self.Actions.Values)
+            {
+                subActionCount += ac.SubActions.Count;
+            }
+            layerNeuronCounts.Add(subActionCount);
 
             for(int i = 0; i < layerNeuronCounts.Count; i++)
             {
@@ -77,17 +82,14 @@ namespace ALifeUni.ALife.AgentPieces.Brains.NeuralNetBrain
         public void ExecuteTurn()
         {
             //Detect all the things.
-            foreach(SenseCluster sc in self.Senses)
-            {
-                sc.Detect();
-            }
+            self.Senses.ForEach((sc) => sc.Detect());
+
             //Set the values within the neurons
-            foreach(FuncNeuron fn in Layers[0].Neurons)
-            {
-                fn.RefreshValue();
-            }
+            Layers[0].Neurons.ForEach((fn) => ((FuncNeuron)fn).RefreshValue());
+
             //Plinko the values through the NN
             PermeateValues();
+
             //Then set the values into the ActionCluster
             throw new NotImplementedException("Have not yet written how to 'set the values into the ActionClusters'");
         }

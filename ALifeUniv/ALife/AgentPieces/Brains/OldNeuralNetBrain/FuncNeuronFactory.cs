@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ALifeUni.ALife.AgentPieces.Brains.NeuralNetBrain
+namespace ALifeUni.ALife.Brains
 {
     internal class FuncNeuronFactory
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses
+namespace ALifeUni.ALife.Brains
 {
     public enum IntOperationEnum
     {

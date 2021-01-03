@@ -1,9 +1,7 @@
-﻿using ALifeUni.ALife.AgentPieces.Brains;
-using ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace ALifeUni.ALife.Brains.BehaviourBrains
+namespace ALifeUni.ALife.Brains
 {
     public class BehaviourBrain : IBrain
     {

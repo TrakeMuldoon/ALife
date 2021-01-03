@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ALifeUni.ALife.AgentPieces.Brains.NeuralNetBrain
+namespace ALifeUni.ALife.Brains
 {
     class NeuralNetworkBrain : IBrain
     {

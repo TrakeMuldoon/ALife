@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
+namespace ALifeUni.ALife.Brains
 {
     public class BehaviourCabinet
     {

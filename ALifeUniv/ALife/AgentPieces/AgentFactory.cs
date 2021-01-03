@@ -1,4 +1,4 @@
-﻿using ALifeUni.ALife.AgentPieces.Brains;
+﻿using ALifeUni.ALife.Brains;
 using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;

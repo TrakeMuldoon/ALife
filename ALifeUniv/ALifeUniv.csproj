@@ -138,13 +138,15 @@
     <Compile Include="ALife\AgentPieces\Brains\IBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\Behaviour.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourBrain.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\Dendrite.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\FuncNeuronFactory.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\Layer.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\NeuralNetwork.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\NeuralNetworkBrain.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\Neuron.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\FuncNeuron.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\NeuralNetBrain\Dendrite.cs" />
+    <None Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\Dendrite.cs" />
+    <None Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\FuncNeuronFactory.cs" />
+    <None Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\Layer.cs" />
+    <None Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\NeuralNetwork.cs" />
+    <None Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\NeuralNetworkBrain.cs" />
+    <None Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\Neuron.cs" />
+    <None Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\FuncNeuron.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\NeuralNetBrain\Neuron.cs" />
     <Compile Include="ALife\AgentPieces\Brains\RandomBrain\RandomBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\TesterBrain\TesterBrain.cs" />
     <Compile Include="ALife\AgentPieces\Property\IPropertyInput.cs" />
@@ -262,9 +264,7 @@
       <Version>1.23.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ALife\AgentPieces\Brains\NeuralNetBrain\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

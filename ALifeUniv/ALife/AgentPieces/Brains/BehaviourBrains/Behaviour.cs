@@ -1,11 +1,10 @@
-using ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces;
-using ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses;
+using ALifeUni.ALife.Brains;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ALifeUni.ALife.Brains.BehaviourBrains
+namespace ALifeUni.ALife.Brains
 {
     public class Behaviour
     {

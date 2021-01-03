@@ -1,4 +1,4 @@
-﻿namespace ALifeUni.ALife.AgentPieces.Brains
+﻿namespace ALifeUni.ALife.Brains
 {
     public interface IBrain
     {

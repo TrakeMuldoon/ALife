@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
+namespace ALifeUni.ALife.Brains
 {
     public abstract class BehaviourInput
     {

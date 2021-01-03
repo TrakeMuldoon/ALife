@@ -1,5 +1,5 @@
 ﻿using ALifeUni.ALife;
-using ALifeUni.ALife.Brains.BehaviourBrains;
+using ALifeUni.ALife.Brains;
 using ALifeUni.ALife.Objects;
 using ALifeUni.ALife.UtilityClasses;
 using ALifeUni.UI;

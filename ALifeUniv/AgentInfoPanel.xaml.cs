@@ -1,5 +1,5 @@
 ﻿using ALifeUni.ALife;
-using ALifeUni.ALife.Brains.BehaviourBrains;
+using ALifeUni.ALife.Brains;
 using System;
 using System.Text;
 using Windows.UI.Xaml.Controls;

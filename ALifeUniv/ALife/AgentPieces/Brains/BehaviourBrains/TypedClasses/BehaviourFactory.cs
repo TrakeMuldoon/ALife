@@ -1,8 +1,7 @@
-﻿using ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces.TypedClasses;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace ALifeUni.ALife.AgentPieces.Brains.BehaviourBrainPieces
+namespace ALifeUni.ALife.Brains
 {
     public static class BehaviourFactory
     {

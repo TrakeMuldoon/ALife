@@ -146,6 +146,10 @@
     <None Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\NeuralNetworkBrain.cs" />
     <None Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\Neuron.cs" />
     <None Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\FuncNeuron.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\NeuralNetBrain\FuncNeuron.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\NeuralNetBrain\FuncNeuronFactory.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\NeuralNetBrain\Layer.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\NeuralNetBrain\NeuralNetworkBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\NeuralNetBrain\Neuron.cs" />
     <Compile Include="ALife\AgentPieces\Brains\RandomBrain\RandomBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\TesterBrain\TesterBrain.cs" />

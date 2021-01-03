@@ -125,9 +125,9 @@ namespace ALifeUni.ALife
 
             AgentUpkeep();
 
-
             //Reset all the senses. 
             Senses.ForEach((se) => se.Shape.Reset());
+            //Reset all the properties
             foreach(StatisticInput stat in Statistics.Values)
             {
                 stat.Reset();
@@ -136,7 +136,10 @@ namespace ALifeUni.ALife
             {
                 prop.Reset();
             }
+
+
             EndOfTurnTriggers();
+            
             Shape.Reset();
         }
 

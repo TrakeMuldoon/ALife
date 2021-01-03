@@ -37,7 +37,49 @@ namespace ALifeUni.ALife.Brains
             Layer senseLayer = CreateSenseLayer(self);
             Layers.Add(senseLayer);
 
+            //Next we implement all the middle layers
+            for(int i = 0; i < layerNeuronCounts.Count; i++)
+            {
+                Layer newLayer = new Layer(layerNeuronCounts[i]);
+                Layers.Add(newLayer);
 
+                //This works because we know that there is always a layer above us.
+                List<Neuron> aboveLayerNeurons = Layers[i].Neurons;
+
+                for(int n = 0; n < layerNeuronCounts[i]; n++)
+                {
+                    //Add a neuron
+                    Neuron neu = new Neuron("HN:" + (i + 1) + "." + (n + 1));
+                    newLayer.Neurons.Add(neu);
+                    for(int d = 0; d < aboveLayerNeurons.Count; d++)
+                    {
+                        neu.UpstreamDendrites.Add(new Dendrite(aboveLayerNeurons[d]));
+                    }
+                }
+            }
+
+            Layer actionLayer = CreateActionLayer(self, Layers[Layers.Count - 1]);
+            Layers.Add(actionLayer);
+        }
+
+        private Layer CreateActionLayer(Agent self, Layer aboveLayer)
+        {
+            List<ActionNeuron> actionNeurons = new List<ActionNeuron>();
+            foreach(ActionCluster ac in self.Actions.Values)
+            {
+                foreach(ActionPart ap in ac.SubActions.Values)
+                {
+                    ActionNeuron neu = new ActionNeuron(ap);
+                    actionNeurons.Add(neu);
+                    for(int d = 0; d < aboveLayer.Neurons.Count; d++)
+                    {
+                        neu.UpstreamDendrites.Add(new Dendrite(aboveLayer.Neurons[d]));
+                    }
+                }
+            }
+            Layer actionLayer = new Layer(actionNeurons.Count);
+            actionLayer.Neurons.AddRange(actionNeurons);
+            return actionLayer;
         }
 
         private static Layer CreateSenseLayer(Agent self)
@@ -53,6 +95,7 @@ namespace ALifeUni.ALife.Brains
             }
 
             Layer senseLayer = new Layer(senseNeurons.Count);
+            senseLayer.Neurons.AddRange(senseNeurons);
             return senseLayer;
         }
     }

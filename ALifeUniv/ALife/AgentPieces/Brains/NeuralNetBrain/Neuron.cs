@@ -40,7 +40,7 @@ namespace ALifeUni.ALife.Brains
             foreach(Dendrite upDen in UpstreamDendrites)
             {
                 //Apply all the values;
-                Value += upDen.TargetNeuron.Value * upDen.Weight;
+                Value += upDen.CurrentValue;
             }
             //Sigmoid it
             Value = Sigmoid(Value + Bias);

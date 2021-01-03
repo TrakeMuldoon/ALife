@@ -138,6 +138,7 @@
     <Compile Include="ALife\AgentPieces\Brains\IBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\Behaviour.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourBrain.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\NeuralNetBrain\ActionNeuron.cs" />
     <Compile Include="ALife\AgentPieces\Brains\NeuralNetBrain\Dendrite.cs" />
     <None Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\Dendrite.cs" />
     <None Include="ALife\AgentPieces\Brains\OldNeuralNetBrain\FuncNeuronFactory.cs" />

@@ -9,13 +9,6 @@ namespace ALifeUni.ALife.Brains
     public class Layer
     {
         public List<Neuron> Neurons { get; set; }
-        public int NeuronCount
-        {
-            get
-            {
-                return Neurons.Count;
-            }
-        }
 
         public Layer(int numNeurons)
         {

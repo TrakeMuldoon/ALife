@@ -156,16 +156,7 @@ namespace ALifeUni.ALife
 
         public void CollisionBehvaviour(List<WorldObject> collisions)
         {
-            //TODO: Somehow abstract out "Collision behaviour"
-            //Collision means death right now
-            //foreach(WorldObject wo in collisions)
-            //{
-            //    if(wo is Agent ag)
-            //    {
-            //        ag.Die();
-            //    }
-            //}
-            Die();
+            Planet.World.Scenario.CollisionBehaviour(this, collisions);
         }
 
         public override WorldObject Clone()

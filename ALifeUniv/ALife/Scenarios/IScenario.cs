@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Windows.UI;
 
 namespace ALifeUni.ALife
@@ -13,5 +14,7 @@ namespace ALifeUni.ALife
         void PlanetSetup();
 
         void GlobalEndOfTurnActions();
+
+        void CollisionBehaviour(Agent me, List<WorldObject> collisions);
     }
 }

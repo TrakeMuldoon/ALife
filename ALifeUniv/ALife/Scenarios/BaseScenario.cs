@@ -151,16 +151,24 @@ namespace ALifeUni.ALife.Scenarios
             Circle cir = new Circle(rockCP, 30);
             FallingRock fr = new FallingRock(rockCP, cir, Colors.Black);
             instance.AddObjectToWorld(fr);
-
-            //Point rockRCP = new Point((width / 2), (height / 2) - (height / 10));
-            //Rectangle rec = new Rectangle(rockRCP, 80, 40, Colors.Black);
-            //FallingRock frR = new FallingRock(rockRCP, rec, Colors.Black);
-            //instance.AddObjectToWorld(frR);
         }
 
         public virtual void GlobalEndOfTurnActions()
         {
 
+        }
+
+        public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        {
+            //Collision means death right now
+            foreach(WorldObject wo in collisions)
+            {
+                if(wo is Agent ag)
+                {
+                    ag.Die();
+                }
+            }
+            me.Die();
         }
     }
 }

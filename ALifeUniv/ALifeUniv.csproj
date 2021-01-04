@@ -171,6 +171,7 @@
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\IChildShape.cs" />
     <Compile Include="ALife\Scenarios\MazeScenario.cs" />
     <Compile Include="ALife\Scenarios\GoalsTestScenario.cs" />
+    <Compile Include="ALife\Scenarios\NeuralNetScenario.cs" />
     <Compile Include="ALife\Scenarios\RectangleScenario.cs" />
     <Compile Include="ALife\Scenarios\IScenario.cs" />
     <Compile Include="ALife\Scenarios\BaseScenario.cs" />

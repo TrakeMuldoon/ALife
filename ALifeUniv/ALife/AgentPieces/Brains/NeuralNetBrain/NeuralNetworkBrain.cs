@@ -12,6 +12,7 @@ namespace ALifeUni.ALife.Brains
         public double ModificationRate;
         public double MutabilityRate;
         public List<Layer> Layers = new List<Layer>();
+        private Layer actions;
 
         public NeuralNetworkBrain(Agent self, List<int> layers)
             : this(self, 0.1, 0.05, layers)
@@ -60,6 +61,7 @@ namespace ALifeUni.ALife.Brains
 
             Layer actionLayer = CreateActionLayer(self, Layers[Layers.Count - 1]);
             Layers.Add(actionLayer);
+            actions = actionLayer;
         }
 
         private Layer CreateActionLayer(Agent self, Layer aboveLayer)
@@ -97,6 +99,40 @@ namespace ALifeUni.ALife.Brains
             Layer senseLayer = new Layer(senseNeurons.Count);
             senseLayer.Neurons.AddRange(senseNeurons);
             return senseLayer;
+        }
+
+        public void ExecuteTurn()
+        {
+            //Detect all the things.
+            self.Senses.ForEach((sc) => sc.Detect());
+
+            //Permeate the values down the layers.
+            //Each layer gathers from the layer above it.
+            foreach(Layer lay in Layers)
+            {
+                lay.Neurons.ForEach((nn) => nn.GatherValue());
+            }
+            
+            foreach(ActionNeuron an in actions.Neurons)
+            {
+                an.ApplyValue();
+            }
+
+            //This makes the agent enact those items.
+            foreach(ActionCluster act in self.Actions.Values)
+            {
+                act.ActivateAction();
+            }
+        }
+
+        public IBrain Clone(Agent self)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBrain Reproduce(Agent self)
+        {
+            throw new NotImplementedException();
         }
     }
 }

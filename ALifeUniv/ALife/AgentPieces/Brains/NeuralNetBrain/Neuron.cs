@@ -26,7 +26,8 @@ namespace ALifeUni.ALife.Brains
         private Neuron(string name, double bias)
         {
             this.UpstreamDendrites = new List<Dendrite>();
-            if(bias < 0.0 || bias > 1.0)
+            bias = (bias * 2) - 1;
+            if(bias < -1.0 || bias > 1.0)
             {
                 throw new ArgumentOutOfRangeException("Bias must be between 0 and 1");
             }
@@ -53,12 +54,7 @@ namespace ALifeUni.ALife.Brains
 
         public virtual Neuron Clone()
         {
-            Neuron neu = new Neuron(Name, Bias);
-            //foreach(Dendrite d in Dendrites)
-            //{
-            //    neu.Dendrites.Add(new Dendrite(d.Weight));
-            //}
-            //return neu;
+            throw new NotImplementedException("clone no worky yet");
         }
     }
 }

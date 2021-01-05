@@ -72,6 +72,10 @@ namespace ALifeUni.ALife.Brains
                 foreach(ActionPart ap in ac.SubActions.Values)
                 {
                     ActionNeuron neu = new ActionNeuron(ap);
+                    if(ap.Name == "StopForward")
+                    {
+                        neu.Bias = -10;
+                    }
                     actionNeurons.Add(neu);
                     for(int d = 0; d < aboveLayer.Neurons.Count; d++)
                     {

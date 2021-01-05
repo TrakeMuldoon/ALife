@@ -17,6 +17,13 @@ namespace ALifeUni.ALife
 
         private Planet(int seed, int height, int width, IScenario theScenario)
         {
+            if(theScenario.FixedWidthHeight
+                && (theScenario.WorldHeight != height
+                    || theScenario.WorldWidth != width))
+            {
+                throw new ArgumentException("Do not set width and height on fixed dimension scenarios");
+            }
+
             worldWidth = width;
             worldHeight = height;
             Seed = seed;
@@ -40,24 +47,27 @@ namespace ALifeUni.ALife
             }
         }
 
-        public static void CreateWorld()
+
+        public static void CreateWorld(IScenario scenario)
         {
             Random r = new Random();
-            //TODO Hardcoded world size
-            CreateWorld(r.Next(), 1000, 880);
+            CreateWorld(r.Next(), scenario, scenario.WorldHeight, scenario.WorldWidth);
         }
 
-        public static void CreateWorld(int height, int width)
+        public static void CreateWorld(int seed, IScenario scenario)
+        {
+            CreateWorld(seed, scenario, scenario.WorldHeight, scenario.WorldWidth);
+        }
+
+        public static void CreateWorld(IScenario scenario, int height, int width)
         {
             Random r = new Random();
-
-            CreateWorld(r.Next(), height, width);
+            CreateWorld(r.Next(), scenario, scenario.WorldHeight, scenario.WorldWidth);
         }
-        #endregion
 
-        public static void CreateWorld(int seed, int height, int width)
+        public static void CreateWorld(int seed, IScenario scenario, int height, int width)
         {
-            instance = new Planet(seed, height, width, new MazeScenario());
+            instance = new Planet(seed, height, width, scenario);
 
             //Initialize collision grid
             instance._collisionLevels.Add(ReferenceValues.CollisionLevelPhysical, new CollisionGrid<WorldObject>(height, width));
@@ -65,6 +75,7 @@ namespace ALifeUni.ALife
 
             instance.Scenario.PlanetSetup();
         }
+        #endregion
 
         #region Instance Stuff
 

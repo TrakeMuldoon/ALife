@@ -1,10 +1,15 @@
-﻿using ALifeUni.ALife.UtilityClasses;
+﻿
+using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;
 
+
 namespace ALifeUni.Configs
 {
+#pragma warning disable 0169
+#pragma warning disable IDE0051
+#pragma warning disable IDE0044
     struct WorldConfig
     {
         int Height;

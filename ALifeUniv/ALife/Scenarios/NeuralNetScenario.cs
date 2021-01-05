@@ -12,7 +12,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    class NeuralNetScenario : BaseScenario
+    public class NeuralNetScenario : BaseScenario
     {
         public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
@@ -72,6 +72,10 @@ namespace ALifeUni.ALife.Scenarios
         {
         }
 
+        public override string Name
+        {
+            get { return "Neural Net Test"; }
+        }
         public override void PlanetSetup()
         {
             Zone nullZone = new Zone("Null", "random", Colors.Black, new Point(0, 0), 1000, 1000);

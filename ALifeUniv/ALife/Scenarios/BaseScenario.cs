@@ -10,7 +10,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    class BaseScenario : IScenario
+    public class BaseScenario : IScenario
     {
         public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
@@ -113,6 +113,37 @@ namespace ALifeUni.ALife.Scenarios
             me.Statistics["ZoneEscapeTimer"].IncreasePropertyBy(1);
         }
 
+        public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        {
+            //Collision means death right now
+            foreach(WorldObject wo in collisions)
+            {
+                if(wo is Agent ag)
+                {
+                    ag.Die();
+                }
+            }
+            me.Die();
+        }
+
+        public virtual string Name
+        {
+            get { return "Base"; }
+        }
+
+        public virtual int WorldWidth
+        {
+            get { return 1000; }
+        }
+        public virtual int WorldHeight
+        {
+            get { return 1000; }
+        }
+        public virtual bool FixedWidthHeight
+        {
+            get { return false; }
+        }
+
         public virtual void PlanetSetup()
         {
             Planet instance = Planet.World;
@@ -158,17 +189,9 @@ namespace ALifeUni.ALife.Scenarios
 
         }
 
-        public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        public virtual void Reset()
         {
-            //Collision means death right now
-            foreach(WorldObject wo in collisions)
-            {
-                if(wo is Agent ag)
-                {
-                    ag.Die();
-                }
-            }
-            me.Die();
+
         }
     }
 }

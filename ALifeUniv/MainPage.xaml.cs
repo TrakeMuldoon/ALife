@@ -1,6 +1,7 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Brains;
 using ALifeUni.ALife.Objects;
+using ALifeUni.ALife.Scenarios;
 using ALifeUni.ALife.UtilityClasses;
 using ALifeUni.UI;
 using Microsoft.Graphics.Canvas.UI;
@@ -28,7 +29,6 @@ namespace ALifeUni
     /// </summary>
     public sealed partial class MainPage : Page
     {
-
         long startticks;
         DispatcherTimer gameTimer = new DispatcherTimer();
         public List<LayerUISettings> UIGrid;
@@ -36,10 +36,15 @@ namespace ALifeUni
         public MainPage()
         {
             this.InitializeComponent();
+            /* ***********************************
+             * Set Scenario Here
+             * ***********************************/
+            Planet.CreateWorld(new MazeScenario());
 
             animCanvas.ClearColor = Colors.NavajoWhite;
+            animCanvas.Height = Planet.World.Scenario.WorldHeight;
+            animCanvas.Width = Planet.World.Scenario.WorldWidth;
 
-            Planet.CreateWorld((int)animCanvas.Height, (int)animCanvas.Width);
             seed = Planet.World.Seed.ToString();
             SimSeed.Text = seed;
 
@@ -264,11 +269,13 @@ namespace ALifeUni
             int seedValue;
             if(int.TryParse(seed, out seedValue))
             {
-                Planet.CreateWorld(seedValue, (int)animCanvas.Height, (int)animCanvas.Width);
+                Planet.World.Scenario.Reset();
+                Planet.CreateWorld(seedValue, Planet.World.Scenario, (int)animCanvas.Height, (int)animCanvas.Width);
             }
             else
             {
-                Planet.CreateWorld((int)animCanvas.Height, (int)animCanvas.Width);
+                Planet.World.Scenario.Reset();
+                Planet.CreateWorld(Planet.World.Scenario, (int)animCanvas.Height, (int)animCanvas.Width);
             }
 
             seed = Planet.World.Seed.ToString();

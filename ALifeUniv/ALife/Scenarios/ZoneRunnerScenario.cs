@@ -6,7 +6,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    class ZoneRunnerScenario : BaseScenario
+    public class ZoneRunnerScenario : BaseScenario
     {
         public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
@@ -21,6 +21,24 @@ namespace ALifeUni.ALife.Scenarios
         public override void AgentUpkeep(Agent me)
         {
             base.AgentUpkeep(me);
+        }
+
+        public override string Name
+        {
+            get { return "Zone Runner"; }
+        }
+
+        public override int WorldWidth
+        {
+            get { return 2000; }
+        }
+        public override int WorldHeight
+        {
+            get { return 2000; }
+        }
+        public override bool FixedWidthHeight
+        {
+            get { return false; }
         }
 
         public override void PlanetSetup()

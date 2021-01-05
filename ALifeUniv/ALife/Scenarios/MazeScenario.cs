@@ -12,15 +12,17 @@ using ALifeUni.ALife.WorldObjects;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    class MazeScenario : BaseScenario
+    public class MazeScenario : BaseScenario
     {
         public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
-                                    , ReferenceValues.CollisionLevelPhysical);
-            agent.Zone = parentZone;
-            agent.TargetZone = targetZone;
+                                    , ReferenceValues.CollisionLevelPhysical)
+            {
+                Zone = parentZone,
+                TargetZone = targetZone
+            };
 
             //TODO: FIX SO THAT THE SHAPE IS A PARAMETER
             Point centrePoint = parentZone.Distributor.NextAgentCentre(10, 10); //TODO: HARDCODED AGENT RADIUS
@@ -85,6 +87,9 @@ namespace ALifeUni.ALife.Scenarios
             {
                 if(z.Name == me.TargetZone.Name)
                 {
+                    int successfulSeed = Planet.World.Seed;
+                    int turns = Planet.World.Turns;
+                    
                     throw new Exception("SUCCESS!!!!!!!!?");
                 }
             }
@@ -105,6 +110,24 @@ namespace ALifeUni.ALife.Scenarios
                     me.Reproduce();
                 }
             }
+        }
+
+        public override string Name
+        {
+            get { return "Maze"; }
+        }
+
+        public override int WorldWidth
+        {
+            get { return 6000; }
+        }
+        public override int WorldHeight
+        {
+            get { return 2000; }
+        }
+        public override bool FixedWidthHeight
+        {
+            get { return true; }
         }
 
         public override void PlanetSetup()
@@ -262,6 +285,11 @@ namespace ALifeUni.ALife.Scenarios
                     Planet.World.InactiveObjects.Remove(wo);
                 }
             }
+        }
+
+        public override void Reset()
+        {
+            bestXNum = 5;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ALifeUni.ALife;
+using ALifeUni.ALife.Scenarios;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -25,12 +26,14 @@ namespace ScenarioTestHarness
 
             int height = 2000;
             int width = 2000;
+            IScenario scenario = new ZoneRunnerScenario();
+
             Random r = new Random();
             for(int i = 0; i < 10; i++)
             {
                 Console.Write(i + "-> ");
                 int seedValue = r.Next();
-                RunSeed(seedValue, height, width);
+                RunSeed(seedValue, scenario, height, width);
             }
             Console.WriteLine("Done, Please hit enter key");
             Log.Information("--->EndRun");
@@ -38,14 +41,14 @@ namespace ScenarioTestHarness
             Console.ReadLine();
         }
 
-        private static void RunSeed(int seedValue, int height, int width)
+        private static void RunSeed(int seedValue, IScenario scenario, int height, int width)
         {
-            string topLine = String.Format("Seed:{0}, Height:{1}, Width:{2}\t", seedValue, height, width);
+            string topLine = String.Format("Seed:{0}, Name: {1}, Height:{2}, Width:{3}\t", seedValue, scenario.Name, height, width);
             Console.Write(topLine);
             DateTime start = DateTime.Now;
             //Console.Write("Started at: " + start.ToString("HH:mm:ss"));
 
-            Planet.CreateWorld(seedValue, height, width);
+            Planet.CreateWorld(seedValue, scenario, height, width);
 
             string error = null;
             try

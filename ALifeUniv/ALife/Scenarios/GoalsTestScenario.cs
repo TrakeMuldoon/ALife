@@ -7,7 +7,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    class GoalsTestScenario : BaseScenario
+    public class GoalsTestScenario : BaseScenario
     {
         public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
@@ -57,6 +57,11 @@ namespace ALifeUni.ALife.Scenarios
         public override void AgentUpkeep(Agent me)
         {
 
+        }
+
+        public override string Name
+        {
+            get { return "GoalsSenseTest"; }
         }
 
         public override void PlanetSetup()

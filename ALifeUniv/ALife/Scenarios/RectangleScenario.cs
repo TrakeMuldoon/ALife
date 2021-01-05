@@ -10,7 +10,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    class RectangleScenario : BaseScenario
+    public class RectangleScenario : BaseScenario
     {
         public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
@@ -65,6 +65,11 @@ namespace ALifeUni.ALife.Scenarios
         public override void AgentUpkeep(Agent me)
         {
 
+        }
+
+        public override string Name
+        {
+            get { return "Rectangular Agent Test"; }
         }
 
         public override void PlanetSetup()

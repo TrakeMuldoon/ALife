@@ -65,7 +65,9 @@ namespace ALifeUni.ALife
             foreach(IHasShape wo in toCollide)
             {
                 IShape woShape = wo.Shape;
-                if(DetectorMarshaller[me.GetShapeEnum()][woShape.GetShapeEnum()](me, woShape))
+                ShapesEnum meShape = me.GetShapeEnum();
+                ShapesEnum woShapeType = woShape.GetShapeEnum();
+                if(DetectorMarshaller[meShape][woShapeType](me, woShape))
                 {
                     collisions.Add(wo);
                 }

@@ -126,7 +126,7 @@ namespace ALifeUni.ALife.Scenarios
             {
                 Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
             }
-            //MazeRunner mr = new MazeRunner(red, blue);
+            MazeRunner mr = new MazeRunner(red, blue);
 
             List<Wall> walls = new List<Wall>();
             walls.Add(new Wall(new Point(260, 410), 850, new Angle(75),     "w1-1"));

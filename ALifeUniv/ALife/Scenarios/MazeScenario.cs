@@ -90,7 +90,7 @@ namespace ALifeUni.ALife.Scenarios
                     int successfulSeed = Planet.World.Seed;
                     int turns = Planet.World.Turns;
                     
-                    throw new Exception("SUCCESS!!!!!!!!?");
+                    throw new Exception("SUCCESS!!!!!!!!? at " + turns);
                 }
             }
         }
@@ -149,7 +149,7 @@ namespace ALifeUni.ALife.Scenarios
             {
                 Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
             }
-            MazeRunner mr = new MazeRunner(red, blue);
+            //MazeRunner mr = new MazeRunner(red, blue);
 
             List<Wall> walls = new List<Wall>();
             walls.Add(new Wall(new Point(260, 410), 850, new Angle(75),     "w1-1"));
@@ -199,10 +199,14 @@ namespace ALifeUni.ALife.Scenarios
             for(int n = 1; n < 20; n++)
             {
                 int val = (n * 100) - 50;
-                walls.Add(new Wall(new Point(1930, val + 23), 100, new Angle(342), "w8-" + n));
-                walls.Add(new Wall(new Point(1930, val + 57), 100, new Angle(18),  "w8-" + n + "_1"));
+                walls.Add(new Wall(new Point(1930, val + 25), 100, new Angle(342), "w8-" + n));
+                walls.Add(new Wall(new Point(1930, val + 55), 100, new Angle(18),  "w8-" + n + "_1"));
             }
 
+            walls.Add(new Wall(new Point(2150, 230), 450, new Angle(85), "w9-1"));
+            walls.Add(new Wall(new Point(2143, 1260), 1500, new Angle(92), "w9-2"));
+            walls.Add(new Wall(new Point(2198, 1260), 1500, new Angle(88), "w9-3"));
+            walls.Add(new Wall(new Point(2190, 230), 450, new Angle(95), "w9-4"));
 
             foreach(Wall w in walls)
             {

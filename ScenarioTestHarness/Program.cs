@@ -24,9 +24,11 @@ namespace ScenarioTestHarness
             Log.Logger = new LoggerConfiguration().WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day).CreateLogger();
             Log.Information("<---StartRun");
 
-            int height = 2000;
-            int width = 2000;
-            IScenario scenario = new ZoneRunnerScenario();
+            IScenario scenario = new MazeScenario();
+            //int height = 2000;
+            //int width = 2000;
+            int height = scenario.WorldHeight;
+            int width = scenario.WorldWidth;
 
             Random r = new Random();
             for(int i = 0; i < 10; i++)
@@ -44,7 +46,8 @@ namespace ScenarioTestHarness
         private static void RunSeed(int seedValue, IScenario scenario, int height, int width)
         {
             string topLine = String.Format("Seed:{0}, Name: {1}, Height:{2}, Width:{3}\t", seedValue, scenario.Name, height, width);
-            Console.Write(topLine);
+            Console.WriteLine(topLine);
+            Console.Write("  ");
             DateTime start = DateTime.Now;
             //Console.Write("Started at: " + start.ToString("HH:mm:ss"));
 
@@ -53,10 +56,23 @@ namespace ScenarioTestHarness
             string error = null;
             try
             {
-                for(int i = 0; i < 15; i++)
+                for(int i = 0; i < 60; i++)
                 {
                     Planet.World.ExecuteManyTurns(1000);
                     Console.Write(".");
+
+                    if((i + 1) % 10 == 0)
+                    {
+                        DateTime now = DateTime.Now;
+                        TimeSpan elapsed = DateTime.Now - start;
+                        string interim = elapsed.ToString("mm\\:ss\\.ff");
+                        double averageX = Planet.World.AllActiveObjects.OfType<Agent>().Average((ag) => ag.Shape.CentrePoint.X);
+                        int maxiumumX = (int)Planet.World.AllActiveObjects.OfType<Agent>().Max((ag) => ag.Shape.CentrePoint.X);
+                        string stats = String.Format("\tElapsed: {0} TPS: {1:0.00000} AvgX: {2:0.00} MaxX: {3}"
+                                                        , interim, (elapsed.TotalSeconds / i * 1000), averageX, maxiumumX);
+                        Console.WriteLine(stats);
+                        Console.Write(i + 1);
+                    }
                 }
             }
             catch(Exception ex)
@@ -80,14 +96,12 @@ namespace ScenarioTestHarness
             }
             else
             {
-                int count = Planet.World.AllActiveObjects.Where(wo => wo.Alive).Count();
-                if(count > 200)
-                {
-                    Console.WriteLine(count);
-                    string nl = Environment.NewLine;
-                    string message = topLine + nl + count + nl;
-                    Log.Information(message);
-                }
+                int count = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
+                Console.WriteLine(count);
+                string nl = Environment.NewLine;
+                string message = topLine + nl + count + nl;
+                Log.Information(message);
+
                 Console.WriteLine("Boring");
             }
             Console.WriteLine();

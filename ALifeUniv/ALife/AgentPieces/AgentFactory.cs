@@ -1,11 +1,11 @@
 ﻿using ALifeUni.ALife.Brains;
-using ALifeUni.ALife.UtilityClasses;
+using ALifeUni.ALife.Shapes;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI;
 
-namespace ALifeUni.ALife.AgentPieces
+namespace ALifeUni.ALife
 {
     public static class AgentFactory
     {

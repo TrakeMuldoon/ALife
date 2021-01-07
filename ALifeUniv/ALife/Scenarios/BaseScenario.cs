@@ -1,8 +1,7 @@
-﻿using ALifeUni.ALife.AgentPieces;
-using ALifeUni.ALife.Brains;
-using ALifeUni.ALife.Objects;
+﻿using ALifeUni.ALife.Brains;
+using ALifeUni.ALife.CustomWorldObjects;
+using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
-using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;

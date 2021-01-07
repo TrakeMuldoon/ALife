@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ALifeUni.ALife.AgentPieces
+namespace ALifeUni.ALife
 {
     internal static class AgentIDGenerator
     {

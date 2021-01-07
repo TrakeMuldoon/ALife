@@ -1,7 +1,8 @@
-﻿using Windows.Foundation;
+﻿using ALifeUni.ALife.Utility;
+using Windows.Foundation;
 using Windows.UI;
 
-namespace ALifeUni.ALife.UtilityClasses
+namespace ALifeUni.ALife.Shapes
 {
     public interface IShape
     {

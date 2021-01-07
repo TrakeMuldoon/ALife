@@ -1,7 +1,7 @@
 using System;
 using Windows.Foundation;
 
-namespace ALifeUni.ALife.UtilityClasses
+namespace ALifeUni.ALife.Utility
 {
     public static class ExtraMath
     {

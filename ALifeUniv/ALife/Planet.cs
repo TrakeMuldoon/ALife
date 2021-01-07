@@ -1,5 +1,4 @@
-﻿using ALifeUni.ALife.AgentPieces;
-using ALifeUni.ALife.Scenarios;
+﻿using ALifeUni.ALife.Scenarios;
 using System;
 using System.Collections.Generic;
 
@@ -88,13 +87,13 @@ namespace ALifeUni.ALife
         public readonly List<WorldObject> StableActiveObjects = new List<WorldObject>();
         //All new objects. Should be added to Stable Active Objects, should already be in AllActiveObjects
         public readonly List<WorldObject> NewActiveObjects = new List<WorldObject>();
-        
+
         //All objects which have falled out of all active object scope
         public readonly List<WorldObject> InactiveObjects = new List<WorldObject>();
         //Objects which at the end of the turn should be removed from "AllActive", "StableActive" and "NewActive"
         public readonly List<WorldObject> ToRemoveObjects = new List<WorldObject>();
-        
-        
+
+
         public readonly int Seed;
         public readonly IScenario Scenario;
 
@@ -164,7 +163,7 @@ namespace ALifeUni.ALife
             while(NewActiveObjects.Count > 0)
             {
                 StableActiveObjects.Add(NewActiveObjects[0]);
-                
+
                 NewActiveObjects.RemoveAt(0);
             }
             while(ToRemoveObjects.Count > 0)
@@ -174,7 +173,7 @@ namespace ALifeUni.ALife
                 NewActiveObjects.Remove(ToRemoveObjects[0]);
 
                 InactiveObjects.Add(ToRemoveObjects[0]);
-                
+
                 ToRemoveObjects.RemoveAt(0);
             }
 

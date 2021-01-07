@@ -1,5 +1,5 @@
-﻿using ALifeUni.ALife.Utility;
-using ALifeUni.ALife.UtilityClasses;
+﻿using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Utility;
 using System;
 using Windows.UI;
 

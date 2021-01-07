@@ -1,8 +1,9 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Brains;
-using ALifeUni.ALife.Objects;
+using ALifeUni.ALife.CustomWorldObjects;
 using ALifeUni.ALife.Scenarios;
-using ALifeUni.ALife.UtilityClasses;
+using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Utility;
 using ALifeUni.UI;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
@@ -193,7 +194,7 @@ namespace ALifeUni
         private void AnimCanvas_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Point tapPoint = e.GetPosition(animCanvas);
-            BoundingBox bb = new BoundingBox(tapPoint.X-5, tapPoint.Y-5, tapPoint.X+5, tapPoint.Y+5);
+            BoundingBox bb = new BoundingBox(tapPoint.X - 5, tapPoint.Y - 5, tapPoint.X + 5, tapPoint.Y + 5);
             List<WorldObject> colls = Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].QueryForBoundingBoxCollisions(bb);
 
             CoreWindow cw = Window.Current.CoreWindow;
@@ -239,7 +240,7 @@ namespace ALifeUni
             }
             //If we do have a collisions, then set that agent to be "Special"
             special = colls[SpecialSelectorIndex];
-            
+
             switch(special)
             {
                 case Agent ag: AgentPanel.TheAgent = ag; break;

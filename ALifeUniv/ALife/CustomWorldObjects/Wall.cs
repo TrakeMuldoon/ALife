@@ -1,13 +1,11 @@
-﻿using ALifeUni.ALife.UtilityClasses;
+﻿using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Utility;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 
-namespace ALifeUni.ALife.Objects
+namespace ALifeUni.ALife.CustomWorldObjects
 {
     public class Wall : WorldObject
     {
@@ -70,7 +68,7 @@ namespace ALifeUni.ALife.Objects
             List<Wall> segments = new List<Wall>();
             int numSplits = (int)(wall.RShape.FBLength / SplitLength);
             double segmentLength = wall.RShape.FBLength / numSplits;
-            for(int i = 1; i < numSplits+1; i++)
+            for(int i = 1; i < numSplits + 1; i++)
             {
                 Angle ori = wall.Shape.Orientation.Clone();
                 double indexer = i - ((numSplits + 1) / 2.0);

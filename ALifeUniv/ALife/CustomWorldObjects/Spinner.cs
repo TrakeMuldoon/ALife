@@ -1,9 +1,10 @@
-﻿using ALifeUni.ALife.UtilityClasses;
+﻿using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Utility;
 using System;
 using Windows.Foundation;
 using Windows.UI;
 
-namespace ALifeUni.ALife.Objects
+namespace ALifeUni.ALife.CustomWorldObjects
 {
     class Spinner : WorldObject
     {

@@ -3,7 +3,7 @@ using System;
 using Windows.Foundation;
 using Windows.UI;
 
-namespace ALifeUni.ALife.UtilityClasses
+namespace ALifeUni.ALife.Shapes
 {
     public class Rectangle : IShape
     {

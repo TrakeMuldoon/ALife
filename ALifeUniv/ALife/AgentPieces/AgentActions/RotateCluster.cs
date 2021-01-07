@@ -1,4 +1,5 @@
-﻿using ALifeUni.ALife.UtilityClasses;
+﻿using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Utility;
 using System.Collections.Generic;
 
 namespace ALifeUni.ALife

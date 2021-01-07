@@ -1,4 +1,4 @@
-﻿using ALifeUni.ALife.UtilityClasses;
+﻿using ALifeUni.ALife.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,14 +94,14 @@ namespace ALifeUni.ALife
             //insert into all applicable buckets
             foreach(Point gc in myCoords)
             {
-                if(gc.X < 0 
+                if(gc.X < 0
                    || gc.Y < 0
                    || gc.X >= GridXMax
                    || gc.Y >= GridYMax)
                 {
                     continue;
                 }
-               
+
                 objectGrid[(int)gc.X, (int)gc.Y].Add(newObject);
             }
 

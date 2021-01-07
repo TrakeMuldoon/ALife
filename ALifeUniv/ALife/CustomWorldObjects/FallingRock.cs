@@ -1,12 +1,12 @@
-﻿using ALifeUni.ALife.AgentPieces;
-using ALifeUni.ALife.UtilityClasses;
+﻿using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation;
 using Windows.UI;
 
-namespace ALifeUni.ALife.Objects
+namespace ALifeUni.ALife.CustomWorldObjects
 {
     class FallingRock : WorldObject
     {

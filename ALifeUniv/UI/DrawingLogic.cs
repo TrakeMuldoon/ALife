@@ -1,5 +1,6 @@
 ﻿using ALifeUni.ALife;
-using ALifeUni.ALife.UtilityClasses;
+using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Utility;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.UI.Xaml;

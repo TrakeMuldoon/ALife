@@ -1,9 +1,6 @@
-﻿using ALifeUni.ALife.UtilityClasses;
+﻿using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 
 namespace ALifeUni.ALife
@@ -54,7 +51,7 @@ namespace ALifeUni.ALife
             int distanceValue = 0;
             int rotationValue = 0;
 
-            if(targBB.MinX <= myCP.X 
+            if(targBB.MinX <= myCP.X
                 && myCP.X <= targBB.MaxX)
             {
                 if(targBB.MinY <= myCP.Y
@@ -99,8 +96,8 @@ namespace ALifeUni.ALife
                 double yTarg = myCP.Y < targBB.MinY ? targBB.MinY : targBB.MaxY;
                 Point target = new Point(xTarg, yTarg);
 
-                distanceValue = (int) ExtraMath.DistanceBetweenTwoPoints(target, myCP);
-                
+                distanceValue = (int)ExtraMath.DistanceBetweenTwoPoints(target, myCP);
+
                 double angleBetweenPoints = ExtraMath.AngleBetweenPoints(target, myCP);
                 Angle abp = new Angle(angleBetweenPoints, true);
                 rotationValue = CalculateRotationFrom((int)abp.Degrees);
@@ -116,11 +113,11 @@ namespace ALifeUni.ALife
         {
             double rotationdelta = v - myParent.Shape.Orientation.Degrees;
             double finalVal;
-            if(rotationdelta < -180) 
+            if(rotationdelta < -180)
                 finalVal = rotationdelta + 360;
-            else if(rotationdelta > 180) 
+            else if(rotationdelta > 180)
                 finalVal = rotationdelta - 360;
-            else 
+            else
                 finalVal = rotationdelta;
 
             return (int)finalVal;

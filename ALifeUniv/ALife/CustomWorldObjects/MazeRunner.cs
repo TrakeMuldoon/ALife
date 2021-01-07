@@ -1,16 +1,12 @@
-﻿using ALifeUni.ALife.AgentPieces;
-using ALifeUni.ALife.Brains;
+﻿using ALifeUni.ALife.Brains;
+using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
-using ALifeUni.ALife.UtilityClasses;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 
-namespace ALifeUni.ALife.WorldObjects
+namespace ALifeUni.ALife.CustomWorldObjects
 {
     public class MazeRunner : Agent
     {
@@ -19,7 +15,7 @@ namespace ALifeUni.ALife.WorldObjects
             Zone = parentZone;
             TargetZone = targetZone;
 
-            Point centrePoint = parentZone.Distributor.NextAgentCentre(10, 10); 
+            Point centrePoint = parentZone.Distributor.NextAgentCentre(10, 10);
 
             IShape myShape = new Circle(centrePoint, 5);
             StartOrientation = 0;

@@ -1,4 +1,4 @@
-﻿namespace ALifeUni.ALife.UtilityClasses
+﻿namespace ALifeUni.ALife.Shapes
 {
     public struct BoundingBox
     {

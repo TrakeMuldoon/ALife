@@ -2,7 +2,6 @@
 
 namespace ALifeUni.ALife.Utility
 {
-
     public class EvoNumber : BoundedNumber
     {
         double startValue;
@@ -135,9 +134,9 @@ namespace ALifeUni.ALife.Utility
             double randNormal = mean + stdDev * randStdNormal;      //random normal(mean,stdDev^2)
 
             double delta = randNormal * deltaMax;
-                //double delta = (Planet.World.NumberGen.NextDouble() * deltaMax)
-                //               + (Planet.World.NumberGen.NextDouble() * deltaMax)
-                //               - deltaMax;
+            //double delta = (Planet.World.NumberGen.NextDouble() * deltaMax)
+            //               + (Planet.World.NumberGen.NextDouble() * deltaMax)
+            //               - deltaMax;
 
             double moddedValue = current + delta;
             double clampedValue = Math.Clamp(moddedValue, hardMin, hardMax);

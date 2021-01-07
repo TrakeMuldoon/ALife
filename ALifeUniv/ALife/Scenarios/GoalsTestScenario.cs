@@ -1,6 +1,5 @@
-﻿using ALifeUni.ALife.AgentPieces;
-using ALifeUni.ALife.Brains;
-using ALifeUni.ALife.UtilityClasses;
+﻿using ALifeUni.ALife.Brains;
+using ALifeUni.ALife.Shapes;
 using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI;

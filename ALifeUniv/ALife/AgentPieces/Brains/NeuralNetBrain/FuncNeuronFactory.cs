@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ALifeUni.ALife.Brains
 {
@@ -10,7 +9,7 @@ namespace ALifeUni.ALife.Brains
             List<FuncNeuron> newNeurons = new List<FuncNeuron>();
             switch(si)
             {
-                case Input<bool> sib: 
+                case Input<bool> sib:
                     newNeurons.Add(new FuncNeuron(si.Name + ".Value", () => sib.Value ? 1.0 : 0.0));
                     newNeurons.Add(new FuncNeuron(si.Name + ".MostRecentValue", () => sib.MostRecentValue ? 1.0 : 0.0));
                     newNeurons.Add(new FuncNeuron(si.Name + ".Modified", () => sib.Modified ? 1.0 : 0.0));

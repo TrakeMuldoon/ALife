@@ -1,6 +1,5 @@
-﻿using ALifeUni.ALife.AgentPieces;
-using ALifeUni.ALife.Objects;
-using ALifeUni.ALife.UtilityClasses;
+﻿using ALifeUni.ALife.CustomWorldObjects;
+using ALifeUni.ALife.Shapes;
 using Windows.Foundation;
 using Windows.UI;
 

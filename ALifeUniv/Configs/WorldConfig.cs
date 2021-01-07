@@ -1,5 +1,4 @@
-﻿
-using ALifeUni.ALife.UtilityClasses;
+﻿using ALifeUni.ALife.Utility;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;

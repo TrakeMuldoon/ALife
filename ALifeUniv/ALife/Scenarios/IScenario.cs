@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Windows.UI;
 
-namespace ALifeUni.ALife
+namespace ALifeUni.ALife.Scenarios
 {
     public interface IScenario
     {

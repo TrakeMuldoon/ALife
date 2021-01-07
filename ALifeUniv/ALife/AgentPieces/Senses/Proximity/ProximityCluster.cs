@@ -1,5 +1,5 @@
-﻿using ALifeUni.ALife.Utility;
-using ALifeUni.ALife.UtilityClasses;
+﻿using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Utility;
 using System;
 using Windows.UI;
 
@@ -18,12 +18,12 @@ namespace ALifeUni.ALife
         }
 
         [Obsolete("ProximityDefault is deprecated, please use ProximityCluster with EvoNumbers instead.")]
-        public ProximityCluster(WorldObject parent, string name) 
+        public ProximityCluster(WorldObject parent, string name)
             : this(parent, name, new ROEvoNumber(30, 2, 5, 50))
         {
         }
 
-        public ProximityCluster(WorldObject parent, string name, EvoNumber radius) 
+        public ProximityCluster(WorldObject parent, string name, EvoNumber radius)
             : base(parent, name)
         {
             evoRadius = radius;

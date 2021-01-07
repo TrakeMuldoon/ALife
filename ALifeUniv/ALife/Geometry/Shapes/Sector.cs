@@ -1,9 +1,10 @@
-﻿using System;
+﻿using ALifeUni.ALife.Utility;
+using System;
 using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI;
 
-namespace ALifeUni.ALife.UtilityClasses
+namespace ALifeUni.ALife.Shapes
 {
     public class AgentSector : Sector
     {

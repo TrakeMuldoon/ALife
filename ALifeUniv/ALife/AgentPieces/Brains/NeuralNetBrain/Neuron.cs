@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALifeUni.ALife.Brains
 {
@@ -12,15 +9,15 @@ namespace ALifeUni.ALife.Brains
         public String Name { get; protected set; }
         public double Bias { get; set; }
 
-        public virtual double Value 
-        { 
-            get; 
-            set; 
+        public virtual double Value
+        {
+            get;
+            set;
         }
 
         public Neuron(string name)
             : this(name, Planet.World.NumberGen.NextDouble())
-        {  
+        {
         }
 
         private Neuron(string name, double bias)

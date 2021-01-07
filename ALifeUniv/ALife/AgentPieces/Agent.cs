@@ -1,6 +1,5 @@
-﻿using ALifeUni.ALife.AgentPieces;
-using ALifeUni.ALife.Brains;
-using ALifeUni.ALife.UtilityClasses;
+﻿using ALifeUni.ALife.Brains;
+using ALifeUni.ALife.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -139,7 +138,7 @@ namespace ALifeUni.ALife
 
 
             EndOfTurnTriggers();
-            
+
             Shape.Reset();
         }
 

@@ -1,5 +1,5 @@
-﻿using ALifeUni.ALife.Utility;
-using ALifeUni.ALife.UtilityClasses;
+﻿using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Utility;
 using System;
 using Windows.UI;
 
@@ -16,7 +16,7 @@ namespace ALifeUni.ALife
             }
         }
 
-        public SquareSenseCluster(WorldObject parent, string name, double FBLength, double RLWidth) 
+        public SquareSenseCluster(WorldObject parent, string name, double FBLength, double RLWidth)
             : base(parent, name)
         {
             myShape = new ChildRectangle(parent.Shape, new Angle(45), 5.0, FBLength, RLWidth);

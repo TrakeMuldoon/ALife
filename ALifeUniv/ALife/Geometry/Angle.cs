@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 
-namespace ALifeUni.ALife.UtilityClasses
+namespace ALifeUni.ALife.Utility
 {
     [DebuggerDisplay("Deg:{Degrees}, Rads:{Radians}")]
     public class Angle

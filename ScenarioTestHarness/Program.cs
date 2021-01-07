@@ -2,7 +2,6 @@
 using ALifeUni.ALife.Scenarios;
 using Serilog;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Windows.Storage;

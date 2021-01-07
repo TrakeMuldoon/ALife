@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALifeUni.ALife.Brains
 {
@@ -116,7 +113,7 @@ namespace ALifeUni.ALife.Brains
             {
                 lay.Neurons.ForEach((nn) => nn.GatherValue());
             }
-            
+
             foreach(ActionNeuron an in actions.Neurons)
             {
                 an.ApplyValue();

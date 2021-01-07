@@ -1,0 +1,31 @@
+Initialize engine version: 5.6.0f3 (497a0f351392)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: Intel(R) UHD Graphics 620 (ID=0x3ea0)
+    Vendor:   Intel
+    VRAM:     2111 MB
+    Driver:   26.20.100.8141
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\devin.n.bialo\Source\Repos\Applying_EANNs\Build\Applying EANNs_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\devin.n.bialo\Source\Repos\Applying_EANNs\Build\Applying EANNs_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\devin.n.bialo\Source\Repos\Applying_EANNs\Build\Applying EANNs_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\devin.n.bialo\Source\Repos\Applying_EANNs\Build\Applying EANNs_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\devin.n.bialo\Source\Repos\Applying_EANNs\Build\Applying EANNs_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\devin.n.bialo\Source\Repos\Applying_EANNs\Build\Applying EANNs_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\devin.n.bialo\Source\Repos\Applying_EANNs\Build\Applying EANNs_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\devin.n.bialo\Source\Repos\Applying_EANNs\Build\Applying EANNs_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.218 seconds
+Platform assembly: C:\Users\devin.n.bialo\Source\Repos\Applying_EANNs\Build\Applying EANNs_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\devin.n.bialo\Source\Repos\Applying_EANNs\Build\Applying EANNs_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 5760x1712 at -3840,-632
+<RI> Initializing input.
+XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 6.185100 ms
+Setting up 4 worker threads for Enlighten.
+  Thread -> id: 3e48 -> priority: 1 
+  Thread -> id: 43d4 -> priority: 1 
+  Thread -> id: 1294 -> priority: 1 
+  Thread -> id: 62a4 -> priority: 1 

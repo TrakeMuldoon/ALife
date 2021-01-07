@@ -44,7 +44,7 @@ namespace ALifeUni.ALife.AgentPieces
 
             CompleteAgentInitialization(newClone, clonedSenses, clonedProperties, clonedStatistics, clonedActions);
 
-            IBrain newBrain = toClone.myBrain.Clone(newClone);
+            IBrain newBrain = toClone.MyBrain.Clone(newClone);
 
             newClone.CompleteInitialization(toClone, toClone.Generation + 1, newBrain);
 
@@ -82,7 +82,7 @@ namespace ALifeUni.ALife.AgentPieces
 
             CompleteAgentInitialization(newChild, evolvedSenses, evolvedProperties, evolvedStatistics, evolvedActions);
 
-            IBrain newBrain = newParent.myBrain.Reproduce(newChild);
+            IBrain newBrain = newParent.MyBrain.Reproduce(newChild);
 
             newChild.CompleteInitialization(newParent, newParent.Generation + 1, newBrain);
 

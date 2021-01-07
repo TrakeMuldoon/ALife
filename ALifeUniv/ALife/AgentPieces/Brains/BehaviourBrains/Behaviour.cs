@@ -15,7 +15,8 @@ namespace ALifeUni.ALife.Brains
         public Func<double> SuccessParam;
         private int waitTurns = 0;
         private string intensityString;
-        Regex englishStringParser = new Regex("^IF (.*) THEN (.*)$");
+
+        static readonly Regex EnglishStringParser = new Regex("^IF (.*) THEN (.*)$");
 
         public Behaviour(String englishString, BehaviourCabinet cabinet)
         {
@@ -35,7 +36,7 @@ namespace ALifeUni.ALife.Brains
             }
             else
             {
-                Match behaviourMatch = englishStringParser.Match(englishString);
+                Match behaviourMatch = EnglishStringParser.Match(englishString);
                 ParseConditions(behaviourMatch.Groups[1].Value, cabinet);
                 ParseResults(behaviourMatch.Groups[2].Value, cabinet);
             }
@@ -121,7 +122,7 @@ namespace ALifeUni.ALife.Brains
             return bc;
         }
 
-        Regex resultParser = new Regex("^(WAIT \\[(\\d+)\\] TO )?(\\w+(\\.\\w+)) AT ([\\[\\]\\.\\w]+)$");
+        static readonly Regex resultParser = new Regex("^(WAIT \\[(\\d+)\\] TO )?(\\w+(\\.\\w+)) AT ([\\[\\]\\.\\w]+)$");
         private void ParseResults(string value, BehaviourCabinet cabinet)
         {
             Match resultsMatch = resultParser.Match(value);

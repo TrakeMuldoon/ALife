@@ -12,7 +12,7 @@ namespace ALifeUni.ALife
     [DebuggerDisplay("AgentX:{Shape.CentrePoint.X}")]
     public class Agent : WorldObject
     {
-        public IBrain myBrain
+        public IBrain MyBrain
         {
             get;
             private set;
@@ -75,7 +75,7 @@ namespace ALifeUni.ALife
         internal void CompleteInitialization(Agent parent, int generation, IBrain newBrain)
         {
             Generation = generation;
-            myBrain = newBrain;
+            MyBrain = newBrain;
 
             Parent = parent;
             LivingAncestor = parent;
@@ -117,7 +117,7 @@ namespace ALifeUni.ALife
         public override void ExecuteAliveTurn()
         {
             Shadow = new AgentShadow(this);
-            myBrain.ExecuteTurn();
+            MyBrain.ExecuteTurn();
             if(!Alive)
             {
                 return;

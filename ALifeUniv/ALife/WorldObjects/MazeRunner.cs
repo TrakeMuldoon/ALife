@@ -30,14 +30,14 @@ namespace ALifeUni.ALife.WorldObjects
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {
                 new EyeCluster(this, "EyeLeft"
-                                , new ROEvoNumber(startValue: -15, evoDeltaMax: 20, hardMin:-360, hardMax: 360)   //Orientation Around Parent
+                                , new ROEvoNumber(startValue: -15, evoDeltaMax: 20, hardMin:-360, hardMax: 360)  //Orientation Around Parent
                                 , new ROEvoNumber(startValue: 10, evoDeltaMax:30, hardMin:-360, hardMax: 360)    //Relative Orientation
-                                , new ROEvoNumber(startValue: 60, evoDeltaMax:3, hardMin:40, hardMax:90)        //Radius
+                                , new ROEvoNumber(startValue: 60, evoDeltaMax:3, hardMin:40, hardMax:90)         //Radius
                                 , new ROEvoNumber(startValue: 25, evoDeltaMax:1, hardMin:15, hardMax:40)),       //Sweep
                 new EyeCluster(this, "EyeRight"
                                 , new ROEvoNumber(startValue: 15, evoDeltaMax: 20, hardMin:-360, hardMax: 360)   //Orientation Around Parent
                                 , new ROEvoNumber(startValue: -10, evoDeltaMax:30, hardMin:-360, hardMax: 360)   //Relative Orientation
-                                , new ROEvoNumber(startValue: 60, evoDeltaMax:3, hardMin:40, hardMax:90)        //Radius
+                                , new ROEvoNumber(startValue: 60, evoDeltaMax:3, hardMin:40, hardMax:90)         //Radius
                                 , new ROEvoNumber(startValue: 25, evoDeltaMax:1, hardMin:15, hardMax:40)),       //Sweep
                 new GoalSenseCluster(this, "Goals", TargetZone)
             };

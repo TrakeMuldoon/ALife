@@ -84,9 +84,9 @@ namespace ALifeUni
         private void brainBuilder()
         {
             StringBuilder sb = new StringBuilder();
-            if(theAgent.myBrain is BehaviourBrain)
+            if(theAgent.MyBrain is BehaviourBrain)
             {
-                BehaviourBrain brain = (BehaviourBrain)theAgent.myBrain;
+                BehaviourBrain brain = (BehaviourBrain)theAgent.MyBrain;
                 foreach(Behaviour beh in brain.Behaviours)
                 {
                     sb.Append(beh.PassedThisTurn ? "!!" : "XX");

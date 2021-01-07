@@ -62,7 +62,7 @@ namespace ALifeUni.ALife
         public static void CreateWorld(IScenario scenario, int height, int width)
         {
             Random r = new Random();
-            CreateWorld(r.Next(), scenario, scenario.WorldHeight, scenario.WorldWidth);
+            CreateWorld(r.Next(), scenario, height, width);
         }
 
         public static void CreateWorld(int seed, IScenario scenario, int height, int width)

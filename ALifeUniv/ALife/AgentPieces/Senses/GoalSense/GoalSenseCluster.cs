@@ -64,7 +64,7 @@ namespace ALifeUni.ALife
                     distanceValue = 0;
                     rotationValue = 0;
                 }
-                if(myCP.Y < targBB.MinY)
+                else if(myCP.Y < targBB.MinY)
                 {
                     //below
                     distanceValue = (int)(targBB.MinY - myCP.Y);

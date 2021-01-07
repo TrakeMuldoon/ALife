@@ -24,13 +24,9 @@ namespace ALifeUni.ALife.Objects
         {
             get { return rShape; }
             protected set
-            {
+            {   
                 Rectangle rec = value as Rectangle;
-                if(rec == null)
-                {
-                    throw new Exception("Cannot set a wall to be any other shape");
-                }
-                rShape = rec;
+                rShape = rec ?? throw new Exception("Cannot set a wall to be any other shape");
             }
         }
 
@@ -68,7 +64,7 @@ namespace ALifeUni.ALife.Objects
             throw new NotImplementedException();
         }
 
-        private static int SplitLength = 100;
+        private const int SplitLength = 100;
         public static List<Wall> WallSplitter(Wall wall)
         {
             List<Wall> segments = new List<Wall>();

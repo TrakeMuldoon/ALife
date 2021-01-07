@@ -381,7 +381,7 @@ namespace ALifeUni.ALife
             double angleBetweenPoints = ExtraMath.AngleBetweenPoints(targetPoint, sector.CentrePoint);
             Angle abp = new Angle(angleBetweenPoints, true);
 
-            Angle minimum = new Angle(0);
+            //Angle minimum = new Angle(0);
             abp -= sector.AbsoluteOrientation;
             Angle maximum = sector.SweepAngle;
 

@@ -8,7 +8,6 @@ namespace ALifeUni.ALife.Brains
         public bool LastState;
         private BehaviourInput origin;
         private Func<T, T, bool> comparator;
-        private string comparatorString;
         private BehaviourInput compareTo;
 
         public BehaviourCondition(BehaviourInput leftSide, BehaviourInput rightSide, Func<T, T, bool> operation, string opString)
@@ -16,7 +15,6 @@ namespace ALifeUni.ALife.Brains
             origin = leftSide;
             comparator = operation;
             compareTo = rightSide;
-            comparatorString = opString;
 
             Text = origin.FullName + " " + opString + " " + rightSide.FullName;
         }

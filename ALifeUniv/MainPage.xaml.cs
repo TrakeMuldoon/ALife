@@ -30,7 +30,7 @@ namespace ALifeUni
     public sealed partial class MainPage : Page
     {
         long startticks;
-        DispatcherTimer gameTimer = new DispatcherTimer();
+        readonly DispatcherTimer gameTimer = new DispatcherTimer();
         public List<LayerUISettings> UIGrid;
 
         public MainPage()
@@ -57,7 +57,7 @@ namespace ALifeUni
             PlaySim_Go();
         }
 
-        private void animCanvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
+        private void AnimCanvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
         {
         }
 
@@ -83,7 +83,7 @@ namespace ALifeUni
         }
 
         private Boolean showParents;
-        private void animCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
+        private void AnimCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
 
             if(special != null
@@ -266,8 +266,7 @@ namespace ALifeUni
 
         private void ResetSim_Click(object sender, RoutedEventArgs e)
         {
-            int seedValue;
-            if(int.TryParse(seed, out seedValue))
+            if(int.TryParse(seed, out int seedValue))
             {
                 Planet.World.Scenario.Reset();
                 Planet.CreateWorld(seedValue, Planet.World.Scenario, (int)animCanvas.Height, (int)animCanvas.Width);
@@ -373,7 +372,7 @@ namespace ALifeUni
 
         #region Zoom controls
 
-        private List<String> ZoomFactors = new List<String>() { "0.1", "0.25", "0.5", "0.75", "0.9", "1", "2", "3", "4", "5", "6", "7", "8" };
+        private static readonly List<String> ZoomFactors = new List<String>() { "0.1", "0.25", "0.5", "0.75", "0.9", "1", "2", "3", "4", "5", "6", "7", "8" };
         private int ZoomIndex = 6;
         private float CurrentZoom = 1;
 
@@ -427,14 +426,12 @@ namespace ALifeUni
 
         private void AnimCanvas_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
-
-            int panMagnifyFactor = 0;
-            panMagnifyFactor = (int)(8 * CurrentZoom);
-
             //Constantly updates the position the pan window should be as you drag along. 
             //Each time this is called constitutes a new drag.
             if(dragStart.HasValue)
             {
+                int panMagnifyFactor = (int)(8 * CurrentZoom);
+
                 Point current = e.GetCurrentPoint(animCanvas).Position;
                 Point moveDelta = new Point((current.X - dragStart.Value.X) * panMagnifyFactor * -1
                                             , (current.Y - dragStart.Value.Y) * panMagnifyFactor * -1);
@@ -493,7 +490,7 @@ namespace ALifeUni
         private void ShortestBrain_Click(object sender, RoutedEventArgs e)
         {
             shortBrainIndex = FindAndSelect(shortBrainIndex
-                                            , (ag) => ((BehaviourBrain)ag.myBrain).Behaviours.Count()
+                                            , (ag) => ((BehaviourBrain)ag.MyBrain).Behaviours.Count()
                                             , false);
         }
 

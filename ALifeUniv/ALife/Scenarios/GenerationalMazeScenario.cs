@@ -10,22 +10,21 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class MazeScenario : BaseScenario
+    public class GenerationalMazeScenario : BaseScenario
     {
         public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             Agent agent = new Agent(genusName
-                                    , AgentIDGenerator.GetNextAgentId()
+                                    , Iteration + "_" + AgentIDGenerator.GetNextAgentId()
                                     , ReferenceValues.CollisionLevelPhysical)
             {
                 Zone = parentZone,
                 TargetZone = targetZone
             };
 
-            //TODO: FIX SO THAT THE SHAPE IS A PARAMETER
-            Point centrePoint = parentZone.Distributor.NextAgentCentre(10, 10); //TODO: HARDCODED AGENT RADIUS
+            Point centrePoint = parentZone.Distributor.NextAgentCentre(10, 10);
 
-            IShape myShape = new Circle(centrePoint, 5);                        //TODO: HARDCODED AGENT RADIUS
+            IShape myShape = new Circle(centrePoint, 5);                       
             agent.StartOrientation = startOrientation;
             myShape.Orientation.Degrees = startOrientation;
             myShape.Color = color;
@@ -34,17 +33,17 @@ namespace ALifeUni.ALife.Scenarios
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {
                 new EyeCluster(agent, "EyeLeft"
-                                , new ROEvoNumber(startValue: -30, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
+                                , new ROEvoNumber(startValue: -20, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
                                 , new ROEvoNumber(startValue: 10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Relative Orientation
-                                , new ROEvoNumber(startValue: 80, evoDeltaMax: 3, hardMin: 40, hardMax: 120)        //Radius
-                                , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),       //Sweep
+                                , new ROEvoNumber(startValue: 60, evoDeltaMax: 3, hardMin: 40, hardMax: 120)       //Radius
+                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
                 new EyeCluster(agent, "EyeRight"
-                                , new ROEvoNumber(startValue: 30, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Orientation Around Parent
+                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Orientation Around Parent
                                 , new ROEvoNumber(startValue: -10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Relative Orientation
-                                , new ROEvoNumber(startValue: 80, evoDeltaMax: 3, hardMin: 40, hardMax: 120)        //Radius
-                                , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),       //Sweep
+                                , new ROEvoNumber(startValue: 60, evoDeltaMax: 3, hardMin: 40, hardMax: 120)       //Radius
+                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
                 new ProximityCluster(agent, "Proximity1"
-                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 4, hardMin: 10, hardMax: 40)),        //Radius
+                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 4, hardMin: 10, hardMax: 40)),      //Radius
                 new GoalSenseCluster(agent, "GoalSense", targetZone)
             };
 
@@ -52,7 +51,7 @@ namespace ALifeUni.ALife.Scenarios
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                new StatisticInput("Age", 0, Int32.MaxValue),
+                new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue),
                 new StatisticInput("MaximumX", 0, Int32.MaxValue),
                 new StatisticInput("MaxXTimer", 0, Int32.MaxValue)
             };
@@ -75,7 +74,7 @@ namespace ALifeUni.ALife.Scenarios
 
         public override void EndOfTurnTriggers(Agent me)
         {
-            if(me.Statistics["MaxXTimer"].Value > 600)
+            if(me.Statistics["MaxXTimer"].Value > 1000)
             {
                 me.Die();
                 return;
@@ -83,6 +82,12 @@ namespace ALifeUni.ALife.Scenarios
             List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(me.Shape.BoundingBox);
             foreach(Zone z in inZones)
             {
+                if(z.Name == me.Zone.Name
+                    && me.Statistics["ZoneEscapeTimer"].Value > 200)
+                {
+                    me.Die();
+                    return;
+                }
                 if(z.Name == me.TargetZone.Name)
                 {
                     int successfulSeed = Planet.World.Seed;
@@ -95,20 +100,28 @@ namespace ALifeUni.ALife.Scenarios
 
         public override void AgentUpkeep(Agent me)
         {
-            //Increment or Decrement end of turn values
-            me.Statistics["Age"].IncreasePropertyBy(1);
+            me.Statistics["ZoneEscapeTimer"].IncreasePropertyBy(1);
             me.Statistics["MaxXTimer"].IncreasePropertyBy(1);
             int roundedX = (int)(me.Shape.CentrePoint.X / 100) * 100;
             if(roundedX > me.Statistics["MaximumX"].Value)
             {
                 me.Statistics["MaximumX"].Value = roundedX;
                 me.Statistics["MaxXTimer"].Value = 0;
-                if(roundedX % 300 == 0)
-                {
-                    me.Reproduce();
-                }
             }
         }
+
+        public override void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        {
+            foreach(WorldObject wo in collisions)
+            {
+                if(!(wo is Wall))
+                {
+                    wo.Die();
+                }
+            }
+            me.Die();
+        }
+
 
         public override string Name
         {
@@ -147,7 +160,6 @@ namespace ALifeUni.ALife.Scenarios
             {
                 Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
             }
-            MazeRunner mr = new MazeRunner(red, blue);
 
             List<Wall> walls = new List<Wall>();
             walls.Add(new Wall(new Point(260, 410), 850, new Angle(75), "w1-1"));
@@ -229,23 +241,69 @@ namespace ALifeUni.ALife.Scenarios
             }
         }
 
-        int bestXNum = 5;
+        int bestXNum = 10;
+        int Iteration = 1;
         public override void GlobalEndOfTurnActions()
         {
-            List<Agent> winners = Planet.World.BestXAgents;
-            foreach(Agent ag in Planet.World.AllActiveObjects.OfType<Agent>())
+            IEnumerable<Agent> someAgents = Planet.World.AllActiveObjects.OfType<Agent>();
+
+            var LivingAgents =
+                from ag in someAgents
+                where ag.Alive == true
+                select ag;
+
+            if(Planet.World.Turns % 10000 == 0
+                || LivingAgents.Count() == 0)
             {
-                if(winners.Count < bestXNum)
+                foreach(Agent aa in someAgents)
                 {
-                    winners.Add(ag);
-                    winners.Sort((a, b) => b.Shape.CentrePoint.X.CompareTo(a.Shape.CentrePoint.X));
+                    aa.Die();
+                }
+
+                List<Agent> allAgents = new List<Agent>(someAgents);
+                IEnumerable<Agent> otherAgents = Planet.World.InactiveObjects.OfType<Agent>();
+                allAgents.AddRange(otherAgents);
+
+                List<Agent> bestX = FindTopX<Agent>(bestXNum, allAgents, (ag) => (double)(ag.Shape.CentrePoint.X));
+
+                Zone red = Planet.World.Zones["Red(Blue)"];
+                Zone blue = Planet.World.Zones["Blue(Red)"];
+
+                //This will create a gradually decreasing number of agents. weighted towards whichever agents did best in the last round
+                for(int i = bestXNum; i > 0; i--)
+                {
+                    for(int j = 0; j < i; j++)
+                    {
+                        bestX[bestXNum - i].Reproduce();
+                    }
+                }
+                for(int k = 0; k < 30; k++)
+                {
+                    Agent ag1 = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
+                }
+
+                //Clear the Refuse
+                Planet.World.InactiveObjects.Clear();
+                Iteration += 1;
+            }
+        }
+
+        private static List<T> FindTopX<T>(int topX, List<T> listOfThings, Func<T, double> getValue)
+        {
+            List<T> winners = new List<T>();
+            foreach(T eval in listOfThings)
+            {
+                if(winners.Count < topX)
+                {
+                    winners.Add(eval);
+                    winners.Sort((a, b) => getValue(b).CompareTo(getValue(a)));
                     continue;
                 }
 
-                int j = bestXNum - 1;
-                double agCpX = ag.Shape.CentrePoint.X;
+                int j = topX - 1;
+                double agCpX = getValue(eval);
 
-                if(winners[j].Shape.CentrePoint.X > agCpX)
+                if(getValue(winners[j]) > agCpX)
                 {
                     //Not in the best X;
                     continue;
@@ -254,10 +312,10 @@ namespace ALifeUni.ALife.Scenarios
                 bool inserted = false;
                 for(j--; j > -1; j--)
                 {
-                    if(winners[j].Shape.CentrePoint.X > agCpX)
+                    if(getValue(winners[j]) > agCpX)
                     {
-                        winners.Insert(j + 1, ag);
-                        winners.RemoveAt(bestXNum);
+                        winners.Insert(j + 1, eval);
+                        winners.RemoveAt(topX);
                         inserted = true;
                         break; //break the for loop
                     }
@@ -265,28 +323,11 @@ namespace ALifeUni.ALife.Scenarios
                 if(!inserted)
                 {
                     //This means it made it through the forloop and is the best.
-                    winners.Insert(j + 1, ag);
-                    winners.RemoveAt(bestXNum);
+                    winners.Insert(j + 1, eval);
+                    winners.RemoveAt(topX);
                 }
             }
-
-            Zone red = Planet.World.Zones["Red(Blue)"];
-            Zone blue = Planet.World.Zones["Blue(Red)"];
-            if(Planet.World.AllActiveObjects.OfType<Agent>().Count() < 50)
-            {
-                Planet.World.ReproduceBest();
-                Planet.World.ReproduceBest();
-                Planet.World.ReproduceBest();
-                Agent ag1 = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
-                Agent ag2 = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
-                Agent ag3 = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
-
-                var weaklings = Planet.World.InactiveObjects.Where((wo) => wo.Shape.CentrePoint.X < 50).ToList();
-                foreach(WorldObject wo in weaklings)
-                {
-                    Planet.World.InactiveObjects.Remove(wo);
-                }
-            }
+            return winners;
         }
 
         public override void Reset()

@@ -161,6 +161,7 @@
     <Compile Include="ALife\AgentPieces\Senses\SquareSense\SquareSenseCluster.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildRectangle.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\IChildShape.cs" />
+    <Compile Include="ALife\Scenarios\GenerationalMazeScenario.cs" />
     <Compile Include="ALife\Scenarios\MazeScenario.cs" />
     <Compile Include="ALife\Scenarios\GoalsTestScenario.cs" />
     <Compile Include="ALife\Scenarios\NeuralNetScenario.cs" />

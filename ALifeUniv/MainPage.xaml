@@ -52,7 +52,7 @@
                       BorderThickness="1"
                       Width="1050">
             <Border Background="Black" BorderBrush="Red" BorderThickness="5">
-                <canvas:CanvasAnimatedControl x:Name="animCanvas" Draw="animCanvas_Draw" CreateResources="animCanvas_CreateResources" 
+                <canvas:CanvasAnimatedControl x:Name="animCanvas" Draw="AnimCanvas_Draw" CreateResources="AnimCanvas_CreateResources" 
                                                   Tapped="AnimCanvas_Tapped"
                                                   PointerPressed="AnimCanvas_PointerPressed"
                                                   PointerMoved="AnimCanvas_PointerMoved"

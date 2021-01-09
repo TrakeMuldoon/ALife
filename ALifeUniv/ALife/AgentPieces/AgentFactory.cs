@@ -18,7 +18,7 @@ namespace ALifeUni.ALife
         {
             Agent newClone = new Agent(toClone.GenusLabel
                                        , AgentIDGenerator.GetNextChildId(toClone.IndividualLabel, toClone.NumChildren)
-                                       , toClone.CollisionLevel);
+                                       , ReferenceValues.CollisionLevelPhysical); //TODO: This is a bug when you use "ReproduceBest" or reproduce anything that is already dead. 
             newClone.Zone = toClone.Zone;
             newClone.TargetZone = toClone.TargetZone;
 

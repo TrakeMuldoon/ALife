@@ -1,0 +1,6 @@
+﻿Q-Learning simple maze in C#
+https://docs.microsoft.com/en-us/archive/msdn-magazine/2018/august/test-run-introduction-to-q-learning-using-csharp
+pictures here: https://jamesmccaffrey.wordpress.com/2018/08/06/q-learning-using-c/
+
+Simple tutorial
+https://www.baeldung.com/cs/reinforcement-learning-neural-network

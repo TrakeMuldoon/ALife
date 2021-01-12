@@ -15,7 +15,7 @@ namespace ALifeUni.ALife.Scenarios
         public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             Agent agent = new Agent(genusName
-                                    , Iteration + "_" + AgentIDGenerator.GetNextAgentId()
+                                    , AgentIDGenerator.GetNextAgentId()
                                     , ReferenceValues.CollisionLevelPhysical)
             {
                 Zone = parentZone,
@@ -53,7 +53,8 @@ namespace ALifeUni.ALife.Scenarios
             {
                 new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue),
                 new StatisticInput("MaximumX", 0, Int32.MaxValue),
-                new StatisticInput("MaxXTimer", 0, Int32.MaxValue)
+                new StatisticInput("MaxXTimer", 0, Int32.MaxValue),
+                new StatisticInput("Iteration", 0, Int32.MaxValue, Iteration)
             };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
@@ -168,16 +169,16 @@ namespace ALifeUni.ALife.Scenarios
             walls.Add(new Wall(new Point(480, 1590), 850, new Angle(75), "w1-4"));
 
             //i 2
-            walls.Add(new Wall(new Point(735, 200), 200, new Angle(80), "w5"));
-            walls.Add(new Wall(new Point(735, 500), 200, new Angle(100), "w6"));
-            walls.Add(new Wall(new Point(735, 800), 200, new Angle(80), "w7"));
-            walls.Add(new Wall(new Point(735, 1100), 200, new Angle(100), "w8"));
-            walls.Add(new Wall(new Point(735, 1400), 200, new Angle(80), "w9"));
-            walls.Add(new Wall(new Point(735, 1700), 200, new Angle(100), "w10"));
+            walls.Add(new Wall(new Point(735, 210), 200, new Angle(80), "w5"));
+            walls.Add(new Wall(new Point(735, 510), 200, new Angle(100), "w6"));
+            walls.Add(new Wall(new Point(735, 810), 200, new Angle(80), "w7"));
+            walls.Add(new Wall(new Point(735, 1110), 200, new Angle(100), "w8"));
+            walls.Add(new Wall(new Point(735, 1410), 200, new Angle(80), "w9"));
+            walls.Add(new Wall(new Point(735, 1710), 200, new Angle(100), "w10"));
 
             for(int j = 1; j < 10; j++)
             {
-                int yVal = j * 200;
+                int yVal = (j * 200) - 30;
                 int angleVal = ((j * 30) % 90) - 10;
                 walls.Add(new Wall(new Point(900, yVal), 175, new Angle(angleVal), "w3-" + j));
             }
@@ -241,7 +242,7 @@ namespace ALifeUni.ALife.Scenarios
             }
         }
 
-        int bestXNum = 10;
+        int bestXNum = 6;
         int Iteration = 1;
         public override void GlobalEndOfTurnActions()
         {
@@ -269,18 +270,27 @@ namespace ALifeUni.ALife.Scenarios
                 Zone red = Planet.World.Zones["Red(Blue)"];
                 Zone blue = Planet.World.Zones["Blue(Red)"];
 
-                //This will create a gradually decreasing number of agents. weighted towards whichever agents did best in the last round
-                for(int i = bestXNum; i > 0; i--)
+                for(int i = 0; i < (80/bestXNum)+1; i++)
                 {
-                    for(int j = 0; j < i; j++)
+                    for(int j = 0; j< bestXNum; j++)
                     {
-                        bestX[bestXNum - i].Reproduce();
+                        Agent ag = (Agent)bestX[j].Reproduce();
+                        ag.Statistics["Iteration"].Value = Iteration;
                     }
                 }
-                for(int k = 0; k < 30; k++)
-                {
-                    Agent ag1 = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
-                }
+
+                ////This will create a gradually decreasing number of agents. weighted towards whichever agents did best in the last round
+                //for(int i = bestXNum; i > 0; i--)
+                //{
+                //    for(int j = 0; j < i; j++)
+                //    {
+                //        bestX[bestXNum - i].Reproduce();
+                //    }
+                //}
+                ////for(int k = 0; k < 30; k++)
+                ////{
+                ////    Agent ag1 = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
+                ////}
 
                 //Clear the Refuse
                 Planet.World.InactiveObjects.Clear();

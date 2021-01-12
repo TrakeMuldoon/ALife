@@ -4,3 +4,6 @@ pictures here: https://jamesmccaffrey.wordpress.com/2018/08/06/q-learning-using-
 
 Simple tutorial
 https://www.baeldung.com/cs/reinforcement-learning-neural-network
+
+Calculating Loss Function for Deep Q-Learning
+https://stats.stackexchange.com/questions/249355/how-exactly-to-compute-deep-q-learning-loss-function

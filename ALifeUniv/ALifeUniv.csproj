@@ -135,6 +135,7 @@
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\TypedClasses\StringConditionFactory.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\TypedClasses\DoubleConditionFactory.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\TypedClasses\BoolConditionFactory.cs" />
+    <Compile Include="ALife\AgentPieces\Brains\CarNeuralBrain\CarNeuralBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\IBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\Behaviour.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourBrain.cs" />

@@ -113,13 +113,22 @@ namespace ALifeUni.ALife.Scenarios
 
         public override void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
-            foreach(WorldObject wo in collisions)
-            {
-                if(!(wo is Wall))
-                {
-                    wo.Die();
-                }
-            }
+            //foreach(WorldObject wo in collisions)
+            //{
+            //    if(!(wo is Wall))
+            //    {
+            //        wo.Die();
+            //    }
+            //}
+            //me.Die();
+            //foreach(WorldObject wo in collisions)
+            //{
+            //    if(wo is Wall)
+            //    {
+            //        me.Die();
+            //        return;
+            //    }
+            //}
             me.Die();
         }
 

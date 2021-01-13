@@ -1,4 +1,6 @@
-﻿namespace ALifeUni.ALife.Brains
+﻿using System;
+
+namespace ALifeUni.ALife.Brains
 {
     public class Dendrite
     {
@@ -15,14 +17,18 @@
         }
 
         public Dendrite(Neuron targetNeuron)
+            : this(targetNeuron, (Planet.World.NumberGen.NextDouble() * 2) - 1)
         {
-            TargetNeuron = targetNeuron;
-            Weight = Planet.World.NumberGen.NextDouble();
         }
 
-        //public Dendrite(double weight)
-        //{
-        //    Weight = weight;
-        //}
+        public Dendrite(Neuron targetNeuron, double weight)
+        {
+            TargetNeuron = targetNeuron;
+            if(weight < -1.0 || weight > 1.0)
+            {
+                throw new ArgumentOutOfRangeException("Weight must be between -1 and 1");
+            }
+            Weight = weight;
+        }
     }
 }

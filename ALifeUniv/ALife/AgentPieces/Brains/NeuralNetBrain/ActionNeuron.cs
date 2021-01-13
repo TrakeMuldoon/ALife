@@ -6,6 +6,10 @@
         {
             Activity = actionPart;
         }
+        public ActionNeuron(ActionPart actionPart, double weight) : base(actionPart.Name, weight)
+        {
+            Activity = actionPart;
+        }
 
         public readonly ActionPart Activity;
 

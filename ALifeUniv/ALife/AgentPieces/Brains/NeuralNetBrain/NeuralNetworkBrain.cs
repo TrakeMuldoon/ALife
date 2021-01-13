@@ -12,7 +12,7 @@ namespace ALifeUni.ALife.Brains
         private Layer actions;
 
         public NeuralNetworkBrain(Agent self, List<int> layers)
-            : this(self, 0.1, 0.05, layers)
+            : this(self, 0.2, 0.05, layers)
         {
         }
 
@@ -61,6 +61,71 @@ namespace ALifeUni.ALife.Brains
             actions = actionLayer;
         }
 
+        private NeuralNetworkBrain(Agent self, NeuralNetworkBrain templateBrain, bool exactCopy)
+        {
+            this.self = self;
+            ModificationRate = templateBrain.ModificationRate;
+            MutabilityRate = templateBrain.MutabilityRate;
+
+            Layer senseLayer = CreateSenseLayer(self);
+            if(senseLayer.Neurons.Count != templateBrain.Layers[0].Neurons.Count)
+            {
+                throw new NotImplementedException("Cannot clone or reproduce brain with different number of inputs");
+            }
+            Layers.Add(senseLayer);
+
+            for(int i = 1; i < templateBrain.Layers.Count - 1; i++)
+            {
+                List<Neuron> templateCurrLayerNeurons = templateBrain.Layers[i].Neurons;
+                int currentLayerNeuronCount = templateCurrLayerNeurons.Count;
+                Layer newLayer = new Layer(currentLayerNeuronCount);
+                Layers.Add(newLayer);
+
+                //This works because we know that there is always a layer above us.
+                List<Neuron> aboveLayerNeurons = Layers[i].Neurons;
+
+                for(int n = 0; n < currentLayerNeuronCount; n++)
+                {
+                    Neuron templateNeuron = templateCurrLayerNeurons[n];
+                    double neuBias = templateNeuron.Bias;
+                    if(!exactCopy)
+                    {
+                        neuBias = ModifyANumber(neuBias);
+                    }
+
+                    //Add a neuron
+                    Neuron neu = new Neuron("HN:" + (i + 1) + "." + (n + 1), neuBias);
+                    newLayer.Neurons.Add(neu);
+                    for(int d = 0; d < aboveLayerNeurons.Count; d++)
+                    {
+                        double denWeight = templateCurrLayerNeurons[n].UpstreamDendrites[d].Weight;
+                        if(!exactCopy)
+                        {
+                            denWeight = ModifyANumber(denWeight);
+                        }
+                        neu.UpstreamDendrites.Add(new Dendrite(aboveLayerNeurons[d], denWeight));
+                    }
+                }
+            }
+            Layer actionLayer = CreateClonedActionLayer(self, Layers[Layers.Count - 1], templateBrain.Layers[Layers.Count], exactCopy);
+            Layers.Add(actionLayer);
+            actions = actionLayer;
+        }
+
+        private double ModifyANumber(double original)
+        {
+            double val = original;
+            double shouldMod = Planet.World.NumberGen.NextDouble();
+            if(shouldMod < ModificationRate)
+            {
+                double rawMod = Planet.World.NumberGen.NextDouble();
+                double modification = ((rawMod * 2) - 1) * MutabilityRate;
+                val += modification;
+                val = Math.Clamp(val, -1, 1);
+            }
+            return val;
+        }
+
         private Layer CreateActionLayer(Agent self, Layer aboveLayer)
         {
             List<ActionNeuron> actionNeurons = new List<ActionNeuron>();
@@ -69,16 +134,50 @@ namespace ALifeUni.ALife.Brains
                 foreach(ActionPart ap in ac.SubActions.Values)
                 {
                     ActionNeuron neu = new ActionNeuron(ap);
-                    if(ap.Name == "StopForward")
-                    {
-                        neu.Bias = -10;
-                    }
                     actionNeurons.Add(neu);
                     for(int d = 0; d < aboveLayer.Neurons.Count; d++)
                     {
                         neu.UpstreamDendrites.Add(new Dendrite(aboveLayer.Neurons[d]));
                     }
                 }
+            }
+            Layer actionLayer = new Layer(actionNeurons.Count);
+            actionLayer.Neurons.AddRange(actionNeurons);
+            return actionLayer;
+        }
+
+        private Layer CreateClonedActionLayer(Agent self, Layer aboveLayer, Layer templateLayer, bool exactCopy)
+        {
+            List<ActionNeuron> actionNeurons = new List<ActionNeuron>();
+            int apIndex = 0;
+            foreach(ActionCluster ac in self.Actions.Values)
+            {
+                foreach(ActionPart ap in ac.SubActions.Values)
+                {
+                    Neuron currNeuron = templateLayer.Neurons[apIndex];
+                    double neuBias = currNeuron.Bias;
+                    if(!exactCopy)
+                    {
+                        neuBias = ModifyANumber(neuBias);
+                    }
+
+                    ActionNeuron neu = new ActionNeuron(ap, neuBias);
+                    actionNeurons.Add(neu);
+                    for(int d = 0; d < aboveLayer.Neurons.Count; d++)
+                    {
+                        double denWeight = currNeuron.UpstreamDendrites[d].Weight;
+                        if(!exactCopy)
+                        {
+                            denWeight = ModifyANumber(denWeight);
+                        }
+                        neu.UpstreamDendrites.Add(new Dendrite(aboveLayer.Neurons[d], denWeight));
+                    }
+                    apIndex++;
+                }
+            }
+            if(actionNeurons.Count != templateLayer.Neurons.Count)
+            {
+                throw new NotImplementedException("Cannot clone a brain with a different number of actions");
             }
             Layer actionLayer = new Layer(actionNeurons.Count);
             actionLayer.Neurons.AddRange(actionNeurons);
@@ -128,12 +227,12 @@ namespace ALifeUni.ALife.Brains
 
         public IBrain Clone(Agent self)
         {
-            throw new NotImplementedException();
+            return new NeuralNetworkBrain(self, this, true);
         }
 
         public IBrain Reproduce(Agent self)
         {
-            throw new NotImplementedException();
+            return new NeuralNetworkBrain(self, this, false);
         }
 
 

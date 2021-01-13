@@ -16,17 +16,16 @@ namespace ALifeUni.ALife.Brains
         }
 
         public Neuron(string name)
-            : this(name, Planet.World.NumberGen.NextDouble())
+            : this(name, (Planet.World.NumberGen.NextDouble() * 2) - 1)
         {
         }
 
-        private Neuron(string name, double bias)
+        public Neuron(string name, double bias)
         {
             this.UpstreamDendrites = new List<Dendrite>();
-            bias = (bias * 2) - 1;
             if(bias < -1.0 || bias > 1.0)
             {
-                throw new ArgumentOutOfRangeException("Bias must be between 0 and 1");
+                throw new ArgumentOutOfRangeException("Bias must be between -1 and 1");
             }
             this.Bias = bias;
             this.Name = name;
@@ -47,11 +46,6 @@ namespace ALifeUni.ALife.Brains
         private double Sigmoid(double x)
         {
             return 1 / (1 + Math.Exp(-x));
-        }
-
-        public virtual Neuron Clone()
-        {
-            throw new NotImplementedException("clone no worky yet");
         }
     }
 }

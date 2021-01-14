@@ -335,6 +335,7 @@ namespace ALifeUni
                 gameTimer.Start();
             }
         }
+        
         private void SkipAhead_Click(object sender, RoutedEventArgs e)
         {
             Planet.World.ExecuteManyTurns(200);
@@ -342,6 +343,31 @@ namespace ALifeUni
         }
 
         private void SkipFarAhead_Click(object sender, RoutedEventArgs e)
+        {
+            FastForward(5000);
+        }
+
+        int skipValue = 0;
+        private void SkipLength_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            if(int.TryParse(tb.Text, out int skip))
+            {
+                skipValue = skip;
+            }
+            else
+            {
+                tb.Text = "0";
+                skipValue = 0;
+            }
+        }
+
+        private void SkipSpecificAhead_Click(object sender, RoutedEventArgs e)
+        {
+            FastForward(skipValue);
+        }
+
+        private void FastForward(int turnsToSkip)
         {
             bool restart = false;
             if(gameTimer.IsEnabled)
@@ -356,7 +382,7 @@ namespace ALifeUni
                 set.ShowLayer = false;
             }
 
-            Planet.World.ExecuteManyTurns(5000);
+            Planet.World.ExecuteManyTurns(turnsToSkip);
             AgentPanel.updateInfo();
 
             foreach(LayerUISettings set in UIGrid)

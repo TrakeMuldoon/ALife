@@ -12,7 +12,7 @@ namespace ALifeUni.ALife.Brains
         private Layer actions;
 
         public NeuralNetworkBrain(Agent self, List<int> layers)
-            : this(self, 0.3, 0.03, layers)
+            : this(self, 0.8, 0.001, layers)
         {
         }
 

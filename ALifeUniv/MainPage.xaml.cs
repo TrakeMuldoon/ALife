@@ -369,6 +369,9 @@ namespace ALifeUni
 
         private void FastForward(int turnsToSkip)
         {
+            ProgressBar pb = SkipProgress;
+            SkipProgress.Value = 0;
+
             bool restart = false;
             if(gameTimer.IsEnabled)
             {
@@ -382,7 +385,19 @@ namespace ALifeUni
                 set.ShowLayer = false;
             }
 
-            Planet.World.ExecuteManyTurns(turnsToSkip);
+            int skipPartLength = 1000;
+            int progress = 0;
+            while((progress + skipPartLength) <= turnsToSkip)
+            {
+                Planet.World.ExecuteManyTurns(skipPartLength);
+                SkipProgress.Value = progress / turnsToSkip;
+                progress += skipPartLength;
+            }
+            if(progress < turnsToSkip)
+            {
+                Planet.World.ExecuteManyTurns(turnsToSkip - progress);
+            }
+            
             AgentPanel.updateInfo();
 
             foreach(LayerUISettings set in UIGrid)

@@ -41,6 +41,18 @@
             <Setter Property="MinWidth" Value="80" />
             <Setter Property="HorizontalContentAlignment" Value="Left" />
         </Style>
+        <Style TargetType="Button">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderBrush" >
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="Black" Offset="0.0" />
+                        <GradientStop Color="Gray" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
     
 
@@ -51,6 +63,7 @@
                       BorderBrush="Blue"
                       BorderThickness="1"
                       Width="1050">
+            
             <Border Background="Black" BorderBrush="Red" BorderThickness="5">
                 <canvas:CanvasAnimatedControl x:Name="animCanvas" Draw="AnimCanvas_Draw" CreateResources="AnimCanvas_CreateResources" 
                                                   Tapped="AnimCanvas_Tapped"
@@ -64,17 +77,28 @@
 
         </ScrollViewer>
         <StackPanel Width="220" Background="LightCoral">
-            <TextBox x:Name="SimSeed" HorizontalAlignment="Stretch" TextChanged="SimSeed_TextChanged"/>
-            <Button x:Name="ResetSim" HorizontalAlignment="Stretch" Click="ResetSim_Click">RESET</Button>
-            <Button x:Name="PauseSim" HorizontalAlignment="Stretch" Click="PauseSim_Click">Pause</Button>
-            <Button x:Name="OneTurn" HorizontalAlignment="Stretch" Click="OneTurnSim_Click">1 Turn</Button>
-            <Button x:Name="SlowPlaySim" HorizontalAlignment="Stretch" Click="SlowPlaySim_Click">Slow</Button>
-            <Button x:Name="PlaySim" HorizontalAlignment="Stretch" Click="PlaySim_Click">Play</Button>
-            <Button x:Name="FastPlaySim" HorizontalAlignment="Stretch" Click="FastPlaySim_Click">Fast</Button>
-            <Button x:Name="SkipAhead" HorizontalAlignment="Stretch" Click="SkipAhead_Click">Stupid Fast</Button>
-            <Button x:Name="SkipFarAhead" HorizontalAlignment="Stretch" Click="SkipFarAhead_Click">Obscenely Fast</Button>
-            <Button x:Name="SkipSpecificAhead" HorizontalAlignment="Stretch" Click="SkipSpecificAhead_Click">Specific Skip</Button>
-            <TextBox x:Name="SkipLength" HorizontalAlignment="Stretch" TextChanged="SkipLength_TextChanged"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="SimSeed" HorizontalAlignment="Stretch" TextChanged="SimSeed_TextChanged"/>
+                <Button x:Name="ResetSim" HorizontalAlignment="Stretch" Click="ResetSim_Click">RESET</Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="PauseSim" HorizontalAlignment="Stretch" Click="PauseSim_Click">Pause</Button>
+                <Button x:Name="OneTurn" HorizontalAlignment="Stretch" Click="OneTurnSim_Click">1 Turn</Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="SlowPlaySim" HorizontalAlignment="Stretch" Click="SlowPlaySim_Click">Slow</Button>
+                <Button x:Name="PlaySim" HorizontalAlignment="Stretch" Click="PlaySim_Click">Play</Button>
+                <Button x:Name="FastPlaySim" HorizontalAlignment="Stretch" Click="FastPlaySim_Click">Fast</Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="SkipAhead" HorizontalAlignment="Stretch" Click="SkipAhead_Click">FF 200</Button>
+                <Button x:Name="SkipFarAhead" HorizontalAlignment="Stretch" Click="SkipFarAhead_Click"> FF 5000</Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="SkipSpecificAhead" HorizontalAlignment="Stretch" Click="SkipSpecificAhead_Click">FF:</Button>
+                <TextBox x:Name="SkipLength" HorizontalAlignment="Stretch" TextChanged="SkipLength_TextChanged"/>
+            </StackPanel>
+            <ProgressBar x:Name="SkipProgress" Height="25"></ProgressBar>
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="ZoomOut" Click="ZoomOut_Click">ZOut</Button>
                 <TextBlock x:Name="ZoomDisplay">1</TextBlock>

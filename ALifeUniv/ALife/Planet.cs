@@ -79,7 +79,7 @@ namespace ALifeUni.ALife
         #region Instance Stuff
 
         public readonly Dictionary<String, Zone> Zones = new Dictionary<string, Zone>();
-
+        public List<string> MessagePump = new List<string>();
 
         //All objects which are active (This includes "dead" objects, which have not yet finished their activity (i.e. corpses are "active")
         public readonly List<WorldObject> AllActiveObjects = new List<WorldObject>();

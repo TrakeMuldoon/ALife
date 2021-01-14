@@ -4,6 +4,7 @@ using Serilog;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Storage;
 
 // This example code shows how you could implement the required main function for a 
@@ -23,7 +24,7 @@ namespace ScenarioTestHarness
             Log.Logger = new LoggerConfiguration().WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day).CreateLogger();
             Log.Information("<---StartRun");
 
-            IScenario scenario = new MazeScenario();
+            IScenario scenario = new GenerationalMazeScenario();
             //int height = 2000;
             //int width = 2000;
             int height = scenario.WorldHeight;
@@ -55,7 +56,8 @@ namespace ScenarioTestHarness
             string error = null;
             try
             {
-                for(int i = 0; i < 60; i++)
+                int generationIndex = 0;
+                for(int i = 0; i < 200; i++)
                 {
                     Planet.World.ExecuteManyTurns(1000);
                     Console.Write(".");
@@ -65,11 +67,15 @@ namespace ScenarioTestHarness
                         DateTime now = DateTime.Now;
                         TimeSpan elapsed = DateTime.Now - start;
                         string interim = elapsed.ToString("mm\\:ss\\.ff");
-                        double averageX = Planet.World.AllActiveObjects.OfType<Agent>().Average((ag) => ag.Shape.CentrePoint.X);
-                        int maxiumumX = (int)Planet.World.AllActiveObjects.OfType<Agent>().Max((ag) => ag.Shape.CentrePoint.X);
-                        string stats = String.Format("\tElapsed: {0} TPS: {1:0.00000} AvgX: {2:0.00} MaxX: {3}"
-                                                        , interim, (elapsed.TotalSeconds / i * 1000), averageX, maxiumumX);
+                        string stats = String.Format("\tElapsed: {0} TPS: {1:0.00000}"
+                                                        , interim, (elapsed.TotalSeconds / i * 1000));
                         Console.WriteLine(stats);
+                        while(generationIndex < Planet.World.MessagePump.Count)
+                        {
+                            Console.WriteLine(Planet.World.MessagePump[generationIndex]);
+                            generationIndex += 5;
+                        }
+
                         Console.Write(i + 1);
                     }
                 }

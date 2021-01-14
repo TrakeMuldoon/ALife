@@ -252,8 +252,9 @@ namespace ALifeUni.ALife.Scenarios
             }
         }
 
-        int bestXNum = 6;
+        int bestXNum = 4;
         int Iteration = 1;
+        Agent bestEver;
         public override void GlobalEndOfTurnActions()
         {
             IEnumerable<Agent> someAgents = Planet.World.AllActiveObjects.OfType<Agent>();
@@ -262,9 +263,10 @@ namespace ALifeUni.ALife.Scenarios
                 from ag in someAgents
                 where ag.Alive == true
                 select ag;
+            int living = LivingAgents.Count();
 
             if(Planet.World.Turns % 10000 == 0
-                || LivingAgents.Count() == 0)
+                || living == 0)
             {
                 foreach(Agent aa in someAgents)
                 {
@@ -275,14 +277,30 @@ namespace ALifeUni.ALife.Scenarios
                 IEnumerable<Agent> otherAgents = Planet.World.InactiveObjects.OfType<Agent>();
                 allAgents.AddRange(otherAgents);
 
+                double averageX = allAgents.Average((ag) => ag.Shape.CentrePoint.X);
+                double maxX = allAgents.Max((ag) => ag.Shape.CentrePoint.X);
+
+                String generationString = String.Format("Gen {0}: Stragglers: {1} Avg: {2:0.000}, MaxX: {3:0}", Iteration, living, averageX, maxX);
+                Planet.World.MessagePump.Add(generationString);
+
                 List<Agent> bestX = FindTopX<Agent>(bestXNum, allAgents, (ag) => (double)(ag.Shape.CentrePoint.X));
 
                 Zone red = Planet.World.Zones["Red(Blue)"];
                 Zone blue = Planet.World.Zones["Blue(Red)"];
 
-                for(int i = 0; i < (80/bestXNum)+1; i++)
+                if(bestEver == null
+                    || bestEver.Shape.CentrePoint.X < bestX[0].Shape.CentrePoint.X)
                 {
-                    for(int j = 0; j< bestXNum; j++)
+                    bestEver = bestX[0];
+                }
+                else
+                {
+                    bestX.Insert(0, bestEver);
+                }
+
+                for(int i = 0; i < (60/bestXNum)+1; i++)
+                {
+                    for(int j = 0; j < bestXNum; j++)
                     {
                         Agent ag = (Agent)bestX[j].Reproduce();
                         ag.Statistics["Iteration"].Value = Iteration;

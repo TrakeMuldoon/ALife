@@ -98,7 +98,7 @@
                 <Button x:Name="SkipSpecificAhead" HorizontalAlignment="Stretch" Click="SkipSpecificAhead_Click">FF:</Button>
                 <TextBox x:Name="SkipLength" HorizontalAlignment="Stretch" TextChanged="SkipLength_TextChanged"/>
             </StackPanel>
-            <ProgressBar x:Name="SkipProgress" Height="25"></ProgressBar>
+            <ProgressBar x:Name="SkipProgress" Height="25" IsIndeterminate="False"></ProgressBar>
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="ZoomOut" Click="ZoomOut_Click">ZOut</Button>
                 <TextBlock x:Name="ZoomDisplay">1</TextBlock>

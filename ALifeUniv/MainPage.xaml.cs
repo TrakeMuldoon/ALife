@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
@@ -86,7 +87,6 @@ namespace ALifeUni
         private Boolean showParents;
         private void AnimCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
-
             if(special != null
                 && special.Shape is Circle ssc)
             {
@@ -367,9 +367,10 @@ namespace ALifeUni
             FastForward(skipValue);
         }
 
-        private void FastForward(int turnsToSkip)
+        private async void FastForward(int turnsToSkip)
         {
-            ProgressBar pb = SkipProgress;
+            SkipProgress.Maximum = 100;
+            SkipProgress.Minimum = 0;
             SkipProgress.Value = 0;
 
             bool restart = false;
@@ -385,13 +386,13 @@ namespace ALifeUni
                 set.ShowLayer = false;
             }
 
-            int skipPartLength = 1000;
+            int skipPartLength = 500;
             int progress = 0;
             while((progress + skipPartLength) <= turnsToSkip)
             {
-                Planet.World.ExecuteManyTurns(skipPartLength);
-                SkipProgress.Value = progress / turnsToSkip;
+                await Task.Run(() => Planet.World.ExecuteManyTurns(skipPartLength));
                 progress += skipPartLength;
+                SkipProgress.Value = (double)progress / (double)turnsToSkip * 100.0;
             }
             if(progress < turnsToSkip)
             {

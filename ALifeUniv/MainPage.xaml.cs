@@ -373,6 +373,8 @@ namespace ALifeUni
             SkipProgress.Minimum = 0;
             SkipProgress.Value = 0;
 
+            DateTime start = DateTime.Now;
+
             bool restart = false;
             if(gameTimer.IsEnabled)
             {
@@ -386,13 +388,34 @@ namespace ALifeUni
                 set.ShowLayer = false;
             }
 
-            int skipPartLength = 500;
+            int skipPartLength = 1000;
             int progress = 0;
+            DateTime previous = start;
             while((progress + skipPartLength) <= turnsToSkip)
             {
                 await Task.Run(() => Planet.World.ExecuteManyTurns(skipPartLength));
+                DateTime current = DateTime.Now;
                 progress += skipPartLength;
                 SkipProgress.Value = (double)progress / (double)turnsToSkip * 100.0;
+
+                int numLeft = turnsToSkip - progress;
+                TimeSpan totalElapsed = current - start;
+                TimeSpan recentElapsed = current - previous;
+
+                double tpsa = progress / (totalElapsed.TotalSeconds + 0.1);
+                double tpsc = skipPartLength / (recentElapsed.TotalSeconds + 0.1);
+
+                TimeSpan estTotal = new TimeSpan(0, 0, (int)(numLeft / tpsa));
+                TimeSpan curTotal = new TimeSpan(0, 0, (int)(numLeft / tpsc));
+
+                String info = String.Format("{0}/{1}:{2}\r\nETA>{3}:{4} ETC>{5}:{6}\r\nTPSA:{7:0.00}, TPSC:{8:0.00}"
+                                            , progress, turnsToSkip, numLeft
+                                            , (int)estTotal.TotalMinutes, estTotal.ToString("ss"), (int)curTotal.TotalMinutes, curTotal.ToString("ss")
+                                            , tpsa, tpsc);
+
+                SkipInfo.Text = info;
+
+                previous = current;
             }
             if(progress < turnsToSkip)
             {

@@ -12,7 +12,9 @@ namespace ALifeUni.ALife
         private WorldObject myParent;
 
         private DistanceToObjectInput distanceInput;
-        private RotationToObjectInput rotationInput;
+        private RotationToObjectInput intRotationInput;
+        private RotationToObjectDoubleInput doubRotationInput;
+
         public GoalSenseCluster(WorldObject parent, string name, IShape targetObject) : base(parent, name)
         {
             targetShape = targetObject;
@@ -24,9 +26,12 @@ namespace ALifeUni.ALife
                                       radius: 6,
                                       sweep: new Angle(1));
             distanceInput = new DistanceToObjectInput(name + ".HowFar");
-            rotationInput = new RotationToObjectInput(name + ".RelativeAngle");
+            intRotationInput = new RotationToObjectInput(name + ".RelativeAngle");
+            doubRotationInput = new RotationToObjectDoubleInput(name + ".DoubleRelativeAngle");
+
             SubInputs.Add(distanceInput);
-            SubInputs.Add(rotationInput);
+            SubInputs.Add(intRotationInput);
+            SubInputs.Add(doubRotationInput);
         }
 
         public override IShape Shape
@@ -104,7 +109,9 @@ namespace ALifeUni.ALife
             }
 
             distanceInput.SetValue(distanceValue);
-            rotationInput.SetValue(rotationValue);
+            intRotationInput.SetValue(rotationValue);
+            double dubValue = (double)rotationValue / 180;
+            doubRotationInput.SetValue(dubValue);
 
             myShape.Orientation.Degrees = rotationValue;
         }

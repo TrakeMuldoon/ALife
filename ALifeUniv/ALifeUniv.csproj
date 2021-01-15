@@ -158,6 +158,7 @@
     <Compile Include="ALife\AgentPieces\Senses\GenericInputs\CountInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\GoalSense\DistanceToObjectInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\GoalSense\GoalSenseCluster.cs" />
+    <Compile Include="ALife\AgentPieces\Senses\GoalSense\RotationToObjecDoubleInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\GoalSense\RotationToObjectInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Proximity\ProximityCluster.cs" />
     <Compile Include="ALife\AgentPieces\Senses\SquareSense\SquareSenseCluster.cs" />

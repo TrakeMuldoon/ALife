@@ -66,7 +66,7 @@ namespace ALifeUni.ALife.Scenarios
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
-            IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 10, 8 });
+            IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 9, 9 });
 //            IBrain newBrain = new BehaviourBrain(agent, "*", "*", "*", "*", "*");
 
             agent.CompleteInitialization(null, 1, newBrain);
@@ -76,7 +76,7 @@ namespace ALifeUni.ALife.Scenarios
 
         public override void EndOfTurnTriggers(Agent me)
         {
-            if(me.Statistics["MaxXTimer"].Value > 1000)
+            if(me.Statistics["MaxXTimer"].Value > 800)
             {
                 me.Die();
                 return;

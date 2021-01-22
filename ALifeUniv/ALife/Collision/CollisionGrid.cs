@@ -6,7 +6,7 @@ using Windows.Foundation;
 
 namespace ALifeUni.ALife
 {
-    class CollisionGrid<T> : ICollisionMap<T> where T : IHasShape
+    public class CollisionGrid<T> : ICollisionMap<T> where T : IHasShape
     {
         public readonly int Height;
         public readonly int Width;
@@ -176,18 +176,18 @@ namespace ALifeUni.ALife
             return tempList;
         }
 
-        public List<T> DetectCollisions(T self)
+        public List<T> DetectCollisions(T myBody)
         {
-            List<T> collisions = QueryForBoundingBoxCollisions(self.Shape.BoundingBox, self);
-            List<IHasShape> colShapes = CollisionDetector.FineGrainedCollisionDetection(collisions.Cast<IHasShape>(), self.Shape);
+            List<T> collisions = QueryForBoundingBoxCollisions(myBody.Shape.BoundingBox, myBody);
+            List<IHasShape> colShapes = CollisionDetector.FineGrainedCollisionDetection(collisions.Cast<IHasShape>(), myBody.Shape);
             collisions = colShapes.Cast<T>().ToList();
             return collisions;
         }
 
-        public List<T> DetectCollisions(IHasShape detector, T self)
+        public List<T> DetectCollisions(IHasShape detectionArea, T myBody)
         {
-            List<T> collisions = QueryForBoundingBoxCollisions(detector.Shape.BoundingBox, self);
-            List<IHasShape> colShapes = CollisionDetector.FineGrainedCollisionDetection(collisions.Cast<IHasShape>(), detector.Shape);
+            List<T> collisions = QueryForBoundingBoxCollisions(detectionArea.Shape.BoundingBox, myBody);
+            List<IHasShape> colShapes = CollisionDetector.FineGrainedCollisionDetection(collisions.Cast<IHasShape>(), detectionArea.Shape);
             collisions = colShapes.Cast<T>().ToList();
             return collisions;
         }

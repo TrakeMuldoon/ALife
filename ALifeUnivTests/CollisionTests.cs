@@ -1,8 +1,10 @@
 using ALifeUni.ALife;
 using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using Windows.Foundation;
+using Windows.UI;
 
 namespace AlifeTestProject
 {
@@ -91,7 +93,155 @@ namespace AlifeTestProject
             VerifyCollisionTarget(collision2, wrap1);
         }
 
-        [TestMethod] public void CircleCircleNoCollision() { Assert.Fail("Not Implmeented"); }
+        [TestMethod]
+        public void CircleCircleNoCollision()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+
+            Point p1 = new Point(50, 50);
+            Circle cir1 = new Circle(p1, 10);
+            ShapeWrapper wrap1 = new ShapeWrapper("Cir1", cir1);
+
+            Point p2 = new Point(100, 100);
+            Circle cir2 = new Circle(p2, 10);
+            ShapeWrapper wrap2 = new ShapeWrapper("Cir2", cir2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            VerifyCollisionTarget(collision1);
+
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+            VerifyCollisionTarget(collision2);
+        }
+        #endregion
+
+        #region Circle Rectangle
+        [TestMethod]
+        public void CircleRectangleCircleSide1()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+
+            Point ccp = new Point(50, 50);
+            Circle circle = new Circle(ccp, 10);
+            ShapeWrapper wrapC = new ShapeWrapper("Circle", circle);
+
+            Point rcp = new Point(50, 64);
+            Rectangle rectangle = new Rectangle(rcp, 10, 10, Colors.Red);
+            ShapeWrapper wrapR = new ShapeWrapper("Rectangle", rectangle);
+
+            if(!collMap.Insert(wrapC)) { Assert.Fail("Failed To Insert"); }
+            if(!collMap.Insert(wrapR)) { Assert.Fail("Failed To Insert"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrapC);
+            VerifyCollisionTarget(collision1, wrapR);
+
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrapR);
+            VerifyCollisionTarget(collision2, wrapC);
+        }
+
+        [TestMethod] public void CircleRectangleCircleSide2()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+
+            Point ccp = new Point(50, 50);
+            Circle circle = new Circle(ccp, 10);
+            ShapeWrapper wrapC = new ShapeWrapper("Circle", circle);
+
+            Point rcp = new Point(50, 64);
+            Rectangle rectangle = new Rectangle(rcp, 10, 10, Colors.Red);
+            rectangle.Orientation = new Angle(90);
+            ShapeWrapper wrapR = new ShapeWrapper("Rectangle", rectangle);
+
+            if(!collMap.Insert(wrapC)) { Assert.Fail("Failed To Insert"); }
+            if(!collMap.Insert(wrapR)) { Assert.Fail("Failed To Insert"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrapC);
+            VerifyCollisionTarget(collision1, wrapR);
+
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrapR);
+            VerifyCollisionTarget(collision2, wrapC);
+        }
+
+        [TestMethod]
+        public void CircleRectangleCircleSide3()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+
+            Point ccp = new Point(50, 50);
+            Circle circle = new Circle(ccp, 10);
+            ShapeWrapper wrapC = new ShapeWrapper("Circle", circle);
+
+            Point rcp = new Point(50, 64);
+            Rectangle rectangle = new Rectangle(rcp, 10, 10, Colors.Red);
+            rectangle.Orientation = new Angle(180);
+            ShapeWrapper wrapR = new ShapeWrapper("Rectangle", rectangle);
+
+            if(!collMap.Insert(wrapC)) { Assert.Fail("Failed To Insert"); }
+            if(!collMap.Insert(wrapR)) { Assert.Fail("Failed To Insert"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrapC);
+            VerifyCollisionTarget(collision1, wrapR);
+
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrapR);
+            VerifyCollisionTarget(collision2, wrapC);
+        }
+
+        [TestMethod]
+        public void CircleRectangleCircleSide4()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+
+            Point ccp = new Point(50, 50);
+            Circle circle = new Circle(ccp, 10);
+            ShapeWrapper wrapC = new ShapeWrapper("Circle", circle);
+
+            Point rcp = new Point(50, 64);
+            Rectangle rectangle = new Rectangle(rcp, 10, 10, Colors.Red);
+            rectangle.Orientation = new Angle(270);
+            ShapeWrapper wrapR = new ShapeWrapper("Rectangle", rectangle);
+
+            if(!collMap.Insert(wrapC)) { Assert.Fail("Failed To Insert"); }
+            if(!collMap.Insert(wrapR)) { Assert.Fail("Failed To Insert"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrapC);
+            VerifyCollisionTarget(collision1, wrapR);
+
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrapR);
+            VerifyCollisionTarget(collision2, wrapC);
+        }
+
+
+        [TestMethod]
+        public void CircleRectangleCircleSide1NC()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+
+            Point ccp = new Point(50, 50);
+            Circle circle = new Circle(ccp, 10);
+            ShapeWrapper wrapC = new ShapeWrapper("Circle", circle);
+
+            Point rcp = new Point(50, 70);
+            Rectangle rectangle = new Rectangle(rcp, 10, 10, Colors.Red);
+            ShapeWrapper wrapR = new ShapeWrapper("Rectangle", rectangle);
+
+            if(!collMap.Insert(wrapC)) { Assert.Fail("Failed To Insert"); }
+            if(!collMap.Insert(wrapR)) { Assert.Fail("Failed To Insert"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrapC);
+            VerifyCollisionTarget(collision1, wrapR);
+
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrapR);
+            VerifyCollisionTarget(collision2, wrapC);
+
+            Assert.Fail("BAD TEST. Change to BB No NC");
+        }
+
+        [TestMethod] public void CircleRectangleCircleCornersNC() { Assert.Fail("Not Implmeented"); }
+        [TestMethod] public void CircleRectangleCircleContainsRectangle() { Assert.Fail("Not Implmeented"); }
+        [TestMethod] public void CircleRectangleRectangleContainsCircle() { Assert.Fail("Not Implmeented"); }
+        [TestMethod] public void CircleRectangleNoCollision() { Assert.Fail("Not Implmeented"); }
         #endregion
 
         #region Sector Rectangle
@@ -134,20 +284,6 @@ namespace AlifeTestProject
         [TestMethod] public void SectorCircleSecContainsCircle() { Assert.Fail("Not Implmeented"); }
         [TestMethod] public void SectorCircleCircleContainsSec() { Assert.Fail("Not Implmeented"); }
         [TestMethod] public void SectorCircleNoCollision() { Assert.Fail("Not Implmeented"); }
-        #endregion
-
-        #region Circle Rectangle
-        [TestMethod] public void CircleRectangleCircleSide1() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void CircleRectangleCircleSide1NC() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void CircleRectangleCircleSide2() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void CircleRectangleCircleSide2NC() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void CircleRectangleCircleSide3() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void CircleRectangleCircleSide3NC() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void CircleRectangleCircleSide4() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void CircleRectangleCircleSide4NC() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void CircleRectangleCircleContainsRectangle() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void CircleRectangleRectangleContainsCircle() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void CircleRectangleNoCollision() { Assert.Fail("Not Implmeented"); }
         #endregion
 
         void VerifyCollisionTarget(List<ShapeWrapper> detectedCollisions, params ShapeWrapper[] targets)

@@ -13,9 +13,12 @@ namespace ALifeUni.ALife.Brains
             }
         }
 
+        private const int BehaviourWaitMax = 5; //TODO: Should this be an abstracted setting? It doesn't seem very impactful.
         private List<Behaviour> behaviours = new List<Behaviour>();
         private Agent self;
         private BehaviourCabinet behaviorCabinet;
+        private BehaviourWaitQueue bwq = new BehaviourWaitQueue(BehaviourWaitMax);
+
 
         public BehaviourBrain(Agent self, params string[] behaviourStrings)
         {
@@ -23,7 +26,7 @@ namespace ALifeUni.ALife.Brains
             this.self = self;
             foreach(string behaviourString in behaviourStrings)
             {
-                behaviours.Add(new Behaviour(behaviourString, behaviorCabinet));
+                behaviours.Add(new Behaviour(behaviourString, behaviorCabinet, BehaviourWaitMax));
             }
         }
 
@@ -56,7 +59,7 @@ namespace ALifeUni.ALife.Brains
 
             foreach(string rule in rules)
             {
-                behaviours.Add(new Behaviour(rule, this.behaviorCabinet));
+                behaviours.Add(new Behaviour(rule, this.behaviorCabinet, BehaviourWaitMax));
             }
         }
 
@@ -69,9 +72,6 @@ namespace ALifeUni.ALife.Brains
         {
             return new BehaviourBrain(newSelf, this, false);
         }
-
-
-        BehaviourWaitQueue bwq = new BehaviourWaitQueue();
 
         public void ExecuteTurn()
         {

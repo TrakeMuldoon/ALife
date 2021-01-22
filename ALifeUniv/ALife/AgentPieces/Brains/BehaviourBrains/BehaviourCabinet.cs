@@ -89,7 +89,6 @@ namespace ALifeUni.ALife.Brains
             }
             throw new IndexOutOfRangeException("Some, I was unable to return a random number");
         }
-
         public BehaviourCondition GetRandomConditionForInputs(BehaviourInput b1, BehaviourInput b2)
         {
             return BehaviourFactory.GetRandomConditionForInputs(b1, b2);
@@ -103,6 +102,7 @@ namespace ALifeUni.ALife.Brains
         {
             return FullStringToActionPart[name];
         }
+
         public ActionPart GetRandomAction()
         {
             int randomActionNum = Planet.World.NumberGen.Next(FullStringToActionPart.Count);

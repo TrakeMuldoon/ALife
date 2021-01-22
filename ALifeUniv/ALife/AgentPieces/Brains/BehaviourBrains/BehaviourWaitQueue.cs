@@ -5,12 +5,15 @@ namespace ALifeUni.ALife.Brains
 {
     public class BehaviourWaitQueue
     {
-        List<Action>[] waitQueue = new List<Action>[Settings.BehaviourWaitMax];
+        List<Action>[] waitQueue;
         int currPosition = 0;
+        int maxWaitTurns;
 
-        public BehaviourWaitQueue()
+        public BehaviourWaitQueue(int waitMax)
         {
-            for(int i = 0; i < Settings.BehaviourWaitMax; i++)
+            maxWaitTurns = waitMax;
+            waitQueue = new List<Action>[waitMax];
+            for(int i = 0; i < waitMax; i++)
             {
                 waitQueue[i] = new List<Action>();
             }
@@ -18,14 +21,14 @@ namespace ALifeUni.ALife.Brains
 
         public void AddAction(Action activity, int waitTurns)
         {
-            waitQueue[(currPosition + waitTurns) % Settings.BehaviourWaitMax].Add(activity);
+            waitQueue[(currPosition + waitTurns) % maxWaitTurns].Add(activity);
         }
 
         public IEnumerable<Action> PopThisTurnsActions()
         {
             IEnumerable<Action> toReturn = waitQueue[currPosition];
             waitQueue[currPosition] = new List<Action>();
-            currPosition = (currPosition + 1) % Settings.BehaviourWaitMax;
+            currPosition = (currPosition + 1) % maxWaitTurns;
             return toReturn;
         }
     }

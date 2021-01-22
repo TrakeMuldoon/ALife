@@ -17,7 +17,7 @@ namespace ALifeUni.ALife.Brains
 
         static readonly Regex EnglishStringParser = new Regex("^IF (.*) THEN (.*)$");
 
-        public Behaviour(String englishString, BehaviourCabinet cabinet)
+        public Behaviour(String englishString, BehaviourCabinet cabinet, int waitTurnsMax)
         {
             AsEnglish = englishString;
             //Spec: <BEHAVIOUR> = "IF <CONDITION> THEN <RESULT>"
@@ -31,7 +31,7 @@ namespace ALifeUni.ALife.Brains
             //Spec: "*" = Random Behaviour
             if(englishString.Equals("*"))
             {
-                AsEnglish = CreateRandomBehaviour(cabinet);
+                AsEnglish = CreateRandomBehaviour(cabinet, waitTurnsMax);
             }
             else
             {
@@ -46,7 +46,7 @@ namespace ALifeUni.ALife.Brains
             }
         }
 
-        private string CreateRandomBehaviour(BehaviourCabinet cabinet)
+        private string CreateRandomBehaviour(BehaviourCabinet cabinet, int waitTurnsMax)
         {
             //IF <CONDITION> THEN <RESULT>
 
@@ -69,7 +69,7 @@ namespace ALifeUni.ALife.Brains
             int addWaitOn6 = Planet.World.NumberGen.Next(1, 6);
             if(addWaitOn6 == 6)
             {
-                waitTurns = Planet.World.NumberGen.Next(1, Settings.BehaviourWaitMax);
+                waitTurns = Planet.World.NumberGen.Next(1, waitTurnsMax);
             }
             //select action
             SuccessAction = cabinet.GetRandomAction();

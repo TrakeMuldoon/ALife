@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ScenarioTestHarness
+namespace ScenarioRunner
 {
     public static class StdDevTester
     {

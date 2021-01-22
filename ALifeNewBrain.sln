@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALifeUniv", "ALifeUniv\ALifeUniv.csproj", "{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScenarioTestHarness", "ScenarioTestHarness\ScenarioTestHarness.csproj", "{00A91FB4-A5F7-47CC-B933-7E6DC8302265}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScenarioRunner", "ScenarioTestHarness\ScenarioRunner.csproj", "{00A91FB4-A5F7-47CC-B933-7E6DC8302265}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALifeUnivTests", "ALifeUnivTests\ALifeUnivTests.csproj", "{01A28A0A-035F-492A-9E75-ABE3E39CBBAC}"
 EndProject

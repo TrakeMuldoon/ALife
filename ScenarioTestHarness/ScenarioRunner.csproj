@@ -14,8 +14,8 @@
     <SDKIdentifier>Windows</SDKIdentifier>
     <SDKVersion>10.0</SDKVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ScenarioTestHarness</RootNamespace>
-    <AssemblyName>ScenarioTestHarness</AssemblyName>
+    <RootNamespace>ScenarioRunner</RootNamespace>
+    <AssemblyName>ScenarioRunner</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
@@ -111,7 +111,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="ScenarioTestHarness_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\NoDefault.rd.xml" />

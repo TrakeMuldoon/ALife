@@ -14,7 +14,7 @@ using Windows.Storage;
 // Package.appxmanifest to a value that you define. To edit this file manually, right-click
 // it in Solution Explorer and select View Code, or open it with the XML Editor.
 
-namespace ScenarioTestHarness
+namespace ScenarioRunner
 {
     class Program
     {

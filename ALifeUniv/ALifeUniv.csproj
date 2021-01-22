@@ -229,7 +229,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="ALifeUni_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ALife\AgentPieces\Brains\BehaviourBrains\spec.txt" />

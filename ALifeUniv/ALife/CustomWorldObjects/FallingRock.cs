@@ -35,7 +35,8 @@ namespace ALifeUni.ALife.CustomWorldObjects
 
         public override void Die()
         {
-            throw new NotImplementedException();
+            //TODO: Abstract this out
+            this.Alive = false;
         }
 
         public override void ExecuteAliveTurn()
@@ -75,7 +76,7 @@ namespace ALifeUni.ALife.CustomWorldObjects
 
         public override void ExecuteDeadTurn()
         {
-            throw new NotImplementedException();
+            Planet.World.RemoveWorldObject(this);
         }
 
         public override WorldObject Reproduce()

@@ -1,0 +1,35 @@
+﻿<UserControl
+    x:Class="ALifeUni.ShapeChanger"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ALifeUni"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <StackPanel>
+        <ComboBox PlaceholderText="Shape"  SelectionChanged="ComboBox_SelectionChanged">
+            <x:String>Circle</x:String>
+            <x:String>Sector</x:String>
+            <x:String>Rectangle</x:String>
+        </ComboBox>
+        <StackPanel Orientation="Horizontal">
+            <muxc:NumberBox x:Name="GreenXVal" SpinButtonPlacementMode="Compact" />
+            <muxc:NumberBox x:Name="GreenYVal" SpinButtonPlacementMode="Compact" />
+        </StackPanel>
+        <muxc:NumberBox x:Name="GreenOrientation" SpinButtonPlacementMode="Compact" />
+        <StackPanel x:Name="CircleGreen">
+            <muxc:NumberBox x:Name="CirGreenRadius" SpinButtonPlacementMode="Compact" />
+        </StackPanel>
+        <StackPanel x:Name="SectorGreen">
+            <muxc:NumberBox x:Name="SecGreenRadius" SpinButtonPlacementMode="Compact" />
+            <muxc:NumberBox x:Name="SecGreenSweep" SpinButtonPlacementMode="Compact" />
+        </StackPanel>
+        <StackPanel x:Name="RectangleGreen">
+            <muxc:NumberBox x:Name="RecGreenFBLength" SpinButtonPlacementMode="Compact" />
+            <muxc:NumberBox x:Name="RecGreenWRWdith" SpinButtonPlacementMode="Compact" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

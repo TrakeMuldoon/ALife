@@ -41,7 +41,7 @@ namespace ALifeUni
             /* ***********************************
              * Set Scenario Here
              * ***********************************/
-            Planet.CreateWorld(new GenerationalMazeScenario());
+            Planet.CreateWorld(new ZoneRunnerScenario());
 
             animCanvas.ClearColor = Colors.NavajoWhite;
             animCanvas.Height = Planet.World.Scenario.WorldHeight;
@@ -211,14 +211,7 @@ namespace ALifeUni
                 }
                 else
                 {
-                    if(colls[0] is Agent ag)
-                    {
-                        colls[0].Die();
-                    }
-                    else
-                    {
-                        Planet.World.RemoveWorldObject(colls[0]);
-                    }
+                    colls[0].Die();
                 }
             }
             else

@@ -14,10 +14,15 @@ namespace ALifeUni.ALife.CustomWorldObjects
             : base(centrePoint, new Circle(centrePoint, startRadius), "Empty", name, collisionLevel, Colors.Gray)
         {
         }
+        public EmptyObject(IShape shape, string collisionLevel)
+            : base("Empty", string.Empty, collisionLevel)
+        {
+            Shape = shape;
+        }
 
         public override void Die()
         {
-            throw new NotImplementedException();
+            this.Alive = false;
         }
 
         public override void ExecuteAliveTurn()
@@ -27,7 +32,7 @@ namespace ALifeUni.ALife.CustomWorldObjects
 
         public override void ExecuteDeadTurn()
         {
-            throw new NotImplementedException();
+            Planet.World.RemoveWorldObject(this);
         }
 
         public override WorldObject Reproduce()

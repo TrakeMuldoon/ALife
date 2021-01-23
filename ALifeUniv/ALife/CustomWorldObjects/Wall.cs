@@ -40,7 +40,9 @@ namespace ALifeUni.ALife.CustomWorldObjects
 
         public override void Die()
         {
-            throw new NotImplementedException();
+            //TODO: Abstract this out
+            this.Alive = false;
+            Planet.World.RemoveWorldObject(this);
         }
 
         public override void ExecuteAliveTurn()

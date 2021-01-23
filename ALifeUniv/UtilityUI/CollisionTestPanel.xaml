@@ -19,8 +19,12 @@
 
     <StackPanel>
         <StackPanel Orientation="Horizontal">
-            <Button x:Name="KillAll" Click="KillAll_Click">Kill All Things</Button>
-            <Button x:Name="CreateTestDummies" Click="CreateTestDummies_Click" Style="{StaticResource ButtonStyle}">Create Dummies</Button>
+            <Button x:Name="KillAll" Click="KillAll_Click" Style="{StaticResource ButtonStyle}">Kill All Things</Button>
+            <Button x:Name="CreateTestDummies" Click="CreateTestDummies_Click">Create Dummies</Button>
         </StackPanel>
+        <TextBlock>Green</TextBlock>
+        <local:ShapeChanger x:Name="GreenShape"></local:ShapeChanger>
+        <TextBlock>Red</TextBlock>
+        <local:ShapeChanger x:Name="RedShape"></local:ShapeChanger>
     </StackPanel>
 </UserControl>

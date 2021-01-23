@@ -211,7 +211,14 @@ namespace ALifeUni
                 }
                 else
                 {
-                    Planet.World.RemoveWorldObject(colls[0]);
+                    if(colls[0] is Agent ag)
+                    {
+                        colls[0].Die();
+                    }
+                    else
+                    {
+                        Planet.World.RemoveWorldObject(colls[0]);
+                    }
                 }
             }
             else
@@ -622,6 +629,18 @@ namespace ALifeUni
             Point p = new Point(x, y);
             taps.Clear();
             taps.Add(p);
+        }
+
+        private void CollisionTestPanelButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(CollisionTestPanel.Visibility == Visibility.Visible)
+            {
+                CollisionTestPanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                CollisionTestPanel.Visibility = Visibility.Visible;
+            }
         }
     }
 }

@@ -149,8 +149,10 @@
 
             <TextBox x:Name="Coords"/>
             <Button x:Name="DotMaker" Click="DotMaker_Click">Dot</Button>
+            <Button x:Name="CollisionTestPanelButton" Click="CollisionTestPanelButton_Click">CollTestPanel</Button>
         </StackPanel>
         <local:AgentInfoPanel x:Name="AgentPanel"></local:AgentInfoPanel>
         <local:WallPanel x:Name="WallPane"></local:WallPanel>
+        <local:CollisionTestPanel x:Name="CollisionTestPanel"></local:CollisionTestPanel>
     </StackPanel>
 </Page>

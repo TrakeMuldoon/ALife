@@ -20,9 +20,11 @@ namespace ALifeUni
             set
             {
                 theWall = value;
-                clearInfo();
+                this.Visibility = Visibility.Collapsed;
+                //clearInfo();
                 if(theWall != null)
                 {
+                    this.Visibility = Visibility.Visible;
                     updateInfo();
                 }
             }

@@ -188,6 +188,9 @@
     <Compile Include="ALife\CustomWorldObjects\Spinner.cs" />
     <Compile Include="ALife\CustomWorldObjects\Wall.cs" />
     <Compile Include="ALife\Zone.cs" />
+    <Compile Include="CollisionTestPanel.xaml.cs">
+      <DependentUpon>CollisionTestPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Configs\WorldConfig.cs" />
     <Compile Include="UI\DrawingLogic.cs" />
     <Compile Include="UI\LayerUISettings.cs" />
@@ -242,6 +245,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="CollisionTestPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

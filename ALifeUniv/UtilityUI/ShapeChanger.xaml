@@ -10,29 +10,46 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
     <StackPanel>
-        <ComboBox PlaceholderText="Shape"  SelectionChanged="ComboBox_SelectionChanged">
+        <ComboBox x:Name="ShapeChooser" PlaceholderText="Shape"  SelectionChanged="ShapeChooser_SelectionChanged">
             <x:String>Circle</x:String>
             <x:String>Sector</x:String>
             <x:String>Rectangle</x:String>
         </ComboBox>
         <StackPanel Orientation="Horizontal">
             <TextBlock>X</TextBlock>
-            <muxc:NumberBox x:Name="XVal" SpinButtonPlacementMode="Compact" ValueChanged="Coord_ValueChanged"/>
+            <muxc:NumberBox x:Name="XVal" Minimum="1" SpinButtonPlacementMode="Compact" ValueChanged="Coord_ValueChanged"/>
             <TextBlock>Y</TextBlock>
-            <muxc:NumberBox x:Name="YVal" SpinButtonPlacementMode="Compact" ValueChanged="Coord_ValueChanged"/>
+            <muxc:NumberBox x:Name="YVal" Minimum="1" SpinButtonPlacementMode="Compact" ValueChanged="Coord_ValueChanged"/>
         </StackPanel>
-        <TextBlock>Orientation</TextBlock>
-        <muxc:NumberBox x:Name="Orientation" SpinButtonPlacementMode="Compact" ValueChanged="Orientation_ValueChanged"/>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock>Orientation</TextBlock>
+            <muxc:NumberBox x:Name="Orientation" SpinButtonPlacementMode="Compact" ValueChanged="Orientation_ValueChanged"/>
+        </StackPanel>
         <StackPanel x:Name="CircleStats">
-            <muxc:NumberBox x:Name="CirRadius" SpinButtonPlacementMode="Compact" ValueChanged="CirRadius_ValueChanged"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>Radius</TextBlock>
+                <muxc:NumberBox x:Name="CirRadius" Minimum="1" SpinButtonPlacementMode="Compact" ValueChanged="CirRadius_ValueChanged"/>
+            </StackPanel>
         </StackPanel>
         <StackPanel x:Name="SectorStats">
-            <muxc:NumberBox x:Name="SecRadius" SpinButtonPlacementMode="Compact" ValueChanged="SecRadius_ValueChanged"/>
-            <muxc:NumberBox x:Name="SecSweep" SpinButtonPlacementMode="Compact" ValueChanged="SecSweep_ValueChanged"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>Radius</TextBlock>
+                <muxc:NumberBox x:Name="SecRadius" Minimum="1" SpinButtonPlacementMode="Compact" ValueChanged="SecRadius_ValueChanged"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>Sweep</TextBlock>
+                <muxc:NumberBox x:Name="SecSweep" SpinButtonPlacementMode="Compact" ValueChanged="SecSweep_ValueChanged"/>
+            </StackPanel>
         </StackPanel>
-        <StackPanel x:Name="RectangleGreen">
-            <muxc:NumberBox x:Name="RecFBLength" SpinButtonPlacementMode="Compact" ValueChanged="RecFBLength_ValueChanged"/>
-            <muxc:NumberBox x:Name="RecRLWidth" SpinButtonPlacementMode="Compact" ValueChanged="RecRLWidth_ValueChanged"/>
+        <StackPanel x:Name="RectangleStats">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>FB Length</TextBlock>
+                <muxc:NumberBox x:Name="RecFBLength" Minimum="1" SpinButtonPlacementMode="Compact" ValueChanged="RecFBLength_ValueChanged"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>RL Width</TextBlock>
+                <muxc:NumberBox x:Name="RecRLWidth" Minimum="1" SpinButtonPlacementMode="Compact" ValueChanged="RecRLWidth_ValueChanged"/>
+            </StackPanel>
         </StackPanel>
     </StackPanel>
 </UserControl>

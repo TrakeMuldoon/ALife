@@ -1,5 +1,7 @@
 ﻿using ALifeUni.ALife;
+using ALifeUni.ALife.CustomWorldObjects;
 using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Utility;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -52,13 +54,67 @@ namespace ALifeUni
             XVal.Value = myShape.CentrePoint.X;
             YVal.Value = myShape.CentrePoint.Y;
             Orientation.Value = myShape.Orientation.Degrees;
+            CircleStats.Visibility = Visibility.Collapsed;
+            SectorStats.Visibility = Visibility.Collapsed;
+            RectangleStats.Visibility = Visibility.Collapsed;
+            switch(myShape)
+            {
+                case Circle cc:
+                    CircleStats.Visibility = Visibility.Visible;
+                    ShapeChooser.SelectedValue = "Circle";
+                    CirRadius.Value = cc.Radius; 
+                    break;
+                case Sector sec:
+                    SectorStats.Visibility = Visibility.Visible;
+                    ShapeChooser.SelectedValue = "Sector";
+                    SecRadius.Value = sec.Radius;
+                    SecSweep.Value = sec.SweepAngle.Degrees;
+                    break;
+                case Rectangle rec:
+                    RectangleStats.Visibility = Visibility.Visible;
+                    ShapeChooser.SelectedValue = "Rectangle";
+                    RecFBLength.Value = rec.FBLength;
+                    RecRLWidth.Value = rec.RLWidth;
+                    break;
+                default:
+                    throw new NotImplementedException("Shape not known. What you do?");
+            }
             inUpdate = false;
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ShapeChooser_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if(inUpdate) { return; }
 
+            if(!(ShapeOwner is EmptyObject))
+            {
+                throw new NotImplementedException("Cannot change shape of anything but 'EmptyObject'. If you don't know what that means, then something is wrong.");
+            }
+
+            double keyValue;
+            switch(myShape)
+            {
+                case Circle cc: keyValue = cc.Radius; break;
+                case Rectangle rec: keyValue = rec.FBLength; break;
+                case Sector sec: keyValue = sec.Radius; break;
+                default: throw new NotImplementedException("What Shape? Why?");
+            }
+            IShape newShape = null;
+            switch(ShapeChooser.SelectedValue)
+            {
+                case "Circle": newShape = new Circle(myShape.CentrePoint, (float)keyValue); break;
+                case "Sector": newShape = new AgentSector(myShape.CentrePoint, new Angle(0), (float)keyValue, new Angle(0)); break;
+                case "Rectangle": newShape = new Rectangle(myShape.CentrePoint, keyValue, keyValue / 2, myShape.Color); break;
+            }
+            newShape.Color = myShape.Color;
+            EmptyObject eoOwner = ShapeOwner as EmptyObject;
+            eoOwner.SetShape(newShape);
+            myShape = shapeOwner.Shape;
+            myShape.Reset();
+            UpdateValues();
         }
+
+
         private void Coord_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             if(inUpdate) { return; }

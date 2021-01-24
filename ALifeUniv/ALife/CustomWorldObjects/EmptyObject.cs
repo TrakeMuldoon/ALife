@@ -20,6 +20,11 @@ namespace ALifeUni.ALife.CustomWorldObjects
             Shape = shape;
         }
 
+        public void SetShape(IShape newShape)
+        {
+            Shape = newShape;
+        }
+
         public override void Die()
         {
             this.Alive = false;

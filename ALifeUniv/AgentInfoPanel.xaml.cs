@@ -91,7 +91,8 @@ namespace ALifeUni
                 {
                     sb.Append(beh.PassedThisTurn ? "!!" : "XX");
                     string behave = beh.AsEnglish;
-                    behave = behave.Replace(" THEN", Environment.NewLine + "\t" + "THEN");
+                    behave = behave.Replace(" AND", Environment.NewLine + "\t" + "AND");
+                    behave = behave.Replace(" THEN", Environment.NewLine + "\t\t" + "THEN");
                     sb.Append(" : " + behave + Environment.NewLine);
                 }
             }

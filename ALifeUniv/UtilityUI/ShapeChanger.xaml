@@ -16,20 +16,23 @@
             <x:String>Rectangle</x:String>
         </ComboBox>
         <StackPanel Orientation="Horizontal">
-            <muxc:NumberBox x:Name="GreenXVal" SpinButtonPlacementMode="Compact" />
-            <muxc:NumberBox x:Name="GreenYVal" SpinButtonPlacementMode="Compact" />
+            <TextBlock>X</TextBlock>
+            <muxc:NumberBox x:Name="XVal" SpinButtonPlacementMode="Compact" ValueChanged="Coord_ValueChanged"/>
+            <TextBlock>Y</TextBlock>
+            <muxc:NumberBox x:Name="YVal" SpinButtonPlacementMode="Compact" ValueChanged="Coord_ValueChanged"/>
         </StackPanel>
-        <muxc:NumberBox x:Name="GreenOrientation" SpinButtonPlacementMode="Compact" />
-        <StackPanel x:Name="CircleGreen">
-            <muxc:NumberBox x:Name="CirGreenRadius" SpinButtonPlacementMode="Compact" />
+        <TextBlock>Orientation</TextBlock>
+        <muxc:NumberBox x:Name="Orientation" SpinButtonPlacementMode="Compact" ValueChanged="Orientation_ValueChanged"/>
+        <StackPanel x:Name="CircleStats">
+            <muxc:NumberBox x:Name="CirRadius" SpinButtonPlacementMode="Compact" ValueChanged="CirRadius_ValueChanged"/>
         </StackPanel>
-        <StackPanel x:Name="SectorGreen">
-            <muxc:NumberBox x:Name="SecGreenRadius" SpinButtonPlacementMode="Compact" />
-            <muxc:NumberBox x:Name="SecGreenSweep" SpinButtonPlacementMode="Compact" />
+        <StackPanel x:Name="SectorStats">
+            <muxc:NumberBox x:Name="SecRadius" SpinButtonPlacementMode="Compact" ValueChanged="SecRadius_ValueChanged"/>
+            <muxc:NumberBox x:Name="SecSweep" SpinButtonPlacementMode="Compact" ValueChanged="SecSweep_ValueChanged"/>
         </StackPanel>
         <StackPanel x:Name="RectangleGreen">
-            <muxc:NumberBox x:Name="RecGreenFBLength" SpinButtonPlacementMode="Compact" />
-            <muxc:NumberBox x:Name="RecGreenWRWdith" SpinButtonPlacementMode="Compact" />
+            <muxc:NumberBox x:Name="RecFBLength" SpinButtonPlacementMode="Compact" ValueChanged="RecFBLength_ValueChanged"/>
+            <muxc:NumberBox x:Name="RecRLWidth" SpinButtonPlacementMode="Compact" ValueChanged="RecRLWidth_ValueChanged"/>
         </StackPanel>
     </StackPanel>
 </UserControl>

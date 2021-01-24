@@ -47,6 +47,15 @@ namespace ALifeUni
 
             EmptyObject eo = new EmptyObject(c1, ReferenceValues.CollisionLevelPhysical);
             Planet.World.AddObjectToWorld(eo);
+            GreenShape.ShapeOwner = eo;
+
+            Point p2 = new Point(100, 100);
+            Rectangle r1 = new Rectangle(p2, 20, 10, Colors.Red);
+            r1.Orientation.Degrees = 45;
+
+            EmptyObject e2 = new EmptyObject(r1, ReferenceValues.CollisionLevelPhysical);
+            Planet.World.AddObjectToWorld(e2);
+            RedShape.ShapeOwner = e2;
         }
     }
 }

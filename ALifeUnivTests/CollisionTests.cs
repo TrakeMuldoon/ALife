@@ -141,7 +141,8 @@ namespace AlifeTestProject
             VerifyCollisionTarget(collision2, wrapC);
         }
 
-        [TestMethod] public void CircleRectangleCircleSide2()
+        [TestMethod]
+        public void CircleRectangleCircleSide2()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
 
@@ -246,36 +247,438 @@ namespace AlifeTestProject
 
         #region Sector Rectangle
         [TestMethod]
+        public void SectorRectangleLeftSideBB_NC()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 20, new Angle(50), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(60, 40);
+            Rectangle shape2 = new Rectangle(point2, 20, 10, Colors.Pink);
+            shape2.Orientation.Degrees = 45;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1);
+            VerifyCollisionTarget(collision2);
+        }
+
+        [TestMethod]
         public void SectorRectangleLeftArmSide1() 
         {
-            Assert.Fail("Not Implmeented"); 
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 20, new Angle(50), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(60, 45);
+            Rectangle shape2 = new Rectangle(point2, 20, 10, Colors.Pink);
+            shape2.Orientation.Degrees = 45;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
         }
-        [TestMethod] public void SectorRectangleLeftArmSide2() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleLeftArmSide3() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleLeftArmSide4() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleSweepSide1() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleSweepSide2() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleSweepSide3() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleSweepSide4() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleRightArmSide1() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleRightArmSide2() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleRightArmSide3() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleRightArmSide4() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleLeftArmSide1NC() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleLeftArmSide2NC() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleLeftArmSide3NC() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleLeftArmSide4NC() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleSweepSide1NC() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleSweepSide2NC() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleSweepSide3NC() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleSweepSide4NC() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleRightArmSide1NC() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleRightArmSide2NC() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleRightArmSide3NC() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleRightArmSide4NC() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleSectorContainsRectangle() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleRectangleContainsSector() { Assert.Fail("Not Implmeented"); }
-        [TestMethod] public void SectorRectangleNoCollision() { Assert.Fail("Not Implmeented"); }
+
+        [TestMethod] 
+        public void SectorRectangleLeftArmSide2() 
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 20, new Angle(50), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(65, 45);
+            Rectangle shape2 = new Rectangle(point2, 20, 10, Colors.Pink);
+            shape2.Orientation.Degrees = 135;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
+
+        [TestMethod]
+        public void SectorRectangleLeftArmSide3() 
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 20, new Angle(50), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(60, 45);
+            Rectangle shape2 = new Rectangle(point2, 20, 10, Colors.Pink);
+            shape2.Orientation.Degrees = 215;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
+
+        [TestMethod]
+        public void SectorRectangleLeftArmSide4()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 20, new Angle(50), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(60, 41);
+            Rectangle shape2 = new Rectangle(point2, 20, 10, Colors.Pink);
+            shape2.Orientation.Degrees = 305;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
+
+        [TestMethod]
+        public void SectorRectangleSweepSide1() 
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(80, 66);
+            Rectangle shape2 = new Rectangle(point2, 20, 10, Colors.Pink);
+            shape2.Orientation.Degrees = 299;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
+
+        [TestMethod]
+        public void SectorRectangleSweepSide2()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(84, 69);
+            Rectangle shape2 = new Rectangle(point2, 20, 50, Colors.Pink);
+            shape2.Orientation.Degrees = 27;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
+
+        [TestMethod] 
+        public void SectorRectangleSweepSide3()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(80, 66);
+            Rectangle shape2 = new Rectangle(point2, 20, 10, Colors.Pink);
+            shape2.Orientation.Degrees = 117;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
+
+        [TestMethod]
+        public void SectorRectangleSweepSide4()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(84, 69);
+            Rectangle shape2 = new Rectangle(point2, 20, 50, Colors.Pink);
+            shape2.Orientation.Degrees = 207;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
+
+        [TestMethod] 
+        public void SectorRectangleRightArmSide1() 
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(45, 85);
+            Rectangle shape2 = new Rectangle(point2, 20, 50, Colors.Pink);
+            shape2.Orientation.Degrees = 200;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
+
+        [TestMethod]
+        public void SectorRectangleRightArmSide2()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(45, 73);
+            Rectangle shape2 = new Rectangle(point2, 20, 40, Colors.Pink);
+            shape2.Orientation.Degrees = 110;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
+
+        [TestMethod] 
+        public void SectorRectangleRightArmSide3()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(45, 85);
+            Rectangle shape2 = new Rectangle(point2, 20, 50, Colors.Pink);
+            shape2.Orientation.Degrees = 20;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
+
+        [TestMethod]
+        public void SectorRectangleRightArmSide4() 
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(45, 65);
+            Rectangle shape2 = new Rectangle(point2, 20, 40, Colors.Pink);
+            shape2.Orientation.Degrees = 120;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
+
+        
+        [TestMethod] 
+        public void SectorRectangleSweepBB_NC() 
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(87, 69);
+            Rectangle shape2 = new Rectangle(point2, 20, 50, Colors.Pink);
+            shape2.Orientation.Degrees = 207;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1);
+            VerifyCollisionTarget(collision2);
+        }
+
+
+        [TestMethod]
+        public void SectorRectangleRightArmNC()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(35, 65);
+            Rectangle shape2 = new Rectangle(point2, 20, 40, Colors.Pink);
+            shape2.Orientation.Degrees = 120;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1);
+            VerifyCollisionTarget(collision2);
+        }
+
+        [TestMethod]
+        public void SectorRectangleSectorContainsRectangle() 
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(40, 50);
+            Sector shape1 = new Sector(point1, 50, new Angle(70), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(65, 65);
+            Rectangle shape2 = new Rectangle(point2, 10, 20, Colors.Pink);
+            shape2.Orientation.Degrees = 120;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
+
+        [TestMethod] 
+        public void SectorRectangleRectangleContainsSector()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(40, 50);
+            Sector shape1 = new Sector(point1, 25, new Angle(40), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(50, 65);
+            Rectangle shape2 = new Rectangle(point2, 40, 60, Colors.Pink);
+            shape2.Orientation.Degrees = 120;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
+
+        [TestMethod]
+        public void SectorRectangleNoCollision()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
+            shape1.Orientation.Degrees = 5;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(25, 65);
+            Rectangle shape2 = new Rectangle(point2, 20, 40, Colors.Pink);
+            shape2.Orientation.Degrees = 120;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1);
+            VerifyCollisionTarget(collision2);
+        }
         #endregion
 
         #region Sector Circle

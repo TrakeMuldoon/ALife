@@ -66,11 +66,11 @@ namespace ALifeUni
 
             string point1 = String.Format("Point point1 = new Point({0}, {1});", GreenShape.XValue, GreenShape.YValue);
             string shape1 = BuildShapeConstructor(1, GreenShape);
-            string ori1 = "shape1.Orientation.Degrees = " + (int)GreenShape.OrientationVal;
+            string ori1 = "shape1.Orientation.Degrees = " + (int)GreenShape.OrientationVal + ";";
 
             string point2 = String.Format("Point point2 = new Point({0}, {1});", RedShape.XValue, RedShape.YValue);
             string shape2 = BuildShapeConstructor(2, RedShape);
-            string ori2 = "shape2.Orientation.Degrees = " + (int)RedShape.OrientationVal;
+            string ori2 = "shape2.Orientation.Degrees = " + (int)RedShape.OrientationVal + ";";
 
             sb.AppendLine("ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);");
             sb.AppendLine(point1); 
@@ -87,7 +87,7 @@ namespace ALifeUni
             sb.AppendLine("if(!collMap.Insert(wrap2)) { Assert.Fail(\"Failed To Insert wrap 2\"); }");
             sb.AppendLine();
             sb.AppendLine("List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);");
-            sb.AppendLine("List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrapR);");
+            sb.AppendLine("List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);");
             sb.AppendLine();
 
             if(IsCollision.IsChecked.Value)
@@ -115,7 +115,7 @@ namespace ALifeUni
                                                      , itemNum, shapeSpec.CircleRadius); 
                 case "Rectangle": return String.Format("Rectangle shape{0} = new Rectangle(point{0}, {1}, {2}, Colors.Pink);"
                                                         , itemNum, shapeSpec.RectangleFB, shapeSpec.RectangleRL);
-                case "Sector": return String.Format("Sector shape{0} = new Sector(point{0}, {1}, {2}, Colors.Pink);"
+                case "Sector": return String.Format("Sector shape{0} = new Sector(point{0}, {1}, new Angle({2}), Colors.Pink);"
                                                     , itemNum, shapeSpec.SectorRadius, shapeSpec.SectorSweep);
                 default: throw new Exception("Invalid shape value in the shape constructor.");
             }

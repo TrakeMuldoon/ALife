@@ -169,10 +169,10 @@ namespace ALifeUni
             if(inUpdate) { return; }
             inUpdate = true;
 
-            SecRadius.Value = SecRadius.Value % 360 + (SecRadius.Value < 0 ? 360 : 0);
+            SecSweep.Value = SecSweep.Value % 360 + (SecSweep.Value < 0 ? 360 : 0);
 
             Sector sec = myShape as Sector;
-            sec.SweepAngle.Degrees = SecRadius.Value;
+            sec.SweepAngle.Degrees = SecSweep.Value;
 
             collider.MoveObject(ShapeOwner);
             myShape.Reset();

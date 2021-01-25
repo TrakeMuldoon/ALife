@@ -169,18 +169,19 @@ namespace ALifeUni.UI
                 case AARectangle aar: DrawAARectangle(aar, args); break;
                 default: throw new NotImplementedException("What the heck shape is this?");
             }
+            if(uiSettings.ShowBoundingBoxes)
+            {
+                DrawBoundingBox(shape.BoundingBox, Colors.Black, args);
+            }
         }
 
         private static void DrawSector(IShape currShape, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args, bool fillIn)
         {
-            ChildSector sec = (ChildSector)currShape;
-            if(uiSettings.ShowBoundingBoxes)
-            {
-                DrawBoundingBox(sec.BoundingBox, Colors.Black, args);
-            }
+            //ChildSector sec = (ChildSector)currShape;
 
+            Sector sec = (Sector)currShape;
             CanvasPathBuilder pathBuilder = new CanvasPathBuilder(args.DrawingSession);
-            Angle myAngle = sec.Orientation + sec.OrientationAroundParent + sec.Parent.Orientation;
+            Angle myAngle = sec.Orientation;
             Vector2 centre = sec.CentrePoint.ToVector2();
             pathBuilder.BeginFigure(centre);
             pathBuilder.AddArc(centre, sec.Radius, sec.Radius, (float)myAngle.Radians, (float)sec.SweepAngle.Radians);
@@ -216,11 +217,6 @@ namespace ALifeUni.UI
 
             //Core of the body is the debug colour
             args.DrawingSession.FillCircle(objectCentre, 2, wo.DebugColor);
-
-            if(ui.ShowBoundingBoxes)
-            {
-                DrawBoundingBox(wo.BoundingBox, Colors.Black, args);
-            }
 
             DrawOrientation(args, wo);
         }
@@ -260,11 +256,6 @@ namespace ALifeUni.UI
             }
 
             args.DrawingSession.FillCircle(rec.CentrePoint.ToVector2(), 2, rec.DebugColor);
-
-            if(ui.ShowBoundingBoxes)
-            {
-                DrawBoundingBox(rec.BoundingBox, Colors.Black, args);
-            }
 
             DrawOrientation(args, rec);
         }

@@ -106,11 +106,11 @@ namespace ALifeUni.ALife
             if(PointCircleCollision(sector.CentrePoint, circle)) return true;
 
             //Check the left point of the sector
-            Point leftPoint = ExtraMath.TranslateByVector(sector.CentrePoint, sector.AbsoluteOrientation, sector.Radius);
+            Point leftPoint = ExtraMath.TranslateByVector(sector.CentrePoint, sector.Orientation, sector.Radius);
             if(PointCircleCollision(leftPoint, circle)) return true;
 
             //Check the right point of the sector
-            Point rightPoint = ExtraMath.TranslateByVector(sector.CentrePoint, (sector.AbsoluteOrientation + sector.SweepAngle), sector.Radius);
+            Point rightPoint = ExtraMath.TranslateByVector(sector.CentrePoint, (sector.Orientation + sector.SweepAngle), sector.Radius);
             if(PointCircleCollision(rightPoint, circle)) return true;
 
             //Now we're checking the line segment collisions
@@ -383,7 +383,7 @@ namespace ALifeUni.ALife
             Angle abp = new Angle(angleBetweenPoints, true);
 
             //Angle minimum = new Angle(0);
-            abp -= sector.AbsoluteOrientation;
+            abp -= sector.Orientation;
             Angle maximum = sector.SweepAngle;
 
             return abp.Degrees < maximum.Degrees;

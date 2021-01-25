@@ -103,7 +103,7 @@ namespace ALifeUni
             switch(ShapeChooser.SelectedValue)
             {
                 case "Circle": newShape = new Circle(myShape.CentrePoint, (float)keyValue); break;
-                case "Sector": newShape = new AgentSector(myShape.CentrePoint, new Angle(0), (float)keyValue, new Angle(0)); break;
+                case "Sector": newShape = new Sector(myShape.CentrePoint, (float)keyValue, new Angle(20), myShape.Color); break;
                 case "Rectangle": newShape = new Rectangle(myShape.CentrePoint, keyValue, keyValue / 2, myShape.Color); break;
             }
             newShape.Color = myShape.Color;

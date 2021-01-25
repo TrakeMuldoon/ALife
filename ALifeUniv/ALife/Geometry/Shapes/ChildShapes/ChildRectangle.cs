@@ -8,22 +8,32 @@ namespace ALifeUni.ALife.Shapes
     public class ChildRectangle : Rectangle, IChildShape
     {
         public readonly IShape Parent;
-        public readonly Angle RelativeToParentOrientation;
         public readonly double DistFromParentCentre;
 
         public override Angle Orientation
         {
             get
             {
-                return RelativeToParentOrientation + Parent.Orientation;
+                return RelativeOrientation + Parent.Orientation;
             }
+        }
+
+        public Angle RelativeOrientation
+        {
+            get;
+            set;
+        }
+        public Angle AbsoluteOrientation 
+        {
+            get => Orientation;
+            set => throw new NotImplementedException();
         }
 
         public ChildRectangle(IShape parent, Angle relativeToParentOrientation, double distFromParentCentre
                                 , double FBLength, double RLWidth)
             : base(FBLength, RLWidth, Colors.Red)
         {
-            RelativeToParentOrientation = relativeToParentOrientation;
+            RelativeOrientation = relativeToParentOrientation;
             DistFromParentCentre = distFromParentCentre;
             Parent = parent;
         }
@@ -47,8 +57,7 @@ namespace ALifeUni.ALife.Shapes
 
         private void GenerateCentrePoint()
         {
-            Angle relativeAngle = Parent.Orientation + RelativeToParentOrientation;
-            Point centre = ExtraMath.TranslateByVector(Parent.CentrePoint, relativeAngle, DistFromParentCentre + (FBLength / 2));
+            Point centre = ExtraMath.TranslateByVector(Parent.CentrePoint, AbsoluteOrientation, DistFromParentCentre + (FBLength / 2));
             myCentrePoint = centre;
         }
 
@@ -64,7 +73,7 @@ namespace ALifeUni.ALife.Shapes
         }
         public IShape CloneChildShape(IShape parent)
         {
-            return new ChildRectangle(parent, RelativeToParentOrientation.Clone(), DistFromParentCentre, FBLength, RLWidth);
+            return new ChildRectangle(parent, RelativeOrientation.Clone(), DistFromParentCentre, FBLength, RLWidth);
         }
     }
 }

@@ -23,6 +23,9 @@ namespace ALifeUni.ALife.Shapes
             }
         }
 
+        public Angle RelativeOrientation { get => Orientation; set => throw new NotImplementedException(); }
+        public Angle AbsoluteOrientation { get => Orientation; set => throw new NotImplementedException(); }
+
         public ChildCircle(IShape parent, Angle orientationAroundParent, double distFromParentCentre
                            , float radius)
             : base(radius)

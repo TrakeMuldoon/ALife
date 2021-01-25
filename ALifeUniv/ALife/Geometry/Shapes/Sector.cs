@@ -6,14 +6,12 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Shapes
 {
-    public class AgentSector : Sector
+    public class Sector : IShape
     {
-        public override Point CentrePoint
-        {
-            get;
-            set;
-        }
-        public override BoundingBox BoundingBox
+        public float Radius;
+        public Angle SweepAngle;
+
+        public virtual BoundingBox BoundingBox
         {
             get
             {
@@ -21,45 +19,6 @@ namespace ALifeUni.ALife.Shapes
             }
         }
 
-        public override Angle Orientation
-        {
-            get { return AbsoluteOrientation; }
-            set { AbsoluteOrientation = value; }
-        }
-
-        public override Angle RelativeOrientation
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-
-        public override Angle AbsoluteOrientation
-        {
-            get;
-            set;
-        }
-
-        public AgentSector(Point centrePoint, Angle orientation, float radius, Angle sweep) : base(radius, sweep)
-        {
-            CentrePoint = centrePoint;
-            Orientation = orientation;
-        }
-
-        public override IShape CloneShape()
-        {
-            return new AgentSector(new Point(CentrePoint.X, CentrePoint.Y), Orientation.Clone(), Radius, SweepAngle.Clone());
-        }
-    }
-
-    public abstract class Sector : IShape
-    {
-        public float Radius;
-        public Angle SweepAngle;
-
-        public abstract BoundingBox BoundingBox
-        {
-            get;
-        }
         public Color Color
         {
             get;
@@ -71,25 +30,13 @@ namespace ALifeUni.ALife.Shapes
             set;
         }
 
-        public abstract Point CentrePoint
+        public virtual Point CentrePoint
         {
             get;
             set;
         }
 
-        public abstract Angle Orientation
-        {
-            get;
-            set;
-        }
-
-        public abstract Angle RelativeOrientation
-        {
-            get;
-            set;
-        }
-
-        public abstract Angle AbsoluteOrientation
+        public virtual Angle Orientation
         {
             get;
             set;
@@ -121,8 +68,16 @@ namespace ALifeUni.ALife.Shapes
             }
         }
 
-
         private BoundingBox? myBox = null;
+
+        public Sector(Point centrePoint, float radius, Angle sweepAngle, Color color)
+        {
+            CentrePoint = centrePoint;
+            Radius = radius;
+            SweepAngle = sweepAngle;
+            Color = color;
+            Orientation = new Angle(0);
+        }
 
         protected Sector(float radius, Angle sweepAngle)
         {
@@ -234,6 +189,11 @@ namespace ALifeUni.ALife.Shapes
             return ShapesEnum.Sector;
         }
 
-        public abstract IShape CloneShape();
+        public virtual IShape CloneShape()
+        {
+            Sector newSec = new Sector(new Point(CentrePoint.X, CentrePoint.Y), Radius, SweepAngle.Clone(), Color.Clone());
+            newSec.Orientation = Orientation.Clone();
+            return newSec;
+        }
     }
 }

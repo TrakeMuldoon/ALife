@@ -9,27 +9,30 @@ namespace ALifeUni.ALife.Shapes
     {
         public override Angle Orientation
         {
-            get { return RelativeOrientation; }
-            set { RelativeOrientation = value; }
-        }
-
-        public override Angle RelativeOrientation
-        {
-            get;
-            set;
-        }
-
-        public override Angle AbsoluteOrientation
-        {
             get
             {
-                return Parent.Orientation + OrientationAroundParent + RelativeOrientation;
+                return AbsoluteOrientation;
             }
             set
             {
                 throw new InvalidOperationException();
             }
         }
+
+        public Angle RelativeOrientation
+        {
+            get;
+            set;
+        }
+        public Angle AbsoluteOrientation
+        {
+            get
+            {
+                return Parent.Orientation + OrientationAroundParent + RelativeOrientation;
+            }
+            set => throw new NotImplementedException();
+        }
+
 
         public Angle OrientationAroundParent;
         public IShape Parent;
@@ -42,7 +45,7 @@ namespace ALifeUni.ALife.Shapes
                             , float radius
                             , Angle sweep) : base(radius, sweep)
         {
-            Orientation = relativeOrientationAngle;
+            RelativeOrientation = relativeOrientationAngle;
             OrientationAroundParent = orientationAroundParent;
             distanceFromParentCentre = distFromParentCentre;
             Parent = parent;
@@ -66,7 +69,7 @@ namespace ALifeUni.ALife.Shapes
         {
             get
             {
-                return GetBoundingBox(AbsoluteOrientation);
+                return GetBoundingBox(Orientation);
             }
         }
 
@@ -74,6 +77,7 @@ namespace ALifeUni.ALife.Shapes
         {
             throw new NotImplementedException("Cannot clone a ChildShape");
         }
+
         public IShape CloneChildShape(IShape parent)
         {
             ChildSector cs = new ChildSector(parent, OrientationAroundParent.Clone(), distanceFromParentCentre, RelativeOrientation.Clone(), Radius, SweepAngle.Clone());

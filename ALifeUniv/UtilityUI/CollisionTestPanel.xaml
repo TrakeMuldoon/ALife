@@ -26,5 +26,11 @@
         <local:ShapeChanger x:Name="GreenShape"></local:ShapeChanger>
         <TextBlock>Red</TextBlock>
         <local:ShapeChanger x:Name="RedShape"></local:ShapeChanger>
+
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="Copy" Click="Copy_Click">Copy Test</Button>
+            <TextBlock>Collision?</TextBlock>
+            <CheckBox x:Name="IsCollision" />
+        </StackPanel>
     </StackPanel>
 </UserControl>

@@ -47,6 +47,17 @@ namespace ALifeUni
             }
         }
 
+        public int XValue { get { return (int)XVal.Value; } }
+        public int YValue { get { return (int)YVal.Value; } }
+        public string ShapeString {  get { return ShapeChooser.SelectedValue.ToString(); } }
+        public double OrientationVal { get { return Orientation.Value; } }
+        public double CircleRadius { get { return CirRadius.Value; } }
+        public double SectorRadius { get { return SecRadius.Value; } }
+        public double SectorSweep {  get { return SecSweep.Value; } }
+        public double RectangleFB { get { return RecFBLength.Value; } }
+        public double RectangleRL { get { return RecRLWidth.Value; } }
+
+
         bool inUpdate = false;
         private void UpdateValues()
         {
@@ -104,7 +115,7 @@ namespace ALifeUni
             {
                 case "Circle": newShape = new Circle(myShape.CentrePoint, (float)keyValue); break;
                 case "Sector": newShape = new Sector(myShape.CentrePoint, (float)keyValue, new Angle(20), myShape.Color); break;
-                case "Rectangle": newShape = new Rectangle(myShape.CentrePoint, keyValue, keyValue / 2, myShape.Color); break;
+                case "Rectangle": newShape = new Rectangle(myShape.CentrePoint, keyValue, keyValue + 5, myShape.Color); break;
             }
             newShape.Color = myShape.Color;
             EmptyObject eoOwner = ShapeOwner as EmptyObject;

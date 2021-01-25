@@ -245,7 +245,11 @@ namespace AlifeTestProject
         #endregion
 
         #region Sector Rectangle
-        [TestMethod] public void SectorRectangleLeftArmSide1() { Assert.Fail("Not Implmeented"); }
+        [TestMethod]
+        public void SectorRectangleLeftArmSide1() 
+        {
+            Assert.Fail("Not Implmeented"); 
+        }
         [TestMethod] public void SectorRectangleLeftArmSide2() { Assert.Fail("Not Implmeented"); }
         [TestMethod] public void SectorRectangleLeftArmSide3() { Assert.Fail("Not Implmeented"); }
         [TestMethod] public void SectorRectangleLeftArmSide4() { Assert.Fail("Not Implmeented"); }

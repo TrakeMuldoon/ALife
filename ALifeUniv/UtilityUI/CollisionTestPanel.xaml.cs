@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -56,6 +58,67 @@ namespace ALifeUni
             EmptyObject e2 = new EmptyObject(r1, ReferenceValues.CollisionLevelPhysical);
             Planet.World.AddObjectToWorld(e2);
             RedShape.ShapeOwner = e2;
+        }
+
+        private void Copy_Click(object sender, RoutedEventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            string point1 = String.Format("Point point1 = new Point({0}, {1});", GreenShape.XValue, GreenShape.YValue);
+            string shape1 = BuildShapeConstructor(1, GreenShape);
+            string ori1 = "shape1.Orientation.Degrees = " + (int)GreenShape.OrientationVal;
+
+            string point2 = String.Format("Point point2 = new Point({0}, {1});", RedShape.XValue, RedShape.YValue);
+            string shape2 = BuildShapeConstructor(2, RedShape);
+            string ori2 = "shape2.Orientation.Degrees = " + (int)RedShape.OrientationVal;
+
+            sb.AppendLine("ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);");
+            sb.AppendLine(point1); 
+            sb.AppendLine(shape1);
+            sb.AppendLine(ori1);
+            sb.AppendLine("ShapeWrapper wrap1 = new ShapeWrapper(\"shape1\", shape1);");
+            sb.AppendLine();
+            sb.AppendLine(point2);
+            sb.AppendLine(shape2);
+            sb.AppendLine(ori2);
+            sb.AppendLine("ShapeWrapper wrap2 = new ShapeWrapper(\"shape2\", shape2);");
+            sb.AppendLine();
+            sb.AppendLine("if(!collMap.Insert(wrap1)) { Assert.Fail(\"Failed To Insert wrap 1\"); }");
+            sb.AppendLine("if(!collMap.Insert(wrap2)) { Assert.Fail(\"Failed To Insert wrap 2\"); }");
+            sb.AppendLine();
+            sb.AppendLine("List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);");
+            sb.AppendLine("List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrapR);");
+            sb.AppendLine();
+
+            if(IsCollision.IsChecked.Value)
+            {
+                sb.AppendLine("VerifyCollisionTarget(collision1, wrap2);");
+                sb.AppendLine("VerifyCollisionTarget(collision2, wrap1);");
+            }
+            else
+            {
+                sb.AppendLine("VerifyCollisionTarget(collision1);");
+                sb.AppendLine("VerifyCollisionTarget(collision2);");
+            }
+
+            string newTest = sb.ToString();
+            DataPackage dp = new DataPackage();
+            dp.SetText(newTest);
+            Clipboard.SetContent(dp);
+        }
+
+        private string BuildShapeConstructor(int itemNum, ShapeChanger shapeSpec)
+        {
+            switch(shapeSpec.ShapeString)
+            {
+                case "Circle": return String.Format("Circle shape{0} = new Circle(point{0}, {1});"
+                                                     , itemNum, shapeSpec.CircleRadius); 
+                case "Rectangle": return String.Format("Rectangle shape{0} = new Rectangle(point{0}, {1}, {2}, Colors.Pink);"
+                                                        , itemNum, shapeSpec.RectangleFB, shapeSpec.RectangleRL);
+                case "Sector": return String.Format("Sector shape{0} = new Sector(point{0}, {1}, {2}, Colors.Pink);"
+                                                    , itemNum, shapeSpec.SectorRadius, shapeSpec.SectorSweep);
+                default: throw new Exception("Invalid shape value in the shape constructor.");
+            }
         }
     }
 }

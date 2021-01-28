@@ -843,39 +843,195 @@ namespace AlifeTestProject
         #region Sector Circle
         [TestMethod]
         public void SectorCircleLeftArm()
-        { Assert.Fail("Not Implmented"); }
-        
-        [TestMethod]
-        public void SectorCircleLeftArmNC()
-        { Assert.Fail("Not Implmeented"); }
-        
-        [TestMethod]
-        public void SectorCircleSweep()
-        { Assert.Fail("Not Implmeented"); }
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(80, 116);
+            Sector shape1 = new Sector(point1, 50, new Angle(45), Colors.Pink);
+            shape1.Orientation.Degrees = 0;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(105, 100);
+            Circle shape2 = new Circle(point2, 20);
+            shape2.Orientation.Degrees = 0;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
 
         [TestMethod]
-        public void SectorCircleSweepNC()
-        { Assert.Fail("Not Implmeented"); }
+        public void SectorCircleLeftArmNC()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(120, 116);
+            Sector shape1 = new Sector(point1, 50, new Angle(45), Colors.Pink);
+            shape1.Orientation.Degrees = 0;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(105, 100);
+            Circle shape2 = new Circle(point2, 20);
+            shape2.Orientation.Degrees = 0;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1);
+            VerifyCollisionTarget(collision2);
+        }
+
+        [TestMethod]
+        public void SectorCircleSweep()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(170, 92);
+            Sector shape1 = new Sector(point1, 50, new Angle(45), Colors.Pink);
+            shape1.Orientation.Degrees = 150;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(105, 100);
+            Circle shape2 = new Circle(point2, 20);
+            shape2.Orientation.Degrees = 150;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
 
         [TestMethod]
         public void SectorCircleRightArm()
-        { Assert.Fail("Not Implmeented"); }
-        
-        [TestMethod]
-        public void SectorCircleRightArmNC()
-        { Assert.Fail("Not Implmeented"); }
-        
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(95, 65);
+            Sector shape1 = new Sector(point1, 50, new Angle(45), Colors.Pink);
+            shape1.Orientation.Degrees = 0;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(105, 100);
+            Circle shape2 = new Circle(point2, 20);
+            shape2.Orientation.Degrees = 150;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
+       
         [TestMethod]
         public void SectorCircleSecContainsCircle()
-        { Assert.Fail("Not Implmeented"); }
-        
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(95, 65);
+            Sector shape1 = new Sector(point1, 50, new Angle(45), Colors.Pink);
+            shape1.Orientation.Degrees = 0;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(125, 80);
+            Circle shape2 = new Circle(point2, 10);
+            shape2.Orientation.Degrees = 150;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
+
         [TestMethod]
         public void SectorCircleCircleContainsSec() 
-        { Assert.Fail("Not Implmeented"); }
-        
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(95, 65);
+            Sector shape1 = new Sector(point1, 20, new Angle(45), Colors.Pink);
+            shape1.Orientation.Degrees = 0;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(125, 80);
+            Circle shape2 = new Circle(point2, 40);
+            shape2.Orientation.Degrees = 150;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1, wrap2);
+            VerifyCollisionTarget(collision2, wrap1);
+        }
+
+        [TestMethod]
+        public void SectorCircleBBNC()
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(50, 50);
+            Sector shape1 = new Sector(point1, 50, new Angle(45), Colors.Pink);
+            shape1.Orientation.Degrees = 0;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(105, 100);
+            Circle shape2 = new Circle(point2, 20);
+            shape2.Orientation.Degrees = 0;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1);
+            VerifyCollisionTarget(collision2);
+        }
+
         [TestMethod]
         public void SectorCircleNoCollision()
-        { Assert.Fail("Not Implmeented"); }
+        {
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            Point point1 = new Point(20, 20);
+            Sector shape1 = new Sector(point1, 50, new Angle(45), Colors.Pink);
+            shape1.Orientation.Degrees = 0;
+            ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
+
+            Point point2 = new Point(125, 80);
+            Circle shape2 = new Circle(point2, 10);
+            shape2.Orientation.Degrees = 150;
+            ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
+
+            if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
+            if(!collMap.Insert(wrap2)) { Assert.Fail("Failed To Insert wrap 2"); }
+
+            List<ShapeWrapper> collision1 = collMap.DetectCollisions(wrap1);
+            List<ShapeWrapper> collision2 = collMap.DetectCollisions(wrap2);
+
+            VerifyCollisionTarget(collision1);
+            VerifyCollisionTarget(collision2);
+        }
         #endregion
 
         void VerifyCollisionTarget(List<ShapeWrapper> detectedCollisions, params ShapeWrapper[] targets)

@@ -29,11 +29,11 @@ namespace ALifeUni.ALife.Scenarios
 
         public override int WorldWidth
         {
-            get { return 2000; }
+            get { return 1800; }
         }
         public override int WorldHeight
         {
-            get { return 2000; }
+            get { return 1800; }
         }
         public override bool FixedWidthHeight
         {

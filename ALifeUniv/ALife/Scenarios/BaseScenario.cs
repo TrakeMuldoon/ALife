@@ -30,13 +30,17 @@ namespace ALifeUni.ALife.Scenarios
 
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {
-                new EyeCluster(agent, "Eye1"
-                                , new ROEvoNumber(0, 20, -360, 360)  //Orientation Around Parent
-                                , new ROEvoNumber(0, 30, -360, 360)  //Relative Orientation
-                                , new ROEvoNumber(80, 3, 40, 120)      //Radius
-                                , new ROEvoNumber(25, 1, 15, 40)),      //Sweep
-                new ProximityCluster(agent, "Proximity1"
-                                , new ROEvoNumber(20, 4, 10, 40))        //Radius
+                new EyeCluster(agent, "EyeLeft"
+                                , new ROEvoNumber(startValue: -20, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
+                                , new ROEvoNumber(startValue: 10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Relative Orientation
+                                , new ROEvoNumber(startValue: 60, evoDeltaMax: 3, hardMin: 40, hardMax: 120)       //Radius
+                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
+                new EyeCluster(agent, "EyeRight"
+                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Orientation Around Parent
+                                , new ROEvoNumber(startValue: -10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Relative Orientation
+                                , new ROEvoNumber(startValue: 60, evoDeltaMax: 3, hardMin: 40, hardMax: 120)       //Radius
+                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
+                //new GoalSenseCluster(agent, "GoalSense", targetZone)
             };
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
@@ -84,18 +88,25 @@ namespace ALifeUni.ALife.Scenarios
                 {
                     ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[me.CollisionLevel];
 
+                    //Get a new free point within the start zone.
                     Point myPoint = me.Zone.Distributor.NextAgentCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
                     me.Shape.CentrePoint = myPoint;
                     collider.MoveObject(me);
 
+                    //Reproduce one child going the same direction
                     me.Reproduce();
-                    //foreach(Zone zon in Planet.World.Zones.Values)
-                    //{
-                    //    if(zon.Name != Zone.Name)
-                    //    {
-                    //        //Reproduce(zon, zon.OppositeZone, new Angle(zon.OrientationDegrees), zon.OppositeZone.Color);
-                    //    }
-                    //}
+
+                    //Reproduce one child going the other way
+                    Agent reverseChild = (Agent)me.Reproduce();
+                    reverseChild.Zone = me.TargetZone;
+                    reverseChild.TargetZone = me.Zone;
+                    Point reverseChildPoint = reverseChild.Zone.Distributor.NextAgentCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
+                    reverseChild.Shape.CentrePoint = reverseChildPoint;
+                    reverseChild.Shape.Orientation.Degrees += 180;
+                    reverseChild.Shape.Color = reverseChild.Zone.Color;
+                    
+                    collider.MoveObject(reverseChild);
+
 
                     //You have a new countdown
                     me.Statistics["DeathTimer"].Value = 0;
@@ -168,7 +179,7 @@ namespace ALifeUni.ALife.Scenarios
             instance.AddZone(green);
             instance.AddZone(orange);
 
-            int numAgents = 50;
+            int numAgents = 80;
             for(int i = 0; i < numAgents; i++)
             {
                 Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);

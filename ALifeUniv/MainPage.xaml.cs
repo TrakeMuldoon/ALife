@@ -42,6 +42,7 @@ namespace ALifeUni
              * Set Scenario Here
              * ***********************************/
             Planet.CreateWorld(new ZoneRunnerScenario());
+            //Planet.CreateWorld(new MazeScenario());
 
             animCanvas.ClearColor = Colors.NavajoWhite;
             animCanvas.Height = Planet.World.Scenario.WorldHeight;
@@ -136,7 +137,7 @@ namespace ALifeUni
             {
                 sb.AppendLine(name + ":" + zoneCount[name]);
             }
-            sb.AppendLine("WOOOORDL: " + Planet.World.AllActiveObjects.Where(wo => wo.Alive).Count());
+            //sb.AppendLine("WORLD: " + Planet.World.AllActiveObjects.Where(wo => wo.Alive).Count());
             ZoneInfo.Text = sb.ToString();
             Turns.Text = Planet.World.Turns.ToString();
         }

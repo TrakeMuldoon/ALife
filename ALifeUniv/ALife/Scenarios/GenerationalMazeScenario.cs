@@ -76,7 +76,7 @@ namespace ALifeUni.ALife.Scenarios
 
         public override void EndOfTurnTriggers(Agent me)
         {
-            if(me.Statistics["MaxXTimer"].Value > 800)
+            if(me.Statistics["MaxXTimer"].Value > 600)
             {
                 me.Die();
                 return;

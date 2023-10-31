@@ -15,20 +15,20 @@
     Unloaded="Page_Unloaded">
     <Page.Resources>
         <Style x:Key="CBStyle" TargetType="controls:DataGridCell">
-            <Setter Property="Background" Value="Transparent"/>
+            <!--<Setter Property="Background" Value="Black"/>
             <Setter Property="Margin" Value="-10"/>
             <Setter Property="Padding" Value="0" />
             <Setter Property="Width" Value="32" />
             <Setter Property="Height" Value="28" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="HorizontalAlignment" Value="Left" />-->
         </Style>
         <Style x:Key="ElemStyle" TargetType="CheckBox">
-            <Setter Property="Background" Value="RED"/>
+            <!--<Setter Property="Background" Value="RED"/>
             <Setter Property="Margin" Value="-2"/>
             <Setter Property="Padding" Value="0" />
             <Setter Property="Width" Value="90" />
             <Setter Property="Height" Value="28" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="HorizontalAlignment" Value="Left" />-->
         </Style>
         <Style x:Key="headStyle" TargetType="cprim:DataGridColumnHeader" >
             <Setter Property="Margin" Value="0" />
@@ -50,6 +50,10 @@
                     </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
+        </Style>
+        <Style x:Key="ShowBoxes" TargetType="CheckBox">
+            <Setter Property="MinWidth" Value="25"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Right"></Setter>
         </Style>
     </Page.Resources>
     
@@ -107,8 +111,25 @@
             <!--<TextBlock x:Name="debugText" />-->
 
             <TextBlock x:Name="LayersLabel" Text="Layers"></TextBlock>
+
+            <!--<StackPanel Width="220" Background="Black">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Zones"/>
+                    <CheckBox x:Name="ZoneShow" Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowAgents}"/>
+                    <CheckBox x:Name="ZoneShowBB" Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowZonesBB}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Agents"/>
+                    <CheckBox x:Name="AgentShow" Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowAgents}"/>
+                    <CheckBox x:Name="AgentShowBB" Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowAgentsBB}"/>
+                </StackPanel>
+            </StackPanel>-->
+
             <controls:DataGrid x:Name="VisualSettingsGrid"
-                               AutoGenerateColumns="false">
+                               AutoGenerateColumns="false"
+                               SelectionMode="Single"
+                               SelectionUnit="Cell"
+                            >
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn Header="Layer" Binding="{Binding LayerName}"
                                                  HeaderStyle="{StaticResource headStyle}"
@@ -138,6 +159,9 @@
                                                      Width="32"/>
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
+
+            
+            
             <TextBlock x:Name="ZoneInfo"></TextBlock>
             <TextBlock x:Name="Turns"></TextBlock>
             <CheckBox x:Name="ShowGeneology" Click="ShowGeneology_Checked">Show Ancestry</CheckBox>

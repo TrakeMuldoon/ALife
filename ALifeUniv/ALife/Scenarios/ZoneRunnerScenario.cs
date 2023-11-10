@@ -65,7 +65,7 @@ namespace ALifeUni.ALife.Scenarios
             instance.AddZone(green);
             instance.AddZone(orange);
 
-            int numAgents = 50;
+            int numAgents = 90;
             for(int i = 0; i < numAgents; i++)
             {
                 Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);

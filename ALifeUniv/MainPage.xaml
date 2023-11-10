@@ -68,11 +68,11 @@
             
             <Border Background="Black" BorderBrush="Red" BorderThickness="5">
                 <canvas:CanvasAnimatedControl x:Name="animCanvas" Draw="AnimCanvas_Draw" CreateResources="AnimCanvas_CreateResources" 
-                                                  Tapped="AnimCanvas_Tapped"
-                                                  PointerPressed="AnimCanvas_PointerPressed"
-                                                  PointerMoved="AnimCanvas_PointerMoved"
-                                                  PointerReleased="AnimCanvas_PointerReleased"
-                                                  Width="6000" Height="2000">
+                                                Tapped="AnimCanvas_Tapped"
+                                                PointerPressed="AnimCanvas_PointerPressed"
+                                                PointerMoved="AnimCanvas_PointerMoved"
+                                                PointerReleased="AnimCanvas_PointerReleased"
+                                                Width="6000" Height="2000">
 
                 </canvas:CanvasAnimatedControl>
             </Border>
@@ -111,21 +111,24 @@
             <!--<TextBlock x:Name="debugText" />-->
 
             <TextBlock x:Name="LayersLabel" Text="Layers"></TextBlock>
+            <StackPanel Orientation="Vertical" Width="220" Margin="0" Padding="0" Background="Green">
+                <ListView x:Name="VisualSettingsList" SelectionMode="None" Background="Blue" Margin="0" Padding="0" BorderThickness="0" HorizontalAlignment="Left">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="-5,0,0,0" Padding="0" Background="Red">
+                                <TextBlock Text="{Binding LayerName}" Padding="0" Width="60"/>
+                                <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowLayer, Mode=TwoWay}" />
+                                <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowObjects, Mode=TwoWay}" />
+                                <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowBoundingBoxes, Mode=TwoWay}"/>
+                                <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowSenses, Mode=TwoWay}" />
+                                <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowSenseBoundingBoxes, Mode=TwoWay}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
 
-            <!--<StackPanel Width="220" Background="Black">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Zones"/>
-                    <CheckBox x:Name="ZoneShow" Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowAgents}"/>
-                    <CheckBox x:Name="ZoneShowBB" Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowZonesBB}"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Agents"/>
-                    <CheckBox x:Name="AgentShow" Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowAgents}"/>
-                    <CheckBox x:Name="AgentShowBB" Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowAgentsBB}"/>
-                </StackPanel>
-            </StackPanel>-->
-
-            <controls:DataGrid x:Name="VisualSettingsGrid"
+            <!--<controls:DataGrid x:Name="VisualSettingsGrid"
                                AutoGenerateColumns="false"
                                SelectionMode="Single"
                                SelectionUnit="Cell"
@@ -158,7 +161,7 @@
                                                      CellStyle="{StaticResource CBStyle}"
                                                      Width="32"/>
                 </controls:DataGrid.Columns>
-            </controls:DataGrid>
+            </controls:DataGrid>-->
 
             
             

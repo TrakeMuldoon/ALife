@@ -83,13 +83,16 @@ namespace ALifeUni.ALife
 
         //All objects which are active (This includes "dead" objects, which have not yet finished their activity (i.e. corpses are "active")
         public readonly List<WorldObject> AllActiveObjects = new List<WorldObject>();
+
         //All objects which were active last turn
         public readonly List<WorldObject> StableActiveObjects = new List<WorldObject>();
+        
         //All new objects. Should be added to Stable Active Objects, should already be in AllActiveObjects
         public readonly List<WorldObject> NewActiveObjects = new List<WorldObject>();
 
-        //All objects which have falled out of all active object scope
+        //All objects which have fallen out of all active object scope
         public readonly List<WorldObject> InactiveObjects = new List<WorldObject>();
+        
         //Objects which at the end of the turn should be removed from "AllActive", "StableActive" and "NewActive"
         public readonly List<WorldObject> ToRemoveObjects = new List<WorldObject>();
 

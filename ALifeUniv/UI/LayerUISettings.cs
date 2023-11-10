@@ -9,24 +9,25 @@ namespace ALifeUni.UI
     public class LayerUISettings
     {
         public String LayerName { get; set; }
+
         public Boolean ShowLayer { get; set; }
         public Boolean ShowObjects { get; set; }
-        public Boolean ShowAgents { get; set; }
         public Boolean ShowBoundingBoxes { get; set; }
         public Boolean ShowSenses { get; set; }
+        public Boolean ShowSenseBoundingBoxes { get; set; }
 
         public LayerUISettings(string layerName) : this(layerName, false) { }
 
-        public LayerUISettings(string layerName, bool showLayer) : this(layerName, showLayer, true, true, true, true) { }
+        public LayerUISettings(string layerName, bool showLayer) : this(layerName, showLayer, showLayer, showLayer, showLayer, showLayer) { }
 
-        public LayerUISettings(string layerName, bool showLayer, bool showObjects, bool showAgents, bool showBoundingBoxes, bool showSenses)
+        public LayerUISettings(string layerName, bool showLayer, bool showObjects, bool showBoundingBoxes, bool showSenses, bool showSenseBoundingBoxes)
         {
             LayerName = layerName;
             ShowLayer = showLayer;
             ShowObjects = showObjects;
-            ShowAgents = showAgents;
             ShowBoundingBoxes = showBoundingBoxes;
             ShowSenses = showSenses;
+            ShowSenseBoundingBoxes = showSenseBoundingBoxes;
         }
 
         public static List<LayerUISettings> GetSettings()
@@ -34,7 +35,6 @@ namespace ALifeUni.UI
             List<LayerUISettings> settingsList = new List<LayerUISettings>();
             settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelZone));
             settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelPhysical, true));
-            settingsList.Add(new LayerUISettings(ReferenceValues.COllisionLevelSight));
             settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelSound));
             settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelScent));
             settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelDead));

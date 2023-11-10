@@ -15,22 +15,20 @@
     Unloaded="Page_Unloaded">
     <Page.Resources>
         <Style x:Key="CBStyle" TargetType="controls:DataGridCell">
-            <Setter Property="Background" Value="Transparent"/>
+            <!--<Setter Property="Background" Value="Black"/>
             <Setter Property="Margin" Value="-10"/>
             <Setter Property="Padding" Value="0" />
             <Setter Property="Width" Value="32" />
             <Setter Property="Height" Value="28" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="IsFocusEngagementEnabled" Value="False"/>
-            <Setter Property="AllowFocusOnInteraction" Value="False"/>
+            <Setter Property="HorizontalAlignment" Value="Left" />-->
         </Style>
         <Style x:Key="ElemStyle" TargetType="CheckBox">
-            <Setter Property="Background" Value="RED"/>
+            <!--<Setter Property="Background" Value="RED"/>
             <Setter Property="Margin" Value="-2"/>
             <Setter Property="Padding" Value="0" />
             <Setter Property="Width" Value="90" />
             <Setter Property="Height" Value="28" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="HorizontalAlignment" Value="Left" />-->
         </Style>
         <Style x:Key="headStyle" TargetType="cprim:DataGridColumnHeader" >
             <Setter Property="Margin" Value="0" />
@@ -53,6 +51,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="ShowBoxes" TargetType="CheckBox">
+            <Setter Property="MinWidth" Value="25"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+        </Style>
     </Page.Resources>
     
 
@@ -66,11 +68,11 @@
             
             <Border Background="Black" BorderBrush="Red" BorderThickness="5">
                 <canvas:CanvasAnimatedControl x:Name="animCanvas" Draw="AnimCanvas_Draw" CreateResources="AnimCanvas_CreateResources" 
-                                                  Tapped="AnimCanvas_Tapped"
-                                                  PointerPressed="AnimCanvas_PointerPressed"
-                                                  PointerMoved="AnimCanvas_PointerMoved"
-                                                  PointerReleased="AnimCanvas_PointerReleased"
-                                                  Width="6000" Height="2000">
+                                                Tapped="AnimCanvas_Tapped"
+                                                PointerPressed="AnimCanvas_PointerPressed"
+                                                PointerMoved="AnimCanvas_PointerMoved"
+                                                PointerReleased="AnimCanvas_PointerReleased"
+                                                Width="6000" Height="2000">
 
                 </canvas:CanvasAnimatedControl>
             </Border>
@@ -109,8 +111,28 @@
             <!--<TextBlock x:Name="debugText" />-->
 
             <TextBlock x:Name="LayersLabel" Text="Layers"></TextBlock>
-            <controls:DataGrid x:Name="VisualSettingsGrid"
-                               AutoGenerateColumns="false">
+            <StackPanel Orientation="Vertical" Width="220" Margin="0" Padding="0" Background="Green">
+                <ListView x:Name="VisualSettingsList" SelectionMode="None" Background="Blue" Margin="0" Padding="0" BorderThickness="0" HorizontalAlignment="Left">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="-5,0,0,0" Padding="0" Background="Red">
+                                <TextBlock Text="{Binding LayerName}" Padding="0" Width="60"/>
+                                <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowLayer, Mode=TwoWay}" />
+                                <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowObjects, Mode=TwoWay}" />
+                                <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowBoundingBoxes, Mode=TwoWay}"/>
+                                <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowSenses, Mode=TwoWay}" />
+                                <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowSenseBoundingBoxes, Mode=TwoWay}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+
+            <!--<controls:DataGrid x:Name="VisualSettingsGrid"
+                               AutoGenerateColumns="false"
+                               SelectionMode="Single"
+                               SelectionUnit="Cell"
+                            >
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn Header="Layer" Binding="{Binding LayerName}"
                                                  HeaderStyle="{StaticResource headStyle}"
@@ -123,7 +145,7 @@
                     <controls:DataGridCheckBoxColumn Header="Obj" Binding="{Binding ShowObjects}"
                                                      HeaderStyle="{StaticResource headStyle}"
                                                      CellStyle="{StaticResource CBStyle}" 
-                                                     ElementStyle="{StaticResource ElemStyle}"
+                                                     ElementStyle="{StaticResource ElemStyle}"                                             
                                                      Width="32"/>
                     <controls:DataGridCheckBoxColumn Header="Ag" Binding="{Binding ShowAgents}"
                                                      HeaderStyle="{StaticResource headStyle}"
@@ -139,7 +161,10 @@
                                                      CellStyle="{StaticResource CBStyle}"
                                                      Width="32"/>
                 </controls:DataGrid.Columns>
-            </controls:DataGrid>
+            </controls:DataGrid>-->
+
+            
+            
             <TextBlock x:Name="ZoneInfo"></TextBlock>
             <TextBlock x:Name="Turns"></TextBlock>
             <CheckBox x:Name="ShowGeneology" Click="ShowGeneology_Checked">Show Ancestry</CheckBox>

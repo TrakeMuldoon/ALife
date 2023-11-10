@@ -33,7 +33,8 @@ namespace ALifeUni
     {
         long startticks;
         readonly DispatcherTimer gameTimer = new DispatcherTimer();
-        public List<LayerUISettings> UIGrid;
+        public List<LayerUISettings> VisualSettings;
+        public int DrawingErrors = 0;
 
         public MainPage()
         {
@@ -42,6 +43,7 @@ namespace ALifeUni
              * Set Scenario Here
              * ***********************************/
             Planet.CreateWorld(new ZoneRunnerScenario());
+            //Planet.CreateWorld(new MazeScenario());
 
             animCanvas.ClearColor = Colors.NavajoWhite;
             animCanvas.Height = Planet.World.Scenario.WorldHeight;
@@ -50,8 +52,8 @@ namespace ALifeUni
             seed = Planet.World.Seed.ToString();
             SimSeed.Text = seed;
 
-            UIGrid = LayerUISettings.GetSettings();
-            VisualSettingsGrid.ItemsSource = UIGrid;
+            VisualSettings = LayerUISettings.GetSettings();
+            VisualSettingsList.ItemsSource = VisualSettings;
 
             startticks = DateTime.Now.Ticks;
             gameTimer.Tick += Dt_Tick;
@@ -94,7 +96,7 @@ namespace ALifeUni
                 args.DrawingSession.DrawCircle(agentCentre, ssc.Radius + 1, Colors.Red);
             }
 
-            foreach(LayerUISettings layer in UIGrid)
+            foreach(LayerUISettings layer in VisualSettings)
             {
                 DrawLayer(layer, args);
             }
@@ -136,56 +138,62 @@ namespace ALifeUni
             {
                 sb.AppendLine(name + ":" + zoneCount[name]);
             }
-            sb.AppendLine("WOOOORDL: " + Planet.World.AllActiveObjects.Where(wo => wo.Alive).Count());
+            //sb.AppendLine("WORLD: " + Planet.World.AllActiveObjects.Where(wo => wo.Alive).Count());
             ZoneInfo.Text = sb.ToString();
             Turns.Text = Planet.World.Turns.ToString();
         }
 
         private void DrawLayer(LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
         {
-            if(!ui.ShowLayer)
+            try
             {
-                return;
-            }
-
-            //Special Layer, Zones draw different
-            if(ui.LayerName == ReferenceValues.CollisionLevelZone)
-            {
-                foreach(Zone z in Planet.World.Zones.Values)
+                if(!ui.ShowLayer)
                 {
-                    DrawingLogic.DrawZone(z, args);
+                    return;
                 }
-                return;
-            }
-            if(ui.LayerName == ReferenceValues.CollisionLevelDead)
-            {
-                for(int i = 0; i < Planet.World.InactiveObjects.Count; i++)
+
+                //Special Layer, Zones draw different
+                if(ui.LayerName == ReferenceValues.CollisionLevelZone)
                 {
-                    WorldObject obj = Planet.World.InactiveObjects[i];
-                    DrawingLogic.DrawInactiveObject(obj, ui, args);
-
+                    foreach(Zone z in Planet.World.Zones.Values)
+                    {
+                        DrawingLogic.DrawZone(z, args);
+                    }
+                    return;
                 }
-                return;
-            }
-
-            if(!Planet.World.CollisionLevels.ContainsKey(ui.LayerName))        //Layer doesn't exist
-            {
-                return;
-            }
-
-            if(viewPast
-                && special != null)
-            {
-                int compnumber = special.ExecutionOrder;
-                DrawingLogic.DrawPastState(ui, args, compnumber);
-            }
-            else
-            {
-                //Default Draw Normal case
-                foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
+                if(ui.LayerName == ReferenceValues.CollisionLevelDead)
                 {
-                    DrawingLogic.DrawWorldObject(wo, ui, args);
+                    for(int i = 0; i < Planet.World.InactiveObjects.Count; i++)
+                    {
+                        WorldObject obj = Planet.World.InactiveObjects[i];
+                        DrawingLogic.DrawInactiveObject(obj, ui, args);
+
+                    }
+                    return;
                 }
+
+                if(!Planet.World.CollisionLevels.ContainsKey(ui.LayerName))        //Layer doesn't exist
+                {
+                    return;
+                }
+
+                if(viewPast
+                    && special != null)
+                {
+                    int compnumber = special.ExecutionOrder;
+                    DrawingLogic.DrawPastState(ui, args, compnumber);
+                }
+                else
+                {
+                    //Default Draw Normal case
+                    foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
+                    {
+                        DrawingLogic.DrawWorldObject(wo, ui, args);
+                    }
+                }
+            }
+            catch (Exception ex) {
+                DrawingErrors++;
             }
         }
 
@@ -382,7 +390,7 @@ namespace ALifeUni
                 gameTimer.Stop();
             }
             Queue<bool> viewables = new Queue<bool>();
-            foreach(LayerUISettings set in UIGrid)
+            foreach(LayerUISettings set in VisualSettings)
             {
                 viewables.Enqueue(set.ShowLayer);
                 set.ShowLayer = false;
@@ -424,7 +432,7 @@ namespace ALifeUni
             
             AgentPanel.updateInfo();
 
-            foreach(LayerUISettings set in UIGrid)
+            foreach(LayerUISettings set in VisualSettings)
             {
                 set.ShowLayer = viewables.Dequeue();
             }

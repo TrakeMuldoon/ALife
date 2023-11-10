@@ -42,7 +42,7 @@ namespace ALifeUni.ALife.Brains
 
             if(AsEnglish != this.GenerateString())
             {
-                throw new Exception("");
+                throw new Exception("Created Behaviour does not match string");
             }
         }
 

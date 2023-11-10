@@ -232,11 +232,11 @@ namespace ALifeUni.ALife.Scenarios
             foreach(Wall w in walls)
             {
                 List<Wall> splitsies = Wall.WallSplitter(w);
+                //Big walls have huge bounding boxes.
                 foreach(Wall smallWall in splitsies)
                 {
                     Planet.World.AddObjectToWorld(smallWall);
                 }
-                //Planet.World.AddObjectToWorld(w);
             }
 
             List<Wall> borderWalls = new List<Wall>()

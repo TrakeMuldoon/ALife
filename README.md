@@ -23,3 +23,20 @@ CTRL-Clicking on empty space will create a "rock" in that space. This sometimes 
 CTRL-Clicking on an object will kill that object. KILL. This is also buggy, because it doesn't always remove them correctly
 
 
+##Codewise
+
+The code is meant to be clean, commented and easier to read. 
+It is NOT, however, currently easy to understand then WHOLE of it. 
+
+A viable place to start is in the MainPage.xaml.cs where it says 
+"            /* ***********************************
+             * Set Scenario Here
+             * ***********************************/"
+That is where you pick the scenario which will be run. 
+The scenarios themselves are under
+
+ALife\ALifeUniv\ALife\Scenarios
+And each one should have a header with a description of what it is there for.
+Eventually, there will be a UI in the app to select, but that's long term.
+
+

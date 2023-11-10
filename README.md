@@ -23,7 +23,7 @@ CTRL-Clicking on empty space will create a "rock" in that space. This sometimes 
 CTRL-Clicking on an object will kill that object. KILL. This is also buggy, because it doesn't always remove them correctly
 
 
-##Codewise
+## Codewise
 
 The code is meant to be clean, commented and easier to read. 
 It is NOT, however, currently easy to understand then WHOLE of it. 

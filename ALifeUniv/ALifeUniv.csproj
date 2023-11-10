@@ -164,13 +164,13 @@
     <Compile Include="ALife\AgentPieces\Senses\SquareSense\SquareSenseCluster.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildRectangle.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\IChildShape.cs" />
+    <Compile Include="ALife\Scenarios\FieldCrossingScenario.cs" />
     <Compile Include="ALife\Scenarios\GenerationalMazeScenario.cs" />
     <Compile Include="ALife\Scenarios\MazeScenario.cs" />
     <Compile Include="ALife\Scenarios\Tests\GoalsTestScenario.cs" />
     <Compile Include="ALife\Scenarios\Tests\NeuralNetScenario.cs" />
     <Compile Include="ALife\Scenarios\Tests\RectangleScenario.cs" />
     <Compile Include="ALife\Scenarios\IScenario.cs" />
-    <Compile Include="ALife\Scenarios\BaseScenario.cs" />
     <Compile Include="ALife\Utility\EvoNumber.cs" />
     <Compile Include="ALife\Geometry\Shapes\AARectangle.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildCircle.cs" />

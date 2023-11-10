@@ -23,7 +23,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class BaseScenario : IScenario
+    public class FieldCrossingScenario : IScenario
     {
         public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
@@ -152,7 +152,7 @@ namespace ALifeUni.ALife.Scenarios
 
         public virtual string Name
         {
-            get { return "Base"; }
+            get { return "Field Crossing"; }
         }
 
         public virtual int WorldWidth

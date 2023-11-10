@@ -22,7 +22,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class MazeScenario : BaseScenario
+    public class MazeScenario : IScenario
     {
         public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {

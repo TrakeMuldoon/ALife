@@ -10,7 +10,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class GenerationalMazeScenario : BaseScenario
+    public class GenerationalMazeScenario : IScenario
     {
         public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
@@ -136,7 +136,7 @@ namespace ALifeUni.ALife.Scenarios
 
         public override string Name
         {
-            get { return "Maze"; }
+            get { return "Generational Maze"; }
         }
 
         public override int WorldWidth

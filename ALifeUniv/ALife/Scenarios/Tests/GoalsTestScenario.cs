@@ -6,7 +6,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class GoalsTestScenario : BaseScenario
+    public class GoalsTestScenario : IScenario
     {
         public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {

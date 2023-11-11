@@ -1,14 +1,26 @@
 ﻿using ALifeUni.ALife.Brains;
 using ALifeUni.ALife.Shapes;
-using ALifeUni.ALife.Utility;
 using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class NeuralNetScenario : BaseScenario
+    public class GoalsTestScenario : AbstractScenario
     {
+        /******************/
+        /* SCENARIO STUFF */
+        /******************/
+
+        public override string Name
+        {
+            get { return "GoalsSenseTest"; }
+        }
+
+        /******************/
+        /*   AGENT STUFF  */
+        /******************/
+
         public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             Agent agent = new Agent(genusName
@@ -27,13 +39,7 @@ namespace ALifeUni.ALife.Scenarios
 
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {
-                new EyeCluster(agent, "Eye1"
-                                , new ROEvoNumber(0, 20, -360, 360)  //Orientation Around Parent
-                                , new ROEvoNumber(0, 30, -360, 360)  //Relative Orientation
-                                , new ROEvoNumber(80, 3, 40, 120)    //Radius
-                                , new ROEvoNumber(25, 1, 15, 40)),   //Sweep
-                new ProximityCluster(agent, "Proximity1"
-                                , new ROEvoNumber(20, 4, 10, 40))    //Radius
+                new GoalSenseCluster(agent, "Goals", targetZone)
             };
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
@@ -41,51 +47,36 @@ namespace ALifeUni.ALife.Scenarios
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
             {
-                new ColorCluster(agent),
                 new MoveCluster(agent),
                 new RotateCluster(agent)
             };
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
-            IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 8, 8 });
+            IBrain newBrain = new BehaviourBrain(agent, "IF ALWAYS THEN Rotate.TurnRight AT [0.02]"
+                                                      , "IF ALWAYS THEN Move.GoLeft AT [0.9]");
 
             agent.CompleteInitialization(null, 1, newBrain);
 
             return agent;
         }
 
-        public override void AgentUpkeep(Agent me)
-        {
-        }
+        /******************/
+        /*  PLANET STUFF  */
+        /******************/
 
-        public override void EndOfTurnTriggers(Agent me)
-        {
-        }
+        public override int WorldWidth { get { return 800; } }
 
-        public override void GlobalEndOfTurnActions()
-        {
-        }
+        public override int WorldHeight { get { return 800; } }
 
-        public override string Name
-        {
-            get { return "Neural Net Test"; }
-        }
         public override void PlanetSetup()
         {
-            Zone nullZone = new Zone("Null", "random", Colors.Black, new Point(0, 0), 1000, 1000);
+            Zone nullZone = new Zone("Null", "random", Colors.Green, new Point(0, 0), 500, 500);
+            Zone blueZone = new Zone("Blue", "random", Colors.Blue, new Point(200, 200), 50, 50);
             Planet.World.AddZone(nullZone);
+            Planet.World.AddZone(blueZone);
 
-            int numAgents = 50;
-            for(int i = 0; i < numAgents; i++)
-            {
-                Agent rag = AgentFactory.CreateAgent("Agent", nullZone, null, Colors.Blue, 0);
-            }
-        }
-
-        public override void CollisionBehaviour(Agent me, List<WorldObject> collisions)
-        {
-
+            Agent a = AgentFactory.CreateAgent("Agent", nullZone, blueZone, Colors.Red, 0);
         }
     }
 }

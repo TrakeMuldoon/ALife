@@ -118,26 +118,30 @@ namespace ALifeUni.ALife.Scenarios
                     me.Shape.CentrePoint = myPoint;
                     collider.MoveObject(me);
 
-                    //Reproduce one child going the same direction
-                    me.Reproduce();
-
-                    //Reproduce one child going the other way
-                    Agent reverseChild = (Agent)me.Reproduce();
-                    reverseChild.Zone = me.TargetZone;
-                    reverseChild.TargetZone = me.Zone;
-                    Point reverseChildPoint = reverseChild.Zone.Distributor.NextAgentCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
-                    reverseChild.Shape.CentrePoint = reverseChildPoint;
-                    reverseChild.Shape.Orientation.Degrees += 180;
-                    reverseChild.Shape.Color = reverseChild.Zone.Color;
-                    
-                    collider.MoveObject(reverseChild);
-
+                    //Reproduce one child for each direction
+                    foreach(AgentZoneSpec spec in AgentZoneSpecs.Values)
+                    {
+                        CreateZonedChild(me, collider, spec);
+                    }
 
                     //You have a new countdown
                     me.Statistics["DeathTimer"].Value = 0;
                     me.Statistics["ZoneEscapeTimer"].Value = 0;
                 }
             }
+        }
+
+        private static void CreateZonedChild(Agent me, ICollisionMap<WorldObject> collider, AgentZoneSpec specification)
+        {
+            Agent child = (Agent)me.Reproduce();
+            child.Zone = specification.StartZone;
+            child.TargetZone = specification.TargetZone;
+            Point reverseChildPoint = child.Zone.Distributor.NextAgentCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
+            child.Shape.CentrePoint = reverseChildPoint;
+            child.Shape.Orientation.Degrees = specification.StartOrientation;
+            child.Shape.Color = specification.AgentColor;
+
+            collider.MoveObject(child);
         }
 
         public override void AgentUpkeep(Agent me)
@@ -171,21 +175,38 @@ namespace ALifeUni.ALife.Scenarios
 
         public override bool FixedWidthHeight { get { return false; } }
 
+        private struct AgentZoneSpec
+        {
+            public Zone StartZone;
+            public Zone TargetZone;
+            public Color AgentColor;
+            public int StartOrientation;
+            public AgentZoneSpec(Zone start, Zone target, Color color, int ori)
+            {
+                StartZone = start;
+                TargetZone = target;
+                AgentColor = color;
+                StartOrientation = ori;
+            }
+        }
+
+        private static Dictionary<Zone, AgentZoneSpec> AgentZoneSpecs = new Dictionary<Zone, AgentZoneSpec>();
+
         public override void PlanetSetup()
         {
             Planet instance = Planet.World;
             double height = instance.WorldHeight;
             double width = instance.WorldWidth;
 
-            Zone red = new Zone("Red(Blue)", "Random", Colors.Red, new Point(0, 0), 50, height);
-            Zone blue = new Zone("Blue(Red)", "Random", Colors.Blue, new Point(width - 50, 0), 50, height);
+            Zone red = new Zone("Red(->Blue)", "Random", Colors.Red, new Point(0, 0), 50, height);
+            Zone blue = new Zone("Blue(->Red)", "Random", Colors.Blue, new Point(width - 50, 0), 50, height);
             red.OppositeZone = blue;
             red.OrientationDegrees = 0;
             blue.OppositeZone = red;
             blue.OrientationDegrees = 180;
 
-            Zone green = new Zone("Green(Orange)", "Random", Colors.Green, new Point(0, 0), width, 100);
-            Zone orange = new Zone("Orange(Green)", "Random", Colors.Orange, new Point(0, height - 40), width, 40);
+            Zone green = new Zone("Green(->Orange)", "Random", Colors.Green, new Point(0, 0), width, 100);
+            Zone orange = new Zone("Orange(->Green)", "Random", Colors.Orange, new Point(0, height - 40), width, 40);
             green.OppositeZone = orange;
             green.OrientationDegrees = 90;
             orange.OppositeZone = green;
@@ -196,19 +217,33 @@ namespace ALifeUni.ALife.Scenarios
             instance.AddZone(green);
             instance.AddZone(orange);
 
+            AgentZoneSpecs.Add(red, new AgentZoneSpec(red, blue, Colors.Blue, 0));
+            AgentZoneSpecs.Add(blue, new AgentZoneSpec(blue, red, Colors.Red, 180));
+            AgentZoneSpecs.Add(green, new AgentZoneSpec(green, orange, Colors.Orange, 90));
+            AgentZoneSpecs.Add(orange, new AgentZoneSpec(orange, green, Colors.Green, 270));
+
             int numAgents = 80;
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
-                Agent bag = AgentFactory.CreateAgent("Agent", blue, red, Colors.Red, 180);
-                Agent gag = AgentFactory.CreateAgent("Agent", green, orange, Colors.Orange, 90);
-                Agent oag = AgentFactory.CreateAgent("Agent", orange, green, Colors.Green, 270);
+                Agent rag = CreateZonedAgent(AgentZoneSpecs[red]);
+                Agent bag = CreateZonedAgent(AgentZoneSpecs[blue]);
+                Agent gag = CreateZonedAgent(AgentZoneSpecs[green]);
+                Agent oag = CreateZonedAgent(AgentZoneSpecs[orange]);
             }
 
             Point rockCP = new Point((width / 2) + (width / 15), height / 2);
-            Circle cir = new Circle(rockCP, 30);
+            Circle cir = new Circle(rockCP, 20);
             FallingRock fr = new FallingRock(rockCP, cir, Colors.Black);
             instance.AddObjectToWorld(fr);
+        }
+
+        private Agent CreateZonedAgent(AgentZoneSpec spec)
+        {
+            return AgentFactory.CreateAgent("Agent"
+                                            , spec.StartZone
+                                            , spec.TargetZone
+                                            , spec.AgentColor
+                                            , spec.StartOrientation);
         }
     }
 }

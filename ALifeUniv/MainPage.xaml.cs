@@ -42,7 +42,7 @@ namespace ALifeUni
             /* ***********************************
              * Set Scenario Here
              * ***********************************/
-            Planet.CreateWorld(new BaseScenario());
+            Planet.CreateWorld(new FieldCrossingScenario());
             //Planet.CreateWorld(new MazeScenario());
 
             animCanvas.ClearColor = Colors.NavajoWhite;

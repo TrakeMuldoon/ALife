@@ -4,6 +4,28 @@
 
 This system is intended so simulate a set of agents following a set of non-declarative rules, interacting with each other with the hopes to show off some emergent behaviour(s).
 
+The Agents are little digital creatures that each have an independant brain.
+The Brain is any algorithm or function that takes a set of Agent Inputs, and maps them (in any way) to a set of Agent Actions
+An Input is anything that the creature can read numerically, external or internal
+- "MyAge"
+- "MyEnergyLevel"
+- "DistanceToGoal"
+Inputs can come in "Input Clusters" which is a set of related inputs. This helps optimize the code
+- Eye Cluster is a set of inputs 
+-- DoISee
+-- HowManyThings (currently disabled)
+-- DoIRecognize (currently disabled)
+-- WhatColor(Avg) (currently disabled)
+-- HowMuchColor (currently disabled)
+-- Etc.
+
+Actions are anything the Agent can do
+- Move
+- Turn
+- Bite (not implemented yet)
+
+A Scenario is a set of rules about agents, their interactions with each other and the world.
+
 ## Using the App
 
 Controls

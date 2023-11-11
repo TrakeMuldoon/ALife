@@ -10,8 +10,21 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class GenerationalMazeScenario : IScenario
+    public class GenerationalMazeScenario : AbstractScenario
     {
+        /******************/
+        /* SCENARIO STUFF */
+        /******************/
+
+        public override string Name
+        {
+            get { return "Generational Maze"; }
+        }
+
+        /******************/
+        /*   AGENT STUFF  */
+        /******************/
+
         public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             Agent agent = new Agent(genusName
@@ -59,7 +72,6 @@ namespace ALifeUni.ALife.Scenarios
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
             {
-                //new ColorCluster(agent),
                 new MoveCluster(agent),
                 new RotateCluster(agent)
             };
@@ -114,30 +126,13 @@ namespace ALifeUni.ALife.Scenarios
 
         public override void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
-            //foreach(WorldObject wo in collisions)
-            //{
-            //    if(!(wo is Wall))
-            //    {
-            //        wo.Die();
-            //    }
-            //}
-            //me.Die();
-            //foreach(WorldObject wo in collisions)
-            //{
-            //    if(wo is Wall)
-            //    {
-            //        me.Die();
-            //        return;
-            //    }
-            //}
+
             me.Die();
         }
 
-
-        public override string Name
-        {
-            get { return "Generational Maze"; }
-        }
+        /******************/
+        /*  PLANET STUFF  */
+        /******************/
 
         public override int WorldWidth
         {
@@ -357,7 +352,9 @@ namespace ALifeUni.ALife.Scenarios
 
         public override void Reset()
         {
-            bestXNum = 5;
+            bestXNum = 4;
+            Iteration = 1;
+            bestEver = null;
         }
     }
 }

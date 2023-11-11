@@ -7,8 +7,21 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class NeuralNetScenario : IScenario
+    public class NeuralNetScenario : AbstractScenario
     {
+        /******************/
+        /* SCENARIO STUFF */
+        /******************/
+
+        public override string Name
+        {
+            get { return "Neural Net Test"; }
+        }
+
+        /******************/
+        /*   AGENT STUFF  */
+        /******************/
+
         public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             Agent agent = new Agent(genusName
@@ -55,22 +68,14 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
-        public override void AgentUpkeep(Agent me)
-        {
-        }
+        /******************/
+        /*  PLANET STUFF  */
+        /******************/
 
-        public override void EndOfTurnTriggers(Agent me)
-        {
-        }
+        public override int WorldWidth { get { return 800; } }
 
-        public override void GlobalEndOfTurnActions()
-        {
-        }
+        public override int WorldHeight { get { return 800; } }
 
-        public override string Name
-        {
-            get { return "Neural Net Test"; }
-        }
         public override void PlanetSetup()
         {
             Zone nullZone = new Zone("Null", "random", Colors.Black, new Point(0, 0), 1000, 1000);
@@ -81,11 +86,6 @@ namespace ALifeUni.ALife.Scenarios
             {
                 Agent rag = AgentFactory.CreateAgent("Agent", nullZone, null, Colors.Blue, 0);
             }
-        }
-
-        public override void CollisionBehaviour(Agent me, List<WorldObject> collisions)
-        {
-
         }
     }
 }

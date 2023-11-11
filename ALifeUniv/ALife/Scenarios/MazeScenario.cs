@@ -22,8 +22,21 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class MazeScenario : IScenario
+    public class MazeScenario : AbstractScenario
     {
+        /******************/
+        /* SCENARIO STUFF */
+        /******************/
+
+        public override string Name
+        {
+            get { return "Maze"; }
+        }
+
+        /******************/
+        /*   AGENT STUFF  */
+        /******************/
+
         public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             Agent agent = new Agent(genusName
@@ -71,7 +84,6 @@ namespace ALifeUni.ALife.Scenarios
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
             {
-                //new ColorCluster(agent),
                 new MoveCluster(agent),
                 new RotateCluster(agent)
             };
@@ -122,23 +134,15 @@ namespace ALifeUni.ALife.Scenarios
             }
         }
 
-        public override string Name
-        {
-            get { return "Maze"; }
-        }
+        /******************/
+        /*  PLANET STUFF  */
+        /******************/
 
-        public override int WorldWidth
-        {
-            get { return 6000; }
-        }
-        public override int WorldHeight
-        {
-            get { return 2000; }
-        }
-        public override bool FixedWidthHeight
-        {
-            get { return true; }
-        }
+        public override int WorldWidth { get { return 6000; } }
+
+        public override int WorldHeight { get { return 2000; } }
+
+        public override bool FixedWidthHeight { get { return true; } }
 
         public override void PlanetSetup()
         {
@@ -223,9 +227,9 @@ namespace ALifeUni.ALife.Scenarios
                 List<Wall> splitsies = Wall.WallSplitter(w);
                 foreach(Wall smallWall in splitsies)
                 {
+                    //Big walls have huge bounding boxes, which impacts performance
                     Planet.World.AddObjectToWorld(smallWall);
                 }
-                //Planet.World.AddObjectToWorld(w);
             }
 
             List<Wall> borderWalls = new List<Wall>()

@@ -6,10 +6,18 @@ namespace ALifeUni.ALife.Scenarios
 {
     public interface IScenario
     {
+        /******************/
+        /* SCENARIO STUFF */
+        /******************/
 
-        /****************/
-        /* AGENT STUFF */
-        /****************/
+        string Name
+        {
+            get;
+        }
+
+        /******************/
+        /*   AGENT STUFF  */
+        /******************/
 
         Agent CreateAgent(String genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation);
 
@@ -19,14 +27,9 @@ namespace ALifeUni.ALife.Scenarios
 
         void CollisionBehaviour(Agent me, List<WorldObject> collisions);
 
-        /****************/
-        /* PLANET STUFF */
-        /****************/
-
-        string Name
-        {
-            get;
-        }
+        /******************/
+        /*  PLANET STUFF  */
+        /******************/
 
         int WorldWidth
         {
@@ -36,6 +39,7 @@ namespace ALifeUni.ALife.Scenarios
         {
             get;
         }
+        /* It's not clear what I was thinking when I created this. Re-evaluate at a later date */
         bool FixedWidthHeight
         {
             get;
@@ -45,6 +49,8 @@ namespace ALifeUni.ALife.Scenarios
 
         void GlobalEndOfTurnActions();
 
+
+        /* This is called when the scenario is reset, any variables being tracked inside the Scenario itself must be reset */
         void Reset();
     }
 }

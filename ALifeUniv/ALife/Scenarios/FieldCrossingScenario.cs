@@ -23,9 +23,21 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class FieldCrossingScenario : IScenario
+    public class FieldCrossingScenario : AbstractScenario
     {
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
+        /******************/
+        /* SCENARIO STUFF */
+        /******************/
+        public override string Name
+        {
+            get { return "Field Crossing"; }
+        }
+
+        /******************/
+        /*   AGENT STUFF  */
+        /******************/
+
+        public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -54,7 +66,7 @@ namespace ALifeUni.ALife.Scenarios
                                 , new ROEvoNumber(startValue: -10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Relative Orientation
                                 , new ROEvoNumber(startValue: 60, evoDeltaMax: 3, hardMin: 40, hardMax: 120)       //Radius
                                 , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
-                //new GoalSenseCluster(agent, "GoalSense", targetZone)
+                new GoalSenseCluster(agent, "GoalSense", targetZone)
             };
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
@@ -68,7 +80,6 @@ namespace ALifeUni.ALife.Scenarios
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
             {
-                //new ColorCluster(agent),
                 new MoveCluster(agent),
                 new RotateCluster(agent)
             };
@@ -82,7 +93,7 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
-        public virtual void EndOfTurnTriggers(Agent me)
+        public override void EndOfTurnTriggers(Agent me)
         {
             if(me.Statistics["DeathTimer"].Value > 1899)
             {
@@ -129,7 +140,7 @@ namespace ALifeUni.ALife.Scenarios
             }
         }
 
-        public virtual void AgentUpkeep(Agent me)
+        public override void AgentUpkeep(Agent me)
         {
             //Increment or Decrement end of turn values
             me.Statistics["Age"].IncreasePropertyBy(1);
@@ -137,7 +148,7 @@ namespace ALifeUni.ALife.Scenarios
             me.Statistics["ZoneEscapeTimer"].IncreasePropertyBy(1);
         }
 
-        public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        public override void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
             //Collision means death right now
             foreach(WorldObject wo in collisions)
@@ -150,25 +161,17 @@ namespace ALifeUni.ALife.Scenarios
             me.Die();
         }
 
-        public virtual string Name
-        {
-            get { return "Field Crossing"; }
-        }
+        /******************/
+        /*  PLANET STUFF  */
+        /******************/
 
-        public virtual int WorldWidth
-        {
-            get { return 1000; }
-        }
-        public virtual int WorldHeight
-        {
-            get { return 1000; }
-        }
-        public virtual bool FixedWidthHeight
-        {
-            get { return false; }
-        }
+        public override int WorldWidth { get { return 1000; } }
 
-        public virtual void PlanetSetup()
+        public override int WorldHeight { get { return 1000; } }
+
+        public override bool FixedWidthHeight { get { return false; } }
+
+        public override void PlanetSetup()
         {
             Planet instance = Planet.World;
             double height = instance.WorldHeight;
@@ -206,16 +209,6 @@ namespace ALifeUni.ALife.Scenarios
             Circle cir = new Circle(rockCP, 30);
             FallingRock fr = new FallingRock(rockCP, cir, Colors.Black);
             instance.AddObjectToWorld(fr);
-        }
-
-        public virtual void GlobalEndOfTurnActions()
-        {
-
-        }
-
-        public virtual void Reset()
-        {
-
         }
     }
 }

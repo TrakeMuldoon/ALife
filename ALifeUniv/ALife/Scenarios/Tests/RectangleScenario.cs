@@ -8,8 +8,21 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class RectangleScenario : IScenario
+    public class RectangleScenario : AbstractScenario
     {
+        /******************/
+        /* SCENARIO STUFF */
+        /******************/
+
+        public override string Name
+        {
+            get { return "Rectangular Agent Test"; }
+        }
+
+        /******************/
+        /*   AGENT STUFF  */
+        /******************/
+
         public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             Agent agent = new Agent(genusName
@@ -55,20 +68,13 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
-        public override void EndOfTurnTriggers(Agent me)
-        {
+        /******************/
+        /*  PLANET STUFF  */
+        /******************/
 
-        }
+        public override int WorldWidth { get { return 800; } }
 
-        public override void AgentUpkeep(Agent me)
-        {
-
-        }
-
-        public override string Name
-        {
-            get { return "Rectangular Agent Test"; }
-        }
+        public override int WorldHeight { get { return 800; } }
 
         public override void PlanetSetup()
         {

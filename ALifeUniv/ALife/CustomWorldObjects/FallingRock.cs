@@ -44,7 +44,7 @@ namespace ALifeUni.ALife.CustomWorldObjects
             Point origin = new Point(Shape.CentrePoint.X, Shape.CentrePoint.Y);
             Angle turnRotation = new Angle(2);
 
-            Point newCentre = ExtraMath.TranslateByVector(Shape.CentrePoint, Shape.Orientation, 15);
+            Point newCentre = ExtraMath.TranslateByVector(Shape.CentrePoint, Shape.Orientation, 10);
             Shape.CentrePoint = newCentre;
 
             Shape.Orientation += turnRotation;
@@ -62,6 +62,9 @@ namespace ALifeUni.ALife.CustomWorldObjects
                 crushed.Die();
             }
             collider.MoveObject(this);
+
+            /* This code made the falling rock zoom across the map and then reappear at the starting point
+             * Could be used like a raindrop animation, if there were many of them */
 
             //List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(Shape.BoundingBox);
             //Zone z = inZones.Where((zone) => zone.Name == finish.Name).FirstOrDefault();

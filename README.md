@@ -1,6 +1,10 @@
 # ALife
 
+## Introduction
+
 This system is intended so simulate a set of agents following a set of non-declarative rules, interacting with each other with the hopes to show off some emergent behaviour(s).
+
+## Using the App
 
 Controls
 
@@ -15,7 +19,7 @@ Show Ancestry tickbox will show the ancestry of each living agent. It highlights
 The Smallest Brain, Oldest, and Most Children buttons will CYCLE through any tied agents who match that description and Select them.
 The "Dot" button will add a dot to the map. You enter the coordinates in the box above in the format "{double},{double}" which will be parsed as "x,y"
 
-Clicking on an agent will "Select" them. They will be circled in Red and their information displayed in the Agent Ifnromation display on the right.
+Clicking on an agent will "Select" them. They will be circled in Red and their information displayed in the Agent Information display on the right.
 
 Holding "X" while an agent is selected will show the "shadow world" which is what the agent saw last turn. This is really only useful when the simulation is paused.
 
@@ -38,5 +42,3 @@ The scenarios themselves are under
 ALife\ALifeUniv\ALife\Scenarios
 And each one should have a header with a description of what it is there for.
 Eventually, there will be a UI in the app to select, but that's long term.
-
-

@@ -231,9 +231,9 @@ namespace ALifeUni.ALife.Scenarios
                 Agent oag = CreateZonedAgent(AgentZoneSpecs[orange]);
             }
 
-            Point rockCP = new Point((width / 2) + (width / 15), height / 2);
-            Circle cir = new Circle(rockCP, 20);
-            FallingRock fr = new FallingRock(rockCP, cir, Colors.Black);
+            Point rockCP = new Point((width / 2) + (width / 3), height / 2);
+            Rectangle rec = new Rectangle(rockCP, 40, 20, Colors.Black);
+            FallingRock fr = new FallingRock(rockCP, rec, Colors.Black);
             instance.AddObjectToWorld(fr);
         }
 

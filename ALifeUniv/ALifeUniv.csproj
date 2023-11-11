@@ -168,9 +168,9 @@
     <Compile Include="ALife\Scenarios\FieldCrossingScenario.cs" />
     <Compile Include="ALife\Scenarios\GenerationalMazeScenario.cs" />
     <Compile Include="ALife\Scenarios\MazeScenario.cs" />
-    <Compile Include="ALife\Scenarios\Tests\GoalsTestScenario.cs" />
-    <Compile Include="ALife\Scenarios\Tests\NeuralNetScenario.cs" />
-    <Compile Include="ALife\Scenarios\Tests\RectangleScenario.cs" />
+    <Compile Include="ALife\Scenarios\TestScenarios\GoalsTestScenario.cs" />
+    <Compile Include="ALife\Scenarios\TestScenarios\NeuralNetScenario.cs" />
+    <Compile Include="ALife\Scenarios\TestScenarios\RectangleScenario.cs" />
     <Compile Include="ALife\Scenarios\IScenario.cs" />
     <Compile Include="ALife\Utility\EvoNumber.cs" />
     <Compile Include="ALife\Geometry\Shapes\AARectangle.cs" />
@@ -283,7 +283,9 @@
       <Version>1.27.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ALife\Scenarios\ScenarioPieces\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

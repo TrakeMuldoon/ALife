@@ -33,8 +33,16 @@ Controls
 the "Q" and "E" keys will zoom in and out.
 
 There is a Seed Input at the top. Once it is changed, you can click "reset" and the world will be reset to whatever is currently in the Seed textbox.
-Stupid Fast does "200" turns without pausing.
-Obscenely Fast does 5000 turns without pausing and usually takes 5-10 seconds. The UI is blanked during this time to save cpu.
+FF will fast forward that many turns. The UI is blanked during this time to save cpu.
+
+Beneath that there is a poorly styled grid. 
+Each row of the grid represents a "collision layer" in the world.
+The columns (which will be labeled eventually) are
+    Show Layer
+    Show Objects (including agents)
+    Show Objects Bounding Boxes
+    Show Agent Senses
+    Show Agent Senses Bounding Boxes
 
 Show Ancestry tickbox will show the ancestry of each living agent. It highlights the "Eldest Living" in a blue circle.
 
@@ -54,13 +62,13 @@ CTRL-Clicking on an object will kill that object. KILL. This is also buggy, beca
 The code is meant to be clean, commented and easier to read. 
 It is NOT, however, currently easy to understand then WHOLE of it. 
 
-A viable place to start is in the MainPage.xaml.cs where it says 
+To change the scenario being executed find the following comment in the Main.Xaml.cs
 "            /* ***********************************
              * Set Scenario Here
              * ***********************************/"
 That is where you pick the scenario which will be run. 
 The scenarios themselves are under
-
 ALife\ALifeUniv\ALife\Scenarios
+
 And each one should have a header with a description of what it is there for.
 Eventually, there will be a UI in the app to select, but that's long term.

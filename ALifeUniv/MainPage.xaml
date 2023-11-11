@@ -14,14 +14,6 @@
     Loaded="Page_Loaded"
     Unloaded="Page_Unloaded">
     <Page.Resources>
-        <Style x:Key="CBStyle" TargetType="controls:DataGridCell">
-            <!--<Setter Property="Background" Value="Black"/>
-            <Setter Property="Margin" Value="-10"/>
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Width" Value="32" />
-            <Setter Property="Height" Value="28" />
-            <Setter Property="HorizontalAlignment" Value="Left" />-->
-        </Style>
         <Style x:Key="ElemStyle" TargetType="CheckBox">
             <!--<Setter Property="Background" Value="RED"/>
             <Setter Property="Margin" Value="-2"/>
@@ -111,11 +103,11 @@
             <!--<TextBlock x:Name="debugText" />-->
 
             <TextBlock x:Name="LayersLabel" Text="Layers"></TextBlock>
-            <StackPanel Orientation="Vertical" Width="220" Margin="0" Padding="0" Background="Green">
+            <StackPanel Orientation="Vertical" Width="220" Margin="0" Padding="0">
                 <ListView x:Name="VisualSettingsList" SelectionMode="None" Background="Blue" Margin="0" Padding="0" BorderThickness="0" HorizontalAlignment="Left">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="-5,0,0,0" Padding="0" Background="Red">
+                            <StackPanel Orientation="Horizontal" Margin="-5,0,0,0" Padding="0">
                                 <TextBlock Text="{Binding LayerName}" Padding="0" Width="60"/>
                                 <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowLayer, Mode=TwoWay}" />
                                 <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowObjects, Mode=TwoWay}" />
@@ -128,45 +120,16 @@
                 </ListView>
             </StackPanel>
 
-            <!--<controls:DataGrid x:Name="VisualSettingsGrid"
-                               AutoGenerateColumns="false"
-                               SelectionMode="Single"
-                               SelectionUnit="Cell"
-                            >
-                <controls:DataGrid.Columns>
-                    <controls:DataGridTextColumn Header="Layer" Binding="{Binding LayerName}"
-                                                 HeaderStyle="{StaticResource headStyle}"
-                                                 Width="50" />
-                    <controls:DataGridCheckBoxColumn Header="On" Binding="{Binding ShowLayer}"
-                                                     HeaderStyle="{StaticResource headStyle}"
-                                                     CellStyle="{StaticResource CBStyle}"
-                                                     ElementStyle="{StaticResource ElemStyle}"
-                                                     Width="32"/>
-                    <controls:DataGridCheckBoxColumn Header="Obj" Binding="{Binding ShowObjects}"
-                                                     HeaderStyle="{StaticResource headStyle}"
-                                                     CellStyle="{StaticResource CBStyle}" 
-                                                     ElementStyle="{StaticResource ElemStyle}"                                             
-                                                     Width="32"/>
-                    <controls:DataGridCheckBoxColumn Header="Ag" Binding="{Binding ShowAgents}"
-                                                     HeaderStyle="{StaticResource headStyle}"
-                                                     CellStyle="{StaticResource CBStyle}"
-                                                     ElementStyle="{StaticResource ElemStyle}"
-                                                     Width="32"/>
-                    <controls:DataGridCheckBoxColumn Header="BB" Binding="{Binding ShowBoundingBoxes}"
-                                                     HeaderStyle="{StaticResource headStyle}"
-                                                     CellStyle="{StaticResource CBStyle}"
-                                                     Width="32"/>
-                    <controls:DataGridCheckBoxColumn Header="Sen" Binding="{Binding ShowSenses}"
-                                                     HeaderStyle="{StaticResource headStyle}"
-                                                     CellStyle="{StaticResource CBStyle}"
-                                                     Width="32"/>
-                </controls:DataGrid.Columns>
-            </controls:DataGrid>-->
+            <Border BorderBrush="Beige" BorderThickness="1">
+                <TextBlock x:Name="ZoneInfo"></TextBlock>
+            </Border>
+            <Border BorderBrush="Beige" BorderThickness="1">
+                <TextBlock x:Name="GeneologyInfo"></TextBlock>
+            </Border>
+            <Border BorderBrush="Beige" BorderThickness="1">
+                <TextBlock x:Name="Turns"></TextBlock>
+            </Border>
 
-            
-            
-            <TextBlock x:Name="ZoneInfo"></TextBlock>
-            <TextBlock x:Name="Turns"></TextBlock>
             <CheckBox x:Name="ShowGeneology" Click="ShowGeneology_Checked">Show Ancestry</CheckBox>
             <Button x:Name="LongestLived" Click="LongestLived_Click">Oldest</Button>
             <Button x:Name="ShortestBrain" Click="ShortestBrain_Click">Smallest Brain</Button>

@@ -84,6 +84,7 @@ namespace ALifeUni
             Planet.World.ExecuteOneTurn();
             AgentPanel.updateInfo();
             UpdateZoneInfo();
+            UpdateGeneology();
         }
 
         private Boolean showParents;
@@ -141,6 +142,28 @@ namespace ALifeUni
             //sb.AppendLine("WORLD: " + Planet.World.AllActiveObjects.Where(wo => wo.Alive).Count());
             ZoneInfo.Text = sb.ToString();
             Turns.Text = Planet.World.Turns.ToString();
+        }
+
+        private void UpdateGeneology()
+        {
+            Dictionary<string, int> geneCount = new Dictionary<string, int>();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
+            {
+                WorldObject wo = Planet.World.AllActiveObjects[i];
+                if (wo is Agent ag
+                    && ag.Alive)
+                {
+                    string gene = ag.IndividualLabel.Substring(0, 3);
+                    if(!geneCount.ContainsKey(gene))
+                    {
+                        geneCount.Add(gene, 0);
+                    }
+                    ++geneCount[gene];
+                }
+            }
+
+            GeneologyInfo.Text = "Genes Active: " + geneCount.Count;
         }
 
         private void DrawLayer(LayerUISettings ui, CanvasAnimatedDrawEventArgs args)

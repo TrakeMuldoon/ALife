@@ -128,10 +128,10 @@ namespace ALifeUni.ALife.Utility
             double stdDev = 0.2; //TODO: This is a magic number to approximate the distribution I like.
 
             double u1 = 1.0 - Planet.World.NumberGen.NextDouble(); //uniform(0,1] random doubles
-            double u2 = 1.0 - Planet.World.NumberGen.NextDouble();
+            double u2 = 1.0 - Planet.World.NumberGen.NextDouble(); //uniform(0,1] random doubles
             double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1))
                                    * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
-            double randNormal = mean + stdDev * randStdNormal;      //random normal(mean,stdDev^2)
+            double randNormal = mean + stdDev * randStdNormal;     //random normal(mean,stdDev^2)
 
             double delta = randNormal * deltaMax;
             //double delta = (Planet.World.NumberGen.NextDouble() * deltaMax)

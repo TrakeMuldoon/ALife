@@ -59,12 +59,12 @@ namespace ALifeUni.ALife.Scenarios
                 new EyeCluster(agent, "EyeLeft"
                                 , new ROEvoNumber(startValue: -20, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
                                 , new ROEvoNumber(startValue: 10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Relative Orientation
-                                , new ROEvoNumber(startValue: 60, evoDeltaMax: 3, hardMin: 40, hardMax: 120)       //Radius
+                                , new ROEvoNumber(startValue: 60, evoDeltaMax: 5, hardMin: 30, hardMax: 100)       //Radius
                                 , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
                 new EyeCluster(agent, "EyeRight"
                                 , new ROEvoNumber(startValue: 20, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Orientation Around Parent
                                 , new ROEvoNumber(startValue: -10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Relative Orientation
-                                , new ROEvoNumber(startValue: 60, evoDeltaMax: 3, hardMin: 40, hardMax: 120)       //Radius
+                                , new ROEvoNumber(startValue: 60, evoDeltaMax: 5, hardMin: 30, hardMax: 100)       //Radius
                                 , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
                 new GoalSenseCluster(agent, "GoalSense", targetZone)
             };

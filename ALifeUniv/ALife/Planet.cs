@@ -156,37 +156,35 @@ namespace ALifeUni.ALife
 
         public void ExecuteOneTurn()
         {
-            lock {
-                turns++;
-                int order = 0;
-                //Iterate through all the active objects, and execute their turn.
-                //Note, some of them may have "died" in the meantime. They still "execute" a turn. 
-                foreach (WorldObject wo in StableActiveObjects)
-                {
-                    wo.ExecutionOrder = order++;
-                    wo.ExecuteTurn();
-                }
-
-                //Add all the new objects into the Stable list
-                if (NewActiveObjects.Count > 0)
-                {
-                    StableActiveObjects.AddRange(NewActiveObjects);
-                    NewActiveObjects.Clear();
-                }
-                // Remove objects as necessary
-                while (ToRemoveObjects.Count > 0)
-                {
-                    AllActiveObjects.Remove(ToRemoveObjects[0]);
-                    StableActiveObjects.Remove(ToRemoveObjects[0]);
-
-                    //It needs to be added to the InactiveObjects list, for statistics reasons. 
-                    InactiveObjects.Add(ToRemoveObjects[0]);
-
-                    ToRemoveObjects.RemoveAt(0);
-                }
-
-                GlobalEndOfTurnActions();
+            turns++;
+            int order = 0;
+            //Iterate through all the active objects, and execute their turn.
+            //Note, some of them may have "died" in the meantime. They still "execute" a turn. 
+            foreach(WorldObject wo in StableActiveObjects)
+            {
+                wo.ExecutionOrder = order++;
+                wo.ExecuteTurn();
             }
+
+            //Add all the new objects into the Stable list
+            if (NewActiveObjects.Count > 0)
+            {
+                StableActiveObjects.AddRange(NewActiveObjects);
+                NewActiveObjects.Clear();
+            }
+            // Remove objects as necessary
+            while(ToRemoveObjects.Count > 0)
+            {
+                AllActiveObjects.Remove(ToRemoveObjects[0]);
+                StableActiveObjects.Remove(ToRemoveObjects[0]);
+
+                //It needs to be added to the InactiveObjects list, for statistics reasons. 
+                InactiveObjects.Add(ToRemoveObjects[0]);
+
+                ToRemoveObjects.RemoveAt(0);
+            }
+
+            GlobalEndOfTurnActions();
         }
 
         internal void GlobalEndOfTurnActions()

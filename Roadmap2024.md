@@ -39,11 +39,12 @@ These items may be complete already. It is unclear to me as of right now.
 * [ ] Live editing of Agents
 * [ ] Saving of Current State (Including flag for "edited or not")
 
-# 2024 Roadmap
+# 2024 Roadmap - Ideas (No Particular Order)
 * [ ] Scenario: Fruit trees. Bump into them an fruit falls nearby. Eat 2 (x) fruits, to reproduce. Fruits would be different colour from the agents.
 * [ ] Scenario: Predation. Biting other agents (not just bumping) will kill them, and two kills reproduces. 
 * [ ] Aggressive Code Cleanup. There are a lot of config defintions scattered around that don't really make sense anymore, and aren't used. They should be put into an archive folder as reference artifacts.
-* [ ] Update the UI into popout panels, instead of inline. 
+* [ ] Update the UI into popout panels, instead of inline.
+* [ ] Update the Scenario Runner to be genericizable. Feed in a Scenario and outputs, etc, instead of replacing them every time. 
 
 
 Neural Network Open Source projects

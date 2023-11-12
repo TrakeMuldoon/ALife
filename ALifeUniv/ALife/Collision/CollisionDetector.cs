@@ -76,10 +76,16 @@ namespace ALifeUni.ALife
             return collisions;
         }
 
+
+        /*** Top Level Intersection Methods **********************************************
+         * These are all the individual shape to shape collision detectors. 
+         * Some of them simply call the utility methods below. But these are the generized versions.
+         */
         public static Boolean IndividualShapeCollision(Circle circle1, Circle circle2)
         {
             return CircleCircleCollision(circle1, circle2);
         }
+
         public static Boolean IndividualShapeCollision(Circle circle, Sector sector)
         {
             //All Collision Detection has the following cases
@@ -153,6 +159,7 @@ namespace ALifeUni.ALife
 
             return false;
         }
+
         public static Boolean IndividualShapeCollision(Sector a, Sector b)
         {
             throw new NotImplementedException();
@@ -181,7 +188,6 @@ namespace ALifeUni.ALife
             return RecArcCollision;
         }
 
-
         public static Boolean IndividualShapeCollision(Rectangle a, Rectangle b)
         {
             bool segmentCollision = (DoesLineSegmentIntersectRectangle(a.TopLeft, a.TopRight, b)
@@ -196,8 +202,18 @@ namespace ALifeUni.ALife
                   || IsPointWithinRectangle(b.TopLeft, a);
         }
 
+
+        /*** Utility Intersection Methods ************************************************
+         * These are all the utility functions used to test intersection. 
+         * Not all of them are super optimized. More work on optimization is required.
+         */
+
         private static Boolean DoesRectangleIntersectArc(Sector sector, Rectangle rectangle)
         {
+            /* Check if each of the four rectangle lines intersect any part of the sector.
+             * TODO: Test if this works for sectors which are entirely contained WITHIN rectangle
+             * I don't think that was implemented, because it is currently impossible in the scenario.
+             */
             Rectangle r = rectangle;
             return (DoesLineSegmentIntersectSector(r.TopLeft, r.TopRight, sector)
                     || DoesLineSegmentIntersectSector(r.TopRight, r.BottomRight, sector)
@@ -233,13 +249,13 @@ namespace ALifeUni.ALife
         {
             if(a < b)
             {
-                return a <= eval
-                        && eval <= b;
+                //return a <= eval && eval <= b;
+                return (eval - a) * (b - eval) >= 0;
             }
             else
             {
-                return b <= eval
-                        && eval <= a;
+                //return b <= eval && eval <= a;
+                return (eval - b) * (a - eval) >= 0;
             }
         }
 
@@ -252,9 +268,9 @@ namespace ALifeUni.ALife
                     || LineSegmentLineSegmentCollision(a1, a2, r.BottomLeft, r.TopLeft));
         }
 
-
         private static Boolean PointRadiusPointRadiusCollision(Point a, float radA, Point b, float radB)
         {
+
             //If the distance between the points is closer or equal to this, then they overlap/collide
             float minimumDistance = radA + radB;
 
@@ -263,6 +279,9 @@ namespace ALifeUni.ALife
 
             double distanceSq = xDeltaSq + yDeltaSq;
             double minSq = minimumDistance * minimumDistance;
+
+            //Note: We never do square roots anywhere, because they are slow. 
+            // It does mean we're passing around a lot of squared values. 
 
             return distanceSq <= minSq;
         }
@@ -333,11 +352,11 @@ namespace ALifeUni.ALife
 
                 return intersections;
             }
-            throw new Exception("Impossible to get here.");
         }
 
         private static Boolean IsPointOnLine(Point pt, Point line1, Point line2)
         {
+            //TODO: Should these be renamed line1 => lineStart, and line2 => lineEnd?
             double lineX = line1.X - line2.X;
             double lineY = line1.Y - line2.Y;
 
@@ -351,6 +370,7 @@ namespace ALifeUni.ALife
             double ptLine1SQ = (ptLine1X * ptLine1X) + (ptLine1Y * ptLine1Y);
             double ptLine2SQ = (ptLine2X * ptLine2X) + (ptLine2Y * ptLine2Y);
 
+            //TODO: This uses 3 sqrts. How often is this function used?
             double diff = Math.Sqrt(lenSQ) - (Math.Sqrt(ptLine1SQ) + Math.Sqrt(ptLine2SQ));
             return Math.Round(diff, 3) == 0;
         }
@@ -371,6 +391,11 @@ namespace ALifeUni.ALife
 
         private static bool IsPointWithinSector(Point targetPoint, Sector sector)
         {
+            // To determine if a point is within a sector.
+            // 1. First check if the point is within the circle, which is relatively fast.
+            //    If it is not, then we can bail.
+            // 2. Check if the point is within the sweep, which is slightly harder.
+            //TODO: Actually check which operation is slower. I might have optimized this in the wrong order
             if(!PointCircleCollision(targetPoint, new Circle(sector.CentrePoint, sector.Radius)))
                 return false;
 
@@ -433,7 +458,8 @@ namespace ALifeUni.ALife
             bool trbr = LinePointSubCollision(p, rect.TopRight, rect.BottomRight);
             bool brbl = LinePointSubCollision(p, rect.BottomRight, rect.BottomLeft);
             bool bltl = LinePointSubCollision(p, rect.BottomLeft, rect.TopLeft);
-
+            
+            //Exclusive OR to determine if the number of true is odd or even
             return tltr ^= trbr ^= brbl ^= bltl;
         }
 

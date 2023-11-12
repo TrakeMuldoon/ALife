@@ -24,9 +24,7 @@ namespace ScenarioRunner
             Log.Logger = new LoggerConfiguration().WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day).CreateLogger();
             Log.Information("<---StartRun");
 
-            IScenario scenario = new GenerationalMazeScenario();
-            //int height = 2000;
-            //int width = 2000;
+            IScenario scenario = new FieldCrossingScenario();
             int height = scenario.WorldHeight;
             int width = scenario.WorldWidth;
 
@@ -49,7 +47,6 @@ namespace ScenarioRunner
             Console.WriteLine(topLine);
             Console.Write("  ");
             DateTime start = DateTime.Now;
-            //Console.Write("Started at: " + start.ToString("HH:mm:ss"));
 
             Planet.CreateWorld(seedValue, scenario, height, width);
 
@@ -57,7 +54,7 @@ namespace ScenarioRunner
             try
             {
                 int generationIndex = 0;
-                for(int i = 0; i < 200; i++)
+                for(int i = 0; i < 100; i++)
                 {
                     Planet.World.ExecuteManyTurns(1000);
                     Console.Write(".");

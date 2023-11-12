@@ -6,37 +6,37 @@
 * [*] Fix Dead Things View not working
 * [*] Implement Keegan's maze concept
 * [*] Create Wall Splitter
-* [ ] Differentiate between the "Visible" and "physical" layers, so that you can there are things which are visible, but no tangible (perhaps smells and fogs?)
-* [ ] Implement Testing Framework / Scenario concept
+* [x] Implement Testing Framework / Scenario concept
 * [ ] Write list of all possible tests
 * [ ] Investigate why Sector/Rectangle Collision Detection isn't working consistently
 * [ ] Implement INumeric for every value (min, max, modmax, mod%, value, add, sub);
 * [ ] Implement ReadOnlyProperties for Internal/Mandatory values [i.e. Age, NumChildren, etc.]
-* [ ] Goal Based Features
-* [ ] Refactor Environment size into Scenarios
-* [ ] Give each WorldObject access to its collider
+* [x] Goal Based Features
+* [x] Refactor Environment size into Scenarios
+* [ ] Give each WorldObject access to its collider (?)
+* [ ] Differentiate between the "Visible" and "physical" layers, so that you can there are things which are visible, but no tangible (perhaps smells and fogs?)
 
 
 ## Goal-based Features
 The goal is provided/set to the agents; they do not decide at this time.
-* [ ] Rotation to Goal Input
-* [ ] Distance to Goal Input
+* [x] Rotation to Goal Input
+* [x] Distance to Goal Input
 
 ## Procedural Features
 Required to start running simulations; currently, these are configured/provided.
-* [ ] Eyeball Generator
+* [x] Eyeball Generator
 * [*] Random Brain Generator
-* [ ] Replace Brain Paradigm with Neural Network approach
+* [x] Replace Brain Paradigm with Neural Network approach
 
 ## Other things
-* [ ] Custom Environment Setup / Provide a configuration and a means to configure the environment build
-   * [ ] Includes Custom Starting Points for individual Agents
-   * [ ] Specified Goals for All Agents / Groups of Agents / up to Individual Agents
-* [ ] External Fitness Function -- the concept here is that there may be some environment-level calculations required to determine the fitness of the agents; e.g., if you want to determine who the fastest agent is, the agents don't decide that / there is some evaluator we can build to query for such
-* [ ] Reproduction, "Asexual"; requires:
+* [x] Custom Environment Setup / Provide a configuration and a means to configure the environment build
+   * [x] Includes Custom Starting Points for individual Agents
+   * [x] Specified Goals for All Agents / Groups of Agents / up to Individual Agents
+* [x] External Fitness Function -- the concept here is that there may be some environment-level calculations required to determine the fitness of the agents; e.g., if you want to determine who the fastest agent is, the agents don't decide that / there is some evaluator we can build to query for such
+* [x] Reproduction, "Asexual"; requires:
    * [*] Clone functionality - cloning a subset of the attributes; creating a child with identical rules + brain* [ ] (brains can only be RNG'd - this needs to be changed, first)
-   * [ ] "Brain Mutability" concept - certain aspects of the NN can be modified, but need to temper this to not completely change the behaviour(s) from the parent
-   * [ ] "Body Mutability" concept - number and orientation/power of each of their sense/actions
+   * [x] "Brain Mutability" concept - certain aspects of the NN can be modified, but need to temper this to not completely change the behaviour(s) from the parent
+   * [x] "Body Mutability" concept - number and orientation/power of each of their sense/actions
    * [ ] "Variable mutability" - each agent is determining how mutable its offspring is
 
 ## End Goals
@@ -70,7 +70,7 @@ This will be its own section, but for now we need to be aware/cognizant that thi
 
 ### Action-related Effects
 We need a way for an agent to respond to its own actions and the results of its own actions.
-* [ ] Actions as Inputs
+* [x] Actions as Inputs
 * [ ] Inputs as Actions - based on a state, choose inputs
 * [ ] Reactions - when something happens to an agent
    * [ ] Collision -> Collide

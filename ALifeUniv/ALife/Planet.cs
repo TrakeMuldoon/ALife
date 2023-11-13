@@ -165,20 +165,18 @@ namespace ALifeUni.ALife
                 wo.ExecutionOrder = order++;
                 wo.ExecuteTurn();
             }
-            //Add all the new objects into the Stable list
-            //TODO: Investigate if we can add them as a range, and just clear the list after.
-            while(NewActiveObjects.Count > 0)
-            {
-                StableActiveObjects.Add(NewActiveObjects[0]);
 
-                NewActiveObjects.RemoveAt(0);
+            //Add all the new objects into the Stable list
+            if (NewActiveObjects.Count > 0)
+            {
+                StableActiveObjects.AddRange(NewActiveObjects);
+                NewActiveObjects.Clear();
             }
-            //TODO: Investigate this. It is probably unnecessary to remove from NewActiveObjects, as it has already been emptied.
+            // Remove objects as necessary
             while(ToRemoveObjects.Count > 0)
             {
                 AllActiveObjects.Remove(ToRemoveObjects[0]);
                 StableActiveObjects.Remove(ToRemoveObjects[0]);
-                NewActiveObjects.Remove(ToRemoveObjects[0]);
 
                 //It needs to be added to the InactiveObjects list, for statistics reasons. 
                 InactiveObjects.Add(ToRemoveObjects[0]);

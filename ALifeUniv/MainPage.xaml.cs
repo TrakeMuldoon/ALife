@@ -42,8 +42,9 @@ namespace ALifeUni
             /* ***********************************
              * Set Scenario Here
              * ***********************************/
-            Planet.CreateWorld(new FieldCrossingScenario());
+            //Planet.CreateWorld(new FieldCrossingScenario());
             //Planet.CreateWorld(new MazeScenario());
+            Planet.CreateWorld(new FieldCrossingLowReproScenario());
 
             animCanvas.ClearColor = Colors.NavajoWhite;
             animCanvas.Height = Planet.World.Scenario.WorldHeight;

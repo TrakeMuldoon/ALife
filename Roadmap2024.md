@@ -45,6 +45,7 @@ These items may be complete already. It is unclear to me as of right now.
 * [ ] Aggressive Code Cleanup. There are a lot of config defintions scattered around that don't really make sense anymore, and aren't used. They should be put into an archive folder as reference artifacts.
 * [ ] Update the UI into popout panels, instead of inline.
 * [ ] Update the Scenario Runner to be genericizable. Feed in a Scenario and outputs, etc, instead of replacing them every time. 
+* [ ] Find a good optimized C# Neural Network that allows for huge networks efficiently.
 
 
 Neural Network Open Source projects

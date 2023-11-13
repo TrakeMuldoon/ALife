@@ -165,6 +165,7 @@
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildRectangle.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\IChildShape.cs" />
     <Compile Include="ALife\Scenarios\AbstractScenario.cs" />
+    <Compile Include="ALife\Scenarios\FieldCrossingLowReproScenario.cs" />
     <Compile Include="ALife\Scenarios\FieldCrossingScenario.cs" />
     <Compile Include="ALife\Scenarios\GardenScenario.cs" />
     <Compile Include="ALife\Scenarios\GenerationalMazeScenario.cs" />

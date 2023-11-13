@@ -4,6 +4,6 @@
     {
         //TODO Extract Settings into a file somehow
         public const double AgentDefaultSpeed = 5;
-        public const double AgentMaximumTurnDegrees = 90;
+        public const double AgentMaximumTurnDegrees = 70;
     }
 }

@@ -111,27 +111,32 @@ namespace ALifeUni.ALife.Scenarios
                 }
                 else if(z.Name == me.TargetZone.Name)
                 {
-                    ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[me.CollisionLevel];
-
-                    //Get a new free point within the start zone.
-                    Point myPoint = me.Zone.Distributor.NextAgentCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
-                    me.Shape.CentrePoint = myPoint;
-                    collider.MoveObject(me);
-
-                    //Reproduce one child for each direction
-                    foreach(AgentZoneSpec spec in AgentZoneSpecs.Values)
-                    {
-                        CreateZonedChild(me, collider, spec);
-                    }
-
-                    //You have a new countdown
-                    me.Statistics["DeathTimer"].Value = 0;
-                    me.Statistics["ZoneEscapeTimer"].Value = 0;
+                    this.VictoryBehaviour(me);
                 }
             }
         }
 
-        private static void CreateZonedChild(Agent me, ICollisionMap<WorldObject> collider, AgentZoneSpec specification)
+        protected virtual void VictoryBehaviour(Agent me)
+        {
+            ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[me.CollisionLevel];
+
+            //Get a new free point within the start zone.
+            Point myPoint = me.Zone.Distributor.NextAgentCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
+            me.Shape.CentrePoint = myPoint;
+            collider.MoveObject(me);
+
+            //Reproduce one child for each direction
+            foreach (AgentZoneSpec spec in AgentZoneSpecs.Values)
+            {
+                CreateZonedChild(me, collider, spec);
+            }
+
+            //You have a new countdown
+            me.Statistics["DeathTimer"].Value = 0;
+            me.Statistics["ZoneEscapeTimer"].Value = 0;
+        }
+
+        protected static void CreateZonedChild(Agent me, ICollisionMap<WorldObject> collider, AgentZoneSpec specification)
         {
             Agent child = (Agent)me.Reproduce();
             child.Zone = specification.StartZone;
@@ -175,7 +180,7 @@ namespace ALifeUni.ALife.Scenarios
 
         public override bool FixedWidthHeight { get { return false; } }
 
-        private struct AgentZoneSpec
+        protected struct AgentZoneSpec
         {
             public Zone StartZone;
             public Zone TargetZone;
@@ -190,7 +195,7 @@ namespace ALifeUni.ALife.Scenarios
             }
         }
 
-        private static Dictionary<Zone, AgentZoneSpec> AgentZoneSpecs = new Dictionary<Zone, AgentZoneSpec>();
+        protected static Dictionary<Zone, AgentZoneSpec> AgentZoneSpecs = new Dictionary<Zone, AgentZoneSpec>();
 
         public override void PlanetSetup()
         {
@@ -205,7 +210,7 @@ namespace ALifeUni.ALife.Scenarios
             blue.OppositeZone = red;
             blue.OrientationDegrees = 180;
 
-            Zone green = new Zone("Green(->Orange)", "Random", Colors.Green, new Point(0, 0), width, 100);
+            Zone green = new Zone("Green(->Orange)", "Random", Colors.Green, new Point(0, 0), width, 40);
             Zone orange = new Zone("Orange(->Green)", "Random", Colors.Orange, new Point(0, height - 40), width, 40);
             green.OppositeZone = orange;
             green.OrientationDegrees = 90;
@@ -218,8 +223,8 @@ namespace ALifeUni.ALife.Scenarios
             instance.AddZone(orange);
 
             AgentZoneSpecs.Add(red, new AgentZoneSpec(red, blue, Colors.Blue, 0));
-            AgentZoneSpecs.Add(blue, new AgentZoneSpec(blue, red, Colors.Red, 180));
             AgentZoneSpecs.Add(green, new AgentZoneSpec(green, orange, Colors.Orange, 90));
+            AgentZoneSpecs.Add(blue, new AgentZoneSpec(blue, red, Colors.Red, 180));
             AgentZoneSpecs.Add(orange, new AgentZoneSpec(orange, green, Colors.Green, 270));
 
             int numAgents = 80;
@@ -237,7 +242,7 @@ namespace ALifeUni.ALife.Scenarios
             instance.AddObjectToWorld(fr);
         }
 
-        private Agent CreateZonedAgent(AgentZoneSpec spec)
+        protected Agent CreateZonedAgent(AgentZoneSpec spec)
         {
             return AgentFactory.CreateAgent("Agent"
                                             , spec.StartZone

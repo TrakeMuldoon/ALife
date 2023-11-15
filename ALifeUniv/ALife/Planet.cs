@@ -1,4 +1,5 @@
 ﻿using ALifeUni.ALife.Scenarios;
+using ALifeUni.ALife.Utility;
 using System;
 using System.Collections.Generic;
 
@@ -26,7 +27,7 @@ namespace ALifeUni.ALife
             worldWidth = width;
             worldHeight = height;
             Seed = seed;
-            NumberGen = new Random(seed);
+            NumberGen = new FastRandom(seed);
             Scenario = theScenario;
             AgentIDGenerator.Reset();
         }
@@ -125,7 +126,7 @@ namespace ALifeUni.ALife
             }
         }
 
-        internal readonly Random NumberGen;
+        internal readonly FastRandom NumberGen;
 
         private int turns = 0;
         public int Turns

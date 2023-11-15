@@ -180,6 +180,7 @@
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildSector.cs" />
     <Compile Include="ALife\Utility\BoundedNumber.cs" />
     <Compile Include="ALife\Utility\Extensions.cs" />
+    <Compile Include="ALife\Utility\FastRandom.cs" />
     <Compile Include="ALife\Utility\ROEvoNumber.cs" />
     <Compile Include="ALife\CustomWorldObjects\EmptyObject.cs" />
     <Compile Include="ALife\CustomWorldObjects\AgentShadow.cs" />

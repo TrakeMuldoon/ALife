@@ -6,4 +6,8 @@ Simple tutorial
 https://www.baeldung.com/cs/reinforcement-learning-neural-network
 
 Calculating Loss Function for Deep Q-Learning
-https://stats.stackexchange.com/questions/249355/how-exactly-to-compute-deep-q-learning-loss-function
+https://stats.stackexchange.com/question
+s/249355/how-exactly-to-compute-deep-q-learning-loss-function
+
+Very Active C# implementation of NeuralNetwork NEAT algorithm
+https://github.com/colgreen/sharpneat

@@ -43,8 +43,8 @@ namespace ALifeUni
              * Set Scenario Here
              * ***********************************/
             //Planet.CreateWorld(new FieldCrossingScenario());
-            //Planet.CreateWorld(new MazeScenario());
-            Planet.CreateWorld(new FieldCrossingLowReproScenario());
+            Planet.CreateWorld(new MazeScenario());
+            //Planet.CreateWorld(new FieldCrossingLowReproScenario());
 
             animCanvas.ClearColor = Colors.NavajoWhite;
             animCanvas.Height = Planet.World.Scenario.WorldHeight;
@@ -91,6 +91,11 @@ namespace ALifeUni
         private Boolean showParents;
         private void AnimCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
+            if(DNB_DEBUG)
+            {
+                return;
+            }
+
             if(special != null
                 && special.Shape is Circle ssc)
             {
@@ -399,70 +404,79 @@ namespace ALifeUni
             FastForward(skipValue);
         }
 
+        private bool DNB_DEBUG = false;
         private async void FastForward(int turnsToSkip)
         {
-            SkipProgress.Maximum = 100;
-            SkipProgress.Minimum = 0;
-            SkipProgress.Value = 0;
-
-            DateTime start = DateTime.Now;
-
-            bool restart = false;
-            if(gameTimer.IsEnabled)
+            try
             {
-                restart = true;
-                gameTimer.Stop();
+                DNB_DEBUG = true;
+                SkipProgress.Maximum = 100;
+                SkipProgress.Minimum = 0;
+                SkipProgress.Value = 0;
+
+                DateTime start = DateTime.Now;
+
+                bool restart = false;
+                if(gameTimer.IsEnabled)
+                {
+                    restart = true;
+                    gameTimer.Stop();
+                }
+                //Queue<bool> viewables = new Queue<bool>();
+                //foreach(LayerUISettings set in VisualSettings)
+                //{
+                //    viewables.Enqueue(set.ShowLayer);
+                //    //set.ShowLayer = false;
+                //}
+
+                int skipPartLength = 1000;
+                int progress = 0;
+                DateTime previous = start;
+                while((progress + skipPartLength) <= turnsToSkip)
+                {
+                    await Task.Run(() => Planet.World.ExecuteManyTurns(skipPartLength));
+                    DateTime current = DateTime.Now;
+                    progress += skipPartLength;
+                    SkipProgress.Value = (double)progress / (double)turnsToSkip * 100.0;
+
+                    int numLeft = turnsToSkip - progress;
+                    TimeSpan totalElapsed = current - start;
+                    TimeSpan recentElapsed = current - previous;
+
+                    double tpsa = progress / (totalElapsed.TotalSeconds + 0.1);
+                    double tpsc = skipPartLength / (recentElapsed.TotalSeconds + 0.1);
+
+                    TimeSpan estTotal = new TimeSpan(0, 0, (int)(numLeft / tpsa));
+                    TimeSpan curTotal = new TimeSpan(0, 0, (int)(numLeft / tpsc));
+
+                    String info = String.Format("{0}/{1}:{2}\r\nETA>{3}:{4} ETC>{5}:{6}\r\nTPSA:{7:0.00}, TPSC:{8:0.00}"
+                                                , progress, turnsToSkip, numLeft
+                                                , (int)estTotal.TotalMinutes, estTotal.ToString("ss"), (int)curTotal.TotalMinutes, curTotal.ToString("ss")
+                                                , tpsa, tpsc);
+
+                    SkipInfo.Text = info;
+
+                    previous = current;
+                }
+                if(progress < turnsToSkip)
+                {
+                    Planet.World.ExecuteManyTurns(turnsToSkip - progress);
+                }
+
+                AgentPanel.updateInfo();
+
+                //foreach(LayerUISettings set in VisualSettings)
+                //{
+                //    set.ShowLayer = viewables.Dequeue();
+                //}
+                if(restart)
+                {
+                    gameTimer.Start();
+                }
             }
-            Queue<bool> viewables = new Queue<bool>();
-            foreach(LayerUISettings set in VisualSettings)
+            finally
             {
-                viewables.Enqueue(set.ShowLayer);
-                set.ShowLayer = false;
-            }
-
-            int skipPartLength = 1000;
-            int progress = 0;
-            DateTime previous = start;
-            while((progress + skipPartLength) <= turnsToSkip)
-            {
-                await Task.Run(() => Planet.World.ExecuteManyTurns(skipPartLength));
-                DateTime current = DateTime.Now;
-                progress += skipPartLength;
-                SkipProgress.Value = (double)progress / (double)turnsToSkip * 100.0;
-
-                int numLeft = turnsToSkip - progress;
-                TimeSpan totalElapsed = current - start;
-                TimeSpan recentElapsed = current - previous;
-
-                double tpsa = progress / (totalElapsed.TotalSeconds + 0.1);
-                double tpsc = skipPartLength / (recentElapsed.TotalSeconds + 0.1);
-
-                TimeSpan estTotal = new TimeSpan(0, 0, (int)(numLeft / tpsa));
-                TimeSpan curTotal = new TimeSpan(0, 0, (int)(numLeft / tpsc));
-
-                String info = String.Format("{0}/{1}:{2}\r\nETA>{3}:{4} ETC>{5}:{6}\r\nTPSA:{7:0.00}, TPSC:{8:0.00}"
-                                            , progress, turnsToSkip, numLeft
-                                            , (int)estTotal.TotalMinutes, estTotal.ToString("ss"), (int)curTotal.TotalMinutes, curTotal.ToString("ss")
-                                            , tpsa, tpsc);
-
-                SkipInfo.Text = info;
-
-                previous = current;
-            }
-            if(progress < turnsToSkip)
-            {
-                Planet.World.ExecuteManyTurns(turnsToSkip - progress);
-            }
-            
-            AgentPanel.updateInfo();
-
-            foreach(LayerUISettings set in VisualSettings)
-            {
-                set.ShowLayer = viewables.Dequeue();
-            }
-            if(restart)
-            {
-                gameTimer.Start();
+                DNB_DEBUG = false;
             }
         }
 

@@ -11,10 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALifeUnivTests", "ALifeUniv
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BD7F9F1B-F088-4C03-A79C-162FB32D797D}"
 	ProjectSection(SolutionItems) = preProject
-		Config.txt = Config.txt
 		NewConfig.txt = NewConfig.txt
 		README.md = README.md
-		Roadmap.md = Roadmap.md
 		Roadmap2024.md = Roadmap2024.md
 	EndProjectSection
 EndProject

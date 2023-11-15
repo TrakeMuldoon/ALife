@@ -158,12 +158,13 @@ namespace ALifeUni.ALife.Scenarios
             instance.AddZone(red);
             instance.AddZone(blue);
 
-            int numAgents = 30;
+            int numAgents = 2;
+
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
+                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, GetRandomColor(), 0);
             }
-            MazeRunner mr = new MazeRunner(red, blue);
+            //MazeRunner mr = new MazeRunner(red, blue);
 
             List<Wall> walls = new List<Wall>();
             walls.Add(new Wall(new Point(260, 410), 850, new Angle(75), "w1-1"));
@@ -293,9 +294,9 @@ namespace ALifeUni.ALife.Scenarios
                 Planet.World.ReproduceBest();
                 Planet.World.ReproduceBest();
                 Planet.World.ReproduceBest();
-                Agent ag1 = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
-                Agent ag2 = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
-                Agent ag3 = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
+                Agent ag1 = AgentFactory.CreateAgent("Agent", red, blue, GetRandomColor(), 0);
+                Agent ag2 = AgentFactory.CreateAgent("Agent", red, blue, GetRandomColor(), 0);
+                Agent ag3 = AgentFactory.CreateAgent("Agent", red, blue, GetRandomColor(), 0);
 
                 var weaklings = Planet.World.InactiveObjects.Where((wo) => wo.Shape.CentrePoint.X < 50).ToList();
                 foreach(WorldObject wo in weaklings)
@@ -303,6 +304,17 @@ namespace ALifeUni.ALife.Scenarios
                     Planet.World.InactiveObjects.Remove(wo);
                 }
             }
+        }
+
+        private Color GetRandomColor()
+        {
+            Color color = new Color() {
+                R = (byte)Planet.World.NumberGen.Next(100, 255),
+                G = (byte)Planet.World.NumberGen.Next(100, 255),
+                B = (byte)Planet.World.NumberGen.Next(100, 255),
+                A = 255
+            };
+            return color;
         }
 
         public override void Reset()

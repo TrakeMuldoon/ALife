@@ -7,7 +7,8 @@ namespace ALifeUni.ALife.Utility
     {
         public static int MultiMin(params int[] values)
         {
-            if(values == null)
+            if(values == null || values.Length == 0
+                )
             {
                 throw new ArgumentNullException();
             }
@@ -21,7 +22,7 @@ namespace ALifeUni.ALife.Utility
 
         public static double MultiMin(params double[] values)
         {
-            if(values == null)
+            if(values == null || values.Length == 0)
             {
                 throw new ArgumentNullException();
             }
@@ -35,7 +36,7 @@ namespace ALifeUni.ALife.Utility
 
         public static float MultiMin(params float[] values)
         {
-            if(values == null)
+            if (values == null || values.Length == 0)
             {
                 throw new ArgumentNullException();
             }
@@ -49,7 +50,7 @@ namespace ALifeUni.ALife.Utility
 
         public static int MultiMax(params int[] values)
         {
-            if(values == null)
+            if(values == null || values.Length == 0)
             {
                 throw new ArgumentNullException();
             }
@@ -63,7 +64,7 @@ namespace ALifeUni.ALife.Utility
 
         public static double MultiMax(params double[] values)
         {
-            if(values == null)
+            if(values == null || values.Length == 0)
             {
                 throw new ArgumentNullException();
             }
@@ -77,7 +78,7 @@ namespace ALifeUni.ALife.Utility
 
         public static float MultiMax(params float[] values)
         {
-            if(values == null)
+            if(values == null || values.Length == 0)
             {
                 throw new ArgumentNullException();
             }

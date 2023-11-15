@@ -68,7 +68,6 @@ namespace ALifeUni.ALife
         public Agent(String genusLabel, string individualLabel, string collisionLevel)
             : base(genusLabel, individualLabel, collisionLevel)
         {
-
         }
 
         internal void CompleteInitialization(Agent parent, int generation, IBrain newBrain)
@@ -135,7 +134,6 @@ namespace ALifeUni.ALife
             {
                 prop.Reset();
             }
-
 
             EndOfTurnTriggers();
 

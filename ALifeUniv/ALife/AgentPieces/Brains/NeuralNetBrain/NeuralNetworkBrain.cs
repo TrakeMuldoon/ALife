@@ -41,7 +41,7 @@ namespace ALifeUni.ALife.Brains
                 Layer newLayer = new Layer(layerNeuronCounts[i]);
                 Layers.Add(newLayer);
 
-                //This works because we know that there is always a layer above us.
+                //This pulls the layer above us. Layer 0 is the sense layer. Layer 1 is the first created hidden layer.
                 List<Neuron> aboveLayerNeurons = Layers[i].Neurons;
 
                 for(int n = 0; n < layerNeuronCounts[i]; n++)
@@ -74,9 +74,11 @@ namespace ALifeUni.ALife.Brains
             }
             Layers.Add(senseLayer);
 
-            for(int i = 1; i < templateBrain.Layers.Count - 1; i++)
+            //This is the number of hidden layers we need to make
+            int hiddenLayerCount = templateBrain.Layers.Count - 2;
+            for(int i = 0; i < hiddenLayerCount; i++)
             {
-                List<Neuron> templateCurrLayerNeurons = templateBrain.Layers[i].Neurons;
+                List<Neuron> templateCurrLayerNeurons = templateBrain.Layers[i+1].Neurons;
                 int currentLayerNeuronCount = templateCurrLayerNeurons.Count;
                 Layer newLayer = new Layer(currentLayerNeuronCount);
                 Layers.Add(newLayer);
@@ -107,6 +109,7 @@ namespace ALifeUni.ALife.Brains
                     }
                 }
             }
+
             Layer actionLayer = CreateClonedActionLayer(self, Layers[Layers.Count - 1], templateBrain.Layers[Layers.Count], exactCopy);
             Layers.Add(actionLayer);
             actions = actionLayer;

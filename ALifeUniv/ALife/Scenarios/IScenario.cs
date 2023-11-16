@@ -21,8 +21,11 @@ namespace ALifeUni.ALife.Scenarios
 
         Agent CreateAgent(String genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation);
 
+
+        /*** Something that an agent does, or soemthing affecting their internals ***/
         void AgentUpkeep(Agent me);
 
+        /*** Something that is happening TO an agent, based on external stimulus ***/
         void EndOfTurnTriggers(Agent me);
 
         void CollisionBehaviour(Agent me, List<WorldObject> collisions);
@@ -39,7 +42,7 @@ namespace ALifeUni.ALife.Scenarios
         {
             get;
         }
-        /* It's not clear what I was thinking when I created this. Re-evaluate at a later date */
+        /* Some Scenarios have fixed maps, like the mazes, you cannot set an arbitrary world width and height for them */
         bool FixedWidthHeight
         {
             get;

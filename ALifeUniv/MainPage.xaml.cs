@@ -42,10 +42,10 @@ namespace ALifeUni
             /* ***********************************
              * Set Scenario Here
              * ***********************************/
-            //Planet.CreateWorld(new FieldCrossingScenario());
+            Planet.CreateWorld(new FieldCrossingScenario());
             //Planet.CreateWorld(new MazeScenario());
             //Planet.CreateWorld(new FieldCrossingLowReproScenario());
-            Planet.CreateWorld(new DripFeedMaze());
+            //Planet.CreateWorld(new DripFeedMaze());
 
             animCanvas.ClearColor = Colors.NavajoWhite;
             animCanvas.Height = Planet.World.Scenario.WorldHeight;
@@ -326,6 +326,19 @@ namespace ALifeUni
             SimSeed.Text = seed;
             SimSeed_TextChanged(SimSeed, null);
             special = null;
+        }
+
+        private void RandResetSim_Click(object sender, RoutedEventArgs e)
+        {
+            int newSeed = Planet.World.NumberGen.Next();
+            Planet.World.Scenario.Reset();
+            Planet.CreateWorld(newSeed, Planet.World.Scenario, (int)animCanvas.Height, (int)animCanvas.Width);
+            
+            seed = Planet.World.Seed.ToString();
+            SimSeed.Text = seed;
+            SimSeed_TextChanged(SimSeed, null);
+            special = null;
+
         }
 
         #region speed controls

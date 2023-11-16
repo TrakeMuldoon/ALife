@@ -86,7 +86,8 @@ namespace ALifeUni.ALife.Scenarios
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
-            IBrain newBrain = new BehaviourBrain(agent, "IF Age.Value GreaterThan [10] THEN Move.GoForward AT [0.2]", "*", "*", "*", "*");
+            //IBrain newBrain = new BehaviourBrain(agent, "IF Age.Value GreaterThan [10] THEN Move.GoForward AT [0.2]", "*", "*", "*", "*");
+            IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 15, 12, 10 });
 
             agent.CompleteInitialization(null, 1, newBrain);
 
@@ -199,6 +200,7 @@ namespace ALifeUni.ALife.Scenarios
 
         public override void PlanetSetup()
         {
+
             Planet instance = Planet.World;
             double height = instance.WorldHeight;
             double width = instance.WorldWidth;
@@ -227,7 +229,7 @@ namespace ALifeUni.ALife.Scenarios
             AgentZoneSpecs.Add(blue, new AgentZoneSpec(blue, red, Colors.Red, 180));
             AgentZoneSpecs.Add(orange, new AgentZoneSpec(orange, green, Colors.Green, 270));
 
-            int numAgents = 80;
+            int numAgents = 50;
             for(int i = 0; i < numAgents; i++)
             {
                 Agent rag = CreateZonedAgent(AgentZoneSpecs[red]);
@@ -249,6 +251,11 @@ namespace ALifeUni.ALife.Scenarios
                                             , spec.TargetZone
                                             , spec.AgentColor
                                             , spec.StartOrientation);
+        }
+
+        public override void Reset()
+        {
+            AgentZoneSpecs.Clear();
         }
     }
 }

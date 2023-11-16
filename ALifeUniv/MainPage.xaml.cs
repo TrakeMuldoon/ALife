@@ -357,8 +357,9 @@ namespace ALifeUni
             {
                 gameTimer.Stop();
             }
-            Planet.World.ExecuteOneTurn();
-            AgentPanel.updateInfo();
+            Dt_Tick(sender, e);
+            //Planet.World.ExecuteOneTurn();
+            //AgentPanel.updateInfo();
         }
 
         private void SlowPlaySim_Click(object sender, RoutedEventArgs e)
@@ -442,12 +443,6 @@ namespace ALifeUni
                     restart = true;
                     gameTimer.Stop();
                 }
-                //Queue<bool> viewables = new Queue<bool>();
-                //foreach(LayerUISettings set in VisualSettings)
-                //{
-                //    viewables.Enqueue(set.ShowLayer);
-                //    //set.ShowLayer = false;
-                //}
 
                 int skipPartLength = 1000;
                 int progress = 0;
@@ -485,10 +480,6 @@ namespace ALifeUni
 
                 AgentPanel.updateInfo();
 
-                //foreach(LayerUISettings set in VisualSettings)
-                //{
-                //    set.ShowLayer = viewables.Dequeue();
-                //}
                 if(restart)
                 {
                     gameTimer.Start();
@@ -617,13 +608,19 @@ namespace ALifeUni
         }
 
 
-
+        string ErrorText;
         int shortBrainIndex = -1;
         private void ShortestBrain_Click(object sender, RoutedEventArgs e)
         {
-            shortBrainIndex = FindAndSelect(shortBrainIndex
-                                            , (ag) => ((BehaviourBrain)ag.MyBrain).Behaviours.Count()
-                                            , false);
+            try
+            {
+                shortBrainIndex = FindAndSelect(shortBrainIndex
+                                                , (ag) => ((BehaviourBrain)ag.MyBrain).Behaviours.Count()
+                                                , false);
+            }
+            catch(Exception ex) {
+                ErrorText = "No Shortest Brain Found";
+            }
         }
 
         int mostChildrenIndex = -1;

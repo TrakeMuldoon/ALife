@@ -52,7 +52,7 @@ namespace ALifeUni.ALife
             }
             else
             {
-                netTurn = netRightTurnPercent * Settings.AgentMaximumTurnDegrees;
+                netTurn = netRightTurnPercent * 70; //TODO: Abstract this into a config or the scenario
             }
 
             Angle myOrientation = self.Shape.Orientation;

@@ -135,8 +135,6 @@
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\TypedClasses\StringConditionFactory.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\TypedClasses\DoubleConditionFactory.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\TypedClasses\BoolConditionFactory.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\CarNeuralBrain\CarNeuralBrain.cs" />
-    <Compile Include="ALife\AgentPieces\Brains\CarNeuralBrain\NetworkDefinition.cs" />
     <Compile Include="ALife\AgentPieces\Brains\IBrain.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\Behaviour.cs" />
     <Compile Include="ALife\AgentPieces\Brains\BehaviourBrains\BehaviourBrain.cs" />
@@ -165,12 +163,12 @@
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildRectangle.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\IChildShape.cs" />
     <Compile Include="ALife\Scenarios\AbstractScenario.cs" />
-    <Compile Include="ALife\Scenarios\DripFeedMaze.cs" />
-    <Compile Include="ALife\Scenarios\FieldCrossingLowReproScenario.cs" />
-    <Compile Include="ALife\Scenarios\FieldCrossingScenario.cs" />
+    <Compile Include="ALife\Scenarios\Mazes\DripFeedMaze.cs" />
+    <Compile Include="ALife\Scenarios\FieldCrossings\FieldCrossingLowReproScenario.cs" />
+    <Compile Include="ALife\Scenarios\FieldCrossings\FieldCrossingScenario.cs" />
     <Compile Include="ALife\Scenarios\GardenScenario.cs" />
-    <Compile Include="ALife\Scenarios\GenerationalMazeScenario.cs" />
-    <Compile Include="ALife\Scenarios\MazeScenario.cs" />
+    <Compile Include="ALife\Scenarios\Mazes\GenerationalMazeScenario.cs" />
+    <Compile Include="ALife\Scenarios\Mazes\MazeScenario.cs" />
     <Compile Include="ALife\Scenarios\ScenarioHelpers.cs" />
     <Compile Include="ALife\Scenarios\TestScenarios\GoalsTestScenario.cs" />
     <Compile Include="ALife\Scenarios\TestScenarios\NeuralNetScenario.cs" />
@@ -218,7 +216,6 @@
     <Compile Include="ALife\Geometry\BoundingBox.cs" />
     <Compile Include="ALife\ReferenceValues.cs" />
     <Compile Include="ALife\Planet.cs" />
-    <Compile Include="ALife\Rulesets\Settings.cs" />
     <Compile Include="ALife\Geometry\Shapes\Circle.cs" />
     <Compile Include="ALife\Geometry\Shapes\EnumShapes.cs" />
     <Compile Include="ALife\Geometry\ExtraMath.cs" />

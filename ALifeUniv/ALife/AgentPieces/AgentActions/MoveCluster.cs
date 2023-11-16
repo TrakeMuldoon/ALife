@@ -8,7 +8,7 @@ namespace ALifeUni.ALife
 {
     public class MoveCluster : ActionCluster
     {
-        private double Speed = Settings.AgentDefaultSpeed;
+        private double Speed = 5; //TODO Abstract this into Scenario
 
         public MoveCluster(Agent self) : base(self, "Move")
         {

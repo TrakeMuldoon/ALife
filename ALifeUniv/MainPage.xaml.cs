@@ -87,6 +87,7 @@ namespace ALifeUni
             AgentPanel.updateInfo();
             UpdateZoneInfo();
             UpdateGeneology();
+            UpdateErrors();
         }
 
         private Boolean showParents;
@@ -173,15 +174,20 @@ namespace ALifeUni
             GeneologyInfo.Text = "Genes Active: " + geneCount.Count;
         }
 
+        private void UpdateErrors()
+        {
+            ErrorsInfo.Text = "Errors: " + DrawingErrors;
+        }
+
         private void DrawLayer(LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
         {
+            if(!ui.ShowLayer)
+            {
+                return;
+            }
+
             try
             {
-                if(!ui.ShowLayer)
-                {
-                    return;
-                }
-
                 //Special Layer, Zones draw different
                 if(ui.LayerName == ReferenceValues.CollisionLevelZone)
                 {
@@ -619,7 +625,7 @@ namespace ALifeUni
         {
             int compValue = greaterThan ? int.MinValue : int.MaxValue;
             List<Agent> options = new List<Agent>();
-
+            
             for(int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
             {
                 WorldObject wo = Planet.World.AllActiveObjects[i];

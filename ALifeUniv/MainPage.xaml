@@ -129,6 +129,9 @@
             <Border BorderBrush="Beige" BorderThickness="1">
                 <TextBlock x:Name="Turns"></TextBlock>
             </Border>
+            <Border BorderBrush="Beige" BorderThickness="1">
+                <TextBlock x:Name="ErrorsInfo"></TextBlock>
+            </Border>
 
             <CheckBox x:Name="ShowGeneology" Click="ShowGeneology_Checked">Show Ancestry</CheckBox>
             <Button x:Name="LongestLived" Click="LongestLived_Click">Oldest</Button>

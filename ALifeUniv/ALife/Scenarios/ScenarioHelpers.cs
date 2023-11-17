@@ -39,7 +39,6 @@ namespace ALifeUni.ALife.Scenarios
             }
         }
 
-
         public static List<Wall> GetMazeWalls()
         {
             List<Wall> walls = new List<Wall>();

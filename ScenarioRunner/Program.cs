@@ -1,5 +1,6 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Scenarios;
+using ALifeUni.ALife.Scenarios.FieldCrossings;
 using Serilog;
 using System;
 using System.IO;
@@ -24,7 +25,7 @@ namespace ScenarioRunner
             Log.Logger = new LoggerConfiguration().WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day).CreateLogger();
             Log.Information("<---StartRun");
 
-            IScenario scenario = new FieldCrossingScenario();
+            IScenario scenario = new FieldCrossingWallsScenario();
             int height = scenario.WorldHeight;
             int width = scenario.WorldWidth;
 
@@ -54,18 +55,25 @@ namespace ScenarioRunner
             try
             {
                 int generationIndex = 0;
-                for(int i = 0; i < 100; i++)
+                for(int i = 0; i < 50; i++)
                 {
-                    Planet.World.ExecuteManyTurns(1000);
+                    int turnCount = 1000;
+                    Planet.World.ExecuteManyTurns(turnCount);
                     Console.Write(".");
+
+                    int population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
+                    if(population == 0)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("All Dead. Next");
+                        break;
+                    }
 
                     if((i + 1) % 10 == 0)
                     {
-                        DateTime now = DateTime.Now;
                         TimeSpan elapsed = DateTime.Now - start;
                         string interim = elapsed.ToString("mm\\:ss\\.ff");
-                        string stats = String.Format("\tElapsed: {0} TPS: {1:0.00000}"
-                                                        , interim, (elapsed.TotalSeconds / i * 1000));
+                        string stats = $"\tElapsed: {interim} TPS: {(i * turnCount) / elapsed.TotalSeconds:0.00000} Pop:{population}";
                         Console.WriteLine(stats);
                         while(generationIndex < Planet.World.MessagePump.Count)
                         {
@@ -99,12 +107,12 @@ namespace ScenarioRunner
             else
             {
                 int count = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
-                Console.WriteLine(count);
+
                 string nl = Environment.NewLine;
                 string message = topLine + nl + count + nl;
                 Log.Information(message);
 
-                Console.WriteLine("Boring");
+                Console.WriteLine($"Surviving: {count}");
             }
             Console.WriteLine();
         }

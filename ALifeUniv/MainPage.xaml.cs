@@ -2,6 +2,7 @@
 using ALifeUni.ALife.Brains;
 using ALifeUni.ALife.CustomWorldObjects;
 using ALifeUni.ALife.Scenarios;
+using ALifeUni.ALife.Scenarios.FieldCrossings;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using ALifeUni.UI;
@@ -42,10 +43,12 @@ namespace ALifeUni
             /* ***********************************
              * Set Scenario Here
              * ***********************************/
-            Planet.CreateWorld(new FieldCrossingScenario());
+            //Planet.CreateWorld(new FieldCrossingScenario());
             //Planet.CreateWorld(new MazeScenario());
             //Planet.CreateWorld(new FieldCrossingLowReproScenario());
             //Planet.CreateWorld(new DripFeedMaze());
+            Planet.CreateWorld(new FieldCrossingWallsScenario());
+
 
             animCanvas.ClearColor = Colors.NavajoWhite;
             animCanvas.Height = Planet.World.Scenario.WorldHeight;

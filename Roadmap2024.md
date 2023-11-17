@@ -46,6 +46,7 @@ These items may be complete already. It is unclear to me as of right now.
 * [ ] Update the UI into popout panels, instead of inline.
 * [ ] Update the Scenario Runner to be genericizable. Feed in a Scenario and outputs, etc, instead of replacing them every time. 
 * [ ] Find a good optimized C# Neural Network that allows for huge networks efficiently.
+* [ ] Modified fitness by time/trigger
 
 
 Neural Network Open Source projects

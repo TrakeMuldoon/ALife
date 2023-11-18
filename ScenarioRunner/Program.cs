@@ -35,6 +35,7 @@ namespace ScenarioRunner
                 Console.Write(i + "-> ");
                 int seedValue = r.Next();
                 RunSeed(seedValue, scenario, height, width);
+                RunSeed(seedValue, scenario, height, width);
             }
             Console.WriteLine("Done, Please hit enter key");
             Log.Information("--->EndRun");
@@ -45,16 +46,16 @@ namespace ScenarioRunner
         private static void RunSeed(int seedValue, IScenario scenario, int height, int width)
         {
             string topLine = String.Format("Seed:{0}, Name: {1}, Height:{2}, Width:{3}\t", seedValue, scenario.Name, height, width);
-            Console.WriteLine(topLine);
+            Console.WriteLine($"\t---------------{topLine}-----------");
             Console.Write("  ");
             DateTime start = DateTime.Now;
 
+            scenario.Reset();
             Planet.CreateWorld(seedValue, scenario, height, width);
-
+            
             string error = null;
             try
             {
-                int generationIndex = 0;
                 for(int i = 0; i < 50; i++)
                 {
                     int turnCount = 1000;
@@ -75,11 +76,6 @@ namespace ScenarioRunner
                         string interim = elapsed.ToString("mm\\:ss\\.ff");
                         string stats = $"\tElapsed: {interim} TPS: {(i * turnCount) / elapsed.TotalSeconds:0.00000} Pop:{population}";
                         Console.WriteLine(stats);
-                        while(generationIndex < Planet.World.MessagePump.Count)
-                        {
-                            Console.WriteLine(Planet.World.MessagePump[generationIndex]);
-                            generationIndex += 5;
-                        }
 
                         Console.Write(i + 1);
                     }
@@ -94,7 +90,10 @@ namespace ScenarioRunner
             DateTime end = DateTime.Now;
             string durationString = (end - start).ToString("mm\\:ss\\.fff");
 
-            Console.WriteLine("\tElapsed: " + durationString);
+            Console.WriteLine("\tTotal Time: " + durationString);
+
+            Planet.World.MessagePump.ForEach(m => Console.Write("|" + m));
+            Console.WriteLine();
 
             if(!String.IsNullOrEmpty(error))
             {
@@ -112,7 +111,7 @@ namespace ScenarioRunner
                 string message = topLine + nl + count + nl;
                 Log.Information(message);
 
-                Console.WriteLine($"Surviving: {count}");
+                Console.WriteLine($"\tSurviving: {count}");
             }
             Console.WriteLine();
         }

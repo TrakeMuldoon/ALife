@@ -55,8 +55,8 @@ namespace ALifeUni.ALife.Scenarios
 
             //IBrain newBrain = new BehaviourBrain(agent, "IF ALWAYS THEN Rotate.TurnRight AT [0.02]"
             //                                             , "IF ALWAYS THEN Move.GoLeft AT [0.9]");
-            IBrain newBrain = new BehaviourBrain(agent, "IF Goals.RelativeAngle.Value GreaterThan [0] THEN Rotate.TurnRight AT [0.03]"
-                                                        , "IF Goals.RelativeAngle.Value LessThan [0] THEN Rotate.TurnLeft AT [0.03]"
+            IBrain newBrain = new BehaviourBrain(agent, "IF Goals.RelativeAngle.Value GreaterThan [0] THEN Rotate.TurnRight AT [0.04]"
+                                                        , "IF Goals.RelativeAngle.Value LessThan [0] THEN Rotate.TurnLeft AT [0.04]"
                                                         , "IF Goals.RelativeAngle.Value AbsLessThan [10] THEN Move.GoForward AT [0.5]");
 
             agent.CompleteInitialization(null, 1, newBrain);

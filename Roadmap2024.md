@@ -49,7 +49,10 @@ These items may be complete already. It is unclear to me as of right now.
 * [ ] Modified fitness by time/trigger
 * [ ] Clean UI colours
 * [ ] Implement "Randomable" type
-* [ ] Goal Sense Bug on exactly "180"
+* [X] Goal Sense Bug on exactly "180"
+* [ ] Comment Every Class and Function
+* [ ] Temperature Scenario (Low temps steal energy, high temps restore energy)
+* [ ] Rabbit Chasing Scenario (Implement WorldObjectTargetSense)
 
 
 Neural Network Open Source projects

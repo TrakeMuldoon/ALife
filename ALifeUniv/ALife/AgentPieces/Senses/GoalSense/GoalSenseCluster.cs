@@ -48,6 +48,10 @@ namespace ALifeUni.ALife
             }
         }
 
+        /// <summary>
+        /// Detect the orientation towards an AAR
+        /// </summary>
+        /// <param name="aar"></param>
         private void DetectAgainstAAR(AARectangle aar)
         {
             Point myCP = myShape.CentrePoint;
@@ -56,47 +60,54 @@ namespace ALifeUni.ALife
             int distanceValue;
             int rotationValue;
 
+
+            //The point 0,0 is TopLeft of the scenario
+
+            //This detects if "myself" is inline with the "X" (Above, Below or Within)            
             if(targBB.MinX <= myCP.X
                 && myCP.X <= targBB.MaxX)
             {
                 if(targBB.MinY <= myCP.Y
                     && myCP.Y <= targBB.MaxY)
                 {
-                    //I am within
+                    //I am within the AAR
                     distanceValue = 0;
                     rotationValue = 0;
                 }
                 else if(myCP.Y < targBB.MinY)
                 {
-                    //below
+                    //below mathwise, above visually
                     distanceValue = (int)(targBB.MinY - myCP.Y);
-                    rotationValue = CalculateRotationFrom(270);
-                }
-                else //I am above it
-                {
-                    distanceValue = (int)(myCP.Y - targBB.MaxY);
                     rotationValue = CalculateRotationFrom(90);
                 }
+                else 
+                {
+                    //above mathwise, below visually
+                    distanceValue = (int)(myCP.Y - targBB.MaxY);
+                    rotationValue = CalculateRotationFrom(270);
+                }
             }
+            //This detects if "myself" is inline with the "Y" (Left, Right) (Within is covered in the previous case)
             else if(targBB.MinY <= myCP.Y
                     && myCP.Y <= targBB.MaxY)
             {
                 //I am to the left or the right
                 if(myCP.X < targBB.MinX)
                 {
-                    //below
+                    //I am to the left
                     distanceValue = (int)(targBB.MinX - myCP.X);
                     rotationValue = CalculateRotationFrom(0);
                 }
-                else //I am above it
+                else 
                 {
+                    //I am to the right 
                     distanceValue = (int)(myCP.X - targBB.MaxX);
                     rotationValue = CalculateRotationFrom(180);
                 }
             }
             else
             {
-                //I am not inline with it.
+                //I am not inline with it. Therefore the closest point will be one of the corners. 
                 double xTarg = myCP.X < targBB.MinX ? targBB.MinX : targBB.MaxX;
                 double yTarg = myCP.Y < targBB.MinY ? targBB.MinY : targBB.MaxY;
                 Point target = new Point(xTarg, yTarg);

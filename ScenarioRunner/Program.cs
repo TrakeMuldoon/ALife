@@ -35,7 +35,6 @@ namespace ScenarioRunner
                 Console.Write(i + "-> ");
                 int seedValue = r.Next();
                 RunSeed(seedValue, scenario, height, width);
-                RunSeed(seedValue, scenario, height, width);
             }
             Console.WriteLine("Done, Please hit enter key");
             Log.Information("--->EndRun");
@@ -45,8 +44,8 @@ namespace ScenarioRunner
 
         private static void RunSeed(int seedValue, IScenario scenario, int height, int width)
         {
-            string topLine = String.Format("Seed:{0}, Name: {1}, Height:{2}, Width:{3}\t", seedValue, scenario.Name, height, width);
-            Console.WriteLine($"\t---------------{topLine}-----------");
+            string topLine = String.Format("Seed:{0}, Name: {1}, Height:{2}, Width:{3}", seedValue, scenario.Name, height, width);
+            Console.WriteLine($"\t---------------{topLine}");
             Console.Write("  ");
             DateTime start = DateTime.Now;
 
@@ -91,9 +90,6 @@ namespace ScenarioRunner
             string durationString = (end - start).ToString("mm\\:ss\\.fff");
 
             Console.WriteLine("\tTotal Time: " + durationString);
-
-            Planet.World.MessagePump.ForEach(m => Console.Write("|" + m));
-            Console.WriteLine();
 
             if(!String.IsNullOrEmpty(error))
             {

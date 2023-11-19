@@ -48,6 +48,7 @@ namespace ALifeUni
             //Planet.CreateWorld(new FieldCrossingLowReproScenario());
             //Planet.CreateWorld(new DripFeedMaze());
             Planet.CreateWorld(new FieldCrossingWallsScenario());
+            //Planet.CreateWorld(new GoalsTestScenario());
 
 
             animCanvas.ClearColor = Colors.NavajoWhite;

@@ -9,7 +9,11 @@ namespace ALifeUni.ALife.Brains
         EqualTo,
         NotEqualTo,
         LessThanOrEqualTo,
-        GreaterThanOrEqualTo
+        GreaterThanOrEqualTo,
+        AbsGreaterThan,
+        AbsLessThan,
+        AbsEqualTo,
+        AbsNotEqualTo
     }
 
     public static class IntConditionFactory
@@ -61,16 +65,22 @@ namespace ALifeUni.ALife.Brains
 
         private static BehaviourCondition GetNewBehaviourByEnum(BehaviourInput b1, BehaviourInput b2, IntOperationEnum val)
         {
+            Func<int, int, bool> evaluator;
             switch(val)
             {
-                case IntOperationEnum.GreaterThan:          return new BehaviourCondition<int>(b1, b2, (x, y) => x > y, val.ToString());
-                case IntOperationEnum.LessThan:             return new BehaviourCondition<int>(b1, b2, (x, y) => x < y, val.ToString());
-                case IntOperationEnum.EqualTo:              return new BehaviourCondition<int>(b1, b2, (x, y) => x == y, val.ToString());
-                case IntOperationEnum.NotEqualTo:           return new BehaviourCondition<int>(b1, b2, (x, y) => x != y, val.ToString());
-                case IntOperationEnum.LessThanOrEqualTo:    return new BehaviourCondition<int>(b1, b2, (x, y) => x <= y, val.ToString());
-                case IntOperationEnum.GreaterThanOrEqualTo: return new BehaviourCondition<int>(b1, b2, (x, y) => x >= y, val.ToString());
+                case IntOperationEnum.GreaterThan:          evaluator = (x, y) => x > y; break;
+                case IntOperationEnum.LessThan:             evaluator = (x, y) => x < y; break;
+                case IntOperationEnum.EqualTo:              evaluator = (x, y) => x == y; break;
+                case IntOperationEnum.NotEqualTo:           evaluator = (x, y) => x != y; break;
+                case IntOperationEnum.LessThanOrEqualTo:    evaluator = (x, y) => x <= y; break;
+                case IntOperationEnum.GreaterThanOrEqualTo: evaluator = (x, y) => x >= y; break;
+                case IntOperationEnum.AbsGreaterThan:       evaluator = (x, y) => Math.Abs(x) > Math.Abs(y); break;
+                case IntOperationEnum.AbsLessThan:          evaluator = (x, y) => Math.Abs(x) < Math.Abs(y); break;
+                case IntOperationEnum.AbsEqualTo:           evaluator = (x, y) => Math.Abs(x) == Math.Abs(y); break;
+                case IntOperationEnum.AbsNotEqualTo:        evaluator = (x, y) => Math.Abs(x) != Math.Abs(y); break;
+                default: throw new Exception("Unknown operator for Integer: " + val);
             }
-            throw new Exception("Impossible Exception!");
+            return new BehaviourCondition<int>(b1, b2, evaluator, val.ToString());
         }
     }
 }

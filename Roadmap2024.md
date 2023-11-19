@@ -47,6 +47,9 @@ These items may be complete already. It is unclear to me as of right now.
 * [ ] Update the Scenario Runner to be genericizable. Feed in a Scenario and outputs, etc, instead of replacing them every time. 
 * [ ] Find a good optimized C# Neural Network that allows for huge networks efficiently.
 * [ ] Modified fitness by time/trigger
+* [ ] Clean UI colours
+* [ ] Implement "Randomable" type
+* [ ] Goal Sense Bug on exactly "180"
 
 
 Neural Network Open Source projects

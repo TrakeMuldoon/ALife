@@ -53,8 +53,8 @@ namespace ALifeUni.ALife
             Point myCP = myShape.CentrePoint;
             BoundingBox targBB = aar.BoundingBox;
 
-            int distanceValue = 0;
-            int rotationValue = 0;
+            int distanceValue;
+            int rotationValue;
 
             if(targBB.MinX <= myCP.X
                 && myCP.X <= targBB.MaxX)

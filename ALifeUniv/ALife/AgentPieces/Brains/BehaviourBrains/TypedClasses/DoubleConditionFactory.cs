@@ -60,16 +60,18 @@ namespace ALifeUni.ALife.Brains
 
         private static BehaviourCondition GetNewBehaviourByEnum(BehaviourInput b1, BehaviourInput b2, DoubleOperationEnum val)
         {
+            Func<double, double, bool> evaluator;
             switch(val)
             {
-                case DoubleOperationEnum.GreaterThan:           return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) > Math.Round(y, 4), val.ToString());
-                case DoubleOperationEnum.LessThan:              return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) < Math.Round(y, 4), val.ToString());
-                case DoubleOperationEnum.EqualTo:               return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) == Math.Round(y, 4), val.ToString());
-                case DoubleOperationEnum.NotEqualTo:            return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) != Math.Round(y, 4), val.ToString());
-                case DoubleOperationEnum.LessThanOrEqualTo:     return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) <= Math.Round(y, 4), val.ToString());
-                case DoubleOperationEnum.GreaterThanOrEqualTo:  return new BehaviourCondition<double>(b1, b2, (x, y) => Math.Round(x, 4) >= Math.Round(y, 4), val.ToString());
+                case DoubleOperationEnum.GreaterThan:           evaluator = (x, y) => Math.Round(x, 4) > Math.Round(y, 4); break;
+                case DoubleOperationEnum.LessThan:              evaluator = (x, y) => Math.Round(x, 4) < Math.Round(y, 4); break;
+                case DoubleOperationEnum.EqualTo:               evaluator = (x, y) => Math.Round(x, 4) == Math.Round(y, 4); break;
+                case DoubleOperationEnum.NotEqualTo:            evaluator = (x, y) => Math.Round(x, 4) != Math.Round(y, 4); break;
+                case DoubleOperationEnum.LessThanOrEqualTo:     evaluator = (x, y) => Math.Round(x, 4) <= Math.Round(y, 4); break;
+                case DoubleOperationEnum.GreaterThanOrEqualTo:  evaluator = (x, y) => Math.Round(x, 4) >= Math.Round(y, 4); break;
+                default: throw new Exception("Unknown operator for Double: " + val);
             }
-            throw new Exception("Impossible Exception!");
+            return new BehaviourCondition<double>(b1, b2, evaluator, val.ToString());
         }
     }
 }

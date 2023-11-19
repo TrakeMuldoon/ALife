@@ -7,11 +7,13 @@ namespace ALifeUni.ALife
 {
     public class RotateCluster : ActionCluster
     {
+        const int MAXIMUM_TURN_DEGREES = 70;  //TODO: Abstract this into a config or the scenario
+
         public RotateCluster(Agent self) : base(self, "Rotate")
         {
             SubActions.Add("TurnLeft", new ActionPart("TurnLeft", Name));
             SubActions.Add("TurnRight", new ActionPart("TurnRight", Name));
-            SubActions.Add("TurnAround", new ActionPart("TurnAround", Name));
+            //SubActions.Add("TurnAround", new ActionPart("TurnAround", Name));
         }
 
         public override ActionCluster CloneAction(Agent newParent)
@@ -42,18 +44,20 @@ namespace ALifeUni.ALife
         {
             double turnRight = SubActions["TurnRight"].Intensity;
             double turnLeft = SubActions["TurnLeft"].Intensity;
-            double turnAround = SubActions["TurnAround"].Intensity;
+            //double turnAround = SubActions["TurnAround"].Intensity;
 
             double netRightTurnPercent = turnRight - turnLeft;
 
-            if(turnAround < Math.Abs(netRightTurnPercent))
-            {
-                netTurn = 180;
-            }
-            else
-            {
-                netTurn = netRightTurnPercent * 70; //TODO: Abstract this into a config or the scenario
-            }
+            //if(turnAround > Math.Abs(netRightTurnPercent))
+            //{
+            //    netTurn = 180;
+            //}
+            //else
+            //{
+            //    netTurn = netRightTurnPercent * MAXIMUM_TURN_DEGREES;
+            //}
+
+            netTurn = netRightTurnPercent * 70; //TODO: Abstract this into a config or the scenario
 
             Angle myOrientation = self.Shape.Orientation;
             myOrientation.Degrees += netTurn;

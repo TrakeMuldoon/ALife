@@ -70,7 +70,7 @@ namespace ALifeUni.ALife.Scenarios.FieldCrossings
             AgentZoneSpecs.Add(blue, new AgentZoneSpec(blue, red, Colors.Red, 180));
             AgentZoneSpecs.Add(orange, new AgentZoneSpec(orange, green, Colors.Green, 270));
 
-            int numAgents = 40;
+            int numAgents = 50;
             for(int i = 0; i < numAgents; i++)
             {
                 Agent rag = CreateZonedAgent(AgentZoneSpecs[red]);

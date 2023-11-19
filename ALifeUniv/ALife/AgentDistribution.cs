@@ -147,6 +147,7 @@ namespace ALifeUni.ALife
             double yMin = StartZone.TopLeft.Y + halfHeight;
             double yMax = StartZone.TopLeft.Y + StartZone.YHeight - halfHeight;
 
+            //If we aren't tracking collisions, then any point in the area is valid
             if(!TrackCollisions)
             {
                 double X = Planet.World.NumberGen.Next((int)xMin, (int)xMax);

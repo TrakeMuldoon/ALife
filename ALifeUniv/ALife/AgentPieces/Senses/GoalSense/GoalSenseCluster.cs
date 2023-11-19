@@ -48,6 +48,11 @@ namespace ALifeUni.ALife
             }
         }
 
+        public void ChangeTarget(IShape newTarget)
+        {
+            targetShape = newTarget;
+        }
+
         /// <summary>
         /// Detect the orientation towards an AAR
         /// </summary>

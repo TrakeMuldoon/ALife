@@ -99,6 +99,7 @@ namespace ALifeUni.ALife.Scenarios
             if(me.Statistics["DeathTimer"].Value > 1899)
             {
                 me.Die();
+                return;
             }
             List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(me.Shape.BoundingBox);
             foreach(Zone z in inZones)
@@ -108,6 +109,7 @@ namespace ALifeUni.ALife.Scenarios
                     if(me.Statistics["ZoneEscapeTimer"].Value > 200)
                     {
                         me.Die();
+                        return;
                     }
                 }
                 else if(z.Name == me.TargetZone.Name)
@@ -146,6 +148,7 @@ namespace ALifeUni.ALife.Scenarios
             child.Shape.CentrePoint = reverseChildPoint;
             child.Shape.Orientation.Degrees = specification.StartOrientation;
             child.Shape.Color = specification.AgentColor;
+            (child.Senses[2] as GoalSenseCluster).ChangeTarget(specification.TargetZone);
 
             collider.MoveObject(child);
         }

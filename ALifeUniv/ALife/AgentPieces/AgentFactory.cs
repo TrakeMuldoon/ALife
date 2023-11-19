@@ -55,7 +55,9 @@ namespace ALifeUni.ALife
         {
             Agent newChild = new Agent(newParent.GenusLabel
                            , AgentIDGenerator.GetNextChildId(newParent.IndividualLabel, newParent.NumChildren)
-                           , ReferenceValues.CollisionLevelPhysical); //TODO: This is a bug when you use "ReproduceBest" or reproduce anything that is already dead. 
+                           , ReferenceValues.CollisionLevelPhysical); //TODO: This is hardcoded to solve a bug where "ReproduceBest" or any kind of out of band reproduction
+                                                                      //was being used. It was reproducing on the dead layer. 
+                                                                      //This should be changed to somehow understand the target layer it wishes to reproduce on. 
 
             newChild.Zone = newParent.Zone;
             newChild.TargetZone = newParent.TargetZone;

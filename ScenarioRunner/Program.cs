@@ -64,8 +64,7 @@ namespace ScenarioRunner
                     int population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
                     if(population == 0)
                     {
-                        Console.WriteLine();
-                        Console.WriteLine("All Dead. Next");
+                        Console.WriteLine("|> All Dead. Next");
                         break;
                     }
 

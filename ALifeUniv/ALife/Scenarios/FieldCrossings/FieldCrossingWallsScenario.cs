@@ -80,14 +80,12 @@ namespace ALifeUni.ALife.Scenarios.FieldCrossings
             }
 
             List<Wall> walls = new List<Wall>();
-            for(int i = 0; i < 15; i++)
+            for(int i = 0; i < 14; i ++)
             {
-                walls.Add(new Wall(new Point(70 + (i * 55), 110 + (i * 55)), 32, new Angle(45), $"x-1.{i}"));
-                walls.Add(new Wall(new Point(125 + (i * 55), 80 + (i * 55)), 32, new Angle(135), $"x-3.{i}"));
-                if(i < 13)
-                {
-                    walls.Add(new Wall(new Point(100 + (i * 55), 245 + (i * 55)), 32, new Angle(135), $"x-5.{i}"));
-                }
+                int angleDelta = i % 2 == 0 ? 10 : -10;
+
+                walls.Add(new Wall(new Point(50 + (i * 65), 100 + (i * 65)), 50, new Angle(angleDelta), $"x-1.{i}"));
+                walls.Add(new Wall(new Point(950 - (i * 65), 100 + (i * 65)), 50, new Angle(90 + angleDelta), $"x-2.{i}"));
             }
 
             walls.ForEach(w => Planet.World.AddObjectToWorld(w));

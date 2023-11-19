@@ -362,8 +362,6 @@ namespace ALifeUni
                 gameTimer.Stop();
             }
             Dt_Tick(sender, e);
-            //Planet.World.ExecuteOneTurn();
-            //AgentPanel.updateInfo();
         }
 
         private void SlowPlaySim_Click(object sender, RoutedEventArgs e)
@@ -402,6 +400,9 @@ namespace ALifeUni
         {
             Planet.World.ExecuteManyTurns(200);
             AgentPanel.updateInfo();
+            UpdateZoneInfo();
+            UpdateGeneology();
+            UpdateErrors();
         }
 
         private void SkipFarAhead_Click(object sender, RoutedEventArgs e)

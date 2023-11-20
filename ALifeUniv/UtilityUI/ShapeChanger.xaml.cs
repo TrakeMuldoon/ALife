@@ -4,19 +4,9 @@ using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -49,11 +39,11 @@ namespace ALifeUni
 
         public int XValue { get { return (int)XVal.Value; } }
         public int YValue { get { return (int)YVal.Value; } }
-        public string ShapeString {  get { return ShapeChooser.SelectedValue.ToString(); } }
+        public string ShapeString { get { return ShapeChooser.SelectedValue.ToString(); } }
         public double OrientationVal { get { return Orientation.Value; } }
         public double CircleRadius { get { return CirRadius.Value; } }
         public double SectorRadius { get { return SecRadius.Value; } }
-        public double SectorSweep {  get { return SecSweep.Value; } }
+        public double SectorSweep { get { return SecSweep.Value; } }
         public double RectangleFB { get { return RecFBLength.Value; } }
         public double RectangleRL { get { return RecRLWidth.Value; } }
 
@@ -73,7 +63,7 @@ namespace ALifeUni
                 case Circle cc:
                     CircleStats.Visibility = Visibility.Visible;
                     ShapeChooser.SelectedValue = "Circle";
-                    CirRadius.Value = cc.Radius; 
+                    CirRadius.Value = cc.Radius;
                     break;
                 case Sector sec:
                     SectorStats.Visibility = Visibility.Visible;
@@ -156,7 +146,7 @@ namespace ALifeUni
             inUpdate = true;
 
             Circle cc = myShape as Circle;
-            cc.Radius = (float) CirRadius.Value;
+            cc.Radius = (float)CirRadius.Value;
 
             collider.MoveObject(ShapeOwner);
             inUpdate = false;
@@ -166,7 +156,7 @@ namespace ALifeUni
         {
             if(inUpdate) { return; }
             inUpdate = true;
-            
+
             Sector sec = myShape as Sector;
             sec.Radius = (float)SecRadius.Value;
 

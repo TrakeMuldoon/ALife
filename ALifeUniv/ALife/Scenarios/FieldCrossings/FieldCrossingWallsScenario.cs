@@ -1,10 +1,6 @@
 ﻿using ALifeUni.ALife.CustomWorldObjects;
 using ALifeUni.ALife.Utility;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -80,7 +76,7 @@ namespace ALifeUni.ALife.Scenarios.FieldCrossings
             }
 
             List<Wall> walls = new List<Wall>();
-            for(int i = 0; i < 14; i ++)
+            for(int i = 0; i < 14; i++)
             {
                 int angleDelta = i % 2 == 0 ? 10 : -10;
 

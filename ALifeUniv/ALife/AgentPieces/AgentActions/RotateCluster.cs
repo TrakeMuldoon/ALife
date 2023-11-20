@@ -1,6 +1,5 @@
 ﻿using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
-using System;
 using System.Collections.Generic;
 
 namespace ALifeUni.ALife
@@ -64,7 +63,7 @@ namespace ALifeUni.ALife
 
 
             if(self.Shape is Circle)
-            {  
+            {
                 //This if statement is here because circles don't change their collision profile when they rotate,
                 return true;
             }

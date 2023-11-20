@@ -2,22 +2,12 @@
 using ALifeUni.ALife.CustomWorldObjects;
 using ALifeUni.ALife.Shapes;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -38,7 +28,7 @@ namespace ALifeUni
             foreach(WorldObject wo in Planet.World.AllActiveObjects)
             {
                 wo.Die();
-            }    
+            }
         }
 
         private void CreateTestDummies_Click(object sender, RoutedEventArgs e)
@@ -73,7 +63,7 @@ namespace ALifeUni
             string ori2 = "shape2.Orientation.Degrees = " + (int)RedShape.OrientationVal + ";";
 
             sb.AppendLine("ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);");
-            sb.AppendLine(point1); 
+            sb.AppendLine(point1);
             sb.AppendLine(shape1);
             sb.AppendLine(ori1);
             sb.AppendLine("ShapeWrapper wrap1 = new ShapeWrapper(\"shape1\", shape1);");
@@ -112,7 +102,7 @@ namespace ALifeUni
             switch(shapeSpec.ShapeString)
             {
                 case "Circle": return String.Format("Circle shape{0} = new Circle(point{0}, {1});"
-                                                     , itemNum, shapeSpec.CircleRadius); 
+                                                     , itemNum, shapeSpec.CircleRadius);
                 case "Rectangle": return String.Format("Rectangle shape{0} = new Rectangle(point{0}, {1}, {2}, Colors.Pink);"
                                                         , itemNum, shapeSpec.RectangleFB, shapeSpec.RectangleRL);
                 case "Sector": return String.Format("Sector shape{0} = new Sector(point{0}, {1}, new Angle({2}), Colors.Pink);"

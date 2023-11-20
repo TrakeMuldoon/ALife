@@ -87,13 +87,13 @@ namespace ALifeUni.ALife
 
         //All objects which were active last turn
         public readonly List<WorldObject> StableActiveObjects = new List<WorldObject>();
-        
+
         //All new objects. Should be added to Stable Active Objects, should already be in AllActiveObjects
         public readonly List<WorldObject> NewActiveObjects = new List<WorldObject>();
 
         //All objects which have fallen out of all active object scope
         public readonly List<WorldObject> InactiveObjects = new List<WorldObject>();
-        
+
         //Objects which at the end of the turn should be removed from "AllActive", "StableActive" and "NewActive"
         public readonly List<WorldObject> ToRemoveObjects = new List<WorldObject>();
 
@@ -168,7 +168,7 @@ namespace ALifeUni.ALife
             }
 
             //Add all the new objects into the Stable list
-            if (NewActiveObjects.Count > 0)
+            if(NewActiveObjects.Count > 0)
             {
                 StableActiveObjects.AddRange(NewActiveObjects);
                 NewActiveObjects.Clear();

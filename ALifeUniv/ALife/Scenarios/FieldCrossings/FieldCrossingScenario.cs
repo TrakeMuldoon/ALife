@@ -129,7 +129,7 @@ namespace ALifeUni.ALife.Scenarios
             collider.MoveObject(me);
 
             //Reproduce one child for each direction
-            foreach (AgentZoneSpec spec in AgentZoneSpecs.Values)
+            foreach(AgentZoneSpec spec in AgentZoneSpecs.Values)
             {
                 CreateZonedChild(me, collider, spec);
             }

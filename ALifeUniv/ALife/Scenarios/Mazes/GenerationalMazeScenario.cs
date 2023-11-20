@@ -1,5 +1,4 @@
 ﻿using ALifeUni.ALife.Brains;
-using ALifeUni.ALife.CustomWorldObjects;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using System;
@@ -37,7 +36,7 @@ namespace ALifeUni.ALife.Scenarios
 
             Point centrePoint = parentZone.Distributor.NextAgentCentre(10, 10);
 
-            IShape myShape = new Circle(centrePoint, 5);                       
+            IShape myShape = new Circle(centrePoint, 5);
             agent.StartOrientation = startOrientation;
             myShape.Orientation.Degrees = startOrientation;
             myShape.Color = color;
@@ -79,7 +78,7 @@ namespace ALifeUni.ALife.Scenarios
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
             IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 9, 9 });
-//            IBrain newBrain = new BehaviourBrain(agent, "*", "*", "*", "*", "*");
+            //            IBrain newBrain = new BehaviourBrain(agent, "*", "*", "*", "*", "*");
 
             agent.CompleteInitialization(null, 1, newBrain);
 
@@ -216,7 +215,7 @@ namespace ALifeUni.ALife.Scenarios
                     bestX.Insert(0, bestEver);
                 }
 
-                for(int i = 0; i < (60/bestXNum)+1; i++)
+                for(int i = 0; i < (60 / bestXNum) + 1; i++)
                 {
                     for(int j = 0; j < bestXNum; j++)
                     {

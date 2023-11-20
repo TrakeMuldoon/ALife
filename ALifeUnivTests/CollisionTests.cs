@@ -47,7 +47,7 @@ namespace AlifeTestProject
             VerifyCollisionTarget(collision2, wrap1);
         }
 
-        [TestMethod] 
+        [TestMethod]
         public void CircleCircleBB_NC()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
@@ -237,7 +237,7 @@ namespace AlifeTestProject
             VerifyCollisionTarget(collision2);
         }
 
-        [TestMethod] 
+        [TestMethod]
         public void CircleRectangleCircleCorners1BBNC()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
@@ -334,7 +334,7 @@ namespace AlifeTestProject
         }
 
         [TestMethod]
-        public void CircleRectangleCircleContainsRectangle() 
+        public void CircleRectangleCircleContainsRectangle()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
             Point point1 = new Point(115, 130);
@@ -381,8 +381,8 @@ namespace AlifeTestProject
             VerifyCollisionTarget(collision2, wrap1);
         }
 
-        [TestMethod] 
-        public void CircleRectangleNoCollision() 
+        [TestMethod]
+        public void CircleRectangleNoCollision()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
             Point point1 = new Point(200, 100);
@@ -432,7 +432,7 @@ namespace AlifeTestProject
         }
 
         [TestMethod]
-        public void SectorRectangleLeftArmSide1() 
+        public void SectorRectangleLeftArmSide1()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
             Point point1 = new Point(50, 50);
@@ -455,8 +455,8 @@ namespace AlifeTestProject
             VerifyCollisionTarget(collision2, wrap1);
         }
 
-        [TestMethod] 
-        public void SectorRectangleLeftArmSide2() 
+        [TestMethod]
+        public void SectorRectangleLeftArmSide2()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
             Point point1 = new Point(50, 50);
@@ -480,7 +480,7 @@ namespace AlifeTestProject
         }
 
         [TestMethod]
-        public void SectorRectangleLeftArmSide3() 
+        public void SectorRectangleLeftArmSide3()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
             Point point1 = new Point(50, 50);
@@ -528,7 +528,7 @@ namespace AlifeTestProject
         }
 
         [TestMethod]
-        public void SectorRectangleSweepSide1() 
+        public void SectorRectangleSweepSide1()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
             Point point1 = new Point(50, 50);
@@ -575,7 +575,7 @@ namespace AlifeTestProject
             VerifyCollisionTarget(collision2, wrap1);
         }
 
-        [TestMethod] 
+        [TestMethod]
         public void SectorRectangleSweepSide3()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
@@ -623,8 +623,8 @@ namespace AlifeTestProject
             VerifyCollisionTarget(collision2, wrap1);
         }
 
-        [TestMethod] 
-        public void SectorRectangleRightArmSide1() 
+        [TestMethod]
+        public void SectorRectangleRightArmSide1()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
             Point point1 = new Point(50, 50);
@@ -671,7 +671,7 @@ namespace AlifeTestProject
             VerifyCollisionTarget(collision2, wrap1);
         }
 
-        [TestMethod] 
+        [TestMethod]
         public void SectorRectangleRightArmSide3()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
@@ -696,7 +696,7 @@ namespace AlifeTestProject
         }
 
         [TestMethod]
-        public void SectorRectangleRightArmSide4() 
+        public void SectorRectangleRightArmSide4()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
             Point point1 = new Point(50, 50);
@@ -719,8 +719,8 @@ namespace AlifeTestProject
             VerifyCollisionTarget(collision2, wrap1);
         }
 
-        [TestMethod] 
-        public void SectorRectangleSweepBB_NC() 
+        [TestMethod]
+        public void SectorRectangleSweepBB_NC()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
             Point point1 = new Point(50, 50);
@@ -768,7 +768,7 @@ namespace AlifeTestProject
         }
 
         [TestMethod]
-        public void SectorRectangleSectorContainsRectangle() 
+        public void SectorRectangleSectorContainsRectangle()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
             Point point1 = new Point(40, 50);
@@ -791,7 +791,7 @@ namespace AlifeTestProject
             VerifyCollisionTarget(collision2, wrap1);
         }
 
-        [TestMethod] 
+        [TestMethod]
         public void SectorRectangleRectangleContainsSector()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
@@ -936,7 +936,7 @@ namespace AlifeTestProject
             VerifyCollisionTarget(collision1, wrap2);
             VerifyCollisionTarget(collision2, wrap1);
         }
-       
+
         [TestMethod]
         public void SectorCircleSecContainsCircle()
         {
@@ -962,7 +962,7 @@ namespace AlifeTestProject
         }
 
         [TestMethod]
-        public void SectorCircleCircleContainsSec() 
+        public void SectorCircleCircleContainsSec()
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
             Point point1 = new Point(95, 65);

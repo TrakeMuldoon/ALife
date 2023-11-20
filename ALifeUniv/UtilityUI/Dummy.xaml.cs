@@ -4,9 +4,9 @@
 
 namespace ALifeUni
 {
-    public sealed partial class BrainView : ContentDialog
+    public sealed partial class Dummy : ContentDialog
     {
-        public BrainView()
+        public Dummy()
         {
             this.InitializeComponent();
         }

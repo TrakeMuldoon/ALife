@@ -1,8 +1,6 @@
-using ALifeUni.ALife.CustomWorldObjects;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation;
-using Windows.Media.Core;
 using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
@@ -10,7 +8,7 @@ namespace ALifeUni.ALife.Scenarios
     public class FieldCrossingLowReproScenario : FieldCrossingScenario
     {
         private Dictionary<Zone, AgentZoneSpec> RotatedZoneSpecs = new Dictionary<Zone, AgentZoneSpec>();
-        private bool _init; 
+        private bool _init;
         private void Initialize()
         {
             List<Zone> keys = AgentZoneSpecs.Keys.ToList<Zone>();
@@ -18,7 +16,7 @@ namespace ALifeUni.ALife.Scenarios
             specs.Add(specs[0]);
             specs.RemoveAt(0);
 
-            for (int i = 0; i < keys.Count; i++)
+            for(int i = 0; i < keys.Count; i++)
             {
                 RotatedZoneSpecs.Add(keys[i], specs[i]);
             }
@@ -78,7 +76,7 @@ namespace ALifeUni.ALife.Scenarios
             AgentZoneSpecs.Add(orange, new AgentZoneSpec(orange, green, Colors.Green, 270));
 
             int numAgents = 80;
-            for (int i = 0; i < numAgents; i++)
+            for(int i = 0; i < numAgents; i++)
             {
                 Agent rag = CreateZonedAgent(AgentZoneSpecs[red]);
                 Agent bag = CreateZonedAgent(AgentZoneSpecs[blue]);

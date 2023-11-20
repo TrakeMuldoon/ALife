@@ -1,7 +1,6 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Brains;
 using ALifeUni.ALife.CustomWorldObjects;
-using ALifeUni.ALife.Scenarios;
 using ALifeUni.ALife.Scenarios.FieldCrossings;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
@@ -155,10 +154,10 @@ namespace ALifeUni
         {
             Dictionary<string, int> geneCount = new Dictionary<string, int>();
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
+            for(int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
             {
                 WorldObject wo = Planet.World.AllActiveObjects[i];
-                if (wo is Agent ag
+                if(wo is Agent ag
                     && ag.Alive)
                 {
                     string gene = ag.IndividualLabel.Substring(0, 3);
@@ -227,7 +226,8 @@ namespace ALifeUni
                     }
                 }
             }
-            catch (Exception) {
+            catch(Exception)
+            {
                 DrawingErrors++;
             }
         }
@@ -332,7 +332,7 @@ namespace ALifeUni
             int newSeed = Planet.World.NumberGen.Next();
             Planet.World.Scenario.Reset();
             Planet.CreateWorld(newSeed, Planet.World.Scenario, (int)animCanvas.Height, (int)animCanvas.Width);
-            
+
             seed = Planet.World.Seed.ToString();
             SimSeed.Text = seed;
             SimSeed_TextChanged(SimSeed, null);
@@ -390,7 +390,7 @@ namespace ALifeUni
                 gameTimer.Start();
             }
         }
-        
+
         private void SkipAhead_Click(object sender, RoutedEventArgs e)
         {
             Planet.World.ExecuteManyTurns(200);
@@ -618,7 +618,8 @@ namespace ALifeUni
                                                 , (ag) => ((BehaviourBrain)ag.MyBrain).Behaviours.Count()
                                                 , false);
             }
-            catch(Exception) {
+            catch(Exception)
+            {
                 ErrorText = "No Shortest Brain Found";
             }
         }
@@ -635,7 +636,7 @@ namespace ALifeUni
         {
             int compValue = greaterThan ? int.MinValue : int.MaxValue;
             List<Agent> options = new List<Agent>();
-            
+
             for(int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
             {
                 WorldObject wo = Planet.World.AllActiveObjects[i];

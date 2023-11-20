@@ -193,19 +193,24 @@
     <Compile Include="ALife\CustomWorldObjects\Spinner.cs" />
     <Compile Include="ALife\CustomWorldObjects\Wall.cs" />
     <Compile Include="ALife\Zone.cs" />
+    <Compile Include="UtilityUI\BrainView.xaml.cs">
+      <DependentUpon>BrainView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UtilityUI\CollisionTestPanel.xaml.cs">
       <DependentUpon>CollisionTestPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Configs\WorldConfig.cs" />
     <Compile Include="UI\DrawingLogic.cs" />
     <Compile Include="UI\LayerUISettings.cs" />
+    <Compile Include="UtilityUI\Dummy.xaml.cs">
+      <DependentUpon>Dummy.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UtilityUI\ShapeChanger.xaml.cs">
       <DependentUpon>ShapeChanger.xaml</DependentUpon>
     </Compile>
     <Compile Include="UtilityUI\WallPanel.xaml.cs">
       <DependentUpon>WallPanel.xaml</DependentUpon>
     </Compile>
-    <None Include="ALife\Collision\CollisionQuadTree.cs" />
     <Compile Include="ALife\Collision\CollisionGrid.cs" />
     <Compile Include="ALife\Collision\ICollisionMap.cs" />
     <Compile Include="ALife\Collision\CollisionDetector.cs" />
@@ -252,6 +257,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="UtilityUI\BrainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UtilityUI\CollisionTestPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -263,6 +272,10 @@
     <Page Include="AgentInfoPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UtilityUI\Dummy.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UtilityUI\ShapeChanger.xaml">
       <SubType>Designer</SubType>

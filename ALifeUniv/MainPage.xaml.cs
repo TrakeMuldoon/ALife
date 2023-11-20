@@ -118,11 +118,6 @@ namespace ALifeUni
             {
                 DrawingLogic.DrawAncestry(args);
             }
-
-            foreach(Point p in taps)
-            {
-                args.DrawingSession.FillCircle(new Vector2((float)p.X, (float)p.Y), 1, Colors.Peru);
-            }
         }
 
         private void ShowGeneology_Checked(object sender, RoutedEventArgs e)
@@ -232,7 +227,7 @@ namespace ALifeUni
                     }
                 }
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 DrawingErrors++;
             }
         }
@@ -623,7 +618,7 @@ namespace ALifeUni
                                                 , (ag) => ((BehaviourBrain)ag.MyBrain).Behaviours.Count()
                                                 , false);
             }
-            catch(Exception ex) {
+            catch(Exception) {
                 ErrorText = "No Shortest Brain Found";
             }
         }
@@ -674,34 +669,20 @@ namespace ALifeUni
             return currentIndex;
         }
 
-        List<Point> taps = new List<Point>();
-        private void DotMaker_Click(object sender, RoutedEventArgs e)
-        {
-            string tex = Coords.Text;
-            string[] coords = tex.Split(',');
-            if(coords.Length != 2) return;
-
-            coords[0] = coords[0].Trim();
-            coords[1] = coords[1].Trim();
-
-            double x = double.Parse(coords[0]);
-            double y = double.Parse(coords[1]);
-
-            Point p = new Point(x, y);
-            taps.Clear();
-            taps.Add(p);
-        }
-
         private void CollisionTestPanelButton_Click(object sender, RoutedEventArgs e)
         {
-            if(CollisionTestPanel.Visibility == Visibility.Visible)
-            {
-                CollisionTestPanel.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                CollisionTestPanel.Visibility = Visibility.Visible;
-            }
+            ContentDialog dg = new BrainView();
+            dg.ShowAsync();
+            //CollisionPopup.IsOpen = !CollisionPopup.IsOpen;
+            //if(CollisionTestPanel.Visibility == Visibility.Visible)
+            //{
+            //    CollisionTestPanel.Visibility = Visibility.Collapsed;
+            //}
+            //else
+            //{
+            //    CollisionTestPan
+            //    el.Visibility = Visibility.Visible;
+            //}
         }
     }
 }

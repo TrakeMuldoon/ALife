@@ -53,7 +53,7 @@ These items may be complete already. It is unclear to me as of right now.
 * [ ] Comment Every Class and Function
 * [ ] Temperature Scenario (Low temps steal energy, high temps restore energy)
 * [ ] Rabbit Chasing Scenario (Implement WorldObjectTargetSense)
-
+* [x] Figure out why (with this build) run "568678228" results in an AgentNotFound exception (Turn number 40951)
 
 Neural Network Open Source projects
 https://www.heatonresearch.com/encog/ - Last Release 2017

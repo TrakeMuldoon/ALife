@@ -202,9 +202,6 @@
     <Compile Include="Configs\WorldConfig.cs" />
     <Compile Include="UI\DrawingLogic.cs" />
     <Compile Include="UI\LayerUISettings.cs" />
-    <Compile Include="UtilityUI\Dummy.xaml.cs">
-      <DependentUpon>Dummy.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UtilityUI\ShapeChanger.xaml.cs">
       <DependentUpon>ShapeChanger.xaml</DependentUpon>
     </Compile>
@@ -272,10 +269,6 @@
     <Page Include="AgentInfoPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UtilityUI\Dummy.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UtilityUI\ShapeChanger.xaml">
       <SubType>Designer</SubType>

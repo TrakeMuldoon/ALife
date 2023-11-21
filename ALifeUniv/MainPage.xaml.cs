@@ -96,7 +96,7 @@ namespace ALifeUni
         private Boolean showParents;
         private void AnimCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
-            if(DNB_DEBUG)
+            if(FASTFORWARDING)
             {
                 return;
             }
@@ -117,11 +117,6 @@ namespace ALifeUni
             {
                 DrawingLogic.DrawAncestry(args);
             }
-        }
-
-        private void ShowGeneology_Checked(object sender, RoutedEventArgs e)
-        {
-            showParents = ((CheckBox)sender).IsChecked.Value;
         }
 
         private void UpdateZoneInfo()
@@ -340,7 +335,7 @@ namespace ALifeUni
 
         }
 
-        #region speed controls
+        #region Speed controls
 
         private void PauseSim_Click(object sender, RoutedEventArgs e)
         {
@@ -423,24 +418,28 @@ namespace ALifeUni
         private void SkipSpecificAhead_Click(object sender, RoutedEventArgs e)
         {
             FastForward(skipValue);
+            AgentPanel.updateInfo();
+            UpdateZoneInfo();
+            UpdateGeneology();
+            UpdateErrors();
         }
 
-        private bool DNB_DEBUG = false;
+        private bool FASTFORWARDING = false;
         private async void FastForward(int turnsToSkip)
         {
             try
             {
-                DNB_DEBUG = true;
+                FASTFORWARDING = true;
                 SkipProgress.Maximum = 100;
                 SkipProgress.Minimum = 0;
                 SkipProgress.Value = 0;
 
                 DateTime start = DateTime.Now;
 
-                bool restart = false;
+                bool restart_timer = false;
                 if(gameTimer.IsEnabled)
                 {
-                    restart = true;
+                    restart_timer = true;
                     gameTimer.Stop();
                 }
 
@@ -478,16 +477,14 @@ namespace ALifeUni
                     Planet.World.ExecuteManyTurns(turnsToSkip - progress);
                 }
 
-                AgentPanel.updateInfo();
-
-                if(restart)
+                if(restart_timer)
                 {
                     gameTimer.Start();
                 }
             }
             finally
             {
-                DNB_DEBUG = false;
+                FASTFORWARDING = false;
             }
         }
 
@@ -599,6 +596,11 @@ namespace ALifeUni
         }
         #endregion
 
+        private void ShowGeneology_Checked(object sender, RoutedEventArgs e)
+        {
+            showParents = ((CheckBox)sender).IsChecked.Value;
+        }
+
         int oldestIndex = -1;
         private void LongestLived_Click(object sender, RoutedEventArgs e)
         {
@@ -606,7 +608,6 @@ namespace ALifeUni
                                         , (ag) => ag.Statistics["Age"].Value
                                         , true);
         }
-
 
         string ErrorText;
         int shortBrainIndex = -1;
@@ -672,18 +673,7 @@ namespace ALifeUni
 
         private void CollisionTestPanelButton_Click(object sender, RoutedEventArgs e)
         {
-            ContentDialog dg = new BrainView();
-            dg.ShowAsync();
-            //CollisionPopup.IsOpen = !CollisionPopup.IsOpen;
-            //if(CollisionTestPanel.Visibility == Visibility.Visible)
-            //{
-            //    CollisionTestPanel.Visibility = Visibility.Collapsed;
-            //}
-            //else
-            //{
-            //    CollisionTestPan
-            //    el.Visibility = Visibility.Visible;
-            //}
+            CollisionTestPopup.IsOpen = !CollisionTestPopup.IsOpen;
         }
     }
 }

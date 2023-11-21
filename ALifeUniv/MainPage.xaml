@@ -143,6 +143,8 @@
         </StackPanel>
         <local:AgentInfoPanel x:Name="AgentPanel"></local:AgentInfoPanel>
         <local:WallPanel x:Name="WallPane"></local:WallPanel>
-        <local:CollisionTestPanel x:Name="CollisionTestPanel" Visibility="Visible"></local:CollisionTestPanel>
+        <Popup x:Name="CollisionTestPopup">
+            <local:CollisionTestPanel x:Name="CollisionTestPanel" Visibility="Visible"></local:CollisionTestPanel>
+        </Popup>
     </StackPanel>
 </Page>

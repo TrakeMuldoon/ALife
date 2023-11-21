@@ -8,6 +8,20 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderBrush" >
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="Black" Offset="0.0" />
+                        <GradientStop Color="Gray" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
 
     <StackPanel x:Name="SelectedAgent">
         <TextBlock x:Name="NameLabel" Text="Name" />
@@ -25,5 +39,9 @@
         
         <TextBlock x:Name="BrainDisplayLabel" Text="Brain"/>
         <TextBlock x:Name="BrainDisplay" />
+        <Button x:Name="NeuralNetworkPopupButton" Visibility="Collapsed" Click="NeuralNetworkPopupButton_Click"></Button>
+        <Popup x:Name="NeuralNetworkBrainViewer" IsOpen="False">
+            <local:NeuralBrainView></local:NeuralBrainView>
+        </Popup>
     </StackPanel>
 </UserControl>

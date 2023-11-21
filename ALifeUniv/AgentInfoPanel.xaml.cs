@@ -1,7 +1,9 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Brains;
+using ALifeUni.ALife.Shapes;
 using System;
 using System.Text;
+using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -18,11 +20,18 @@ namespace ALifeUni
             {
                 theAgent = value;
                 clearInfo();
+                NeuralNetworkBrainViewer.IsOpen = true;
+                NeuralNetworkPopupButton.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 if(theAgent != null)
                 {
                     updateInfo();
                 }
             }
+        }
+
+        public AgentInfoPanel()
+        {
+            this.InitializeComponent();
         }
 
         public void updateInfo()
@@ -32,8 +41,8 @@ namespace ALifeUni
                 return;
             }
             AgentName.Text = theAgent.IndividualLabel;
-            AgentLocation.Text = Math.Round(theAgent.Shape.CentrePoint.X, 4) + "," + Math.Round(theAgent.Shape.CentrePoint.Y, 4) + "::" + theAgent.Shape.Orientation.Degrees
-                + Environment.NewLine + "Generation:" + theAgent.Generation + "  Children: " + theAgent.NumChildren;
+            IShape sh = theAgent.Shape;
+            AgentLocation.Text = $"{Math.Round(sh.CentrePoint.X, 4)}, {Math.Round(sh.CentrePoint.Y, 4)}::{sh.Orientation.Degrees}{Environment.NewLine}Generation:{theAgent.Generation} Children: {theAgent.NumChildren}";
             senseBuilder();
             propertiesBuilder();
             actionsBuilder();
@@ -84,23 +93,32 @@ namespace ALifeUni
         private void brainBuilder()
         {
             StringBuilder sb = new StringBuilder();
-            if(theAgent.MyBrain is BehaviourBrain)
+            switch(theAgent.MyBrain)
             {
-                BehaviourBrain brain = (BehaviourBrain)theAgent.MyBrain;
-                foreach(Behaviour beh in brain.Behaviours)
-                {
-                    sb.Append(beh.PassedThisTurn ? "!!" : "XX");
-                    string behave = beh.AsEnglish;
-                    behave = behave.Replace(" AND", Environment.NewLine + "\t" + "AND");
-                    behave = behave.Replace(" THEN", Environment.NewLine + "\t\t" + "THEN");
-                    sb.Append(" : " + behave + Environment.NewLine);
-                }
+                case BehaviourBrain bb: WriteBehaviourBrainText(bb, sb); break;
+                case NeuralNetworkBrain nn: PrepareNeuralNetworkBrain(nn, sb); break;
+                default: sb.Append("unknown brain type"); break;
             }
-            else
-            {
-                sb.Append("unknown brain type");
-            }
+
             BrainDisplay.Text = sb.ToString();
+        }
+
+        private void PrepareNeuralNetworkBrain(NeuralNetworkBrain bb, StringBuilder sb)
+        {
+            sb.Append("Use NeuralNetwork Brain Viewer Button");
+            NeuralNetworkPopupButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
+        private void WriteBehaviourBrainText(BehaviourBrain bb, StringBuilder sb)
+        {
+            foreach(Behaviour beh in bb.Behaviours)
+            {
+                sb.Append(beh.PassedThisTurn ? "!!" : "XX");
+                string behave = beh.AsEnglish;
+                behave = behave.Replace(" AND", Environment.NewLine + "\t" + "AND");
+                behave = behave.Replace(" THEN", Environment.NewLine + "\t\t" + "THEN");
+                sb.Append(" : " + behave + Environment.NewLine);
+            }
         }
 
         private void clearInfo()
@@ -112,9 +130,10 @@ namespace ALifeUni
             BrainDisplay.Text = "xx";
         }
 
-        public AgentInfoPanel()
+
+        private void NeuralNetworkPopupButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            this.InitializeComponent();
+            NeuralNetworkBrainViewer.IsOpen = true;
         }
     }
 }

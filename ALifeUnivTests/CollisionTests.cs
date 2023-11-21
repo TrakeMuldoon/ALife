@@ -27,7 +27,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void CircleCircleCollision()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
 
             Point p1 = new Point(50, 50);
             Circle cir1 = new Circle(p1, 15);
@@ -50,7 +50,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void CircleCircleBB_NC()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
 
             Point p1 = new Point(50, 50);
             Circle cir1 = new Circle(p1, 15);
@@ -73,7 +73,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void CircleCircleA_Contains_B()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
 
             Point p1 = new Point(50, 50);
             Circle cir1 = new Circle(p1, 15);
@@ -96,7 +96,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void CircleCircleNoCollision()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
 
             Point p1 = new Point(50, 50);
             Circle cir1 = new Circle(p1, 10);
@@ -121,7 +121,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void CircleRectangleCircleSide1()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
 
             Point ccp = new Point(50, 50);
             Circle circle = new Circle(ccp, 10);
@@ -144,7 +144,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void CircleRectangleCircleSide2()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
 
             Point ccp = new Point(50, 50);
             Circle circle = new Circle(ccp, 10);
@@ -168,7 +168,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void CircleRectangleCircleSide3()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
 
             Point ccp = new Point(50, 50);
             Circle circle = new Circle(ccp, 10);
@@ -192,7 +192,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void CircleRectangleCircleSide4()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
 
             Point ccp = new Point(50, 50);
             Circle circle = new Circle(ccp, 10);
@@ -216,7 +216,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void CircleRectangleCircleSide1NC()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(80, 80);
             Circle shape1 = new Circle(point1, 11);
             shape1.Orientation.Degrees = 0;
@@ -240,7 +240,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void CircleRectangleCircleCorners1BBNC()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(85, 70);
             Circle shape1 = new Circle(point1, 10);
             shape1.Orientation.Degrees = 0;
@@ -264,7 +264,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void CircleRectangleCircleCorners2BBNC()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(70, 100);
             Circle shape1 = new Circle(point1, 10);
             shape1.Orientation.Degrees = 0;
@@ -288,7 +288,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void CircleRectangleCircleCorners3BBNC()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(130, 100);
             Circle shape1 = new Circle(point1, 10);
             shape1.Orientation.Degrees = 0;
@@ -312,7 +312,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void CircleRectangleCircleCorners4BBNC()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(115, 130);
             Circle shape1 = new Circle(point1, 10);
             shape1.Orientation.Degrees = 0;
@@ -336,7 +336,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void CircleRectangleCircleContainsRectangle()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(115, 130);
             Circle shape1 = new Circle(point1, 50);
             shape1.Orientation.Degrees = 0;
@@ -360,7 +360,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void CircleRectangleRectangleContainsCircle()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(100, 100);
             Circle shape1 = new Circle(point1, 10);
             shape1.Orientation.Degrees = 0;
@@ -384,7 +384,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void CircleRectangleNoCollision()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(200, 100);
             Circle shape1 = new Circle(point1, 10);
             shape1.Orientation.Degrees = 0;
@@ -410,7 +410,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleLeftSideBB_NC()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 20, new Angle(50), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -434,7 +434,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleLeftArmSide1()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 20, new Angle(50), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -458,7 +458,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleLeftArmSide2()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 20, new Angle(50), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -482,7 +482,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleLeftArmSide3()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 20, new Angle(50), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -506,7 +506,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleLeftArmSide4()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 20, new Angle(50), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -530,7 +530,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleSweepSide1()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -554,7 +554,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleSweepSide2()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -578,7 +578,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleSweepSide3()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -602,7 +602,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleSweepSide4()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -626,7 +626,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleRightArmSide1()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -650,7 +650,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleRightArmSide2()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -674,7 +674,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleRightArmSide3()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -698,7 +698,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleRightArmSide4()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -722,7 +722,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleSweepBB_NC()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -746,7 +746,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleRightArmNC()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -770,7 +770,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleSectorContainsRectangle()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(40, 50);
             Sector shape1 = new Sector(point1, 50, new Angle(70), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -794,7 +794,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleRectangleContainsSector()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(40, 50);
             Sector shape1 = new Sector(point1, 25, new Angle(40), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -818,7 +818,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorRectangleNoCollision()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colors.Pink);
             shape1.Orientation.Degrees = 5;
@@ -844,7 +844,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorCircleLeftArm()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(80, 116);
             Sector shape1 = new Sector(point1, 50, new Angle(45), Colors.Pink);
             shape1.Orientation.Degrees = 0;
@@ -868,7 +868,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorCircleLeftArmNC()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(120, 116);
             Sector shape1 = new Sector(point1, 50, new Angle(45), Colors.Pink);
             shape1.Orientation.Degrees = 0;
@@ -892,7 +892,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorCircleSweep()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(170, 92);
             Sector shape1 = new Sector(point1, 50, new Angle(45), Colors.Pink);
             shape1.Orientation.Degrees = 150;
@@ -916,7 +916,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorCircleRightArm()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(95, 65);
             Sector shape1 = new Sector(point1, 50, new Angle(45), Colors.Pink);
             shape1.Orientation.Degrees = 0;
@@ -940,7 +940,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorCircleSecContainsCircle()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(95, 65);
             Sector shape1 = new Sector(point1, 50, new Angle(45), Colors.Pink);
             shape1.Orientation.Degrees = 0;
@@ -964,7 +964,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorCircleCircleContainsSec()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(95, 65);
             Sector shape1 = new Sector(point1, 20, new Angle(45), Colors.Pink);
             shape1.Orientation.Degrees = 0;
@@ -988,7 +988,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorCircleBBNC()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 50, new Angle(45), Colors.Pink);
             shape1.Orientation.Degrees = 0;
@@ -1012,7 +1012,7 @@ namespace AlifeTestProject
         [TestMethod]
         public void SectorCircleNoCollision()
         {
-            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);
+            ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(20, 20);
             Sector shape1 = new Sector(point1, 50, new Angle(45), Colors.Pink);
             shape1.Orientation.Degrees = 0;

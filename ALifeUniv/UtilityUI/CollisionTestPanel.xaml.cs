@@ -62,7 +62,7 @@ namespace ALifeUni
             string shape2 = BuildShapeConstructor(2, RedShape);
             string ori2 = "shape2.Orientation.Degrees = " + (int)RedShape.OrientationVal + ";";
 
-            sb.AppendLine("ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000);");
+            sb.AppendLine("ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, \"TestGrid\");");
             sb.AppendLine(point1);
             sb.AppendLine(shape1);
             sb.AppendLine(ori1);

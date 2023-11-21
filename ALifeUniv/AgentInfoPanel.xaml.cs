@@ -20,7 +20,7 @@ namespace ALifeUni
             {
                 theAgent = value;
                 clearInfo();
-                NeuralNetworkBrainViewer.IsOpen = true;
+                NeuralNetworkBrainViewer.IsOpen = false;
                 NeuralNetworkPopupButton.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 if(theAgent != null)
                 {
@@ -133,7 +133,7 @@ namespace ALifeUni
 
         private void NeuralNetworkPopupButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            NeuralNetworkBrainViewer.IsOpen = true;
+            NeuralNetworkBrainViewer.IsOpen = !NeuralNetworkBrainViewer.IsOpen;
         }
     }
 }

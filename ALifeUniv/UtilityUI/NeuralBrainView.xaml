@@ -17,8 +17,9 @@
                                                 PointerPressed="brainCanvas_PointerPressed"
                                                 PointerMoved="brainCanvas_PointerMoved"
                                                 PointerReleased="brainCanvas_PointerReleased"
-                                                Width="150" Height="500">
+                                                Width="400" Height="550">
             </canvas:CanvasAnimatedControl>
         </Border>
+        <Button x:Name="CloseButton" Click="CloseButton_Click">Close</Button>
     </StackPanel>
 </UserControl>

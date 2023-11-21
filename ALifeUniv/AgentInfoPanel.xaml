@@ -39,8 +39,10 @@
         
         <TextBlock x:Name="BrainDisplayLabel" Text="Brain"/>
         <TextBlock x:Name="BrainDisplay" />
-        <Button x:Name="NeuralNetworkPopupButton" Visibility="Collapsed" Click="NeuralNetworkPopupButton_Click"></Button>
-        <Popup x:Name="NeuralNetworkBrainViewer" IsOpen="False">
+        <Button x:Name="NeuralNetworkPopupButton" Visibility="Collapsed" Click="NeuralNetworkPopupButton_Click">Brain Viewer</Button>
+        <Popup x:Name="NeuralNetworkBrainViewer" IsOpen="False"
+               HorizontalOffset="-200"
+               VerticalOffset="-600">
             <local:NeuralBrainView></local:NeuralBrainView>
         </Popup>
     </StackPanel>

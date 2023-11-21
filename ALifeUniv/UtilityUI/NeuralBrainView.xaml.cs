@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Shapes;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -52,6 +53,33 @@ namespace ALifeUni
         private void brainCanvas_Draw(Microsoft.Graphics.Canvas.UI.Xaml.ICanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedDrawEventArgs args)
         {
 
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Popup parentPopup = FindFirstParentOfType<Popup>(this);
+            if(parentPopup != null)
+            {
+                parentPopup.IsOpen = false;
+            }
+        }
+
+        private T FindFirstParentOfType<T>(FrameworkElement element) where T : FrameworkElement
+        {
+            if(element.Parent == null)
+            {
+                return null;
+            }
+            Type parentType = element.Parent.GetType();
+            if(element.Parent is T)
+            {
+                return element.Parent as T;
+            }
+            if(!(element.Parent is FrameworkElement))
+            {
+                throw new Exception("Unexpected Type of Parent");
+            }
+            return FindFirstParentOfType<T>(element.Parent as FrameworkElement);
         }
     }
 }

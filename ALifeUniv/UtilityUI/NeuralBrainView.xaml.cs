@@ -27,6 +27,8 @@ namespace ALifeUni
     {
         int canvasHeight;
         int canvasWidth;
+        private Dictionary<Neuron, Vector2> NodeMap;
+
         public NeuralBrainView()
         {
             this.InitializeComponent();
@@ -48,7 +50,7 @@ namespace ALifeUni
                 {
                     AgentName.Text = theAgent.IndividualLabel;
                     brain = theAgent.MyBrain as NeuralNetworkBrain;
-                    //TODO: RESET STUFF
+                    BuildNodeLocationDictionary();
                 }
             }
         }
@@ -59,22 +61,35 @@ namespace ALifeUni
             {
                 return;
             }
-            args.DrawingSession.FillCircle(new Vector2(0, 0), 20, Colors.Green);
-            args.DrawingSession.FillCircle(new Vector2(0, canvasHeight), 20, Colors.Blue);
-            args.DrawingSession.FillCircle(new Vector2(canvasWidth, canvasHeight), 20, Colors.Yellow);
-            args.DrawingSession.FillCircle(new Vector2(canvasWidth, 0), 20, Colors.Purple);
+            args.DrawingSession.FillCircle(new Vector2(0, 0), 50, Colors.Green);
+            args.DrawingSession.FillCircle(new Vector2(0, canvasHeight), 50, Colors.Blue);
+            args.DrawingSession.FillCircle(new Vector2(canvasWidth, canvasHeight), 50, Colors.Yellow);
+            args.DrawingSession.FillCircle(new Vector2(canvasWidth, 0), 50, Colors.Purple);
 
-            int heightSpacer = (int)(canvasHeight / brain.Layers.Count);
-            for(int i = 0; i < brain.Layers.Count; ++i)
+            //int heightSpacer = (int)(canvasHeight / (brain.Layers.Count + 1));
+            //for(int i = 0; i < brain.Layers.Count; ++i)
+            //{
+            //    Layer layer = brain.Layers[i];
+            //    int widthSpacer = (int)(canvasWidth / (layer.Neurons.Count + 1));
+            //    for(int j = 0; j < layer.Neurons.Count; ++j)
+            //    {
+            //        Neuron nn = layer.Neurons[j];
+            //        Vector2 neuronCenter = new Vector2(widthSpacer * (j + 1), heightSpacer * (i + 1));
+            //        args.DrawingSession.DrawCircle(neuronCenter, 5, Colors.Red);
+            //    }
+            //}
+            foreach(var(neuron, point) in NodeMap)
             {
-                Layer layer = brain.Layers[i];
-                int widthSpacer = (int)(canvasWidth / layer.Neurons.Count);
-                for(int j = 0; j < layer.Neurons.Count; ++j)
+                Color col;
+                if(neuron.Value > 0)
                 {
-                    Neuron nn = layer.Neurons[j];
-                    Vector2 neuronCenter = new Vector2(widthSpacer * (j + 1),heightSpacer * (i + 1));
-                    args.DrawingSession.DrawCircle(neuronCenter, 5, Colors.Red);
+                    col = Colors.Blue;
                 }
+                else
+                {
+                    col = Colors.Red;
+                }
+                args.DrawingSession.DrawCircle(point, 5, col);
             }
         }
 
@@ -128,6 +143,23 @@ namespace ALifeUni
                 throw new Exception("Unexpected Type of Parent");
             }
             return FindFirstParentOfType<T>(element.Parent as FrameworkElement);
+        }
+
+        private void BuildNodeLocationDictionary()
+        {
+            NodeMap = new Dictionary<Neuron, Vector2>();
+            int heightSpacer = (int)(canvasHeight / (brain.Layers.Count + 1));
+            for(int i = 0; i < brain.Layers.Count; ++i)
+            {
+                Layer layer = brain.Layers[i];
+                int widthSpacer = (int)(canvasWidth / (layer.Neurons.Count + 1));
+                for(int j = 0; j < layer.Neurons.Count; ++j)
+                {
+                    Neuron nn = layer.Neurons[j];
+                    Vector2 neuronCentre = new Vector2(widthSpacer * (j + 1), heightSpacer * (i + 1));
+                    NodeMap.Add(nn, neuronCentre);
+                }
+            }
         }
     }
 }

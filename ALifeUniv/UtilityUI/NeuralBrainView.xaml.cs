@@ -66,30 +66,16 @@ namespace ALifeUni
             args.DrawingSession.FillCircle(new Vector2(canvasWidth, canvasHeight), 50, Colors.Yellow);
             args.DrawingSession.FillCircle(new Vector2(canvasWidth, 0), 50, Colors.Purple);
 
-            //int heightSpacer = (int)(canvasHeight / (brain.Layers.Count + 1));
-            //for(int i = 0; i < brain.Layers.Count; ++i)
-            //{
-            //    Layer layer = brain.Layers[i];
-            //    int widthSpacer = (int)(canvasWidth / (layer.Neurons.Count + 1));
-            //    for(int j = 0; j < layer.Neurons.Count; ++j)
-            //    {
-            //        Neuron nn = layer.Neurons[j];
-            //        Vector2 neuronCenter = new Vector2(widthSpacer * (j + 1), heightSpacer * (i + 1));
-            //        args.DrawingSession.DrawCircle(neuronCenter, 5, Colors.Red);
-            //    }
-            //}
-            foreach(var(neuron, point) in NodeMap)
+            foreach(var (neuron, point) in NodeMap)
             {
-                Color col;
-                if(neuron.Value > 0)
+                foreach(Dendrite den in neuron.UpstreamDendrites)
                 {
-                    col = Colors.Blue;
+                    Color dendriteColour = den.CurrentValue > 0 ? Colors.Black : Colors.Gray;
+                    Vector2 targetPoint = NodeMap[den.TargetNeuron];
+                    args.DrawingSession.DrawLine(point, targetPoint, dendriteColour);
                 }
-                else
-                {
-                    col = Colors.Red;
-                }
-                args.DrawingSession.DrawCircle(point, 5, col);
+                Color neuronColour = neuron.Value > 0 ? Colors.Blue : Colors.Red;
+                args.DrawingSession.FillCircle(point, 8, neuronColour);
             }
         }
 
@@ -149,7 +135,7 @@ namespace ALifeUni
         {
             NodeMap = new Dictionary<Neuron, Vector2>();
             int heightSpacer = (int)(canvasHeight / (brain.Layers.Count + 1));
-            for(int i = 0; i < brain.Layers.Count; ++i)
+            for(int i = brain.Layers.Count - 1; i > -1; --i)
             {
                 Layer layer = brain.Layers[i];
                 int widthSpacer = (int)(canvasWidth / (layer.Neurons.Count + 1));

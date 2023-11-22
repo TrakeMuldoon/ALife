@@ -11,8 +11,8 @@ namespace ALifeUni.ALife.Brains
             {
                 case Input<bool> sib:
                     newNeurons.Add(new FuncNeuron(si.Name + ".Value", () => sib.Value ? 1.0 : 0.0));
-                    newNeurons.Add(new FuncNeuron(si.Name + ".MostRecentValue", () => sib.MostRecentValue ? 1.0 : 0.0));
-                    //newNeurons.Add(new FuncNeuron(si.Name + ".Modified", () => sib.Modified ? 1.0 : 0.0));
+                    //newNeurons.Add(new FuncNeuron(si.Name + ".MostRecentValue", () => sib.MostRecentValue ? 1.0 : 0.0));
+                    newNeurons.Add(new FuncNeuron(si.Name + ".Modified", () => sib.Modified ? 1.0 : 0.0));
                     break;
                 case Input<double> sid:
                     newNeurons.Add(new FuncNeuron(si.Name + ".Value", () => sid.Value));

@@ -1,10 +1,15 @@
-﻿using System;
+﻿using ALifeUni.ALife;
+using ALifeUni.ALife.Brains;
+using Microsoft.Graphics.Canvas.UI.Xaml;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -20,9 +25,57 @@ namespace ALifeUni
 {
     public sealed partial class NeuralBrainView : UserControl
     {
+        int canvasHeight;
+        int canvasWidth;
         public NeuralBrainView()
         {
             this.InitializeComponent();
+            canvasHeight = (int)brainCanvas.Height;
+            canvasWidth = (int)brainCanvas.Width;
+            brainCanvas.ClearColor = Colors.NavajoWhite;
+        }
+
+        private NeuralNetworkBrain brain;
+        private Agent theAgent;
+        public Agent TheAgent
+        {
+            get => theAgent;
+            set
+            {
+                theAgent = value;
+                AgentName.Text = "No Agent Selected";
+                if(theAgent != null)
+                {
+                    AgentName.Text = theAgent.IndividualLabel;
+                    brain = theAgent.MyBrain as NeuralNetworkBrain;
+                    //TODO: RESET STUFF
+                }
+            }
+        }
+
+        private void brainCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
+        {
+            if(brain == null)
+            {
+                return;
+            }
+            args.DrawingSession.FillCircle(new Vector2(0, 0), 20, Colors.Green);
+            args.DrawingSession.FillCircle(new Vector2(0, canvasHeight), 20, Colors.Blue);
+            args.DrawingSession.FillCircle(new Vector2(canvasWidth, canvasHeight), 20, Colors.Yellow);
+            args.DrawingSession.FillCircle(new Vector2(canvasWidth, 0), 20, Colors.Purple);
+
+            int heightSpacer = (int)(canvasHeight / brain.Layers.Count);
+            for(int i = 0; i < brain.Layers.Count; ++i)
+            {
+                Layer layer = brain.Layers[i];
+                int widthSpacer = (int)(canvasWidth / layer.Neurons.Count);
+                for(int j = 0; j < layer.Neurons.Count; ++j)
+                {
+                    Neuron nn = layer.Neurons[j];
+                    Vector2 neuronCenter = new Vector2(widthSpacer * (j + 1),heightSpacer * (i + 1));
+                    args.DrawingSession.DrawCircle(neuronCenter, 5, Colors.Red);
+                }
+            }
         }
 
         private void brainCanvas_Tapped(object sender, TappedRoutedEventArgs e)
@@ -46,11 +99,6 @@ namespace ALifeUni
         }
 
         private void brainCanvas_CreateResources(Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
-        {
-
-        }
-
-        private void brainCanvas_Draw(Microsoft.Graphics.Canvas.UI.Xaml.ICanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedDrawEventArgs args)
         {
 
         }

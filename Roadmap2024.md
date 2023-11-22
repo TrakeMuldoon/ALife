@@ -55,6 +55,7 @@ These items may be complete already. It is unclear to me as of right now.
 * [ ] Rabbit Chasing Scenario (Implement WorldObjectTargetSense)
 * [x] Figure out why (with this build) run "568678228" results in an AgentNotFound exception (Turn number 40951)
 * [ ] 		Planet.World.Seed	1090033702	crashes at 		Planet.World.Turns	104192	int
+* [ ] Optimize out the Scenario RESET into a Scenario CreateAgain
 
 
 

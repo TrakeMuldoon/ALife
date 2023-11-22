@@ -43,7 +43,7 @@
         <Popup x:Name="NeuralNetworkBrainViewer" IsOpen="False"
                HorizontalOffset="-200"
                VerticalOffset="-600">
-            <local:NeuralBrainView></local:NeuralBrainView>
+            <local:NeuralBrainView x:Name="AgentNeuralBrain"></local:NeuralBrainView>
         </Popup>
     </StackPanel>
 </UserControl>

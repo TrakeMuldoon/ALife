@@ -3,6 +3,7 @@ using ALifeUni.ALife.Brains;
 using ALifeUni.ALife.Shapes;
 using System;
 using System.Text;
+using System.Threading;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 
@@ -20,10 +21,9 @@ namespace ALifeUni
             {
                 theAgent = value;
                 clearInfo();
-                NeuralNetworkBrainViewer.IsOpen = false;
-                NeuralNetworkPopupButton.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 if(theAgent != null)
                 {
+                    NewAgentSet();
                     updateInfo();
                 }
             }
@@ -32,6 +32,24 @@ namespace ALifeUni
         public AgentInfoPanel()
         {
             this.InitializeComponent();
+        }
+
+        private void NewAgentSet()
+        {
+            bool nnPopupOpen = NeuralNetworkBrainViewer.IsOpen;
+            if(theAgent.MyBrain is NeuralNetworkBrain)
+            {
+                AgentNeuralBrain.TheAgent = theAgent;
+                NeuralNetworkBrainViewer.IsOpen = nnPopupOpen;
+                NeuralNetworkPopupButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
+
+            }
+            else //Currently there are no other special cases. Eventually this will get unweildy and a new solution will be required.
+
+            {
+                NeuralNetworkBrainViewer.IsOpen = false;
+                NeuralNetworkPopupButton.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
         }
 
         public void updateInfo()
@@ -96,17 +114,16 @@ namespace ALifeUni
             switch(theAgent.MyBrain)
             {
                 case BehaviourBrain bb: WriteBehaviourBrainText(bb, sb); break;
-                case NeuralNetworkBrain nn: PrepareNeuralNetworkBrain(nn, sb); break;
+                case NeuralNetworkBrain nn: WriteNeuralNetworkBrain(nn, sb); break;
                 default: sb.Append("unknown brain type"); break;
             }
 
             BrainDisplay.Text = sb.ToString();
         }
 
-        private void PrepareNeuralNetworkBrain(NeuralNetworkBrain bb, StringBuilder sb)
+        private void WriteNeuralNetworkBrain(NeuralNetworkBrain bb, StringBuilder sb)
         {
             sb.Append("Use NeuralNetwork Brain Viewer Button");
-            NeuralNetworkPopupButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
 
         private void WriteBehaviourBrainText(BehaviourBrain bb, StringBuilder sb)

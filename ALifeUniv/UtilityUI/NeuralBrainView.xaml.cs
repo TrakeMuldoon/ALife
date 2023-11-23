@@ -70,7 +70,8 @@ namespace ALifeUni
             {
                 foreach(Dendrite den in neuron.UpstreamDendrites)
                 {
-                    Color dendriteColour = den.CurrentValue > 0 ? Colors.Black : Colors.Gray;
+                    Color dendriteColour = den.CurrentValue > 0 ? Colors.Gray : Colors.Purple;
+                    dendriteColour = den.CurrentValue > 0.5 ? Colors.Black : dendriteColour;
                     Vector2 targetPoint = NodeMap[den.TargetNeuron];
                     args.DrawingSession.DrawLine(point, targetPoint, dendriteColour);
                 }
@@ -134,7 +135,7 @@ namespace ALifeUni
         private void BuildNodeLocationDictionary()
         {
             NodeMap = new Dictionary<Neuron, Vector2>();
-            int heightSpacer = (int)(canvasHeight / (brain.Layers.Count + 1));
+            int heightSpacer = (int)(canvasHeight / (brain.Layers.Count));
             for(int i = brain.Layers.Count - 1; i > -1; --i)
             {
                 Layer layer = brain.Layers[i];
@@ -142,7 +143,9 @@ namespace ALifeUni
                 for(int j = 0; j < layer.Neurons.Count; ++j)
                 {
                     Neuron nn = layer.Neurons[j];
-                    Vector2 neuronCentre = new Vector2(widthSpacer * (j + 1), heightSpacer * (i + 1));
+                    int x = (int)(widthSpacer * (j + 1));
+                    int y = (int)(heightSpacer * (i + 0.5));
+                    Vector2 neuronCentre = new Vector2(x, y);
                     NodeMap.Add(nn, neuronCentre);
                 }
             }

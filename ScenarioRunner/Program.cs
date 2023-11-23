@@ -5,7 +5,6 @@ using Serilog;
 using System;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Windows.Storage;
 
 // This example code shows how you could implement the required main function for a 
@@ -30,7 +29,7 @@ namespace ScenarioRunner
             int width = scenario.WorldWidth;
 
             Random r = new Random();
-            for(int i = 0; i < 10; i++)
+            for(int i = 0; i < 20; i++)
             {
                 Console.Write(i + "-> ");
                 int seedValue = r.Next();
@@ -51,7 +50,7 @@ namespace ScenarioRunner
 
             scenario.Reset();
             Planet.CreateWorld(seedValue, scenario, height, width);
-            
+
             string error = null;
             try
             {

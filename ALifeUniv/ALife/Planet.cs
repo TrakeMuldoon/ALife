@@ -70,8 +70,9 @@ namespace ALifeUni.ALife
             instance = new Planet(seed, height, width, scenario);
 
             //Initialize collision grid
-            instance._collisionLevels.Add(ReferenceValues.CollisionLevelPhysical, new CollisionGrid<WorldObject>(height, width));
-            instance.ZoneMap = new CollisionGrid<Zone>(height, width);
+            string colLevel = ReferenceValues.CollisionLevelPhysical;
+            instance._collisionLevels.Add(colLevel, new CollisionGrid<WorldObject>(height, width, colLevel));
+            instance.ZoneMap = new CollisionGrid<Zone>(height, width, "Zone");
 
             instance.Scenario.PlanetSetup();
         }
@@ -87,13 +88,13 @@ namespace ALifeUni.ALife
 
         //All objects which were active last turn
         public readonly List<WorldObject> StableActiveObjects = new List<WorldObject>();
-        
+
         //All new objects. Should be added to Stable Active Objects, should already be in AllActiveObjects
         public readonly List<WorldObject> NewActiveObjects = new List<WorldObject>();
 
         //All objects which have fallen out of all active object scope
         public readonly List<WorldObject> InactiveObjects = new List<WorldObject>();
-        
+
         //Objects which at the end of the turn should be removed from "AllActive", "StableActive" and "NewActive"
         public readonly List<WorldObject> ToRemoveObjects = new List<WorldObject>();
 
@@ -157,7 +158,7 @@ namespace ALifeUni.ALife
 
         public void ExecuteOneTurn()
         {
-            turns++;
+            ++turns;
             int order = 0;
             //Iterate through all the active objects, and execute their turn.
             //Note, some of them may have "died" in the meantime. They still "execute" a turn. 
@@ -168,7 +169,7 @@ namespace ALifeUni.ALife
             }
 
             //Add all the new objects into the Stable list
-            if (NewActiveObjects.Count > 0)
+            if(NewActiveObjects.Count > 0)
             {
                 StableActiveObjects.AddRange(NewActiveObjects);
                 NewActiveObjects.Clear();
@@ -193,6 +194,7 @@ namespace ALifeUni.ALife
             Scenario.GlobalEndOfTurnActions();
         }
 
+        //TODO: Move this out to a Scenario helper. The Planet shouldn't have a concept of "BEST"
         public List<Agent> BestXAgents = new List<Agent>();
         private int bestAgentCounter = 0;
         public void ReproduceBest()
@@ -221,9 +223,10 @@ namespace ALifeUni.ALife
         {
             string currCollisionLevel = mySelf.CollisionLevel;
             CollisionLevels[currCollisionLevel].RemoveObject(mySelf);
+            //TODO: If I initialize the collision levels at the scenario level, then I don't need to constantly check if the layer exists.
             if(!_collisionLevels.ContainsKey(newLevel))
             {
-                _collisionLevels.Add(newLevel, new CollisionGrid<WorldObject>(WorldHeight, WorldWidth));
+                _collisionLevels.Add(newLevel, new CollisionGrid<WorldObject>(WorldHeight, WorldWidth, newLevel));
             }
             CollisionLevels[newLevel].Insert(mySelf);
         }
@@ -232,7 +235,7 @@ namespace ALifeUni.ALife
         {
             if(!_collisionLevels.ContainsKey(toAdd.CollisionLevel))
             {
-                _collisionLevels.Add(toAdd.CollisionLevel, new CollisionGrid<WorldObject>(WorldHeight, WorldWidth));
+                _collisionLevels.Add(toAdd.CollisionLevel, new CollisionGrid<WorldObject>(WorldHeight, WorldWidth, toAdd.CollisionLevel));
             }
             _collisionLevels[toAdd.CollisionLevel].Insert(toAdd);
 

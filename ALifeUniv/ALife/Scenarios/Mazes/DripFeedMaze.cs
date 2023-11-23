@@ -1,13 +1,9 @@
 ﻿using ALifeUni.ALife.Brains;
-using ALifeUni.ALife.CustomWorldObjects;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Data.Text;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -24,7 +20,7 @@ namespace ALifeUni.ALife.Scenarios
         private static List<EyeCluster> GetEyes(Agent agent)
         {
             agentCounter++;
-            if(DripFeedMaze.agentCounter % 2  == 0)
+            if(DripFeedMaze.agentCounter % 2 == 0)
             {
                 return new List<EyeCluster>() {
                     new EyeCluster(agent, "EyeLong"

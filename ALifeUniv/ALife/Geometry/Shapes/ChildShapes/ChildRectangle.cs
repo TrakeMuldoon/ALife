@@ -23,7 +23,7 @@ namespace ALifeUni.ALife.Shapes
             get;
             set;
         }
-        public Angle AbsoluteOrientation 
+        public Angle AbsoluteOrientation
         {
             get => Orientation;
             set => throw new NotImplementedException();

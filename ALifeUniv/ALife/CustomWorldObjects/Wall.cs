@@ -22,7 +22,7 @@ namespace ALifeUni.ALife.CustomWorldObjects
         {
             get { return rShape; }
             protected set
-            {   
+            {
                 Rectangle rec = value as Rectangle;
                 rShape = rec ?? throw new Exception("Cannot set a wall to be any other shape");
             }

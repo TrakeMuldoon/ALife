@@ -11,7 +11,6 @@
  * **/
 
 using ALifeUni.ALife.Brains;
-using ALifeUni.ALife.CustomWorldObjects;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using System;

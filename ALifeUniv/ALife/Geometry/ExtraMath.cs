@@ -36,7 +36,7 @@ namespace ALifeUni.ALife.Utility
 
         public static float MultiMin(params float[] values)
         {
-            if (values == null || values.Length == 0)
+            if(values == null || values.Length == 0)
             {
                 throw new ArgumentNullException();
             }

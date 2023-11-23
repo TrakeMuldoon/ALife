@@ -1,7 +1,6 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Brains;
 using ALifeUni.ALife.CustomWorldObjects;
-using ALifeUni.ALife.Scenarios;
 using ALifeUni.ALife.Scenarios.FieldCrossings;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
@@ -97,7 +96,7 @@ namespace ALifeUni
         private Boolean showParents;
         private void AnimCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
-            if(DNB_DEBUG)
+            if(FASTFORWARDING)
             {
                 return;
             }
@@ -118,16 +117,6 @@ namespace ALifeUni
             {
                 DrawingLogic.DrawAncestry(args);
             }
-
-            foreach(Point p in taps)
-            {
-                args.DrawingSession.FillCircle(new Vector2((float)p.X, (float)p.Y), 1, Colors.Peru);
-            }
-        }
-
-        private void ShowGeneology_Checked(object sender, RoutedEventArgs e)
-        {
-            showParents = ((CheckBox)sender).IsChecked.Value;
         }
 
         private void UpdateZoneInfo()
@@ -160,10 +149,10 @@ namespace ALifeUni
         {
             Dictionary<string, int> geneCount = new Dictionary<string, int>();
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
+            for(int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
             {
                 WorldObject wo = Planet.World.AllActiveObjects[i];
-                if (wo is Agent ag
+                if(wo is Agent ag
                     && ag.Alive)
                 {
                     string gene = ag.IndividualLabel.Substring(0, 3);
@@ -232,7 +221,8 @@ namespace ALifeUni
                     }
                 }
             }
-            catch (Exception ex) {
+            catch(Exception)
+            {
                 DrawingErrors++;
             }
         }
@@ -337,7 +327,7 @@ namespace ALifeUni
             int newSeed = Planet.World.NumberGen.Next();
             Planet.World.Scenario.Reset();
             Planet.CreateWorld(newSeed, Planet.World.Scenario, (int)animCanvas.Height, (int)animCanvas.Width);
-            
+
             seed = Planet.World.Seed.ToString();
             SimSeed.Text = seed;
             SimSeed_TextChanged(SimSeed, null);
@@ -345,7 +335,7 @@ namespace ALifeUni
 
         }
 
-        #region speed controls
+        #region Speed controls
 
         private void PauseSim_Click(object sender, RoutedEventArgs e)
         {
@@ -395,7 +385,7 @@ namespace ALifeUni
                 gameTimer.Start();
             }
         }
-        
+
         private void SkipAhead_Click(object sender, RoutedEventArgs e)
         {
             Planet.World.ExecuteManyTurns(200);
@@ -428,24 +418,28 @@ namespace ALifeUni
         private void SkipSpecificAhead_Click(object sender, RoutedEventArgs e)
         {
             FastForward(skipValue);
+            AgentPanel.updateInfo();
+            UpdateZoneInfo();
+            UpdateGeneology();
+            UpdateErrors();
         }
 
-        private bool DNB_DEBUG = false;
+        private bool FASTFORWARDING = false;
         private async void FastForward(int turnsToSkip)
         {
             try
             {
-                DNB_DEBUG = true;
+                FASTFORWARDING = true;
                 SkipProgress.Maximum = 100;
                 SkipProgress.Minimum = 0;
                 SkipProgress.Value = 0;
 
                 DateTime start = DateTime.Now;
 
-                bool restart = false;
+                bool restart_timer = false;
                 if(gameTimer.IsEnabled)
                 {
-                    restart = true;
+                    restart_timer = true;
                     gameTimer.Stop();
                 }
 
@@ -483,16 +477,14 @@ namespace ALifeUni
                     Planet.World.ExecuteManyTurns(turnsToSkip - progress);
                 }
 
-                AgentPanel.updateInfo();
-
-                if(restart)
+                if(restart_timer)
                 {
                     gameTimer.Start();
                 }
             }
             finally
             {
-                DNB_DEBUG = false;
+                FASTFORWARDING = false;
             }
         }
 
@@ -604,6 +596,11 @@ namespace ALifeUni
         }
         #endregion
 
+        private void ShowGeneology_Checked(object sender, RoutedEventArgs e)
+        {
+            showParents = ((CheckBox)sender).IsChecked.Value;
+        }
+
         int oldestIndex = -1;
         private void LongestLived_Click(object sender, RoutedEventArgs e)
         {
@@ -611,7 +608,6 @@ namespace ALifeUni
                                         , (ag) => ag.Statistics["Age"].Value
                                         , true);
         }
-
 
         string ErrorText;
         int shortBrainIndex = -1;
@@ -623,7 +619,8 @@ namespace ALifeUni
                                                 , (ag) => ((BehaviourBrain)ag.MyBrain).Behaviours.Count()
                                                 , false);
             }
-            catch(Exception ex) {
+            catch(Exception)
+            {
                 ErrorText = "No Shortest Brain Found";
             }
         }
@@ -640,7 +637,7 @@ namespace ALifeUni
         {
             int compValue = greaterThan ? int.MinValue : int.MaxValue;
             List<Agent> options = new List<Agent>();
-            
+
             for(int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
             {
                 WorldObject wo = Planet.World.AllActiveObjects[i];
@@ -674,34 +671,9 @@ namespace ALifeUni
             return currentIndex;
         }
 
-        List<Point> taps = new List<Point>();
-        private void DotMaker_Click(object sender, RoutedEventArgs e)
-        {
-            string tex = Coords.Text;
-            string[] coords = tex.Split(',');
-            if(coords.Length != 2) return;
-
-            coords[0] = coords[0].Trim();
-            coords[1] = coords[1].Trim();
-
-            double x = double.Parse(coords[0]);
-            double y = double.Parse(coords[1]);
-
-            Point p = new Point(x, y);
-            taps.Clear();
-            taps.Add(p);
-        }
-
         private void CollisionTestPanelButton_Click(object sender, RoutedEventArgs e)
         {
-            if(CollisionTestPanel.Visibility == Visibility.Visible)
-            {
-                CollisionTestPanel.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                CollisionTestPanel.Visibility = Visibility.Visible;
-            }
+            CollisionTestPopup.IsOpen = !CollisionTestPopup.IsOpen;
         }
     }
 }

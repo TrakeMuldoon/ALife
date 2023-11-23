@@ -1,0 +1,25 @@
+﻿<UserControl
+    x:Class="ALifeUni.NeuralBrainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="600"
+    d:DesignWidth="250">
+
+    <StackPanel Background="Azure">
+        <TextBlock x:Name="AgentName" Foreground="Black"></TextBlock>
+        <Border Background="Black" BorderBrush="Moccasin" BorderThickness="5">
+            <canvas:CanvasAnimatedControl x:Name="brainCanvas" Draw="brainCanvas_Draw" CreateResources="brainCanvas_CreateResources" 
+                                            Tapped="brainCanvas_Tapped"
+                                            PointerPressed="brainCanvas_PointerPressed"
+                                            PointerMoved="brainCanvas_PointerMoved"
+                                            PointerReleased="brainCanvas_PointerReleased"
+                                            Width="400" Height="550">
+            </canvas:CanvasAnimatedControl>
+        </Border>
+        <Button x:Name="CloseButton" Click="CloseButton_Click">Close</Button>
+    </StackPanel>
+</UserControl>

@@ -10,6 +10,7 @@ namespace ALifeUni.ALife
     {
         public readonly int Height;
         public readonly int Width;
+        public readonly string GridName;
 
         //TODO: Load from Default Configuration
         private int GridXMax;
@@ -19,8 +20,9 @@ namespace ALifeUni.ALife
         private List<T> trackedObjects;
         private Dictionary<T, List<Point>> agentLocationTracker = new Dictionary<T, List<Point>>();
 
-        public CollisionGrid(int gridHeight, int gridWidth)
+        public CollisionGrid(int gridHeight, int gridWidth, string gridName)
         {
+            GridName = gridName;
             if(gridHeight < GridSize)
             {
                 GridSize = gridHeight;
@@ -117,6 +119,25 @@ namespace ALifeUni.ALife
             return true;
         }
 
+        public void RemoveObject(T killMe)
+        {
+            trackedObjects.Remove(killMe);
+            List<Point> myCoords = agentLocationTracker[killMe];
+            foreach(Point coord in myCoords)
+            {
+                //In case some objects go out of bounds.
+                if(coord.X < 0
+                   || coord.Y < 0
+                   || coord.X >= GridXMax
+                   || coord.Y >= GridYMax)
+                {
+                    continue;
+                }
+                objectGrid[(int)coord.X, (int)coord.Y].Remove(killMe);
+            }
+            agentLocationTracker.Remove(killMe);
+        }
+
         public void MoveObject(T moveMe)
         {
             RemoveObject(moveMe);
@@ -190,25 +211,6 @@ namespace ALifeUni.ALife
             List<IHasShape> colShapes = CollisionDetector.FineGrainedCollisionDetection(collisions.Cast<IHasShape>(), detectionArea.Shape);
             collisions = colShapes.Cast<T>().ToList();
             return collisions;
-        }
-
-        public void RemoveObject(T killMe)
-        {
-            trackedObjects.Remove(killMe);
-            List<Point> myCoords = agentLocationTracker[killMe];
-            foreach(Point coord in myCoords)
-            {
-                //In case some objects go out of bounds.
-                if(coord.X < 0
-                   || coord.Y < 0
-                   || coord.X >= GridXMax
-                   || coord.Y >= GridYMax)
-                {
-                    continue;
-                }
-                objectGrid[(int)coord.X, (int)coord.Y].Remove(killMe);
-            }
-            agentLocationTracker.Remove(killMe);
         }
 
         public IEnumerator<T> GetEnumerator()

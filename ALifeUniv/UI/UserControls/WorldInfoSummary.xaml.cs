@@ -54,7 +54,7 @@ namespace ALifeUni.UI.UserControls
             {
                 sb.AppendLine(name + ":" + zoneCount[name]);
             }
-            //sb.AppendLine("WORLD: " + Planet.World.AllActiveObjects.Where(wo => wo.Alive).Count());
+            sb.AppendLine("WORLD: " + Planet.World.AllActiveObjects.Where(wo => wo.Alive).Count());
             ZoneInfo.Text = sb.ToString();
         }
 

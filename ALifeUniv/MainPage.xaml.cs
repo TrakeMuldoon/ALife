@@ -87,8 +87,6 @@ namespace ALifeUni
             this.animCanvas = null;
         }
 
-
-        int counter = 0;
         private void Dt_Tick(object sender, object e)
         {
             Planet.World.ExecuteOneTurn();
@@ -140,6 +138,7 @@ namespace ALifeUni
                     }
                     return;
                 }
+                //Special Layer, DeadLayer draws different
                 if(ui.LayerName == ReferenceValues.CollisionLevelDead)
                 {
                     for(int i = 0; i < Planet.World.InactiveObjects.Count; i++)
@@ -156,11 +155,14 @@ namespace ALifeUni
                     return;
                 }
 
-                if(viewPast
-                    && special != null)
+                if(special != null && viewPast)
                 {
-                    int compnumber = special.ExecutionOrder;
-                    DrawingLogic.DrawPastState(ui, args, compnumber);
+                    //This is for when the 'x' key is depressed, it means we view what the selected agent saw when it's 
+                    //turn happened.
+                    //Because each agent executes in order, any agents BEFORE the execution order of the selected agent, are in the correct
+                    //spots, but any agents with a HIGHER execution order will have been moved. 
+                    //So they must be drawn in their previous location.
+                    DrawingLogic.DrawPastState(ui, args, special.ExecutionOrder);
                 }
                 else
                 {
@@ -289,18 +291,12 @@ namespace ALifeUni
 
         private void PauseSim_Click(object sender, RoutedEventArgs e)
         {
-            if(gameTimer.IsEnabled)
-            {
-                gameTimer.Stop();
-            }
+             gameTimer.Stop();
         }
 
         private void OneTurnSim_Click(object sender, RoutedEventArgs e)
         {
-            if(gameTimer.IsEnabled)
-            {
-                gameTimer.Stop();
-            }
+            gameTimer.Stop();
             Dt_Tick(sender, e);
         }
 

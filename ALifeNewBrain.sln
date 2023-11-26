@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		NewConfig.txt = NewConfig.txt
 		README.md = README.md
 		Roadmap2024.md = Roadmap2024.md
+		ValuableLinks.txt = ValuableLinks.txt
 	EndProjectSection
 EndProject
 Global

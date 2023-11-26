@@ -2,7 +2,7 @@
     x:Class="ALifeUni.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ALifeUni"
+    xmlns:local="using:ALifeUni.UI.UserControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
@@ -14,14 +14,6 @@
     Loaded="Page_Loaded"
     Unloaded="Page_Unloaded">
     <Page.Resources>
-        <Style x:Key="ElemStyle" TargetType="CheckBox">
-            <!--<Setter Property="Background" Value="RED"/>
-            <Setter Property="Margin" Value="-2"/>
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Width" Value="90" />
-            <Setter Property="Height" Value="28" />
-            <Setter Property="HorizontalAlignment" Value="Left" />-->
-        </Style>
         <Style x:Key="headStyle" TargetType="cprim:DataGridColumnHeader" >
             <Setter Property="Margin" Value="0" />
             <Setter Property="Padding" Value="0" />
@@ -34,6 +26,7 @@
         <Style TargetType="Button">
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Background" Value="Blue" />
             <Setter Property="BorderBrush" >
                 <Setter.Value>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
@@ -70,28 +63,30 @@
             </Border>
 
         </ScrollViewer>
-        <StackPanel Width="220" Background="LightCoral">
-            <StackPanel Orientation="Horizontal">
-                <TextBox x:Name="SimSeed" HorizontalAlignment="Stretch" TextChanged="SimSeed_TextChanged"/>
-                <Button x:Name="ResetSim" HorizontalAlignment="Stretch" Click="ResetSim_Click">RESET</Button>
-                <Button x:Name="RandResetSim" HorizontalAlignment="Stretch" Click="RandResetSim_Click">NEWRAND</Button>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="PauseSim" HorizontalAlignment="Stretch" Click="PauseSim_Click">Pause</Button>
-                <Button x:Name="OneTurn" HorizontalAlignment="Stretch" Click="OneTurnSim_Click">1 Turn</Button>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="SlowPlaySim" HorizontalAlignment="Stretch" Click="SlowPlaySim_Click">Slow</Button>
-                <Button x:Name="PlaySim" HorizontalAlignment="Stretch" Click="PlaySim_Click">Play</Button>
-                <Button x:Name="FastPlaySim" HorizontalAlignment="Stretch" Click="FastPlaySim_Click">Fast</Button>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="SkipAhead" HorizontalAlignment="Stretch" Click="SkipAhead_Click">FF 200</Button>
-                <Button x:Name="SkipFarAhead" HorizontalAlignment="Stretch" Click="SkipFarAhead_Click"> FF 5000</Button>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="SkipSpecificAhead" HorizontalAlignment="Stretch" Click="SkipSpecificAhead_Click">FF:</Button>
-                <TextBox x:Name="SkipLength" HorizontalAlignment="Stretch" TextChanged="SkipLength_TextChanged"/>
+        <StackPanel Width="220" Background="DarkGray">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="SimSeed" HorizontalAlignment="Stretch" TextChanged="SimSeed_TextChanged"/>
+                    <Button x:Name="ResetSim" HorizontalAlignment="Stretch" Click="ResetSim_Click">RESET</Button>
+                    <Button x:Name="RandResetSim" HorizontalAlignment="Stretch" Click="RandResetSim_Click">NEWRAND</Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="PauseSim" HorizontalAlignment="Stretch" Click="PauseSim_Click">Pause</Button>
+                    <Button x:Name="OneTurn" HorizontalAlignment="Stretch" Click="OneTurnSim_Click">1 Turn</Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="SlowPlaySim" HorizontalAlignment="Stretch" Click="SlowPlaySim_Click">Slow</Button>
+                    <Button x:Name="PlaySim" HorizontalAlignment="Stretch" Click="PlaySim_Click">Play</Button>
+                    <Button x:Name="FastPlaySim" HorizontalAlignment="Stretch" Click="FastPlaySim_Click">Fast</Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="SkipAhead" HorizontalAlignment="Stretch" Click="SkipAhead_Click">FF 200</Button>
+                    <Button x:Name="SkipFarAhead" HorizontalAlignment="Stretch" Click="SkipFarAhead_Click"> FF 5000</Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="SkipSpecificAhead" HorizontalAlignment="Stretch" Click="SkipSpecificAhead_Click">FF:</Button>
+                    <TextBox x:Name="SkipLength" HorizontalAlignment="Stretch" TextChanged="SkipLength_TextChanged"/>
+                </StackPanel>
             </StackPanel>
             <ProgressBar x:Name="SkipProgress" Height="25" IsIndeterminate="False"></ProgressBar>
             <TextBlock x:Name="SkipInfo"></TextBlock>
@@ -121,19 +116,8 @@
                 </ListView>
             </StackPanel>
 
-            <Border BorderBrush="Beige" BorderThickness="1">
-                <TextBlock x:Name="ZoneInfo"></TextBlock>
-            </Border>
-            <Border BorderBrush="Beige" BorderThickness="1">
-                <TextBlock x:Name="GeneologyInfo"></TextBlock>
-            </Border>
-            <Border BorderBrush="Beige" BorderThickness="1">
-                <TextBlock x:Name="Turns"></TextBlock>
-            </Border>
-            <Border BorderBrush="Beige" BorderThickness="1">
-                <TextBlock x:Name="ErrorsInfo"></TextBlock>
-            </Border>
-
+            <local:WorldInfoSummary x:Name="WorldSummary"></local:WorldInfoSummary>
+            
             <CheckBox x:Name="ShowGeneology" Click="ShowGeneology_Checked">Show Ancestry</CheckBox>
             <Button x:Name="LongestLived" Click="LongestLived_Click">Oldest</Button>
             <Button x:Name="ShortestBrain" Click="ShortestBrain_Click">Smallest Brain</Button>

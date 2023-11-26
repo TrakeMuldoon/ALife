@@ -9,11 +9,14 @@ using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.Media.Protection;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -63,7 +66,7 @@ namespace ALifeUni
             startticks = DateTime.Now.Ticks;
             gameTimer.Tick += Dt_Tick;
 
-            PlaySim_Go();
+            StartSimWithInterval(100);
         }
 
         private void AnimCanvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
@@ -88,9 +91,7 @@ namespace ALifeUni
         {
             Planet.World.ExecuteOneTurn();
             AgentPanel.updateInfo();
-            UpdateZoneInfo();
-            UpdateGeneology();
-            UpdateErrors();
+            WorldSummary.UpdateWorldSummary();
         }
 
         private Boolean showParents;
@@ -119,59 +120,6 @@ namespace ALifeUni
             }
         }
 
-        private void UpdateZoneInfo()
-        {
-            Dictionary<string, int> zoneCount = new Dictionary<string, int>();
-            foreach(Zone z in Planet.World.Zones.Values)
-            {
-                zoneCount.Add(z.Name, 0);
-            }
-            StringBuilder sb = new StringBuilder();
-            for(int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
-            {
-                WorldObject wo = Planet.World.AllActiveObjects[i];
-                if(wo is Agent ag
-                    && ag.Alive)
-                {
-                    zoneCount[ag.Zone.Name]++;
-                }
-            }
-            foreach(string name in zoneCount.Keys)
-            {
-                sb.AppendLine(name + ":" + zoneCount[name]);
-            }
-            //sb.AppendLine("WORLD: " + Planet.World.AllActiveObjects.Where(wo => wo.Alive).Count());
-            ZoneInfo.Text = sb.ToString();
-            Turns.Text = Planet.World.Turns.ToString();
-        }
-
-        private void UpdateGeneology()
-        {
-            Dictionary<string, int> geneCount = new Dictionary<string, int>();
-            StringBuilder sb = new StringBuilder();
-            for(int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
-            {
-                WorldObject wo = Planet.World.AllActiveObjects[i];
-                if(wo is Agent ag
-                    && ag.Alive)
-                {
-                    string gene = ag.IndividualLabel.Substring(0, 3);
-                    if(!geneCount.ContainsKey(gene))
-                    {
-                        geneCount.Add(gene, 0);
-                    }
-                    ++geneCount[gene];
-                }
-            }
-
-            GeneologyInfo.Text = "Genes Active: " + geneCount.Count;
-        }
-
-        private void UpdateErrors()
-        {
-            ErrorsInfo.Text = "Errors: " + DrawingErrors;
-        }
-
         private void DrawLayer(LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
         {
             if(!ui.ShowLayer)
@@ -190,6 +138,7 @@ namespace ALifeUni
                     }
                     return;
                 }
+                //Special Layer, DeadLayer draws different
                 if(ui.LayerName == ReferenceValues.CollisionLevelDead)
                 {
                     for(int i = 0; i < Planet.World.InactiveObjects.Count; i++)
@@ -206,11 +155,14 @@ namespace ALifeUni
                     return;
                 }
 
-                if(viewPast
-                    && special != null)
+                if(special != null && viewPast)
                 {
-                    int compnumber = special.ExecutionOrder;
-                    DrawingLogic.DrawPastState(ui, args, compnumber);
+                    //This is for when the 'x' key is depressed, it means we view what the selected agent saw when it's 
+                    //turn happened.
+                    //Because each agent executes in order, any agents BEFORE the execution order of the selected agent, are in the correct
+                    //spots, but any agents with a HIGHER execution order will have been moved. 
+                    //So they must be drawn in their previous location.
+                    DrawingLogic.DrawPastState(ui, args, special.ExecutionOrder);
                 }
                 else
                 {
@@ -339,38 +291,28 @@ namespace ALifeUni
 
         private void PauseSim_Click(object sender, RoutedEventArgs e)
         {
-            if(gameTimer.IsEnabled)
-            {
-                gameTimer.Stop();
-            }
+             gameTimer.Stop();
         }
 
         private void OneTurnSim_Click(object sender, RoutedEventArgs e)
         {
-            if(gameTimer.IsEnabled)
-            {
-                gameTimer.Stop();
-            }
+            gameTimer.Stop();
             Dt_Tick(sender, e);
         }
 
         private void SlowPlaySim_Click(object sender, RoutedEventArgs e)
         {
-            gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            if(!gameTimer.IsEnabled)
-            {
-                gameTimer.Start();
-            }
+            StartSimWithInterval(500);
         }
 
         private void PlaySim_Click(object sender, RoutedEventArgs e)
         {
-            PlaySim_Go();
+            StartSimWithInterval(100);
         }
 
-        private void PlaySim_Go()
+        private void StartSimWithInterval(int interval)
         {
-            gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            gameTimer.Interval = new TimeSpan(0, 0, 0, 0, interval);
             if(!gameTimer.IsEnabled)
             {
                 gameTimer.Start();
@@ -379,20 +321,12 @@ namespace ALifeUni
 
         private void FastPlaySim_Click(object sender, RoutedEventArgs e)
         {
-            gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 1);
-            if(!gameTimer.IsEnabled)
-            {
-                gameTimer.Start();
-            }
+            StartSimWithInterval(1);
         }
 
         private void SkipAhead_Click(object sender, RoutedEventArgs e)
         {
-            Planet.World.ExecuteManyTurns(200);
-            AgentPanel.updateInfo();
-            UpdateZoneInfo();
-            UpdateGeneology();
-            UpdateErrors();
+            FastForward(200);
         }
 
         private void SkipFarAhead_Click(object sender, RoutedEventArgs e)
@@ -425,6 +359,8 @@ namespace ALifeUni
         }
 
         private bool FASTFORWARDING = false;
+
+
         private async void FastForward(int turnsToSkip)
         {
             try
@@ -486,6 +422,8 @@ namespace ALifeUni
             {
                 FASTFORWARDING = false;
             }
+            AgentPanel.updateInfo();
+            WorldSummary.UpdateWorldSummary();
         }
 
         #endregion
@@ -609,7 +547,6 @@ namespace ALifeUni
                                         , true);
         }
 
-        string ErrorText;
         int shortBrainIndex = -1;
         private void ShortestBrain_Click(object sender, RoutedEventArgs e)
         {
@@ -621,11 +558,12 @@ namespace ALifeUni
             }
             catch(Exception)
             {
-                ErrorText = "No Shortest Brain Found";
+                //TODO: Create a more consumer friendly error handler. Currently all errors or swallowed, because the application is only run in debug. 
             }
         }
 
         int mostChildrenIndex = -1;
+
         private void MostChildren_Click(object sender, RoutedEventArgs e)
         {
             mostChildrenIndex = FindAndSelect(mostChildrenIndex

@@ -189,7 +189,7 @@ namespace ALifeUni.ALife.Scenarios
 
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", startZone, endZone, ScenarioHelpers.GetRandomColor(), 0);
+                Agent rag = AgentFactory.CreateAgent("Agent", startZone, endZone, ColorExtensions.GetRandomColor(), 0);
             }
 
             ScenarioHelpers.SetUpMaze();
@@ -200,8 +200,8 @@ namespace ALifeUni.ALife.Scenarios
             if(Planet.World.Turns % 10 == 0
                 && Planet.World.AllActiveObjects.OfType<Agent>().Count() < 50)
             {
-                AgentFactory.CreateAgent("Agent", startZone, endZone, ScenarioHelpers.GetRandomColor(), 0);
-                AgentFactory.CreateAgent("Agent", startZone, endZone, ScenarioHelpers.GetRandomColor(), 0);
+                AgentFactory.CreateAgent("Agent", startZone, endZone, ColorExtensions.GetRandomColor(), 0);
+                AgentFactory.CreateAgent("Agent", startZone, endZone, ColorExtensions.GetRandomColor(), 0);
             }
         }
 

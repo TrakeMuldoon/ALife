@@ -352,6 +352,10 @@ namespace ALifeUni
         private void SkipSpecificAhead_Click(object sender, RoutedEventArgs e)
         {
             FastForward(skipValue);
+            AgentPanel.updateInfo();
+            UpdateZoneInfo();
+            UpdateGeneology();
+            UpdateErrors();
         }
 
         private bool FASTFORWARDING = false;

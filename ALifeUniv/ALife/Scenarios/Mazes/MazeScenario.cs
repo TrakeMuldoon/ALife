@@ -161,7 +161,7 @@ namespace ALifeUni.ALife.Scenarios
 
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, ScenarioHelpers.GetRandomColor(), 0);
+                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, ColorExtensions.GetRandomColor(), 0);
             }
             //MazeRunner mr = new MazeRunner(red, blue);
 
@@ -216,9 +216,9 @@ namespace ALifeUni.ALife.Scenarios
                 Planet.World.ReproduceBest();
                 Planet.World.ReproduceBest();
                 Planet.World.ReproduceBest();
-                Agent ag1 = AgentFactory.CreateAgent("Agent", red, blue, ScenarioHelpers.GetRandomColor(), 0);
-                Agent ag2 = AgentFactory.CreateAgent("Agent", red, blue, ScenarioHelpers.GetRandomColor(), 0);
-                Agent ag3 = AgentFactory.CreateAgent("Agent", red, blue, ScenarioHelpers.GetRandomColor(), 0);
+                Agent ag1 = AgentFactory.CreateAgent("Agent", red, blue, ColorExtensions.GetRandomColor(), 0);
+                Agent ag2 = AgentFactory.CreateAgent("Agent", red, blue, ColorExtensions.GetRandomColor(), 0);
+                Agent ag3 = AgentFactory.CreateAgent("Agent", red, blue, ColorExtensions.GetRandomColor(), 0);
 
                 var weaklings = Planet.World.InactiveObjects.Where((wo) => wo.Shape.CentrePoint.X < 50).ToList();
                 foreach(WorldObject wo in weaklings)

@@ -105,17 +105,5 @@ namespace ALifeUni.ALife.Scenarios
 
             return walls;
         }
-        public static Color GetRandomColor()
-        {
-            Color color = new Color()
-            {
-                R = (byte)Planet.World.NumberGen.Next(100, 255),
-                G = (byte)Planet.World.NumberGen.Next(100, 255),
-                B = (byte)Planet.World.NumberGen.Next(100, 255),
-                A = 255
-            };
-            return Colors.BlueViolet;
-            //return color;
-        }
     }
 }

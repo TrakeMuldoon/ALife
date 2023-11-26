@@ -87,7 +87,7 @@ namespace ALifeUni.ALife.Scenarios
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
             //IBrain newBrain = new BehaviourBrain(agent, "IF Age.Value GreaterThan [10] THEN Move.GoForward AT [0.2]", "*", "*", "*", "*");
-            IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 15, 12, 10 });
+            IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 15, 12 });
 
             agent.CompleteInitialization(null, 1, newBrain);
 

@@ -9,11 +9,14 @@ using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.Media.Protection;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -63,7 +66,7 @@ namespace ALifeUni
             startticks = DateTime.Now.Ticks;
             gameTimer.Tick += Dt_Tick;
 
-            PlaySim_Go();
+            StartSimWithInterval(100);
         }
 
         private void AnimCanvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
@@ -84,6 +87,8 @@ namespace ALifeUni
             this.animCanvas = null;
         }
 
+
+        int counter = 0;
         private void Dt_Tick(object sender, object e)
         {
             Planet.World.ExecuteOneTurn();
@@ -356,21 +361,17 @@ namespace ALifeUni
 
         private void SlowPlaySim_Click(object sender, RoutedEventArgs e)
         {
-            gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            if(!gameTimer.IsEnabled)
-            {
-                gameTimer.Start();
-            }
+            StartSimWithInterval(500);
         }
 
         private void PlaySim_Click(object sender, RoutedEventArgs e)
         {
-            PlaySim_Go();
+            StartSimWithInterval(100);
         }
 
-        private void PlaySim_Go()
+        private void StartSimWithInterval(int interval)
         {
-            gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            gameTimer.Interval = new TimeSpan(0, 0, 0, 0, interval);
             if(!gameTimer.IsEnabled)
             {
                 gameTimer.Start();
@@ -379,20 +380,12 @@ namespace ALifeUni
 
         private void FastPlaySim_Click(object sender, RoutedEventArgs e)
         {
-            gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 1);
-            if(!gameTimer.IsEnabled)
-            {
-                gameTimer.Start();
-            }
+            StartSimWithInterval(1);
         }
 
         private void SkipAhead_Click(object sender, RoutedEventArgs e)
         {
-            Planet.World.ExecuteManyTurns(200);
-            AgentPanel.updateInfo();
-            UpdateZoneInfo();
-            UpdateGeneology();
-            UpdateErrors();
+            FastForward(200);
         }
 
         private void SkipFarAhead_Click(object sender, RoutedEventArgs e)
@@ -418,13 +411,11 @@ namespace ALifeUni
         private void SkipSpecificAhead_Click(object sender, RoutedEventArgs e)
         {
             FastForward(skipValue);
-            AgentPanel.updateInfo();
-            UpdateZoneInfo();
-            UpdateGeneology();
-            UpdateErrors();
         }
 
         private bool FASTFORWARDING = false;
+
+
         private async void FastForward(int turnsToSkip)
         {
             try
@@ -486,6 +477,10 @@ namespace ALifeUni
             {
                 FASTFORWARDING = false;
             }
+            AgentPanel.updateInfo();
+            UpdateZoneInfo();
+            UpdateGeneology();
+            UpdateErrors();
         }
 
         #endregion
@@ -626,6 +621,7 @@ namespace ALifeUni
         }
 
         int mostChildrenIndex = -1;
+
         private void MostChildren_Click(object sender, RoutedEventArgs e)
         {
             mostChildrenIndex = FindAndSelect(mostChildrenIndex

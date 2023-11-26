@@ -93,9 +93,7 @@ namespace ALifeUni
         {
             Planet.World.ExecuteOneTurn();
             AgentPanel.updateInfo();
-            UpdateZoneInfo();
-            UpdateGeneology();
-            UpdateErrors();
+            WorldSummary.UpdateWorldSummary();
         }
 
         private Boolean showParents;
@@ -122,59 +120,6 @@ namespace ALifeUni
             {
                 DrawingLogic.DrawAncestry(args);
             }
-        }
-
-        private void UpdateZoneInfo()
-        {
-            Dictionary<string, int> zoneCount = new Dictionary<string, int>();
-            foreach(Zone z in Planet.World.Zones.Values)
-            {
-                zoneCount.Add(z.Name, 0);
-            }
-            StringBuilder sb = new StringBuilder();
-            for(int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
-            {
-                WorldObject wo = Planet.World.AllActiveObjects[i];
-                if(wo is Agent ag
-                    && ag.Alive)
-                {
-                    zoneCount[ag.Zone.Name]++;
-                }
-            }
-            foreach(string name in zoneCount.Keys)
-            {
-                sb.AppendLine(name + ":" + zoneCount[name]);
-            }
-            //sb.AppendLine("WORLD: " + Planet.World.AllActiveObjects.Where(wo => wo.Alive).Count());
-            ZoneInfo.Text = sb.ToString();
-            Turns.Text = Planet.World.Turns.ToString();
-        }
-
-        private void UpdateGeneology()
-        {
-            Dictionary<string, int> geneCount = new Dictionary<string, int>();
-            StringBuilder sb = new StringBuilder();
-            for(int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
-            {
-                WorldObject wo = Planet.World.AllActiveObjects[i];
-                if(wo is Agent ag
-                    && ag.Alive)
-                {
-                    string gene = ag.IndividualLabel.Substring(0, 3);
-                    if(!geneCount.ContainsKey(gene))
-                    {
-                        geneCount.Add(gene, 0);
-                    }
-                    ++geneCount[gene];
-                }
-            }
-
-            GeneologyInfo.Text = "Genes Active: " + geneCount.Count;
-        }
-
-        private void UpdateErrors()
-        {
-            ErrorsInfo.Text = "Errors: " + DrawingErrors;
         }
 
         private void DrawLayer(LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
@@ -478,9 +423,7 @@ namespace ALifeUni
                 FASTFORWARDING = false;
             }
             AgentPanel.updateInfo();
-            UpdateZoneInfo();
-            UpdateGeneology();
-            UpdateErrors();
+            WorldSummary.UpdateWorldSummary();
         }
 
         #endregion
@@ -604,7 +547,6 @@ namespace ALifeUni
                                         , true);
         }
 
-        string ErrorText;
         int shortBrainIndex = -1;
         private void ShortestBrain_Click(object sender, RoutedEventArgs e)
         {
@@ -616,7 +558,7 @@ namespace ALifeUni
             }
             catch(Exception)
             {
-                ErrorText = "No Shortest Brain Found";
+                //TODO: Create a more consumer friendly error handler. Currently all errors or swallowed, because the application is only run in debug. 
             }
         }
 

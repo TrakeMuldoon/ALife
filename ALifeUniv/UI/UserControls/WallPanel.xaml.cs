@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace ALifeUni
+namespace ALifeUni.UI.UserControls
 {
     public sealed partial class WallPanel : UserControl
     {

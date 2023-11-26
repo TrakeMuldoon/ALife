@@ -1,4 +1,9 @@
-﻿using ALifeUni.ALife.Utility;
+﻿/*** 
+ * This is a historical artifact, and not currently in use 
+ * It remains because it might represent something of value someday
+ * And it reflects a time when I was very thoroughly thinking about the design of the inheritance tree
+ * */
+using ALifeUni.ALife.Utility;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;

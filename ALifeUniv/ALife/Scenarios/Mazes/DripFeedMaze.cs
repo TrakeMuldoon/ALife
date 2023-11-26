@@ -1,4 +1,5 @@
 ﻿using ALifeUni.ALife.Brains;
+using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using System;
@@ -192,7 +193,7 @@ namespace ALifeUni.ALife.Scenarios
                 Agent rag = AgentFactory.CreateAgent("Agent", startZone, endZone, ColorExtensions.GetRandomColor(), 0);
             }
 
-            MazeScenarioHelpers.SetUpMaze();
+            MazeSetups.SetUpMaze();
         }
 
         public void GlobalEndOfTurnActions()

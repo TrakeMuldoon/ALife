@@ -5,6 +5,7 @@ using ALifeUni.ALife.Scenarios.FieldCrossings;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using ALifeUni.UI;
+using ALifeUni.UI.UserControls;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
@@ -291,7 +292,7 @@ namespace ALifeUni
 
         private void PauseSim_Click(object sender, RoutedEventArgs e)
         {
-             gameTimer.Stop();
+            gameTimer.Stop();
         }
 
         private void OneTurnSim_Click(object sender, RoutedEventArgs e)
@@ -310,6 +311,11 @@ namespace ALifeUni
             StartSimWithInterval(100);
         }
 
+        private void FastPlaySim_Click(object sender, RoutedEventArgs e)
+        {
+            StartSimWithInterval(1);
+        }
+
         private void StartSimWithInterval(int interval)
         {
             gameTimer.Interval = new TimeSpan(0, 0, 0, 0, interval);
@@ -317,11 +323,6 @@ namespace ALifeUni
             {
                 gameTimer.Start();
             }
-        }
-
-        private void FastPlaySim_Click(object sender, RoutedEventArgs e)
-        {
-            StartSimWithInterval(1);
         }
 
         private void SkipAhead_Click(object sender, RoutedEventArgs e)
@@ -352,10 +353,6 @@ namespace ALifeUni
         private void SkipSpecificAhead_Click(object sender, RoutedEventArgs e)
         {
             FastForward(skipValue);
-            AgentPanel.updateInfo();
-            UpdateZoneInfo();
-            UpdateGeneology();
-            UpdateErrors();
         }
 
         private bool FASTFORWARDING = false;

@@ -163,14 +163,14 @@
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildRectangle.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\IChildShape.cs" />
     <Compile Include="ALife\Scenarios\AbstractScenario.cs" />
-    <Compile Include="ALife\Scenarios\CollisionBehaviours.cs" />
+    <Compile Include="ALife\Scenarios\ScenarioHelpers\CollisionBehaviours.cs" />
     <Compile Include="ALife\Scenarios\FieldCrossings\FieldCrossingWallsScenario.cs" />
     <Compile Include="ALife\Scenarios\Mazes\DripFeedMaze.cs" />
     <Compile Include="ALife\Scenarios\FieldCrossings\FieldCrossingLowReproScenario.cs" />
     <Compile Include="ALife\Scenarios\FieldCrossings\FieldCrossingScenario.cs" />
     <Compile Include="ALife\Scenarios\Mazes\GenerationalMazeScenario.cs" />
     <Compile Include="ALife\Scenarios\Mazes\MazeScenario.cs" />
-    <Compile Include="ALife\Scenarios\MazeScenarioHelpers.cs" />
+    <Compile Include="ALife\Scenarios\ScenarioHelpers\MazeSetups.cs" />
     <Compile Include="ALife\Scenarios\TestScenarios\GoalsTestScenario.cs" />
     <Compile Include="ALife\Scenarios\TestScenarios\NeuralNetScenario.cs" />
     <Compile Include="ALife\Scenarios\TestScenarios\RectangleScenario.cs" />

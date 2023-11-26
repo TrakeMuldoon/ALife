@@ -125,6 +125,12 @@
       <Version>4.1.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ALifeUniv\ALifeUniv.csproj">
+      <Project>{755b3ea2-f7aa-4756-bb87-7f4e5ce6e91f}</Project>
+      <Name>ALifeUniv</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

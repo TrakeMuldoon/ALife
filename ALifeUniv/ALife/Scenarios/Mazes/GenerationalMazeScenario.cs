@@ -1,4 +1,5 @@
 ﻿using ALifeUni.ALife.Brains;
+using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using System;
@@ -166,7 +167,7 @@ namespace ALifeUni.ALife.Scenarios
                 Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
             }
 
-            MazeScenarioHelpers.SetUpMaze();
+            MazeSetups.SetUpMaze();
         }
 
         int bestXNum = 4;

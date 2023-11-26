@@ -25,7 +25,8 @@ namespace ALifeUni.ALife
             SubInputs.Add(new CountInput(name + ".HowMany"));
         }
 
-        [Obsolete("SuqareSenseClusterDefault is deprecated, please use SquareSenseCluster with EvoNumbers instead.")]
+        //TODO: Implement SquareSenseCluster with EvoNumbers... whoops
+        [Obsolete("SquareSenseClusterDefault is deprecated, please use SquareSenseCluster with EvoNumbers instead.")]
         public SquareSenseCluster(WorldObject parent, string name)
             : this(parent, name, 80, 30)
         {

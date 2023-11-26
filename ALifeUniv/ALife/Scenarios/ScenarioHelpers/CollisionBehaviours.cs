@@ -1,4 +1,4 @@
-﻿namespace ALifeUni.ALife.Scenarios
+﻿namespace ALifeUni.ALife.Scenarios.ScenarioHelpers
 {
     internal class CollisionBehaviours
     {

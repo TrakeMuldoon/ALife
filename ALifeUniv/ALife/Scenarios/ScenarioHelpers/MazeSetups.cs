@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI;
 
-namespace ALifeUni.ALife.Scenarios
+namespace ALifeUni.ALife.Scenarios.ScenarioHelpers
 {
-    public static class MazeScenarioHelpers
+    public static class MazeSetups
     {
         public static void SetUpMaze()
         {
-            List<Wall> walls = MazeScenarioHelpers.GetMazeWalls();
+            List<Wall> walls = MazeSetups.GetMazeWalls();
 
             foreach(Wall w in walls)
             {

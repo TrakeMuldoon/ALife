@@ -6,11 +6,11 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public static class ScenarioHelpers
+    public static class MazeScenarioHelpers
     {
         public static void SetUpMaze()
         {
-            List<Wall> walls = ScenarioHelpers.GetMazeWalls();
+            List<Wall> walls = MazeScenarioHelpers.GetMazeWalls();
 
             foreach(Wall w in walls)
             {

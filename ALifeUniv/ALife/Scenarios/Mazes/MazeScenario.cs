@@ -165,7 +165,7 @@ namespace ALifeUni.ALife.Scenarios
             }
             //MazeRunner mr = new MazeRunner(red, blue);
 
-            ScenarioHelpers.SetUpMaze();
+            MazeScenarioHelpers.SetUpMaze();
         }
 
         int bestXNum = 5;

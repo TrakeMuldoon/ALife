@@ -192,7 +192,7 @@ namespace ALifeUni.ALife.Scenarios
                 Agent rag = AgentFactory.CreateAgent("Agent", startZone, endZone, ColorExtensions.GetRandomColor(), 0);
             }
 
-            ScenarioHelpers.SetUpMaze();
+            MazeScenarioHelpers.SetUpMaze();
         }
 
         public void GlobalEndOfTurnActions()

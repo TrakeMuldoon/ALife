@@ -166,7 +166,7 @@ namespace ALifeUni.ALife.Scenarios
                 Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
             }
 
-            ScenarioHelpers.SetUpMaze();
+            MazeScenarioHelpers.SetUpMaze();
         }
 
         int bestXNum = 4;

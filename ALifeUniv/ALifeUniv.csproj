@@ -168,10 +168,9 @@
     <Compile Include="ALife\Scenarios\Mazes\DripFeedMaze.cs" />
     <Compile Include="ALife\Scenarios\FieldCrossings\FieldCrossingLowReproScenario.cs" />
     <Compile Include="ALife\Scenarios\FieldCrossings\FieldCrossingScenario.cs" />
-    <Compile Include="ALife\Scenarios\GardenScenario.cs" />
     <Compile Include="ALife\Scenarios\Mazes\GenerationalMazeScenario.cs" />
     <Compile Include="ALife\Scenarios\Mazes\MazeScenario.cs" />
-    <Compile Include="ALife\Scenarios\ScenarioHelpers.cs" />
+    <Compile Include="ALife\Scenarios\MazeScenarioHelpers.cs" />
     <Compile Include="ALife\Scenarios\TestScenarios\GoalsTestScenario.cs" />
     <Compile Include="ALife\Scenarios\TestScenarios\NeuralNetScenario.cs" />
     <Compile Include="ALife\Scenarios\TestScenarios\RectangleScenario.cs" />

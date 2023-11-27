@@ -162,7 +162,7 @@
     <Compile Include="ALife\AgentPieces\Senses\SquareSense\SquareSenseCluster.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildRectangle.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\IChildShape.cs" />
-    <Compile Include="ALife\Scenarios\AbstractScenario.cs" />
+    <Compile Include="ALife\Scenarios\ScenarioTemplate.cs" />
     <Compile Include="ALife\Scenarios\ScenarioHelpers\CollisionBehaviours.cs" />
     <Compile Include="ALife\Scenarios\FieldCrossings\FieldCrossingWallsScenario.cs" />
     <Compile Include="ALife\Scenarios\Mazes\DripFeedMaze.cs" />

@@ -24,12 +24,12 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class FieldCrossingScenario : AbstractScenario
+    public class FieldCrossingScenario : IScenario
     {
         /******************/
         /* SCENARIO STUFF */
         /******************/
-        public override string Name
+        public virtual string Name
         {
             get { return "Field Crossing"; }
         }
@@ -38,7 +38,7 @@ namespace ALifeUni.ALife.Scenarios
         /*   AGENT STUFF  */
         /******************/
 
-        public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -91,7 +91,7 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
-        public override void EndOfTurnTriggers(Agent me)
+        public virtual void EndOfTurnTriggers(Agent me)
         {
             if(me.Statistics["DeathTimer"].Value > 1899)
             {
@@ -150,7 +150,7 @@ namespace ALifeUni.ALife.Scenarios
             collider.MoveObject(child);
         }
 
-        public override void AgentUpkeep(Agent me)
+        public virtual void AgentUpkeep(Agent me)
         {
             //Increment or Decrement end of turn values
             me.Statistics["Age"].IncreasePropertyBy(1);
@@ -158,7 +158,7 @@ namespace ALifeUni.ALife.Scenarios
             me.Statistics["ZoneEscapeTimer"].IncreasePropertyBy(1);
         }
 
-        public override void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
             //Collision means death right now
             foreach(WorldObject wo in collisions)
@@ -175,11 +175,11 @@ namespace ALifeUni.ALife.Scenarios
         /*  PLANET STUFF  */
         /******************/
 
-        public override int WorldWidth { get { return 1000; } }
+        public virtual int WorldWidth { get { return 1000; } }
 
-        public override int WorldHeight { get { return 1000; } }
+        public virtual int WorldHeight { get { return 1000; } }
 
-        public override bool FixedWidthHeight { get { return false; } }
+        public virtual bool FixedWidthHeight { get { return false; } }
 
         protected struct AgentZoneSpec
         {
@@ -198,7 +198,7 @@ namespace ALifeUni.ALife.Scenarios
 
         protected static Dictionary<Zone, AgentZoneSpec> AgentZoneSpecs = new Dictionary<Zone, AgentZoneSpec>();
 
-        public override void PlanetSetup()
+        public virtual void PlanetSetup()
         {
 
             Planet instance = Planet.World;
@@ -253,7 +253,7 @@ namespace ALifeUni.ALife.Scenarios
                                             , spec.StartOrientation);
         }
 
-        public override void Reset()
+        public virtual void Reset()
         {
             AgentZoneSpecs.Clear();
         }

@@ -4,7 +4,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class AbstractScenario : IScenario
+    public class ScenarioTemplate : IScenario
     {
         /******************/
         /* SCENARIO STUFF */

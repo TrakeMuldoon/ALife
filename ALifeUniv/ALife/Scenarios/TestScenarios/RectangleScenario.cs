@@ -8,13 +8,13 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class RectangleScenario : AbstractScenario
+    public class RectangleScenario : IScenario
     {
         /******************/
         /* SCENARIO STUFF */
         /******************/
 
-        public override string Name
+        public virtual string Name
         {
             get { return "Rectangular Agent Test"; }
         }
@@ -23,7 +23,7 @@ namespace ALifeUni.ALife.Scenarios
         /*   AGENT STUFF  */
         /******************/
 
-        public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -68,15 +68,30 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
+        public virtual void AgentUpkeep(Agent me)
+        {
+            //Do nothing
+        }
+
+        public virtual void EndOfTurnTriggers(Agent me)
+        {
+            //Do Nothing
+        }
+
+        public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        {
+            //Do Nothing
+        }
+
         /******************/
         /*  PLANET STUFF  */
         /******************/
 
-        public override int WorldWidth { get { return 800; } }
+        public virtual int WorldWidth { get { return 800; } }
 
-        public override int WorldHeight { get { return 800; } }
+        public virtual int WorldHeight { get { return 800; } }
 
-        public override void PlanetSetup()
+        public virtual void PlanetSetup()
         {
             Zone nullZone = new Zone("Null", "random", Colors.Black, new Point(0, 0), 1000, 1000);
             Planet.World.AddZone(nullZone);
@@ -99,6 +114,11 @@ namespace ALifeUni.ALife.Scenarios
             collider.MoveObject(mr);
 
             Planet.World.AddObjectToWorld(new Wall(new Point(299, 78), 200, new Angle(35), "wa"));
+        }
+
+        public virtual void Reset()
+        {
+            //Do Nothing
         }
     }
 }

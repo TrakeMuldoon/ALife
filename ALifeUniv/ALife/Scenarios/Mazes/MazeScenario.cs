@@ -22,13 +22,13 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class MazeScenario : AbstractScenario
+    public class MazeScenario : IScenario
     {
         /******************/
         /* SCENARIO STUFF */
         /******************/
 
-        public override string Name
+        public virtual string Name
         {
             get { return "Maze"; }
         }
@@ -37,7 +37,7 @@ namespace ALifeUni.ALife.Scenarios
         /*   AGENT STUFF  */
         /******************/
 
-        public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -94,7 +94,7 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
-        public override void EndOfTurnTriggers(Agent me)
+        public virtual void EndOfTurnTriggers(Agent me)
         {
             if(me.Statistics["MaxXTimer"].Value > 600)
             {
@@ -114,7 +114,7 @@ namespace ALifeUni.ALife.Scenarios
             }
         }
 
-        public override void AgentUpkeep(Agent me)
+        public virtual void AgentUpkeep(Agent me)
         {
             //Increment or Decrement end of turn values
             me.Statistics["Age"].IncreasePropertyBy(1);
@@ -131,17 +131,22 @@ namespace ALifeUni.ALife.Scenarios
             }
         }
 
+        public void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        {
+            //Nothing happens on collisions
+        }
+
         /******************/
         /*  PLANET STUFF  */
         /******************/
 
-        public override int WorldWidth { get { return 6000; } }
+        public virtual int WorldWidth { get { return 6000; } }
 
-        public override int WorldHeight { get { return 2000; } }
+        public virtual int WorldHeight { get { return 2000; } }
 
-        public override bool FixedWidthHeight { get { return true; } }
+        public virtual bool FixedWidthHeight { get { return true; } }
 
-        public override void PlanetSetup()
+        public virtual void PlanetSetup()
         {
             Planet instance = Planet.World;
             double height = instance.WorldHeight;
@@ -167,7 +172,7 @@ namespace ALifeUni.ALife.Scenarios
         }
 
         int bestXNum = 5;
-        public override void GlobalEndOfTurnActions()
+        public virtual void GlobalEndOfTurnActions()
         {
             List<Agent> winners = Planet.World.BestXAgents;
             foreach(Agent ag in Planet.World.AllActiveObjects.OfType<Agent>())
@@ -226,7 +231,7 @@ namespace ALifeUni.ALife.Scenarios
             }
         }
 
-        public override void Reset()
+        public virtual void Reset()
         {
             bestXNum = 5;
         }

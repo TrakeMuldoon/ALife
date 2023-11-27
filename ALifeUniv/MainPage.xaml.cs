@@ -258,14 +258,14 @@ namespace ALifeUni
 
         private void ResetSim_Click(object sender, RoutedEventArgs e)
         {
+            Planet.World.Scenario.Reset();
+
             if(int.TryParse(seed, out int seedValue))
             {
-                Planet.World.Scenario.Reset();
                 Planet.CreateWorld(seedValue, Planet.World.Scenario, (int)animCanvas.Height, (int)animCanvas.Width);
             }
             else
             {
-                Planet.World.Scenario.Reset();
                 Planet.CreateWorld(Planet.World.Scenario, (int)animCanvas.Height, (int)animCanvas.Width);
             }
 

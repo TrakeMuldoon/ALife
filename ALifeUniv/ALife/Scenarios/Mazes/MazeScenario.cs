@@ -56,22 +56,19 @@ namespace ALifeUni.ALife.Scenarios
             myShape.Color = color;
             agent.SetShape(myShape);
 
-            List<SenseCluster> agentSenses = new List<SenseCluster>()
-            {
-                new EyeCluster(agent, "EyeLeft"
-                                , new ROEvoNumber(startValue: -30, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
-                                , new ROEvoNumber(startValue: 10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Relative Orientation
-                                , new ROEvoNumber(startValue: 80, evoDeltaMax: 3, hardMin: 40, hardMax: 120)        //Radius
-                                , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),       //Sweep
-                new EyeCluster(agent, "EyeRight"
-                                , new ROEvoNumber(startValue: 30, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Orientation Around Parent
-                                , new ROEvoNumber(startValue: -10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Relative Orientation
-                                , new ROEvoNumber(startValue: 80, evoDeltaMax: 3, hardMin: 40, hardMax: 120)        //Radius
-                                , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),       //Sweep
-                new ProximityCluster(agent, "Proximity1"
-                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 4, hardMin: 10, hardMax: 40)),        //Radius
-                new GoalSenseCluster(agent, "GoalSense", targetZone)
-            };
+            List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(
+                new SenseCluster[]
+                {
+                    new ProximityCluster(agent, "Proximity1"
+                                        , new ROEvoNumber(startValue: 20, evoDeltaMax: 4, hardMin: 10, hardMax: 40)), //Radius
+                    new GoalSenseCluster(agent, "GoalSense", targetZone)
+                },
+                new IEnumerable<SenseCluster>[]
+                {
+                    CommonSenses.PairOfEyes(agent)
+                }
+            );
+
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
 

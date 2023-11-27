@@ -14,6 +14,7 @@
 
 using ALifeUni.ALife.Brains;
 using ALifeUni.ALife.CustomWorldObjects;
+using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using System;
@@ -54,20 +55,16 @@ namespace ALifeUni.ALife.Scenarios
             myShape.Color = color;
             agent.SetShape(myShape);
 
-            List<SenseCluster> agentSenses = new List<SenseCluster>()
-            {
-                new EyeCluster(agent, "EyeLeft"
-                                , new ROEvoNumber(startValue: -20, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
-                                , new ROEvoNumber(startValue: 10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Relative Orientation
-                                , new ROEvoNumber(startValue: 60, evoDeltaMax: 5, hardMin: 30, hardMax: 100)       //Radius
-                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
-                new EyeCluster(agent, "EyeRight"
-                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Orientation Around Parent
-                                , new ROEvoNumber(startValue: -10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Relative Orientation
-                                , new ROEvoNumber(startValue: 60, evoDeltaMax: 5, hardMin: 30, hardMax: 100)       //Radius
-                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
-                new GoalSenseCluster(agent, "GoalSense", targetZone)
-            };
+            List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(
+                new SenseCluster[]
+                {
+                    new GoalSenseCluster(agent, "GoalSense", targetZone)
+                },
+                new IEnumerable<SenseCluster>[]
+                {
+                    CommonSenses.PairOfEyes(agent)
+                }
+            );
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
 

@@ -91,6 +91,8 @@ namespace ALifeUni.ALife.Scenarios
 
         public virtual int WorldHeight { get { return 800; } }
 
+        public bool FixedWidthHeight => true;
+
         public virtual void PlanetSetup()
         {
             Zone nullZone = new Zone("Null", "random", Colors.Black, new Point(0, 0), 1000, 1000);
@@ -101,6 +103,11 @@ namespace ALifeUni.ALife.Scenarios
             {
                 Agent rag = AgentFactory.CreateAgent("Agent", nullZone, null, Colors.Blue, 0);
             }
+        }
+
+        public void GlobalEndOfTurnActions()
+        {
+            //Do Nothing
         }
 
         public virtual void Reset()

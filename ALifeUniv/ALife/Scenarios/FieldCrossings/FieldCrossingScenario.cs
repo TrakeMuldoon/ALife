@@ -244,6 +244,11 @@ namespace ALifeUni.ALife.Scenarios
             instance.AddObjectToWorld(fr);
         }
 
+        public void GlobalEndOfTurnActions()
+        {
+            //Do Nothing
+        }
+
         protected Agent CreateZonedAgent(AgentZoneSpec spec)
         {
             return AgentFactory.CreateAgent("Agent"

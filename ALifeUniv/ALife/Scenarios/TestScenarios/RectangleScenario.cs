@@ -91,6 +91,8 @@ namespace ALifeUni.ALife.Scenarios
 
         public virtual int WorldHeight { get { return 800; } }
 
+        public bool FixedWidthHeight => true;
+
         public virtual void PlanetSetup()
         {
             Zone nullZone = new Zone("Null", "random", Colors.Black, new Point(0, 0), 1000, 1000);
@@ -114,6 +116,11 @@ namespace ALifeUni.ALife.Scenarios
             collider.MoveObject(mr);
 
             Planet.World.AddObjectToWorld(new Wall(new Point(299, 78), 200, new Angle(35), "wa"));
+        }
+
+        public void GlobalEndOfTurnActions()
+        {
+            //Do Nothing
         }
 
         public virtual void Reset()

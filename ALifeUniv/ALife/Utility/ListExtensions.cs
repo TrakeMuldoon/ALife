@@ -8,7 +8,7 @@ namespace ALifeUni.ALife.Utility
 {
     public static class ListExtensions
     {
-        public static List<T> CompileList<T>(T[] individuals, IEnumerable<T>[] lists)
+        public static List<T> CompileList<T>(IEnumerable<T>[] lists, params T[] individuals)
         {
             List<T> toReturn = new List<T>(individuals);
             foreach(var list in lists)

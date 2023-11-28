@@ -57,16 +57,13 @@ namespace ALifeUni.ALife.Scenarios
             agent.SetShape(myShape);
 
             List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(
-                new SenseCluster[]
-                {
-                    new ProximityCluster(agent, "Proximity1"
-                                        , new ROEvoNumber(startValue: 20, evoDeltaMax: 4, hardMin: 10, hardMax: 40)), //Radius
-                    new GoalSenseCluster(agent, "GoalSense", targetZone)
-                },
                 new IEnumerable<SenseCluster>[]
                 {
                     CommonSenses.PairOfEyes(agent)
-                }
+                },
+                new ProximityCluster(agent, "Proximity1"
+                                    , new ROEvoNumber(startValue: 20, evoDeltaMax: 4, hardMin: 10, hardMax: 40)), //Radius
+                new GoalSenseCluster(agent, "GoalSense", targetZone)
             );
 
 

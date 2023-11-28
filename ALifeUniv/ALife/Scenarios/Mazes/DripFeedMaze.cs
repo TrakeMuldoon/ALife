@@ -37,14 +37,11 @@ namespace ALifeUni.ALife.Scenarios
             agent.SetShape(myShape);
 
             List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(
-                new SenseCluster[] 
-                {
-                    new GoalSenseCluster(agent, "GoalSense", targetZone)
-                },
                 new IEnumerable<SenseCluster>[]
                 {
                     CommonSenses.PairOfEyes(agent)
-                }
+                },
+                new GoalSenseCluster(agent, "GoalSense", targetZone)
             );
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();

@@ -174,9 +174,5 @@ namespace ALifeUni.ALife.Scenarios
                 AgentFactory.CreateAgent("Agent", startZone, endZone, ColorExtensions.GetRandomColor(), 0);
             }
         }
-
-        public void Reset()
-        {
-        }
     }
 }

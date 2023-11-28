@@ -138,6 +138,7 @@ namespace ALifeUni.ALife.Scenarios
 
         protected static void CreateZonedChild(Agent me, ICollisionMap<WorldObject> collider, AgentZoneSpec specification)
         {
+            //TODO: Refactor this into the Agent
             Agent child = (Agent)me.Reproduce();
             child.Zone = specification.StartZone;
             child.TargetZone = specification.TargetZone;
@@ -145,7 +146,7 @@ namespace ALifeUni.ALife.Scenarios
             child.Shape.CentrePoint = reverseChildPoint;
             child.Shape.Orientation.Degrees = specification.StartOrientation;
             child.Shape.Color = specification.AgentColor;
-            (child.Senses[2] as GoalSenseCluster).ChangeTarget(specification.TargetZone);
+            (child.Senses[0] as GoalSenseCluster).ChangeTarget(specification.TargetZone);
 
             collider.MoveObject(child);
         }
@@ -196,7 +197,7 @@ namespace ALifeUni.ALife.Scenarios
             }
         }
 
-        protected static Dictionary<Zone, AgentZoneSpec> AgentZoneSpecs = new Dictionary<Zone, AgentZoneSpec>();
+        protected Dictionary<Zone, AgentZoneSpec> AgentZoneSpecs = new Dictionary<Zone, AgentZoneSpec>();
 
         public virtual void PlanetSetup()
         {
@@ -256,11 +257,6 @@ namespace ALifeUni.ALife.Scenarios
                                             , spec.TargetZone
                                             , spec.AgentColor
                                             , spec.StartOrientation);
-        }
-
-        public virtual void Reset()
-        {
-            AgentZoneSpecs.Clear();
         }
     }
 }

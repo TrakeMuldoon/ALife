@@ -103,10 +103,5 @@ namespace ALifeUni.ALife.Scenarios
         {
             //Do Nothing
         }
-
-        public void Reset()
-        {
-            //No local variables to reset
-        }
     }
 }

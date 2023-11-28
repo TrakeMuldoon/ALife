@@ -109,10 +109,5 @@ namespace ALifeUni.ALife.Scenarios
         {
             //Do Nothing
         }
-
-        public virtual void Reset()
-        {
-            //Do nothing
-        }
     }
 }

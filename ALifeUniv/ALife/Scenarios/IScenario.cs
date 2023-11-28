@@ -51,9 +51,14 @@ namespace ALifeUni.ALife.Scenarios
         void PlanetSetup();
 
         void GlobalEndOfTurnActions();
+    }
 
-
-        /* This is called when the scenario is reset, any variables being tracked inside the Scenario itself must be reset */
-        void Reset();
+    public static class IScenarioHelpers
+    { 
+        /* This is called when the scenario is reset, to get you a fresh scenario */
+        public static IScenario FreshInstanceOf(IScenario originalScenario)
+        {
+            return (IScenario)Activator.CreateInstance(originalScenario.GetType());
+        }
     }
 }

@@ -48,7 +48,7 @@ namespace ScenarioRunner
             Console.Write("  ");
             DateTime start = DateTime.Now;
 
-            scenario.Reset();
+            IScenario newCopy = IScenarioHelpers.FreshInstanceOf(scenario);
             Planet.CreateWorld(seedValue, scenario, height, width);
 
             string error = null;

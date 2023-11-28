@@ -230,10 +230,5 @@ namespace ALifeUni.ALife.Scenarios
                 }
             }
         }
-
-        public virtual void Reset()
-        {
-            bestXNum = 5;
-        }
     }
 }

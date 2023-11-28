@@ -267,12 +267,5 @@ namespace ALifeUni.ALife.Scenarios
             }
             return winners;
         }
-
-        public virtual void Reset()
-        {
-            bestXNum = 4;
-            Iteration = 1;
-            bestEver = null;
-        }
     }
 }

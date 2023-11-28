@@ -1,6 +1,7 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Brains;
 using ALifeUni.ALife.CustomWorldObjects;
+using ALifeUni.ALife.Scenarios;
 using ALifeUni.ALife.Scenarios.FieldCrossings;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
@@ -258,15 +259,20 @@ namespace ALifeUni
 
         private void ResetSim_Click(object sender, RoutedEventArgs e)
         {
-            Planet.World.Scenario.Reset();
+            ResetSimulation();
+        }
+
+        private void ResetSimulation()
+        {
+            IScenario newCopy = IScenarioHelpers.FreshInstanceOf(Planet.World.Scenario);
 
             if(int.TryParse(seed, out int seedValue))
             {
-                Planet.CreateWorld(seedValue, Planet.World.Scenario, (int)animCanvas.Height, (int)animCanvas.Width);
+                Planet.CreateWorld(seedValue, newCopy, (int)animCanvas.Height, (int)animCanvas.Width);
             }
             else
             {
-                Planet.CreateWorld(Planet.World.Scenario, (int)animCanvas.Height, (int)animCanvas.Width);
+                Planet.CreateWorld(newCopy, (int)animCanvas.Height, (int)animCanvas.Width);
             }
 
             seed = Planet.World.Seed.ToString();
@@ -277,15 +283,8 @@ namespace ALifeUni
 
         private void RandResetSim_Click(object sender, RoutedEventArgs e)
         {
-            int newSeed = Planet.World.NumberGen.Next();
-            Planet.World.Scenario.Reset();
-            Planet.CreateWorld(newSeed, Planet.World.Scenario, (int)animCanvas.Height, (int)animCanvas.Width);
-
-            seed = Planet.World.Seed.ToString();
-            SimSeed.Text = seed;
-            SimSeed_TextChanged(SimSeed, null);
-            special = null;
-
+            seed = Planet.World.NumberGen.Next().ToString();
+            ResetSimulation();
         }
 
         #region Speed controls

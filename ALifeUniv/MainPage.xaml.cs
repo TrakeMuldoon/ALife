@@ -1,10 +1,12 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Brains;
 using ALifeUni.ALife.CustomWorldObjects;
+using ALifeUni.ALife.Scenarios;
 using ALifeUni.ALife.Scenarios.FieldCrossings;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using ALifeUni.UI;
+using ALifeUni.UI.UserControls;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
@@ -49,8 +51,9 @@ namespace ALifeUni
             //Planet.CreateWorld(new MazeScenario());
             //Planet.CreateWorld(new FieldCrossingLowReproScenario());
             //Planet.CreateWorld(new DripFeedMaze());
-            Planet.CreateWorld(new FieldCrossingWallsScenario());
+           //Planet.CreateWorld(new FieldCrossingWallsScenario());
             //Planet.CreateWorld(new GoalsTestScenario());
+            Planet.CreateWorld(new CarTrackMaze());
 
 
             animCanvas.ClearColor = Colors.NavajoWhite;
@@ -222,6 +225,7 @@ namespace ALifeUni
             //Reset the Special related stuff
             AgentPanel.TheAgent = null;
             WallPane.TheWall = null;
+            WallPanelPopup.IsOpen = false;
             special = null;
 
             if(++SpecialSelectorIndex >= colls.Count)
@@ -234,7 +238,10 @@ namespace ALifeUni
             switch(special)
             {
                 case Agent ag: AgentPanel.TheAgent = ag; break;
-                case Wall wall: WallPane.TheWall = wall; break;
+                case Wall wall: 
+                    WallPane.TheWall = wall;
+                    WallPanelPopup.IsOpen = true;
+                    break;
                 default: break;
             }
         }
@@ -257,15 +264,20 @@ namespace ALifeUni
 
         private void ResetSim_Click(object sender, RoutedEventArgs e)
         {
+            ResetSimulation();
+        }
+
+        private void ResetSimulation()
+        {
+            IScenario newCopy = IScenarioHelpers.FreshInstanceOf(Planet.World.Scenario);
+
             if(int.TryParse(seed, out int seedValue))
             {
-                Planet.World.Scenario.Reset();
-                Planet.CreateWorld(seedValue, Planet.World.Scenario, (int)animCanvas.Height, (int)animCanvas.Width);
+                Planet.CreateWorld(seedValue, newCopy, (int)animCanvas.Height, (int)animCanvas.Width);
             }
             else
             {
-                Planet.World.Scenario.Reset();
-                Planet.CreateWorld(Planet.World.Scenario, (int)animCanvas.Height, (int)animCanvas.Width);
+                Planet.CreateWorld(newCopy, (int)animCanvas.Height, (int)animCanvas.Width);
             }
 
             seed = Planet.World.Seed.ToString();
@@ -276,22 +288,15 @@ namespace ALifeUni
 
         private void RandResetSim_Click(object sender, RoutedEventArgs e)
         {
-            int newSeed = Planet.World.NumberGen.Next();
-            Planet.World.Scenario.Reset();
-            Planet.CreateWorld(newSeed, Planet.World.Scenario, (int)animCanvas.Height, (int)animCanvas.Width);
-
-            seed = Planet.World.Seed.ToString();
-            SimSeed.Text = seed;
-            SimSeed_TextChanged(SimSeed, null);
-            special = null;
-
+            seed = Planet.World.NumberGen.Next().ToString();
+            ResetSimulation();
         }
 
         #region Speed controls
 
         private void PauseSim_Click(object sender, RoutedEventArgs e)
         {
-             gameTimer.Stop();
+            gameTimer.Stop();
         }
 
         private void OneTurnSim_Click(object sender, RoutedEventArgs e)
@@ -310,6 +315,11 @@ namespace ALifeUni
             StartSimWithInterval(100);
         }
 
+        private void FastPlaySim_Click(object sender, RoutedEventArgs e)
+        {
+            StartSimWithInterval(1);
+        }
+
         private void StartSimWithInterval(int interval)
         {
             gameTimer.Interval = new TimeSpan(0, 0, 0, 0, interval);
@@ -317,11 +327,6 @@ namespace ALifeUni
             {
                 gameTimer.Start();
             }
-        }
-
-        private void FastPlaySim_Click(object sender, RoutedEventArgs e)
-        {
-            StartSimWithInterval(1);
         }
 
         private void SkipAhead_Click(object sender, RoutedEventArgs e)
@@ -352,10 +357,6 @@ namespace ALifeUni
         private void SkipSpecificAhead_Click(object sender, RoutedEventArgs e)
         {
             FastForward(skipValue);
-            AgentPanel.updateInfo();
-            UpdateZoneInfo();
-            UpdateGeneology();
-            UpdateErrors();
         }
 
         private bool FASTFORWARDING = false;
@@ -612,6 +613,11 @@ namespace ALifeUni
         private void CollisionTestPanelButton_Click(object sender, RoutedEventArgs e)
         {
             CollisionTestPopup.IsOpen = !CollisionTestPopup.IsOpen;
+        }
+
+        private void WallPanelButton_Click(object sender, RoutedEventArgs e)
+        {
+            WallPanelPopup.IsOpen = !WallPanelPopup.IsOpen;
         }
     }
 }

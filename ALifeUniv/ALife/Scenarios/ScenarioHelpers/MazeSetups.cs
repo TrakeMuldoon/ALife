@@ -1,16 +1,17 @@
 ﻿using ALifeUni.ALife.CustomWorldObjects;
 using ALifeUni.ALife.Utility;
+using System;
 using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI;
 
-namespace ALifeUni.ALife.Scenarios
+namespace ALifeUni.ALife.Scenarios.ScenarioHelpers
 {
-    public static class ScenarioHelpers
+    public static class MazeSetups
     {
         public static void SetUpMaze()
         {
-            List<Wall> walls = ScenarioHelpers.GetMazeWalls();
+            List<Wall> walls = MazeSetups.GetMazeWalls();
 
             foreach(Wall w in walls)
             {
@@ -104,6 +105,69 @@ namespace ALifeUni.ALife.Scenarios
             walls.Add(new Wall(new Point(x_offset + 90, 230), 450, new Angle(95), "w9-4"));
 
             return walls;
+        }
+
+        public static void BuildThinningCarTrack()
+        {
+            List<Wall> walls = new List<Wall>();
+
+            walls.Add(new Wall(new Point(25, 400), 400, new Angle(90), "OutsideWest"));
+            walls.AddRange(Build60Curve(30, 620, 2, "Outside SW"));
+            walls.Add(new Wall(new Point(760, 784), 1100, new Angle(0), "OutsideSouth"));
+            walls.AddRange(Build60Curve(1490, 620, 3, "Outside SE"));
+            walls.Add(new Wall(new Point(1495, 400), 400, new Angle(270), "OutsideEast"));
+            walls.AddRange(Build60Curve(1490, 180, 4, "Outside NE"));
+            walls.Add(new Wall(new Point(760, 15), 1100, new Angle(180), "OutsideNorth"));
+            walls.AddRange(Build60Curve(30, 180, 1, "Outside NW"));
+
+            walls.Add(new Wall(new Point(225, 350), 100, new Angle(90), "Inside West"));
+            walls.AddRange(Build60Curve(230, 420, 2, "Inside SW"));
+            walls.Add(new Wall(new Point(760, 585), 700, new Angle(0), "Inside South"));
+            walls.AddRange(Build60Curve(1290, 420, 3, "Inside SE"));
+            walls.Add(new Wall(new Point(1305, 365), 70, new Angle(105), "Inside East"));
+            //walls.AddRange(Build60Curve(1290, 280, 4, "Inside NE"));
+            walls.AddRange(Build60Curve(1310, 310, 4, "Inside NE"));
+            Wall northy = new Wall(new Point(768, 130), 730, new Angle(2), "Inside North");
+            walls.AddRange(Wall.WallSplitter(northy));
+
+            walls.AddRange(Build60Curve(230, 280, 1, "Inside NW"));
+
+            walls.Add(new Wall(new Point(128, 330), 200, new Angle(0), "FinishLine"));
+
+            foreach(Wall w in walls)
+            {
+                Planet.World.AddObjectToWorld(w);
+            }
+        }
+
+        private static List<Wall> Build60Curve(int xStart, int yStart, int orientation, string name)
+        {
+            //1 = NW + (->) - (^)  ori 270
+            //2 = SW + (->) + (v)  ori 90
+            //3 = SE - (<-) + (v)  ori 90
+            //4 = NE - (<-) - (^)  ori 270
+
+            //This is a temp solution, could be made more elegant.
+            int counter = 0;
+            int xSign, ySign, ori;
+            switch(orientation)
+            {
+                case 1: xSign = 1; ySign = -1; ori = 270; break;
+                case 2: xSign = 1; ySign = 1; ori = 90; break;
+                case 3: xSign = -1; ySign = 1; ori = 90; break;
+                case 4: xSign = -1; ySign = -1; ori = 270; break;
+                default: throw new Exception("invalid orientation");
+            }
+            int oSign = xSign * ySign;
+
+            List<Wall> curve = new List<Wall> {
+                new Wall(new Point(xStart + (xSign * 3), yStart + (ySign * 8)), 60, new Angle(ori - (oSign * 15)), $"{name}_{++counter}"),
+                new Wall(new Point(xStart + (xSign * 24), yStart + (ySign * 59)), 60, new Angle(ori - (oSign * 30)), $"{name}_{++counter}"),
+                new Wall(new Point(xStart + (xSign * 57), yStart + (ySign * 102)), 60, new Angle(ori - (oSign * 45)), $"{name}_{++counter}"),
+                new Wall(new Point(xStart + (xSign * 100), yStart + (ySign * 135)), 60, new Angle(ori - (oSign * 60)), $"{name}_{++counter}"),
+                new Wall(new Point(xStart + (xSign * 151), yStart + (ySign * 157)), 60, new Angle(ori - (oSign * 75)), $"{name}_{++counter}")
+            };
+            return curve;
         }
     }
 }

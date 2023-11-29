@@ -14,6 +14,7 @@
 
 using ALifeUni.ALife.Brains;
 using ALifeUni.ALife.CustomWorldObjects;
+using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using System;
@@ -23,12 +24,12 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class FieldCrossingScenario : AbstractScenario
+    public class FieldCrossingScenario : IScenario
     {
         /******************/
         /* SCENARIO STUFF */
         /******************/
-        public override string Name
+        public virtual string Name
         {
             get { return "Field Crossing"; }
         }
@@ -37,7 +38,7 @@ namespace ALifeUni.ALife.Scenarios
         /*   AGENT STUFF  */
         /******************/
 
-        public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -54,20 +55,13 @@ namespace ALifeUni.ALife.Scenarios
             myShape.Color = color;
             agent.SetShape(myShape);
 
-            List<SenseCluster> agentSenses = new List<SenseCluster>()
-            {
-                new EyeCluster(agent, "EyeLeft"
-                                , new ROEvoNumber(startValue: -20, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
-                                , new ROEvoNumber(startValue: 10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Relative Orientation
-                                , new ROEvoNumber(startValue: 60, evoDeltaMax: 5, hardMin: 30, hardMax: 100)       //Radius
-                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
-                new EyeCluster(agent, "EyeRight"
-                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Orientation Around Parent
-                                , new ROEvoNumber(startValue: -10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Relative Orientation
-                                , new ROEvoNumber(startValue: 60, evoDeltaMax: 5, hardMin: 30, hardMax: 100)       //Radius
-                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
+            List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(
+                new IEnumerable<SenseCluster>[]
+                {
+                    CommonSenses.PairOfEyes(agent)
+                },
                 new GoalSenseCluster(agent, "GoalSense", targetZone)
-            };
+            );
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
 
@@ -94,7 +88,7 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
-        public override void EndOfTurnTriggers(Agent me)
+        public virtual void EndOfTurnTriggers(Agent me)
         {
             if(me.Statistics["DeathTimer"].Value > 1899)
             {
@@ -141,6 +135,7 @@ namespace ALifeUni.ALife.Scenarios
 
         protected static void CreateZonedChild(Agent me, ICollisionMap<WorldObject> collider, AgentZoneSpec specification)
         {
+            //TODO: Refactor this into the Agent
             Agent child = (Agent)me.Reproduce();
             child.Zone = specification.StartZone;
             child.TargetZone = specification.TargetZone;
@@ -148,12 +143,12 @@ namespace ALifeUni.ALife.Scenarios
             child.Shape.CentrePoint = reverseChildPoint;
             child.Shape.Orientation.Degrees = specification.StartOrientation;
             child.Shape.Color = specification.AgentColor;
-            (child.Senses[2] as GoalSenseCluster).ChangeTarget(specification.TargetZone);
+            (child.Senses[0] as GoalSenseCluster).ChangeTarget(specification.TargetZone);
 
             collider.MoveObject(child);
         }
 
-        public override void AgentUpkeep(Agent me)
+        public virtual void AgentUpkeep(Agent me)
         {
             //Increment or Decrement end of turn values
             me.Statistics["Age"].IncreasePropertyBy(1);
@@ -161,7 +156,7 @@ namespace ALifeUni.ALife.Scenarios
             me.Statistics["ZoneEscapeTimer"].IncreasePropertyBy(1);
         }
 
-        public override void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
             //Collision means death right now
             foreach(WorldObject wo in collisions)
@@ -178,11 +173,11 @@ namespace ALifeUni.ALife.Scenarios
         /*  PLANET STUFF  */
         /******************/
 
-        public override int WorldWidth { get { return 1000; } }
+        public virtual int WorldWidth { get { return 1000; } }
 
-        public override int WorldHeight { get { return 1000; } }
+        public virtual int WorldHeight { get { return 1000; } }
 
-        public override bool FixedWidthHeight { get { return false; } }
+        public virtual bool FixedWidthHeight { get { return false; } }
 
         protected struct AgentZoneSpec
         {
@@ -199,9 +194,9 @@ namespace ALifeUni.ALife.Scenarios
             }
         }
 
-        protected static Dictionary<Zone, AgentZoneSpec> AgentZoneSpecs = new Dictionary<Zone, AgentZoneSpec>();
+        protected Dictionary<Zone, AgentZoneSpec> AgentZoneSpecs = new Dictionary<Zone, AgentZoneSpec>();
 
-        public override void PlanetSetup()
+        public virtual void PlanetSetup()
         {
 
             Planet instance = Planet.World;
@@ -247,6 +242,11 @@ namespace ALifeUni.ALife.Scenarios
             instance.AddObjectToWorld(fr);
         }
 
+        public void GlobalEndOfTurnActions()
+        {
+            //Do Nothing
+        }
+
         protected Agent CreateZonedAgent(AgentZoneSpec spec)
         {
             return AgentFactory.CreateAgent("Agent"
@@ -254,11 +254,6 @@ namespace ALifeUni.ALife.Scenarios
                                             , spec.TargetZone
                                             , spec.AgentColor
                                             , spec.StartOrientation);
-        }
-
-        public override void Reset()
-        {
-            AgentZoneSpecs.Clear();
         }
     }
 }

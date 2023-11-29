@@ -1,4 +1,5 @@
 ﻿using ALifeUni.ALife.Brains;
+using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using System;
@@ -9,13 +10,13 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class GenerationalMazeScenario : AbstractScenario
+    public class GenerationalMazeScenario : IScenario
     {
         /******************/
         /* SCENARIO STUFF */
         /******************/
 
-        public override string Name
+        public virtual string Name
         {
             get { return "Generational Maze"; }
         }
@@ -24,7 +25,7 @@ namespace ALifeUni.ALife.Scenarios
         /*   AGENT STUFF  */
         /******************/
 
-        public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -42,22 +43,15 @@ namespace ALifeUni.ALife.Scenarios
             myShape.Color = color;
             agent.SetShape(myShape);
 
-            List<SenseCluster> agentSenses = new List<SenseCluster>()
-            {
-                new EyeCluster(agent, "EyeLeft"
-                                , new ROEvoNumber(startValue: -20, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
-                                , new ROEvoNumber(startValue: 10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Relative Orientation
-                                , new ROEvoNumber(startValue: 60, evoDeltaMax: 3, hardMin: 40, hardMax: 120)       //Radius
-                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
-                new EyeCluster(agent, "EyeRight"
-                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Orientation Around Parent
-                                , new ROEvoNumber(startValue: -10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Relative Orientation
-                                , new ROEvoNumber(startValue: 60, evoDeltaMax: 3, hardMin: 40, hardMax: 120)       //Radius
-                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
+            List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(
+                new IEnumerable<SenseCluster>[]
+                {
+                    CommonSenses.PairOfEyes(agent)
+                },
                 new ProximityCluster(agent, "Proximity1"
-                                , new ROEvoNumber(startValue: 20, evoDeltaMax: 4, hardMin: 10, hardMax: 40)),      //Radius
+                                    , new ROEvoNumber(startValue: 20, evoDeltaMax: 4, hardMin: 10, hardMax: 40)), //Radius
                 new GoalSenseCluster(agent, "GoalSense", targetZone)
-            };
+            );
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
 
@@ -85,7 +79,7 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
-        public override void EndOfTurnTriggers(Agent me)
+        public virtual void EndOfTurnTriggers(Agent me)
         {
             if(me.Statistics["MaxXTimer"].Value > 600)
             {
@@ -111,7 +105,7 @@ namespace ALifeUni.ALife.Scenarios
             }
         }
 
-        public override void AgentUpkeep(Agent me)
+        public virtual void AgentUpkeep(Agent me)
         {
             me.Statistics["ZoneEscapeTimer"].IncreasePropertyBy(1);
             me.Statistics["MaxXTimer"].IncreasePropertyBy(1);
@@ -123,9 +117,8 @@ namespace ALifeUni.ALife.Scenarios
             }
         }
 
-        public override void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
-
             me.Die();
         }
 
@@ -133,20 +126,20 @@ namespace ALifeUni.ALife.Scenarios
         /*  PLANET STUFF  */
         /******************/
 
-        public override int WorldWidth
+        public virtual int WorldWidth
         {
             get { return 6000; }
         }
-        public override int WorldHeight
+        public virtual int WorldHeight
         {
             get { return 2000; }
         }
-        public override bool FixedWidthHeight
+        public virtual bool FixedWidthHeight
         {
             get { return true; }
         }
 
-        public override void PlanetSetup()
+        public virtual void PlanetSetup()
         {
             Planet instance = Planet.World;
             double height = instance.WorldHeight;
@@ -166,13 +159,13 @@ namespace ALifeUni.ALife.Scenarios
                 Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
             }
 
-            ScenarioHelpers.SetUpMaze();
+            MazeSetups.SetUpMaze();
         }
 
         int bestXNum = 4;
         int Iteration = 1;
         Agent bestEver;
-        public override void GlobalEndOfTurnActions()
+        public virtual void GlobalEndOfTurnActions()
         {
             IEnumerable<Agent> someAgents = Planet.World.AllActiveObjects.OfType<Agent>();
 
@@ -270,13 +263,6 @@ namespace ALifeUni.ALife.Scenarios
                 }
             }
             return winners;
-        }
-
-        public override void Reset()
-        {
-            bestXNum = 4;
-            Iteration = 1;
-            bestEver = null;
         }
     }
 }

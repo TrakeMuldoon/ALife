@@ -138,6 +138,8 @@ namespace ALifeUni.ALife
             }
         }
 
+        //TODO: This is a singlethreaded application. Why am I locking here
+        //DNB: This is for a future in which the application is parallelized.
         private object UniqueLock = new object();
         private int uniqueInt = 0;
         public int NextUniqueID()

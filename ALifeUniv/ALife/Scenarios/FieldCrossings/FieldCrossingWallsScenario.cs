@@ -86,10 +86,5 @@ namespace ALifeUni.ALife.Scenarios.FieldCrossings
 
             walls.ForEach(w => Planet.World.AddObjectToWorld(w));
         }
-
-        public override void Reset()
-        {
-            AgentZoneSpecs.Clear();
-        }
     }
 }

@@ -7,13 +7,13 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class NeuralNetScenario : AbstractScenario
+    public class NeuralNetScenario : IScenario
     {
         /******************/
         /* SCENARIO STUFF */
         /******************/
 
-        public override string Name
+        public virtual string Name
         {
             get { return "Neural Net Test"; }
         }
@@ -22,7 +22,7 @@ namespace ALifeUni.ALife.Scenarios
         /*   AGENT STUFF  */
         /******************/
 
-        public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -68,15 +68,32 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
+        public virtual void AgentUpkeep(Agent me)
+        {
+            //Do nothing
+        }
+
+        public virtual void EndOfTurnTriggers(Agent me)
+        {
+            //Do Nothing
+        }
+
+        public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        {
+            //Do Nothing
+        }
+
         /******************/
         /*  PLANET STUFF  */
         /******************/
 
-        public override int WorldWidth { get { return 800; } }
+        public virtual int WorldWidth { get { return 800; } }
 
-        public override int WorldHeight { get { return 800; } }
+        public virtual int WorldHeight { get { return 800; } }
 
-        public override void PlanetSetup()
+        public bool FixedWidthHeight => true;
+
+        public virtual void PlanetSetup()
         {
             Zone nullZone = new Zone("Null", "random", Colors.Black, new Point(0, 0), 1000, 1000);
             Planet.World.AddZone(nullZone);
@@ -86,6 +103,11 @@ namespace ALifeUni.ALife.Scenarios
             {
                 Agent rag = AgentFactory.CreateAgent("Agent", nullZone, null, Colors.Blue, 0);
             }
+        }
+
+        public void GlobalEndOfTurnActions()
+        {
+            //Do Nothing
         }
     }
 }

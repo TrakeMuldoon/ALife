@@ -1,4 +1,5 @@
 ﻿using ALifeUni.ALife.Brains;
+using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using System;
@@ -14,42 +15,6 @@ namespace ALifeUni.ALife.Scenarios
         public string Name
         {
             get { return "Maze"; }
-        }
-
-        private static int agentCounter = 0;
-        private static List<EyeCluster> GetEyes(Agent agent)
-        {
-            agentCounter++;
-            if(DripFeedMaze.agentCounter % 2 == 0)
-            {
-                return new List<EyeCluster>() {
-                    new EyeCluster(agent, "EyeLong"
-                        , new ROEvoNumber(startValue: 0, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
-                        , new ROEvoNumber(startValue: 0, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Relative Orientation
-                        , new ROEvoNumber(startValue: 90, evoDeltaMax: 3, hardMin: 40, hardMax: 120)        //Radius
-                        , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),       //Sweep
-                    new EyeCluster(agent, "EyeShort"
-                        , new ROEvoNumber(startValue: 0, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Orientation Around Parent
-                        , new ROEvoNumber(startValue: 0, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Relative Orientation
-                        , new ROEvoNumber(startValue: 15, evoDeltaMax: 3, hardMin: 40, hardMax: 120)        //Radius
-                        , new ROEvoNumber(startValue: 50, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),       //Sweep
-                };
-            }
-            else
-            {
-                return new List<EyeCluster>() {
-                    new EyeCluster(agent, "EyeLeft"
-                        , new ROEvoNumber(startValue: -20, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
-                        , new ROEvoNumber(startValue: 10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Relative Orientation
-                        , new ROEvoNumber(startValue: 60, evoDeltaMax: 3, hardMin: 40, hardMax: 120)       //Radius
-                        , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
-                    new EyeCluster(agent, "EyeRight"
-                        , new ROEvoNumber(startValue: 20, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Orientation Around Parent
-                        , new ROEvoNumber(startValue: -10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Relative Orientation
-                        , new ROEvoNumber(startValue: 60, evoDeltaMax: 3, hardMin: 40, hardMax: 120)       //Radius
-                        , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
-                };
-            }
         }
 
         public Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
@@ -71,11 +36,13 @@ namespace ALifeUni.ALife.Scenarios
             myShape.Color = color;
             agent.SetShape(myShape);
 
-            List<SenseCluster> agentSenses = new List<SenseCluster>
-            {
+            List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(
+                new IEnumerable<SenseCluster>[]
+                {
+                    CommonSenses.PairOfEyes(agent)
+                },
                 new GoalSenseCluster(agent, "GoalSense", targetZone)
-            };
-            agentSenses.AddRange(DripFeedMaze.GetEyes(agent));
+            );
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
 
@@ -192,7 +159,7 @@ namespace ALifeUni.ALife.Scenarios
                 Agent rag = AgentFactory.CreateAgent("Agent", startZone, endZone, ColorExtensions.GetRandomColor(), 0);
             }
 
-            ScenarioHelpers.SetUpMaze();
+            MazeSetups.SetUpMaze();
         }
 
         public void GlobalEndOfTurnActions()
@@ -203,10 +170,6 @@ namespace ALifeUni.ALife.Scenarios
                 AgentFactory.CreateAgent("Agent", startZone, endZone, ColorExtensions.GetRandomColor(), 0);
                 AgentFactory.CreateAgent("Agent", startZone, endZone, ColorExtensions.GetRandomColor(), 0);
             }
-        }
-
-        public void Reset()
-        {
         }
     }
 }

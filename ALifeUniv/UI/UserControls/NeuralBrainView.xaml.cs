@@ -1,5 +1,6 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Brains;
+using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,8 @@ namespace ALifeUni.UI.UserControls
             args.DrawingSession.FillCircle(new Vector2(canvasWidth, canvasHeight), 50, Colors.Yellow);
             args.DrawingSession.FillCircle(new Vector2(canvasWidth, 0), 50, Colors.Purple);
 
+
+            int neuronCounter = 0;
             foreach(var (neuron, point) in NodeMap)
             {
                 foreach(Dendrite den in neuron.UpstreamDendrites)
@@ -75,8 +78,22 @@ namespace ALifeUni.UI.UserControls
                     Vector2 targetPoint = NodeMap[den.TargetNeuron];
                     args.DrawingSession.DrawLine(point, targetPoint, dendriteColour);
                 }
+
+                args.DrawingSession.FillCircle(point, 8, Colors.Moccasin);
+
                 Color neuronColour = neuron.Value > 0 ? Colors.Blue : Colors.Red;
+                neuronColour.A = (byte) (Math.Abs(neuron.Value) * 255);
                 args.DrawingSession.FillCircle(point, 8, neuronColour);
+
+                CanvasTextFormat ctf = new CanvasTextFormat();
+                ctf.FontSize = 10;
+
+                //gross unreadable temporary code;
+                float textY = ++neuronCounter % 2 == 0 ? point.Y + 10 : point.Y + 20;
+                float textX = point.X - 13;
+
+                Vector2 textPoint = new Vector2(textX, textY);
+                args.DrawingSession.DrawText(neuron.Name, textPoint, Colors.Black, ctf);
             }
         }
 

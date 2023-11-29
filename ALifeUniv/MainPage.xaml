@@ -124,9 +124,12 @@
             <Button x:Name="MostChildren" Click="MostChildren_Click">Most Children</Button>
 
             <Button x:Name="CollisionTestPanelButton" Click="CollisionTestPanelButton_Click">CollTestPanel</Button>
+            <Button x:Name="WallPanelButton" Click="WallPanelButton_Click">WallPanel</Button>
         </StackPanel>
         <local:AgentInfoPanel x:Name="AgentPanel"></local:AgentInfoPanel>
-        <local:WallPanel x:Name="WallPane"></local:WallPanel>
+        <Popup x:Name="WallPanelPopup">
+            <local:WallPanel x:Name="WallPane" Visibility="Visible"></local:WallPanel>
+        </Popup>
         <Popup x:Name="CollisionTestPopup">
             <local:CollisionTestPanel x:Name="CollisionTestPanel" Visibility="Visible"></local:CollisionTestPanel>
         </Popup>

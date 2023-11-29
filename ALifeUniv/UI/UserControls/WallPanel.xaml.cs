@@ -1,7 +1,10 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.CustomWorldObjects;
 using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Utility;
 using System;
+using System.ComponentModel;
+using Windows.ApplicationModel.Calls;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -20,42 +23,37 @@ namespace ALifeUni.UI.UserControls
             set
             {
                 theWall = value;
-                this.Visibility = Visibility.Collapsed;
-                //clearInfo();
                 if(theWall != null)
                 {
-                    this.Visibility = Visibility.Visible;
                     updateInfo();
                 }
             }
         }
 
-        bool inUpdate = false;
         public void updateInfo()
         {
             if(theWall == null)
             {
                 return;
             }
-            inUpdate = true;
             WallName.Text = theWall.IndividualLabel;
             WallXPos.Text = theWall.Shape.CentrePoint.X.ToString();
             WallYPos.Text = theWall.Shape.CentrePoint.Y.ToString();
             WallLength.Text = theWall.RShape.FBLength.ToString();
             WallOrientation.Text = theWall.Shape.Orientation.Degrees.ToString();
             UpdateDeclaration();
-            inUpdate = false;
+            Errors.Text = String.Empty;
         }
 
-        private void clearInfo()
+        private void ClearInfo()
         {
-            inUpdate = true;
+            TheWall = null;
             WallName.Text = "";
             WallXPos.Text = "";
             WallYPos.Text = "";
             WallLength.Text = "";
             WallOrientation.Text = "";
-            inUpdate = false;
+            Errors.Text = String.Empty;
         }
 
         private void UpdateDeclaration()
@@ -71,11 +69,7 @@ namespace ALifeUni.UI.UserControls
 
         private void Copy_Click(object sender, RoutedEventArgs e)
         {
-            String newdec = String.Format("walls.Add(new Wall(new Point({0}, {1}), {2}, new Angle({3}), ));"
-                                , WallXPos.Text
-                                , WallYPos.Text
-                                , WallLength.Text
-                                , WallOrientation.Text);
+            string newdec = NewDeclaration.Text;
             DataPackage dp = new DataPackage();
             dp.SetText(newdec);
             Clipboard.SetContent(dp);
@@ -88,7 +82,6 @@ namespace ALifeUni.UI.UserControls
 
         private void WallXPos_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(inUpdate) return;
             if(theWall == null) return;
 
             TextBox tb = (TextBox)sender;
@@ -105,7 +98,6 @@ namespace ALifeUni.UI.UserControls
 
         private void WallYPos_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(inUpdate) return;
             if(theWall == null) return;
 
             TextBox tb = (TextBox)sender;
@@ -122,7 +114,6 @@ namespace ALifeUni.UI.UserControls
 
         private void WallOrientation_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(inUpdate) return;
             if(theWall == null) return;
 
             TextBox tb = (TextBox)sender;
@@ -141,7 +132,6 @@ namespace ALifeUni.UI.UserControls
 
         private void WallLength_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(inUpdate) return;
             if(theWall == null) return;
 
             TextBox tb = (TextBox)sender;
@@ -163,6 +153,29 @@ namespace ALifeUni.UI.UserControls
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[theWall.CollisionLevel];
             collider.MoveObject(theWall);
             UpdateDeclaration();
+        }
+
+        private int customCreated = 0;
+        private void Create_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Point centre = new Point(Double.Parse(WallXPos.Text), Double.Parse(WallYPos.Text));
+                int Length = Int32.Parse(WallLength.Text);
+                Angle angle = new Angle(Int32.Parse(WallOrientation.Text));
+                Wall w = new Wall(centre, Length, angle, $"Custom_{++customCreated}");
+                Planet.World.AddObjectToWorld(w);
+                TheWall = w;
+            }
+            catch(Exception ex)
+            {
+                Errors.Text = ex.ToString();
+            }
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            ClearInfo();
         }
     }
 }

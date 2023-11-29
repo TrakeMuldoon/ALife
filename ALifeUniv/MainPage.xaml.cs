@@ -51,8 +51,9 @@ namespace ALifeUni
             //Planet.CreateWorld(new MazeScenario());
             //Planet.CreateWorld(new FieldCrossingLowReproScenario());
             //Planet.CreateWorld(new DripFeedMaze());
-            Planet.CreateWorld(new FieldCrossingWallsScenario());
+           //Planet.CreateWorld(new FieldCrossingWallsScenario());
             //Planet.CreateWorld(new GoalsTestScenario());
+            Planet.CreateWorld(new CarTrackMaze());
 
 
             animCanvas.ClearColor = Colors.NavajoWhite;
@@ -224,6 +225,7 @@ namespace ALifeUni
             //Reset the Special related stuff
             AgentPanel.TheAgent = null;
             WallPane.TheWall = null;
+            WallPanelPopup.IsOpen = false;
             special = null;
 
             if(++SpecialSelectorIndex >= colls.Count)
@@ -236,7 +238,10 @@ namespace ALifeUni
             switch(special)
             {
                 case Agent ag: AgentPanel.TheAgent = ag; break;
-                case Wall wall: WallPane.TheWall = wall; break;
+                case Wall wall: 
+                    WallPane.TheWall = wall;
+                    WallPanelPopup.IsOpen = true;
+                    break;
                 default: break;
             }
         }
@@ -608,6 +613,11 @@ namespace ALifeUni
         private void CollisionTestPanelButton_Click(object sender, RoutedEventArgs e)
         {
             CollisionTestPopup.IsOpen = !CollisionTestPopup.IsOpen;
+        }
+
+        private void WallPanelButton_Click(object sender, RoutedEventArgs e)
+        {
+            WallPanelPopup.IsOpen = !WallPanelPopup.IsOpen;
         }
     }
 }

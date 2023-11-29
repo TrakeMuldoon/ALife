@@ -98,6 +98,16 @@ namespace ALifeUni.ALife.Scenarios
                 me.Die();
                 return;
             }
+            int roundedX = (int)(me.Shape.CentrePoint.X / 100) * 100;
+            if(roundedX > me.Statistics["MaximumX"].Value)
+            {
+                me.Statistics["MaximumX"].Value = roundedX;
+                me.Statistics["MaxXTimer"].Value = 0;
+                if(roundedX % 300 == 0)
+                {
+                    me.Reproduce();
+                }
+            }
             List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(me.Shape.BoundingBox);
             foreach(Zone z in inZones)
             {
@@ -116,16 +126,6 @@ namespace ALifeUni.ALife.Scenarios
             //Increment or Decrement end of turn values
             me.Statistics["Age"].IncreasePropertyBy(1);
             me.Statistics["MaxXTimer"].IncreasePropertyBy(1);
-            int roundedX = (int)(me.Shape.CentrePoint.X / 100) * 100;
-            if(roundedX > me.Statistics["MaximumX"].Value)
-            {
-                me.Statistics["MaximumX"].Value = roundedX;
-                me.Statistics["MaxXTimer"].Value = 0;
-                if(roundedX % 300 == 0)
-                {
-                    me.Reproduce();
-                }
-            }
         }
 
         public void CollisionBehaviour(Agent me, List<WorldObject> collisions)

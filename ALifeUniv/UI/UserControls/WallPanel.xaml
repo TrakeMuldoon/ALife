@@ -18,14 +18,17 @@
             <TextBox x:Name="WallYPos" TextChanged="WallYPos_TextChanged"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <TextBlock>Length</TextBlock>
+            <TextBlock>Length   .</TextBlock>
             <TextBox x:Name="WallLength" TextChanged="WallLength_TextChanged"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <TextBlock>Orienta</TextBlock>
+            <TextBlock>Orientation</TextBlock>
             <TextBox x:Name="WallOrientation" TextChanged="WallOrientation_TextChanged"/>
         </StackPanel>
         <Button x:Name="Copy" Click="Copy_Click">Copy</Button>
+        <Button x:Name="Create" Click="Create_Click">Create</Button>
+        <Button x:Name="Clear" Click="Clear_Click">Clear</Button>        
         <TextBlock x:Name="NewDeclaration"></TextBlock>
+        <TextBlock x:Name="Errors"></TextBlock>
     </StackPanel>
 </UserControl>

@@ -55,7 +55,8 @@ namespace ALifeUni.ALife.Scenarios
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                new StatisticInput("Age", 0, Int32.MaxValue)
+                new StatisticInput("Age", 0, Int32.MaxValue),
+                new StatisticInput("ProgressTimer", 0, Int32.MaxValue)
             };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
@@ -77,6 +78,7 @@ namespace ALifeUni.ALife.Scenarios
         public virtual void AgentUpkeep(Agent me)
         {
             me.Statistics["Age"].IncreasePropertyBy(1);
+            me.Statistics["ProgressTimer"].IncreasePropertyBy(1);
         }
 
         private Dictionary<string, HashSet<Agent>> zonesHit = new Dictionary<string, HashSet<Agent>>
@@ -90,6 +92,12 @@ namespace ALifeUni.ALife.Scenarios
 
         public virtual void EndOfTurnTriggers(Agent me)
         {
+            if(me.Statistics["ProgressTimer"].Value > 1000)
+            {
+                me.Die();
+                return;
+            }
+
             List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(me.Shape.BoundingBox);
             foreach(Zone z in inZones)
             {
@@ -105,11 +113,12 @@ namespace ALifeUni.ALife.Scenarios
                 }
 
                 zonesHit[z.Name].Add(me);
+                me.Statistics["ProgressTimer"].Value = 0;
 
                 switch(z.Name)
                 {
-                    case "Mid1": me.Reproduce(); break;
-                    case "Half": me.Reproduce(); me.Reproduce(); break;
+                    case "Mid1": break;
+                    case "Half": me.Reproduce(); break;
                     case "Mid3": me.Reproduce(); me.Reproduce(); break;
                     case "End": CarTrackMaze.VictoryBehaviour(me); break;
                 }
@@ -118,7 +127,7 @@ namespace ALifeUni.ALife.Scenarios
 
         private static void StartZoneBehaviour(Agent me)
         {
-            if(me.Statistics["Age"].Value > 100)
+            if(me.Statistics["Age"].Value > 200)
             {
                 me.Die();
             }
@@ -169,7 +178,7 @@ namespace ALifeUni.ALife.Scenarios
             int numAgents = 20;
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", startZone, endZone, ColorExtensions.GetRandomColor(), 0);
+                Agent rag = AgentFactory.CreateAgent("Agent", startZone, endZone, ColorExtensions.GetRandomColor(), 90);
             }
         }
 

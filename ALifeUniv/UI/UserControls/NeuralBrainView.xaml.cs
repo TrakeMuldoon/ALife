@@ -82,6 +82,8 @@ namespace ALifeUni.UI.UserControls
                 args.DrawingSession.FillCircle(point, 8, Colors.Moccasin);
 
                 Color neuronColour = neuron.Value > 0 ? Colors.Blue : Colors.Red;
+
+                args.DrawingSession.DrawCircle(point, 8, neuronColour);
                 neuronColour.A = (byte) (Math.Abs(neuron.Value) * 255);
                 args.DrawingSession.FillCircle(point, 8, neuronColour);
 

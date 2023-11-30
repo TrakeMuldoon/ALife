@@ -18,9 +18,9 @@ These items may be complete already. It is unclear to me as of right now.
 * [ ] Bite
 * [ ] Idle
 * [ ] Punch
-* [ ] Instant 180
+* [x] Instant 180 (Tried it, discarded it. Caused very frenetic behaviour)
 * [ ] Composite Actions (such as Veer Left)
-* [ ] 
+
 ### Properties
 * [ ] "Energy" - Actions, Inputs, nothings, could all have energy costs. 	
        This is quite a lot of work, as it would need to somehow modify all other actions. This would be very difficult to build in a generic way so it doesn't break existing scenarios.
@@ -53,9 +53,8 @@ These items may be complete already. It is unclear to me as of right now.
 * [ ] Comment Every Class and Function
 * [ ] Temperature Scenario (Low temps steal energy, high temps restore energy)
 * [ ] Rabbit Chasing Scenario (Implement WorldObjectTargetSense)
-* [x] Figure out why (with this build) run "568678228" results in an AgentNotFound exception (Turn number 40951)
-* [ ] 		Planet.World.Seed	1090033702	crashes at 		Planet.World.Turns	104192	int
-* [ ] Optimize out the Scenario RESET into a Scenario CreateAgain
+* [x] Optimize out the Scenario RESET into a Scenario CreateAgain
+* [ ] Add new Senses "Collided Left, Collided Right, Collided Back, Collided Front"
 
 
 

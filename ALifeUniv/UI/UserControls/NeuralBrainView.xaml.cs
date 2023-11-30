@@ -62,10 +62,10 @@ namespace ALifeUni.UI.UserControls
             {
                 return;
             }
-            args.DrawingSession.FillCircle(new Vector2(0, 0), 50, Colors.Green);
-            args.DrawingSession.FillCircle(new Vector2(0, canvasHeight), 50, Colors.Blue);
-            args.DrawingSession.FillCircle(new Vector2(canvasWidth, canvasHeight), 50, Colors.Yellow);
-            args.DrawingSession.FillCircle(new Vector2(canvasWidth, 0), 50, Colors.Purple);
+            args.DrawingSession.FillCircle(new Vector2(0, 0), 40, Colors.Green);
+            args.DrawingSession.FillCircle(new Vector2(0, canvasHeight), 40, Colors.Blue);
+            args.DrawingSession.FillCircle(new Vector2(canvasWidth, canvasHeight), 40, Colors.Yellow);
+            args.DrawingSession.FillCircle(new Vector2(canvasWidth, 0), 40, Colors.Purple);
 
 
             int neuronCounter = 0;

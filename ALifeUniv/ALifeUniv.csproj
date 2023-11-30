@@ -249,6 +249,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ALife\AgentPieces\Brains\BehaviourBrains\spec.txt" />
+    <Content Include="PackageAssets\AppSplash.png" />
     <Content Include="PackageAssets\splashscreen.scale-200.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

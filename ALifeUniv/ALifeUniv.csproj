@@ -100,7 +100,7 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -197,6 +197,7 @@
     <Compile Include="ALife\CustomWorldObjects\Spinner.cs" />
     <Compile Include="ALife\CustomWorldObjects\Wall.cs" />
     <Compile Include="ALife\Zone.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="UI\UserControls\CollisionTestPanel.xaml.cs">
       <DependentUpon>CollisionTestPanel.xaml</DependentUpon>
     </Compile>
@@ -229,7 +230,7 @@
     <Compile Include="ALife\Planet.cs" />
     <Compile Include="ALife\Geometry\Shapes\Circle.cs" />
     <Compile Include="ALife\Geometry\Shapes\EnumShapes.cs" />
-    <Compile Include="ALife\Geometry\ExtraMath.cs" />
+    <Compile Include="ALife\Utility\ExtraMath.cs" />
     <Compile Include="ALife\Geometry\Shapes\IHasShape.cs" />
     <Compile Include="ALife\Geometry\Shapes\IShape.cs" />
     <Compile Include="ALife\Geometry\Shapes\Sector.cs" />
@@ -293,6 +294,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers">
+      <Version>8.0.0</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
     </PackageReference>

@@ -14,6 +14,7 @@
         <Border Background="Black" BorderBrush="Moccasin" BorderThickness="5">
             <canvas:CanvasAnimatedControl x:Name="brainCanvas" Draw="brainCanvas_Draw" CreateResources="brainCanvas_CreateResources" 
                                             Tapped="brainCanvas_Tapped"
+                                            DoubleTapped="brainCanvas_DoubleTapped"
                                             PointerPressed="brainCanvas_PointerPressed"
                                             PointerMoved="brainCanvas_PointerMoved"
                                             PointerReleased="brainCanvas_PointerReleased"

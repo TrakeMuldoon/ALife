@@ -1,24 +1,18 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Brains;
+using ALifeUni.ALife.Utility;
 using Microsoft.Graphics.Canvas.Text;
+using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Shapes;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -26,10 +20,11 @@ namespace ALifeUni.UI.UserControls
 {
     public sealed partial class NeuralBrainView : UserControl
     {
-        int canvasHeight;
-        int canvasWidth;
-        const int NEURON_VIS_RADIUS = 8;
+        private int canvasHeight;
+        private int canvasWidth;
+        private const int NEURON_VIS_RADIUS = 8;
         private Dictionary<Neuron, Vector2> NodeMap;
+        private Neuron SelectedNeuron = null;
 
         public NeuralBrainView()
         {
@@ -77,16 +72,24 @@ namespace ALifeUni.UI.UserControls
 
 
             int neuronCounter = 0;
-            foreach(var (neuron, point) in NodeMap)
+            //This backup exists because there is a race condition when another agent is selected WHILE
+            // while the neural net is being drawn. Keeping the original brain temporarily in context solves the error.
+            Dictionary<Neuron, Vector2> backup = NodeMap;
+            foreach(var (neuron, point) in backup)
             {
+
                 foreach(Dendrite den in neuron.UpstreamDendrites)
                 {
                     Color dendriteColour = den.CurrentValue > 0 ? Colors.Gray : Colors.Purple;
                     dendriteColour = den.CurrentValue > 0.5 ? Colors.Black : dendriteColour;
-                    Vector2 targetPoint = NodeMap[den.TargetNeuron];
+                    Vector2 targetPoint = backup[den.TargetNeuron];
                     args.DrawingSession.DrawLine(point, targetPoint, dendriteColour);
                 }
 
+                if(SelectedNeuron == neuron)
+                {
+                    args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS + 4, Colors.Orange);
+                }
                 args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS, Colors.Moccasin);
 
                 Color neuronColour = neuron.Value > 0 ? Colors.Blue : Colors.Red;
@@ -107,30 +110,37 @@ namespace ALifeUni.UI.UserControls
             }
         }
 
+        int forgiveness = 0;
         private void brainCanvas_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            Point tapPoint = e.GetPosition(brainCanvas);
+            foreach(var (neuron, point) in NodeMap)
+            {
+                double dist = ExtraMath.DistanceBetweenTwoPoints(tapPoint, new Point(point.X, point.Y));
+                if(dist < NEURON_VIS_RADIUS)
+                {
+                    SelectedNeuron = neuron;
+                    forgiveness = 0;
+                    return;
+                }
+            }
+            if(++forgiveness >= 2)
+            {
+                forgiveness = 0;
+                SelectedNeuron = null;
+            }
         }
 
-        private void brainCanvas_PointerPressed(object sender, PointerRoutedEventArgs e)
+        private void brainCanvas_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-
+            forgiveness = 0;
+            SelectedNeuron = null;
         }
 
-        private void brainCanvas_PointerMoved(object sender, PointerRoutedEventArgs e)
-        {
-
-        }
-
-        private void brainCanvas_PointerReleased(object sender, PointerRoutedEventArgs e)
-        {
-
-        }
-
-        private void brainCanvas_CreateResources(Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
-        {
-
-        }
+        private void brainCanvas_PointerPressed(object sender, PointerRoutedEventArgs e) { }
+        private void brainCanvas_PointerMoved(object sender, PointerRoutedEventArgs e) { }
+        private void brainCanvas_PointerReleased(object sender, PointerRoutedEventArgs e) { }
+        private void brainCanvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args) { }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {

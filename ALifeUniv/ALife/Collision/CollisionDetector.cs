@@ -245,6 +245,7 @@ namespace ALifeUni.ALife
             return false;
         }
 
+        //TODO: Move Math to "ExtraMath"
         private static Boolean IsValueBetweenValues(double eval, double a, double b)
         {
             if(a < b)
@@ -315,13 +316,13 @@ namespace ALifeUni.ALife
             double deltaX = p2.X - p1.X;
             double deltaY = p2.Y - p1.Y;
 
-            double A = deltaX * deltaX + deltaY * deltaY;
+            double A = (deltaX * deltaX) + (deltaY * deltaY);
             double B = 2 * (deltaX * (p1.X - cp.X) + deltaY * (p1.Y - cp.Y));
             double C = (p1.X - cp.X) * (p1.X - cp.X)
                         + (p1.Y - cp.Y) * (p1.Y - cp.Y)
-                        - radius * radius;
+                        - (radius * radius);
 
-            double determinant = B * B - 4 * A * C;
+            double determinant = (B * B) - (4 * A * C);
             List<Point> intersections = new List<Point>();
             if((A <= 0.0000001) || (determinant < 0))
             {
@@ -354,6 +355,7 @@ namespace ALifeUni.ALife
             }
         }
 
+        //TODO: Move Math to "ExtraMath"
         private static Boolean IsPointOnLine(Point pt, Point line1, Point line2)
         {
             //TODO: Should these be renamed line1 => lineStart, and line2 => lineEnd?
@@ -371,6 +373,7 @@ namespace ALifeUni.ALife
             double ptLine2SQ = (ptLine2X * ptLine2X) + (ptLine2Y * ptLine2Y);
 
             //TODO: This uses 3 sqrts. How often is this function used?
+            //TODO: 12/01/2023 This should be mathematically simple to just remove the squareroots, and make the diff factor bigger
             double diff = Math.Sqrt(lenSQ) - (Math.Sqrt(ptLine1SQ) + Math.Sqrt(ptLine2SQ));
             return Math.Round(diff, 3) == 0;
         }

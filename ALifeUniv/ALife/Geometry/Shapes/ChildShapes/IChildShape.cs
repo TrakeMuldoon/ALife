@@ -1,4 +1,4 @@
-﻿using ALifeUni.ALife.Utility;
+﻿using ALifeUni.ALife.Geometry;
 
 namespace ALifeUni.ALife.Shapes
 {

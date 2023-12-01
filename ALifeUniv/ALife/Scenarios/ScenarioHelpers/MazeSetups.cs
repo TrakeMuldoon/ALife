@@ -1,9 +1,9 @@
 ﻿using ALifeUni.ALife.CustomWorldObjects;
-using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.Geometry;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;
-using Windows.UI;
+
 
 namespace ALifeUni.ALife.Scenarios.ScenarioHelpers
 {

@@ -93,7 +93,7 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <NoWarn>;2008</NoWarn>
+    <NoWarn>;2008;CA1065</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
@@ -197,7 +197,6 @@
     <Compile Include="ALife\CustomWorldObjects\Spinner.cs" />
     <Compile Include="ALife\CustomWorldObjects\Wall.cs" />
     <Compile Include="ALife\Zone.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="UI\UserControls\CollisionTestPanel.xaml.cs">
       <DependentUpon>CollisionTestPanel.xaml</DependentUpon>
     </Compile>
@@ -225,7 +224,7 @@
     <Compile Include="ALife\AgentPieces\Senses\SenseInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\GenericInputs\AnyInput.cs" />
     <Compile Include="ALife\Geometry\Angle.cs" />
-    <Compile Include="ALife\Geometry\BoundingBox.cs" />
+    <Compile Include="ALife\Geometry\Shapes\BoundingBox.cs" />
     <Compile Include="ALife\ReferenceValues.cs" />
     <Compile Include="ALife\Planet.cs" />
     <Compile Include="ALife\Geometry\Shapes\Circle.cs" />

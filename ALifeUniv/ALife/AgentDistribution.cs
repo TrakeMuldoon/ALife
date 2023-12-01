@@ -1,4 +1,5 @@
 ﻿using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Utility;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace ALifeUni.ALife
         public abstract Point NextAgentCentre(double BBLength, double BBHeight);
     }
 
-    public struct StraightLineDistributorConfig
+    public readonly struct StraightLineDistributorConfig
     {
         readonly public Angle Direction;
         readonly public int LineDepth;
@@ -118,7 +119,7 @@ namespace ALifeUni.ALife
             }
         }
 
-        public double CalculateNextPos(int counter, double separationValue, double modValue, double deltaStartValue, double startValue)
+        public static double CalculateNextPos(int counter, double separationValue, double modValue, double deltaStartValue, double startValue)
         {
             double fullDelta = (counter * separationValue);
             double modDelta = fullDelta % modValue;

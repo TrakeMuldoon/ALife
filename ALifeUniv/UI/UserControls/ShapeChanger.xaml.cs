@@ -1,7 +1,7 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.CustomWorldObjects;
 using ALifeUni.ALife.Shapes;
-using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.Geometry;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using Windows.Foundation;

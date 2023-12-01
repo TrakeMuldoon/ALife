@@ -28,6 +28,7 @@ namespace ALifeUni.UI.UserControls
     {
         int canvasHeight;
         int canvasWidth;
+        const int NEURON_VIS_RADIUS = 8;
         private Dictionary<Neuron, Vector2> NodeMap;
 
         public NeuralBrainView()
@@ -60,12 +61,19 @@ namespace ALifeUni.UI.UserControls
         {
             if(brain == null)
             {
+                //TODO: Create Error Message Somewhere
                 return;
             }
-            args.DrawingSession.FillCircle(new Vector2(0, 0), 40, Colors.Green);
-            args.DrawingSession.FillCircle(new Vector2(0, canvasHeight), 40, Colors.Blue);
-            args.DrawingSession.FillCircle(new Vector2(canvasWidth, canvasHeight), 40, Colors.Yellow);
-            args.DrawingSession.FillCircle(new Vector2(canvasWidth, 0), 40, Colors.Purple);
+            if(!(brain is NeuralNetworkBrain))
+            {
+                //TODO: Create Error Message Somewhere
+                return;
+            }
+
+            args.DrawingSession.FillCircle(new Vector2(0, 0), 30, Colors.Green);
+            args.DrawingSession.FillCircle(new Vector2(0, canvasHeight), 30, Colors.Blue);
+            args.DrawingSession.FillCircle(new Vector2(canvasWidth, canvasHeight), 30, Colors.Yellow);
+            args.DrawingSession.FillCircle(new Vector2(canvasWidth, 0), 30, Colors.Purple);
 
 
             int neuronCounter = 0;
@@ -79,13 +87,13 @@ namespace ALifeUni.UI.UserControls
                     args.DrawingSession.DrawLine(point, targetPoint, dendriteColour);
                 }
 
-                args.DrawingSession.FillCircle(point, 8, Colors.Moccasin);
+                args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS, Colors.Moccasin);
 
                 Color neuronColour = neuron.Value > 0 ? Colors.Blue : Colors.Red;
 
-                args.DrawingSession.DrawCircle(point, 8, neuronColour);
+                args.DrawingSession.DrawCircle(point, NEURON_VIS_RADIUS, neuronColour);
                 neuronColour.A = (byte) (Math.Abs(neuron.Value) * 255);
-                args.DrawingSession.FillCircle(point, 8, neuronColour);
+                args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS, neuronColour);
 
                 CanvasTextFormat ctf = new CanvasTextFormat();
                 ctf.FontSize = 10;

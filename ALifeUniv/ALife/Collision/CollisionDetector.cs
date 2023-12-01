@@ -60,6 +60,8 @@ namespace ALifeUni.ALife
         }
 
 
+        //TODO: Mark the IndividualShapeCollisions as Private, and have one external marshaller
+
         public static List<IHasShape> FineGrainedCollisionDetection(IEnumerable<IHasShape> toCollide, IShape me)
         {
             List<IHasShape> collisions = new List<IHasShape>();
@@ -358,6 +360,11 @@ namespace ALifeUni.ALife
         //TODO: Move Math to "ExtraMath"
         private static Boolean IsPointOnLine(Point pt, Point line1, Point line2)
         {
+            //This function is determining if P is on a line segment by determining
+            // if p is ON the line segment, then distance of 1 -> p, plus p -> 2 will be equal to 1 -> 2
+            // if the sum is greater, then p is not on the line.
+            // if the sum is less then WHAT? YOU BROKE MATH.
+
             //TODO: Should these be renamed line1 => lineStart, and line2 => lineEnd?
             double lineX = line1.X - line2.X;
             double lineY = line1.Y - line2.Y;
@@ -368,14 +375,14 @@ namespace ALifeUni.ALife
             double ptLine2X = pt.X - line2.X;
             double ptLine2Y = pt.Y - line2.Y;
 
-            double lenSQ = (lineX * lineX) + (lineY * lineY);
-            double ptLine1SQ = (ptLine1X * ptLine1X) + (ptLine1Y * ptLine1Y);
-            double ptLine2SQ = (ptLine2X * ptLine2X) + (ptLine2Y * ptLine2Y);
+            double lenSQ = (lineX * lineX) + (lineY * lineY); //(1,2)
+            double ptLine1SQ = (ptLine1X * ptLine1X) + (ptLine1Y * ptLine1Y); //(1,p)
+            double ptLine2SQ = (ptLine2X * ptLine2X) + (ptLine2Y * ptLine2Y); //(2,p)
 
             //TODO: This uses 3 sqrts. How often is this function used?
             //TODO: 12/01/2023 This should be mathematically simple to just remove the squareroots, and make the diff factor bigger
             double diff = Math.Sqrt(lenSQ) - (Math.Sqrt(ptLine1SQ) + Math.Sqrt(ptLine2SQ));
-            return Math.Round(diff, 3) == 0;
+            return Math.Round(diff, 3) == 0; 
         }
 
         private static Point ClosestPoint_PointToLineSegment(Point cCP, Point p1, Point p2)

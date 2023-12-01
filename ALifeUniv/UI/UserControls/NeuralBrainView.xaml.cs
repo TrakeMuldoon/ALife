@@ -43,11 +43,14 @@ namespace ALifeUni.UI.UserControls
             {
                 theAgent = value;
                 AgentName.Text = "No Agent Selected";
+                NodeMap = null;
+                NeuronToDownstreamDendrites = null;
                 if(theAgent != null)
                 {
                     AgentName.Text = theAgent.IndividualLabel;
                     brain = theAgent.MyBrain as NeuralNetworkBrain;
-                    BuildNodeLocationDictionary();
+                    InitializeNodeLocationDictionary();
+                    InitializeDownstreamDendriteMap();
                 }
             }
         }
@@ -70,44 +73,137 @@ namespace ALifeUni.UI.UserControls
             args.DrawingSession.FillCircle(new Vector2(canvasWidth, canvasHeight), 30, Colors.Yellow);
             args.DrawingSession.FillCircle(new Vector2(canvasWidth, 0), 30, Colors.Purple);
 
+            if(SelectedNeuron != null)
+            {
+                DrawWithSpecialNeuron(args);
+            }
+            else
+            {
+                DrawAllNeurons(args);
+            }
 
+        }
+
+        private void DrawAllNeurons(CanvasAnimatedDrawEventArgs args)
+        {
+            //This is just used to stagger the neuron names
             int neuronCounter = 0;
+
             //This backup exists because there is a race condition when another agent is selected WHILE
             // while the neural net is being drawn. Keeping the original brain temporarily in context solves the error.
             Dictionary<Neuron, Vector2> backup = NodeMap;
             foreach(var (neuron, point) in backup)
             {
+                DrawDendrites(args, backup, neuron, point);
 
-                foreach(Dendrite den in neuron.UpstreamDendrites)
-                {
-                    Color dendriteColour = den.CurrentValue > 0 ? Colors.Gray : Colors.Purple;
-                    dendriteColour = den.CurrentValue > 0.5 ? Colors.Black : dendriteColour;
-                    Vector2 targetPoint = backup[den.TargetNeuron];
-                    args.DrawingSession.DrawLine(point, targetPoint, dendriteColour);
-                }
-
-                if(SelectedNeuron == neuron)
-                {
-                    args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS + 4, Colors.Orange);
-                }
+                //Draw background to cover the Dendrite ends
                 args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS, Colors.Moccasin);
 
+                //Select colour according to value
                 Color neuronColour = neuron.Value > 0 ? Colors.Blue : Colors.Red;
 
+                //Draw Neuron Outline 
                 args.DrawingSession.DrawCircle(point, NEURON_VIS_RADIUS, neuronColour);
-                neuronColour.A = (byte) (Math.Abs(neuron.Value) * 255);
+
+                //Alpha according to value
+                neuronColour.A = (byte)(Math.Abs(neuron.Value) * 255);
                 args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS, neuronColour);
 
-                CanvasTextFormat ctf = new CanvasTextFormat();
-                ctf.FontSize = 10;
+                //Draw name of Neuron beneath it.
+                CanvasTextFormat ctf = new CanvasTextFormat() { FontSize = 10 };
 
-                //gross unreadable temporary code;
+                //This code staggers the names so they don't overlap.
                 float textY = ++neuronCounter % 2 == 0 ? point.Y + 10 : point.Y + 20;
                 float textX = point.X - 13;
-
                 Vector2 textPoint = new Vector2(textX, textY);
+                
+                //Draw the text
                 args.DrawingSession.DrawText(neuron.Name, textPoint, Colors.Black, ctf);
             }
+        }
+
+        private void DrawWithSpecialNeuron(CanvasAnimatedDrawEventArgs args)
+        {
+            //This is just used to stagger the neuron names
+            int neuronCounter = 0;
+
+            //This backup exists because there is a race condition when another agent is selected WHILE
+            // while the neural net is being drawn. Keeping the original brain temporarily in context solves the error.
+            Dictionary<Neuron, Vector2> backup = NodeMap;
+
+            DrawDownstreamDendrites(args, SelectedNeuron, backup);
+
+            foreach(var (neuron, point) in backup)
+            {
+                if(SelectedNeuron == neuron)
+                {
+                    DrawDendrites(args, backup, neuron, point);
+                }
+
+                //Draw background to cover the Dendrite ends
+                args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS, Colors.Moccasin);
+
+                //Select colour according to value
+                Color neuronColour = neuron.Value > 0 ? Colors.Blue : Colors.Red;
+
+                //Draw Neuron Outline 
+                args.DrawingSession.DrawCircle(point, NEURON_VIS_RADIUS, neuronColour);
+
+                //Alpha according to value
+                neuronColour.A = (byte)(Math.Abs(neuron.Value) * 255);
+                args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS, neuronColour);
+
+                //Draw name of Neuron beneath it.
+                CanvasTextFormat ctf = new CanvasTextFormat() { FontSize = 10 };
+
+                //This code staggers the names so they don't overlap.
+                float textY = ++neuronCounter % 2 == 0 ? point.Y + 10 : point.Y + 20;
+                float textX = point.X - 13;
+                Vector2 textPoint = new Vector2(textX, textY);
+
+                //Draw the text
+                args.DrawingSession.DrawText(neuron.Name, textPoint, Colors.Black, ctf);
+            }
+        }
+
+        private void DrawDownstreamDendrites(CanvasAnimatedDrawEventArgs args, Neuron selectedNeuron, Dictionary<Neuron, Vector2> nodemap)
+        {
+            Vector2 homePoint = nodemap[selectedNeuron];
+            foreach(var (den, parentNeuron) in NeuronToDownstreamDendrites[selectedNeuron])
+            {
+                Vector2 targetPoint = nodemap[parentNeuron];
+                Color dendriteColour = GetDendriteColor(den);
+                args.DrawingSession.DrawLine(homePoint, targetPoint, dendriteColour);
+            } 
+        }
+
+        private static void DrawDendrites(CanvasAnimatedDrawEventArgs args, Dictionary<Neuron, Vector2> nodemap, Neuron neuron, Vector2 point)
+        {
+            foreach(Dendrite den in neuron.UpstreamDendrites)
+            {
+                Vector2 targetPoint = nodemap[den.TargetNeuron];
+                Color dendriteColour = GetDendriteColor(den);
+                args.DrawingSession.DrawLine(point, targetPoint, dendriteColour);
+            }
+        }
+
+        private static Color GetDendriteColor(Dendrite den)
+        {
+            Color dendriteColour = Colors.Black;
+            if(den.CurrentValue < -0.5)
+            {
+                dendriteColour = Colors.Purple;
+            }
+            else if(den.CurrentValue < 0)
+            {
+                dendriteColour = Colors.Salmon;
+            }
+            else if(den.CurrentValue < 0.5)
+            {
+                dendriteColour = Colors.Gray;
+            }
+            //Else > 0.5 = default black;
+            return dendriteColour;
         }
 
         int forgiveness = 0;
@@ -169,7 +265,7 @@ namespace ALifeUni.UI.UserControls
             return FindFirstParentOfType<T>(element.Parent as FrameworkElement);
         }
 
-        private void BuildNodeLocationDictionary()
+        private void InitializeNodeLocationDictionary()
         {
             NodeMap = new Dictionary<Neuron, Vector2>();
             int heightSpacer = (int)(canvasHeight / (brain.Layers.Count));
@@ -184,6 +280,29 @@ namespace ALifeUni.UI.UserControls
                     int y = (int)(heightSpacer * (i + 0.5));
                     Vector2 neuronCentre = new Vector2(x, y);
                     NodeMap.Add(nn, neuronCentre);
+                }
+            }
+        }
+
+
+        private Dictionary<Neuron, List<(Dendrite, Neuron)>> NeuronToDownstreamDendrites;
+        private void InitializeDownstreamDendriteMap()
+        {
+            NeuronToDownstreamDendrites = new Dictionary<Neuron, List<(Dendrite, Neuron)>>();
+
+            foreach(Layer lay in brain.Layers)
+            {
+                foreach(Neuron n in lay.Neurons)
+                {
+                    foreach(Dendrite den in n.UpstreamDendrites)
+                    {
+                        Neuron targetNeuron = den.TargetNeuron;
+                        if(!NeuronToDownstreamDendrites.ContainsKey(targetNeuron))
+                        {
+                            NeuronToDownstreamDendrites.Add(targetNeuron, new List<(Dendrite, Neuron)>());
+                        }
+                        NeuronToDownstreamDendrites[targetNeuron].Add((den, n));
+                    }
                 }
             }
         }

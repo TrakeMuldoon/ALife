@@ -41,7 +41,7 @@
         <TextBlock x:Name="BrainDisplay" />
         <Button x:Name="NeuralNetworkPopupButton" Visibility="Collapsed" Click="NeuralNetworkPopupButton_Click">Brain Viewer</Button>
         <Popup x:Name="NeuralNetworkBrainViewer" IsOpen="False"
-               HorizontalOffset="-150"
+               HorizontalOffset="-75"
                VerticalOffset="-550">
             <local:NeuralBrainView x:Name="AgentNeuralBrain"></local:NeuralBrainView>
         </Popup>

@@ -73,14 +73,23 @@ namespace ALifeUni.UI.UserControls
             args.DrawingSession.FillCircle(new Vector2(canvasWidth, canvasHeight), 30, Colors.Yellow);
             args.DrawingSession.FillCircle(new Vector2(canvasWidth, 0), 30, Colors.Purple);
 
-            if(SelectedNeuron != null)
+            try
             {
-                DrawWithSpecialNeuron(args);
+                if(SelectedNeuron != null)
+                {
+                    DrawWithSpecialNeuron(args);
+                }
+                else
+                {
+                    DrawAllNeurons(args);
+                }
             }
-            else
+            catch(Exception)
             {
-                DrawAllNeurons(args);
+                //Swallow. It's just a drawing error. We'll get it right next time.
+                //TODO: Determine why NullRefs happen when we switch SpecialNodes. I suspect race condition... but where?
             }
+ 
 
         }
 
@@ -130,20 +139,32 @@ namespace ALifeUni.UI.UserControls
             int denCount = 0;
             foreach(Dendrite den in neuron.UpstreamDendrites)
             {
-                bool drawTextUp = ++denCount % 2 == 0;
+                bool drawTextUp = denCount++ % 2 == 0;
                 Vector2 UpstreamCentrePoint = backup[den.TargetNeuron];
 
-                float textY = drawTextUp ? UpstreamCentrePoint.Y - 30 : UpstreamCentrePoint.Y - 50;
                 float textX = UpstreamCentrePoint.X - 13;
+                float textY = drawTextUp ? UpstreamCentrePoint.Y - 30 : UpstreamCentrePoint.Y - 50;
                 Vector2 textPoint = new Vector2(textX, textY);
                 CanvasTextFormat ctf = new CanvasTextFormat() { FontSize = 12 };
 
-                Color somecol = drawTextUp ? Colors.Aquamarine : Colors.Green;
-                args.DrawingSession.DrawText(den.TargetNeuron.Value.ToString("0.00"), textPoint, Colors.Black, ctf);
-                textPoint.X += 1;
-                textPoint.Y += 1;
-                args.DrawingSession.DrawText(den.TargetNeuron.Value.ToString("0.00"), textPoint, somecol, ctf);
+                DrawBackedText(args, den.TargetNeuron.Value.ToString("0.00"), textPoint, ctf);
+
+                //Move text to below the Neuron, for the DenValue
+                textPoint.X += 5;
+                textPoint.Y += 70;
+                DrawBackedText(args, den.CurrentValue.ToString("0.00"), textPoint, ctf);
             }
+        }
+
+        private static Vector2 DrawBackedText(CanvasAnimatedDrawEventArgs args, string text, Vector2 textPoint, CanvasTextFormat ctf)
+        {
+            Vector2 textRoot  = new Vector2(textPoint.X, textPoint.Y);
+
+            args.DrawingSession.DrawText(text, textRoot, Colors.Black, ctf);
+            textRoot.X += 1;
+            textRoot.Y += 1;
+            args.DrawingSession.DrawText(text, textRoot, Colors.Green, ctf);
+            return textPoint;
         }
 
         private static void DrawNeuron(CanvasAnimatedDrawEventArgs args, bool textHigh, Neuron neuron, Vector2 point)
@@ -165,7 +186,7 @@ namespace ALifeUni.UI.UserControls
             CanvasTextFormat ctf = new CanvasTextFormat() { FontSize = 10 };
 
             //This code staggers the names so they don't overlap.
-            float textY = textHigh ? point.Y + 10 : point.Y + 20;
+            float textY = textHigh ? point.Y + 10 : point.Y + 30;
             float textX = point.X - 13;
             Vector2 textPoint = new Vector2(textX, textY);
 

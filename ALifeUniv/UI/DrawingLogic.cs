@@ -1,5 +1,6 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Utility;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Geometry;

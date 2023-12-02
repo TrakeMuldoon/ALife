@@ -216,6 +216,7 @@ namespace ALifeUni.ALife.Brains
                 lay.Neurons.ForEach((nn) => nn.GatherValue());
             }
 
+            //This applies the neuron value to the underlying Action
             foreach(ActionNeuron an in actions.Neurons)
             {
                 an.ApplyValue();

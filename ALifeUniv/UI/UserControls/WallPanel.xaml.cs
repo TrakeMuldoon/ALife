@@ -1,10 +1,8 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.CustomWorldObjects;
 using ALifeUni.ALife.Shapes;
-using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.Geometry;
 using System;
-using System.ComponentModel;
-using Windows.ApplicationModel.Calls;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.UI.Xaml;

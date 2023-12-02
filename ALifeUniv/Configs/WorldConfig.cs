@@ -3,6 +3,7 @@
  * It remains because it might represent something of value someday
  * And it reflects a time when I was very thoroughly thinking about the design of the inheritance tree
  * */
+using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Utility;
 using System;
 using System.Collections.Generic;

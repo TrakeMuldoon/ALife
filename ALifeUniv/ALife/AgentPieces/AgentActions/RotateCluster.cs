@@ -1,5 +1,5 @@
 ﻿using ALifeUni.ALife.Shapes;
-using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.Geometry;
 using System.Collections.Generic;
 
 namespace ALifeUni.ALife
@@ -56,7 +56,7 @@ namespace ALifeUni.ALife
             //    netTurn = netRightTurnPercent * MAXIMUM_TURN_DEGREES;
             //}
 
-            netTurn = netRightTurnPercent * 70; //TODO: Abstract this into a config or the scenario
+            netTurn = netRightTurnPercent * MAXIMUM_TURN_DEGREES; //TODO: Abstract this into a config or the scenario
 
             Angle myOrientation = self.Shape.Orientation;
             myOrientation.Degrees += netTurn;

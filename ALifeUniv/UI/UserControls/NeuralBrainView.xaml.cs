@@ -96,29 +96,7 @@ namespace ALifeUni.UI.UserControls
             {
                 DrawDendrites(args, backup, neuron, point);
 
-                //Draw background to cover the Dendrite ends
-                args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS, Colors.Moccasin);
-
-                //Select colour according to value
-                Color neuronColour = neuron.Value > 0 ? Colors.Blue : Colors.Red;
-
-                //Draw Neuron Outline 
-                args.DrawingSession.DrawCircle(point, NEURON_VIS_RADIUS, neuronColour);
-
-                //Alpha according to value
-                neuronColour.A = (byte)(Math.Abs(neuron.Value) * 255);
-                args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS, neuronColour);
-
-                //Draw name of Neuron beneath it.
-                CanvasTextFormat ctf = new CanvasTextFormat() { FontSize = 10 };
-
-                //This code staggers the names so they don't overlap.
-                float textY = ++neuronCounter % 2 == 0 ? point.Y + 10 : point.Y + 20;
-                float textX = point.X - 13;
-                Vector2 textPoint = new Vector2(textX, textY);
-                
-                //Draw the text
-                args.DrawingSession.DrawText(neuron.Name, textPoint, Colors.Black, ctf);
+                DrawNeuron(args, ++neuronCounter % 2 == 0, neuron, point);
             }
         }
 
@@ -135,35 +113,64 @@ namespace ALifeUni.UI.UserControls
 
             foreach(var (neuron, point) in backup)
             {
+                bool drawTextUp = ++neuronCounter % 2 == 0;
+
                 if(SelectedNeuron == neuron)
                 {
                     DrawDendrites(args, backup, neuron, point);
+                    DrawUpstreamValues(args, backup, neuron);
                 }
 
-                //Draw background to cover the Dendrite ends
-                args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS, Colors.Moccasin);
-
-                //Select colour according to value
-                Color neuronColour = neuron.Value > 0 ? Colors.Blue : Colors.Red;
-
-                //Draw Neuron Outline 
-                args.DrawingSession.DrawCircle(point, NEURON_VIS_RADIUS, neuronColour);
-
-                //Alpha according to value
-                neuronColour.A = (byte)(Math.Abs(neuron.Value) * 255);
-                args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS, neuronColour);
-
-                //Draw name of Neuron beneath it.
-                CanvasTextFormat ctf = new CanvasTextFormat() { FontSize = 10 };
-
-                //This code staggers the names so they don't overlap.
-                float textY = ++neuronCounter % 2 == 0 ? point.Y + 10 : point.Y + 20;
-                float textX = point.X - 13;
-                Vector2 textPoint = new Vector2(textX, textY);
-
-                //Draw the text
-                args.DrawingSession.DrawText(neuron.Name, textPoint, Colors.Black, ctf);
+                DrawNeuron(args, drawTextUp, neuron, point);
             }
+        }
+
+        private static void DrawUpstreamValues(CanvasAnimatedDrawEventArgs args, Dictionary<Neuron, Vector2> backup, Neuron neuron)
+        {
+            int denCount = 0;
+            foreach(Dendrite den in neuron.UpstreamDendrites)
+            {
+                bool drawTextUp = ++denCount % 2 == 0;
+                Vector2 UpstreamCentrePoint = backup[den.TargetNeuron];
+
+                float textY = drawTextUp ? UpstreamCentrePoint.Y - 30 : UpstreamCentrePoint.Y - 50;
+                float textX = UpstreamCentrePoint.X - 13;
+                Vector2 textPoint = new Vector2(textX, textY);
+                CanvasTextFormat ctf = new CanvasTextFormat() { FontSize = 12 };
+
+                Color somecol = drawTextUp ? Colors.Aquamarine : Colors.Green;
+                args.DrawingSession.DrawText(den.TargetNeuron.Value.ToString("0.00"), textPoint, Colors.Black, ctf);
+                textPoint.X += 1;
+                textPoint.Y += 1;
+                args.DrawingSession.DrawText(den.TargetNeuron.Value.ToString("0.00"), textPoint, somecol, ctf);
+            }
+        }
+
+        private static void DrawNeuron(CanvasAnimatedDrawEventArgs args, bool textHigh, Neuron neuron, Vector2 point)
+        {
+            //Draw background to cover the Dendrite ends
+            args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS, Colors.Moccasin);
+
+            //Select colour according to value
+            Color neuronColour = neuron.Value > 0 ? Colors.Blue : Colors.Red;
+
+            //Draw Neuron Outline 
+            args.DrawingSession.DrawCircle(point, NEURON_VIS_RADIUS, neuronColour);
+
+            //Alpha according to value
+            neuronColour.A = (byte)(Math.Abs(neuron.Value) * 255);
+            args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS, neuronColour);
+
+            //Draw name of Neuron beneath it.
+            CanvasTextFormat ctf = new CanvasTextFormat() { FontSize = 10 };
+
+            //This code staggers the names so they don't overlap.
+            float textY = textHigh ? point.Y + 10 : point.Y + 20;
+            float textX = point.X - 13;
+            Vector2 textPoint = new Vector2(textX, textY);
+
+            //Draw the text
+            args.DrawingSession.DrawText(neuron.Name, textPoint, Colors.Black, ctf);
         }
 
         private void DrawDownstreamDendrites(CanvasAnimatedDrawEventArgs args, Neuron selectedNeuron, Dictionary<Neuron, Vector2> nodemap)

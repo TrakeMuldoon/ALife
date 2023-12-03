@@ -32,7 +32,6 @@ namespace ALifeUni.ALife
                         [ShapesEnum.Sector] = new Func<IShape, IShape, bool>((wo1, wo2) => throw new NotImplementedException("AAR -> SEC not implemented")),
                         [ShapesEnum.Circle] = new Func<IShape, IShape, bool>((wo1, wo2) => throw new NotImplementedException("AAR -> CIR not implemented"))
                     });
-
             ddf.Add(ShapesEnum.Rectangle
                     , new Dictionary<ShapesEnum, Func<IShape, IShape, Boolean>>
                     {
@@ -364,7 +363,6 @@ namespace ALifeUni.ALife
             //This function is determining if P is on a line segment by determining
             // if p is ON the line segment, then distance of 1 -> p, plus p -> 2 will be equal to 1 -> 2
             // if the sum is greater, then p is not on the line.
-            // if the sum is less then WHAT? YOU BROKE MATH.
 
             //TODO: Should these be renamed line1 => lineStart, and line2 => lineEnd?
             double lineX = line1.X - line2.X;

@@ -33,8 +33,8 @@ namespace ALifeUni.UI
         public static List<LayerUISettings> GetSettings()
         {
             List<LayerUISettings> settingsList = new List<LayerUISettings>();
-            settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelZone));
-            settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelPhysical, true));
+            settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelZone, true, false, false, false, false));
+            settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelPhysical, true, true, false, true, false));
             settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelSound));
             settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelScent));
             settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelDead));

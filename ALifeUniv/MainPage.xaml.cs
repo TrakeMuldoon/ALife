@@ -51,8 +51,6 @@ namespace ALifeUni
             //Planet.CreateWorld(new FieldCrossingLowReproScenario());
             Planet.CreateWorld(new FieldCrossingWallsScenario());
 
-
-
             animCanvas.ClearColor = Colors.NavajoWhite;
             animCanvas.Height = Planet.World.Scenario.WorldHeight;
             animCanvas.Width = Planet.World.Scenario.WorldWidth;

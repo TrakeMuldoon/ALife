@@ -179,67 +179,30 @@ namespace ALifeUni.ALife.Scenarios
 
         public virtual bool FixedWidthHeight { get { return false; } }
 
-        protected struct AgentZoneSpec
-        {
-            public Zone StartZone;
-            public Zone TargetZone;
-            public Color AgentColor;
-            public int StartOrientation;
-            public AgentZoneSpec(Zone start, Zone target, Color color, int ori)
-            {
-                StartZone = start;
-                TargetZone = target;
-                AgentColor = color;
-                StartOrientation = ori;
-            }
-        }
+
 
         protected Dictionary<Zone, AgentZoneSpec> AgentZoneSpecs = new Dictionary<Zone, AgentZoneSpec>();
 
         public virtual void PlanetSetup()
         {
+            int width = Planet.World.WorldWidth;
+            int height = Planet.World.WorldHeight;
 
-            Planet instance = Planet.World;
-            double height = instance.WorldHeight;
-            double width = instance.WorldWidth;
-
-            Zone red = new Zone("Red(->Blue)", "Random", Colors.Red, new Point(0, 0), 50, height);
-            Zone blue = new Zone("Blue(->Red)", "Random", Colors.Blue, new Point(width - 50, 0), 50, height);
-            red.OppositeZone = blue;
-            red.OrientationDegrees = 0;
-            blue.OppositeZone = red;
-            blue.OrientationDegrees = 180;
-
-            Zone green = new Zone("Green(->Orange)", "Random", Colors.Green, new Point(0, 0), width, 40);
-            Zone orange = new Zone("Orange(->Green)", "Random", Colors.Orange, new Point(0, height - 40), width, 40);
-            green.OppositeZone = orange;
-            green.OrientationDegrees = 90;
-            orange.OppositeZone = green;
-            orange.OrientationDegrees = 270;
-
-            instance.AddZone(red);
-            instance.AddZone(blue);
-            instance.AddZone(green);
-            instance.AddZone(orange);
-
-            AgentZoneSpecs.Add(red, new AgentZoneSpec(red, blue, Colors.Blue, 0));
-            AgentZoneSpecs.Add(green, new AgentZoneSpec(green, orange, Colors.Orange, 90));
-            AgentZoneSpecs.Add(blue, new AgentZoneSpec(blue, red, Colors.Red, 180));
-            AgentZoneSpecs.Add(orange, new AgentZoneSpec(orange, green, Colors.Green, 270));
+            AgentZoneSpecs = FieldCrossingHelpers.InsertOpposedZonesAndReturnZoneSpec();
 
             int numAgents = 50;
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = CreateZonedAgent(AgentZoneSpecs[red]);
-                Agent bag = CreateZonedAgent(AgentZoneSpecs[blue]);
-                Agent gag = CreateZonedAgent(AgentZoneSpecs[green]);
-                Agent oag = CreateZonedAgent(AgentZoneSpecs[orange]);
+                foreach(Zone z in AgentZoneSpecs.Keys)
+                {
+                    CreateZonedAgent(AgentZoneSpecs[z]);
+                }
             }
 
             Point rockCP = new Point((width / 2) + (width / 3), height / 2);
             Rectangle rec = new Rectangle(rockCP, 40, 20, Colors.Black);
             FallingRock fr = new FallingRock(rockCP, rec, Colors.Black);
-            instance.AddObjectToWorld(fr);
+            Planet.World.AddObjectToWorld(fr);
         }
 
         public void GlobalEndOfTurnActions()

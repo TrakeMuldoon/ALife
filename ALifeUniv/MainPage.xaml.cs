@@ -43,13 +43,14 @@ namespace ALifeUni
             /* ***********************************
              * Set Scenario Here
              * ***********************************/
-            //Planet.CreateWorld(new FieldCrossingScenario());
             //Planet.CreateWorld(new MazeScenario());
-            //Planet.CreateWorld(new FieldCrossingLowReproScenario());
+            //Planet.CreateWorld(new GenerationalMazeScenario());
             //Planet.CreateWorld(new DripFeedMaze());
-           //Planet.CreateWorld(new FieldCrossingWallsScenario());
-            //Planet.CreateWorld(new GoalsTestScenario());
-            Planet.CreateWorld(new CarTrackMaze());
+            //Planet.CreateWorld(new CarTrackMaze());
+            //Planet.CreateWorld(new FieldCrossingScenario());
+            //Planet.CreateWorld(new FieldCrossingLowReproScenario());
+            Planet.CreateWorld(new FieldCrossingWallsScenario());
+
 
 
             animCanvas.ClearColor = Colors.NavajoWhite;

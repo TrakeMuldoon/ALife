@@ -45,6 +45,7 @@ namespace ALifeUni.UI.UserControls
                 AgentName.Text = "No Agent Selected";
                 NodeMap = null;
                 NeuronToDownstreamDendrites = null;
+                SelectedNeuron = null;
                 if(theAgent != null)
                 {
                     AgentName.Text = theAgent.IndividualLabel;
@@ -84,8 +85,9 @@ namespace ALifeUni.UI.UserControls
                     DrawAllNeurons(args);
                 }
             }
-            catch(Exception)
+            catch(Exception ex)
             {
+                throw ex;
                 //Swallow. It's just a drawing error. We'll get it right next time.
                 //TODO: Determine why NullRefs happen when we switch SpecialNodes. I suspect race condition... but where?
             }

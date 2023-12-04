@@ -114,7 +114,9 @@ namespace ALifeUni.ALife
 
         public override void ExecuteAliveTurn()
         {
+            //Save the previous state of agent, so we can look back on it next turn.
             Shadow = new AgentShadow(this);
+
             MyBrain.ExecuteTurn();
             if(!Alive)
             {
@@ -123,8 +125,9 @@ namespace ALifeUni.ALife
 
             AgentUpkeep();
 
-            //Reset all the senses. 
+            //Reset all the senses.
             Senses.ForEach((se) => se.Shape.Reset());
+
             //Reset all the properties
             foreach(StatisticInput stat in Statistics.Values)
             {
@@ -137,6 +140,7 @@ namespace ALifeUni.ALife
 
             EndOfTurnTriggers();
 
+            //The shape has moved, so its bounding box needs to be reset
             Shape.Reset();
         }
 

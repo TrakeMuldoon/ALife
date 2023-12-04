@@ -137,7 +137,6 @@ namespace ALifeUni.ALife.Scenarios
             me.Reproduce();
             me.Reproduce();
             me.Reproduce();
-            me.Reproduce();
             me.Die();
         }
 

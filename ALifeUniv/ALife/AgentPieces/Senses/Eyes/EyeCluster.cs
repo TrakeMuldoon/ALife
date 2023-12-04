@@ -42,7 +42,7 @@ namespace ALifeUni.ALife
             float radius = (float)eRadius.StartValue;
             Angle sweep = new Angle(eSweep.StartValue);
             myShape = new ChildSector(parent.Shape, orientationAroundParent
-                                      , 5.0 //TODO: HUUUUUUGE BUG. Eyes are hardcoded to be 5 units from centre
+                                      , 5.0 //TODO: HUUUUUUGE BUG. See explanation below
                                       , relativeOrientation, radius, sweep);
             SubInputs.Add(new AnyInput(name + ".SeeSomething"));
             //SubInputs.Add(new CountInput(name + ".HowMany"));
@@ -53,6 +53,10 @@ namespace ALifeUni.ALife
             //SubInputs.Add(new ColorInput(name + ".HowRed", (WorldObject wo) => wo.Shape.Color.R));
             //SubInputs.Add(new ColorInput(name + ".HowBlue", (WorldObject wo) => wo.Shape.Color.B));
             //SubInputs.Add(new ColorInput(name + ".HowGreen", (WorldObject wo) => wo.Shape.Color.G));
+
+            //Re: "TODO: HUUGE BUUG." The code there is setting the distance for the root point of the childSector (the vision radius of the eye) 
+            //to 5.0 away from the parent center point. This is a bug, because if the parent radius is modified to be larger than the that distancce, then the eye will be inside it.
+            //The reason we can't set it to be "parent.Shape.Radius" is that the parent is not guaranteed to be a circle. 
         }
 
         public EyeCluster(WorldObject parent, String name

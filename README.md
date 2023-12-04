@@ -5,12 +5,16 @@
 This system is intended so simulate a set of agents following a set of non-declarative rules, interacting with each other with the hopes to show off some emergent behaviour(s).
 
 The Agents are little digital creatures that each have an independant brain.
-The Brain is any algorithm or function that takes a set of Agent Inputs, and maps them (in any way) to a set of Agent Actions
-An Input is anything that the creature can read numerically, external or internal
+
+The Brain is any algorithm or function that takes a set of Agent Inputs, and maps them (in any way) to a set of Agent Actions.
+
+An Input is anything that the creature can read numerically, external or internal (True/False values are read as 1/0)
 - "MyAge"
 - "MyEnergyLevel"
 - "DistanceToGoal"
-Inputs can come in "Input Clusters" which is a set of related inputs. This helps optimize the code
+- "RightEye SeeSomething"
+
+Inputs can come in "Input Clusters" which is a set of related inputs. This helps optimize the performance
 - Eye Cluster is a set of inputs 
 -- DoISee
 -- HowManyThings (currently disabled)
@@ -47,13 +51,12 @@ The columns (which will be labeled eventually) are
 Show Ancestry tickbox will show the ancestry of each living agent. It highlights the "Eldest Living" in a blue circle.
 
 The Smallest Brain, Oldest, and Most Children buttons will CYCLE through any tied agents who match that description and Select them.
-The "Dot" button will add a dot to the map. You enter the coordinates in the box above in the format "{double},{double}" which will be parsed as "x,y"
 
 Clicking on an agent will "Select" them. They will be circled in Red and their information displayed in the Agent Information display on the right.
 
 Holding "X" while an agent is selected will show the "shadow world" which is what the agent saw last turn. This is really only useful when the simulation is paused.
 
-CTRL-Clicking on empty space will create a "rock" in that space. This sometimes causes bugs, because most things don't know what to do when they collide with rocks. 
+CTRL-Clicking on empty space will create a "wall" in that space. This sometimes causes bugs, because most things don't know what to do when they collide with rocks. 
 CTRL-Clicking on an object will kill that object. KILL. This is also buggy, because it doesn't always remove them correctly
 
 

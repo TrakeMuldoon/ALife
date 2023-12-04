@@ -26,8 +26,7 @@ namespace ALifeUni.ALife.Scenarios
                                     , targetZone);
 
             int agentRadius = 5;
-            Point centrePoint = parentZone.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
-            agent.ApplyCircleShapeToAgent(centrePoint, colour, agentRadius, startOrientation);
+            agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
 
             List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(
                 new IEnumerable<SenseCluster>[]

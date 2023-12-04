@@ -87,6 +87,16 @@ namespace ALifeUni.ALife
             SetShape(myShape);
         }
 
+        internal void ApplyCircleShapeToAgent(AgentDistributor distributor, Color colour, int circleRadius, double startOrientation)
+        {
+            Point centrePoint = distributor.NextAgentCentre(circleRadius * 2, circleRadius * 2);
+            IShape myShape = new Circle(centrePoint, circleRadius);
+            StartOrientation = startOrientation;
+            myShape.Orientation.Degrees = startOrientation;
+            myShape.Color = colour;
+            SetShape(myShape);
+        }
+
         internal void CompleteInitialization(Agent parent, int generation, IBrain newBrain)
         {
             Generation = generation;

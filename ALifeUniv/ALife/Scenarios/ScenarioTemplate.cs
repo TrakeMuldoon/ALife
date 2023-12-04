@@ -16,7 +16,7 @@ namespace ALifeUni.ALife.Scenarios
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation)
         {
             //TODO: Fully Comment This
             throw new NotImplementedException();

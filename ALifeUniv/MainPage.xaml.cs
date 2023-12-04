@@ -35,6 +35,7 @@ namespace ALifeUni
         long startticks;
         readonly DispatcherTimer gameTimer = new DispatcherTimer();
         public List<LayerUISettings> VisualSettings;
+        public AgentUISettings AgentVisualSettings;
         public int DrawingErrors = 0;
 
         public MainPage()
@@ -58,6 +59,9 @@ namespace ALifeUni
             seed = Planet.World.Seed.ToString();
             SimSeed.Text = seed;
 
+
+            AgentVisualSettings = new AgentUISettings();
+            AgentUI.DataContext = AgentVisualSettings;
             VisualSettings = LayerUISettings.GetDefaultSettings();
             VisualSettingsList.ItemsSource = VisualSettings;
 
@@ -109,7 +113,7 @@ namespace ALifeUni
 
             foreach(LayerUISettings layer in VisualSettings)
             {
-                DrawLayer(layer, args);
+                DrawLayer(layer, AgentVisualSettings, args);
             }
 
             if(showParents)
@@ -118,7 +122,7 @@ namespace ALifeUni
             }
         }
 
-        private void DrawLayer(LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
+        private void DrawLayer(LayerUISettings ui, AgentUISettings aui, CanvasAnimatedDrawEventArgs args)
         {
             if(!ui.ShowObjects)
             {
@@ -160,14 +164,14 @@ namespace ALifeUni
                     //Because each agent executes in order, any agents BEFORE the execution order of the selected agent, are in the correct
                     //spots, but any agents with a HIGHER execution order will have been moved. 
                     //So they must be drawn in their previous location.
-                    DrawingLogic.DrawPastState(ui, args, special.ExecutionOrder);
+                    DrawingLogic.DrawPastState(ui, aui, args, special.ExecutionOrder);
                 }
                 else
                 {
                     //Default Draw Normal case
                     foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
                     {
-                        DrawingLogic.DrawWorldObject(wo, ui, args);
+                        DrawingLogic.DrawWorldObject(wo, ui, aui, args);
                     }
                 }
             }

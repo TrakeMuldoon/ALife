@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using Windows.Foundation;
 using Windows.UI;
 
 namespace ALifeUni.ALife
@@ -68,6 +69,22 @@ namespace ALifeUni.ALife
         public Agent(String genusLabel, string individualLabel, string collisionLevel)
             : base(genusLabel, individualLabel, collisionLevel)
         {
+        }
+
+        public Agent(String genusLabel, string individualLabel, string collisionLevel, Zone parentZone, Zone targetZone)
+            : base(genusLabel, individualLabel, collisionLevel)
+        {
+            Zone = parentZone;
+            TargetZone = targetZone;
+        }
+
+        internal void ApplyCircleShapeToAgent(Point centrePoint, Color colour, int circleRadius, double startOrientation)
+        {
+            IShape myShape = new Circle(centrePoint, circleRadius);
+            StartOrientation = startOrientation;
+            myShape.Orientation.Degrees = startOrientation;
+            myShape.Color = colour;
+            SetShape(myShape);
         }
 
         internal void CompleteInitialization(Agent parent, int generation, IBrain newBrain)

@@ -38,22 +38,17 @@ namespace ALifeUni.ALife.Scenarios
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
-                                    , ReferenceValues.CollisionLevelPhysical);
-            agent.Zone = parentZone;
-            agent.TargetZone = targetZone;
+                                    , ReferenceValues.CollisionLevelPhysical
+                                    , parentZone
+                                    , targetZone);
 
-            //TODO: FIX SO THAT THE SHAPE IS A PARAMETER
-            Point centrePoint = parentZone.Distributor.NextAgentCentre(10, 10); //TODO: HARDCODED AGENT RADIUS
-
-            IShape myShape = new Circle(centrePoint, 5);                        //TODO: HARDCODED AGENT RADIUS
-            agent.StartOrientation = startOrientation;
-            myShape.Orientation.Degrees = startOrientation;
-            myShape.Color = color;
-            agent.SetShape(myShape);
+            int agentRadius = 5;
+            Point centrePoint = parentZone.Distributor.NextAgentCentre(agentRadius * 2, agentRadius * 2);
+            agent.ApplyCircleShapeToAgent(centrePoint, colour, agentRadius, startOrientation);
 
             List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(
                 new IEnumerable<SenseCluster>[]

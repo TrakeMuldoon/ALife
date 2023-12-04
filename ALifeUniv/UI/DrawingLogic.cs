@@ -107,13 +107,14 @@ namespace ALifeUni.UI
 
             DrawShape(shape, uiSettings.ShowBoundingBoxes, args, true);
 
-            if(uiSettings.ShowSenses)
-            {
-                foreach(IHasShape iHS in ag.Senses)
-                {
-                    DrawShape(iHS.Shape, uiSettings.ShowSenseBoundingBoxes, args, false);
-                }
-            }
+            //TODO: insert Agent Stuff here
+            //if(uiSettings.ShowSenses)
+            //{
+            //    foreach(IHasShape iHS in ag.Senses)
+            //    {
+            //        DrawShape(iHS.Shape, uiSettings.ShowSenseBoundingBoxes, args, false);
+            //    }
+            //}
 
             //Draw Orientation
             DrawOrientation(args, shape);
@@ -136,7 +137,9 @@ namespace ALifeUni.UI
             DrawOrientation(args, shadow.Shape);
             foreach(IShape shape in shadow.SenseShapes)
             {
-                DrawShape(shape, uiSettings.ShowSenseBoundingBoxes, args, false);
+                //TODO: add Agent stuff here
+                DrawShape(shape, true, args, false);
+                //DrawShape(shape, uiSettings.ShowSenseBoundingBoxes, args, false);
             }
         }
 

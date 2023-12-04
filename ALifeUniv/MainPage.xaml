@@ -14,15 +14,6 @@
     Loaded="Page_Loaded"
     Unloaded="Page_Unloaded">
     <Page.Resources>
-        <Style x:Key="headStyle" TargetType="cprim:DataGridColumnHeader" >
-            <Setter Property="Margin" Value="0" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Background" Value="Green"/>
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="BorderBrush" Value="Red" />
-            <Setter Property="MinWidth" Value="80" />
-            <Setter Property="HorizontalContentAlignment" Value="Left" />
-        </Style>
         <Style TargetType="Button">
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Foreground" Value="Black" />
@@ -42,7 +33,6 @@
         </Style>
     </Page.Resources>
     
-
     <StackPanel Orientation="Horizontal">
         <ScrollViewer x:Name="Zoomer"  Background="Aqua"
                       HorizontalScrollBarVisibility="Visible"
@@ -98,18 +88,16 @@
             
             <!--<TextBlock x:Name="debugText" />-->
 
+            <!-- TODO: Eliminate the spacing between the rows here-->
             <TextBlock x:Name="LayersLabel" Text="Layers"></TextBlock>
             <StackPanel Orientation="Vertical" Width="220" Margin="0" Padding="0">
-                <ListView x:Name="VisualSettingsList" SelectionMode="None" Background="Blue" Margin="0" Padding="0" BorderThickness="0" HorizontalAlignment="Left">
+                <ListView x:Name="VisualSettingsList" SelectionMode="None" Background="Green" Margin="0" Padding="0" BorderThickness="0" HorizontalAlignment="Left">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="-5,0,0,0" Padding="0">
-                                <TextBlock Text="{Binding LayerName}" Padding="0" Width="60"/>
-                                <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowLayer, Mode=TwoWay}" />
+                            <StackPanel Orientation="Horizontal" Margin="-5,-5,0,-5" Padding="0,-5" Background="LimeGreen">
+                                <TextBlock Text="{Binding LayerName}" Padding="0,5" Width="60" Height="26"/>
                                 <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowObjects, Mode=TwoWay}" />
                                 <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowBoundingBoxes, Mode=TwoWay}"/>
-                                <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowSenses, Mode=TwoWay}" />
-                                <CheckBox Style="{StaticResource ShowBoxes}" IsChecked="{Binding ShowSenseBoundingBoxes, Mode=TwoWay}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>

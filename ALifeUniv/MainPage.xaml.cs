@@ -58,7 +58,7 @@ namespace ALifeUni
             seed = Planet.World.Seed.ToString();
             SimSeed.Text = seed;
 
-            VisualSettings = LayerUISettings.GetSettings();
+            VisualSettings = LayerUISettings.GetDefaultSettings();
             VisualSettingsList.ItemsSource = VisualSettings;
 
             startticks = DateTime.Now.Ticks;
@@ -120,7 +120,7 @@ namespace ALifeUni
 
         private void DrawLayer(LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
         {
-            if(!ui.ShowLayer)
+            if(!ui.ShowObjects)
             {
                 return;
             }

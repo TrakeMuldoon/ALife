@@ -50,7 +50,8 @@ namespace ALifeUni
             //Planet.CreateWorld(new CarTrackMaze());
             //Planet.CreateWorld(new FieldCrossingScenario());
             //Planet.CreateWorld(new FieldCrossingLowReproScenario());
-            Planet.CreateWorld(new FieldCrossingWallsScenario());
+            //Planet.CreateWorld(new FieldCrossingWallsScenario());
+            Planet.CreateWorld(new ManaScenario());
 
             animCanvas.ClearColor = Colors.NavajoWhite;
             animCanvas.Height = Planet.World.Scenario.WorldHeight;

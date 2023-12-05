@@ -49,6 +49,7 @@
 * [ ] Implement "Randomable" type
 * [ ] Comment Every Class and Function
 * [ ] Add new Senses "Collided Left, Collided Right, Collided Back, Collided Front"
+* [ ] Reproduction is currently based on the Zone Distributor. Make it so that it could be "next to parent"
 
 ## Scenario Ideas
 * [ ] Temperature Scenario (Low temps steal energy, high temps restore energy)

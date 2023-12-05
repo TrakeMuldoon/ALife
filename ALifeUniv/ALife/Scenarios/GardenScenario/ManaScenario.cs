@@ -1,8 +1,9 @@
 ﻿using ALifeUni.ALife.Brains;
-using ALifeUni.ALife.Scenarios.ScenarioHelpers;
+using ALifeUni.ALife.CustomWorldObjects;
 using ALifeUni.ALife.Utility;
 using System;
 using System.Collections.Generic;
+using Windows.Foundation;
 using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
@@ -33,14 +34,14 @@ namespace ALifeUni.ALife.Scenarios
             List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(null,
                 new EyeCluster(agent, "EyeLeft", true
                     , new ROEvoNumber(startValue: -30, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
-                    , new ROEvoNumber(startValue: 10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)                         //Relative Orientation
-                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 3, hardMin: 40, hardMax: 120)                           //Radius
-                    , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),                          //Sweep
+                    , new ROEvoNumber(startValue: 10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Relative Orientation
+                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 3, hardMin: 40, hardMax: 120)       //Radius
+                    , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
                 new EyeCluster(agent, "EyeRight", true
                     , new ROEvoNumber(startValue: 30, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Orientation Around Parent
-                    , new ROEvoNumber(startValue: -10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)                        //Relative Orientation
-                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 3, hardMin: 40, hardMax: 120)                           //Radius
-                    , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40))                           //Sweep
+                    , new ROEvoNumber(startValue: -10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Relative Orientation
+                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 3, hardMin: 40, hardMax: 120)       //Radius
+                    , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40))       //Sweep
             );
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
@@ -49,7 +50,8 @@ namespace ALifeUni.ALife.Scenarios
             {
                 new StatisticInput("Age", 0, Int32.MaxValue),
                 new StatisticInput("DeathTimer", 0, Int32.MaxValue),
-                new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue)
+                new StatisticInput("HowFullAmI", 0, Int32.MaxValue),
+                new StatisticInput("Kills", 0, Int32.MaxValue),
             };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
@@ -60,8 +62,8 @@ namespace ALifeUni.ALife.Scenarios
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
-            //IBrain newBrain = new BehaviourBrain(agent, "IF Age.Value GreaterThan [10] THEN Move.GoForward AT [0.2]", "*", "*", "*", "*");
-            IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 15, 12 });
+            IBrain newBrain = new BehaviourBrain(agent, "*", "*", "*", "*", "*");
+            //IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 15, 12 });
 
             agent.CompleteInitialization(null, 1, newBrain);
 
@@ -69,20 +71,50 @@ namespace ALifeUni.ALife.Scenarios
         }
         public virtual void AgentUpkeep(Agent me)
         {
-            //TODO: Fully Comment This
-            //Default, no upkeep
+            me.Statistics["Age"].IncreasePropertyBy(1);
+            me.Statistics["DeathTimer"].IncreasePropertyBy(1);
         }
 
         public virtual void EndOfTurnTriggers(Agent me)
         {
-            //TODO: Fully Comment This
-            //Default, nothing happens
+            if(me.Statistics["DeathTimer"].Value > 500)
+            {
+                me.Die();
+                return;
+            }
+            if(me.Statistics["HowFullAmI"].Value > 2)
+            {
+                me.Reproduce();
+                me.Statistics["HowFullAmI"].DecreasePropertyBy(2);
+            }
         }
 
         public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
-            //TODO: Fully Comment This
-            //Default, nothing
+            foreach(WorldObject wo in collisions)
+            {
+                if(wo is Agent ag)
+                {
+                    ag.Die();
+                    me.Statistics["HowFullAmI"].IncreasePropertyBy(1);
+                    me.Statistics["Kills"].IncreasePropertyBy(1);
+                }
+                else if (wo is Fruit f)
+                {
+                    if(f.Shape.Color == PURE_GREEN)
+                    {
+                        me.Statistics["HowFullAmI"].IncreasePropertyBy(2);
+                        me.Statistics["DeathTimer"].ChangePropertyTo(0);
+                        f.Die();
+                    }
+                    else if(f.Shape.Color == PURE_RED)
+                    {
+                        me.Die();
+                        f.Die();
+                    }
+                    AllFruits.Remove(f);
+                }
+            }
         }
 
         /******************/
@@ -90,10 +122,10 @@ namespace ALifeUni.ALife.Scenarios
         /******************/
 
         //TODO: Fully Comment This
-        public virtual int WorldWidth => throw new NotImplementedException();
+        public virtual int WorldWidth => 750;
 
         //TODO: Fully Comment This
-        public virtual int WorldHeight => throw new NotImplementedException();
+        public virtual int WorldHeight => 750;
 
         //TODO: Fully Comment This
         public virtual bool FixedWidthHeight
@@ -101,16 +133,61 @@ namespace ALifeUni.ALife.Scenarios
             get { return false; }
         }
 
-        //TODO: Fully Comment This
+
+        int FruitMax = 100;
+        Color PURE_RED = new Color() { A = 255, R = 255, G = 0, B = 0 };
+        Color PURE_BLUE = new Color() { A = 255, R = 0, G = 0, B = 255 };
+        Color PURE_GREEN = new Color() { A = 255, R = 0, G = 255, B = 0 };
+
+        List<Fruit> AllFruits = new List<Fruit>();
+        Zone WorldZone = null;
+
         public virtual void PlanetSetup()
         {
-            throw new NotImplementedException();
+            double height = Planet.World.WorldHeight;
+            double width = Planet.World.WorldWidth;
+
+            WorldZone = new Zone("WholeWorld", "Random", Colors.Yellow, new Point(0, 0), width, height);
+            Planet.World.AddZone(WorldZone);
+
+            int numAgents = 200;
+
+            for(int i = 0; i < numAgents; i++)
+            {
+                Agent rag = AgentFactory.CreateAgent("Agent", WorldZone, null, PURE_BLUE, 0);
+            }
+
+            while(AllFruits.Count < FruitMax)
+            {
+                Fruit gf = Fruit.FruitCreator(WorldZone, PURE_GREEN);
+                Planet.World.AddObjectToWorld(gf);
+                AllFruits.Add(gf);
+            }
+            for(int j = 0; j < 5; j++) 
+            {
+                Fruit rf = Fruit.FruitCreator(WorldZone, PURE_RED);
+                Planet.World.AddObjectToWorld(rf);
+                AllFruits.Add(rf);
+            }
         }
 
-        //TODO: Fully Comment This
         public virtual void GlobalEndOfTurnActions()
         {
-            //Default, no special actions
+            while(AllFruits.Count < FruitMax)
+            {
+                double d = Planet.World.NumberGen.NextDouble();
+                Fruit newFruit;
+                if(d > 0.80)
+                {
+                    newFruit = Fruit.FruitCreator(WorldZone, PURE_RED);
+                }
+                else
+                {
+                    newFruit = Fruit.FruitCreator(WorldZone, PURE_GREEN);
+                }
+                Planet.World.AddObjectToWorld(newFruit);
+                AllFruits.Add(newFruit);
+            }
         }
     }
 }

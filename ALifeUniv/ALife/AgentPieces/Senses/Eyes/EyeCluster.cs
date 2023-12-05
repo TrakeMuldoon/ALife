@@ -23,6 +23,7 @@ namespace ALifeUni.ALife
         {
         }
 
+        private bool IncludeColor = false;
         private EvoNumber EvoOrientationAroundParent;
         private EvoNumber EvoRelativeOrientation;
         private EvoNumber EvoRadius;
@@ -32,6 +33,7 @@ namespace ALifeUni.ALife
                           , EvoNumber eOrientationAroundParent, EvoNumber eRelativeOrientation, EvoNumber eRadius, EvoNumber eSweep)
             : base(parent, name)
         {
+            IncludeColor = withColour;
             EvoOrientationAroundParent = eOrientationAroundParent;
             EvoRelativeOrientation = eRelativeOrientation;
             EvoRadius = eRadius;
@@ -47,7 +49,7 @@ namespace ALifeUni.ALife
             SubInputs.Add(new AnyInput(name + ".SeeSomething"));
             //SubInputs.Add(new CountInput(name + ".HowMany"));
             //SubInputs.Add(new EyeIdentifierInput(name + ".WhoISee"));
-            if(withColour)
+            if(IncludeColor)
             {
                 SubInputs.Add(new ColorBoolInput(name + ".IsRed", (WorldObject wo) => wo.Shape.Color.R));
                 SubInputs.Add(new ColorBoolInput(name + ".IsBlue", (WorldObject wo) => wo.Shape.Color.B));
@@ -69,10 +71,10 @@ namespace ALifeUni.ALife
         { }
 
 
-        public EyeCluster(WorldObject parent, String name
+        public EyeCluster(WorldObject parent, String name, bool includeColor
                           , EvoNumber eOrientationAroundParent, EvoNumber eRelativeOrientation, EvoNumber eRadius, EvoNumber eSweep
                           , Color myColor, Color myDebugColor)
-            : this(parent, name, false
+            : this(parent, name, includeColor
                   , eOrientationAroundParent, eRelativeOrientation, eRadius, eSweep)
         {
             this.myShape.DebugColor = myDebugColor;
@@ -81,16 +83,16 @@ namespace ALifeUni.ALife
 
         public override SenseCluster CloneSense(WorldObject newParent)
         {
-            EyeCluster newEC = new EyeCluster(newParent, Name,
-                                              EvoOrientationAroundParent.Clone(), EvoRelativeOrientation.Clone(), EvoRadius.Clone(), EvoSweep.Clone()
+            EyeCluster newEC = new EyeCluster(newParent, Name, IncludeColor
+                                              , EvoOrientationAroundParent.Clone(), EvoRelativeOrientation.Clone(), EvoRadius.Clone(), EvoSweep.Clone()
                                               , myShape.Color.Clone(), myShape.DebugColor.Clone());
             return newEC;
         }
 
         public override SenseCluster ReproduceSense(WorldObject newParent)
         {
-            EyeCluster newEC = new EyeCluster(newParent, Name,
-                                              EvoOrientationAroundParent.Evolve(), EvoRelativeOrientation.Evolve(), EvoRadius.Evolve(), EvoSweep.Evolve()
+            EyeCluster newEC = new EyeCluster(newParent, Name, IncludeColor
+                                              , EvoOrientationAroundParent.Evolve(), EvoRelativeOrientation.Evolve(), EvoRadius.Evolve(), EvoSweep.Evolve()
                                               , myShape.Color.Clone(), myShape.DebugColor.Clone());
             return newEC;
         }

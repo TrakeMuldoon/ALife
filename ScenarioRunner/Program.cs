@@ -24,7 +24,7 @@ namespace ScenarioRunner
             Log.Logger = new LoggerConfiguration().WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day).CreateLogger();
             Log.Information("<---StartRun");
 
-            IScenario scenario = new CarTrackMaze();
+            IScenario scenario = new ManaScenario();
             int height = scenario.WorldHeight;
             int width = scenario.WorldWidth;
 

@@ -165,7 +165,7 @@
     <Compile Include="ALife\CustomWorldObjects\Fruit.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildRectangle.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\IChildShape.cs" />
-    <Compile Include="ALife\Scenarios\GardenScenario\ManaScenario.cs" />
+    <Compile Include="ALife\Scenarios\GardenScenario\MushroomScenario.cs" />
     <Compile Include="ALife\Scenarios\Mazes\CarTrackMaze.cs" />
     <Compile Include="ALife\Scenarios\ScenarioHelpers\FieldCrossingHelpers.cs" />
     <Compile Include="ALife\Scenarios\ScenarioTemplate.cs" />

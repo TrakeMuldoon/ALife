@@ -8,13 +8,13 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    public class ManaScenario : IScenario
+    public class MushroomScenario : IScenario
     {
         /******************/
         /* SCENARIO STUFF */
         /******************/
 
-        public virtual string Name => "Mana from the sky";
+        public virtual string Name => "Mushrooms";
 
         /******************/
         /*   AGENT STUFF  */
@@ -33,14 +33,14 @@ namespace ALifeUni.ALife.Scenarios
 
             List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(null,
                 new EyeCluster(agent, "EyeLeft", true
-                    , new ROEvoNumber(startValue: -30, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
-                    , new ROEvoNumber(startValue: 10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Relative Orientation
-                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 3, hardMin: 40, hardMax: 120)       //Radius
+                    , new ROEvoNumber(startValue: -30, evoDeltaMax: 1, hardMin: -360, hardMax: 360)    //Orientation Around Parent
+                    , new ROEvoNumber(startValue: 5,  evoDeltaMax: 1, hardMin: -360, hardMax: 360)     //Relative Orientation
+                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 1, hardMin: 40, hardMax: 120)       //Radius
                     , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
                 new EyeCluster(agent, "EyeRight", true
-                    , new ROEvoNumber(startValue: 30, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Orientation Around Parent
-                    , new ROEvoNumber(startValue: -10, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Relative Orientation
-                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 3, hardMin: 40, hardMax: 120)       //Radius
+                    , new ROEvoNumber(startValue: 30, evoDeltaMax: 1, hardMin: -360, hardMax: 360)     //Orientation Around Parent
+                    , new ROEvoNumber(startValue: -5, evoDeltaMax: 1, hardMin: -360, hardMax: 360)    //Relative Orientation
+                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 1, hardMin: 40, hardMax: 120)       //Radius
                     , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40))       //Sweep
             );
 
@@ -62,8 +62,8 @@ namespace ALifeUni.ALife.Scenarios
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
-            IBrain newBrain = new BehaviourBrain(agent, "*", "*", "*", "*", "*");
-            //IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 15, 12 });
+            //IBrain newBrain = new BehaviourBrain(agent, "*", "*", "*", "*", "*");
+            IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 18, 15, 12 });
 
             agent.CompleteInitialization(null, 1, newBrain);
 
@@ -82,10 +82,10 @@ namespace ALifeUni.ALife.Scenarios
                 me.Die();
                 return;
             }
-            if(me.Statistics["HowFullAmI"].Value > 2)
+            if(me.Statistics["HowFullAmI"].Value >= 6)
             {
                 me.Reproduce();
-                me.Statistics["HowFullAmI"].DecreasePropertyBy(2);
+                me.Statistics["HowFullAmI"].DecreasePropertyBy(6);
             }
         }
 
@@ -96,14 +96,14 @@ namespace ALifeUni.ALife.Scenarios
                 if(wo is Agent ag)
                 {
                     ag.Die();
-                    me.Statistics["HowFullAmI"].IncreasePropertyBy(1);
+                    me.Statistics["HowFullAmI"].IncreasePropertyBy(2);
                     me.Statistics["Kills"].IncreasePropertyBy(1);
                 }
                 else if (wo is Fruit f)
                 {
                     if(f.Shape.Color == PURE_GREEN)
                     {
-                        me.Statistics["HowFullAmI"].IncreasePropertyBy(2);
+                        me.Statistics["HowFullAmI"].IncreasePropertyBy(3);
                         me.Statistics["DeathTimer"].ChangePropertyTo(0);
                         f.Die();
                     }

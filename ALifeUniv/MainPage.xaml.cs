@@ -51,7 +51,7 @@ namespace ALifeUni
             //Planet.CreateWorld(new FieldCrossingScenario());
             //Planet.CreateWorld(new FieldCrossingLowReproScenario());
             //Planet.CreateWorld(new FieldCrossingWallsScenario());
-            Planet.CreateWorld(new ManaScenario());
+            Planet.CreateWorld(new MushroomScenario());
 
             animCanvas.ClearColor = Colors.NavajoWhite;
             animCanvas.Height = Planet.World.Scenario.WorldHeight;

@@ -198,6 +198,11 @@ namespace ALifeUni.UI.UserControls
 
         private void DrawDownstreamDendrites(CanvasAnimatedDrawEventArgs args, Neuron selectedNeuron, Dictionary<Neuron, Vector2> nodemap)
         {
+            if(!NeuronToDownstreamDendrites.ContainsKey(selectedNeuron))
+            {
+                //Action node selected. There are no downstream dendrites to draw
+                return;
+            }
             Vector2 homePoint = nodemap[selectedNeuron];
             foreach(var (den, parentNeuron) in NeuronToDownstreamDendrites[selectedNeuron])
             {

@@ -15,11 +15,12 @@ namespace ALifeUni.ALife.CustomWorldObjects
     public class Fruit : WorldObject
     {
         const int FRUIT_RADIUS = 3;
-        
+
+        static int FruitID = 1;
         Zone StartZone = null;
 
         public Fruit(Point centrePoint, IShape shape, Color colour, Zone startZone)
-             : base(centrePoint, shape, "Fruit", AgentIDGenerator.GetNextAgentId(), ReferenceValues.CollisionLevelPhysical, colour)
+             : base(centrePoint, shape, "Fruit", (Fruit.FruitID++).ToString(), ReferenceValues.CollisionLevelPhysical, colour)
         {
             StartZone = startZone;
         }

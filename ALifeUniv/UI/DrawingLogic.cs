@@ -22,14 +22,14 @@ namespace ALifeUni.UI
             args.DrawingSession.DrawText(zone.Name, zone.TopLeft.ToVector2(), textColor);
         }
 
-        internal static void DrawWorldObject(WorldObject wo, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
+        internal static void DrawWorldObject(WorldObject wo, LayerUISettings uiSettings, AgentUISettings auisettings, CanvasAnimatedDrawEventArgs args)
         {
             if(uiSettings.ShowObjects)
             {
                 if(wo is Agent ag)
                 {
 
-                    DrawAgent(ag, uiSettings, args);
+                    DrawAgent(ag, uiSettings, auisettings, args);
                 }
                 else
                 {
@@ -72,7 +72,7 @@ namespace ALifeUni.UI
             }
         }
 
-        public static void DrawPastState(LayerUISettings ui, CanvasAnimatedDrawEventArgs args, int compnumber)
+        public static void DrawPastState(LayerUISettings ui, AgentUISettings aui, CanvasAnimatedDrawEventArgs args, int compnumber)
         {
             foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
             {
@@ -93,7 +93,7 @@ namespace ALifeUni.UI
 
                 if(compnumber == wo.ExecutionOrder)
                 {
-                    DrawingLogic.DrawAgentShadow(ag.Shadow, ui, args);
+                    DrawingLogic.DrawAgentShadow(ag.Shadow, ui, aui, args);
                     continue;
                 }
 
@@ -101,17 +101,17 @@ namespace ALifeUni.UI
             }
         }
 
-        private static void DrawAgent(Agent ag, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
+        private static void DrawAgent(Agent ag, LayerUISettings uiSettings, AgentUISettings auisettings, CanvasAnimatedDrawEventArgs args)
         {
             IShape shape = ag.Shape;
 
             DrawShape(shape, uiSettings.ShowBoundingBoxes, args, true);
 
-            if(uiSettings.ShowSenses)
+            if(auisettings.ShowSenses)
             {
                 foreach(IHasShape iHS in ag.Senses)
                 {
-                    DrawShape(iHS.Shape, uiSettings.ShowSenseBoundingBoxes, args, false);
+                    DrawShape(iHS.Shape, auisettings.ShowSenseBoundingBoxes, args, false);
                 }
             }
 
@@ -126,7 +126,7 @@ namespace ALifeUni.UI
             args.DrawingSession.DrawLine(ori.ToVector2(), ori2.ToVector2(), Colors.DarkRed, 1);
         }
 
-        internal static void DrawAgentShadow(AgentShadow shadow, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
+        internal static void DrawAgentShadow(AgentShadow shadow, LayerUISettings uiSettings, AgentUISettings auiSettings, CanvasAnimatedDrawEventArgs args)
         {
             Color orig = shadow.Shape.DebugColor;
             shadow.Shape.DebugColor = Colors.White;
@@ -134,10 +134,15 @@ namespace ALifeUni.UI
             shadow.Shape.DebugColor = orig;
             //Draw Orientation
             DrawOrientation(args, shadow.Shape);
-            foreach(IShape shape in shadow.SenseShapes)
+
+            if(auiSettings.ShowSenses)
             {
-                DrawShape(shape, uiSettings.ShowSenseBoundingBoxes, args, false);
+                foreach(IShape shape in shadow.SenseShapes)
+                {
+                    DrawShape(shape, auiSettings.ShowSenseBoundingBoxes, args, false);
+                }
             }
+
         }
 
         internal static void DrawInactiveObject(WorldObject wo, LayerUISettings ui, CanvasAnimatedDrawEventArgs args)

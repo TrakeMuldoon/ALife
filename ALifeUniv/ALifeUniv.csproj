@@ -162,8 +162,10 @@
     <Compile Include="ALife\AgentPieces\Senses\GoalSense\RotationToObjectInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Proximity\ProximityCluster.cs" />
     <Compile Include="ALife\AgentPieces\Senses\SquareSense\SquareSenseCluster.cs" />
+    <Compile Include="ALife\CustomWorldObjects\Fruit.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildRectangle.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\IChildShape.cs" />
+    <Compile Include="ALife\Scenarios\GardenScenario\ManaScenario.cs" />
     <Compile Include="ALife\Scenarios\Mazes\CarTrackMaze.cs" />
     <Compile Include="ALife\Scenarios\ScenarioHelpers\FieldCrossingHelpers.cs" />
     <Compile Include="ALife\Scenarios\ScenarioTemplate.cs" />
@@ -198,6 +200,7 @@
     <Compile Include="ALife\CustomWorldObjects\Spinner.cs" />
     <Compile Include="ALife\CustomWorldObjects\Wall.cs" />
     <Compile Include="ALife\Zone.cs" />
+    <Compile Include="UI\AgentUISettings.cs" />
     <Compile Include="UI\UserControls\CollisionTestPanel.xaml.cs">
       <DependentUpon>CollisionTestPanel.xaml</DependentUpon>
     </Compile>

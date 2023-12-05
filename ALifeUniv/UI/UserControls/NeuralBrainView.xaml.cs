@@ -85,9 +85,9 @@ namespace ALifeUni.UI.UserControls
                     DrawAllNeurons(args);
                 }
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                throw ex;
+                throw;
                 //Swallow. It's just a drawing error. We'll get it right next time.
                 //TODO: Determine why NullRefs happen when we switch SpecialNodes. I suspect race condition... but where?
             }

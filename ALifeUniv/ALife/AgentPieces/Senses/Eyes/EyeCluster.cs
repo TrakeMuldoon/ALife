@@ -23,15 +23,17 @@ namespace ALifeUni.ALife
         {
         }
 
+        private bool IncludeColor = false;
         private EvoNumber EvoOrientationAroundParent;
         private EvoNumber EvoRelativeOrientation;
         private EvoNumber EvoRadius;
         private EvoNumber EvoSweep;
 
-        public EyeCluster(WorldObject parent, String name
+        public EyeCluster(WorldObject parent, String name, bool withColour
                           , EvoNumber eOrientationAroundParent, EvoNumber eRelativeOrientation, EvoNumber eRadius, EvoNumber eSweep)
             : base(parent, name)
         {
+            IncludeColor = withColour;
             EvoOrientationAroundParent = eOrientationAroundParent;
             EvoRelativeOrientation = eRelativeOrientation;
             EvoRadius = eRadius;
@@ -42,23 +44,37 @@ namespace ALifeUni.ALife
             float radius = (float)eRadius.StartValue;
             Angle sweep = new Angle(eSweep.StartValue);
             myShape = new ChildSector(parent.Shape, orientationAroundParent
-                                      , 5.0 //TODO: HUUUUUUGE BUG. Eyes are hardcoded to be 5 units from centre
+                                      , 5.0 //TODO: HUUUUUUGE BUG. See explanation below
                                       , relativeOrientation, radius, sweep);
             SubInputs.Add(new AnyInput(name + ".SeeSomething"));
             //SubInputs.Add(new CountInput(name + ".HowMany"));
             //SubInputs.Add(new EyeIdentifierInput(name + ".WhoISee"));
-            //SubInputs.Add(new ColorBoolInput(name + ".IsRed", (WorldObject wo) => wo.Shape.Color.R));
-            //SubInputs.Add(new ColorBoolInput(name + ".IsBlue", (WorldObject wo) => wo.Shape.Color.B));
-            //SubInputs.Add(new ColorBoolInput(name + ".IsGreen", (WorldObject wo) => wo.Shape.Color.G));
-            //SubInputs.Add(new ColorInput(name + ".HowRed", (WorldObject wo) => wo.Shape.Color.R));
-            //SubInputs.Add(new ColorInput(name + ".HowBlue", (WorldObject wo) => wo.Shape.Color.B));
-            //SubInputs.Add(new ColorInput(name + ".HowGreen", (WorldObject wo) => wo.Shape.Color.G));
+            if(IncludeColor)
+            {
+                SubInputs.Add(new ColorBoolInput(name + ".IsRed", (WorldObject wo) => wo.Shape.Color.R));
+                SubInputs.Add(new ColorBoolInput(name + ".IsBlue", (WorldObject wo) => wo.Shape.Color.B));
+                SubInputs.Add(new ColorBoolInput(name + ".IsGreen", (WorldObject wo) => wo.Shape.Color.G));
+                //SubInputs.Add(new ColorInput(name + ".HowRed", (WorldObject wo) => wo.Shape.Color.R));
+                //SubInputs.Add(new ColorInput(name + ".HowBlue", (WorldObject wo) => wo.Shape.Color.B));
+                //SubInputs.Add(new ColorInput(name + ".HowGreen", (WorldObject wo) => wo.Shape.Color.G));
+            }
+
+            //Re: "TODO: HUUGE BUUG." The code there is setting the distance for the root point of the childSector (the vision radius of the eye) 
+            //to 5.0 away from the parent center point. This is a bug, because if the parent radius is modified to be larger than the that distancce, then the eye will be inside it.
+            //The reason we can't set it to be "parent.Shape.Radius" is that the parent is not guaranteed to be a circle. 
         }
 
         public EyeCluster(WorldObject parent, String name
+                  , EvoNumber eOrientationAroundParent, EvoNumber eRelativeOrientation, EvoNumber eRadius, EvoNumber eSweep)
+            : this(parent, name, false
+                  , eOrientationAroundParent, eRelativeOrientation, eRadius, eSweep)
+        { }
+
+
+        public EyeCluster(WorldObject parent, String name, bool includeColor
                           , EvoNumber eOrientationAroundParent, EvoNumber eRelativeOrientation, EvoNumber eRadius, EvoNumber eSweep
                           , Color myColor, Color myDebugColor)
-            : this(parent, name
+            : this(parent, name, includeColor
                   , eOrientationAroundParent, eRelativeOrientation, eRadius, eSweep)
         {
             this.myShape.DebugColor = myDebugColor;
@@ -67,16 +83,16 @@ namespace ALifeUni.ALife
 
         public override SenseCluster CloneSense(WorldObject newParent)
         {
-            EyeCluster newEC = new EyeCluster(newParent, Name,
-                                              EvoOrientationAroundParent.Clone(), EvoRelativeOrientation.Clone(), EvoRadius.Clone(), EvoSweep.Clone()
+            EyeCluster newEC = new EyeCluster(newParent, Name, IncludeColor
+                                              , EvoOrientationAroundParent.Clone(), EvoRelativeOrientation.Clone(), EvoRadius.Clone(), EvoSweep.Clone()
                                               , myShape.Color.Clone(), myShape.DebugColor.Clone());
             return newEC;
         }
 
         public override SenseCluster ReproduceSense(WorldObject newParent)
         {
-            EyeCluster newEC = new EyeCluster(newParent, Name,
-                                              EvoOrientationAroundParent.Evolve(), EvoRelativeOrientation.Evolve(), EvoRadius.Evolve(), EvoSweep.Evolve()
+            EyeCluster newEC = new EyeCluster(newParent, Name, IncludeColor
+                                              , EvoOrientationAroundParent.Evolve(), EvoRelativeOrientation.Evolve(), EvoRadius.Evolve(), EvoSweep.Evolve()
                                               , myShape.Color.Clone(), myShape.DebugColor.Clone());
             return newEC;
         }

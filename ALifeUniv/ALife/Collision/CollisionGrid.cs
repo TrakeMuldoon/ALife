@@ -10,18 +10,26 @@ namespace ALifeUni.ALife
     {
         public readonly int Height;
         public readonly int Width;
+        public readonly int GridSize;
         public readonly string GridName;
 
         //TODO: Load from Default Configuration
         private int GridXMax;
         private int GridYMax;
-        private int GridSize = 25;
+        private const int DEFAULT_GRID_SIZE = 25;
         private List<T>[,] objectGrid;
         private List<T> trackedObjects;
         private Dictionary<T, List<Point>> agentLocationTracker = new Dictionary<T, List<Point>>();
 
         public CollisionGrid(int gridHeight, int gridWidth, string gridName)
+            : this(gridHeight, gridWidth, DEFAULT_GRID_SIZE, gridName)
         {
+        }
+            
+
+        public CollisionGrid(int gridHeight, int gridWidth, int gridSize, string gridName)
+        {
+            GridSize = gridSize;
             GridName = gridName;
             if(gridHeight < GridSize)
             {

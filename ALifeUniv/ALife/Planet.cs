@@ -83,7 +83,9 @@ namespace ALifeUni.ALife
         public readonly Dictionary<String, Zone> Zones = new Dictionary<string, Zone>();
         public List<string> MessagePump = new List<string>();
 
-        //All objects which are active (This includes "dead" objects, which have not yet finished their activity (i.e. corpses are "active")
+        //All objects which are active
+        //Active in this context means they will still execute a turn. For example, if dead agents become "corpses" which can be eaten, or smelled, they remain "active"
+        //because the object still takes a turn. 
         public readonly List<WorldObject> AllActiveObjects = new List<WorldObject>();
 
         //All objects which were active last turn
@@ -92,7 +94,9 @@ namespace ALifeUni.ALife
         //All new objects. Should be added to Stable Active Objects, should already be in AllActiveObjects
         public readonly List<WorldObject> NewActiveObjects = new List<WorldObject>();
 
-        //All objects which have fallen out of all active object scope
+        //All objects which have fallen out of all active object scope.
+        //They do not take turns.
+        //We might want to eventually clear this list. Probably via config setting.
         public readonly List<WorldObject> InactiveObjects = new List<WorldObject>();
 
         //Objects which at the end of the turn should be removed from "AllActive", "StableActive" and "NewActive"
@@ -226,6 +230,7 @@ namespace ALifeUni.ALife
             string currCollisionLevel = mySelf.CollisionLevel;
             CollisionLevels[currCollisionLevel].RemoveObject(mySelf);
             //TODO: If I initialize the collision levels at the scenario level, then I don't need to constantly check if the layer exists.
+            //Further Thoughts: This is only called on the death of a world-object right now. So not very frequently. I think safety outweighs any miniscule performance gain.
             if(!_collisionLevels.ContainsKey(newLevel))
             {
                 _collisionLevels.Add(newLevel, new CollisionGrid<WorldObject>(WorldHeight, WorldWidth, newLevel));

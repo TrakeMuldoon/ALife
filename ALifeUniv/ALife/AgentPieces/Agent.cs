@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using Windows.Foundation;
 using Windows.UI;
 
 namespace ALifeUni.ALife
@@ -70,6 +71,32 @@ namespace ALifeUni.ALife
         {
         }
 
+        public Agent(String genusLabel, string individualLabel, string collisionLevel, Zone parentZone, Zone targetZone)
+            : base(genusLabel, individualLabel, collisionLevel)
+        {
+            Zone = parentZone;
+            TargetZone = targetZone;
+        }
+
+        internal void ApplyCircleShapeToAgent(Point centrePoint, Color colour, int circleRadius, double startOrientation)
+        {
+            IShape myShape = new Circle(centrePoint, circleRadius);
+            StartOrientation = startOrientation;
+            myShape.Orientation.Degrees = startOrientation;
+            myShape.Color = colour;
+            SetShape(myShape);
+        }
+
+        internal void ApplyCircleShapeToAgent(AgentDistributor distributor, Color colour, int circleRadius, double startOrientation)
+        {
+            Point centrePoint = distributor.NextAgentCentre(circleRadius * 2, circleRadius * 2);
+            IShape myShape = new Circle(centrePoint, circleRadius);
+            StartOrientation = startOrientation;
+            myShape.Orientation.Degrees = startOrientation;
+            myShape.Color = colour;
+            SetShape(myShape);
+        }
+
         internal void CompleteInitialization(Agent parent, int generation, IBrain newBrain)
         {
             Generation = generation;
@@ -114,7 +141,9 @@ namespace ALifeUni.ALife
 
         public override void ExecuteAliveTurn()
         {
+            //Save the previous state of agent, so we can look back on it next turn.
             Shadow = new AgentShadow(this);
+
             MyBrain.ExecuteTurn();
             if(!Alive)
             {
@@ -123,8 +152,9 @@ namespace ALifeUni.ALife
 
             AgentUpkeep();
 
-            //Reset all the senses. 
+            //Reset all the senses.
             Senses.ForEach((se) => se.Shape.Reset());
+
             //Reset all the properties
             foreach(StatisticInput stat in Statistics.Values)
             {
@@ -137,6 +167,7 @@ namespace ALifeUni.ALife
 
             EndOfTurnTriggers();
 
+            //The shape has moved, so its bounding box needs to be reset
             Shape.Reset();
         }
 

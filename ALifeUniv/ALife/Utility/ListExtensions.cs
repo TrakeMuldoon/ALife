@@ -11,9 +11,12 @@ namespace ALifeUni.ALife.Utility
         public static List<T> CompileList<T>(IEnumerable<T>[] lists, params T[] individuals)
         {
             List<T> toReturn = new List<T>(individuals);
-            foreach(var list in lists)
+            if(lists != null)
             {
-                toReturn.AddRange(list);
+                foreach(var list in lists)
+                {
+                    toReturn.AddRange(list);
+                }
             }
             return toReturn;
         }

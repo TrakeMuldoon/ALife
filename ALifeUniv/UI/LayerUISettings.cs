@@ -10,34 +10,29 @@ namespace ALifeUni.UI
     {
         public String LayerName { get; set; }
 
-        public Boolean ShowLayer { get; set; }
         public Boolean ShowObjects { get; set; }
         public Boolean ShowBoundingBoxes { get; set; }
-        public Boolean ShowSenses { get; set; }
-        public Boolean ShowSenseBoundingBoxes { get; set; }
 
         public LayerUISettings(string layerName) : this(layerName, false) { }
 
-        public LayerUISettings(string layerName, bool showLayer) : this(layerName, showLayer, showLayer, showLayer, showLayer, showLayer) { }
+        public LayerUISettings(string layerName, bool showLayer) : this(layerName, showLayer, showLayer) { }
 
-        public LayerUISettings(string layerName, bool showLayer, bool showObjects, bool showBoundingBoxes, bool showSenses, bool showSenseBoundingBoxes)
+        public LayerUISettings(string layerName, bool showObjects, bool showBoundingBoxes)
         {
             LayerName = layerName;
-            ShowLayer = showLayer;
             ShowObjects = showObjects;
             ShowBoundingBoxes = showBoundingBoxes;
-            ShowSenses = showSenses;
-            ShowSenseBoundingBoxes = showSenseBoundingBoxes;
         }
 
-        public static List<LayerUISettings> GetSettings()
+        public static List<LayerUISettings> GetDefaultSettings()
         {
-            List<LayerUISettings> settingsList = new List<LayerUISettings>();
-            settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelZone));
-            settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelPhysical, true));
-            settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelSound));
-            settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelScent));
-            settingsList.Add(new LayerUISettings(ReferenceValues.CollisionLevelDead));
+            List<LayerUISettings> settingsList = new List<LayerUISettings>
+            {
+                new LayerUISettings(ReferenceValues.CollisionLevelZone, true),
+                new LayerUISettings(ReferenceValues.CollisionLevelPhysical, true),
+                new LayerUISettings(ReferenceValues.CollisionLevelSound),
+                new LayerUISettings(ReferenceValues.CollisionLevelDead)
+            };
 
             return settingsList;
         }

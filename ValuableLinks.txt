@@ -11,3 +11,8 @@ s/249355/how-exactly-to-compute-deep-q-learning-loss-function
 
 Very Active C# implementation of NeuralNetwork NEAT algorithm
 https://github.com/colgreen/sharpneat
+
+Neural Network Open Source projects
+https://www.heatonresearch.com/encog/ - Last Release 2017
+http://www.aforgenet.com/news/2013.07.17.releasing_framework_2.2.5.html - Last Release 2013
+https://sourceforge.net/projects/neurondotnet/ - LAst update of any kind 2015

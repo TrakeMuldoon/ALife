@@ -19,7 +19,7 @@ namespace ALifeUni.ALife.Scenarios
         /*   AGENT STUFF  */
         /******************/
 
-        Agent CreateAgent(String genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation);
+        Agent CreateAgent(String genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation);
 
 
         /*** Something that an agent does, or soemthing affecting their internals ***/

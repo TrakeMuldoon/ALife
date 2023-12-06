@@ -3,7 +3,6 @@ using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using System.Collections.Generic;
 using Windows.Foundation;
-using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios.FieldCrossings
 {

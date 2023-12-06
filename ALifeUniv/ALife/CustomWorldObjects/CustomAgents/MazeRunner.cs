@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI;
 
-namespace ALifeUni.ALife.CustomWorldObjects
+namespace ALifeUni.ALife.CustomWorldObjects.CustomAgents
 {
     public class MazeRunner : Agent
     {

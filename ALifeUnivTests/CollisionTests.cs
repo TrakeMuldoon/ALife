@@ -1,6 +1,6 @@
 using ALifeUni.ALife;
-using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Geometry;
+using ALifeUni.ALife.Shapes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using Windows.Foundation;

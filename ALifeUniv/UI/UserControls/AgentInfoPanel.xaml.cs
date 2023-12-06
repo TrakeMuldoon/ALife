@@ -3,8 +3,6 @@ using ALifeUni.ALife.Brains;
 using ALifeUni.ALife.Shapes;
 using System;
 using System.Text;
-using System.Threading;
-using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236

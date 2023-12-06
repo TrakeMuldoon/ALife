@@ -1,12 +1,10 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Brains;
 using ALifeUni.ALife.CustomWorldObjects;
-using ALifeUni.ALife.Scenarios;
-using ALifeUni.ALife.Scenarios.FieldCrossings;
-using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Geometry;
+using ALifeUni.ALife.Scenarios;
+using ALifeUni.ALife.Shapes;
 using ALifeUni.UI;
-using ALifeUni.UI.UserControls;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
@@ -238,7 +236,7 @@ namespace ALifeUni
             switch(special)
             {
                 case Agent ag: AgentPanel.TheAgent = ag; break;
-                case Wall wall: 
+                case Wall wall:
                     WallPane.TheWall = wall;
                     WallPanelPopup.IsOpen = true;
                     break;

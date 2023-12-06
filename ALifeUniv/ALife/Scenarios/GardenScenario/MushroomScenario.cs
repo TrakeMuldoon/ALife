@@ -99,7 +99,7 @@ namespace ALifeUni.ALife.Scenarios
                     me.Statistics["HowFullAmI"].IncreasePropertyBy(2);
                     me.Statistics["Kills"].IncreasePropertyBy(1);
                 }
-                else if (wo is Fruit f)
+                else if(wo is Fruit f)
                 {
                     if(f.Shape.Color == PURE_GREEN)
                     {
@@ -163,7 +163,7 @@ namespace ALifeUni.ALife.Scenarios
                 Planet.World.AddObjectToWorld(gf);
                 AllFruits.Add(gf);
             }
-            for(int j = 0; j < 5; j++) 
+            for(int j = 0; j < 5; j++)
             {
                 Fruit rf = Fruit.FruitCreator(WorldZone, PURE_RED);
                 Planet.World.AddObjectToWorld(rf);

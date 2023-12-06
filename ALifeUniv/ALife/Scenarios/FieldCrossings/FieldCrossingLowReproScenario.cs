@@ -2,7 +2,6 @@ using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation;
-using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
@@ -48,7 +47,7 @@ namespace ALifeUni.ALife.Scenarios
 
         public override void PlanetSetup()
         {
-            AgentZoneSpecs  = FieldCrossingHelpers.InsertOpposedZonesAndReturnZoneSpec();
+            AgentZoneSpecs = FieldCrossingHelpers.InsertOpposedZonesAndReturnZoneSpec();
 
             int numAgents = 80;
             for(int i = 0; i < numAgents; i++)

@@ -1,7 +1,5 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Scenarios;
-using ALifeUni.ALife.Scenarios.FieldCrossings;
-using Microsoft.Graphics.Canvas.Text;
 using Serilog;
 using System;
 using System.IO;

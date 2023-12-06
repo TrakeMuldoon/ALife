@@ -1,5 +1,5 @@
-﻿using ALifeUni.ALife.Shapes;
-using ALifeUni.ALife.Geometry;
+﻿using ALifeUni.ALife.Geometry;
+using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using System;
 using System.Collections.Generic;

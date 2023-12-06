@@ -196,7 +196,7 @@
     <Compile Include="ALife\WorldObject.cs" />
     <Compile Include="ALife\Geometry\Shapes\Rectangle.cs" />
     <Compile Include="ALife\CustomWorldObjects\FallingRock.cs" />
-    <Compile Include="ALife\CustomWorldObjects\MazeRunner.cs" />
+    <Compile Include="ALife\CustomWorldObjects\CustomAgents\MazeRunner.cs" />
     <Compile Include="ALife\CustomWorldObjects\Spinner.cs" />
     <Compile Include="ALife\CustomWorldObjects\Wall.cs" />
     <Compile Include="ALife\Zone.cs" />

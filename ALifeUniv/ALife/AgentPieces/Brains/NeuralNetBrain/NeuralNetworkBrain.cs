@@ -78,7 +78,7 @@ namespace ALifeUni.ALife.Brains
             int hiddenLayerCount = templateBrain.Layers.Count - 2;
             for(int i = 0; i < hiddenLayerCount; i++)
             {
-                List<Neuron> templateCurrLayerNeurons = templateBrain.Layers[i+1].Neurons;
+                List<Neuron> templateCurrLayerNeurons = templateBrain.Layers[i + 1].Neurons;
                 int currentLayerNeuronCount = templateCurrLayerNeurons.Count;
                 Layer newLayer = new Layer(currentLayerNeuronCount);
                 Layers.Add(newLayer);

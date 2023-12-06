@@ -91,7 +91,7 @@ namespace ALifeUni.UI.UserControls
                 //Swallow. It's just a drawing error. We'll get it right next time.
                 //TODO: Determine why NullRefs happen when we switch SpecialNodes. I suspect race condition... but where?
             }
- 
+
 
         }
 
@@ -160,7 +160,7 @@ namespace ALifeUni.UI.UserControls
 
         private static Vector2 DrawBackedText(CanvasAnimatedDrawEventArgs args, string text, Vector2 textPoint, CanvasTextFormat ctf)
         {
-            Vector2 textRoot  = new Vector2(textPoint.X, textPoint.Y);
+            Vector2 textRoot = new Vector2(textPoint.X, textPoint.Y);
 
             args.DrawingSession.DrawText(text, textRoot, Colors.Black, ctf);
             textRoot.X += 1;
@@ -209,7 +209,7 @@ namespace ALifeUni.UI.UserControls
                 Vector2 targetPoint = nodemap[parentNeuron];
                 Color dendriteColour = GetDendriteColor(den);
                 args.DrawingSession.DrawLine(homePoint, targetPoint, dendriteColour);
-            } 
+            }
         }
 
         private static void DrawDendrites(CanvasAnimatedDrawEventArgs args, Dictionary<Neuron, Vector2> nodemap, Neuron neuron, Vector2 point)

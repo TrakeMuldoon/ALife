@@ -1,6 +1,6 @@
-﻿using ALifeUni.ALife.Shapes;
+﻿using ALifeUni.ALife.Geometry;
+using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
-using ALifeUni.ALife.Geometry;
 using System;
 using Windows.Foundation;
 
@@ -86,7 +86,7 @@ namespace ALifeUni.ALife
                     distanceValue = (int)(targBB.MinY - myCP.Y);
                     rotationValue = CalculateRotationFrom(90);
                 }
-                else 
+                else
                 {
                     //above mathwise, below visually
                     distanceValue = (int)(myCP.Y - targBB.MaxY);
@@ -104,7 +104,7 @@ namespace ALifeUni.ALife
                     distanceValue = (int)(targBB.MinX - myCP.X);
                     rotationValue = CalculateRotationFrom(0);
                 }
-                else 
+                else
                 {
                     //I am to the right 
                     distanceValue = (int)(myCP.X - targBB.MaxX);

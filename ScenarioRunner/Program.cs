@@ -38,6 +38,7 @@ namespace ScenarioRunner
             Log.Information("<---StartRun");
 
             IScenario scenario = new MushroomScenario();
+
             int height = scenario.WorldHeight;
             int width = scenario.WorldWidth;
 

@@ -26,7 +26,6 @@ namespace ALifeUni.ALife
         {
         }
 
-
         public CollisionGrid(int gridHeight, int gridWidth, int gridSize, string gridName)
         {
             GridSize = gridSize;

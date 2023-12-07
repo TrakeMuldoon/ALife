@@ -22,6 +22,7 @@ namespace ALifeUni.ALife.Brains
             AsEnglish = englishString;
             //Spec: <BEHAVIOUR> = "IF <CONDITION> THEN <RESULT>"
             //Spec: <CONDITON> = "<VARIABLE> <OPERATION> <CONSTANT|VARIABLE>( AND <CONDITON>)?"     -- Conditions can be chained together
+            //Spec: <CONDITON> = "ALWAYS"                                                           -- Condition can also be "ALWAYS"
             //Spec: <VARIABLE> = "\\w+(\\.\\w+)+"                                                   -- Some property of the Agent which evaluates to a value
             //Spec: <OPERATION> = "\\w+"                                                            -- Some comparator which is valid to compare to values of the correct type
             //Spec: <CONSTANT> = "\\[\\w+\\]"                                                       -- Some constant of the type of the variable mentioned

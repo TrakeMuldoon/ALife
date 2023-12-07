@@ -18,7 +18,7 @@ namespace ALifeUni.ALife.Scenarios
         /// </summary>
         static ScenarioFactory()
         {
-            var registeredScenarios = new List<ScenarioRegistration>
+            List<ScenarioRegistration> registeredScenarios = new List<ScenarioRegistration>
             {
                 new ScenarioRegistration("Maze", new Dictionary<int, string> {}, typeof(MazeScenario)),
                 new ScenarioRegistration("GenerationalMazeScenario", new Dictionary<int, string> {}, typeof(GenerationalMazeScenario)),
@@ -31,7 +31,7 @@ namespace ALifeUni.ALife.Scenarios
             };
 
             scenarios = new Dictionary<string, ScenarioRegistration>();
-            foreach (var scenario in registeredScenarios)
+            foreach (ScenarioRegistration scenario in registeredScenarios)
             {
                 scenarios.Add(scenario.Name, scenario);
             }

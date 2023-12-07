@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ALifeUni.ALife.Scenarios;
 using Windows.UI.Xaml;
@@ -26,15 +27,15 @@ namespace ALifeUni
             {
                 MainPage.ScenarioName = scenarioNameOverride;
                 MainPage.ScenarioSeed = scenarioSeedOverride;
-                _ = Frame.Navigate(typeof(MainPage));
+                Frame.Navigate(typeof(MainPage));
             }
             else
             {
                 SuggestionsText.Text = string.Empty;
                 ScenariosList.Items.Clear();
-                foreach (var scenario in ScenarioFactory.Scenarios)
+                foreach (string scenarioName in ScenarioFactory.Scenarios)
                 {
-                    ScenariosList.Items.Add(scenario);
+                    ScenariosList.Items.Add(scenarioName);
                 }
             }
         }
@@ -50,7 +51,7 @@ namespace ALifeUni
             {
                 MainPage.ScenarioName = scenarioName;
                 MainPage.ScenarioSeed = int.TryParse(SeedText.Text, out var seed) ? seed : (int?)null;
-                _ = Frame.Navigate(typeof(MainPage));
+                Frame.Navigate(typeof(MainPage));
             }
         }
 
@@ -64,15 +65,15 @@ namespace ALifeUni
             SuggestionsText.Text = string.Empty;
             if (ScenariosList.SelectedItem is string scenarioName)
             {
-                var sb = new StringBuilder();
-                var suggestions = ScenarioFactory.GetSuggestions(scenarioName);
+                StringBuilder sb = new StringBuilder();
+                Dictionary<int, string> suggestions = ScenarioFactory.GetSuggestions(scenarioName);
                 if (suggestions.Count > 0)
                 {
-                    var maxSeedLength = suggestions.Select(x => x.Key).Max().ToString().Length;
+                    int maxSeedLength = suggestions.Select(x => x.Key).Max().ToString().Length;
 
-                    foreach (var suggestion in suggestions)
+                    foreach (KeyValuePair<int,string> suggestion in suggestions)
                     {
-                        _ = sb.AppendLine($"{suggestion.Key.ToString($"D{maxSeedLength}")} : {suggestion.Value}");
+                        sb.AppendLine($"{suggestion.Key.ToString($"D{maxSeedLength}")} : {suggestion.Value}");
                     }
                     SuggestionsText.Text = sb.ToString();
                 }

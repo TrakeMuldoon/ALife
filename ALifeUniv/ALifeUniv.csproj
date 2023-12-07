@@ -168,7 +168,9 @@
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\IChildShape.cs" />
     <Compile Include="ALife\Scenarios\GardenScenario\MushroomScenario.cs" />
     <Compile Include="ALife\Scenarios\Mazes\CarTrackMaze.cs" />
+    <Compile Include="ALife\Scenarios\ScenarioFactory.cs" />
     <Compile Include="ALife\Scenarios\ScenarioHelpers\FieldCrossingHelpers.cs" />
+    <Compile Include="ALife\Scenarios\ScenarioRegistration.cs" />
     <Compile Include="ALife\Scenarios\ScenarioTemplate.cs" />
     <Compile Include="ALife\Scenarios\ScenarioHelpers\CollisionBehaviours.cs" />
     <Compile Include="ALife\Scenarios\FieldCrossings\FieldCrossingWallsScenario.cs" />
@@ -201,6 +203,9 @@
     <Compile Include="ALife\CustomWorldObjects\Spinner.cs" />
     <Compile Include="ALife\CustomWorldObjects\Wall.cs" />
     <Compile Include="ALife\Zone.cs" />
+    <Compile Include="Launcher.xaml.cs">
+      <DependentUpon>Launcher.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\AgentUISettings.cs" />
     <Compile Include="UI\UserControls\CollisionTestPanel.xaml.cs">
       <DependentUpon>CollisionTestPanel.xaml</DependentUpon>
@@ -268,6 +273,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Launcher.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\UserControls\CollisionTestPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

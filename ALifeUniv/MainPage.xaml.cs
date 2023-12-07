@@ -30,8 +30,11 @@ namespace ALifeUni
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        long startticks;
-        readonly DispatcherTimer gameTimer = new DispatcherTimer();
+        public static string ScenarioName = string.Empty;
+        public static int? ScenarioSeed = null;
+
+        private readonly long startticks;
+        private readonly DispatcherTimer gameTimer = new DispatcherTimer();
         public List<LayerUISettings> VisualSettings;
         public AgentUISettings AgentVisualSettings;
         public int DrawingErrors = 0;
@@ -39,17 +42,17 @@ namespace ALifeUni
         public MainPage()
         {
             this.InitializeComponent();
-            /* ***********************************
-             * Set Scenario Here
-             * ***********************************/
-            //Planet.CreateWorld(new MazeScenario());
-            //Planet.CreateWorld(new GenerationalMazeScenario());
-            //Planet.CreateWorld(new DripFeedMaze());
-            //Planet.CreateWorld(new CarTrackMaze()); //1832460063!! Fun!
-            //Planet.CreateWorld(new FieldCrossingScenario());
-            //Planet.CreateWorld(new FieldCrossingLowReproScenario());
-            //Planet.CreateWorld(new FieldCrossingWallsScenario());
-            Planet.CreateWorld(new MushroomScenario());
+
+            IScenario scenario = ScenarioFactory.GetScenario(ScenarioName);
+
+            if(ScenarioSeed != null)
+            {
+                Planet.CreateWorld(ScenarioSeed.Value, scenario);
+            }
+            else
+            {
+                Planet.CreateWorld(scenario);
+            }
 
             animCanvas.ClearColor = Colors.NavajoWhite;
             animCanvas.Height = Planet.World.Scenario.WorldHeight;

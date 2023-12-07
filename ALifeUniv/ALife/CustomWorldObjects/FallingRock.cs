@@ -1,6 +1,6 @@
-﻿using ALifeUni.ALife.Shapes;
+﻿using ALifeUni.ALife.Geometry;
+using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
-using ALifeUni.ALife.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;

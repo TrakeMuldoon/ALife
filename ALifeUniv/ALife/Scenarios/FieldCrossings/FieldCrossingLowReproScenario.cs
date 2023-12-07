@@ -2,7 +2,6 @@ using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation;
-using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
@@ -33,13 +32,13 @@ namespace ALifeUni.ALife.Scenarios
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[me.CollisionLevel];
 
             //Get a new free point within the start zone.
-            Point myPoint = me.Zone.Distributor.NextAgentCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
+            Point myPoint = me.HomeZone.Distributor.NextAgentCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
             me.Shape.CentrePoint = myPoint;
             collider.MoveObject(me);
 
             //Create two Children
             FieldCrossingScenario.CreateZonedChild(me, collider, RotatedZoneSpecs[me.TargetZone]);
-            FieldCrossingScenario.CreateZonedChild(me, collider, RotatedZoneSpecs[me.Zone]);
+            FieldCrossingScenario.CreateZonedChild(me, collider, RotatedZoneSpecs[me.HomeZone]);
 
             //You have a new countdown
             me.Statistics["DeathTimer"].Value = 0;
@@ -48,7 +47,7 @@ namespace ALifeUni.ALife.Scenarios
 
         public override void PlanetSetup()
         {
-            AgentZoneSpecs  = FieldCrossingHelpers.InsertOpposedZonesAndReturnZoneSpec();
+            AgentZoneSpecs = FieldCrossingHelpers.InsertOpposedZonesAndReturnZoneSpec();
 
             int numAgents = 80;
             for(int i = 0; i < numAgents; i++)

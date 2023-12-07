@@ -1,6 +1,5 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Scenarios;
-using ALifeUni.ALife.Scenarios.FieldCrossings;
 using Serilog;
 using System;
 using System.IO;
@@ -20,11 +19,26 @@ namespace ScenarioRunner
     {
         static void Main(string[] args)
         {
+            while(true)
+            {
+                RunSetOfSeeds();
+                Console.WriteLine("Done, Hit 'r' to restart, any other key to exit");
+                var key = Console.ReadKey();
+                if(key.Key != ConsoleKey.R)
+                {
+                    break;
+                }
+            }
+        }
+
+        static void RunSetOfSeeds()
+        {
             var logFilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "log.txt");
             Log.Logger = new LoggerConfiguration().WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day).CreateLogger();
             Log.Information("<---StartRun");
 
-            IScenario scenario = new ManaScenario();
+            IScenario scenario = new MushroomScenario();
+
             int height = scenario.WorldHeight;
             int width = scenario.WorldWidth;
 
@@ -35,10 +49,8 @@ namespace ScenarioRunner
                 int seedValue = r.Next();
                 RunSeed(seedValue, scenario, height, width);
             }
-            Console.WriteLine("Done, Please hit enter key");
             Log.Information("--->EndRun");
             Log.CloseAndFlush();
-            Console.ReadLine();
         }
 
         private static void RunSeed(int seedValue, IScenario scenario, int height, int width)
@@ -87,15 +99,15 @@ namespace ScenarioRunner
             DateTime end = DateTime.Now;
             string durationString = (end - start).ToString("mm\\:ss\\.fff");
 
-            Console.WriteLine("\tTotal Time: " + durationString);
+            Console.Write($"\tTotal Time: {durationString}\tTurns:{Planet.World.Turns}");
 
             if(!String.IsNullOrEmpty(error))
             {
-                Console.WriteLine(error);
-
                 string nl = Environment.NewLine;
                 string message = topLine + nl + error + nl;
                 Log.Information(message);
+
+                Console.WriteLine($"\tERROR: {error}");
             }
             else
             {

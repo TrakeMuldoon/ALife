@@ -48,12 +48,17 @@ namespace ALifeUni.UI.UserControls
                 SelectedNeuron = null;
                 if(theAgent != null)
                 {
-                    AgentName.Text = theAgent.IndividualLabel;
+                    AgentName.Text = theAgent.IndividualLabel.Length < 25 ? theAgent.IndividualLabel : TruncateAgentName(theAgent.IndividualLabel);
                     brain = theAgent.MyBrain as NeuralNetworkBrain;
                     InitializeNodeLocationDictionary();
                     InitializeDownstreamDendriteMap();
                 }
             }
+        }
+
+        private String TruncateAgentName(String str)
+        {
+            return $"{str.Substring(0, 3)}...{str.Length - 13}...{str.Substring(str.Length - 10)}";
         }
 
         private void brainCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
@@ -91,7 +96,7 @@ namespace ALifeUni.UI.UserControls
                 //Swallow. It's just a drawing error. We'll get it right next time.
                 //TODO: Determine why NullRefs happen when we switch SpecialNodes. I suspect race condition... but where?
             }
- 
+
 
         }
 
@@ -160,7 +165,7 @@ namespace ALifeUni.UI.UserControls
 
         private static Vector2 DrawBackedText(CanvasAnimatedDrawEventArgs args, string text, Vector2 textPoint, CanvasTextFormat ctf)
         {
-            Vector2 textRoot  = new Vector2(textPoint.X, textPoint.Y);
+            Vector2 textRoot = new Vector2(textPoint.X, textPoint.Y);
 
             args.DrawingSession.DrawText(text, textRoot, Colors.Black, ctf);
             textRoot.X += 1;
@@ -198,13 +203,18 @@ namespace ALifeUni.UI.UserControls
 
         private void DrawDownstreamDendrites(CanvasAnimatedDrawEventArgs args, Neuron selectedNeuron, Dictionary<Neuron, Vector2> nodemap)
         {
+            if(!NeuronToDownstreamDendrites.ContainsKey(selectedNeuron))
+            {
+                //Action node selected. There are no downstream dendrites to draw
+                return;
+            }
             Vector2 homePoint = nodemap[selectedNeuron];
             foreach(var (den, parentNeuron) in NeuronToDownstreamDendrites[selectedNeuron])
             {
                 Vector2 targetPoint = nodemap[parentNeuron];
                 Color dendriteColour = GetDendriteColor(den);
                 args.DrawingSession.DrawLine(homePoint, targetPoint, dendriteColour);
-            } 
+            }
         }
 
         private static void DrawDendrites(CanvasAnimatedDrawEventArgs args, Dictionary<Neuron, Vector2> nodemap, Neuron neuron, Vector2 point)

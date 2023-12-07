@@ -1,5 +1,5 @@
-﻿using ALifeUni.ALife.Shapes;
-using ALifeUni.ALife.Geometry;
+﻿using ALifeUni.ALife.Geometry;
+using ALifeUni.ALife.Shapes;
 using System;
 using Windows.Foundation;
 using Windows.UI;

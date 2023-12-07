@@ -1,6 +1,6 @@
-﻿using ALifeUni.ALife.Shapes;
+﻿using ALifeUni.ALife.Geometry;
+using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
-using ALifeUni.ALife.Geometry;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;
@@ -381,7 +381,7 @@ namespace ALifeUni.ALife
             //TODO: This uses 3 sqrts. How often is this function used?
             //TODO: 12/01/2023 This should be mathematically simple to just remove the squareroots, and make the diff factor bigger
             double diff = Math.Sqrt(lenSQ) - (Math.Sqrt(ptLine1SQ) + Math.Sqrt(ptLine2SQ));
-            return Math.Round(diff, 3) == 0; 
+            return Math.Round(diff, 3) == 0;
         }
 
         private static Point ClosestPoint_PointToLineSegment(Point cCP, Point p1, Point p2)
@@ -467,7 +467,7 @@ namespace ALifeUni.ALife
             bool trbr = LinePointSubCollision(p, rect.TopRight, rect.BottomRight);
             bool brbl = LinePointSubCollision(p, rect.BottomRight, rect.BottomLeft);
             bool bltl = LinePointSubCollision(p, rect.BottomLeft, rect.TopLeft);
-            
+
             //Exclusive OR to determine if the number of true is odd or even
             return tltr ^= trbr ^= brbl ^= bltl;
         }

@@ -54,7 +54,7 @@ namespace ALifeUni.ALife.Scenarios
     }
 
     public static class IScenarioHelpers
-    { 
+    {
         /* This is called when the scenario is reset, to get you a fresh scenario */
         public static IScenario FreshInstanceOf(IScenario originalScenario)
         {

@@ -3,25 +3,21 @@ using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Windows.Foundation;
 using Windows.UI;
 
-namespace ALifeUni.ALife.CustomWorldObjects
+namespace ALifeUni.ALife.CustomWorldObjects.CustomAgents
 {
     public class MazeRunner : Agent
     {
         public MazeRunner(Zone parentZone, Zone targetZone) : base("MazeRunner", AgentIDGenerator.GetNextAgentId(), ReferenceValues.CollisionLevelPhysical)
         {
-            Zone = parentZone;
+            HomeZone = parentZone;
             TargetZone = targetZone;
 
-            Point centrePoint = parentZone.Distributor.NextAgentCentre(10, 10);
-
-            IShape myShape = new Circle(centrePoint, 5);
-            StartOrientation = 0;
-            myShape.Orientation.Degrees = 0;
-            myShape.Color = Colors.Red;
-            SetShape(myShape);
+            int agentRadius = 5;
+            ApplyCircleShapeToAgent(parentZone.Distributor, Colors.Red, agentRadius, 0);
 
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {

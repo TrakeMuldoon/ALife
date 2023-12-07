@@ -162,10 +162,11 @@
     <Compile Include="ALife\AgentPieces\Senses\GoalSense\RotationToObjectInput.cs" />
     <Compile Include="ALife\AgentPieces\Senses\Proximity\ProximityCluster.cs" />
     <Compile Include="ALife\AgentPieces\Senses\SquareSense\SquareSenseCluster.cs" />
+    <Compile Include="ALife\CustomWorldObjects\CustomAgents\MushroomGatherer.cs" />
     <Compile Include="ALife\CustomWorldObjects\Fruit.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildRectangle.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\IChildShape.cs" />
-    <Compile Include="ALife\Scenarios\GardenScenario\ManaScenario.cs" />
+    <Compile Include="ALife\Scenarios\GardenScenario\MushroomScenario.cs" />
     <Compile Include="ALife\Scenarios\Mazes\CarTrackMaze.cs" />
     <Compile Include="ALife\Scenarios\ScenarioHelpers\FieldCrossingHelpers.cs" />
     <Compile Include="ALife\Scenarios\ScenarioTemplate.cs" />
@@ -196,7 +197,7 @@
     <Compile Include="ALife\WorldObject.cs" />
     <Compile Include="ALife\Geometry\Shapes\Rectangle.cs" />
     <Compile Include="ALife\CustomWorldObjects\FallingRock.cs" />
-    <Compile Include="ALife\CustomWorldObjects\MazeRunner.cs" />
+    <Compile Include="ALife\CustomWorldObjects\CustomAgents\MazeRunner.cs" />
     <Compile Include="ALife\CustomWorldObjects\Spinner.cs" />
     <Compile Include="ALife\CustomWorldObjects\Wall.cs" />
     <Compile Include="ALife\Zone.cs" />

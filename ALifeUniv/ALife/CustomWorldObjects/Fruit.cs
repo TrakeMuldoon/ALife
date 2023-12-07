@@ -1,11 +1,5 @@
-﻿using ALifeUni.ALife.Geometry;
-using ALifeUni.ALife.Shapes;
+﻿using ALifeUni.ALife.Shapes;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -15,11 +9,12 @@ namespace ALifeUni.ALife.CustomWorldObjects
     public class Fruit : WorldObject
     {
         const int FRUIT_RADIUS = 3;
-        
+
+        static int FruitID = 1;
         Zone StartZone = null;
 
         public Fruit(Point centrePoint, IShape shape, Color colour, Zone startZone)
-             : base(centrePoint, shape, "Fruit", AgentIDGenerator.GetNextAgentId(), ReferenceValues.CollisionLevelPhysical, colour)
+             : base(centrePoint, shape, "Fruit", (Fruit.FruitID++).ToString(), ReferenceValues.CollisionLevelPhysical, colour)
         {
             StartZone = startZone;
         }

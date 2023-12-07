@@ -1,14 +1,9 @@
 ﻿using ALifeUni.ALife.Brains;
-using ALifeUni.ALife.CustomWorldObjects;
 using ALifeUni.ALife.Scenarios.ScenarioHelpers;
-using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using System.ServiceModel;
 using Windows.Foundation;
-using Windows.Security.Cryptography.Core;
 using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios

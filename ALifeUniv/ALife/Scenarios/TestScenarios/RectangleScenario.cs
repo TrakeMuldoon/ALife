@@ -1,8 +1,9 @@
 ﻿using ALifeUni.ALife.Brains;
 using ALifeUni.ALife.CustomWorldObjects;
+using ALifeUni.ALife.CustomWorldObjects.CustomAgents;
+using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
-using ALifeUni.ALife.Geometry;
 using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI;
@@ -29,7 +30,7 @@ namespace ALifeUni.ALife.Scenarios
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
                                     , ReferenceValues.CollisionLevelPhysical);
-            agent.Zone = parentZone;
+            agent.HomeZone = parentZone;
             agent.TargetZone = targetZone;
 
             Point centrePoint = parentZone.Distributor.NextAgentCentre(40, 80);

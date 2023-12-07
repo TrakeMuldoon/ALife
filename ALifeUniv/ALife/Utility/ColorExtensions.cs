@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Windows.UI;
+﻿using Windows.UI;
 
 namespace ALifeUni.ALife.Utility
 {

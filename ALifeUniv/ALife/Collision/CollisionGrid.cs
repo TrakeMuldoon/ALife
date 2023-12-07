@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation;
 
-namespace ALifeUni.ALife
+namespace ALifeUni.ALife.Collision
 {
     public class CollisionGrid<T> : ICollisionMap<T> where T : IHasShape
     {

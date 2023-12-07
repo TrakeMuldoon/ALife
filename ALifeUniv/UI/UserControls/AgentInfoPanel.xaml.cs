@@ -1,5 +1,10 @@
 ﻿using ALifeUni.ALife;
-using ALifeUni.ALife.Brains;
+using ALifeUni.ALife.Agents;
+using ALifeUni.ALife.Agents.AgentActions;
+using ALifeUni.ALife.Agents.Brains;
+using ALifeUni.ALife.Agents.Brains.BehaviourBrains;
+using ALifeUni.ALife.Agents.Properties;
+using ALifeUni.ALife.Agents.Senses;
 using ALifeUni.ALife.Shapes;
 using System;
 using System.Text;

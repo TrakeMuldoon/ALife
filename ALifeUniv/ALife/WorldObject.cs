@@ -1,4 +1,5 @@
-﻿using ALifeUni.ALife.Shapes;
+﻿using ALifeUni.ALife.Agents.Properties;
+using ALifeUni.ALife.Shapes;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;

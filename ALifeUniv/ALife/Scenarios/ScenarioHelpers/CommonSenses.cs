@@ -1,4 +1,6 @@
-﻿using ALifeUni.ALife.Utility;
+﻿using ALifeUni.ALife.Agents;
+using ALifeUni.ALife.Agents.Senses;
+using ALifeUni.ALife.Utility;
 using System.Collections.Generic;
 
 namespace ALifeUni.ALife.Scenarios.ScenarioHelpers

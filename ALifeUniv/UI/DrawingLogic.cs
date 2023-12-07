@@ -1,7 +1,9 @@
 ﻿using ALifeUni.ALife;
+using ALifeUni.ALife.Agents;
 using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.Utility.WorldObjects;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.UI.Xaml;

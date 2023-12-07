@@ -12,11 +12,16 @@
  * **/
 
 
-using ALifeUni.ALife.Brains;
-using ALifeUni.ALife.CustomWorldObjects;
+using ALifeUni.ALife.Agents;
+using ALifeUni.ALife.Agents.AgentActions;
+using ALifeUni.ALife.Agents.Brains;
+using ALifeUni.ALife.Agents.Properties;
+using ALifeUni.ALife.Agents.Senses;
+using ALifeUni.ALife.Collision;
 using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.Utility.WorldObjects;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;

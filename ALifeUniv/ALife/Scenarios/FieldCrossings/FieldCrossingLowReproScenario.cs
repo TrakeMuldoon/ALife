@@ -1,3 +1,5 @@
+using ALifeUni.ALife.Agents;
+using ALifeUni.ALife.Collision;
 using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using System.Collections.Generic;
 using System.Linq;

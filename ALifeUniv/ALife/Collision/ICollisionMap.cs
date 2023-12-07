@@ -1,7 +1,7 @@
 ﻿using ALifeUni.ALife.Shapes;
 using System.Collections.Generic;
 
-namespace ALifeUni.ALife
+namespace ALifeUni.ALife.Collision
 {
     public interface ICollisionMap<T> where T : IHasShape
     {

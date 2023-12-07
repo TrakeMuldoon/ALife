@@ -1,7 +1,11 @@
-﻿using ALifeUni.ALife.Brains;
-using ALifeUni.ALife.CustomWorldObjects;
-using ALifeUni.ALife.CustomWorldObjects.CustomAgents;
+﻿using ALifeUni.ALife.Agents;
+using ALifeUni.ALife.Agents.AgentActions;
+using ALifeUni.ALife.Agents.Brains;
+using ALifeUni.ALife.Agents.CustomAgents;
+using ALifeUni.ALife.Agents.Properties;
+using ALifeUni.ALife.Agents.Senses;
 using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.Utility.WorldObjects;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;

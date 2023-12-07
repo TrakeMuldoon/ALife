@@ -1,5 +1,5 @@
-﻿using ALifeUni.ALife.CustomWorldObjects;
-using ALifeUni.ALife.Geometry;
+﻿using ALifeUni.ALife.Geometry;
+using ALifeUni.ALife.Utility.WorldObjects;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;

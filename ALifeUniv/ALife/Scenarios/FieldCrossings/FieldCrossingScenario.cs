@@ -92,7 +92,7 @@ namespace ALifeUni.ALife.Scenarios
             List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(me.Shape.BoundingBox);
             foreach(Zone z in inZones)
             {
-                if(z.Name == me.Zone.Name)
+                if(z.Name == me.HomeZone.Name)
                 {
                     if(me.Statistics["ZoneEscapeTimer"].Value > 200)
                     {
@@ -112,7 +112,7 @@ namespace ALifeUni.ALife.Scenarios
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[me.CollisionLevel];
 
             //Get a new free point within the start zone.
-            Point myPoint = me.Zone.Distributor.NextAgentCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
+            Point myPoint = me.HomeZone.Distributor.NextAgentCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
             me.Shape.CentrePoint = myPoint;
             collider.MoveObject(me);
 
@@ -131,9 +131,9 @@ namespace ALifeUni.ALife.Scenarios
         {
             //TODO: Refactor this into the Agent
             Agent child = (Agent)me.Reproduce();
-            child.Zone = specification.StartZone;
+            child.HomeZone = specification.StartZone;
             child.TargetZone = specification.TargetZone;
-            Point reverseChildPoint = child.Zone.Distributor.NextAgentCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
+            Point reverseChildPoint = child.HomeZone.Distributor.NextAgentCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
             child.Shape.CentrePoint = reverseChildPoint;
             child.Shape.Orientation.Degrees = specification.StartOrientation;
             child.Shape.Color = specification.AgentColor;

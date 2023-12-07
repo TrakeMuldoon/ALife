@@ -53,7 +53,7 @@ namespace ALifeUni.ALife
             private set;
         }
 
-        public Zone Zone;
+        public Zone HomeZone;
         public Zone TargetZone;
         public double StartOrientation
         {
@@ -74,7 +74,7 @@ namespace ALifeUni.ALife
         public Agent(String genusLabel, string individualLabel, string collisionLevel, Zone parentZone, Zone targetZone)
             : base(genusLabel, individualLabel, collisionLevel)
         {
-            Zone = parentZone;
+            HomeZone = parentZone;
             TargetZone = targetZone;
         }
 

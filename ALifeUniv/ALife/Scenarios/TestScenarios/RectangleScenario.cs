@@ -30,7 +30,7 @@ namespace ALifeUni.ALife.Scenarios
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
                                     , ReferenceValues.CollisionLevelPhysical);
-            agent.Zone = parentZone;
+            agent.HomeZone = parentZone;
             agent.TargetZone = targetZone;
 
             Point centrePoint = parentZone.Distributor.NextAgentCentre(40, 80);

@@ -81,7 +81,7 @@ namespace ALifeUni.ALife.Scenarios
             List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(me.Shape.BoundingBox);
             foreach(Zone z in inZones)
             {
-                if(z.Name == me.Zone.Name
+                if(z.Name == me.HomeZone.Name
                     && me.Statistics["ZoneEscapeTimer"].Value > 200)
                 {
                     me.Die();

@@ -36,7 +36,7 @@ namespace ALifeUni.UI.UserControls
                 if(wo is Agent ag
                     && ag.Alive)
                 {
-                    zoneCount[ag.Zone.Name]++;
+                    zoneCount[ag.HomeZone.Name]++;
                 }
             }
             foreach(string name in zoneCount.Keys)

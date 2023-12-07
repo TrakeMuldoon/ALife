@@ -19,7 +19,7 @@ namespace ALifeUni.ALife
             Agent newClone = new Agent(toClone.GenusLabel
                                        , AgentIDGenerator.GetNextChildId(toClone.IndividualLabel, toClone.NumChildren)
                                        , ReferenceValues.CollisionLevelPhysical); //TODO: This is a bug when you use "ReproduceBest" or reproduce anything that is already dead. 
-            newClone.Zone = toClone.Zone;
+            newClone.HomeZone = toClone.HomeZone;
             newClone.TargetZone = toClone.TargetZone;
 
             IShape clonedShape = toClone.Shape.CloneShape();
@@ -27,7 +27,7 @@ namespace ALifeUni.ALife
             clonedShape.Orientation.Degrees = toClone.StartOrientation;
             newClone.SetShape(clonedShape);
 
-            Point newCentrePoint = toClone.Zone.Distributor.NextAgentCentre(clonedShape.BoundingBox.XLength, clonedShape.BoundingBox.YHeight);
+            Point newCentrePoint = toClone.HomeZone.Distributor.NextAgentCentre(clonedShape.BoundingBox.XLength, clonedShape.BoundingBox.YHeight);
             clonedShape.CentrePoint = newCentrePoint;
 
             List<SenseCluster> clonedSenses = new List<SenseCluster>();
@@ -59,7 +59,7 @@ namespace ALifeUni.ALife
                                                                       //was being used. It was reproducing on the dead layer. 
                                                                       //This should be changed to somehow understand the target layer it wishes to reproduce on. 
 
-            newChild.Zone = newParent.Zone;
+            newChild.HomeZone = newParent.HomeZone;
             newChild.TargetZone = newParent.TargetZone;
 
             IShape evolvedShape = newParent.Shape.CloneShape();
@@ -67,7 +67,7 @@ namespace ALifeUni.ALife
             evolvedShape.Orientation.Degrees = newParent.StartOrientation;
             newChild.SetShape(evolvedShape);
 
-            Point newCentrePoint = newParent.Zone.Distributor.NextAgentCentre(evolvedShape.BoundingBox.XLength, evolvedShape.BoundingBox.YHeight);
+            Point newCentrePoint = newParent.HomeZone.Distributor.NextAgentCentre(evolvedShape.BoundingBox.XLength, evolvedShape.BoundingBox.YHeight);
             evolvedShape.CentrePoint = newCentrePoint;
 
             List<SenseCluster> evolvedSenses = new List<SenseCluster>();

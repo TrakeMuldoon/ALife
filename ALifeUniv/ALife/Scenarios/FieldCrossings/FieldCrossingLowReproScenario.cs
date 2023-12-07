@@ -32,13 +32,13 @@ namespace ALifeUni.ALife.Scenarios
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[me.CollisionLevel];
 
             //Get a new free point within the start zone.
-            Point myPoint = me.Zone.Distributor.NextAgentCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
+            Point myPoint = me.HomeZone.Distributor.NextAgentCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
             me.Shape.CentrePoint = myPoint;
             collider.MoveObject(me);
 
             //Create two Children
             FieldCrossingScenario.CreateZonedChild(me, collider, RotatedZoneSpecs[me.TargetZone]);
-            FieldCrossingScenario.CreateZonedChild(me, collider, RotatedZoneSpecs[me.Zone]);
+            FieldCrossingScenario.CreateZonedChild(me, collider, RotatedZoneSpecs[me.HomeZone]);
 
             //You have a new countdown
             me.Statistics["DeathTimer"].Value = 0;

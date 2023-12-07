@@ -34,12 +34,12 @@ namespace ALifeUni.ALife.Scenarios
 
             List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(null,
                 new EyeCluster(agent, "EyeLeft", true
-                    , new ROEvoNumber(startValue: -30, evoDeltaMax: 1, hardMin: -360, hardMax: 360)    //Orientation Around Parent
+                    , new ROEvoNumber(startValue: -20, evoDeltaMax: 1, hardMin: -360, hardMax: 360)    //Orientation Around Parent
                     , new ROEvoNumber(startValue: 5,  evoDeltaMax: 1, hardMin: -360, hardMax: 360)     //Relative Orientation
                     , new ROEvoNumber(startValue: 80, evoDeltaMax: 1, hardMin: 40, hardMax: 120)       //Radius
                     , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
                 new EyeCluster(agent, "EyeRight", true
-                    , new ROEvoNumber(startValue: 30, evoDeltaMax: 1, hardMin: -360, hardMax: 360)     //Orientation Around Parent
+                    , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: -360, hardMax: 360)     //Orientation Around Parent
                     , new ROEvoNumber(startValue: -5, evoDeltaMax: 1, hardMin: -360, hardMax: 360)    //Relative Orientation
                     , new ROEvoNumber(startValue: 80, evoDeltaMax: 1, hardMin: 40, hardMax: 120)       //Radius
                     , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40))       //Sweep
@@ -123,10 +123,10 @@ namespace ALifeUni.ALife.Scenarios
         /******************/
 
         //TODO: Fully Comment This
-        public virtual int WorldWidth => 750;
+        public virtual int WorldWidth => 850;
 
         //TODO: Fully Comment This
-        public virtual int WorldHeight => 750;
+        public virtual int WorldHeight => 850;
 
         //TODO: Fully Comment This
         public virtual bool FixedWidthHeight

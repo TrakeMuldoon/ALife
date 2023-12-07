@@ -45,7 +45,7 @@ namespace ALifeUni
             //Planet.CreateWorld(new MazeScenario());
             //Planet.CreateWorld(new GenerationalMazeScenario());
             //Planet.CreateWorld(new DripFeedMaze());
-            //Planet.CreateWorld(new CarTrackMaze());
+            //Planet.CreateWorld(new CarTrackMaze()); //1832460063!! Fun!
             //Planet.CreateWorld(new FieldCrossingScenario());
             //Planet.CreateWorld(new FieldCrossingLowReproScenario());
             //Planet.CreateWorld(new FieldCrossingWallsScenario());

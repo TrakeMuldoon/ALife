@@ -1,5 +1,4 @@
-﻿using ALifeUni.ALife;
-using ALifeUni.ALife.Agents;
+﻿using ALifeUni.ALife.Agents;
 using ALifeUni.ALife.Agents.AgentActions;
 using ALifeUni.ALife.Agents.Brains;
 using ALifeUni.ALife.Agents.Brains.BehaviourBrains;

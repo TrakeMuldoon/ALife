@@ -2,7 +2,7 @@
 using ALifeUni.ALife.Agents.Senses;
 
 namespace ALifeUni.ALife.Agents.Brains
-{ 
+{
     class TesterBrain : IBrain
     {
         private Agent body;

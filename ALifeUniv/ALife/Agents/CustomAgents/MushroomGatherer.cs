@@ -6,9 +6,6 @@ using ALifeUni.ALife.Agents.Senses;
 using ALifeUni.ALife.Utility;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI;
 
 namespace ALifeUni.ALife.Agents.CustomAgents
@@ -19,7 +16,7 @@ namespace ALifeUni.ALife.Agents.CustomAgents
             : base("MushroomGatherer", AgentIDGenerator.GetNextAgentId(), ReferenceValues.CollisionLevelPhysical)
         {
             HomeZone = parentZone;
-            
+
             int agentRadius = 5;
             ApplyCircleShapeToAgent(HomeZone.Distributor, Colors.Red, agentRadius, 0);
 

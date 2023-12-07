@@ -101,11 +101,14 @@ namespace ALifeUni.UI.UserControls
         {
             switch(shapeSpec.ShapeString)
             {
-                case "Circle": return String.Format("Circle shape{0} = new Circle(point{0}, {1});"
+                case "Circle":
+                    return String.Format("Circle shape{0} = new Circle(point{0}, {1});"
                                                      , itemNum, shapeSpec.CircleRadius);
-                case "Rectangle": return String.Format("Rectangle shape{0} = new Rectangle(point{0}, {1}, {2}, Colors.Pink);"
+                case "Rectangle":
+                    return String.Format("Rectangle shape{0} = new Rectangle(point{0}, {1}, {2}, Colors.Pink);"
                                                         , itemNum, shapeSpec.RectangleFB, shapeSpec.RectangleRL);
-                case "Sector": return String.Format("Sector shape{0} = new Sector(point{0}, {1}, new Angle({2}), Colors.Pink);"
+                case "Sector":
+                    return String.Format("Sector shape{0} = new Sector(point{0}, {1}, new Angle({2}), Colors.Pink);"
                                                     , itemNum, shapeSpec.SectorRadius, shapeSpec.SectorSweep);
                 default: throw new Exception("Invalid shape value in the shape constructor.");
             }

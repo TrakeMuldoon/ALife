@@ -1,5 +1,6 @@
 ﻿using ALifeUni.ALife.Brains;
 using ALifeUni.ALife.CustomWorldObjects;
+using ALifeUni.ALife.CustomWorldObjects.CustomAgents;
 using ALifeUni.ALife.Utility;
 using System;
 using System.Collections.Generic;
@@ -155,6 +156,11 @@ namespace ALifeUni.ALife.Scenarios
             for(int i = 0; i < numAgents; i++)
             {
                 Agent rag = AgentFactory.CreateAgent("Agent", WorldZone, null, PURE_BLUE, 0);
+            }
+
+            for(int k = 0; k < 5; k++)
+            {
+                Agent mg = new MushroomGatherer(WorldZone);
             }
 
             while(AllFruits.Count < FruitMax)

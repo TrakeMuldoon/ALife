@@ -48,12 +48,17 @@ namespace ALifeUni.UI.UserControls
                 SelectedNeuron = null;
                 if(theAgent != null)
                 {
-                    AgentName.Text = theAgent.IndividualLabel;
+                    AgentName.Text = theAgent.IndividualLabel.Length < 25 ? theAgent.IndividualLabel : TruncateAgentName(theAgent.IndividualLabel);
                     brain = theAgent.MyBrain as NeuralNetworkBrain;
                     InitializeNodeLocationDictionary();
                     InitializeDownstreamDendriteMap();
                 }
             }
+        }
+
+        private String TruncateAgentName(String str)
+        {
+            return $"{str.Substring(0, 3)}...{str.Length - 13}...{str.Substring(str.Length - 10)}";
         }
 
         private void brainCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)

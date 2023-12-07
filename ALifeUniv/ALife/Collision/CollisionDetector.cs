@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Windows.Foundation;
 
-namespace ALifeUni.ALife
+namespace ALifeUni.ALife.Collision
 {
     public static class CollisionDetector
     {

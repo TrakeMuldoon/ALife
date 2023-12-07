@@ -1,6 +1,7 @@
-﻿using ALifeUni.ALife.CustomWorldObjects;
+﻿using ALifeUni.ALife.Agents;
 using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Scenarios.ScenarioHelpers;
+using ALifeUni.ALife.Utility.WorldObjects;
 using System.Collections.Generic;
 using Windows.Foundation;
 

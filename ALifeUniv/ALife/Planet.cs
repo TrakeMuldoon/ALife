@@ -1,4 +1,6 @@
-﻿using ALifeUni.ALife.Scenarios;
+﻿using ALifeUni.ALife.Agents;
+using ALifeUni.ALife.Collision;
+using ALifeUni.ALife.Scenarios;
 using ALifeUni.ALife.Utility;
 using System;
 using System.Collections.Generic;

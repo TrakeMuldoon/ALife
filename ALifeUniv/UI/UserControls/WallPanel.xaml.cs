@@ -1,7 +1,8 @@
 ﻿using ALifeUni.ALife;
-using ALifeUni.ALife.CustomWorldObjects;
+using ALifeUni.ALife.Collision;
 using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Utility.WorldObjects;
 using System;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;

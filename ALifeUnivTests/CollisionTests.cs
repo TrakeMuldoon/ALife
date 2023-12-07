@@ -1,4 +1,4 @@
-using ALifeUni.ALife;
+using ALifeUni.ALife.Collision;
 using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Shapes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

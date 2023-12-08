@@ -42,13 +42,18 @@ namespace ALifeUni.ALife.Scenarios
         /// <param name="debugModeOnly">True to only list this scenario in debug mode.</param>
         /// <param name="autoStartScenario">Set to true to automatically start this scenario without showing the launcher. NOTE: If multiple have this set to true, an exception will be thrown.</param>
         /// <param name="autoStartSeed">The automatic start seed, used only if AutoStartScenario is true.</param>
-        public ScenarioRegistration(string name, string description, bool debugModeOnly = false, bool autoStartScenario = false, Nullable<int> autoStartSeed = null)
+        public ScenarioRegistration(string name, string description, bool debugModeOnly = false, bool autoStartScenario = false, int autoStartSeed = int.MinValue)
         {
             Name = name;
             Description = description;
             DebugModeOnly = debugModeOnly;
             AutoStartScenario = autoStartScenario;
-            AutoStartSeed = autoStartSeed;
+            Nullable<int> actualSeed = autoStartSeed;
+            if (AutoStartScenario && autoStartSeed == int.MinValue)
+            {
+                actualSeed = null;
+            }
+            AutoStartSeed = actualSeed;
         }
     }
 }

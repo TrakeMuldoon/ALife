@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using ALifeUni.ALife.Scenarios;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -46,21 +45,6 @@ namespace ALifeUni
         }
 
         /// <summary>
-        /// Handles the Click event of the Button control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (ScenariosList.SelectedItem is string scenarioName)
-            {
-                MainPage.ScenarioName = scenarioName;
-                MainPage.ScenarioSeed = int.TryParse(SeedText.Text, out var seed) ? seed : (int?)null;
-                Frame.Navigate(typeof(MainPage));
-            }
-        }
-
-        /// <summary>
         /// Handles the SelectionChanged event of the ScenariosList control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -91,6 +75,11 @@ namespace ALifeUni
             }
         }
 
+        /// <summary>
+        /// Handles the SelectionChanged event of the SeedSuggestions control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void SeedSuggestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SeedText.Text = StartingSeedText;
@@ -100,6 +89,36 @@ namespace ALifeUni
                 {
                     SeedText.Text = seedDetails.Item1.ToString();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the LaunchScenarioRunner control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void LaunchScenarioRunner_Click(object sender, RoutedEventArgs e)
+        {
+            if (ScenariosList.SelectedItem is string scenarioName)
+            {
+                ScenarioRunner.ScenarioName = scenarioName;
+                ScenarioRunner.ScenarioSeed = int.TryParse(SeedText.Text, out var seed) ? seed : (int?)null;
+                Frame.Navigate(typeof(ScenarioRunner));
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the LaunchScenarioUI control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void LaunchScenarioUI_Click(object sender, RoutedEventArgs e)
+        {
+            if (ScenariosList.SelectedItem is string scenarioName)
+            {
+                MainPage.ScenarioName = scenarioName;
+                MainPage.ScenarioSeed = int.TryParse(SeedText.Text, out var seed) ? seed : (int?)null;
+                Frame.Navigate(typeof(MainPage));
             }
         }
     }

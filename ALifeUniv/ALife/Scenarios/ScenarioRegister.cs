@@ -121,7 +121,7 @@ namespace ALifeUni.ALife.Scenarios
         public static ScenarioRegistration GetScenarioDetails(Type scenarioType)
         {
             RegisteredScenarioMetadata scenarioDetails = scenarios.Values.FirstOrDefault(x => x.Type == scenarioType);
-            return scenarioDetails;
+            return scenarioDetails.ScenarioRegistration;
         }
 
         /// <summary>

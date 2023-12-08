@@ -134,7 +134,7 @@ namespace ALifeUni.ALife.Scenarios
         }
 
 
-        int FruitMax = 100;
+        const int FruitMax = 100;
         Color PURE_RED = new Color() { A = 255, R = 255, G = 0, B = 0 };
         Color PURE_BLUE = new Color() { A = 255, R = 0, G = 0, B = 255 };
         Color PURE_GREEN = new Color() { A = 255, R = 0, G = 255, B = 0 };

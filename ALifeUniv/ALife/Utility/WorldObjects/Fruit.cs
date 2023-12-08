@@ -22,7 +22,7 @@ namespace ALifeUni.ALife.Utility.WorldObjects
         {
             int fruitRadius = FRUIT_RADIUS;
             int fruitDiameter = fruitRadius * 2;
-            Point centrePoint = creationZone.Distributor.NextAgentCentre(fruitDiameter, fruitDiameter);
+            Point centrePoint = creationZone.Distributor.NextObjectCentre(fruitDiameter, fruitDiameter);
 
             Circle fruitCircle = new Circle(centrePoint, fruitRadius);
             Fruit newFruit = new Fruit(centrePoint, fruitCircle, colour, creationZone);

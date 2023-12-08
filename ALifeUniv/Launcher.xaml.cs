@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ALifeUni.ALife.Scenarios;
@@ -22,14 +23,12 @@ namespace ALifeUni
             InitializeComponent();
 
             // See ALife.Scenarios.ScenarioFactory.cs for a list of scenarios
-
-            var scenarioNameOverride = string.Empty; // set to something to skip straight to the scenario and not display the launcher
-            int? scenarioSeedOverride = null; // null = random seed
-
-            if (!string.IsNullOrWhiteSpace(scenarioNameOverride))
+            // To skip straight to a scenario and skip the launcher, set the AutoStartScenario in the ScenarioRegistration attribute for a scenario to true.
+            Nullable<(string, Nullable<int>)> startingScenario = ScenarioFactory.GetAutoStartScenario();
+            if (startingScenario != null)
             {
-                MainPage.ScenarioName = scenarioNameOverride;
-                MainPage.ScenarioSeed = scenarioSeedOverride;
+                MainPage.ScenarioName = startingScenario.Value.Item1;
+                MainPage.ScenarioSeed = startingScenario.Value.Item2;
                 Frame.Navigate(typeof(MainPage));
             }
             else

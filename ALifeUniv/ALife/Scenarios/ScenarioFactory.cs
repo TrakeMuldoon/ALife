@@ -15,10 +15,20 @@ namespace ALifeUni.ALife.Scenarios
         private static readonly Dictionary<string, ScenarioRegistrationMetadata> scenarios;
 
         /// <summary>
+        /// The starting scenario name, if any
+        /// </summary>
+        private static readonly string startingScenarioName = string.Empty;
+
+        /// <summary>
         /// Initializes the <see cref="ScenarioFactory"/> class.
         /// </summary>
         static ScenarioFactory()
         {
+            bool isDebugMode = false;
+#if DEBUG
+            isDebugMode = true;
+#endif
+
             scenarios = new Dictionary<string, ScenarioRegistrationMetadata>();
             string scenarioInterfaceClassName = typeof(IScenario).Name;
             Type[] typesInAssembly = Assembly.GetCallingAssembly().GetTypes();
@@ -27,11 +37,26 @@ namespace ALifeUni.ALife.Scenarios
             foreach (Type scenario in potentialScenarioTypes)
             {
                 ScenarioRegistration registrationAttribute = (ScenarioRegistration)scenario.GetCustomAttribute(typeof(ScenarioRegistration), false);
+                if (registrationAttribute.DebugModeOnly && !isDebugMode)
+                {
+                    continue;
+                }
+
                 List<SuggestedSeed> suggestedSeeds = scenario.GetCustomAttributes(typeof(SuggestedSeed), false).Select(x => (SuggestedSeed)x).ToList();
 
                 ScenarioRegistrationMetadata metadata = new ScenarioRegistrationMetadata(registrationAttribute, scenario, suggestedSeeds.ToDictionary(x => x.Seed, x => x.Description));
 
                 scenarios.Add(registrationAttribute.Name, metadata);
+
+                if (registrationAttribute.AutoStartScenario)
+                {
+                    if (startingScenarioName != string.Empty)
+                    {
+                        throw new Exception("Multiple scenarios have been marked as the auto-start scenario");
+                    }
+
+                    startingScenarioName = registrationAttribute.Name;
+                }
             }
         }
 
@@ -86,6 +111,21 @@ namespace ALifeUni.ALife.Scenarios
             }
 
             return type.ScenarioRegistration;
+        }
+
+        /// <summary>
+        /// Gets the automatic start scenario.
+        /// </summary>
+        /// <returns>The name and starting seed for the auto start scenario, or null</returns>
+        public static Nullable<(string, Nullable<int>)> GetAutoStartScenario()
+        {
+            if (string.IsNullOrWhiteSpace(startingScenarioName))
+            {
+                return null;
+            }
+
+            ScenarioRegistration scenario = GetRegistrationDetails(startingScenarioName);
+            return (startingScenarioName, scenario.AutoStartSeed);
         }
     }
 }

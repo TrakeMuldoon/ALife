@@ -28,7 +28,6 @@ namespace ALifeUni.ALife.Agents.Senses
         public virtual void Detect()
         {
             Shape.Reset();
-            BoundingBox bb = Shape.BoundingBox;
 
             //TODO: Factor this out. The SenseClusters shouldn't need to know the details of the collision detection
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[this.CollisionLevel];

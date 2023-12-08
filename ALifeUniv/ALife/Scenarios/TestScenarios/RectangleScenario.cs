@@ -39,7 +39,7 @@ namespace ALifeUni.ALife.Scenarios
             agent.HomeZone = parentZone;
             agent.TargetZone = targetZone;
 
-            Point centrePoint = parentZone.Distributor.NextAgentCentre(40, 80);
+            Point centrePoint = parentZone.Distributor.NextObjectCentre(40, 80);
 
             IShape myShape = new Rectangle(centrePoint, 40, 80, color);
             agent.StartOrientation = startOrientation;

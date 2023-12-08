@@ -28,10 +28,11 @@ namespace ALifeUni.ALife.Scenarios
                 new ScenarioRegistration("FieldCrossingLowReproScenario", new Dictionary<int, string> {}, typeof(FieldCrossingLowReproScenario)),
                 new ScenarioRegistration("FieldCrossingWallsScenario", new Dictionary<int, string> {}, typeof(FieldCrossingWallsScenario)),
                 new ScenarioRegistration("MushroomScenario", new Dictionary<int, string> {}, typeof(MushroomScenario)),
+                new ScenarioRegistration("RabbitScenario", new Dictionary<int, string> { }, typeof(RabbitScenario))
             };
 
             scenarios = new Dictionary<string, ScenarioRegistration>();
-            foreach (ScenarioRegistration scenario in registeredScenarios)
+            foreach(ScenarioRegistration scenario in registeredScenarios)
             {
                 scenarios.Add(scenario.Name, scenario);
             }

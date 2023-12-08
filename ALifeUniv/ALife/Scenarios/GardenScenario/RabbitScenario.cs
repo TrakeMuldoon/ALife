@@ -80,7 +80,6 @@ namespace ALifeUni.ALife.Scenarios
                 me.Reproduce();
                 me.Die();
             }
-            if(me)
         }
 
         public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)

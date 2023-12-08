@@ -163,6 +163,9 @@
     <Compile Include="ALife\Agents\Senses\ProximityCluster.cs" />
     <Compile Include="ALife\Agents\Senses\SquareSenseCluster.cs" />
     <Compile Include="ALife\Agents\CustomAgents\MushroomGatherer.cs" />
+    <Compile Include="ALife\Scenarios\ScenarioRegistration.cs" />
+    <Compile Include="ALife\Scenarios\ScenarioRegistrationMetadata.cs" />
+    <Compile Include="ALife\Scenarios\SuggestedSeed.cs" />
     <Compile Include="ALife\Utility\WorldObjects\Fruit.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildRectangle.cs" />
     <Compile Include="ALife\Geometry\Shapes\ChildShapes\IChildShape.cs" />
@@ -170,7 +173,6 @@
     <Compile Include="ALife\Scenarios\Mazes\CarTrackMaze.cs" />
     <Compile Include="ALife\Scenarios\ScenarioFactory.cs" />
     <Compile Include="ALife\Scenarios\ScenarioHelpers\FieldCrossingHelpers.cs" />
-    <Compile Include="ALife\Scenarios\ScenarioRegistration.cs" />
     <Compile Include="ALife\Scenarios\ScenarioTemplate.cs" />
     <Compile Include="ALife\Scenarios\ScenarioHelpers\CollisionBehaviours.cs" />
     <Compile Include="ALife\Scenarios\FieldCrossings\FieldCrossingWallsScenario.cs" />

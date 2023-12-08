@@ -13,13 +13,20 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
+    [ScenarioRegistration("Mushrooms", description: "Lorum Ipsum")]
     public class MushroomScenario : IScenario
     {
         /******************/
         /* SCENARIO STUFF */
         /******************/
-
-        public virtual string Name => "Mushrooms";
+        public virtual string Name
+        {
+            get
+            {
+                var regAttribute = this.GetType().GetCustomAttributes(typeof(ScenarioRegistration), false)[0] as ScenarioRegistration;
+                return regAttribute.Name;
+            }
+        }
 
         /******************/
         /*   AGENT STUFF  */

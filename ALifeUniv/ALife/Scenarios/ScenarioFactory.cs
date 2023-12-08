@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using ALifeUni.ALife.Scenarios.FieldCrossings;
+using System.Linq;
+using System.Reflection;
 
 namespace ALifeUni.ALife.Scenarios
 {
@@ -9,31 +10,28 @@ namespace ALifeUni.ALife.Scenarios
     public static class ScenarioFactory
     {
         /// <summary>
-        /// The scenarios
+        /// The scenario metadata
         /// </summary>
-        private static readonly Dictionary<string, ScenarioRegistration> scenarios;
+        private static readonly Dictionary<string, ScenarioRegistrationMetadata> scenarios;
 
         /// <summary>
         /// Initializes the <see cref="ScenarioFactory"/> class.
         /// </summary>
         static ScenarioFactory()
         {
-            List<ScenarioRegistration> registeredScenarios = new List<ScenarioRegistration>
-            {
-                new ScenarioRegistration("Maze", new Dictionary<int, string> {}, typeof(MazeScenario)),
-                new ScenarioRegistration("GenerationalMazeScenario", new Dictionary<int, string> {}, typeof(GenerationalMazeScenario)),
-                new ScenarioRegistration("DripFeedMaze", new Dictionary<int, string> {}, typeof(DripFeedMaze)),
-                new ScenarioRegistration("CarTrackMaze", new Dictionary<int, string> { { 1832460063, "Fun scenario!!!" } }, typeof(CarTrackMaze)),
-                new ScenarioRegistration("FieldCrossingScenario", new Dictionary<int, string> {}, typeof(FieldCrossingScenario)),
-                new ScenarioRegistration("FieldCrossingLowReproScenario", new Dictionary<int, string> {}, typeof(FieldCrossingLowReproScenario)),
-                new ScenarioRegistration("FieldCrossingWallsScenario", new Dictionary<int, string> {}, typeof(FieldCrossingWallsScenario)),
-                new ScenarioRegistration("MushroomScenario", new Dictionary<int, string> {}, typeof(MushroomScenario)),
-            };
+            scenarios = new Dictionary<string, ScenarioRegistrationMetadata>();
+            string scenarioInterfaceClassName = typeof(IScenario).Name;
+            Type[] typesInAssembly = Assembly.GetCallingAssembly().GetTypes();
+            List<Type> potentialScenarioTypes = typesInAssembly.Where(x => x.IsClass && !x.IsAbstract && x.GetInterface(scenarioInterfaceClassName) != null && x.IsDefined(typeof(ScenarioRegistration), false)).ToList();
 
-            scenarios = new Dictionary<string, ScenarioRegistration>();
-            foreach (ScenarioRegistration scenario in registeredScenarios)
+            foreach (Type scenario in potentialScenarioTypes)
             {
-                scenarios.Add(scenario.Name, scenario);
+                ScenarioRegistration registrationAttribute = (ScenarioRegistration)scenario.GetCustomAttribute(typeof(ScenarioRegistration), false);
+                List<SuggestedSeed> suggestedSeeds = scenario.GetCustomAttributes(typeof(SuggestedSeed), false).Select(x => (SuggestedSeed)x).ToList();
+
+                ScenarioRegistrationMetadata metadata = new ScenarioRegistrationMetadata(registrationAttribute, scenario, suggestedSeeds.ToDictionary(x => x.Seed, x => x.Description));
+
+                scenarios.Add(registrationAttribute.Name, metadata);
             }
         }
 
@@ -51,9 +49,13 @@ namespace ALifeUni.ALife.Scenarios
         /// <exception cref="System.Exception">Scenario not found</exception>
         public static IScenario GetScenario(string scenarioName)
         {
-            return scenarios.TryGetValue(scenarioName, out var scenarioType)
-                ? (IScenario)Activator.CreateInstance(scenarioType.Type)
-                : throw new Exception("Scenario not found");
+            if (!scenarios.TryGetValue(scenarioName, out var type))
+            {
+                throw new Exception("Scenario not found");
+            }
+
+            var instance = (IScenario)Activator.CreateInstance(type.Type);
+            return instance;
         }
 
         /// <summary>
@@ -63,9 +65,27 @@ namespace ALifeUni.ALife.Scenarios
         /// <returns>The suggested seeds for the specified scenario.</returns>
         public static Dictionary<int, string> GetSuggestions(string scenarioName)
         {
-            return scenarios.TryGetValue(scenarioName, out var scenarioType)
-                ? scenarioType.SuggestedSeeds
-                : new Dictionary<int, string>();
+            if (!scenarios.TryGetValue(scenarioName, out var type))
+            {
+                throw new Exception("Scenario not found");
+            }
+
+            return type.SuggestedScenarios;
+        }
+
+        /// <summary>
+        /// Gets the suggestions.
+        /// </summary>
+        /// <param name="scenarioName">Name of the scenario.</param>
+        /// <returns>The suggested seeds for the specified scenario.</returns>
+        public static ScenarioRegistration GetRegistrationDetails(string scenarioName)
+        {
+            if (!scenarios.TryGetValue(scenarioName, out var type))
+            {
+                throw new Exception("Scenario not found");
+            }
+
+            return type.ScenarioRegistration;
         }
     }
 }

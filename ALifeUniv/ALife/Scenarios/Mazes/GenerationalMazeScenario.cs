@@ -13,15 +13,19 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
+    [ScenarioRegistration("Generational Maze", description: "Lorum Ipsum")]
     public class GenerationalMazeScenario : IScenario
     {
         /******************/
         /* SCENARIO STUFF */
         /******************/
-
         public virtual string Name
         {
-            get { return "Generational Maze"; }
+            get
+            {
+                var regAttribute = this.GetType().GetCustomAttributes(typeof(ScenarioRegistration), false)[0] as ScenarioRegistration;
+                return regAttribute.Name;
+            }
         }
 
         /******************/

@@ -24,11 +24,13 @@ using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.Utility.WorldObjects;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Windows.Foundation;
 using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
+    [ScenarioRegistration("Field Crossing", description: "Lorum Ipsum")]
     public class FieldCrossingScenario : IScenario
     {
         /******************/
@@ -36,7 +38,11 @@ namespace ALifeUni.ALife.Scenarios
         /******************/
         public virtual string Name
         {
-            get { return "Field Crossing"; }
+            get
+            {
+                var regAttribute = this.GetType().GetCustomAttributes(typeof(ScenarioRegistration), false)[0] as ScenarioRegistration;
+                return regAttribute.Name;
+            }
         }
 
         /******************/

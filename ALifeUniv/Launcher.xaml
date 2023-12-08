@@ -14,5 +14,6 @@
         <ListView x:Name="ScenariosList" Width="512" HorizontalAlignment="Left" SelectionChanged="ScenariosList_SelectionChanged" />
         <TextBox x:Name="SeedText" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 60" TextWrapping="Wrap" Text="Enter Numerical Seed Here" Width="426" />
         <TextBox x:Name="SuggestionsText" HorizontalAlignment="Right" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="730" Width="448" />
+        <TextBox x:Name="DescriptionText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="730" Width="448" IsReadOnly="True" />
     </Grid>
 </Page>

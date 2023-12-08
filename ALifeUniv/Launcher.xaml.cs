@@ -31,6 +31,7 @@ namespace ALifeUni
             }
             else
             {
+                DescriptionText.Text = string.Empty;
                 SuggestionsText.Text = string.Empty;
                 ScenariosList.Items.Clear();
                 foreach (string scenarioName in ScenarioFactory.Scenarios)
@@ -62,9 +63,13 @@ namespace ALifeUni
         /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void ScenariosList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            DescriptionText.Text = string.Empty;
             SuggestionsText.Text = string.Empty;
             if (ScenariosList.SelectedItem is string scenarioName)
             {
+                ScenarioRegistration scenarioDetails = ScenarioFactory.GetRegistrationDetails(scenarioName);
+                DescriptionText.Text = scenarioDetails.Description;
+
                 StringBuilder sb = new StringBuilder();
                 Dictionary<int, string> suggestions = ScenarioFactory.GetSuggestions(scenarioName);
                 if (suggestions.Count > 0)

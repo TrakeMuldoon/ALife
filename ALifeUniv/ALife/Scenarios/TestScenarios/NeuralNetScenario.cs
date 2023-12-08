@@ -11,15 +11,19 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
+    [ScenarioRegistration("Neural Net Test", description: "Lorum Ipsum", debugModeOnly: true)]
     public class NeuralNetScenario : IScenario
     {
         /******************/
         /* SCENARIO STUFF */
         /******************/
-
         public virtual string Name
         {
-            get { return "Neural Net Test"; }
+            get
+            {
+                var regAttribute = this.GetType().GetCustomAttributes(typeof(ScenarioRegistration), false)[0] as ScenarioRegistration;
+                return regAttribute.Name;
+            }
         }
 
         /******************/

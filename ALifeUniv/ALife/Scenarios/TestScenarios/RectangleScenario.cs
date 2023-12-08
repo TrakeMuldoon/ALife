@@ -16,15 +16,19 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
+    [ScenarioRegistration("Rectangular Agent Test", description: "Lorum Ipsum", debugModeOnly: true)]
     public class RectangleScenario : IScenario
     {
         /******************/
         /* SCENARIO STUFF */
         /******************/
-
         public virtual string Name
         {
-            get { return "Rectangular Agent Test"; }
+            get
+            {
+                var regAttribute = this.GetType().GetCustomAttributes(typeof(ScenarioRegistration), false)[0] as ScenarioRegistration;
+                return regAttribute.Name;
+            }
         }
 
         /******************/

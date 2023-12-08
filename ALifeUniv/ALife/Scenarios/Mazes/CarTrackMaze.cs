@@ -12,13 +12,21 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
+    [ScenarioRegistration("Around The Track", description: "Lorum Ipsum")]
+    [SuggestedSeed(1832460063, "Fun scenario!!!")]
     public class CarTrackMaze : IScenario
     {
         /******************/
         /* SCENARIO STUFF */
         /******************/
-
-        public virtual string Name => "Around The Track";
+        public virtual string Name
+        {
+            get
+            {
+                var regAttribute = this.GetType().GetCustomAttributes(typeof(ScenarioRegistration), false)[0] as ScenarioRegistration;
+                return regAttribute.Name;
+            }
+        }
 
         /******************/
         /*   AGENT STUFF  */

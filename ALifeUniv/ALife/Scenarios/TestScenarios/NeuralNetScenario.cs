@@ -15,18 +15,6 @@ namespace ALifeUni.ALife.Scenarios
     public class NeuralNetScenario : IScenario
     {
         /******************/
-        /* SCENARIO STUFF */
-        /******************/
-        public virtual string Name
-        {
-            get
-            {
-                var regAttribute = this.GetType().GetCustomAttributes(typeof(ScenarioRegistration), false)[0] as ScenarioRegistration;
-                return regAttribute.Name;
-            }
-        }
-
-        /******************/
         /*   AGENT STUFF  */
         /******************/
 

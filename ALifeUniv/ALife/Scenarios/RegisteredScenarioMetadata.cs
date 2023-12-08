@@ -6,7 +6,7 @@ namespace ALifeUni.ALife.Scenarios
     /// <summary>
     /// Stores metadata about a scenario registration
     /// </summary>
-    public class ScenarioRegistrationMetadata
+    public class RegisteredScenarioMetadata
     {
         /// <summary>
         /// The scenario registration
@@ -24,12 +24,12 @@ namespace ALifeUni.ALife.Scenarios
         public readonly Type Type;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScenarioRegistrationMetadata"/> class.
+        /// Initializes a new instance of the <see cref="RegisteredScenarioMetadata"/> class.
         /// </summary>
         /// <param name="scenarioRegistration">The scenario registration.</param>
         /// <param name="type">The type.</param>
         /// <param name="suggestedScenarios">The suggested scenarios.</param>
-        public ScenarioRegistrationMetadata(ScenarioRegistration scenarioRegistration, Type type, Dictionary<int, string> suggestedScenarios)
+        public RegisteredScenarioMetadata(ScenarioRegistration scenarioRegistration, Type type, Dictionary<int, string> suggestedScenarios)
         {
             ScenarioRegistration = scenarioRegistration;
             Type = type;

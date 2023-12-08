@@ -44,7 +44,7 @@ namespace ALifeUni
         {
             this.InitializeComponent();
 
-            IScenario scenario = ScenarioFactory.GetScenario(ScenarioName);
+            IScenario scenario = ScenarioRegister.GetScenario(ScenarioName);
 
             if(ScenarioSeed != null)
             {

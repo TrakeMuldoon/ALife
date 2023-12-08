@@ -24,7 +24,7 @@ namespace ALifeUni
 
             // See ALife.Scenarios.ScenarioFactory.cs for a list of scenarios
             // To skip straight to a scenario and skip the launcher, set the AutoStartScenario in the ScenarioRegistration attribute for a scenario to true.
-            Nullable<(string, Nullable<int>)> startingScenario = ScenarioFactory.GetAutoStartScenario();
+            Nullable<(string, Nullable<int>)> startingScenario = ScenarioRegister.GetAutoStartScenario();
             if (startingScenario != null)
             {
                 MainPage.ScenarioName = startingScenario.Value.Item1;
@@ -38,7 +38,7 @@ namespace ALifeUni
                 DescriptionText.Text = string.Empty;
                 SeedSuggestions.Items.Clear();
                 ScenariosList.Items.Clear();
-                foreach (string scenarioName in ScenarioFactory.Scenarios)
+                foreach (string scenarioName in ScenarioRegister.Scenarios)
                 {
                     ScenariosList.Items.Add(scenarioName);
                 }
@@ -73,10 +73,10 @@ namespace ALifeUni
             currentSeedSuggestions.Clear();
             if (ScenariosList.SelectedItem is string scenarioName)
             {
-                ScenarioRegistration scenarioDetails = ScenarioFactory.GetRegistrationDetails(scenarioName);
+                ScenarioRegistration scenarioDetails = ScenarioRegister.GetScenarioDetails(scenarioName);
                 DescriptionText.Text = scenarioDetails.Description;
 
-                Dictionary<int, string> suggestions = ScenarioFactory.GetSuggestions(scenarioName);
+                Dictionary<int, string> suggestions = ScenarioRegister.GetSuggestions(scenarioName);
                 if (suggestions.Count > 0)
                 {
                     int maxSeedLength = suggestions.Select(x => x.Key).Max().ToString().Length;

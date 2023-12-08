@@ -8,15 +8,6 @@ namespace ALifeUni.ALife.Scenarios
     public interface IScenario
     {
         /******************/
-        /* SCENARIO STUFF */
-        /******************/
-
-        string Name
-        {
-            get;
-        }
-
-        /******************/
         /*   AGENT STUFF  */
         /******************/
 

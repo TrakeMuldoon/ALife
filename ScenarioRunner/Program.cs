@@ -56,7 +56,8 @@ namespace ScenarioRunner
 
         private static void RunSeed(int seedValue, IScenario scenario, int height, int width)
         {
-            string topLine = String.Format("Seed:{0}, Name: {1}, Height:{2}, Width:{3}", seedValue, scenario.Name, height, width);
+            var scenarioDetails = ScenarioRegister.GetScenarioDetails(scenario.GetType());
+            string topLine = String.Format("Seed:{0}, Name: {1}, Height:{2}, Width:{3}", seedValue, scenarioDetails.Name, height, width);
             Console.WriteLine($"\t---------------{topLine}");
             Console.Write("  ");
             DateTime start = DateTime.Now;

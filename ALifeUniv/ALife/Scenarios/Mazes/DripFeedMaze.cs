@@ -16,15 +16,6 @@ namespace ALifeUni.ALife.Scenarios
     [ScenarioRegistration("Drip Feed Maze", description: "Lorum Ipsum")]
     public class DripFeedMaze : IScenario
     {
-        public virtual string Name
-        {
-            get
-            {
-                var regAttribute = this.GetType().GetCustomAttributes(typeof(ScenarioRegistration), false)[0] as ScenarioRegistration;
-                return regAttribute.Name;
-            }
-        }
-
         public Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation)
         {
             Agent agent = new Agent(genusName

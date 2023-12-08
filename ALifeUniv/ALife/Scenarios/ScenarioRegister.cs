@@ -7,12 +7,12 @@ namespace ALifeUni.ALife.Scenarios
 {
     /// <summary>
     /// </summary>
-    public static class ScenarioFactory
+    public static class ScenarioRegister
     {
         /// <summary>
         /// The scenario metadata
         /// </summary>
-        private static readonly Dictionary<string, ScenarioRegistrationMetadata> scenarios;
+        private static readonly Dictionary<string, RegisteredScenarioMetadata> scenarios;
 
         /// <summary>
         /// The starting scenario name, if any
@@ -20,16 +20,16 @@ namespace ALifeUni.ALife.Scenarios
         private static readonly string startingScenarioName = string.Empty;
 
         /// <summary>
-        /// Initializes the <see cref="ScenarioFactory"/> class.
+        /// Initializes the <see cref="ScenarioRegister"/> class.
         /// </summary>
-        static ScenarioFactory()
+        static ScenarioRegister()
         {
             bool isDebugMode = false;
 #if DEBUG
             isDebugMode = true;
 #endif
 
-            scenarios = new Dictionary<string, ScenarioRegistrationMetadata>();
+            scenarios = new Dictionary<string, RegisteredScenarioMetadata>();
             string scenarioInterfaceClassName = typeof(IScenario).Name;
             Type[] typesInAssembly = Assembly.GetCallingAssembly().GetTypes();
             List<Type> potentialScenarioTypes = typesInAssembly.Where(x => x.IsClass && !x.IsAbstract && x.GetInterface(scenarioInterfaceClassName) != null && x.IsDefined(typeof(ScenarioRegistration), false)).ToList();
@@ -44,7 +44,7 @@ namespace ALifeUni.ALife.Scenarios
 
                 List<SuggestedSeed> suggestedSeeds = scenario.GetCustomAttributes(typeof(SuggestedSeed), false).Select(x => (SuggestedSeed)x).ToList();
 
-                ScenarioRegistrationMetadata metadata = new ScenarioRegistrationMetadata(registrationAttribute, scenario, suggestedSeeds.ToDictionary(x => x.Seed, x => x.Description));
+                RegisteredScenarioMetadata metadata = new RegisteredScenarioMetadata(registrationAttribute, scenario, suggestedSeeds.ToDictionary(x => x.Seed, x => x.Description));
 
                 scenarios.Add(registrationAttribute.Name, metadata);
 
@@ -99,11 +99,11 @@ namespace ALifeUni.ALife.Scenarios
         }
 
         /// <summary>
-        /// Gets the suggestions.
+        /// Gets details on the scenario.
         /// </summary>
         /// <param name="scenarioName">Name of the scenario.</param>
-        /// <returns>The suggested seeds for the specified scenario.</returns>
-        public static ScenarioRegistration GetRegistrationDetails(string scenarioName)
+        /// <returns>Details on the scenario.</returns>
+        public static ScenarioRegistration GetScenarioDetails(string scenarioName)
         {
             if (!scenarios.TryGetValue(scenarioName, out var type))
             {
@@ -111,6 +111,17 @@ namespace ALifeUni.ALife.Scenarios
             }
 
             return type.ScenarioRegistration;
+        }
+
+        /// <summary>
+        /// Gets details on the scenario.
+        /// </summary>
+        /// <param name="scenarioType">Type of the scenario.</param>
+        /// <returns>Details on the scenario.</returns>
+        public static ScenarioRegistration GetScenarioDetails(Type scenarioType)
+        {
+            RegisteredScenarioMetadata scenarioDetails = scenarios.Values.FirstOrDefault(x => x.Type == scenarioType);
+            return scenarioDetails;
         }
 
         /// <summary>
@@ -124,7 +135,7 @@ namespace ALifeUni.ALife.Scenarios
                 return null;
             }
 
-            ScenarioRegistration scenario = GetRegistrationDetails(startingScenarioName);
+            ScenarioRegistration scenario = GetScenarioDetails(startingScenarioName);
             return (startingScenarioName, scenario.AutoStartSeed);
         }
     }

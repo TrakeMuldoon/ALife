@@ -49,6 +49,7 @@ namespace ALifeUni.ALife.Scenarios
             {
                 new StatisticInput("Age", 0, Int32.MaxValue),
                 new StatisticInput("RabbitKills", 0, Int32.MaxValue),
+                new StatisticInput("ReproDistance", 0, Int32.MaxValue, 256),
             };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
@@ -72,13 +73,22 @@ namespace ALifeUni.ALife.Scenarios
             me.Statistics["Age"].IncreasePropertyBy(1);
         }
 
+
         public virtual void EndOfTurnTriggers(Agent me)
         {
-            if(me.Statistics["Age"].Value != 0
-                && me.Statistics["Age"].Value % 300 == 0)
+            //if(me.Statistics["Age"].Value != 0
+            //    && me.Statistics["Age"].Value % 300 == 0)
+            //{
+            //    me.Reproduce();
+            //    me.Die();
+            //}
+
+            double distanceFromRabbit = ExtraMath.DistanceBetweenTwoPoints(me.Shape.CentrePoint, TargetRabbit.Shape.CentrePoint);
+            if(distanceFromRabbit < me.Statistics["ReproDistance"].Value)
             {
+                int newValue = me.Statistics["ReproDistance"].Value / 2;
+                me.Statistics["ReproDistance"].ChangePropertyTo(newValue);
                 me.Reproduce();
-                me.Die();
             }
         }
 
@@ -86,21 +96,23 @@ namespace ALifeUni.ALife.Scenarios
         {
             foreach(WorldObject wo in collisions)
             {
-                if(wo is Agent ag)
+                if(wo is Rabbit rab)
+                {
+                    rab.Caught(me);
+                    me.Statistics["RabbitKills"].IncreasePropertyBy(1);
+                    me.Reproduce();
+                    me.Reproduce();
+                    me.Reproduce();
+                    me.Reproduce();
+                    me.Reproduce();
+                }
+                else if(wo is Agent ag)
                 {
                     ag.Die();
                     me.Die();
                     return;
                 }
-                if(wo is Rabbit rab)
-                {
-                    rab.Caught(me);
-                    me.Reproduce();
-                    me.Reproduce();
-                    me.Reproduce();
-                    me.Reproduce();
-                    me.Reproduce();
-                }
+
             }
         }
 

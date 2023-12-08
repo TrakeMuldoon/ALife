@@ -63,6 +63,11 @@ namespace ALifeUni.ALife.Agents.CustomAgents
         {
         }
 
+        public void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        {
+            //So the rabbit doesn't kill people.
+        }
+
         public void Caught(Agent caughtMe)
         {
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[CollisionLevel];
@@ -72,7 +77,7 @@ namespace ALifeUni.ALife.Agents.CustomAgents
             Shape.CentrePoint = myPoint;
             collider.MoveObject(this);
 
-            Properties["Caught"].IncreasePropertyBy(1);
+            Statistics["Caught"].IncreasePropertyBy(1);
         }
     }
 }

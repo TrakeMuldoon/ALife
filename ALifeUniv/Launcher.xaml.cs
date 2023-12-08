@@ -14,6 +14,9 @@ namespace ALifeUni
     /// </summary>
     public sealed partial class Launcher : Page
     {
+        private string StartingSeedText = string.Empty;
+        private Dictionary<string, (int, string)> currentSeedSuggestions;
+
         public Launcher()
         {
             InitializeComponent();
@@ -31,8 +34,10 @@ namespace ALifeUni
             }
             else
             {
+                StartingSeedText = SeedText.Text;
+                currentSeedSuggestions = new Dictionary<string, (int, string)>();
                 DescriptionText.Text = string.Empty;
-                SuggestionsText.Text = string.Empty;
+                SeedSuggestions.Items.Clear();
                 ScenariosList.Items.Clear();
                 foreach (string scenarioName in ScenarioFactory.Scenarios)
                 {
@@ -63,24 +68,38 @@ namespace ALifeUni
         /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void ScenariosList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            SeedText.Text = StartingSeedText;
             DescriptionText.Text = string.Empty;
-            SuggestionsText.Text = string.Empty;
+            SeedSuggestions.Items.Clear();
+            currentSeedSuggestions.Clear();
             if (ScenariosList.SelectedItem is string scenarioName)
             {
                 ScenarioRegistration scenarioDetails = ScenarioFactory.GetRegistrationDetails(scenarioName);
                 DescriptionText.Text = scenarioDetails.Description;
 
-                StringBuilder sb = new StringBuilder();
                 Dictionary<int, string> suggestions = ScenarioFactory.GetSuggestions(scenarioName);
                 if (suggestions.Count > 0)
                 {
                     int maxSeedLength = suggestions.Select(x => x.Key).Max().ToString().Length;
 
-                    foreach (KeyValuePair<int,string> suggestion in suggestions)
+                    foreach (KeyValuePair<int, string> suggestion in suggestions)
                     {
-                        sb.AppendLine($"{suggestion.Key.ToString($"D{maxSeedLength}")} : {suggestion.Value}");
+                        string seedDescription = $"{suggestion.Key.ToString($"D{maxSeedLength}")} : {suggestion.Value}";
+                        currentSeedSuggestions.Add(seedDescription, (suggestion.Key, suggestion.Value));
+                        SeedSuggestions.Items.Add(seedDescription);
                     }
-                    SuggestionsText.Text = sb.ToString();
+                }
+            }
+        }
+
+        private void SeedSuggestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SeedText.Text = StartingSeedText;
+            if (SeedSuggestions.SelectedItem is string seedDescription)
+            {
+                if (currentSeedSuggestions.TryGetValue(seedDescription, out var seedDetails))
+                {
+                    SeedText.Text = seedDetails.Item1.ToString();
                 }
             }
         }

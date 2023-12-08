@@ -11,9 +11,12 @@
     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <Button Content="Launch Scenario" Margin="10,544,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Button_Click" Width="426" Height="52" FontSize="22" />
 
-        <ListView x:Name="ScenariosList" Width="512" HorizontalAlignment="Left" SelectionChanged="ScenariosList_SelectionChanged" />
+        <ListView x:Name="ScenariosList" Width="512" Height="730"  HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="ScenariosList_SelectionChanged" Margin="0,45,0,225" BorderThickness="3,3,3,3" />
         <TextBox x:Name="SeedText" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 60" TextWrapping="Wrap" Text="Enter Numerical Seed Here" Width="426" />
-        <TextBox x:Name="SuggestionsText" HorizontalAlignment="Right" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="730" Width="448" />
-        <TextBox x:Name="DescriptionText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="730" Width="448" IsReadOnly="True" />
+        <TextBox x:Name="DescriptionText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="730" Width="448" IsReadOnly="True" Margin="0,45,0,0" />
+        <ListView x:Name="SeedSuggestions" Width="512" Height="730" HorizontalAlignment="Right" VerticalAlignment="Top" SelectionChanged="SeedSuggestions_SelectionChanged" Margin="0,45,0,0" BorderThickness="3,3,3,3" />
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Available Scenarios" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="526,10,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1074,10,0,0" TextWrapping="Wrap" Text="Suggested Seeds" VerticalAlignment="Top"/>
     </Grid>
 </Page>

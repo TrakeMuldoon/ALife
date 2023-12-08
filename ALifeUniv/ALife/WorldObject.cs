@@ -14,7 +14,7 @@ namespace ALifeUni.ALife
     /// Alive - Alive objects will execute their "Alive" turn behaviours every turn.
     /// Dead - Dead objects will execute their "Dead" turn behaviours every turn. Based on which state the object was in at the start of its turn.
     /// Removed - Once a "Dead" or alive object no longer has any actions to take, it will be "Removed" from the active grid, and will take no more turns.
-    ///             The (C#) object may remain in memory and be tracked for other activities, but the object will not return to the collision grids. (sort of)
+    ///           The (C#) object may remain in memory and be tracked for other activities, but the object will not return to the collision grids. (sort of)
     /// </summary>
     public abstract class WorldObject : IHasShape
     {

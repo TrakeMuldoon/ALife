@@ -118,6 +118,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ALife\Agents\CustomAgents\Rabbit.cs" />
     <Compile Include="ALife\Distributors\RandomObjectDistributor.cs" />
     <Compile Include="ALife\Distributors\StraightLineDistributor.cs" />
     <Compile Include="ALife\Distributors\WorldObjectDistributor.cs" />

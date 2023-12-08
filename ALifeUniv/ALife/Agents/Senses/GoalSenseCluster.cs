@@ -46,6 +46,7 @@ namespace ALifeUni.ALife.Agents.Senses
             switch(targetShape)
             {
                 case AARectangle aar: DetectAgainstAAR(aar); break;
+                case Circle cir: DetectAgainstCircle(cir); break;
                 default: throw new NotImplementedException("We have not implemented distance to other shapes yet");
             }
         }
@@ -126,12 +127,32 @@ namespace ALifeUni.ALife.Agents.Senses
                 rotationValue = CalculateRotationFrom((int)abp.Degrees);
             }
 
+            SetResults(distanceValue, rotationValue);
+        }
+
+        private void SetResults(int distanceValue, int rotationValue)
+        {
             distanceInput.SetValue(distanceValue);
             intRotationInput.SetValue(rotationValue);
             double dubValue = (double)rotationValue / 180;
             doubRotationInput.SetValue(dubValue);
 
             myShape.Orientation.Degrees = rotationValue;
+        }
+
+        private void DetectAgainstCircle(Circle targetCircle)
+        {
+            Point myCP = myShape.CentrePoint;
+            Point target = new Point(targetCircle.CentrePoint.X, targetCircle.CentrePoint.Y);
+
+            int distanceValue = (int)ExtraMath.DistanceBetweenTwoPoints(target, myCP);
+            distanceValue -= (int)targetCircle.Radius;
+
+            double angleBetweenPoints = ExtraMath.AngleBetweenPoints(target, myCP);
+            Angle abp = new Angle(angleBetweenPoints, true);
+            int rotationValue = CalculateRotationFrom((int)abp.Degrees);
+
+            SetResults(distanceValue, rotationValue);
         }
 
         private int CalculateRotationFrom(int v)

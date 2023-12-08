@@ -93,7 +93,7 @@ namespace ALifeUni.ALife.Agents
 
         internal void ApplyCircleShapeToAgent(WorldObjectDistributor distributor, Color colour, int circleRadius, double startOrientation)
         {
-            Point centrePoint = distributor.NextAgentCentre(circleRadius * 2, circleRadius * 2);
+            Point centrePoint = distributor.NextObjectCentre(circleRadius * 2, circleRadius * 2);
             IShape myShape = new Circle(centrePoint, circleRadius);
             StartOrientation = startOrientation;
             myShape.Orientation.Degrees = startOrientation;

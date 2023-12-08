@@ -1,4 +1,5 @@
-﻿using ALifeUni.ALife.Shapes;
+﻿using ALifeUni.ALife.Distributors;
+using ALifeUni.ALife.Shapes;
 using System;
 using System.Diagnostics;
 using Windows.Foundation;
@@ -38,7 +39,7 @@ namespace ALifeUni.ALife
             Name = name;
 
             //Distributor type is currently unused but will be used later I guess?
-            Distributor = new RandomAgentDistributor(this, true, ReferenceValues.CollisionLevelPhysical);
+            Distributor = new RandomObjectDistributor(this, true, ReferenceValues.CollisionLevelPhysical);
         }
     }
 }

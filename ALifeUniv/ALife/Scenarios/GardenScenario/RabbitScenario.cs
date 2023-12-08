@@ -14,13 +14,12 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
+    [ScenarioRegistration("Rabbits", description: "Lorum Ipsum")]
     public class RabbitScenario : IScenario
     {
         /******************/
         /* SCENARIO STUFF */
         /******************/
-
-        public virtual string Name => throw new NotImplementedException();
 
         private Rabbit TargetRabbit;
 

@@ -31,7 +31,7 @@ namespace ALifeUni.ALife.Scenarios
             };
 
             scenarios = new Dictionary<string, ScenarioRegistration>();
-            foreach (ScenarioRegistration scenario in registeredScenarios)
+            foreach(ScenarioRegistration scenario in registeredScenarios)
             {
                 scenarios.Add(scenario.Name, scenario);
             }

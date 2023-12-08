@@ -91,7 +91,7 @@ namespace ALifeUni.ALife.Agents
             SetShape(myShape);
         }
 
-        internal void ApplyCircleShapeToAgent(AgentDistributor distributor, Color colour, int circleRadius, double startOrientation)
+        internal void ApplyCircleShapeToAgent(WorldObjectDistributor distributor, Color colour, int circleRadius, double startOrientation)
         {
             Point centrePoint = distributor.NextAgentCentre(circleRadius * 2, circleRadius * 2);
             IShape myShape = new Circle(centrePoint, circleRadius);

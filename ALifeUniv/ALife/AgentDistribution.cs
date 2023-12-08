@@ -7,13 +7,13 @@ using Windows.Foundation;
 
 namespace ALifeUni.ALife
 {
-    public abstract class AgentDistributor
+    public abstract class WorldObjectDistributor
     {
         protected readonly Zone StartZone;
         protected readonly bool TrackCollisions;
         protected readonly string CollisionLevel;
 
-        protected AgentDistributor(Zone startZone, bool trackCollisions, string collisionLevel)
+        protected WorldObjectDistributor(Zone startZone, bool trackCollisions, string collisionLevel)
         {
             StartZone = startZone;
             TrackCollisions = trackCollisions;
@@ -57,7 +57,7 @@ namespace ALifeUni.ALife
         }
     }
 
-    public class StraightLineAgentDistributor : AgentDistributor
+    public class StraightLineAgentDistributor : WorldObjectDistributor
     {
         private StraightLineDistributorConfig Config;
 
@@ -132,7 +132,7 @@ namespace ALifeUni.ALife
         }
     }
 
-    public class RandomAgentDistributor : AgentDistributor
+    public class RandomAgentDistributor : WorldObjectDistributor
     {
         public RandomAgentDistributor(Zone startZone, bool trackCollisions, string collisionLevel) : base(startZone, trackCollisions, collisionLevel)
         {

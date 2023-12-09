@@ -59,7 +59,7 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
             List<PropertyInput> agentProperties = new List<PropertyInput>();
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                agent.CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
+                new StatisticInput("Age", 0, Int32.MaxValue, StatisticInputType.Incrementing),
                 new StatisticInput("RabbitKills", 0, Int32.MaxValue),
                 new StatisticInput("ReproDistance", 0, Int32.MaxValue, 256),
             };

@@ -3,15 +3,31 @@ using System.Runtime.InteropServices;
 
 namespace ALifeUni.ALife.WorldObjects.Agents.Properties
 {
+    public enum StatisticInputType
+    {
+        Incrementing,
+        Decrementing,
+        Manual
+    }
+
     public class StatisticInput : Input<int>, IPropertyInput<int>
     {
         public int StatisticMaximum;
         public int StatisticMinimum;
+        public StatisticInputType Disposition;
+        public int StartValue;
 
-        public StatisticInput(string name, int statisticMinimum, int statisticMaximum, [Optional] int startValue) : base(name)
+        public StatisticInput(string name, int statisticMinimum, int statisticMaximum, [Optional] int startValue) 
+            : this(name, statisticMinimum, statisticMaximum, StatisticInputType.Manual, startValue)
+        {
+        }
+
+        public StatisticInput(string name, int statisticMinimum, int statisticMaximum, StatisticInputType disposition, [Optional] int startValue) : base(name)
         {
             StatisticMaximum = statisticMaximum;
             StatisticMinimum = statisticMinimum;
+            Disposition = disposition;
+            StartValue = startValue;
             Value = startValue;
         }
 
@@ -80,7 +96,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Properties
 
         public StatisticInput CloneStatisticInput()
         {
-            return new StatisticInput(Name, StatisticMinimum, StatisticMaximum);
+            return new StatisticInput(Name, StatisticMinimum, StatisticMaximum, Disposition, StartValue);
         }
 
         public IPropertyInput Clone()

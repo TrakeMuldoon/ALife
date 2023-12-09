@@ -57,9 +57,9 @@ If they reach the target zone, they will restart in their own zones, and an evol
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                agent.CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
-                agent.CreateIncrementingStatistic("DeathTimer", 0, Int32.MaxValue),
-                agent.CreateIncrementingStatistic("ZoneEscapeTimer", 0, Int32.MaxValue)
+                new StatisticInput("Age", 0, Int32.MaxValue, StatisticInputType.Incrementing),
+                new StatisticInput("DeathTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing),
+                new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing)
             };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()

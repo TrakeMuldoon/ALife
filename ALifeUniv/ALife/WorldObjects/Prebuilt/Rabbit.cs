@@ -51,7 +51,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents.CustomAgents
             this.CompleteInitialization(null, 1, newBrain);
         }
 
-        public override void EndOfTurnTriggers()
+        public override void ScenarioEndOfTurnTriggers()
         {
         }
 

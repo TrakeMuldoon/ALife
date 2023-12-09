@@ -130,7 +130,6 @@ namespace ALifeUni.ALife.WorldObjects.Agents
             return new ReadOnlyDictionary<string, ActionCluster>(myActions);
         }
 
-
         public override void Die()
         {
             Alive = false;
@@ -156,8 +155,16 @@ namespace ALifeUni.ALife.WorldObjects.Agents
                 return;
             }
 
-            AgentUpkeep();
+            InternalAgentUpkeep();
 
+            ScenarioEndOfTurnTriggers();
+
+            //The shape has moved, so its bounding box needs to be reset
+            Shape.Reset();
+        }
+        
+        public void InternalAgentUpkeep()
+        {
             //Reset all the senses.
             Senses.ForEach((se) => se.Shape.Reset());
 
@@ -171,43 +178,21 @@ namespace ALifeUni.ALife.WorldObjects.Agents
                 prop.Reset();
             }
 
-            EndOfTurnTriggers();
-
-            //The shape has moved, so its bounding box needs to be reset
-            Shape.Reset();
-        }
-
-        public StatisticInput CreateIncrementingStatistic(string name, int statisticMinimum, int statisticMaximum, [Optional] int startValue)
-        {
-            StatisticInput si = new StatisticInput(name, statisticMinimum, statisticMaximum, startValue);
-            IncrementingStatistics.Add(name);
-            return si;
-        }
-
-        public StatisticInput CreateDecrementingStatistic(string name, int statisticMinimum, int statisticMaximum, [Optional] int startValue)
-        {
-            StatisticInput si = new StatisticInput(name, statisticMinimum, statisticMaximum, startValue);
-            DecrementingStatistics.Add(name);
-            return si;
-        }
-
-        List<string> IncrementingStatistics = new List<string>();
-        List<string> DecrementingStatistics = new List<string>();
-
-        public void AgentUpkeep()
-        {
-            foreach(string upStat in IncrementingStatistics)
+            foreach(StatisticInput si in Statistics.Values)
             {
-                Statistics[upStat].IncreasePropertyBy(1);
-            }
-            foreach(string downStat in DecrementingStatistics)
-            {
-                Statistics[downStat].DecreasePropertyBy(1);
+                switch(si.Disposition)
+                {
+                    case StatisticInputType.Incrementing: si.IncreasePropertyBy(1); break;
+                    case StatisticInputType.Decrementing: si.DecreasePropertyBy(1); break;
+                    default: break;
+                }
             }
         }
 
 
-        public virtual void EndOfTurnTriggers()
+        public virtual void ScenarioEndOfTurnTriggers()
+
+
         {
             Planet.World.Scenario.AgentEndOfTurnTriggers(this);
         }

@@ -42,8 +42,8 @@ namespace ALifeUni.ALife.Scenarios
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                agent.CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
-                agent.CreateIncrementingStatistic("ProgressTimer", 0, Int32.MaxValue),
+                new StatisticInput("Age", 0, Int32.MaxValue, StatisticInputType.Incrementing),
+                new StatisticInput("ProgressTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing),
             };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()

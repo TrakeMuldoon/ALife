@@ -43,8 +43,8 @@ namespace ALifeUni.ALife.WorldObjects.Agents.CustomAgents
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
-                CreateIncrementingStatistic("DeathTimer", 0, Int32.MaxValue),
+                new StatisticInput("Age", 0, Int32.MaxValue, StatisticInputType.Incrementing),
+                new StatisticInput("DeathTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing),
                 new StatisticInput("HowFullAmI", 0, Int32.MaxValue),
                 new StatisticInput("Kills", 0, Int32.MaxValue),
             };

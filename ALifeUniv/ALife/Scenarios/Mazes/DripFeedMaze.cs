@@ -52,9 +52,9 @@ If an agent reaches the goal line, the simuluation stops."
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                agent.CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
-                agent.CreateIncrementingStatistic("MaxXTimer", 0, Int32.MaxValue),
-                agent.CreateIncrementingStatistic("ZoneEscapeTimer", 0, Int32.MaxValue),
+                new StatisticInput("Age", 0, Int32.MaxValue, StatisticInputType.Incrementing),
+                new StatisticInput("MaxXTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing),
+                new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing),
 
                 new StatisticInput("MaximumX", 0, Int32.MaxValue),
             };

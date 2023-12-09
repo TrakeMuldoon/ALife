@@ -17,15 +17,16 @@ namespace ALifeUni.ALife.Scenarios
 {
     [ScenarioRegistration("Field Crossing",
     description:
-        @"4 way field crossing
-            This scenario features populations of agents all trying to reach the opposite end, by colour.
-            Failure cases:
-            If they crash into each other, or the spinning rock, they die without reproducing.
-            If they do not reach the other end within 1900 turns, they die without reprodcing.
-            If they do not leave their starting zone within 200 turns, the die without reproducing.
+        @"
+4 way field crossing
+This scenario features populations of agents all trying to reach the opposite end, by colour.
+Failure cases:
+If they crash into each other, or the spinning rock, they die without reproducing.
+If they do not reach the other end within 1900 turns, they die without reprodcing.
+If they do not leave their starting zone within 200 turns, the die without reproducing.
 
-            Success Cases:
-            If they reach the target zone, they will restart in their own zones, and an evolved child will be spawned in each of the four zones."
+Success Cases:
+If they reach the target zone, they will restart in their own zones, and an evolved child will be spawned in each of the four zones."
      )]
     public class FieldCrossingScenario : IScenario
     {

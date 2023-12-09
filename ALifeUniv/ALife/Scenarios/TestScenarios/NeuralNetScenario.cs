@@ -11,7 +11,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    [ScenarioRegistration("Neural Net Test", description: "Lorum Ipsum", debugModeOnly: true)]
+    [ScenarioRegistration("Test - Neural Net", description: "Lorum Ipsum", debugModeOnly: true)]
     public class NeuralNetScenario : IScenario
     {
         /******************/

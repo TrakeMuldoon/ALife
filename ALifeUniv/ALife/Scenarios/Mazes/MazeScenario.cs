@@ -21,14 +21,15 @@ namespace ALifeUni.ALife.Scenarios
 {
     [ScenarioRegistration("Maze",
         description:
-        @"A maze where the agents must attempt to reach the end zone from a starting zone.
-            Failure cases:
-            If they crash into each other, or a wall, they die without reproducing.
-            If they go 600 turns without increasing their X value, they die without reproducing.
+        @"
+A maze where the agents must attempt to reach the end zone from a starting zone.
+Failure cases:
+If they crash into each other, or a wall, they die without reproducing.
+If they go 600 turns without increasing their X value, they die without reproducing.
 
-            Success Cases:
-            If there are less than 50 agents remaining, 6 more will be added, taken from the best agents to ever live.
-            If an agent reaches the goal line, the simuluation stops."
+Success Cases:
+If there are less than 50 agents remaining, 6 more will be added, taken from the best agents to ever live.
+If an agent reaches the goal line, the simuluation stops."
     )]
     public class MazeScenario : IScenario
     {

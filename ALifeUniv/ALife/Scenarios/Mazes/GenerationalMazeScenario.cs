@@ -13,18 +13,19 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    [ScenarioRegistration("Generational Maze",
+    [ScenarioRegistration("Maze (Generational)",
         description:
-        @"A maze where the agents must attempt to reach the end zone from a starting zone.
-            In this Generational maze, when all the agents die, a new set of agents is created from the best of the previous generation
+        @"
+A maze where the agents must attempt to reach the end zone from a starting zone.
+In this Generational maze, when all the agents die, a new set of agents is created from the best of the previous generation
 
-            Failure cases:
-            If they crash into each other, or a wall, they die without reproducing.
-            If they go 600 turns without increasing their X value, they die without reproducing.
+Failure cases:
+If they crash into each other, or a wall, they die without reproducing.
+If they go 600 turns without increasing their X value, they die without reproducing.
 
-            Success Cases:
-            Whichever agents reached the furthest during the timelimit will be reproduced.
-            If an agent reaches the goal line, the simuluation stops."
+Success Cases:
+Whichever agents reached the furthest during the timelimit will be reproduced.
+If an agent reaches the goal line, the simuluation stops."
     )]
     public class GenerationalMazeScenario : IScenario
     {

@@ -16,7 +16,7 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    [ScenarioRegistration("Rectangular Agent Test", description: "Lorum Ipsum", debugModeOnly: true)]
+    [ScenarioRegistration("Test - Rectangular Agent", description: "Lorum Ipsum", debugModeOnly: true)]
     public class RectangleScenario : IScenario
     {
         /******************/

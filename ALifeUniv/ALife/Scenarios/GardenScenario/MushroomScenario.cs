@@ -15,15 +15,16 @@ namespace ALifeUni.ALife.Scenarios
 {
     [ScenarioRegistration("Mushroom Garden",
     description:
-        @"Mushroom Garden
-            This scenario takes place in a mushroom garden. Mushrooms spawn with a ratio of 50% good/bad.
-            Failure cases:
-            Eat a bad mushroom, they die. 
-            Get eaten (collided into) by another agent, they die.
+        @"
+Mushroom Garden
+This scenario takes place in a mushroom garden. Mushrooms spawn with a ratio of 50% good/bad.
+Failure cases:
+Eat a bad mushroom, they die. 
+Get eaten (collided into) by another agent, they die.
 
-            Success Cases:
-            If they eat three other agents, they reproduce. 
-            If they eat two green mushrooms, they reproduce."
+Success Cases:
+If they eat three other agents, they reproduce. 
+If they eat two green mushrooms, they reproduce."
      )]
     public class MushroomScenario : IScenario
     {

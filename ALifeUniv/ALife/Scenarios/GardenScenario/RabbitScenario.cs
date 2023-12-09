@@ -15,16 +15,17 @@ namespace ALifeUni.ALife.Scenarios
 {
     [ScenarioRegistration("Rabbits",
         description: 
-        @"Rabbit Chaser (smart, slow rabbit)
-            In this scenario, the agents are trying to chase down a rabbit using the 'GoalSense' cluster. 
-            Each Agent has a sense for where the rabbit is. 
+        @"
+Rabbit Chaser (smart, slow rabbit)
+In this scenario, the agents are trying to chase down a rabbit using the 'GoalSense' cluster. 
+Each Agent has a sense for where the rabbit is. 
 
-            Failure cases:
-            If the agents bump into anything except the rabbit, they die.
+Failure cases:
+If the agents bump into anything except the rabbit, they die.
 
-            Success cases: 
-            If the agents come withing 256,128,64,32,16,8,4,2 units of distance from the Rabbit, they reproduce.
-            If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respawns somewhere else.
+Success cases: 
+If the agents come withing 256,128,64,32,16,8,4,2 units of distance from the Rabbit, they reproduce.
+If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respawns somewhere else.
         "
     )]
     public class RabbitScenario : IScenario

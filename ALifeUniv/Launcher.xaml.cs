@@ -37,7 +37,15 @@ namespace ALifeUni
                 DescriptionText.Text = string.Empty;
                 SeedSuggestions.Items.Clear();
                 ScenariosList.Items.Clear();
+
+                List<string> sortedNameList = new List<string>();
                 foreach(string scenarioName in ScenarioRegister.Scenarios)
+                {
+                    sortedNameList.Add(scenarioName);
+                }
+                sortedNameList.Sort();
+
+                foreach(string scenarioName in sortedNameList)
                 {
                     ScenariosList.Items.Add(scenarioName);
                 }

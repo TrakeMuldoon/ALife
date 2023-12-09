@@ -23,8 +23,8 @@ namespace ALifeUni.UI.UserControls
 {
     public sealed partial class NeuralBrainView : UserControl
     {
-        private int canvasHeight;
-        private int canvasWidth;
+        private readonly int canvasHeight;
+        private readonly int canvasWidth;
         private const int NEURON_VIS_RADIUS = 8;
         private Dictionary<Neuron, Vector2> NodeMap;
         private Neuron SelectedNeuron = null;
@@ -289,13 +289,12 @@ namespace ALifeUni.UI.UserControls
             }
         }
 
-        private T FindFirstParentOfType<T>(FrameworkElement element) where T : FrameworkElement
+        private static T FindFirstParentOfType<T>(FrameworkElement element) where T : FrameworkElement
         {
             if(element.Parent == null)
             {
                 return null;
             }
-            Type parentType = element.Parent.GetType();
             if(element.Parent is T)
             {
                 return element.Parent as T;

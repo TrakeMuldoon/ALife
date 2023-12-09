@@ -13,9 +13,22 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    [ScenarioRegistration("Mushrooms", description: "Lorum Ipsum")]
+    [ScenarioRegistration("Mushroom Garden",
+    description:
+        @"Mushroom Garden
+            This scenario takes place in a mushroom garden. Mushrooms spawn with a ratio of 50% good/bad.
+            Failure cases:
+            Eat a bad mushroom, they die. 
+            Get eaten (collided into) by another agent, they die.
+
+            Success Cases:
+            If they eat three other agents, they reproduce. 
+            If they eat two green mushrooms, they reproduce."
+     )]
     public class MushroomScenario : IScenario
     {
+        public const double GOOD_MUSH_PERCENT = 0.50;
+
         /******************/
         /*   AGENT STUFF  */
         /******************/

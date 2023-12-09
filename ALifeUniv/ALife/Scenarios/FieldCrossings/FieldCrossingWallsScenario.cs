@@ -7,7 +7,19 @@ using Windows.Foundation;
 
 namespace ALifeUni.ALife.Scenarios.FieldCrossings
 {
-    [ScenarioRegistration("Field Crossing With Walls", description: "Lorum Ipsum")]
+    [ScenarioRegistration("Field Crossing With Walls",
+        description:
+        @"4 way field crossing: (Walls)
+            This scenario features populations of agents all trying to reach the opposite end, by colour. 
+            In order to reduce the number of agents who just blindly run, there are walls criss-crossing, so there is no cardinal straight line available.
+            Failure cases:
+            If they do not reach the other end within 1900 turns, they die without reprodcing.
+            If they do not leave their starting zone within 200 turns, the die without reproducing.
+            If they bump into anything, they die.
+
+            Success Cases:
+            If they reach the target zone, they will restart in their own zones, and an evolved children will be spawned in each of the four zones"
+     )]
     public class FieldCrossingWallsScenario : FieldCrossingScenario
     {
         /******************/

@@ -13,7 +13,19 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    [ScenarioRegistration("Drip Feed Maze", description: "Lorum Ipsum")]
+    [ScenarioRegistration("Drip Feed Maze",
+        description:
+        @"A maze where the agents must attempt to reach the end zone from a starting zone.
+            In this drip feed maze, new agents are created every few turns, to keep the population infused with new agents.
+
+            Failure cases:
+            If they crash into each other, or a wall, they die without reproducing.
+            If they go 600 turns without increasing their X value, they die without reproducing.
+
+            Success Cases:
+            Whichever agents reached the furthest during the timelimit will be reproduced.
+            If an agent reaches the goal line, the simuluation stops."
+    )]
     public class DripFeedMaze : IScenario
     {
         public Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation)

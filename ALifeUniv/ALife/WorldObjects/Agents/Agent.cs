@@ -58,6 +58,13 @@ namespace ALifeUni.ALife.WorldObjects.Agents
             private set;
         }
 
+        public bool JustReproduced
+        {
+            get;
+            private set;
+        }
+
+
         public Zone HomeZone;
         public Zone TargetZone;
         public double StartOrientation
@@ -148,6 +155,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents
         {
             //Save the previous state of agent, so we can look back on it next turn.
             Shadow = new AgentShadow(this);
+            JustReproduced = false;
 
             MyBrain.ExecuteTurn();
             if(!Alive)
@@ -204,12 +212,14 @@ namespace ALifeUni.ALife.WorldObjects.Agents
 
         public override WorldObject Clone()
         {
+            JustReproduced = true;
             NumChildren++;
             return AgentFactory.CloneAgent(this);
         }
 
         public override WorldObject Reproduce()
         {
+            JustReproduced = true;
             NumChildren++;
             return AgentFactory.ReproduceFromAgent(this);
         }

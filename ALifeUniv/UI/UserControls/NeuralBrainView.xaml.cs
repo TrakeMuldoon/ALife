@@ -1,7 +1,9 @@
-﻿using ALifeUni.ALife.Utility;
+﻿using ALifeUni.ALife.Geometry;
+using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.WorldObjects.Agents;
 using ALifeUni.ALife.WorldObjects.Agents.Brains;
 using ALifeUni.ALife.WorldObjects.Agents.Brains.NeuralNetworkBrains;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
@@ -21,8 +23,8 @@ namespace ALifeUni.UI.UserControls
 {
     public sealed partial class NeuralBrainView : UserControl
     {
-        private int canvasHeight;
-        private int canvasWidth;
+        private readonly int canvasHeight;
+        private readonly int canvasWidth;
         private const int NEURON_VIS_RADIUS = 8;
         private Dictionary<Neuron, Vector2> NodeMap;
         private Neuron SelectedNeuron = null;
@@ -154,7 +156,7 @@ namespace ALifeUni.UI.UserControls
                 float textY = drawTextUp ? UpstreamCentrePoint.Y - 30 : UpstreamCentrePoint.Y - 50;
                 Vector2 textPoint = new Vector2(textX, textY);
                 CanvasTextFormat ctf = new CanvasTextFormat() { FontSize = 12 };
-
+                
                 DrawBackedText(args, den.TargetNeuron.Value.ToString("0.00"), textPoint, ctf);
 
                 //Move text to below the Neuron, for the DenValue
@@ -164,7 +166,7 @@ namespace ALifeUni.UI.UserControls
             }
         }
 
-        private static Vector2 DrawBackedText(CanvasAnimatedDrawEventArgs args, string text, Vector2 textPoint, CanvasTextFormat ctf)
+        private static void DrawBackedText(CanvasAnimatedDrawEventArgs args, string text, Vector2 textPoint, CanvasTextFormat ctf)
         {
             Vector2 textRoot = new Vector2(textPoint.X, textPoint.Y);
 
@@ -172,7 +174,6 @@ namespace ALifeUni.UI.UserControls
             textRoot.X += 1;
             textRoot.Y += 1;
             args.DrawingSession.DrawText(text, textRoot, Colors.Green, ctf);
-            return textPoint;
         }
 
         private static void DrawNeuron(CanvasAnimatedDrawEventArgs args, bool textHigh, Neuron neuron, Vector2 point)
@@ -193,13 +194,13 @@ namespace ALifeUni.UI.UserControls
             //Draw name of Neuron beneath it.
             CanvasTextFormat ctf = new CanvasTextFormat() { FontSize = 10 };
 
-            //This code staggers the names so they don't overlap.
-            float textY = textHigh ? point.Y + 10 : point.Y + 30;
-            float textX = point.X - 13;
-            Vector2 textPoint = new Vector2(textX, textY);
+            Vector2 textPoint = new Vector2(point.X - 5, point.Y + 8);
 
-            //Draw the text
+            //Draw the name at an angle
+            CanvasDrawingSession ds = args.DrawingSession;
+            ds.Transform = Matrix3x2.CreateRotation((float)new Angle(45).Radians, textPoint);
             args.DrawingSession.DrawText(neuron.Name, textPoint, Colors.Black, ctf);
+            ds.Transform = Matrix3x2.Identity;
         }
 
         private void DrawDownstreamDendrites(CanvasAnimatedDrawEventArgs args, Neuron selectedNeuron, Dictionary<Neuron, Vector2> nodemap)
@@ -288,13 +289,12 @@ namespace ALifeUni.UI.UserControls
             }
         }
 
-        private T FindFirstParentOfType<T>(FrameworkElement element) where T : FrameworkElement
+        private static T FindFirstParentOfType<T>(FrameworkElement element) where T : FrameworkElement
         {
             if(element.Parent == null)
             {
                 return null;
             }
-            Type parentType = element.Parent.GetType();
             if(element.Parent is T)
             {
                 return element.Parent as T;

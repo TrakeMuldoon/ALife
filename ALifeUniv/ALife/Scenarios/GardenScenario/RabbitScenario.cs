@@ -22,9 +22,10 @@ Each Agent has a sense for where the rabbit is.
 
 Failure cases:
 If the agents bump into anything except the rabbit, they die.
+After 1000 turns, they die.
 
 Success cases: 
-If the agents come withing 256,128,64,32,16,8,4,2 units of distance from the Rabbit, they reproduce.
+If the agents come withing 128,64,32,16,8,4,2 units of distance from the Rabbit, they reproduce.
 If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respawns somewhere else.
         "
     )]
@@ -53,6 +54,12 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
 
             List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(
                 new[] { CommonSenses.QuadrantEyes(agent, 0) },
+                new EyeCluster(agent, "ColourForward", true
+                    , new ROEvoNumber(startValue: 0,  evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
+                    , new ROEvoNumber(startValue: -8, evoDeltaMax: 5, hardMin: -360, hardMax: 360)   //Relative Orientation
+                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 3, hardMin: 40,   hardMax: 120)     //Radius
+                    , new ROEvoNumber(startValue: 16, evoDeltaMax: 1, hardMin: 15,   hardMax: 40)),    //Sweep
+                    
                 new GoalSenseCluster(agent, "RabbitSense", TargetRabbit.Shape)
             );
 
@@ -61,7 +68,7 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
             {
                 new StatisticInput("Age", 0, Int32.MaxValue, StatisticInputType.Incrementing),
                 new StatisticInput("RabbitKills", 0, Int32.MaxValue),
-                new StatisticInput("ReproDistance", 0, Int32.MaxValue, 256),
+                new StatisticInput("ReproDistance", 0, Int32.MaxValue, 128),
             };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
@@ -82,12 +89,11 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
 
         public virtual void AgentEndOfTurnTriggers(Agent me)
         {
-            //if(me.Statistics["Age"].Value != 0
-            //    && me.Statistics["Age"].Value % 300 == 0)
-            //{
-            //    me.Reproduce();
-            //    me.Die();
-            //}
+            if(me.Statistics["Age"].Value > 1000)
+            {
+                me.Die();
+                return;
+            }
 
             double distanceFromRabbit = ExtraMath.DistanceBetweenTwoPoints(me.Shape.CentrePoint, TargetRabbit.Shape.CentrePoint);
             if(distanceFromRabbit < me.Statistics["ReproDistance"].Value)

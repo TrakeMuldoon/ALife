@@ -158,7 +158,7 @@ If an agent reaches the goal line, the simuluation stops."
             MazeSetups.SetUpMaze();
         }
 
-        int bestXNum = 4;
+        readonly int bestXNum = 4;
         int Iteration = 1;
         Agent bestEver;
         public virtual void GlobalEndOfTurnActions()

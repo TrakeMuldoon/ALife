@@ -56,9 +56,9 @@ namespace ALifeUni.ALife.Scenarios
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                new StatisticInput("Age", 0, Int32.MaxValue),
-                new StatisticInput("DeathTimer", 0, Int32.MaxValue),
-                new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue)
+                agent.CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("DeathTimer", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("ZoneEscapeTimer", 0, Int32.MaxValue)
             };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
@@ -135,14 +135,6 @@ namespace ALifeUni.ALife.Scenarios
             (child.Senses[0] as GoalSenseCluster).ChangeTarget(specification.TargetZone);
 
             collider.MoveObject(child);
-        }
-
-        public virtual void AgentUpkeep(Agent me)
-        {
-            //Increment or Decrement end of turn values
-            me.Statistics["Age"].IncreasePropertyBy(1);
-            me.Statistics["DeathTimer"].IncreasePropertyBy(1);
-            me.Statistics["ZoneEscapeTimer"].IncreasePropertyBy(1);
         }
 
         public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)

@@ -39,7 +39,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents.CustomAgents
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                new StatisticInput("Age", 0, Int32.MaxValue),
+                CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
                 new StatisticInput("MaximumX", 0, Int32.MaxValue),
                 new StatisticInput("MaxXTimer", 0, Int32.MaxValue)
             };
@@ -91,12 +91,6 @@ namespace ALifeUni.ALife.WorldObjects.Agents.CustomAgents
         {
             base.Clone();
             base.Die();
-        }
-
-        public override void AgentUpkeep()
-        {
-            //Increment or Decrement end of turn values
-            this.Statistics["Age"].IncreasePropertyBy(1);
         }
     }
 }

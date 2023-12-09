@@ -57,9 +57,9 @@ namespace ALifeUni.ALife.Scenarios
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("ZoneEscapeTimer", 0, Int32.MaxValue),
                 new StatisticInput("MaximumX", 0, Int32.MaxValue),
-                new StatisticInput("MaxXTimer", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("MaxXTimer", 0, Int32.MaxValue),
                 new StatisticInput("Iteration", 0, Int32.MaxValue, Iteration)
             };
 
@@ -81,6 +81,13 @@ namespace ALifeUni.ALife.Scenarios
 
         public virtual void AgentEndOfTurnTriggers(Agent me)
         {
+            int roundedX = (int)(me.Shape.CentrePoint.X / 100) * 100;
+            if(roundedX > me.Statistics["MaximumX"].Value)
+            {
+                me.Statistics["MaximumX"].Value = roundedX;
+                me.Statistics["MaxXTimer"].Value = 0;
+            }
+
             if(me.Statistics["MaxXTimer"].Value > 600)
             {
                 me.Die();
@@ -102,18 +109,6 @@ namespace ALifeUni.ALife.Scenarios
 
                     throw new Exception("SUCCESS!!!!!!!!? at " + turns);
                 }
-            }
-        }
-
-        public virtual void AgentUpkeep(Agent me)
-        {
-            me.Statistics["ZoneEscapeTimer"].IncreasePropertyBy(1);
-            me.Statistics["MaxXTimer"].IncreasePropertyBy(1);
-            int roundedX = (int)(me.Shape.CentrePoint.X / 100) * 100;
-            if(roundedX > me.Statistics["MaximumX"].Value)
-            {
-                me.Statistics["MaximumX"].Value = roundedX;
-                me.Statistics["MaxXTimer"].Value = 0;
             }
         }
 

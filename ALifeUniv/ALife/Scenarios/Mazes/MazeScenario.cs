@@ -62,9 +62,9 @@ namespace ALifeUni.ALife.Scenarios
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                new StatisticInput("Age", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
                 new StatisticInput("MaximumX", 0, Int32.MaxValue),
-                new StatisticInput("MaxXTimer", 0, Int32.MaxValue)
+                agent.CreateIncrementingStatistic("MaxXTimer", 0, Int32.MaxValue)
             };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
@@ -110,13 +110,6 @@ namespace ALifeUni.ALife.Scenarios
                     throw new Exception("SUCCESS!!!!!!!!? at " + turns);
                 }
             }
-        }
-
-        public virtual void AgentUpkeep(Agent me)
-        {
-            //Increment or Decrement end of turn values
-            me.Statistics["Age"].IncreasePropertyBy(1);
-            me.Statistics["MaxXTimer"].IncreasePropertyBy(1);
         }
 
         public void CollisionBehaviour(Agent me, List<WorldObject> collisions)

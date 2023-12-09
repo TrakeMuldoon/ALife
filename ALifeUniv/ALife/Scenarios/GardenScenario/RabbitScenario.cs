@@ -58,7 +58,7 @@ namespace ALifeUni.ALife.Scenarios
             List<PropertyInput> agentProperties = new List<PropertyInput>();
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                new StatisticInput("Age", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
                 new StatisticInput("RabbitKills", 0, Int32.MaxValue),
                 new StatisticInput("ReproDistance", 0, Int32.MaxValue, 256),
             };
@@ -78,12 +78,6 @@ namespace ALifeUni.ALife.Scenarios
 
             return agent;
         }
-
-        public virtual void AgentUpkeep(Agent me)
-        {
-            me.Statistics["Age"].IncreasePropertyBy(1);
-        }
-
 
         public virtual void AgentEndOfTurnTriggers(Agent me)
         {

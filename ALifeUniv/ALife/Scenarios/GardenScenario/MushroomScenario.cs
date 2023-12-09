@@ -61,8 +61,8 @@ namespace ALifeUni.ALife.Scenarios
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                new StatisticInput("Age", 0, Int32.MaxValue),
-                new StatisticInput("DeathTimer", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("DeathTimer", 0, Int32.MaxValue),
                 new StatisticInput("HowFullAmI", 0, Int32.MaxValue),
                 new StatisticInput("Kills", 0, Int32.MaxValue),
             };
@@ -81,11 +81,6 @@ namespace ALifeUni.ALife.Scenarios
             agent.CompleteInitialization(null, 1, newBrain);
 
             return agent;
-        }
-        public virtual void AgentUpkeep(Agent me)
-        {
-            me.Statistics["Age"].IncreasePropertyBy(1);
-            me.Statistics["DeathTimer"].IncreasePropertyBy(1);
         }
 
         public virtual void AgentEndOfTurnTriggers(Agent me)

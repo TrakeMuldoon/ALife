@@ -22,11 +22,6 @@ namespace ALifeUni.ALife.Scenarios
             //TODO: Fully Comment This
             throw new NotImplementedException();
         }
-        public virtual void AgentUpkeep(Agent me)
-        {
-            //TODO: Fully Comment This
-            //Default, no upkeep
-        }
 
         public virtual void AgentEndOfTurnTriggers(Agent me)
         {

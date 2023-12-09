@@ -51,10 +51,11 @@ namespace ALifeUni.ALife.Scenarios
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                new StatisticInput("Age", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("MaxXTimer", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("ZoneEscapeTimer", 0, Int32.MaxValue),
+
                 new StatisticInput("MaximumX", 0, Int32.MaxValue),
-                new StatisticInput("MaxXTimer", 0, Int32.MaxValue),
-                new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue),
             };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
@@ -72,25 +73,6 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
-        public void AgentUpkeep(Agent me)
-        {
-            //Increment or Decrement end of turn values
-            me.Statistics["Age"].IncreasePropertyBy(1);
-            me.Statistics["MaxXTimer"].IncreasePropertyBy(1);
-            me.Statistics["ZoneEscapeTimer"].IncreasePropertyBy(1);
-
-            int roundedX = (int)(me.Shape.CentrePoint.X / 100) * 100;
-            if(roundedX > me.Statistics["MaximumX"].Value)
-            {
-                me.Statistics["MaximumX"].Value = roundedX;
-                me.Statistics["MaxXTimer"].Value = 0;
-                if(roundedX % 300 == 0)
-                {
-                    me.Reproduce();
-                }
-            }
-        }
-
         public void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
             foreach(WorldObject wo in collisions)
@@ -104,6 +86,17 @@ namespace ALifeUni.ALife.Scenarios
 
         public void AgentEndOfTurnTriggers(Agent me)
         {
+            int roundedX = (int)(me.Shape.CentrePoint.X / 100) * 100;
+            if(roundedX > me.Statistics["MaximumX"].Value)
+            {
+                me.Statistics["MaximumX"].Value = roundedX;
+                me.Statistics["MaxXTimer"].Value = 0;
+                if(roundedX % 300 == 0)
+                {
+                    me.Reproduce();
+                }
+            }
+
             if(me.Statistics["MaxXTimer"].Value > 400)
             {
                 me.Die();

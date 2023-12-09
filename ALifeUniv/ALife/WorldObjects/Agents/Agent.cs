@@ -8,7 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using Windows.Foundation;
+using Windows.Services.Maps;
 using Windows.UI;
 
 namespace ALifeUni.ALife.WorldObjects.Agents
@@ -129,6 +131,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents
             return new ReadOnlyDictionary<string, ActionCluster>(myActions);
         }
 
+
         public override void Die()
         {
             Alive = false;
@@ -175,9 +178,33 @@ namespace ALifeUni.ALife.WorldObjects.Agents
             Shape.Reset();
         }
 
-        public virtual void AgentUpkeep()
+        public StatisticInput CreateIncrementingStatistic(string name, int statisticMinimum, int statisticMaximum, [Optional] int startValue)
         {
-            Planet.World.Scenario.AgentUpkeep(this);
+            StatisticInput si = new StatisticInput(name, statisticMinimum, statisticMaximum, startValue);
+            IncrementingStatistics.Add(name);
+            return si;
+        }
+
+        public StatisticInput CreateDecrementingStatistic(string name, int statisticMinimum, int statisticMaximum, [Optional] int startValue)
+        {
+            StatisticInput si = new StatisticInput(name, statisticMinimum, statisticMaximum, startValue);
+            DecrementingStatistics.Add(name);
+            return si;
+        }
+
+        List<string> IncrementingStatistics = new List<string>();
+        List<string> DecrementingStatistics = new List<string>();
+
+        public void AgentUpkeep()
+        {
+            foreach(string upStat in IncrementingStatistics)
+            {
+                Statistics[upStat].IncreasePropertyBy(1);
+            }
+            foreach(string downStat in DecrementingStatistics)
+            {
+                Statistics[downStat].DecreasePropertyBy(1);
+            }
         }
 
 

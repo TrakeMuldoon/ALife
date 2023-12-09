@@ -20,8 +20,6 @@ namespace ALifeUnivTests
 
         public bool FixedWidthHeight { get { return false; } }
 
-        public void AgentUpkeep(Agent me) { }
-
         public void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
         }

@@ -42,8 +42,8 @@ namespace ALifeUni.ALife.Scenarios
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                new StatisticInput("Age", 0, Int32.MaxValue),
-                new StatisticInput("ProgressTimer", 0, Int32.MaxValue)
+                agent.CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("ProgressTimer", 0, Int32.MaxValue),
             };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
@@ -60,12 +60,6 @@ namespace ALifeUni.ALife.Scenarios
             agent.CompleteInitialization(null, 1, newBrain);
 
             return agent;
-        }
-
-        public virtual void AgentUpkeep(Agent me)
-        {
-            me.Statistics["Age"].IncreasePropertyBy(1);
-            me.Statistics["ProgressTimer"].IncreasePropertyBy(1);
         }
 
         private Dictionary<string, HashSet<Agent>> zonesHit = new Dictionary<string, HashSet<Agent>>

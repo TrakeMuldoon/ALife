@@ -68,11 +68,6 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
-        public virtual void AgentUpkeep(Agent me)
-        {
-            //Do nothing
-        }
-
         public virtual void AgentEndOfTurnTriggers(Agent me)
         {
             //Do Nothing

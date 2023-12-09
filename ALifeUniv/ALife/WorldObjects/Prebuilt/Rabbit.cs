@@ -59,10 +59,6 @@ namespace ALifeUni.ALife.WorldObjects.Agents.CustomAgents
         {
         }
 
-        public override void AgentUpkeep()
-        {
-        }
-
         public void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
             //So the rabbit doesn't kill people.

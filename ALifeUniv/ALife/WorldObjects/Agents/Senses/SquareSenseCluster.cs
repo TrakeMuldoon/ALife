@@ -1,7 +1,7 @@
-﻿using ALifeUni.ALife.WorldObjects.Agents.Senses.Generic;
-using ALifeUni.ALife.Geometry;
+﻿using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.WorldObjects.Agents.Senses.Generic;
 using System;
 using Windows.UI;
 

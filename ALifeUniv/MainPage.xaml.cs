@@ -1,10 +1,10 @@
 ﻿using ALifeUni.ALife;
-using ALifeUni.ALife.WorldObjects.Agents;
-using ALifeUni.ALife.WorldObjects.Agents.Brains.BehaviourBrains;
 using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Scenarios;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility.WorldObjects;
+using ALifeUni.ALife.WorldObjects.Agents;
+using ALifeUni.ALife.WorldObjects.Agents.Brains.BehaviourBrains;
 using ALifeUni.UI;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;

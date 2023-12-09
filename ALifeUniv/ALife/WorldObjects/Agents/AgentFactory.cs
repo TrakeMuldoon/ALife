@@ -1,9 +1,8 @@
-﻿using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+﻿using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
 using ALifeUni.ALife.WorldObjects.Agents.Brains;
 using ALifeUni.ALife.WorldObjects.Agents.Properties;
 using ALifeUni.ALife.WorldObjects.Agents.Senses;
-using ALifeUni.ALife.Shapes;
-using ALifeUni.ALife.WorldObjects.Agents;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;

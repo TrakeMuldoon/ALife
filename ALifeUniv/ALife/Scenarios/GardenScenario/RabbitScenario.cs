@@ -1,12 +1,11 @@
-﻿using ALifeUni.ALife.WorldObjects.Agents;
+﻿using ALifeUni.ALife.Scenarios.ScenarioHelpers;
+using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.WorldObjects.Agents;
 using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
 using ALifeUni.ALife.WorldObjects.Agents.Brains;
 using ALifeUni.ALife.WorldObjects.Agents.CustomAgents;
 using ALifeUni.ALife.WorldObjects.Agents.Properties;
 using ALifeUni.ALife.WorldObjects.Agents.Senses;
-using ALifeUni.ALife.Scenarios.ScenarioHelpers;
-using ALifeUni.ALife.Utility;
-using ALifeUni.ALife.Utility.WorldObjects;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;
@@ -66,7 +65,7 @@ namespace ALifeUni.ALife.Scenarios
 
             return agent;
         }
-    
+
         public virtual void AgentUpkeep(Agent me)
         {
             me.Statistics["Age"].IncreasePropertyBy(1);

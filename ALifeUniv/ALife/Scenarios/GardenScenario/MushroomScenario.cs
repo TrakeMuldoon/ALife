@@ -1,11 +1,11 @@
-﻿using ALifeUni.ALife.WorldObjects.Agents;
+﻿using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.Utility.WorldObjects;
+using ALifeUni.ALife.WorldObjects.Agents;
 using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
 using ALifeUni.ALife.WorldObjects.Agents.Brains;
 using ALifeUni.ALife.WorldObjects.Agents.CustomAgents;
 using ALifeUni.ALife.WorldObjects.Agents.Properties;
 using ALifeUni.ALife.WorldObjects.Agents.Senses;
-using ALifeUni.ALife.Utility;
-using ALifeUni.ALife.Utility.WorldObjects;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;
@@ -34,14 +34,14 @@ namespace ALifeUni.ALife.Scenarios
             List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(null,
                 new EyeCluster(agent, "EyeLeft", true
                     , new ROEvoNumber(startValue: -20, evoDeltaMax: 1, hardMin: -360, hardMax: 360)    //Orientation Around Parent
-                    , new ROEvoNumber(startValue: 5,  evoDeltaMax: 1, hardMin: -360, hardMax: 360)     //Relative Orientation
-                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 1, hardMin: 40, hardMax: 120)       //Radius
-                    , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
+                    , new ROEvoNumber(startValue: 5,  evoDeltaMax: 1, hardMin: -360,  hardMax: 360)     //Relative Orientation
+                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 1, hardMin: 40,    hardMax: 120)       //Radius
+                    , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15,    hardMax: 40)),      //Sweep
                 new EyeCluster(agent, "EyeRight", true
                     , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: -360, hardMax: 360)     //Orientation Around Parent
                     , new ROEvoNumber(startValue: -5, evoDeltaMax: 1, hardMin: -360, hardMax: 360)    //Relative Orientation
-                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 1, hardMin: 40, hardMax: 120)       //Radius
-                    , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40))       //Sweep
+                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 1, hardMin: 40,    hardMax: 120)       //Radius
+                    , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15,    hardMax: 40))       //Sweep
             );
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();

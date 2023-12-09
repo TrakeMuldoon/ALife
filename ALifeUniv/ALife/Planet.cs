@@ -1,7 +1,7 @@
-﻿using ALifeUni.ALife.WorldObjects.Agents;
-using ALifeUni.ALife.Collision;
+﻿using ALifeUni.ALife.Collision;
 using ALifeUni.ALife.Scenarios;
 using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.WorldObjects.Agents;
 using System;
 using System.Collections.Generic;
 

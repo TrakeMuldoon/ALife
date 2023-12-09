@@ -12,19 +12,18 @@
  * **/
 
 
-using ALifeUni.ALife.WorldObjects.Agents;
-using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
-using ALifeUni.ALife.WorldObjects.Agents.Brains;
-using ALifeUni.ALife.WorldObjects.Agents.Properties;
-using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using ALifeUni.ALife.Collision;
 using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.Utility.WorldObjects;
+using ALifeUni.ALife.WorldObjects.Agents;
+using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+using ALifeUni.ALife.WorldObjects.Agents.Brains;
+using ALifeUni.ALife.WorldObjects.Agents.Properties;
+using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Windows.Foundation;
 using Windows.UI;
 

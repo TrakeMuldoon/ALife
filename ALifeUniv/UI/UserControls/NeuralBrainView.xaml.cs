@@ -1,7 +1,7 @@
-﻿using ALifeUni.ALife.WorldObjects.Agents;
+﻿using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.WorldObjects.Agents;
 using ALifeUni.ALife.WorldObjects.Agents.Brains;
 using ALifeUni.ALife.WorldObjects.Agents.Brains.NeuralNetworkBrains;
-using ALifeUni.ALife.Utility;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;

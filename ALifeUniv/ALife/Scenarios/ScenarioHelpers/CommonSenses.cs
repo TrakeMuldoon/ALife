@@ -1,6 +1,6 @@
-﻿using ALifeUni.ALife.WorldObjects.Agents;
+﻿using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.WorldObjects.Agents;
 using ALifeUni.ALife.WorldObjects.Agents.Senses;
-using ALifeUni.ALife.Utility;
 using System.Collections.Generic;
 
 namespace ALifeUni.ALife.Scenarios.ScenarioHelpers

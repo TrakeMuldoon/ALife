@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using Windows.System;
 using Windows.UI.Core;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace ALifeUni.Runners
@@ -38,11 +36,11 @@ namespace ALifeUni.Runners
 
         private async void WriteInternal()
         {
-            while (true)
+            while(true)
             {
                 await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    while (messageQueue.TryDequeue(out string message))
+                    while(messageQueue.TryDequeue(out string message))
                     {
                         consoleBox.Text += message;
                     }

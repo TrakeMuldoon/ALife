@@ -1,6 +1,6 @@
-using ALifeUni.ALife.WorldObjects.Agents;
 using ALifeUni.ALife.Collision;
 using ALifeUni.ALife.Scenarios.ScenarioHelpers;
+using ALifeUni.ALife.WorldObjects.Agents;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation;

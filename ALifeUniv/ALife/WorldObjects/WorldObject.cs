@@ -1,5 +1,5 @@
-﻿using ALifeUni.ALife.WorldObjects.Agents.Properties;
-using ALifeUni.ALife.Shapes;
+﻿using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.WorldObjects.Agents.Properties;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;
@@ -88,12 +88,12 @@ namespace ALifeUni.ALife
         /// How to execute a turn for an object which is considered "alive". 
         /// </summary>
         public abstract void ExecuteAliveTurn();
-        
+
         /// <summary>
         /// How to execute a turn for an object which is considered "dead". 
         /// </summary>
         public abstract void ExecuteDeadTurn();
-        
+
         /// <summary>
         /// Execute any required steps to move the object from "Alive" -> "Dead" (or "Removed" if the object has no meaningful "Dead" state")
         /// </summary>

@@ -1,7 +1,7 @@
-﻿using ALifeUni.ALife.WorldObjects.Agents.Senses.GoalSense;
-using ALifeUni.ALife.Geometry;
+﻿using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.WorldObjects.Agents.Senses.GoalSense;
 using System;
 using Windows.Foundation;
 

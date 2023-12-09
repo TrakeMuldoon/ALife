@@ -1,6 +1,6 @@
-﻿using ALifeUni.ALife.WorldObjects.Agents;
+﻿using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.WorldObjects.Agents;
 using ALifeUni.ALife.WorldObjects.Agents.Senses;
-using ALifeUni.ALife.Shapes;
 using System.Collections.Generic;
 using Windows.UI;
 

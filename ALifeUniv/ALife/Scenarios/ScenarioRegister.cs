@@ -34,10 +34,10 @@ namespace ALifeUni.ALife.Scenarios
             Type[] typesInAssembly = Assembly.GetCallingAssembly().GetTypes();
             List<Type> potentialScenarioTypes = typesInAssembly.Where(x => x.IsClass && !x.IsAbstract && x.GetInterface(scenarioInterfaceClassName) != null && x.IsDefined(typeof(ScenarioRegistration), false)).ToList();
 
-            foreach (Type scenario in potentialScenarioTypes)
+            foreach(Type scenario in potentialScenarioTypes)
             {
                 ScenarioRegistration registrationAttribute = (ScenarioRegistration)scenario.GetCustomAttribute(typeof(ScenarioRegistration), false);
-                if (registrationAttribute.DebugModeOnly && !isDebugMode)
+                if(registrationAttribute.DebugModeOnly && !isDebugMode)
                 {
                     continue;
                 }
@@ -48,9 +48,9 @@ namespace ALifeUni.ALife.Scenarios
 
                 scenarios.Add(registrationAttribute.Name, metadata);
 
-                if (registrationAttribute.AutoStartScenario)
+                if(registrationAttribute.AutoStartScenario)
                 {
-                    if (startingScenarioName != string.Empty)
+                    if(startingScenarioName != string.Empty)
                     {
                         throw new Exception("Multiple scenarios have been marked as the auto-start scenario");
                     }
@@ -74,7 +74,7 @@ namespace ALifeUni.ALife.Scenarios
         /// <exception cref="System.Exception">Scenario not found</exception>
         public static IScenario GetScenario(string scenarioName)
         {
-            if (!scenarios.TryGetValue(scenarioName, out var type))
+            if(!scenarios.TryGetValue(scenarioName, out var type))
             {
                 throw new Exception("Scenario not found");
             }
@@ -90,7 +90,7 @@ namespace ALifeUni.ALife.Scenarios
         /// <returns>The suggested seeds for the specified scenario.</returns>
         public static Dictionary<int, string> GetSuggestions(string scenarioName)
         {
-            if (!scenarios.TryGetValue(scenarioName, out var type))
+            if(!scenarios.TryGetValue(scenarioName, out var type))
             {
                 throw new Exception("Scenario not found");
             }
@@ -105,7 +105,7 @@ namespace ALifeUni.ALife.Scenarios
         /// <returns>Details on the scenario.</returns>
         public static ScenarioRegistration GetScenarioDetails(string scenarioName)
         {
-            if (!scenarios.TryGetValue(scenarioName, out var type))
+            if(!scenarios.TryGetValue(scenarioName, out var type))
             {
                 throw new Exception("Scenario not found");
             }
@@ -130,7 +130,7 @@ namespace ALifeUni.ALife.Scenarios
         /// <returns>The name and starting seed for the auto start scenario, or null</returns>
         public static Nullable<(string, Nullable<int>)> GetAutoStartScenario()
         {
-            if (string.IsNullOrWhiteSpace(startingScenarioName))
+            if(string.IsNullOrWhiteSpace(startingScenarioName))
             {
                 return null;
             }

@@ -1,10 +1,10 @@
-﻿using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+﻿using ALifeUni.ALife.Collision;
+using ALifeUni.ALife.Scenarios.ScenarioHelpers;
+using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
 using ALifeUni.ALife.WorldObjects.Agents.Brains;
 using ALifeUni.ALife.WorldObjects.Agents.Brains.BehaviourBrains;
 using ALifeUni.ALife.WorldObjects.Agents.Properties;
 using ALifeUni.ALife.WorldObjects.Agents.Senses;
-using ALifeUni.ALife.Collision;
-using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;

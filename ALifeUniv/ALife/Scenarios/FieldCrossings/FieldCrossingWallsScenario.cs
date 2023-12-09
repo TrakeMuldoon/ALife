@@ -1,7 +1,7 @@
-﻿using ALifeUni.ALife.WorldObjects.Agents;
-using ALifeUni.ALife.Geometry;
+﻿using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using ALifeUni.ALife.Utility.WorldObjects;
+using ALifeUni.ALife.WorldObjects.Agents;
 using System.Collections.Generic;
 using Windows.Foundation;
 

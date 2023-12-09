@@ -1,6 +1,6 @@
-﻿using ALifeUni.ALife.Agents.AgentActions;
+﻿using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
 
-namespace ALifeUni.ALife.Agents.Brains.NeuralNetworkBrains
+namespace ALifeUni.ALife.WorldObjects.Agents.Brains.NeuralNetworkBrains
 {
     public class ActionNeuron : Neuron
     {

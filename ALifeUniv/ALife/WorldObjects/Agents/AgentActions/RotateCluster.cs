@@ -3,7 +3,7 @@ using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Shapes;
 using System.Collections.Generic;
 
-namespace ALifeUni.ALife.Agents.AgentActions
+namespace ALifeUni.ALife.WorldObjects.Agents.AgentActions
 {
     public class RotateCluster : ActionCluster
     {

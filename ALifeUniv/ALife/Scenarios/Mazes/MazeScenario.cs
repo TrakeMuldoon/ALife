@@ -10,12 +10,12 @@
  * If an agent reaches the goal line, the simuluation stops.
  * **/
 
-using ALifeUni.ALife.Agents;
-using ALifeUni.ALife.Agents.AgentActions;
-using ALifeUni.ALife.Agents.Brains;
-using ALifeUni.ALife.Agents.Brains.BehaviourBrains;
-using ALifeUni.ALife.Agents.Properties;
-using ALifeUni.ALife.Agents.Senses;
+using ALifeUni.ALife.WorldObjects.Agents;
+using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+using ALifeUni.ALife.WorldObjects.Agents.Brains;
+using ALifeUni.ALife.WorldObjects.Agents.Brains.BehaviourBrains;
+using ALifeUni.ALife.WorldObjects.Agents.Properties;
+using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using ALifeUni.ALife.Utility;
 using System;

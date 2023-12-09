@@ -1,10 +1,10 @@
-using ALifeUni.ALife.Agents.AgentActions;
+using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ALifeUni.ALife.Agents.Brains.BehaviourBrains
+namespace ALifeUni.ALife.WorldObjects.Agents.Brains.BehaviourBrains
 {
     public class Behaviour
     {

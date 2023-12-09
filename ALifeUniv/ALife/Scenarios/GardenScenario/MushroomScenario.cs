@@ -1,9 +1,9 @@
-﻿using ALifeUni.ALife.Agents;
-using ALifeUni.ALife.Agents.AgentActions;
-using ALifeUni.ALife.Agents.Brains;
-using ALifeUni.ALife.Agents.CustomAgents;
-using ALifeUni.ALife.Agents.Properties;
-using ALifeUni.ALife.Agents.Senses;
+﻿using ALifeUni.ALife.WorldObjects.Agents;
+using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+using ALifeUni.ALife.WorldObjects.Agents.Brains;
+using ALifeUni.ALife.WorldObjects.Agents.CustomAgents;
+using ALifeUni.ALife.WorldObjects.Agents.Properties;
+using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.Utility.WorldObjects;
 using System;

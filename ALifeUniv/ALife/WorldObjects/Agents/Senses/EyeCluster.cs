@@ -1,12 +1,12 @@
-﻿using ALifeUni.ALife.Agents.Senses.Eyes;
-using ALifeUni.ALife.Agents.Senses.Generic;
+﻿using ALifeUni.ALife.WorldObjects.Agents.Senses.Eyes;
+using ALifeUni.ALife.WorldObjects.Agents.Senses.Generic;
 using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using System;
 using Windows.UI;
 
-namespace ALifeUni.ALife.Agents.Senses
+namespace ALifeUni.ALife.WorldObjects.Agents.Senses
 {
     public class EyeCluster : SenseCluster
     {

@@ -13,7 +13,7 @@ namespace ScenarioRunner
         {
             ConsoleScenarioRunner runner = new ConsoleScenarioRunner();
 
-            runner.ExecuteRunner("Mushrooms");
+            runner.ExecuteRunner("Mushrooms", null);
         }
     }
 }

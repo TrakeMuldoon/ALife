@@ -1,11 +1,11 @@
-﻿using ALifeUni.ALife.Agents.Senses.GoalSense;
+﻿using ALifeUni.ALife.WorldObjects.Agents.Senses.GoalSense;
 using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using System;
 using Windows.Foundation;
 
-namespace ALifeUni.ALife.Agents.Senses
+namespace ALifeUni.ALife.WorldObjects.Agents.Senses
 {
     public class GoalSenseCluster : SenseCluster
     {

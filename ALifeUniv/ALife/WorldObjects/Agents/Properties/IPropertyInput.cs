@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ALifeUni.ALife.Agents.Properties
+namespace ALifeUni.ALife.WorldObjects.Agents.Properties
 {
     public interface IPropertyInput
     {

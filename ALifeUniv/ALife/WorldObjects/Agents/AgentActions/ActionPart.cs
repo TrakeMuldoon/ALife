@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ALifeUni.ALife.Agents.AgentActions
+namespace ALifeUni.ALife.WorldObjects.Agents.AgentActions
 {
     public class ActionPart
     {

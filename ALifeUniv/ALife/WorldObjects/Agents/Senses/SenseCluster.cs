@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Windows.UI;
 
-namespace ALifeUni.ALife.Agents.Senses
+namespace ALifeUni.ALife.WorldObjects.Agents.Senses
 {
 
     public abstract class SenseCluster : IHasShape

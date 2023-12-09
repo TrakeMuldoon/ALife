@@ -1,6 +1,6 @@
 ﻿using ALifeUni.ALife;
-using ALifeUni.ALife.Agents;
-using ALifeUni.ALife.Agents.Brains.BehaviourBrains;
+using ALifeUni.ALife.WorldObjects.Agents;
+using ALifeUni.ALife.WorldObjects.Agents.Brains.BehaviourBrains;
 using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Scenarios;
 using ALifeUni.ALife.Shapes;

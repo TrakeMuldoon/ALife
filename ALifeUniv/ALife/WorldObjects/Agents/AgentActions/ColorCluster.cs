@@ -1,7 +1,7 @@
 ﻿using ALifeUni.ALife.Shapes;
 using Windows.UI;
 
-namespace ALifeUni.ALife.Agents.AgentActions
+namespace ALifeUni.ALife.WorldObjects.Agents.AgentActions
 {
     public class ColorCluster : ActionCluster
     {

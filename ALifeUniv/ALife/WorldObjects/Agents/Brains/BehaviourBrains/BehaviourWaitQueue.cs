@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ALifeUni.ALife.Agents.Brains.BehaviourBrains
+namespace ALifeUni.ALife.WorldObjects.Agents.Brains.BehaviourBrains
 {
     public class BehaviourWaitQueue
     {

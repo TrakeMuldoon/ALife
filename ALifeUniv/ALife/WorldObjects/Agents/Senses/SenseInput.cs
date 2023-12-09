@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ALifeUni.ALife.Agents.Senses
+namespace ALifeUni.ALife.WorldObjects.Agents.Senses
 {
     public interface SenseInput
     {

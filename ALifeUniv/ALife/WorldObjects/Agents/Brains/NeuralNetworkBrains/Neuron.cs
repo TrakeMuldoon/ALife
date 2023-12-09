@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ALifeUni.ALife.Agents.Brains.NeuralNetworkBrains
+namespace ALifeUni.ALife.WorldObjects.Agents.Brains.NeuralNetworkBrains
 {
     public class Neuron
     {

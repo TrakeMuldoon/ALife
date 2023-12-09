@@ -1,4 +1,4 @@
-﻿using ALifeUni.ALife.Agents;
+﻿using ALifeUni.ALife.WorldObjects.Agents;
 using ALifeUni.ALife.Collision;
 using ALifeUni.ALife.Scenarios;
 using ALifeUni.ALife.Utility;

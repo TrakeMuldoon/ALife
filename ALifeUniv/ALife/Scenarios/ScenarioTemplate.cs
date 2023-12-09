@@ -1,4 +1,4 @@
-﻿using ALifeUni.ALife.Agents;
+﻿using ALifeUni.ALife.WorldObjects.Agents;
 using System;
 using System.Collections.Generic;
 using Windows.UI;

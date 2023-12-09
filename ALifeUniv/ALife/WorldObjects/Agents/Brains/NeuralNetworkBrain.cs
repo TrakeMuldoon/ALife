@@ -1,10 +1,10 @@
-﻿using ALifeUni.ALife.Agents.AgentActions;
-using ALifeUni.ALife.Agents.Brains.NeuralNetworkBrains;
-using ALifeUni.ALife.Agents.Senses;
+﻿using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+using ALifeUni.ALife.WorldObjects.Agents.Brains.NeuralNetworkBrains;
+using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
 
-namespace ALifeUni.ALife.Agents.Brains
+namespace ALifeUni.ALife.WorldObjects.Agents.Brains
 {
     class NeuralNetworkBrain : IBrain
     {

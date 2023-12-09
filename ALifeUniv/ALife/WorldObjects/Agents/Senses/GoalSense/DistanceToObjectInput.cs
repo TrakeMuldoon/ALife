@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ALifeUni.ALife.Agents.Senses.GoalSense
+namespace ALifeUni.ALife.WorldObjects.Agents.Senses.GoalSense
 {
     class DistanceToObjectInput : SenseInput<int>
     {

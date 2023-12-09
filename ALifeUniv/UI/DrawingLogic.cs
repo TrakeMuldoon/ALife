@@ -1,5 +1,5 @@
 ﻿using ALifeUni.ALife;
-using ALifeUni.ALife.Agents;
+using ALifeUni.ALife.WorldObjects.Agents;
 using ALifeUni.ALife.Geometry;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;

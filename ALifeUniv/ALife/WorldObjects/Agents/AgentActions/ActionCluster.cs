@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ALifeUni.ALife.Agents.AgentActions
+namespace ALifeUni.ALife.WorldObjects.Agents.AgentActions
 {
     public abstract class ActionCluster
     {

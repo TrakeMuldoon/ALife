@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Windows.Foundation;
 
-namespace ALifeUni.ALife.Agents.AgentActions
+namespace ALifeUni.ALife.WorldObjects.Agents.AgentActions
 {
     public class MoveCluster : ActionCluster
     {

@@ -1,11 +1,11 @@
-﻿using ALifeUni.ALife.Agents.AgentActions;
-using ALifeUni.ALife.Agents.Properties;
-using ALifeUni.ALife.Agents.Senses;
+﻿using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+using ALifeUni.ALife.WorldObjects.Agents.Properties;
+using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ALifeUni.ALife.Agents.Brains.BehaviourBrains
+namespace ALifeUni.ALife.WorldObjects.Agents.Brains.BehaviourBrains
 {
     public class BehaviourCabinet
     {

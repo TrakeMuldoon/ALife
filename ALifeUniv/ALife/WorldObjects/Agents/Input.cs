@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace ALifeUni.ALife.Agents
+namespace ALifeUni.ALife.WorldObjects.Agents
 {
     public abstract class Input
     {

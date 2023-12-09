@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ALifeUni.ALife.Agents.Senses.Generic
+namespace ALifeUni.ALife.WorldObjects.Agents.Senses.Generic
 {
     public class CountInput : SenseInput<int>
     {

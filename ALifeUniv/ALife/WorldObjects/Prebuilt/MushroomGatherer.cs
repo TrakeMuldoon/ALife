@@ -1,14 +1,14 @@
-﻿using ALifeUni.ALife.Agents.AgentActions;
-using ALifeUni.ALife.Agents.Brains;
-using ALifeUni.ALife.Agents.Brains.BehaviourBrains;
-using ALifeUni.ALife.Agents.Properties;
-using ALifeUni.ALife.Agents.Senses;
+﻿using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+using ALifeUni.ALife.WorldObjects.Agents.Brains;
+using ALifeUni.ALife.WorldObjects.Agents.Brains.BehaviourBrains;
+using ALifeUni.ALife.WorldObjects.Agents.Properties;
+using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using ALifeUni.ALife.Utility;
 using System;
 using System.Collections.Generic;
 using Windows.UI;
 
-namespace ALifeUni.ALife.Agents.CustomAgents
+namespace ALifeUni.ALife.WorldObjects.Agents.CustomAgents
 {
     public class MushroomGatherer : Agent
     {

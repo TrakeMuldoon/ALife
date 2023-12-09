@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ALifeUni.ALife.Agents.Senses.Eyes
+namespace ALifeUni.ALife.WorldObjects.Agents.Senses.Eyes
 {
     public class ColorInput : SenseInput<double>
     {

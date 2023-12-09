@@ -1,7 +1,7 @@
-﻿using ALifeUni.ALife.Agents.Senses;
+﻿using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using System.Collections.Generic;
 
-namespace ALifeUni.ALife.Agents.Brains.NeuralNetworkBrains
+namespace ALifeUni.ALife.WorldObjects.Agents.Brains.NeuralNetworkBrains
 {
     internal class FuncNeuronFactory
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace ALifeUni.ALife.Agents.Properties
+namespace ALifeUni.ALife.WorldObjects.Agents.Properties
 {
     public class StatisticInput : Input<int>, IPropertyInput<int>
     {

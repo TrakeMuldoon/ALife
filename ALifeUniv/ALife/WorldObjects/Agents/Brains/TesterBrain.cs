@@ -1,7 +1,7 @@
-﻿using ALifeUni.ALife.Agents.AgentActions;
-using ALifeUni.ALife.Agents.Senses;
+﻿using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+using ALifeUni.ALife.WorldObjects.Agents.Senses;
 
-namespace ALifeUni.ALife.Agents.Brains
+namespace ALifeUni.ALife.WorldObjects.Agents.Brains
 {
     class TesterBrain : IBrain
     {

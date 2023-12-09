@@ -1,17 +1,17 @@
-﻿using ALifeUni.ALife.Agents;
-using ALifeUni.ALife.Agents.AgentActions;
-using ALifeUni.ALife.Agents.Brains;
-using ALifeUni.ALife.Agents.Properties;
-using ALifeUni.ALife.Agents.Senses;
-using ALifeUni.ALife.Shapes;
+﻿using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.WorldObjects.Agents;
+using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+using ALifeUni.ALife.WorldObjects.Agents.Brains;
+using ALifeUni.ALife.WorldObjects.Agents.Properties;
+using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    [ScenarioRegistration("Neural Net Test", description: "Lorum Ipsum", debugModeOnly: true)]
+    [ScenarioRegistration("Test - Neural Net", description: "Lorum Ipsum", debugModeOnly: true)]
     public class NeuralNetScenario : IScenario
     {
         /******************/
@@ -64,12 +64,7 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
-        public virtual void AgentUpkeep(Agent me)
-        {
-            //Do nothing
-        }
-
-        public virtual void EndOfTurnTriggers(Agent me)
+        public virtual void AgentEndOfTurnTriggers(Agent me)
         {
             //Do Nothing
         }

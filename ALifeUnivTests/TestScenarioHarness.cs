@@ -1,6 +1,6 @@
 ﻿using ALifeUni.ALife;
-using ALifeUni.ALife.Agents;
 using ALifeUni.ALife.Scenarios;
+using ALifeUni.ALife.WorldObjects.Agents;
 using System;
 using System.Collections.Generic;
 using Windows.UI;
@@ -20,8 +20,6 @@ namespace ALifeUnivTests
 
         public bool FixedWidthHeight { get { return false; } }
 
-        public void AgentUpkeep(Agent me) { }
-
         public void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
         }
@@ -31,7 +29,7 @@ namespace ALifeUnivTests
             throw new NotImplementedException();
         }
 
-        public void EndOfTurnTriggers(Agent me)
+        public void AgentEndOfTurnTriggers(Agent me)
         {
         }
 

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using ALifeUni.ALife.Scenarios;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ALifeUni.ALife.Scenarios;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -24,7 +24,7 @@ namespace ALifeUni
             // See ALife.Scenarios.ScenarioFactory.cs for a list of scenarios
             // To skip straight to a scenario and skip the launcher, set the AutoStartScenario in the ScenarioRegistration attribute for a scenario to true.
             Nullable<(string, Nullable<int>)> startingScenario = ScenarioRegister.GetAutoStartScenario();
-            if (startingScenario != null)
+            if(startingScenario != null)
             {
                 MainPage.ScenarioName = startingScenario.Value.Item1;
                 MainPage.ScenarioSeed = startingScenario.Value.Item2;
@@ -37,7 +37,15 @@ namespace ALifeUni
                 DescriptionText.Text = string.Empty;
                 SeedSuggestions.Items.Clear();
                 ScenariosList.Items.Clear();
-                foreach (string scenarioName in ScenarioRegister.Scenarios)
+
+                List<string> sortedNameList = new List<string>();
+                foreach(string scenarioName in ScenarioRegister.Scenarios)
+                {
+                    sortedNameList.Add(scenarioName);
+                }
+                sortedNameList.Sort();
+
+                foreach(string scenarioName in sortedNameList)
                 {
                     ScenariosList.Items.Add(scenarioName);
                 }
@@ -55,17 +63,17 @@ namespace ALifeUni
             DescriptionText.Text = string.Empty;
             SeedSuggestions.Items.Clear();
             currentSeedSuggestions.Clear();
-            if (ScenariosList.SelectedItem is string scenarioName)
+            if(ScenariosList.SelectedItem is string scenarioName)
             {
                 ScenarioRegistration scenarioDetails = ScenarioRegister.GetScenarioDetails(scenarioName);
                 DescriptionText.Text = scenarioDetails.Description;
 
                 Dictionary<int, string> suggestions = ScenarioRegister.GetSuggestions(scenarioName);
-                if (suggestions.Count > 0)
+                if(suggestions.Count > 0)
                 {
                     int maxSeedLength = suggestions.Select(x => x.Key).Max().ToString().Length;
 
-                    foreach (KeyValuePair<int, string> suggestion in suggestions)
+                    foreach(KeyValuePair<int, string> suggestion in suggestions)
                     {
                         string seedDescription = $"{suggestion.Key.ToString($"D{maxSeedLength}")} : {suggestion.Value}";
                         currentSeedSuggestions.Add(seedDescription, (suggestion.Key, suggestion.Value));
@@ -83,9 +91,9 @@ namespace ALifeUni
         private void SeedSuggestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SeedText.Text = StartingSeedText;
-            if (SeedSuggestions.SelectedItem is string seedDescription)
+            if(SeedSuggestions.SelectedItem is string seedDescription)
             {
-                if (currentSeedSuggestions.TryGetValue(seedDescription, out var seedDetails))
+                if(currentSeedSuggestions.TryGetValue(seedDescription, out var seedDetails))
                 {
                     SeedText.Text = seedDetails.Item1.ToString();
                 }
@@ -99,7 +107,7 @@ namespace ALifeUni
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void LaunchScenarioRunner_Click(object sender, RoutedEventArgs e)
         {
-            if (ScenariosList.SelectedItem is string scenarioName)
+            if(ScenariosList.SelectedItem is string scenarioName)
             {
                 ScenarioRunner.ScenarioName = scenarioName;
                 ScenarioRunner.ScenarioSeed = int.TryParse(SeedText.Text, out var seed) ? seed : (int?)null;
@@ -114,7 +122,7 @@ namespace ALifeUni
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void LaunchScenarioUI_Click(object sender, RoutedEventArgs e)
         {
-            if (ScenariosList.SelectedItem is string scenarioName)
+            if(ScenariosList.SelectedItem is string scenarioName)
             {
                 MainPage.ScenarioName = scenarioName;
                 MainPage.ScenarioSeed = int.TryParse(SeedText.Text, out var seed) ? seed : (int?)null;

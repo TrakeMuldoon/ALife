@@ -1,10 +1,10 @@
-﻿using ALifeUni.ALife.Agents;
-using ALifeUni.ALife.Agents.AgentActions;
-using ALifeUni.ALife.Agents.Brains;
-using ALifeUni.ALife.Agents.Properties;
-using ALifeUni.ALife.Agents.Senses;
-using ALifeUni.ALife.Scenarios.ScenarioHelpers;
+﻿using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.WorldObjects.Agents;
+using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+using ALifeUni.ALife.WorldObjects.Agents.Brains;
+using ALifeUni.ALife.WorldObjects.Agents.Properties;
+using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,20 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    [ScenarioRegistration("Generational Maze", description: "Lorum Ipsum")]
+    [ScenarioRegistration("Maze (Generational)",
+        description:
+        @"
+A maze where the agents must attempt to reach the end zone from a starting zone.
+In this Generational maze, when all the agents die, a new set of agents is created from the best of the previous generation
+
+Failure cases:
+If they crash into each other, or a wall, they die without reproducing.
+If they go 600 turns without increasing their X value, they die without reproducing.
+
+Success Cases:
+Whichever agents reached the furthest during the timelimit will be reproduced.
+If an agent reaches the goal line, the simuluation stops."
+    )]
     public class GenerationalMazeScenario : IScenario
     {
         /******************/
@@ -45,9 +58,9 @@ namespace ALifeUni.ALife.Scenarios
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("ZoneEscapeTimer", 0, Int32.MaxValue),
                 new StatisticInput("MaximumX", 0, Int32.MaxValue),
-                new StatisticInput("MaxXTimer", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("MaxXTimer", 0, Int32.MaxValue),
                 new StatisticInput("Iteration", 0, Int32.MaxValue, Iteration)
             };
 
@@ -67,8 +80,15 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
-        public virtual void EndOfTurnTriggers(Agent me)
+        public virtual void AgentEndOfTurnTriggers(Agent me)
         {
+            int roundedX = (int)(me.Shape.CentrePoint.X / 100) * 100;
+            if(roundedX > me.Statistics["MaximumX"].Value)
+            {
+                me.Statistics["MaximumX"].Value = roundedX;
+                me.Statistics["MaxXTimer"].Value = 0;
+            }
+
             if(me.Statistics["MaxXTimer"].Value > 600)
             {
                 me.Die();
@@ -90,18 +110,6 @@ namespace ALifeUni.ALife.Scenarios
 
                     throw new Exception("SUCCESS!!!!!!!!? at " + turns);
                 }
-            }
-        }
-
-        public virtual void AgentUpkeep(Agent me)
-        {
-            me.Statistics["ZoneEscapeTimer"].IncreasePropertyBy(1);
-            me.Statistics["MaxXTimer"].IncreasePropertyBy(1);
-            int roundedX = (int)(me.Shape.CentrePoint.X / 100) * 100;
-            if(roundedX > me.Statistics["MaximumX"].Value)
-            {
-                me.Statistics["MaximumX"].Value = roundedX;
-                me.Statistics["MaxXTimer"].Value = 0;
             }
         }
 

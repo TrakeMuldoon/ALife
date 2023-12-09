@@ -1,23 +1,16 @@
 ﻿/***
  * Scenario: 
- * A maze where the agents must attempt to reach the end zone from a starting zone.
- * Failure cases:
- * If they crash into each other, or a wall, they die without reproducing.
- * If they go 600 turns without increasing their X value, they die without reproducing.
- * 
- * Success Cases:
- * If there are less than 50 agents remaining, 6 more will be added, taken from the best agents to ever live.
- * If an agent reaches the goal line, the simuluation stops.
+
  * **/
 
-using ALifeUni.ALife.Agents;
-using ALifeUni.ALife.Agents.AgentActions;
-using ALifeUni.ALife.Agents.Brains;
-using ALifeUni.ALife.Agents.Brains.BehaviourBrains;
-using ALifeUni.ALife.Agents.Properties;
-using ALifeUni.ALife.Agents.Senses;
 using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.WorldObjects.Agents;
+using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+using ALifeUni.ALife.WorldObjects.Agents.Brains;
+using ALifeUni.ALife.WorldObjects.Agents.Brains.BehaviourBrains;
+using ALifeUni.ALife.WorldObjects.Agents.Properties;
+using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +19,18 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    [ScenarioRegistration("Maze", description: "Lorum Ipsum")]
+    [ScenarioRegistration("Maze",
+        description:
+        @"
+A maze where the agents must attempt to reach the end zone from a starting zone.
+Failure cases:
+If they crash into each other, or a wall, they die without reproducing.
+If they go 600 turns without increasing their X value, they die without reproducing.
+
+Success Cases:
+If there are less than 50 agents remaining, 6 more will be added, taken from the best agents to ever live.
+If an agent reaches the goal line, the simuluation stops."
+    )]
     public class MazeScenario : IScenario
     {
         /******************/
@@ -59,9 +63,9 @@ namespace ALifeUni.ALife.Scenarios
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                new StatisticInput("Age", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
                 new StatisticInput("MaximumX", 0, Int32.MaxValue),
-                new StatisticInput("MaxXTimer", 0, Int32.MaxValue)
+                agent.CreateIncrementingStatistic("MaxXTimer", 0, Int32.MaxValue)
             };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
@@ -79,7 +83,7 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
-        public virtual void EndOfTurnTriggers(Agent me)
+        public virtual void AgentEndOfTurnTriggers(Agent me)
         {
             if(me.Statistics["MaxXTimer"].Value > 600)
             {
@@ -107,13 +111,6 @@ namespace ALifeUni.ALife.Scenarios
                     throw new Exception("SUCCESS!!!!!!!!? at " + turns);
                 }
             }
-        }
-
-        public virtual void AgentUpkeep(Agent me)
-        {
-            //Increment or Decrement end of turn values
-            me.Statistics["Age"].IncreasePropertyBy(1);
-            me.Statistics["MaxXTimer"].IncreasePropertyBy(1);
         }
 
         public void CollisionBehaviour(Agent me, List<WorldObject> collisions)

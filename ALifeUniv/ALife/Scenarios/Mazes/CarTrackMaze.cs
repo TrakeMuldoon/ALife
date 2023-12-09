@@ -1,10 +1,10 @@
-﻿using ALifeUni.ALife.Agents;
-using ALifeUni.ALife.Agents.AgentActions;
-using ALifeUni.ALife.Agents.Brains;
-using ALifeUni.ALife.Agents.Properties;
-using ALifeUni.ALife.Agents.Senses;
-using ALifeUni.ALife.Scenarios.ScenarioHelpers;
+﻿using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using ALifeUni.ALife.Utility;
+using ALifeUni.ALife.WorldObjects.Agents;
+using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+using ALifeUni.ALife.WorldObjects.Agents.Brains;
+using ALifeUni.ALife.WorldObjects.Agents.Properties;
+using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;
@@ -42,8 +42,8 @@ namespace ALifeUni.ALife.Scenarios
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                new StatisticInput("Age", 0, Int32.MaxValue),
-                new StatisticInput("ProgressTimer", 0, Int32.MaxValue)
+                agent.CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("ProgressTimer", 0, Int32.MaxValue),
             };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
@@ -62,12 +62,6 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
-        public virtual void AgentUpkeep(Agent me)
-        {
-            me.Statistics["Age"].IncreasePropertyBy(1);
-            me.Statistics["ProgressTimer"].IncreasePropertyBy(1);
-        }
-
         private Dictionary<string, HashSet<Agent>> zonesHit = new Dictionary<string, HashSet<Agent>>
         {
             { "Start", new HashSet<Agent>() },
@@ -77,7 +71,7 @@ namespace ALifeUni.ALife.Scenarios
             { "End", new HashSet<Agent>() }
         };
 
-        public virtual void EndOfTurnTriggers(Agent me)
+        public virtual void AgentEndOfTurnTriggers(Agent me)
         {
             if(me.Statistics["ProgressTimer"].Value > 1000)
             {

@@ -1,6 +1,6 @@
 ﻿using ALifeUni.ALife;
-using ALifeUni.ALife.Agents;
 using ALifeUni.ALife.Scenarios;
+using ALifeUni.ALife.WorldObjects.Agents;
 using System;
 using System.Linq;
 
@@ -15,10 +15,10 @@ namespace ALifeUni.Runners
         {
             CancelRunner = false;
             IsStopped = false;
-            while (true)
+            while(true)
             {
                 RunSetOfSeeds(scenarioName, startingSeed);
-                if (CancelRunner || ShouldStopRunner())
+                if(CancelRunner || ShouldStopRunner())
                 {
                     StopRunner();
                     break;
@@ -85,7 +85,7 @@ namespace ALifeUni.Runners
         /// <param name="numLines">The number of new lines.</param>
         protected void WriteNewLine(int numLines)
         {
-            for (var i = 0; i < numLines; i++)
+            for(var i = 0; i < numLines; i++)
             {
                 Write($" {Environment.NewLine}");
             }
@@ -97,7 +97,7 @@ namespace ALifeUni.Runners
         /// <param name="numLines">The number of line seperators.</param>
         protected void WriteLineSeperator(int numLines)
         {
-            for (var i = 0; i < numLines; i++)
+            for(var i = 0; i < numLines; i++)
             {
                 Write($"-------------------------------------{Environment.NewLine}");
             }
@@ -135,15 +135,15 @@ namespace ALifeUni.Runners
             int width = scenario.WorldWidth;
 
             Random r = new Random();
-            for (int i = 0; i < 20; i++)
+            for(int i = 0; i < 20; i++)
             {
-                if (CancelRunner)
+                if(CancelRunner)
                 {
                     break;
                 }
                 Write($"Scenario Execution #{i} -> ");
                 int seedValue = r.Next();
-                if (startingSeed.HasValue)
+                if(startingSeed.HasValue)
                 {
                     seedValue = startingSeed.Value;
                 }
@@ -169,9 +169,9 @@ namespace ALifeUni.Runners
             try
             {
                 Write(" 0");
-                for (int i = 0; i < 50; i++)
+                for(int i = 0; i < 50; i++)
                 {
-                    if (CancelRunner)
+                    if(CancelRunner)
                     {
                         break;
                     }
@@ -180,13 +180,13 @@ namespace ALifeUni.Runners
                     Write(".");
 
                     int population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
-                    if (population == 0)
+                    if(population == 0)
                     {
                         WriteLine("|> All Dead. Next");
                         break;
                     }
 
-                    if ((i + 1) % 10 == 0)
+                    if((i + 1) % 10 == 0)
                     {
                         TimeSpan elapsed = DateTime.Now - start;
                         string interim = elapsed.ToString("mm\\:ss\\.ff");
@@ -197,7 +197,7 @@ namespace ALifeUni.Runners
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 error = ex.Message;
                 string[] stack = ex.StackTrace.Split(Environment.NewLine);
@@ -208,7 +208,7 @@ namespace ALifeUni.Runners
 
             Write($"\tTotal Time: {durationString}\tTurns:{Planet.World.Turns}");
 
-            if (!String.IsNullOrEmpty(error))
+            if(!String.IsNullOrEmpty(error))
             {
                 string nl = Environment.NewLine;
                 string message = topLine + nl + error + nl;

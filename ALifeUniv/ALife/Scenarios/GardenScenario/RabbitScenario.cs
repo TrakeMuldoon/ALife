@@ -1,12 +1,11 @@
-﻿using ALifeUni.ALife.Agents;
-using ALifeUni.ALife.Agents.AgentActions;
-using ALifeUni.ALife.Agents.Brains;
-using ALifeUni.ALife.Agents.CustomAgents;
-using ALifeUni.ALife.Agents.Properties;
-using ALifeUni.ALife.Agents.Senses;
-using ALifeUni.ALife.Scenarios.ScenarioHelpers;
+﻿using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using ALifeUni.ALife.Utility;
-using ALifeUni.ALife.Utility.WorldObjects;
+using ALifeUni.ALife.WorldObjects.Agents;
+using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+using ALifeUni.ALife.WorldObjects.Agents.Brains;
+using ALifeUni.ALife.WorldObjects.Agents.CustomAgents;
+using ALifeUni.ALife.WorldObjects.Agents.Properties;
+using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;
@@ -14,7 +13,21 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    [ScenarioRegistration("Rabbits", description: "Lorum Ipsum")]
+    [ScenarioRegistration("Rabbits",
+        description:
+        @"
+Rabbit Chaser (smart, slow rabbit)
+In this scenario, the agents are trying to chase down a rabbit using the 'GoalSense' cluster. 
+Each Agent has a sense for where the rabbit is. 
+
+Failure cases:
+If the agents bump into anything except the rabbit, they die.
+
+Success cases: 
+If the agents come withing 256,128,64,32,16,8,4,2 units of distance from the Rabbit, they reproduce.
+If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respawns somewhere else.
+        "
+    )]
     public class RabbitScenario : IScenario
     {
         /******************/
@@ -46,7 +59,7 @@ namespace ALifeUni.ALife.Scenarios
             List<PropertyInput> agentProperties = new List<PropertyInput>();
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                new StatisticInput("Age", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
                 new StatisticInput("RabbitKills", 0, Int32.MaxValue),
                 new StatisticInput("ReproDistance", 0, Int32.MaxValue, 256),
             };
@@ -66,14 +79,8 @@ namespace ALifeUni.ALife.Scenarios
 
             return agent;
         }
-    
-        public virtual void AgentUpkeep(Agent me)
-        {
-            me.Statistics["Age"].IncreasePropertyBy(1);
-        }
 
-
-        public virtual void EndOfTurnTriggers(Agent me)
+        public virtual void AgentEndOfTurnTriggers(Agent me)
         {
             //if(me.Statistics["Age"].Value != 0
             //    && me.Statistics["Age"].Value % 300 == 0)

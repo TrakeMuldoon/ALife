@@ -1,13 +1,24 @@
-using ALifeUni.ALife.Agents;
 using ALifeUni.ALife.Collision;
 using ALifeUni.ALife.Scenarios.ScenarioHelpers;
+using ALifeUni.ALife.WorldObjects.Agents;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    [ScenarioRegistration("Field Crossing (Low Repro)", description: "Lorum Ipsum")]
+    [ScenarioRegistration("Field Crossing (Low Repro)",
+    description:
+        @"
+4 way field crossing (Low Reproduction)
+This scenario features populations of agents all trying to reach the opposite end, by colour.
+Failure cases:
+If they do not reach the other end within 1900 turns, they die without reprodcing.
+If they do not leave their starting zone within 200 turns, the die without reproducing.
+
+Success Cases:
+If they reach the target zone, they will restart in their own zones, and two evolved children will be spawned"
+     )]
     public class FieldCrossingLowReproScenario : FieldCrossingScenario
     {
         private Dictionary<Zone, AgentZoneSpec> RotatedZoneSpecs = new Dictionary<Zone, AgentZoneSpec>();

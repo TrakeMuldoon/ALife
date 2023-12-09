@@ -1,11 +1,11 @@
-﻿using ALifeUni.ALife.Agents;
-using ALifeUni.ALife.Agents.AgentActions;
-using ALifeUni.ALife.Agents.Brains;
-using ALifeUni.ALife.Agents.CustomAgents;
-using ALifeUni.ALife.Agents.Properties;
-using ALifeUni.ALife.Agents.Senses;
-using ALifeUni.ALife.Utility;
+﻿using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.Utility.WorldObjects;
+using ALifeUni.ALife.WorldObjects.Agents;
+using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+using ALifeUni.ALife.WorldObjects.Agents.Brains;
+using ALifeUni.ALife.WorldObjects.Agents.CustomAgents;
+using ALifeUni.ALife.WorldObjects.Agents.Properties;
+using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;
@@ -13,9 +13,23 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    [ScenarioRegistration("Mushrooms", description: "Lorum Ipsum")]
+    [ScenarioRegistration("Mushroom Garden",
+    description:
+        @"
+Mushroom Garden
+This scenario takes place in a mushroom garden. Mushrooms spawn with a ratio of 50% good/bad.
+Failure cases:
+Eat a bad mushroom, they die. 
+Get eaten (collided into) by another agent, they die.
+
+Success Cases:
+If they eat three other agents, they reproduce. 
+If they eat two green mushrooms, they reproduce."
+     )]
     public class MushroomScenario : IScenario
     {
+        public const double GOOD_MUSH_PERCENT = 0.50;
+
         /******************/
         /*   AGENT STUFF  */
         /******************/
@@ -34,22 +48,22 @@ namespace ALifeUni.ALife.Scenarios
             List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(null,
                 new EyeCluster(agent, "EyeLeft", true
                     , new ROEvoNumber(startValue: -20, evoDeltaMax: 1, hardMin: -360, hardMax: 360)    //Orientation Around Parent
-                    , new ROEvoNumber(startValue: 5,  evoDeltaMax: 1, hardMin: -360, hardMax: 360)     //Relative Orientation
-                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 1, hardMin: 40, hardMax: 120)       //Radius
-                    , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40)),      //Sweep
+                    , new ROEvoNumber(startValue: 5,  evoDeltaMax: 1, hardMin: -360,  hardMax: 360)     //Relative Orientation
+                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 1, hardMin: 40,    hardMax: 120)       //Radius
+                    , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15,    hardMax: 40)),      //Sweep
                 new EyeCluster(agent, "EyeRight", true
                     , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: -360, hardMax: 360)     //Orientation Around Parent
                     , new ROEvoNumber(startValue: -5, evoDeltaMax: 1, hardMin: -360, hardMax: 360)    //Relative Orientation
-                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 1, hardMin: 40, hardMax: 120)       //Radius
-                    , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15, hardMax: 40))       //Sweep
+                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 1, hardMin: 40,    hardMax: 120)       //Radius
+                    , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15,    hardMax: 40))       //Sweep
             );
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                new StatisticInput("Age", 0, Int32.MaxValue),
-                new StatisticInput("DeathTimer", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("DeathTimer", 0, Int32.MaxValue),
                 new StatisticInput("HowFullAmI", 0, Int32.MaxValue),
                 new StatisticInput("Kills", 0, Int32.MaxValue),
             };
@@ -69,13 +83,8 @@ namespace ALifeUni.ALife.Scenarios
 
             return agent;
         }
-        public virtual void AgentUpkeep(Agent me)
-        {
-            me.Statistics["Age"].IncreasePropertyBy(1);
-            me.Statistics["DeathTimer"].IncreasePropertyBy(1);
-        }
 
-        public virtual void EndOfTurnTriggers(Agent me)
+        public virtual void AgentEndOfTurnTriggers(Agent me)
         {
             if(me.Statistics["DeathTimer"].Value > 500)
             {

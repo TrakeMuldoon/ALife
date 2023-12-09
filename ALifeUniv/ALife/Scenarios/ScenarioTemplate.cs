@@ -1,4 +1,4 @@
-﻿using ALifeUni.ALife.Agents;
+﻿using ALifeUni.ALife.WorldObjects.Agents;
 using System;
 using System.Collections.Generic;
 using Windows.UI;
@@ -22,13 +22,8 @@ namespace ALifeUni.ALife.Scenarios
             //TODO: Fully Comment This
             throw new NotImplementedException();
         }
-        public virtual void AgentUpkeep(Agent me)
-        {
-            //TODO: Fully Comment This
-            //Default, no upkeep
-        }
 
-        public virtual void EndOfTurnTriggers(Agent me)
+        public virtual void AgentEndOfTurnTriggers(Agent me)
         {
             //TODO: Fully Comment This
             //Default, nothing happens

@@ -49,7 +49,7 @@ namespace ALifeUni.ALife.Scenarios
             DebugModeOnly = debugModeOnly;
             AutoStartScenario = autoStartScenario;
             Nullable<int> actualSeed = autoStartSeed;
-            if (AutoStartScenario && autoStartSeed == int.MinValue)
+            if(AutoStartScenario && autoStartSeed == int.MinValue)
             {
                 actualSeed = null;
             }

@@ -1,36 +1,33 @@
-﻿/***
- * Scenario: 
- * 4 way field crossing
- * This scenario features populations of agents all trying to reach the opposite end, by colour. 
- * Failure cases:
- * If they crash into each other, or the spinning rock, they die without reproducing.
- * If they do not reach the other end within 1900 turns, they die without reprodcing.
- * If they do not leave their starting zone within 200 turns, the die without reproducing.
- * 
- * Success Cases:
- * If they reach the target zone, they will restart in their own zones, and an evolved child will be spawned in each of the four zones.
- * **/
-
-
-using ALifeUni.ALife.Agents;
-using ALifeUni.ALife.Agents.AgentActions;
-using ALifeUni.ALife.Agents.Brains;
-using ALifeUni.ALife.Agents.Properties;
-using ALifeUni.ALife.Agents.Senses;
-using ALifeUni.ALife.Collision;
+﻿using ALifeUni.ALife.Collision;
 using ALifeUni.ALife.Scenarios.ScenarioHelpers;
 using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.Utility.WorldObjects;
+using ALifeUni.ALife.WorldObjects.Agents;
+using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+using ALifeUni.ALife.WorldObjects.Agents.Brains;
+using ALifeUni.ALife.WorldObjects.Agents.Properties;
+using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Windows.Foundation;
 using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
-    [ScenarioRegistration("Field Crossing", description: "Lorum Ipsum")]
+    [ScenarioRegistration("Field Crossing",
+    description:
+        @"
+4 way field crossing
+This scenario features populations of agents all trying to reach the opposite end, by colour.
+Failure cases:
+If they crash into each other, or the spinning rock, they die without reproducing.
+If they do not reach the other end within 1900 turns, they die without reprodcing.
+If they do not leave their starting zone within 200 turns, the die without reproducing.
+
+Success Cases:
+If they reach the target zone, they will restart in their own zones, and an evolved child will be spawned in each of the four zones."
+     )]
     public class FieldCrossingScenario : IScenario
     {
         /******************/
@@ -60,9 +57,9 @@ namespace ALifeUni.ALife.Scenarios
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
-                new StatisticInput("Age", 0, Int32.MaxValue),
-                new StatisticInput("DeathTimer", 0, Int32.MaxValue),
-                new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue)
+                agent.CreateIncrementingStatistic("Age", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("DeathTimer", 0, Int32.MaxValue),
+                agent.CreateIncrementingStatistic("ZoneEscapeTimer", 0, Int32.MaxValue)
             };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
@@ -81,7 +78,7 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
-        public virtual void EndOfTurnTriggers(Agent me)
+        public virtual void AgentEndOfTurnTriggers(Agent me)
         {
             if(me.Statistics["DeathTimer"].Value > 1899)
             {
@@ -139,14 +136,6 @@ namespace ALifeUni.ALife.Scenarios
             (child.Senses[0] as GoalSenseCluster).ChangeTarget(specification.TargetZone);
 
             collider.MoveObject(child);
-        }
-
-        public virtual void AgentUpkeep(Agent me)
-        {
-            //Increment or Decrement end of turn values
-            me.Statistics["Age"].IncreasePropertyBy(1);
-            me.Statistics["DeathTimer"].IncreasePropertyBy(1);
-            me.Statistics["ZoneEscapeTimer"].IncreasePropertyBy(1);
         }
 
         public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)

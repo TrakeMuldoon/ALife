@@ -116,6 +116,12 @@ namespace ALifeUni.UI
                     DrawShape(iHS.Shape, auisettings.ShowSenseBoundingBoxes, args, false);
                 }
             }
+            
+            if(ag.JustReproduced)
+            {
+                Circle c = ag.Shape as Circle;
+                DrawCircle(new Circle(c.CentrePoint, c.Radius + 2) { Color = Colors.HotPink }, args, false);
+            }   
 
             //Draw Orientation
             DrawOrientation(args, shape);

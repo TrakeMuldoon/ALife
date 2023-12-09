@@ -7,6 +7,7 @@ using Windows.Foundation;
 
 namespace ALifeUni.ALife.Scenarios
 {
+    [ScenarioRegistration("Field Crossing (Low Repro)", description: "Lorum Ipsum")]
     public class FieldCrossingLowReproScenario : FieldCrossingScenario
     {
         private Dictionary<Zone, AgentZoneSpec> RotatedZoneSpecs = new Dictionary<Zone, AgentZoneSpec>();

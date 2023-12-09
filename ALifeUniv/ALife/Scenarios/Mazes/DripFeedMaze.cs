@@ -13,13 +13,9 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
+    [ScenarioRegistration("Drip Feed Maze", description: "Lorum Ipsum")]
     public class DripFeedMaze : IScenario
     {
-        public string Name
-        {
-            get { return "Maze"; }
-        }
-
         public Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation)
         {
             Agent agent = new Agent(genusName

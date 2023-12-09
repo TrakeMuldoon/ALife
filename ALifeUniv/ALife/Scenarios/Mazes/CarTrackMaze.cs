@@ -12,14 +12,10 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
+    [ScenarioRegistration("Around The Track", description: "Lorum Ipsum")]
+    [SuggestedSeed(1832460063, "Fun scenario!!!")]
     public class CarTrackMaze : IScenario
     {
-        /******************/
-        /* SCENARIO STUFF */
-        /******************/
-
-        public virtual string Name => "Around The Track";
-
         /******************/
         /*   AGENT STUFF  */
         /******************/

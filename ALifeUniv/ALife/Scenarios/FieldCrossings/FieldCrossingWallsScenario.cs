@@ -7,16 +7,9 @@ using Windows.Foundation;
 
 namespace ALifeUni.ALife.Scenarios.FieldCrossings
 {
+    [ScenarioRegistration("Field Crossing With Walls", description: "Lorum Ipsum")]
     public class FieldCrossingWallsScenario : FieldCrossingScenario
     {
-        /******************/
-        /* SCENARIO STUFF */
-        /******************/
-        public override string Name
-        {
-            get { return "Field Crossing With Walls"; }
-        }
-
         /******************/
         /*   AGENT STUFF  */
         /******************/

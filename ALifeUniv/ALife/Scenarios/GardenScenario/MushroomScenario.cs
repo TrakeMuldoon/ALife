@@ -13,14 +13,9 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
+    [ScenarioRegistration("Mushrooms", description: "Lorum Ipsum")]
     public class MushroomScenario : IScenario
     {
-        /******************/
-        /* SCENARIO STUFF */
-        /******************/
-
-        public virtual string Name => "Mushrooms";
-
         /******************/
         /*   AGENT STUFF  */
         /******************/

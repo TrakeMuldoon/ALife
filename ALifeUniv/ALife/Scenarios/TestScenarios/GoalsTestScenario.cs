@@ -11,17 +11,9 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
+    [ScenarioRegistration("GoalsSenseTest", description: "Lorum Ipsum", debugModeOnly: true)]
     public class GoalsTestScenario : IScenario
     {
-        /******************/
-        /* SCENARIO STUFF */
-        /******************/
-
-        public virtual string Name
-        {
-            get { return "GoalsSenseTest"; }
-        }
-
         /******************/
         /*   AGENT STUFF  */
         /******************/

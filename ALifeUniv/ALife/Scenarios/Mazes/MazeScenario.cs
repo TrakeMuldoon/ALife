@@ -26,17 +26,9 @@ using Windows.UI;
 
 namespace ALifeUni.ALife.Scenarios
 {
+    [ScenarioRegistration("Maze", description: "Lorum Ipsum")]
     public class MazeScenario : IScenario
     {
-        /******************/
-        /* SCENARIO STUFF */
-        /******************/
-
-        public virtual string Name
-        {
-            get { return "Maze"; }
-        }
-
         /******************/
         /*   AGENT STUFF  */
         /******************/

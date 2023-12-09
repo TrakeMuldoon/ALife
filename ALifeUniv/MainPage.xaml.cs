@@ -433,7 +433,7 @@ namespace ALifeUni
 
         #region Zoom controls
 
-        private static readonly List<String> ZoomFactors = new List<String>() { "0.1", "0.25", "0.5", "0.75", "0.9", "1", "2", "3", "4", "5", "6", "7", "8" };
+        private static readonly List<String> ZoomFactors = new List<String>() { "0.1", "0.25", "0.5", "0.75", "0.9", "1", "1.5", "2", "3", "4", "5", "6", "7", "8" };
         private int ZoomIndex = 6;
         private float CurrentZoom = 1;
 

@@ -10,7 +10,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Windows.Foundation;
-using Windows.Services.Maps;
 using Windows.UI;
 
 namespace ALifeUni.ALife.WorldObjects.Agents

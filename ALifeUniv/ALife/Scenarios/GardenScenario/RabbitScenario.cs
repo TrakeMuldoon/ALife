@@ -14,7 +14,7 @@ using Windows.UI;
 namespace ALifeUni.ALife.Scenarios
 {
     [ScenarioRegistration("Rabbits",
-        description: 
+        description:
         @"
 Rabbit Chaser (smart, slow rabbit)
 In this scenario, the agents are trying to chase down a rabbit using the 'GoalSense' cluster. 

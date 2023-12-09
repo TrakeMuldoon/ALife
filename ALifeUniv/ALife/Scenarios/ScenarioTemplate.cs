@@ -28,7 +28,7 @@ namespace ALifeUni.ALife.Scenarios
             //Default, no upkeep
         }
 
-        public virtual void EndOfTurnTriggers(Agent me)
+        public virtual void AgentEndOfTurnTriggers(Agent me)
         {
             //TODO: Fully Comment This
             //Default, nothing happens

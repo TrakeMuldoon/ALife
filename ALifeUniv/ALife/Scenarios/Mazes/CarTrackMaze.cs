@@ -77,7 +77,7 @@ namespace ALifeUni.ALife.Scenarios
             { "End", new HashSet<Agent>() }
         };
 
-        public virtual void EndOfTurnTriggers(Agent me)
+        public virtual void AgentEndOfTurnTriggers(Agent me)
         {
             if(me.Statistics["ProgressTimer"].Value > 1000)
             {

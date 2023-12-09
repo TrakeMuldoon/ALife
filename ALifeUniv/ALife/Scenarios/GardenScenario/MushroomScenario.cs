@@ -88,7 +88,7 @@ namespace ALifeUni.ALife.Scenarios
             me.Statistics["DeathTimer"].IncreasePropertyBy(1);
         }
 
-        public virtual void EndOfTurnTriggers(Agent me)
+        public virtual void AgentEndOfTurnTriggers(Agent me)
         {
             if(me.Statistics["DeathTimer"].Value > 500)
             {

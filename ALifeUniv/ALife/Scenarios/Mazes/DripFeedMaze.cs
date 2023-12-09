@@ -102,7 +102,7 @@ namespace ALifeUni.ALife.Scenarios
             }
         }
 
-        public void EndOfTurnTriggers(Agent me)
+        public void AgentEndOfTurnTriggers(Agent me)
         {
             if(me.Statistics["MaxXTimer"].Value > 400)
             {

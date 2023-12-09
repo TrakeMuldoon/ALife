@@ -31,7 +31,7 @@ namespace ALifeUnivTests
             throw new NotImplementedException();
         }
 
-        public void EndOfTurnTriggers(Agent me)
+        public void AgentEndOfTurnTriggers(Agent me)
         {
         }
 

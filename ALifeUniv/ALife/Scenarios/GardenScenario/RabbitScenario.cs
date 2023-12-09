@@ -85,7 +85,7 @@ namespace ALifeUni.ALife.Scenarios
         }
 
 
-        public virtual void EndOfTurnTriggers(Agent me)
+        public virtual void AgentEndOfTurnTriggers(Agent me)
         {
             //if(me.Statistics["Age"].Value != 0
             //    && me.Statistics["Age"].Value % 300 == 0)

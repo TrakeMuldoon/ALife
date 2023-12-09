@@ -77,7 +77,7 @@ namespace ALifeUni.ALife.Scenarios
             return agent;
         }
 
-        public virtual void EndOfTurnTriggers(Agent me)
+        public virtual void AgentEndOfTurnTriggers(Agent me)
         {
             if(me.Statistics["DeathTimer"].Value > 1899)
             {

@@ -66,7 +66,7 @@ namespace ALifeUni.ALife.Scenarios
             //Do nothing
         }
 
-        public virtual void EndOfTurnTriggers(Agent me)
+        public virtual void AgentEndOfTurnTriggers(Agent me)
         {
             //Do Nothing
         }

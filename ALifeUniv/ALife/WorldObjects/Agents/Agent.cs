@@ -183,7 +183,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents
 
         public virtual void EndOfTurnTriggers()
         {
-            Planet.World.Scenario.EndOfTurnTriggers(this);
+            Planet.World.Scenario.AgentEndOfTurnTriggers(this);
         }
 
         public void CollisionBehvaviour(List<WorldObject> collisions)

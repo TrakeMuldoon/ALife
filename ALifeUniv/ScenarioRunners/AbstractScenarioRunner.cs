@@ -17,7 +17,14 @@ namespace ALifeUni.ScenarioRunners
             IsStopped = false;
             while(true)
             {
-                RunSetOfSeeds(scenarioName, startingSeed);
+                if(startingSeed.HasValue)
+                {
+                    RunSingleSeed(scenarioName, startingSeed.Value);
+                }
+                else
+                {
+                    RunSetOfRandomSeeds(scenarioName);
+                }
                 if(CancelRunner || ShouldStopRunner())
                 {
                     StopRunner();
@@ -62,15 +69,6 @@ namespace ALifeUni.ScenarioRunners
         protected abstract void Write(string message);
 
         /// <summary>
-        /// Writes the specified message.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        protected void Write(int message)
-        {
-            Write(message.ToString());
-        }
-
-        /// <summary>
         /// Writes the line.
         /// </summary>
         /// <param name="message">The message.</param>
@@ -104,7 +102,18 @@ namespace ALifeUni.ScenarioRunners
         }
 
 
-        private void RunSetOfSeeds(string scenarioName, int? startingSeed)
+        private void RunSingleSeed(string scenarioName, int startingSeed)
+        {
+            IScenario scenario = ScenarioRegister.GetScenario(scenarioName);
+
+            Write($"Executing Single Scenario");
+            RunSeed(startingSeed, scenario);
+            WriteNewLine(1);
+            WriteLineSeperator(3);
+            WriteNewLine(1);
+        }
+
+        private void RunSetOfRandomSeeds(string scenarioName)
         {
             IScenario scenario = ScenarioRegister.GetScenario(scenarioName);
 
@@ -117,10 +126,6 @@ namespace ALifeUni.ScenarioRunners
                 }
                 Write($"Scenario Execution #{i} -> ");
                 int seedValue = r.Next();
-                if(startingSeed.HasValue)
-                {
-                    seedValue = startingSeed.Value;
-                }
                 RunSeed(seedValue, scenario);
                 WriteNewLine(1);
                 WriteLineSeperator(3);
@@ -167,10 +172,10 @@ namespace ALifeUni.ScenarioRunners
                     {
                         TimeSpan elapsed = DateTime.Now - start;
                         string interim = elapsed.ToString("mm\\:ss\\.ff");
-                        string stats = $"\tElapsed: {interim} TPS: {(i * turnCount) / elapsed.TotalSeconds:0.00000} Pop: {population}";
+                        string stats = $"{i+1}\tElapsed: {interim} TPS: {(i * turnCount) / elapsed.TotalSeconds:0.00000} Pop: {population}";
                         WriteLine(stats);
 
-                        Write(i + 1);
+                        Write($"{i + 1}");
                     }
                 }
             }

@@ -43,10 +43,6 @@ namespace ALifeUni.ALife.WorldObjects.Agents.CustomAgents
                                                        "IF EyeBack.SeeSomething.Value Equals [True] THEN Move.GoForward AT [0.8]",
                                                        "IF ALWAYS THEN Rotate.TurnLeft AT [0.1]"
                 );
-            //new EyeCluster(agent, "EyeStraight"
-            //    new EyeCluster(agent, "EyeRight"
-            //    new EyeCluster(agent, "EyeBack"
-            //    new EyeCluster(agent, "EyeLeft"
 
             this.CompleteInitialization(null, 1, newBrain);
         }
@@ -59,9 +55,9 @@ namespace ALifeUni.ALife.WorldObjects.Agents.CustomAgents
         {
         }
 
-        public void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        public override void CollisionBehvaviour(List<WorldObject> collisions)
         {
-            //So the rabbit doesn't kill people.
+            //So the rabbit doesn't kill things
         }
 
         public void Caught(Agent caughtMe)

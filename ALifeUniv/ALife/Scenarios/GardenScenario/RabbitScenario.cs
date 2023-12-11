@@ -25,7 +25,7 @@ If the agents bump into anything except the rabbit, they die.
 After 1000 turns, they die.
 
 Success cases: 
-If the agents come withing 128,64,32,16,8,4,2 units of distance from the Rabbit, they reproduce.
+If the agents come withing 64,32,16,8,4,2 units of distance from the Rabbit, they reproduce.
 If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respawns somewhere else.
         "
     )]
@@ -68,7 +68,7 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
             {
                 new StatisticInput("Age", 0, Int32.MaxValue, StatisticInputType.Incrementing),
                 new StatisticInput("RabbitKills", 0, Int32.MaxValue),
-                new StatisticInput("ReproDistance", 0, Int32.MaxValue, 128),
+                new StatisticInput("ReproDistance", 0, Int32.MaxValue, 64),
             };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()

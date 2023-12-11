@@ -1,6 +1,7 @@
 ﻿using ALifeUni.ScenarioRunners;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -25,6 +26,8 @@ namespace ALifeUni
         private void StartScenarioRunner()
         {
             ConsoleText.Text = string.Empty;
+            ConsoleText.FontFamily = new FontFamily("Consolas");
+            ConsoleText.FontSize = 13;
             runner = new UiScenarioRunner(ConsoleText);
             runnerTask = new Task(() => runner.ExecuteRunner(ScenarioName, ScenarioSeed));
             runnerTask.Start();

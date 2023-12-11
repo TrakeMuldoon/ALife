@@ -97,7 +97,7 @@ namespace ALifeUni.ScenarioRunners
         {
             for(var i = 0; i < numLines; i++)
             {
-                Write($"-------------------------------------{Environment.NewLine}");
+                Write($"--------------------------------------------------------------------------{Environment.NewLine}");
             }
         }
 
@@ -108,8 +108,12 @@ namespace ALifeUni.ScenarioRunners
 
             Write($"Executing Single Scenario");
             RunSeed(startingSeed, scenario);
+            WriteLineSeperator(1);
             WriteNewLine(1);
-            WriteLineSeperator(3);
+            //TODO: THIS IS A DEBUG THING
+            Write($"Executing Single Scenario");
+            RunSeed(startingSeed, scenario);
+            WriteLineSeperator(1);
             WriteNewLine(1);
         }
 
@@ -127,55 +131,59 @@ namespace ALifeUni.ScenarioRunners
                 Write($"Scenario Execution #{i} -> ");
                 int seedValue = r.Next();
                 RunSeed(seedValue, scenario);
-                WriteNewLine(1);
-                WriteLineSeperator(3);
+                WriteLineSeperator(1);
                 WriteNewLine(1);
             }
         }
 
+        //514029898
+        const int TOTAL_TURNS = 50000;
+        const int TURN_BATCH = 1000;
+        const int UPDATE_FREQUENCY = 10000;
         private void RunSeed(int seedValue, IScenario scenario)
         {
+            ScenarioRegistration scenarioDetails = ScenarioRegister.GetScenarioDetails(scenario.GetType());
             int height = scenario.WorldHeight;
             int width = scenario.WorldWidth;
 
-            var scenarioDetails = ScenarioRegister.GetScenarioDetails(scenario.GetType());
+            //Write Header
             string topLine = $"Seed: {seedValue}, Name: {scenarioDetails.Name}, Height:{height}, Width:{width}";
             WriteLine($"\t{topLine}");
-            WriteLineSeperator(1);
+            
+            //Get World Ready
             DateTime start = DateTime.Now;
-
             IScenario newCopy = IScenarioHelpers.FreshInstanceOf(scenario);
             Planet.CreateWorld(seedValue, scenario, height, width);
 
             string error = null;
             try
             {
-                Write(" 0");
-                for(int i = 0; i < 50; i++)
+                WriteLine($"Each . represents {TURN_BATCH} turns");
+                Write("    [0]");
+                for(int i = 0; i < TOTAL_TURNS/TURN_BATCH; i++)
                 {
                     if(CancelRunner)
                     {
                         break;
                     }
-                    int turnCount = 1000;
-                    Planet.World.ExecuteManyTurns(turnCount);
+                    Planet.World.ExecuteManyTurns(TURN_BATCH);
                     Write(".");
 
-                    int population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
-                    if(population == 0)
+                    if(IsSimulationComplete())
                     {
-                        WriteLine("|> All Dead. Next");
                         break;
                     }
 
-                    if((i + 1) % 10 == 0)
+                    if((i + 1) % (UPDATE_FREQUENCY/TURN_BATCH) == 0)
                     {
+                        Planet instance = Planet.World;
+                        int population = instance.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
                         TimeSpan elapsed = DateTime.Now - start;
                         string interim = elapsed.ToString("mm\\:ss\\.ff");
-                        string stats = $"{i+1}\tElapsed: {interim} TPS: {(i * turnCount) / elapsed.TotalSeconds:0.00000} Pop: {population}";
+                        string stats = $"[{Planet.World.Turns}]\tElapsed: {interim} TPS: {(i * TURN_BATCH) / elapsed.TotalSeconds:0.00000} Pop: {population}";
                         WriteLine(stats);
 
-                        Write($"{i + 1}");
+                        Write($"[{Planet.World.Turns}]");
                     }
                 }
             }
@@ -211,6 +219,17 @@ namespace ALifeUni.ScenarioRunners
                 WriteLine($"\tSurviving: {count}");
             }
             WriteLine();
+        }
+
+        public bool IsSimulationComplete()
+        {
+            int population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
+            if(population == 0)
+            {
+                WriteLine("|> All Dead. Next");
+                return true;
+            }
+            return false;
         }
     }
 }

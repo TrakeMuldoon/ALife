@@ -4,7 +4,7 @@ using ALifeUni.ALife.WorldObjects.Agents;
 using System;
 using System.Linq;
 
-namespace ALifeUni.Runners
+namespace ALifeUni.ScenarioRunners
 {
     public abstract class AbstractScenarioRunner
     {
@@ -106,33 +106,7 @@ namespace ALifeUni.Runners
 
         private void RunSetOfSeeds(string scenarioName, int? startingSeed)
         {
-            // TODO: Restore logging functionality. Had been using Serilog previously
-            /*
-            var logFilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "log.txt");
-            Log.Logger = new LoggerConfiguration().WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day).CreateLogger();
-            Log.Information("<---StartRun");
-
-            // IScenario scenario = new MushroomScenario();
             IScenario scenario = ScenarioRegister.GetScenario(scenarioName);
-
-            int height = scenario.WorldHeight;
-            int width = scenario.WorldWidth;
-
-            Random r = new Random();
-            for (int i = 0; i < 20; i++)
-            {
-                Console.Write(i + "-> ");
-                int seedValue = r.Next();
-                RunSeed(seedValue, scenario, height, width);
-            }
-            Log.Information("--->EndRun");
-            Log.CloseAndFlush();
-             */
-
-            IScenario scenario = ScenarioRegister.GetScenario(scenarioName);
-
-            int height = scenario.WorldHeight;
-            int width = scenario.WorldWidth;
 
             Random r = new Random();
             for(int i = 0; i < 20; i++)
@@ -147,15 +121,18 @@ namespace ALifeUni.Runners
                 {
                     seedValue = startingSeed.Value;
                 }
-                RunSeed(seedValue, scenario, height, width);
+                RunSeed(seedValue, scenario);
                 WriteNewLine(1);
                 WriteLineSeperator(3);
                 WriteNewLine(1);
             }
         }
 
-        private void RunSeed(int seedValue, IScenario scenario, int height, int width)
+        private void RunSeed(int seedValue, IScenario scenario)
         {
+            int height = scenario.WorldHeight;
+            int width = scenario.WorldWidth;
+
             var scenarioDetails = ScenarioRegister.GetScenarioDetails(scenario.GetType());
             string topLine = $"Seed: {seedValue}, Name: {scenarioDetails.Name}, Height:{height}, Width:{width}";
             WriteLine($"\t{topLine}");

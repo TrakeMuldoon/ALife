@@ -212,8 +212,8 @@
     <Compile Include="Launcher.xaml.cs">
       <DependentUpon>Launcher.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Runners\AbstractScenarioRunner.cs" />
-    <Compile Include="Runners\UiScenarioRunner.cs" />
+    <Compile Include="ScenarioRunners\AbstractScenarioRunner.cs" />
+    <Compile Include="ScenarioRunners\UiScenarioRunner.cs" />
     <Compile Include="ScenarioRunner.xaml.cs">
       <DependentUpon>ScenarioRunner.xaml</DependentUpon>
     </Compile>

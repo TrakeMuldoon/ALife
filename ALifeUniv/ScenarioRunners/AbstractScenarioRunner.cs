@@ -153,7 +153,7 @@ namespace ALifeUni.ScenarioRunners
             //Get World Ready
             DateTime start = DateTime.Now;
             IScenario newCopy = IScenarioHelpers.FreshInstanceOf(scenario);
-            Planet.CreateWorld(seedValue, scenario, height, width);
+            Planet.CreateWorld(seedValue, newCopy, height, width);
 
             string error = null;
             try

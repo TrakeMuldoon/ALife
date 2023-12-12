@@ -1,4 +1,4 @@
-﻿using ALifeUni.Runners;
+﻿using ALifeUni.ScenarioRunners;
 using System;
 
 namespace ScenarioRunner

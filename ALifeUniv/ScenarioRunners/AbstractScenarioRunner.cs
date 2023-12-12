@@ -1,13 +1,24 @@
 ﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Scenarios;
 using ALifeUni.ALife.WorldObjects.Agents;
+using ALifeUni.ScenarioRunners.ScenarioRunConfigs;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace ALifeUni.Runners
+namespace ALifeUni.ScenarioRunners
 {
     public abstract class AbstractScenarioRunner
     {
+        /// <summary>
+        /// This is where to put a new ScenarioRunConfig when a new one is created
+        /// </summary>
+        public readonly Dictionary<Type, ScenarioRunConfig> ScenarioRunConfigs = new Dictionary<Type, ScenarioRunConfig>
+        {
+            {typeof(RabbitScenario), new RabbitScenarioConfig() }
+        };
+        private readonly ScenarioRunConfig defaultRunConfig = new DefaultScenarioRunConfig();
+
         /// <summary>
         /// Defines the entry point of the application.
         /// </summary>
@@ -15,9 +26,26 @@ namespace ALifeUni.Runners
         {
             CancelRunner = false;
             IsStopped = false;
+
+            IScenario scenario = ScenarioRegister.GetScenario(scenarioName);
+
+            ScenarioRunConfig config = defaultRunConfig;
+
+            if(ScenarioRunConfigs.ContainsKey(scenario.GetType()))
+            {
+                config = ScenarioRunConfigs[scenario.GetType()];
+            }
+
             while(true)
             {
-                RunSetOfSeeds(scenarioName, startingSeed);
+                if(startingSeed.HasValue)
+                {
+                    RunSingleSeed(scenario, startingSeed.Value, config);
+                }
+                else
+                {
+                    RunSetOfRandomSeeds(scenario, config);
+                }
                 if(CancelRunner || ShouldStopRunner())
                 {
                     StopRunner();
@@ -62,15 +90,6 @@ namespace ALifeUni.Runners
         protected abstract void Write(string message);
 
         /// <summary>
-        /// Writes the specified message.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        protected void Write(int message)
-        {
-            Write(message.ToString());
-        }
-
-        /// <summary>
         /// Writes the line.
         /// </summary>
         /// <param name="message">The message.</param>
@@ -99,41 +118,21 @@ namespace ALifeUni.Runners
         {
             for(var i = 0; i < numLines; i++)
             {
-                Write($"-------------------------------------{Environment.NewLine}");
+                Write($"--------------------------------------------------------------------------{Environment.NewLine}");
             }
         }
 
 
-        private void RunSetOfSeeds(string scenarioName, int? startingSeed)
+        private void RunSingleSeed(IScenario scenario, int startingSeed, ScenarioRunConfig config)
         {
-            // TODO: Restore logging functionality. Had been using Serilog previously
-            /*
-            var logFilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "log.txt");
-            Log.Logger = new LoggerConfiguration().WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day).CreateLogger();
-            Log.Information("<---StartRun");
+            Write($"Executing Single Scenario");
+            RunSeed(startingSeed, scenario, config);
+            WriteLineSeperator(1);
+            WriteNewLine(1);
+        }
 
-            // IScenario scenario = new MushroomScenario();
-            IScenario scenario = ScenarioRegister.GetScenario(scenarioName);
-
-            int height = scenario.WorldHeight;
-            int width = scenario.WorldWidth;
-
-            Random r = new Random();
-            for (int i = 0; i < 20; i++)
-            {
-                Console.Write(i + "-> ");
-                int seedValue = r.Next();
-                RunSeed(seedValue, scenario, height, width);
-            }
-            Log.Information("--->EndRun");
-            Log.CloseAndFlush();
-             */
-
-            IScenario scenario = ScenarioRegister.GetScenario(scenarioName);
-
-            int height = scenario.WorldHeight;
-            int width = scenario.WorldWidth;
-
+        private void RunSetOfRandomSeeds(IScenario scenario, ScenarioRunConfig config)
+        {
             Random r = new Random();
             for(int i = 0; i < 20; i++)
             {
@@ -143,57 +142,58 @@ namespace ALifeUni.Runners
                 }
                 Write($"Scenario Execution #{i} -> ");
                 int seedValue = r.Next();
-                if(startingSeed.HasValue)
-                {
-                    seedValue = startingSeed.Value;
-                }
-                RunSeed(seedValue, scenario, height, width);
-                WriteNewLine(1);
-                WriteLineSeperator(3);
+                RunSeed(seedValue, scenario, config);
+                WriteLineSeperator(1);
                 WriteNewLine(1);
             }
         }
 
-        private void RunSeed(int seedValue, IScenario scenario, int height, int width)
+        //514029898
+        const int TOTAL_TURNS = 50000;
+        const int TURN_BATCH = 1000;
+        const int UPDATE_FREQUENCY = 10000;
+        private void RunSeed(int seedValue, IScenario scenario, ScenarioRunConfig config)
         {
-            var scenarioDetails = ScenarioRegister.GetScenarioDetails(scenario.GetType());
+            ScenarioRegistration scenarioDetails = ScenarioRegister.GetScenarioDetails(scenario.GetType());
+            int height = scenario.WorldHeight;
+            int width = scenario.WorldWidth;
+
+            //Write Header
             string topLine = $"Seed: {seedValue}, Name: {scenarioDetails.Name}, Height:{height}, Width:{width}";
             WriteLine($"\t{topLine}");
-            WriteLineSeperator(1);
+            
+            //Get World Ready
             DateTime start = DateTime.Now;
-
             IScenario newCopy = IScenarioHelpers.FreshInstanceOf(scenario);
-            Planet.CreateWorld(seedValue, scenario, height, width);
+            Planet.CreateWorld(seedValue, newCopy, height, width);
 
             string error = null;
             try
             {
-                Write(" 0");
-                for(int i = 0; i < 50; i++)
+                WriteLine($"Each . represents {TURN_BATCH} turns");
+                Write("    [0]");
+                for(int i = 0; i < TOTAL_TURNS/TURN_BATCH; i++)
                 {
                     if(CancelRunner)
                     {
                         break;
                     }
-                    int turnCount = 1000;
-                    Planet.World.ExecuteManyTurns(turnCount);
+                    Planet.World.ExecuteManyTurns(TURN_BATCH);
                     Write(".");
 
-                    int population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
-                    if(population == 0)
+                    if(config.ShouldEndSimulation(Write))
                     {
-                        WriteLine("|> All Dead. Next");
                         break;
                     }
 
-                    if((i + 1) % 10 == 0)
+                    if((i + 1) % (UPDATE_FREQUENCY/TURN_BATCH) == 0)
                     {
                         TimeSpan elapsed = DateTime.Now - start;
-                        string interim = elapsed.ToString("mm\\:ss\\.ff");
-                        string stats = $"\tElapsed: {interim} TPS: {(i * turnCount) / elapsed.TotalSeconds:0.00000} Pop: {population}";
-                        WriteLine(stats);
+                        string stats = $"[{Planet.World.Turns}]\tElapsed: {elapsed.ToString("mm\\:ss\\.ff")} TPS: {(i * TURN_BATCH) / elapsed.TotalSeconds:0.000} || ";
+                        Write(stats);
+                        config.UpdateStatusDetails(Write);
 
-                        Write(i + 1);
+                        Write($"[{Planet.World.Turns}]");
                     }
                 }
             }
@@ -206,27 +206,15 @@ namespace ALifeUni.Runners
             DateTime end = DateTime.Now;
             string durationString = (end - start).ToString("mm\\:ss\\.fff");
 
-            Write($"\tTotal Time: {durationString}\tTurns:{Planet.World.Turns}");
+            WriteLine($"\tTotal Time: {durationString}\tTurns:{Planet.World.Turns}");
 
             if(!String.IsNullOrEmpty(error))
             {
-                string nl = Environment.NewLine;
-                string message = topLine + nl + error + nl;
-                //Log.Information(message);
-
-                WriteNewLine(1);
                 WriteLine($"\tERROR: {error}");
             }
             else
             {
-                int count = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
-
-                string nl = Environment.NewLine;
-                string message = topLine + nl + count + nl;
-                //Log.Information(message);
-
-                WriteNewLine(1);
-                WriteLine($"\tSurviving: {count}");
+                config.SimulationSuccessInformation(Write);
             }
             WriteLine();
         }

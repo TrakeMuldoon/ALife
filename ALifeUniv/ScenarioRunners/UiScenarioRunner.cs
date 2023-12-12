@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 
-namespace ALifeUni.Runners
+namespace ALifeUni.ScenarioRunners
 {
     public class UiScenarioRunner : AbstractScenarioRunner
     {

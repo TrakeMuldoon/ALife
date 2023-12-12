@@ -29,6 +29,7 @@ If the agents come withing 64,32,16,8,4,2 units of distance from the Rabbit, the
 If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respawns somewhere else.
         "
     )]
+    [SuggestedSeed(1434557654, "Merry Chase!")]
     public class RabbitScenario : IScenario
     {
         /******************/

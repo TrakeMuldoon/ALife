@@ -213,6 +213,7 @@
       <DependentUpon>Launcher.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScenarioRunners\AbstractScenarioRunner.cs" />
+    <Compile Include="ScenarioRunners\ScenarioRunConfigs\ScenarioRunConfig.cs" />
     <Compile Include="ScenarioRunners\UiScenarioRunner.cs" />
     <Compile Include="ScenarioRunner.xaml.cs">
       <DependentUpon>ScenarioRunner.xaml</DependentUpon>
@@ -340,7 +341,6 @@
       <Version>1.27.1</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

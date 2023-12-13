@@ -45,10 +45,10 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
         public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation)
         {
             Agent agent = new Agent(genusName
-                                               , AgentIDGenerator.GetNextAgentId()
-                                               , ReferenceValues.CollisionLevelPhysical
-                       , parentZone
-                       , targetZone);
+                                    , AgentIDGenerator.GetNextAgentId()
+                                    , ReferenceValues.CollisionLevelPhysical
+                                    , parentZone
+                                    , targetZone);
 
             int agentRadius = 5;
             agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);

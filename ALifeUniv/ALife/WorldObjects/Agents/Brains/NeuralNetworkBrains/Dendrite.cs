@@ -6,6 +6,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Brains.NeuralNetworkBrains
     {
         public double Weight { get; set; }
         public Neuron TargetNeuron { get; set; }
+        public String TargetNeuronName { get; set; }
 
         public double CurrentValue
         {
@@ -24,6 +25,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Brains.NeuralNetworkBrains
         public Dendrite(Neuron targetNeuron, double weight)
         {
             TargetNeuron = targetNeuron;
+            TargetNeuronName = targetNeuron.Name;
             if(weight < -1.0 || weight > 1.0)
             {
                 throw new ArgumentOutOfRangeException("Weight must be between -1 and 1");

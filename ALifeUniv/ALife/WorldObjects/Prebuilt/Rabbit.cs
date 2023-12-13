@@ -42,7 +42,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents.CustomAgents
                                                        "IF EyeStraight.SeeSomething.Value Equals [True] THEN Move.GoBackward AT [0.8]",
                                                        "IF EyeBack.SeeSomething.Value Equals [True] THEN Move.GoForward AT [0.8]",
                                                        "IF ALWAYS THEN Rotate.TurnLeft AT [0.1]"
-                );
+            );
 
             this.CompleteInitialization(null, 1, newBrain);
         }

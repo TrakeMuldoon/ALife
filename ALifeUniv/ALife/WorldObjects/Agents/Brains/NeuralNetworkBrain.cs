@@ -15,7 +15,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Brains
         private Layer actions;
 
         public NeuralNetworkBrain(Agent self, List<int> layers)
-            : this(self, 0.7, 0.005, layers)
+            : this(self, 0.70, 0.005, layers)
         {
         }
 
@@ -95,21 +95,13 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Brains
                     double neuBias = templateNeuron.Bias;
                     if(!exactCopy)
                     {
-                        neuBias = ModifyANumber(neuBias);
+                        neuBias = ModifyBetweenNegOneAndOne(neuBias);
                     }
 
                     //Add a neuron
-                    Neuron neu = new Neuron("HN:" + (i + 1) + "." + (n + 1), neuBias);
-                    newLayer.Neurons.Add(neu);
-                    for(int d = 0; d < aboveLayerNeurons.Count; d++)
-                    {
-                        double denWeight = templateCurrLayerNeurons[n].UpstreamDendrites[d].Weight;
-                        if(!exactCopy)
-                        {
-                            denWeight = ModifyANumber(denWeight);
-                        }
-                        neu.UpstreamDendrites.Add(new Dendrite(aboveLayerNeurons[d], denWeight));
-                    }
+                    Neuron newNeuron = new Neuron("HN:" + (i + 1) + "." + (n + 1), neuBias);
+                    newLayer.Neurons.Add(newNeuron);
+                    CreateDendrites(aboveLayerNeurons, templateNeuron, newNeuron, exactCopy);
                 }
             }
 
@@ -118,7 +110,20 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Brains
             actions = actionLayer;
         }
 
-        private double ModifyANumber(double original)
+        private void CreateDendrites(List<Neuron> aboveLayerNeurons, Neuron templateNeuron, Neuron newNeuron, bool exactCopy)
+        {
+            for(int d = 0; d < aboveLayerNeurons.Count; d++)
+            {
+                double denWeight = templateNeuron.UpstreamDendrites[d].Weight;
+                if(!exactCopy)
+                {
+                    denWeight = ModifyBetweenNegOneAndOne(denWeight);
+                }
+                newNeuron.UpstreamDendrites.Add(new Dendrite(aboveLayerNeurons[d], denWeight));
+            }
+        }
+
+        private double ModifyBetweenNegOneAndOne(double original)
         {
             double val = original;
             double shouldMod = Planet.World.NumberGen.NextDouble();
@@ -164,20 +169,12 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Brains
                     double neuBias = currNeuron.Bias;
                     if(!exactCopy)
                     {
-                        neuBias = ModifyANumber(neuBias);
+                        neuBias = ModifyBetweenNegOneAndOne(neuBias);
                     }
 
                     ActionNeuron neu = new ActionNeuron(ap, neuBias);
                     actionNeurons.Add(neu);
-                    for(int d = 0; d < aboveLayer.Neurons.Count; d++)
-                    {
-                        double denWeight = currNeuron.UpstreamDendrites[d].Weight;
-                        if(!exactCopy)
-                        {
-                            denWeight = ModifyANumber(denWeight);
-                        }
-                        neu.UpstreamDendrites.Add(new Dendrite(aboveLayer.Neurons[d], denWeight));
-                    }
+                    CreateDendrites(aboveLayer.Neurons, currNeuron, neu, exactCopy);
                     apIndex++;
                 }
             }
@@ -241,53 +238,5 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Brains
         {
             return new NeuralNetworkBrain(self, this, false);
         }
-
-
-        //public bool Train(List<double> input, List<double> output)
-        //{
-        //    if((input.Count != this.Layers[0].Neurons.Count)
-        //        || (output.Count != this.Layers[this.Layers.Count - 1].Neurons.Count))
-        //    {
-        //        return false;
-        //    }
-
-        //    Run(input);
-
-        //    for(int i = 0; i < Layers[Layers.Count - 1].Neurons.Count; i++)
-        //    {
-        //        Neuron neuron = Layers[Layers.Count - 1].Neurons[i];
-
-        //        neuron.Delta = neuron.Value * (1 - neuron.Value) * (output[i] - neuron.Value);
-
-        //        for(int j = Layers.Count - 2; j > 2; j--)
-        //        {
-        //            for(int k = 0; k < Layers[j].Neurons.Count; k++)
-        //            {
-        //                Neuron n = Layers[j].Neurons[k];
-
-        //                n.Delta = n.Value *
-        //                          (1 - n.Value) *
-        //                          Layers[j + 1].Neurons[i].Dendrites[k].Weight *
-        //                          Layers[j + 1].Neurons[i].Delta;
-        //            }
-        //        }
-        //    }
-
-        //    for(int i = Layers.Count - 1; i > 1; i--)
-        //    {
-        //        for(int j = 0; j < Layers[i].Neurons.Count; j++)
-        //        {
-        //            Neuron n = Layers[i].Neurons[j];
-        //            n.Bias += LearningRate * n.Delta;
-
-        //            for(int k = 0; k < n.Dendrites.Count; k++)
-        //                n.Dendrites[k].Weight += (this.LearningRate
-        //                                          * this.Layers[i - 1].Neurons[k].Value
-        //                                          * n.Delta);
-        //        }
-        //    }
-
-        //    return true;
-        //}
     }
 }

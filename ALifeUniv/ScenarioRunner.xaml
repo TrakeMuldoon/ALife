@@ -9,17 +9,21 @@
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Button x:Name="ReturntoLauncher" VerticalAlignment="Top" HorizontalAlignment="Left" Click="ReturntoLauncher_Click" Width="160" Height="30">Return to Launcher</Button>
-        <Button x:Name="Restart" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="180,0" Click="Restart_Click" Width="80" Height="30">Restart</Button>
-        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="280,7" Text="Number of Scenarios to Execute:" />
-        <TextBox x:Name="NumberExecutions" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="490,0" Text="1" Width="20" />
-        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="580,7" Text="MaxNumber of Turns per Scenario:" />
-        <TextBox x:Name="NumberTurns" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="800,0" Text="1" Width="20" />
+        <Button x:Name="Start" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="180,0" Width="80" Height="30" Click="Start_Click">Start</Button>
+        <Button x:Name="Stop" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="280,0" Width="80" Height="30" Click="Stop_Click">Stop</Button>
+        <Button x:Name="Restart" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="380,0" Click="Restart_Click" Width="80" Height="30">Restart</Button>
+        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="480,7" Text="Number of Scenarios to Execute:" />
+        <TextBox x:Name="NumberExecutions" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="690,0" Text="1" Width="20" />
+        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="770,7" Text="MaxNumber of Turns per Scenario:" />
+        <TextBox x:Name="NumberTurns" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1010,0" Text="1" Width="20" />
 
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0, 35">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
+                <ColumnDefinition MinWidth="500" Width="500*" />
+                <ColumnDefinition MinWidth="100" Width="100*" />
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="ConsoleText" TextWrapping="Wrap" Text="TextBox" FontFamily="Consolas" FontSize="13" />
+            <TextBox x:Name="ConsoleText" TextWrapping="Wrap" Text="TextBox" FontFamily="Consolas" FontSize="13" Grid.Column="0" />
+            <TextBox x:Name="SeedText" TextWrapping="Wrap" Text="TextBox" FontFamily="Consolas" FontSize="13" Grid.Column="1" />
         </Grid>
     </Grid>
 </Page>

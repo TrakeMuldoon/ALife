@@ -222,6 +222,7 @@
     <Compile Include="ScenarioRunners\ScenarioRunnerConfigs\ScenarioRunnerConfigRegistration.cs" />
     <Compile Include="ScenarioRunners\Constants.cs" />
     <Compile Include="ScenarioRunners\ScenarioLoggers\Logger.cs" />
+    <Compile Include="ScenarioRunners\ScenarioRunnerConfigs\ScenarioState.cs" />
     <Compile Include="ScenarioRunners\UiScenarioRunnerOld.cs" />
     <Compile Include="ScenarioRunners\UiScenarioRunner.cs" />
     <Compile Include="ScenarioRunner.xaml.cs">

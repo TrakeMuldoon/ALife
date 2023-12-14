@@ -36,7 +36,8 @@ namespace ALifeUni
             NumberExecutions.Text = ScenarioRunners.Constants.DEFAULT_NUMBER_SEEDS_EXECUTED.ToString();
             NumberTurns.Text = ScenarioRunners.Constants.DEFAULT_TOTAL_TURNS.ToString();
             ConsoleText.Text = string.Empty;
-            StartScenarioRunner();
+            SeedText.Text = string.Empty;
+            //StartScenarioRunner();
         }
 
         /// <summary>
@@ -80,6 +81,20 @@ namespace ALifeUni
         }
 
         /// <summary>
+        /// Handles the Click event of the Start control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
+        private void Start_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (!(runner?.IsStopped ?? true))
+            {
+                StopRunner();
+            }
+            StartScenarioRunner();
+        }
+
+        /// <summary>
         /// Starts the scenario runner.
         /// </summary>
         private void StartScenarioRunner()
@@ -102,14 +117,26 @@ namespace ALifeUni
         }
 
         /// <summary>
+        /// Handles the Click event of the Stop control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
+        private void Stop_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            StopRunner();
+        }
+
+        /// <summary>
         /// Stops the runner.
         /// </summary>
         private void StopRunner()
         {
-            runner.StopRunner(true);
-
-            // add some extra sleep time to make sure we're done writing to the console
-            Thread.Sleep(1000);
+            if (runner != null)
+            {
+                runner.StopRunner(true);
+                // add some extra sleep time to make sure we're done writing to the console
+                Thread.Sleep(500);
+            }
         }
     }
 }

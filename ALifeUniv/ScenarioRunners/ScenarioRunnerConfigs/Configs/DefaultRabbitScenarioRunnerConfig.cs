@@ -21,7 +21,7 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs.Configs
         /// </summary>
         /// <param name="WriteMessage">An Action to write a message</param>
         /// <returns>A bool indicating whether or not the simulation should end</returns>
-        public override bool ShouldEndSimulation(Action<string> WriteMessage)
+        public override bool ShouldEndSimulationInternal(Action<string> WriteMessage)
         {
             var population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
             if (population == 1)
@@ -37,7 +37,7 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs.Configs
         /// information. Use Planet.World instance to find the information.
         /// </summary>
         /// <param name="WriteMessage">An Action to write a message</param>
-        public override void SimulationSuccessInformation(Action<string> WriteMessage)
+        public override void SimulationSuccessInformationInternal(Action<string> WriteMessage)
         {
             var count = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
             WriteMessage($"\tSurviving: {count}{Environment.NewLine}");

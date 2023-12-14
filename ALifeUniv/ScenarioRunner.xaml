@@ -8,8 +8,18 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Grid>
-            <TextBox x:Name="ConsoleText" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextWrapping="Wrap" Text="TextBox"/>
+        <Button x:Name="ReturntoLauncher" VerticalAlignment="Top" HorizontalAlignment="Left" Click="ReturntoLauncher_Click" Width="160" Height="30">Return to Launcher</Button>
+        <Button x:Name="Restart" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="180,0" Click="Restart_Click" Width="80" Height="30">Restart</Button>
+        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="280,7" Text="Number of Scenarios to Execute:" />
+        <TextBox x:Name="NumberExecutions" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="490,0" Text="1" Width="20" />
+        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="580,7" Text="MaxNumber of Turns per Scenario:" />
+        <TextBox x:Name="NumberTurns" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="800,0" Text="1" Width="20" />
+
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0, 35">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="ConsoleText" TextWrapping="Wrap" Text="TextBox" FontFamily="Consolas" FontSize="13" />
         </Grid>
     </Grid>
 </Page>

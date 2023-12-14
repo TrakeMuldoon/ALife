@@ -1,59 +1,185 @@
-﻿using ALifeUni.ALife;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using ALifeUni.ALife;
 using ALifeUni.ALife.Scenarios;
-using ALifeUni.ALife.WorldObjects.Agents;
-using ALifeUni.ScenarioRunners.ScenarioRunConfigs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using ALifeUni.ScenarioRunners.ScenarioLoggers;
+using ALifeUni.ScenarioRunners.ScenarioRunnerConfigs;
 
 namespace ALifeUni.ScenarioRunners
 {
-    public abstract class AbstractScenarioRunner
+    /// <summary>
+    /// An abstract scenario runner
+    /// </summary>
+    /// <seealso cref="System.IDisposable"/>
+    public abstract class AbstractScenarioRunner : IDisposable
     {
         /// <summary>
-        /// This is where to put a new ScenarioRunConfig when a new one is created
+        /// The execution task
         /// </summary>
-        public readonly Dictionary<Type, ScenarioRunConfig> ScenarioRunConfigs = new Dictionary<Type, ScenarioRunConfig>
-        {
-            {typeof(RabbitScenario), new RabbitScenarioConfig() }
-        };
-        private readonly ScenarioRunConfig defaultRunConfig = new DefaultScenarioRunConfig();
+        protected Task executionTask;
 
         /// <summary>
-        /// Defines the entry point of the application.
+        /// The cancellation token source
         /// </summary>
-        public void ExecuteRunner(string scenarioName, int? startingSeed)
+        private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
+        /// <summary>
+        /// The configuration
+        /// </summary>
+        private readonly AbstractScenarionRunnerConfig config;
+
+        /// <summary>
+        /// The scenario
+        /// </summary>
+        private readonly IScenario scenario;
+
+        /// <summary>
+        /// The disposed value
+        /// </summary>
+        private bool disposedValue;
+
+        /// <summary>
+        /// Whether we should stop the runner (true) or not (false)
+        /// </summary>
+        private bool stopRunner = true;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractScenarioRunner"/> class.
+        /// </summary>
+        /// <param name="scenarioName">Name of the scenario.</param>
+        /// <param name="startingSeed">The starting seed.</param>
+        /// <param name="numberSeedsToExecute">The number seeds to execute.</param>
+        /// <param name="totalTurns">The total turns.</param>
+        /// <param name="turnBatch">The turn batch.</param>
+        /// <param name="updateFrequency">The update frequency.</param>
+        /// <param name="logger">The logger.</param>
+        public AbstractScenarioRunner(string scenarioName, int? startingSeed = null, int numberSeedsToExecute = ScenarioRunners.Constants.DEFAULT_NUMBER_SEEDS_EXECUTED, int totalTurns = ScenarioRunners.Constants.DEFAULT_TOTAL_TURNS, int turnBatch = ScenarioRunners.Constants.DEFAULT_TURN_BATCH, int updateFrequency = ScenarioRunners.Constants.DEFAULT_UPDATE_FREQUENCY, Logger logger = null)
         {
-            CancelRunner = false;
-            IsStopped = false;
+            // instantiate needed variables
+            Logger = (Logger)(logger ?? Activator.CreateInstance(LoggerType));
+            scenario = ScenarioRegister.GetScenario(scenarioName);
+            config = ScenarioRunnerConfigRegister.GetDefaultConfigForScenarioType(scenario.GetType());
+            StartingSeed = startingSeed;
+            NumberSeedsToExecute = numberSeedsToExecute;
+            TotalTurns = totalTurns;
+            TurnBatch = turnBatch;
+            UpdateFrequency = updateFrequency;
+            ExecutionNumber = 1;
 
-            IScenario scenario = ScenarioRegister.GetScenario(scenarioName);
+            // Execute the runner!
+            stopRunner = false;
+            cancellationTokenSource = new CancellationTokenSource();
+            var ct = cancellationTokenSource.Token;
+            Logger.StartLogger(ct);
+            executionTask = new Task(() => ExecuteRunner(ct), ct);
+            executionTask.Start();
+        }
 
-            ScenarioRunConfig config = defaultRunConfig;
+        /// <summary>
+        /// Gets the execution number.
+        /// </summary>
+        /// <value>The execution number.</value>
+        public int ExecutionNumber { get; private set; }
 
-            if(ScenarioRunConfigs.ContainsKey(scenario.GetType()))
+        /// <summary>
+        /// Gets a value indicating whether this instance is stopped.
+        /// </summary>
+        /// <value><c>true</c> if this instance is stopped; otherwise, <c>false</c>.</value>
+        public bool IsStopped => ((executionTask?.IsCompleted ?? true) || (executionTask?.IsCanceled ?? true)) && stopRunner;
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is stopped and logger stopped.
+        /// </summary>
+        /// <value><c>true</c> if this instance is stopped and logger stopped; otherwise, <c>false</c>.</value>
+        public bool IsStoppedAndLoggerStopped => IsStopped && Logger.IsStopped;
+
+        /// <summary>
+        /// Gets the number seeds to execute.
+        /// </summary>
+        /// <value>The number seeds to execute.</value>
+        public int NumberSeedsToExecute { get; private set; }
+
+        /// <summary>
+        /// The starting seed
+        /// </summary>
+        public int? StartingSeed { get; private set; }
+
+        /// <summary>
+        /// Gets the total turns.
+        /// </summary>
+        /// <value>The total turns.</value>
+        public int TotalTurns { get; private set; }
+
+        /// <summary>
+        /// Gets the turn batch.
+        /// </summary>
+        /// <value>The turn batch.</value>
+        public int TurnBatch { get; private set; }
+
+        /// <summary>
+        /// Gets the update frequency.
+        /// </summary>
+        /// <value>The update frequency.</value>
+        public int UpdateFrequency { get; private set; }
+
+        /// <summary>
+        /// Gets the logger.
+        /// </summary>
+        /// <value>The logger.</value>
+        protected Logger Logger { get; }
+
+        /// <summary>
+        /// Gets the type of the logger.
+        /// </summary>
+        /// <value>The type of the logger.</value>
+        protected abstract Type LoggerType { get; }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Stops the runner.
+        /// </summary>
+        /// <param name="wait">if set to <c>true</c> [wait].</param>
+        public void StopRunner(bool wait = false)
+        {
+            cancellationTokenSource.Cancel();
+            stopRunner = true;
+            if (wait)
             {
-                config = ScenarioRunConfigs[scenario.GetType()];
+                while (!IsStopped)
+                {
+                    Thread.Sleep(100);
+                }
             }
+        }
 
-            while(true)
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing">
+        /// <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
+        /// </param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
             {
-                if(startingSeed.HasValue)
+                if (disposing)
                 {
-                    RunSingleSeed(scenario, startingSeed.Value, config);
+                    StopRunner(true);
                 }
-                else
-                {
-                    RunSetOfRandomSeeds(scenario, config);
-                }
-                if(CancelRunner || ShouldStopRunner())
-                {
-                    StopRunner();
-                    break;
-                }
-            }
+                cancellationTokenSource.Dispose();
 
-            IsStopped = true;
+                disposedValue = true;
+            }
         }
 
         /// <summary>
@@ -63,160 +189,118 @@ namespace ALifeUni.ScenarioRunners
         protected abstract bool ShouldStopRunner();
 
         /// <summary>
-        /// Gets or sets a value indicating whether [cancel runner].
+        /// Executes the runner.
         /// </summary>
-        /// <value>
-        ///   <c>true</c> if [cancel runner]; otherwise, <c>false</c>.
-        /// </value>
-        public bool CancelRunner { get; set; }
-
-        /// <summary>
-        /// Gets a value indicating whether this instance is stopped.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is stopped; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsStopped { get; private set; } = false;
-
-        /// <summary>
-        /// Stops the runner.
-        /// </summary>
-        protected abstract void StopRunner();
-
-        /// <summary>
-        /// Writes the specified message.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        protected abstract void Write(string message);
-
-        /// <summary>
-        /// Writes the line.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        protected void WriteLine(string message = " ")
+        /// <param name="ct">The ct.</param>
+        private void ExecuteRunner(CancellationToken ct)
         {
-            Write($"{message}{Environment.NewLine}");
-        }
+            bool shouldStop;
 
-        /// <summary>
-        /// Writes new lines.
-        /// </summary>
-        /// <param name="numLines">The number of new lines.</param>
-        protected void WriteNewLine(int numLines)
-        {
-            for(var i = 0; i < numLines; i++)
+            do
             {
-                Write($" {Environment.NewLine}");
-            }
-        }
-
-        /// <summary>
-        /// Writes line seperators.
-        /// </summary>
-        /// <param name="numLines">The number of line seperators.</param>
-        protected void WriteLineSeperator(int numLines)
-        {
-            for(var i = 0; i < numLines; i++)
-            {
-                Write($"--------------------------------------------------------------------------{Environment.NewLine}");
-            }
-        }
-
-
-        private void RunSingleSeed(IScenario scenario, int startingSeed, ScenarioRunConfig config)
-        {
-            Write($"Executing Single Scenario");
-            RunSeed(startingSeed, scenario, config);
-            WriteLineSeperator(1);
-            WriteNewLine(1);
-        }
-
-        private void RunSetOfRandomSeeds(IScenario scenario, ScenarioRunConfig config)
-        {
-            Random r = new Random();
-            for(int i = 0; i < 20; i++)
-            {
-                if(CancelRunner)
+                if (StartingSeed != null)
                 {
-                    break;
+                    ScenarioExecutor(StartingSeed.Value, "Executing Single Scenario", ct);
                 }
-                Write($"Scenario Execution #{i} -> ");
-                int seedValue = r.Next();
-                RunSeed(seedValue, scenario, config);
-                WriteLineSeperator(1);
-                WriteNewLine(1);
-            }
+                else
+                {
+                    var r = new Random();
+                    for (var i = 0; i < NumberSeedsToExecute; i++)
+                    {
+                        var message = $"Scenario Execution #{ExecutionNumber++}/{NumberSeedsToExecute} -> ";
+                        var seedValue = r.Next();
+                        ScenarioExecutor(seedValue, message, ct);
+
+                        if (ct.IsCancellationRequested)
+                        {
+                            ct.ThrowIfCancellationRequested();
+                        }
+                    }
+                }
+                shouldStop = ShouldStopRunner() || stopRunner;
+            } while (!shouldStop);
         }
 
-        //514029898
-        const int TOTAL_TURNS = 50000;
-        const int TURN_BATCH = 1000;
-        const int UPDATE_FREQUENCY = 10000;
-        private void RunSeed(int seedValue, IScenario scenario, ScenarioRunConfig config)
+        /// <summary>
+        /// Executes a scenario
+        /// </summary>
+        /// <param name="seedValue">The seed value.</param>
+        /// <param name="headerMessage">The header message.</param>
+        /// <param name="ct">The ct.</param>
+        private void ScenarioExecutor(int seedValue, string headerMessage, CancellationToken ct)
         {
-            ScenarioRegistration scenarioDetails = ScenarioRegister.GetScenarioDetails(scenario.GetType());
-            int height = scenario.WorldHeight;
-            int width = scenario.WorldWidth;
+            // Display Header Message
+            Logger.Write(headerMessage);
+            Logger.WriteNewLine(1);
+            Logger.WriteLineSeperator(1);
+            Logger.WriteNewLine(1);
+
+            var scenarioDetails = ScenarioRegister.GetScenarioDetails(scenario.GetType());
+            var height = scenario.WorldHeight;
+            var width = scenario.WorldWidth;
 
             //Write Header
-            string topLine = $"Seed: {seedValue}, Name: {scenarioDetails.Name}, Height:{height}, Width:{width}";
-            WriteLine($"\t{topLine}");
-            
+            var topLine = $"Seed: {seedValue}, Name: {scenarioDetails.Name}, Height:{height}, Width:{width}, Max Turns: {TotalTurns}";
+            Logger.WriteLine($"{topLine}");
+
             //Get World Ready
-            DateTime start = DateTime.Now;
-            IScenario newCopy = IScenarioHelpers.FreshInstanceOf(scenario);
+            var start = DateTime.Now;
+            var newCopy = IScenarioHelpers.FreshInstanceOf(scenario);
             Planet.CreateWorld(seedValue, newCopy, height, width);
 
             string error = null;
             try
             {
-                WriteLine($"Each . represents {TURN_BATCH} turns");
-                Write("    [0]");
-                for(int i = 0; i < TOTAL_TURNS/TURN_BATCH; i++)
+                var maxTurns = TotalTurns.ToString().Length;
+                var turnStringFormat = $"D{maxTurns}";
+                var initialTurnSpaces = new string(' ', maxTurns - 1);
+                Logger.WriteLine($"Each . represents {TurnBatch} turns");
+                Logger.Write($"{initialTurnSpaces}[0]");
+                for (var i = 0; i < TotalTurns / TurnBatch; i++)
                 {
-                    if(CancelRunner)
+                    if (ct.IsCancellationRequested)
+                    {
+                        ct.ThrowIfCancellationRequested();
+                    }
+                    Planet.World.ExecuteManyTurns(TurnBatch);
+                    Logger.Write(".");
+
+                    if (config.ShouldEndSimulation(Logger.Write))
                     {
                         break;
                     }
-                    Planet.World.ExecuteManyTurns(TURN_BATCH);
-                    Write(".");
 
-                    if(config.ShouldEndSimulation(Write))
+                    if ((i + 1) % (UpdateFrequency / TurnBatch) == 0)
                     {
-                        break;
-                    }
+                        var elapsed = DateTime.Now - start;
+                        var stats = $"[{Planet.World.Turns.ToString(turnStringFormat)}]\tElapsed: {elapsed:mm\\:ss\\.ff} TPS: {i * TurnBatch / elapsed.TotalSeconds:0.000} || ";
+                        Logger.Write(stats);
+                        config.UpdateStatusDetails(Logger.Write);
 
-                    if((i + 1) % (UPDATE_FREQUENCY/TURN_BATCH) == 0)
-                    {
-                        TimeSpan elapsed = DateTime.Now - start;
-                        string stats = $"[{Planet.World.Turns}]\tElapsed: {elapsed.ToString("mm\\:ss\\.ff")} TPS: {(i * TURN_BATCH) / elapsed.TotalSeconds:0.000} || ";
-                        Write(stats);
-                        config.UpdateStatusDetails(Write);
-
-                        Write($"[{Planet.World.Turns}]");
+                        Logger.Write($"[{Planet.World.Turns.ToString(turnStringFormat)}]");
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 error = ex.Message;
-                string[] stack = ex.StackTrace.Split(Environment.NewLine);
+                var stack = ex.StackTrace.Split(Environment.NewLine);
                 error += Environment.NewLine + stack[0];
             }
-            DateTime end = DateTime.Now;
-            string durationString = (end - start).ToString("mm\\:ss\\.fff");
+            var end = DateTime.Now;
+            var durationString = (end - start).ToString("mm\\:ss\\.fff");
 
-            WriteLine($"\tTotal Time: {durationString}\tTurns:{Planet.World.Turns}");
+            Logger.WriteLine($"\tTotal Time: {durationString}\tTurns:{Planet.World.Turns}");
 
-            if(!String.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(error))
             {
-                WriteLine($"\tERROR: {error}");
+                Logger.WriteLine($"\tERROR: {error}");
             }
             else
             {
-                config.SimulationSuccessInformation(Write);
+                config.SimulationSuccessInformation(Logger.Write);
             }
-            WriteLine();
+            Logger.WriteNewLine(1);
         }
     }
 }

@@ -14,13 +14,14 @@ namespace ALifeUni.ScenarioRunners
         /// Initializes a new instance of the <see cref="UiScenarioRunner"/> class.
         /// </summary>
         /// <param name="consoleBox">The console box.</param>
+        /// <param name="seedBox">The seed box.</param>
         /// <param name="scenarioName">Name of the scenario.</param>
         /// <param name="startingSeed">The starting seed.</param>
         /// <param name="numberSeedsToExecute">The number seeds to execute.</param>
         /// <param name="totalTurns">The total turns.</param>
         /// <param name="turnBatch">The turn batch.</param>
         /// <param name="updateFrequency">The update frequency.</param>
-        public UiScenarioRunner(TextBox consoleBox, string scenarioName, int? startingSeed = null, int numberSeedsToExecute = 20, int totalTurns = 50000, int turnBatch = 1000, int updateFrequency = 10000) : base(scenarioName, startingSeed, numberSeedsToExecute, totalTurns, turnBatch, updateFrequency, new TextboxLogger(consoleBox))
+        public UiScenarioRunner(TextBox consoleBox, TextBox seedBox, string scenarioName, int? startingSeed = null, int numberSeedsToExecute = 20, int totalTurns = 50000, int turnBatch = 1000, int updateFrequency = 10000) : base(scenarioName, startingSeed, numberSeedsToExecute, totalTurns, turnBatch, updateFrequency, new TextboxLogger(consoleBox), new TextboxLogger(seedBox))
         {
         }
 

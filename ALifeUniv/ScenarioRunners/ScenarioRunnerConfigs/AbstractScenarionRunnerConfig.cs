@@ -42,7 +42,6 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs
         /// <param name="WriteMessage">An Action to write a message</param>
         public void SimulationSuccessInformation(Action<string> WriteMessage)
         {
-            ScenarioState = ScenarioState.CompleteSuccessful;
             SimulationSuccessInformationInternal(WriteMessage);
         }
 

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using ALifeUni.ALife;
+﻿using ALifeUni.ALife;
 using ALifeUni.ALife.Scenarios;
 using ALifeUni.ALife.WorldObjects.Agents;
 using ALifeUni.ALife.WorldObjects.Agents.CustomAgents;
+using System;
+using System.Linq;
 
 namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs.Configs
 {
@@ -41,6 +41,13 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs.Configs
         {
             var count = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
             WriteMessage($"\tSurviving: {count}{Environment.NewLine}");
+
+            var r = Planet.World.AllActiveObjects.OfType<Rabbit>().First();
+
+            if (count > 0 && r.Statistics["Caught"].Value > 0)
+            {
+                ScenarioState = ScenarioState.CompleteSuccessful;
+            }
         }
 
         /// <summary>

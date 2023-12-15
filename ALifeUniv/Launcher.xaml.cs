@@ -1,7 +1,6 @@
-﻿using ALifeUni.ALife.Scenarios;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using ALifeUni.ALife.Scenarios;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -14,21 +13,21 @@ namespace ALifeUni
     /// </summary>
     public sealed partial class Launcher : Page
     {
-        private string StartingSeedText = string.Empty;
-        private Dictionary<string, (int, string)> currentSeedSuggestions;
+        private readonly Dictionary<string, (int, string)> currentSeedSuggestions;
+        private readonly string StartingSeedText = string.Empty;
 
         public Launcher()
         {
             InitializeComponent();
 
-            // See ALife.Scenarios.ScenarioFactory.cs for a list of scenarios
-            // To skip straight to a scenario and skip the launcher, set the AutoStartScenario in the ScenarioRegistration attribute for a scenario to true.
-            Nullable<(string, Nullable<int>)> startingScenario = ScenarioRegister.GetAutoStartScenario();
-            if(startingScenario != null)
+            // See ALife.Scenarios.ScenarioFactory.cs for a list of scenarios To skip straight to a scenario and skip
+            // the launcher, set the AutoStartScenario in the ScenarioRegistration attribute for a scenario to true.
+            var startingScenario = ScenarioRegister.GetAutoStartScenario();
+            if (startingScenario != null)
             {
                 MainPage.ScenarioName = startingScenario.Value.Item1;
                 MainPage.ScenarioSeed = startingScenario.Value.Item2;
-                Frame.Navigate(typeof(MainPage));
+                _ = Frame.Navigate(typeof(MainPage));
             }
             else
             {
@@ -38,17 +37,49 @@ namespace ALifeUni
                 SeedSuggestions.Items.Clear();
                 ScenariosList.Items.Clear();
 
-                List<string> sortedNameList = new List<string>();
-                foreach(string scenarioName in ScenarioRegister.Scenarios)
+                var sortedNameList = new List<string>();
+                foreach (var scenarioName in ScenarioRegister.Scenarios)
                 {
                     sortedNameList.Add(scenarioName);
                 }
                 sortedNameList.Sort();
 
-                foreach(string scenarioName in sortedNameList)
+                foreach (var scenarioName in sortedNameList)
                 {
                     ScenariosList.Items.Add(scenarioName);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the LaunchScenarioRunner control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void LaunchScenarioRunner_Click(object sender, RoutedEventArgs e)
+        {
+            if (ScenariosList.SelectedItem is string scenarioName)
+            {
+                var autoStart = AutoStartScenarioRunner?.IsChecked ?? true;
+                ScenarioRunner.ScenarioName = scenarioName;
+                ScenarioRunner.ScenarioSeed = int.TryParse(SeedText.Text, out var seed) ? seed : (int?)null;
+                ScenarioRunner.AutoStartScenarioRunner = autoStart;
+                _ = Frame.Navigate(typeof(ScenarioRunner));
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the LaunchScenarioUI control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void LaunchScenarioUI_Click(object sender, RoutedEventArgs e)
+        {
+            if (ScenariosList.SelectedItem is string scenarioName)
+            {
+                MainPage.ScenarioName = scenarioName;
+                MainPage.ScenarioSeed = int.TryParse(SeedText.Text, out var seed) ? seed : (int?)null;
+                _ = Frame.Navigate(typeof(MainPage));
             }
         }
 
@@ -63,19 +94,19 @@ namespace ALifeUni
             DescriptionText.Text = string.Empty;
             SeedSuggestions.Items.Clear();
             currentSeedSuggestions.Clear();
-            if(ScenariosList.SelectedItem is string scenarioName)
+            if (ScenariosList.SelectedItem is string scenarioName)
             {
-                ScenarioRegistration scenarioDetails = ScenarioRegister.GetScenarioDetails(scenarioName);
+                var scenarioDetails = ScenarioRegister.GetScenarioDetails(scenarioName);
                 DescriptionText.Text = scenarioDetails.Description;
 
-                Dictionary<int, string> suggestions = ScenarioRegister.GetSuggestions(scenarioName);
-                if(suggestions.Count > 0)
+                var suggestions = ScenarioRegister.GetSuggestions(scenarioName);
+                if (suggestions.Count > 0)
                 {
-                    int maxSeedLength = suggestions.Select(x => x.Key).Max().ToString().Length;
+                    var maxSeedLength = suggestions.Select(x => x.Key).Max().ToString().Length;
 
-                    foreach(KeyValuePair<int, string> suggestion in suggestions)
+                    foreach (var suggestion in suggestions)
                     {
-                        string seedDescription = $"{suggestion.Key.ToString($"D{maxSeedLength}")} : {suggestion.Value}";
+                        var seedDescription = $"{suggestion.Key.ToString($"D{maxSeedLength}")} : {suggestion.Value}";
                         currentSeedSuggestions.Add(seedDescription, (suggestion.Key, suggestion.Value));
                         SeedSuggestions.Items.Add(seedDescription);
                     }
@@ -91,42 +122,12 @@ namespace ALifeUni
         private void SeedSuggestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SeedText.Text = StartingSeedText;
-            if(SeedSuggestions.SelectedItem is string seedDescription)
+            if (SeedSuggestions.SelectedItem is string seedDescription)
             {
-                if(currentSeedSuggestions.TryGetValue(seedDescription, out var seedDetails))
+                if (currentSeedSuggestions.TryGetValue(seedDescription, out var seedDetails))
                 {
                     SeedText.Text = seedDetails.Item1.ToString();
                 }
-            }
-        }
-
-        /// <summary>
-        /// Handles the Click event of the LaunchScenarioRunner control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void LaunchScenarioRunner_Click(object sender, RoutedEventArgs e)
-        {
-            if(ScenariosList.SelectedItem is string scenarioName)
-            {
-                ScenarioRunner.ScenarioName = scenarioName;
-                ScenarioRunner.ScenarioSeed = int.TryParse(SeedText.Text, out var seed) ? seed : (int?)null;
-                Frame.Navigate(typeof(ScenarioRunner));
-            }
-        }
-
-        /// <summary>
-        /// Handles the Click event of the LaunchScenarioUI control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void LaunchScenarioUI_Click(object sender, RoutedEventArgs e)
-        {
-            if(ScenariosList.SelectedItem is string scenarioName)
-            {
-                MainPage.ScenarioName = scenarioName;
-                MainPage.ScenarioSeed = int.TryParse(SeedText.Text, out var seed) ? seed : (int?)null;
-                Frame.Navigate(typeof(MainPage));
             }
         }
     }

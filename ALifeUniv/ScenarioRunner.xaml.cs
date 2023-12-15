@@ -13,6 +13,11 @@ namespace ALifeUni
     public sealed partial class ScenarioRunner : Page, System.IDisposable
     {
         /// <summary>
+        /// True to automatically start the scenario runner on entering the page
+        /// </summary>
+        public static bool AutoStartScenarioRunner = false;
+
+        /// <summary>
         /// The scenario name
         /// </summary>
         public static string ScenarioName = string.Empty;
@@ -33,11 +38,14 @@ namespace ALifeUni
         public ScenarioRunner()
         {
             InitializeComponent();
-            NumberExecutions.Text = ScenarioRunners.Constants.DEFAULT_NUMBER_SEEDS_EXECUTED.ToString();
-            NumberTurns.Text = ScenarioRunners.Constants.DEFAULT_TOTAL_TURNS.ToString();
+            _ = GetOrResetScenarioParameters(true);
+
             ConsoleText.Text = string.Empty;
             SeedText.Text = string.Empty;
-            //StartScenarioRunner();
+            if (AutoStartScenarioRunner)
+            {
+                StartScenarioRunner();
+            }
         }
 
         /// <summary>
@@ -47,6 +55,44 @@ namespace ALifeUni
         {
             runner.StopRunner(true);
             runner.Dispose();
+        }
+
+        /// <summary>
+        /// Gets the or reset scenario parameters.
+        /// </summary>
+        /// <param name="reset">if set to <c>true</c> [reset].</param>
+        /// <returns></returns>
+        private (int, int, int, int) GetOrResetScenarioParameters(bool reset = false)
+        {
+            // get the number of scenarios we want to execute
+            if (!int.TryParse(NumberExecutions.Text, out var seedCount) || reset)
+            {
+                seedCount = ScenarioRunners.Constants.DEFAULT_NUMBER_SEEDS_EXECUTED;
+                NumberExecutions.Text = seedCount.ToString();
+            }
+
+            // get the number of turns we want per scenario
+            if (!int.TryParse(NumberTurns.Text, out var maxTurns) || reset)
+            {
+                maxTurns = ScenarioRunners.Constants.DEFAULT_TOTAL_TURNS;
+                NumberTurns.Text = maxTurns.ToString();
+            }
+
+            // get the number of turns we want per scenario
+            if (!int.TryParse(TurnBatch.Text, out var turnBatch) || reset)
+            {
+                turnBatch = ScenarioRunners.Constants.DEFAULT_TURN_BATCH;
+                TurnBatch.Text = turnBatch.ToString();
+            }
+
+            // get the number of turns we want per scenario
+            if (!int.TryParse(UpdateFrequency.Text, out var updateFrequency) || reset)
+            {
+                updateFrequency = ScenarioRunners.Constants.DEFAULT_UPDATE_FREQUENCY;
+                UpdateFrequency.Text = updateFrequency.ToString();
+            }
+
+            return (seedCount, maxTurns, turnBatch, updateFrequency);
         }
 
         /// <summary>
@@ -73,7 +119,7 @@ namespace ALifeUni
         /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private void ReturntoLauncher_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!runner.IsStopped)
+            if ((bool)!runner?.IsStopped)
             {
                 StopRunner();
             }
@@ -99,21 +145,9 @@ namespace ALifeUni
         /// </summary>
         private void StartScenarioRunner()
         {
-            // get the number of scenarios we want to execute
-            if (!int.TryParse(NumberExecutions.Text, out var seedCount))
-            {
-                seedCount = ScenarioRunners.Constants.DEFAULT_NUMBER_SEEDS_EXECUTED;
-                NumberExecutions.Text = seedCount.ToString();
-            }
+            (var seedCount, var maxTurns, var turnBatch, var updateFrequency) = GetOrResetScenarioParameters();
 
-            // get the number of turns we want per scenario
-            if (!int.TryParse(NumberTurns.Text, out var maxTurns))
-            {
-                maxTurns = ScenarioRunners.Constants.DEFAULT_TOTAL_TURNS;
-                NumberTurns.Text = maxTurns.ToString();
-            }
-
-            runner = new UiScenarioRunner(ConsoleText, ScenarioName, ScenarioSeed, numberSeedsToExecute: seedCount, totalTurns: maxTurns);
+            runner = new UiScenarioRunner(ConsoleText, SeedText, ScenarioName, ScenarioSeed, numberSeedsToExecute: seedCount, totalTurns: maxTurns, turnBatch: turnBatch, updateFrequency: updateFrequency);
         }
 
         /// <summary>

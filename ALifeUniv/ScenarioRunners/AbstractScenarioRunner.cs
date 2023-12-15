@@ -25,11 +25,6 @@ namespace ALifeUni.ScenarioRunners
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
         /// <summary>
-        /// The configuration
-        /// </summary>
-        private readonly AbstractScenarionRunnerConfig config;
-
-        /// <summary>
         /// The scenario
         /// </summary>
         private readonly IScenario scenario;
@@ -54,12 +49,12 @@ namespace ALifeUni.ScenarioRunners
         /// <param name="turnBatch">The turn batch.</param>
         /// <param name="updateFrequency">The update frequency.</param>
         /// <param name="logger">The logger.</param>
-        public AbstractScenarioRunner(string scenarioName, int? startingSeed = null, int numberSeedsToExecute = ScenarioRunners.Constants.DEFAULT_NUMBER_SEEDS_EXECUTED, int totalTurns = ScenarioRunners.Constants.DEFAULT_TOTAL_TURNS, int turnBatch = ScenarioRunners.Constants.DEFAULT_TURN_BATCH, int updateFrequency = ScenarioRunners.Constants.DEFAULT_UPDATE_FREQUENCY, Logger logger = null)
+        public AbstractScenarioRunner(string scenarioName, int? startingSeed = null, int numberSeedsToExecute = ScenarioRunners.Constants.DEFAULT_NUMBER_SEEDS_EXECUTED, int totalTurns = ScenarioRunners.Constants.DEFAULT_TOTAL_TURNS, int turnBatch = ScenarioRunners.Constants.DEFAULT_TURN_BATCH, int updateFrequency = ScenarioRunners.Constants.DEFAULT_UPDATE_FREQUENCY, Logger logger = null, Logger scenarioSeedLogger = null)
         {
             // instantiate needed variables
             Logger = (Logger)(logger ?? Activator.CreateInstance(LoggerType));
+            ScenarioSeedLogger = (Logger)(scenarioSeedLogger ?? Activator.CreateInstance(LoggerType));
             scenario = ScenarioRegister.GetScenario(scenarioName);
-            config = ScenarioRunnerConfigRegister.GetDefaultConfigForScenarioType(scenario.GetType());
             StartingSeed = startingSeed;
             NumberSeedsToExecute = numberSeedsToExecute;
             TotalTurns = totalTurns;
@@ -72,6 +67,7 @@ namespace ALifeUni.ScenarioRunners
             cancellationTokenSource = new CancellationTokenSource();
             var ct = cancellationTokenSource.Token;
             Logger.StartLogger(ct);
+            ScenarioSeedLogger.StartLogger(ct);
             executionTask = new Task(() => ExecuteRunner(ct), ct);
             executionTask.Start();
         }
@@ -134,6 +130,12 @@ namespace ALifeUni.ScenarioRunners
         /// </summary>
         /// <value>The type of the logger.</value>
         protected abstract Type LoggerType { get; }
+
+        /// <summary>
+        /// Gets the scenario seed logger.
+        /// </summary>
+        /// <value>The logger.</value>
+        protected Logger ScenarioSeedLogger { get; }
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -229,6 +231,7 @@ namespace ALifeUni.ScenarioRunners
         /// <param name="ct">The ct.</param>
         private void ScenarioExecutor(int seedValue, string headerMessage, CancellationToken ct)
         {
+            var config = ScenarioRunnerConfigRegister.GetDefaultConfigForScenarioType(scenario.GetType());
             // Display Header Message
             Logger.Write(headerMessage);
             Logger.WriteNewLine(1);
@@ -299,6 +302,10 @@ namespace ALifeUni.ScenarioRunners
             else
             {
                 config.SimulationSuccessInformation(Logger.Write);
+                if (config.ScenarioState == ScenarioState.CompleteSuccessful)
+                {
+                    ScenarioSeedLogger.WriteLine(seedValue);
+                }
             }
             Logger.WriteNewLine(1);
         }

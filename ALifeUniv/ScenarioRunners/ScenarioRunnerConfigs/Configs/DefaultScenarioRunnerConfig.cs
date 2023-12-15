@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-using ALifeUni.ALife;
+﻿using ALifeUni.ALife;
 using ALifeUni.ALife.WorldObjects.Agents;
+using System;
+using System.Linq;
 
 namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs.Configs
 {
@@ -38,6 +38,11 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs.Configs
         {
             var count = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
             WriteMessage($"\tSurviving: {count}{Environment.NewLine}");
+
+            if (count > 0)
+            {
+                ScenarioState = ScenarioState.CompleteSuccessful;
+            }
         }
 
         /// <summary>

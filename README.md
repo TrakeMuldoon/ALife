@@ -65,13 +65,12 @@ CTRL-Clicking on an object will kill that object. KILL. This is also buggy, beca
 The code is meant to be clean, commented and easier to read. 
 It is NOT, however, currently easy to understand then WHOLE of it. 
 
-To change the scenario being executed find the following comment in the Main.Xaml.cs
-"            /* ***********************************
-             * Set Scenario Here
-             * ***********************************/"
-That is where you pick the scenario which will be run. 
+To change the scenario being executed depends on whether you're running the GUI or the Console App:
+
+- Console App: Update the string in Program.cs that is passed to the `ConsoleScenarioRunner` to the name of the scenario you want to run.
+- GUI App: Select the scenario you wish to execute from the list. Suggested seeds are available and you can choose to run either a console-like experience or a GUI experience.
+
 The scenarios themselves are under
 ALife\ALifeUniv\ALife\Scenarios
 
 And each one should have a header with a description of what it is there for.
-Eventually, there will be a UI in the app to select, but that's long term.

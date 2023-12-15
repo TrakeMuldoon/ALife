@@ -7,23 +7,60 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Button x:Name="ReturntoLauncher" VerticalAlignment="Top" HorizontalAlignment="Left" Click="ReturntoLauncher_Click" Width="160" Height="30">Return to Launcher</Button>
-        <Button x:Name="Start" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="180,0" Width="80" Height="30" Click="Start_Click">Start</Button>
-        <Button x:Name="Stop" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="280,0" Width="80" Height="30" Click="Stop_Click">Stop</Button>
-        <Button x:Name="Restart" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="380,0" Click="Restart_Click" Width="80" Height="30">Restart</Button>
-        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="480,7" Text="Number of Scenarios to Execute:" />
-        <TextBox x:Name="NumberExecutions" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="690,0" Text="1" Width="20" />
-        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="770,7" Text="MaxNumber of Turns per Scenario:" />
-        <TextBox x:Name="NumberTurns" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1010,0" Text="1" Width="20" />
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3, 3, 3, 3">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="100" Width="100*" />
+            <ColumnDefinition MinWidth="500" Width="500*" />
+            <ColumnDefinition MinWidth="100" Width="100*" />
+        </Grid.ColumnDefinitions>
 
-        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0, 35">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="500" Width="500*" />
-                <ColumnDefinition MinWidth="100" Width="100*" />
-            </Grid.ColumnDefinitions>
-            <TextBox x:Name="ConsoleText" TextWrapping="Wrap" Text="TextBox" FontFamily="Consolas" FontSize="13" Grid.Column="0" />
-            <TextBox x:Name="SeedText" TextWrapping="Wrap" Text="TextBox" FontFamily="Consolas" FontSize="13" Grid.Column="1" />
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40*" />
+            </Grid.RowDefinitions>
+
+            <Button x:Name="ReturntoLauncher" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="ReturntoLauncher_Click" Margin="3, 3, 3, 3" Grid.Row="0">Return to Launcher</Button>
+            <Button x:Name="Start" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="Start_Click" Margin="3, 3, 3, 3" Grid.Row="1">Start</Button>
+            <Button x:Name="Stop" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="Stop_Click" Margin="3, 3, 3, 3" Grid.Row="2">Stop</Button>
+            <Button x:Name="Restart" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="Restart_Click" Margin="3, 3, 3, 3" Grid.Row="3">Restart</Button>
+
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Number of Scenarios to Execute:" Margin="3, 3, 3, 3" Grid.Row="4" />
+            <TextBox x:Name="NumberExecutions" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="1" Margin="3, 3, 3, 3" Grid.Row="5" />
+
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Max Number of Scenario Turns:" Visibility="Visible" Margin="3, 3, 3, 3" Grid.Row="6" />
+            <TextBox x:Name="NumberTurns" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="1" Visibility="Visible" Margin="3, 3, 3, 3" Grid.Row="7" />
+
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Turn Batch:" Visibility="Visible" Margin="3, 3, 3, 3" Grid.Row="8" />
+            <TextBox x:Name="TurnBatch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="1" Visibility="Visible" Margin="3, 3, 3, 3" Grid.Row="9" />
+
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Update Frequency:" Visibility="Visible" Margin="3, 3, 3, 3" Grid.Row="10" />
+            <TextBox x:Name="UpdateFrequency" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="1" Visibility="Visible" Margin="3, 3, 3, 3" Grid.Row="11" />
+
+            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" TextWrapping="Wrap" FontStyle="Italic" Text="Note: Updating above scenario parameters will not take effect until the scenario runner is restarted!" Visibility="Visible" Margin="3, 3, 3, 3" Grid.Row="12" />
+        </Grid>
+
+        <TextBox x:Name="ConsoleText" TextWrapping="Wrap" Text="TextBox" FontFamily="Consolas" FontSize="13" Margin="3, 3, 3, 3" Grid.Column="1" />
+
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="40*" MinHeight="40" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Successful Seeds:" FontFamily="Consolas" FontSize="13" Margin="3, 3, 3, 3" Grid.Row="0" />
+            <TextBox x:Name="SeedText" TextWrapping="Wrap" Text="TextBox" FontFamily="Consolas" FontSize="13" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="3, 3, 3, 3" Grid.Row="1" />
         </Grid>
     </Grid>
 </Page>

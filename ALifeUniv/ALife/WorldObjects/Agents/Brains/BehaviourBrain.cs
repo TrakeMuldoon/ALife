@@ -1,9 +1,10 @@
 ﻿using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
+using ALifeUni.ALife.WorldObjects.Agents.Brains.BehaviourBrains;
 using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
 
-namespace ALifeUni.ALife.WorldObjects.Agents.Brains.BehaviourBrains
+namespace ALifeUni.ALife.WorldObjects.Agents.Brains
 {
     public class BehaviourBrain : IBrain
     {

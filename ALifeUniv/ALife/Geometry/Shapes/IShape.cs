@@ -1,4 +1,5 @@
 ﻿using ALifeUni.ALife.Geometry;
+using Newtonsoft.Json;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -11,20 +12,24 @@ namespace ALifeUni.ALife.Shapes
             get;
             set;
         }
+
         Angle Orientation
         {
             get;
             set;
         }
+
         BoundingBox BoundingBox
         {
             get;
         }
+
         Color Color
         {
             get;
             set;
         }
+
         Color DebugColor
         {
             get;

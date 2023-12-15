@@ -14,7 +14,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents.CustomAgents
 {
     public class Rabbit : Agent
     {
-        public Rabbit(Zone parentZone) : base("MazeRunner", AgentIDGenerator.GetNextAgentId(), ReferenceValues.CollisionLevelPhysical)
+        public Rabbit(Zone parentZone) : base("Rabbit", AgentIDGenerator.GetNextAgentId(), ReferenceValues.CollisionLevelPhysical)
         {
             HomeZone = parentZone;
 

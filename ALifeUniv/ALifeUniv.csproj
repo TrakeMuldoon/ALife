@@ -142,7 +142,7 @@
     <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\TypedClasses\BoolConditionFactory.cs" />
     <Compile Include="ALife\WorldObjects\Agents\Brains\IBrain.cs" />
     <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\Behaviour.cs" />
-    <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\BehaviourBrain.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrain.cs" />
     <Compile Include="ALife\WorldObjects\Agents\Brains\NeuralNetworkBrains\ActionNeuron.cs" />
     <Compile Include="ALife\WorldObjects\Agents\Brains\NeuralNetworkBrains\Dendrite.cs" />
     <Compile Include="ALife\WorldObjects\Agents\Brains\NeuralNetworkBrains\FuncNeuron.cs" />

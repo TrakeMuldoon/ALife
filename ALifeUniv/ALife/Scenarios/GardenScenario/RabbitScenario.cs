@@ -56,8 +56,8 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
             List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(
                 new[] { CommonSenses.QuadrantEyes(agent, 0) },
                 new EyeCluster(agent, "ColourForward", true
-                    , new ROEvoNumber(startValue: 0,  evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
-                    , new ROEvoNumber(startValue: -8, evoDeltaMax: 5, hardMin: -360, hardMax: 360)   //Relative Orientation
+                    , new ROEvoNumber(startValue: 0,  evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Orientation Around Parent
+                    , new ROEvoNumber(startValue: -8, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Relative Orientation
                     , new ROEvoNumber(startValue: 80, evoDeltaMax: 3, hardMin: 40,   hardMax: 120)     //Radius
                     , new ROEvoNumber(startValue: 16, evoDeltaMax: 1, hardMin: 15,   hardMax: 40)),    //Sweep
                     

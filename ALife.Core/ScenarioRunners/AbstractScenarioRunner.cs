@@ -257,9 +257,9 @@ namespace ALife.Core.ScenarioRunners
             string error = null;
             try
             {
-                int maxTurns = TotalTurns.ToString().Length;
-                string turnStringFormat = $"D{maxTurns}";
-                string initialTurnSpaces = new string(' ', maxTurns - 1);
+                int turnsWidth = TotalTurns.ToString().Length;
+                string turnStringFormat = $"D{turnsWidth}";
+                string initialTurnSpaces = new string(' ', turnsWidth - 1);
                 Logger.WriteLine($"Each . represents {TurnBatch} turns");
                 Logger.Write($"{initialTurnSpaces}[0]");
                 for (int i = 0; i < TotalTurns / TurnBatch; i++)

@@ -3,6 +3,7 @@ using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.WorldObjects.Agents.Senses.Generic;
 using System;
+using System.Collections.Generic;
 using Windows.UI;
 
 namespace ALifeUni.ALife.WorldObjects.Agents.Senses
@@ -48,6 +49,19 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Senses
         public override SenseCluster ReproduceSense(WorldObject newParent)
         {
             return new ProximityCluster(newParent, Name, evoRadius.Evolve(), myShape.Color.Clone());
+        }
+
+        public Dictionary<string, string> ExportEvoNumbersAsCode()
+        {
+            Dictionary<string, string> properties = new Dictionary<string, string>();
+            PopulateCodeDictionary(properties, "Radius", evoRadius);
+
+            return properties;
+        }
+
+        private void PopulateCodeDictionary(Dictionary<string, string> properties, string name, EvoNumber evo)
+        {
+            properties.Add(name, $", new ROEvoNumber(startValue: {evo.StartValue},\tevoDeltaMax: {evo.DeltaMax},\thardMin: {evo.ValueHardMin},\thardMax: {evo.ValueHardMax})\t//{name}");
         }
     }
 }

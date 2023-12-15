@@ -9,7 +9,11 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Senses
 {
     public class GoalSenseCluster : SenseCluster
     {
-        private IShape targetShape;
+        public IShape TargetShape
+        {
+            get;
+            private set;
+        }
         private ChildSector myShape;
         private WorldObject myParent;
 
@@ -19,7 +23,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Senses
 
         public GoalSenseCluster(WorldObject parent, string name, IShape targetObject) : base(parent, name)
         {
-            targetShape = targetObject;
+            TargetShape = targetObject;
             myParent = parent;
             myShape = new ChildSector(parent: parent.Shape,
                                       orientationAroundParent: new Angle(0),
@@ -43,7 +47,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Senses
 
         public override void Detect()
         {
-            switch(targetShape)
+            switch(TargetShape)
             {
                 case AARectangle aar: DetectAgainstAAR(aar); break;
                 case Circle cir: DetectAgainstCircle(cir); break;
@@ -53,7 +57,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Senses
 
         public void ChangeTarget(IShape newTarget)
         {
-            targetShape = newTarget;
+            TargetShape = newTarget;
         }
 
         /// <summary>
@@ -171,13 +175,13 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Senses
 
         public override SenseCluster CloneSense(WorldObject newParent)
         {
-            return new GoalSenseCluster(newParent, this.Name, this.targetShape);
+            return new GoalSenseCluster(newParent, this.Name, this.TargetShape);
         }
 
         public override SenseCluster ReproduceSense(WorldObject newParent)
         {
             //There is no evolution here. It always targets in the same way.
-            return new GoalSenseCluster(newParent, this.Name, this.targetShape);
+            return new GoalSenseCluster(newParent, this.Name, this.TargetShape);
         }
     }
 }

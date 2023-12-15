@@ -28,15 +28,19 @@ namespace ALifeUni.ALife.ImportExport
         {
 
             StringBuilder outputCode = new StringBuilder();
-            outputCode.AppendLine(@"
-int agentRadius = 5;
-ApplyCircleShapeToAgent(parentZone.Distributor, Colors.Blue, agentRadius, 0);");
+            outputCode.AppendLine("int agentRadius = 5;");
+            outputCode.AppendLine("ApplyCircleShapeToAgent(parentZone.Distributor, Colors.Blue, agentRadius, 0);");
 
             outputCode.AppendLine();
             outputCode.AppendLine("List<SenseCluster> agentSenses = new List<SenseCluster>()");
             outputCode.AppendLine("{");
+            bool first = true;
             foreach(SenseCluster sc in theAgent.Senses)
             {
+                if(!first)
+                {
+                    outputCode.Append(", ");
+                }
                 switch(sc)
                 {
                     case EyeCluster eye: outputCode.AppendLine(EyeClusterDefinitionAsCode(eye)); break;
@@ -44,8 +48,9 @@ ApplyCircleShapeToAgent(parentZone.Distributor, Colors.Blue, agentRadius, 0);");
                     case ProximityCluster pc: outputCode.AppendLine(ProximityClusterDefinitionAsCode(pc)); break;
                     default: throw new NotImplementedException($"Unable to export: {sc.GetType().Name}");
                 }
+                first = false;
             }
-            outputCode.AppendLine("}");
+            outputCode.AppendLine("};");
 
             outputCode.AppendLine();
             if(theAgent.Properties.Count > 0)
@@ -60,26 +65,32 @@ ApplyCircleShapeToAgent(parentZone.Distributor, Colors.Blue, agentRadius, 0);");
             outputCode.AppendLine();
             outputCode.AppendLine("List<StatisticInput> agentStatistics = new List<StatisticInput>()");
             outputCode.AppendLine("{");
+            first = true;
             foreach(StatisticInput si in theAgent.Statistics.Values)
             {
-                string nextLine = $"\tnew StatisticInput(\"{si.Name}\", {si.StatisticMinimum}, {si.StatisticMaximum}, {si.StartValue}, {si.Disposition});";
-                outputCode.AppendLine(nextLine);
+                string prepend = first ? "\t " : "\t, ";
+                string nextLine = $"new StatisticInput(\"{si.Name}\", {si.StatisticMinimum}, {si.StatisticMaximum}, StatisticInputType.{si.Disposition}, {si.StartValue})";
+                outputCode.AppendLine($"{prepend}{nextLine}");
+                first = false;
             }
-            outputCode.AppendLine("}");
+            outputCode.AppendLine("};");
 
             outputCode.AppendLine();
             outputCode.AppendLine("List<ActionCluster> agentActions = new List<ActionCluster>()");
             outputCode.AppendLine("{");
+            first = true;
             foreach(ActionCluster ac in theAgent.Actions.Values)
             {
-                outputCode.AppendLine($"new {ac.GetType().Name}(this);");
+                string prepend = first ? "\t " : "\t, ";
+                outputCode.AppendLine($"{prepend}new {ac.GetType().Name}(this)");
+                first = false;
             }
-            outputCode.AppendLine("}");
+            outputCode.AppendLine("};");
 
             outputCode.AppendLine();
             outputCode.AppendLine("this.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);");
             outputCode.AppendLine();
-            outputCode.AppendLine("IBrain newBrain =");
+            outputCode.Append("IBrain newBrain = ");
 
             switch(theAgent.MyBrain)
             {
@@ -107,8 +118,9 @@ ApplyCircleShapeToAgent(parentZone.Distributor, Colors.Blue, agentRadius, 0);");
                 sb.AppendLine($"\t\t\"{behave}\",");
             }
 
-            string finalBrain = sb.ToString().TrimEnd(',');
-            return $"{finalBrain}{Environment.NewLine}\t}}";
+            string brainString = sb.ToString();
+            string trimBrainString = brainString.Substring(0,brainString.LastIndexOf(','));
+            return $"{trimBrainString});{Environment.NewLine}\t";
         }
 
         private static string OutputNeuralNetworkBrainAsCode(IBrain myBrain)
@@ -121,7 +133,7 @@ ApplyCircleShapeToAgent(parentZone.Distributor, Colors.Blue, agentRadius, 0);");
             string result;
             switch(gsc.TargetShape)
             {
-                case AARectangle aar: result = $"new GoalSenseCluster(agent, \"{gsc.Name}\", targetZone)"; break;
+                case AARectangle aar: result = $"new GoalSenseCluster(this, \"{gsc.Name}\", targetZone)"; break;
                 default: throw new NotImplementedException($"Cannot have a target of shape: {gsc.TargetShape.GetType()}");
             }
 
@@ -134,14 +146,13 @@ ApplyCircleShapeToAgent(parentZone.Distributor, Colors.Blue, agentRadius, 0);");
 
             Dictionary<string, string> eyeProperties = eye.ExportEvoNumbersAsCode();
 
-            sb.AppendLine($"new EyeCluster(this, \"{eye.Name}\"");
+            sb.AppendLine($"new EyeCluster(this, \"{eye.Name}\", {eye.IncludeColor.ToString().ToLower()}");
             sb.AppendLine($"\t{eyeProperties["OrientationAroundParent"]}");
             sb.AppendLine($"\t{eyeProperties["RelativeOrientation"]}");
             sb.AppendLine($"\t{eyeProperties["Radius"]}");
-            sb.AppendLine($"\t{eyeProperties["Sweep"]}),");
-
+            sb.AppendLine($"\t{eyeProperties["Sweep"]}");
+            sb.AppendLine(")");
             return sb.ToString();
-
         }
 
         private static string ProximityClusterDefinitionAsCode(ProximityCluster pc)
@@ -150,9 +161,9 @@ ApplyCircleShapeToAgent(parentZone.Distributor, Colors.Blue, agentRadius, 0);");
 
             Dictionary<string, string> pcProperties = pc.ExportEvoNumbersAsCode();
 
-            sb.AppendLine($"new ProximityCluster(this, {pc.Name}");
+            sb.AppendLine($"new ProximityCluster(this, \"{pc.Name}\"");
             sb.AppendLine($"\t{pcProperties["Radius"]}");
-
+            sb.AppendLine(")");
             return sb.ToString();
         }
 

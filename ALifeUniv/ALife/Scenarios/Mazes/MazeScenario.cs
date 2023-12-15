@@ -31,6 +31,7 @@ Success Cases:
 If there are less than 50 agents remaining, 6 more will be added, taken from the best agents to ever live.
 If an agent reaches the goal line, the simuluation stops."
     )]
+    [SuggestedSeed(151661169, "Success at 15000 ish")]
     public class MazeScenario : IScenario
     {
         /******************/

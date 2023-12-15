@@ -8,16 +8,38 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <Button x:Name="LaunchScenarioUI" Content="Launch Scenario UI" Margin="10,544,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="LaunchScenarioUI_Click" Width="426" Height="52" FontSize="22" />
-        <TextBox x:Name="SeedText" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 120" TextWrapping="Wrap" Text="Enter Numerical Seed Here" Width="426" />
-        <Button x:Name="LaunchScenarioRunner" Content="Launch Scenario Runner" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 60" Width="426" Height="52" FontSize="22" Click="LaunchScenarioRunner_Click" />
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="3, 3, 3, 3">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="200" Width="200*" />
+            <ColumnDefinition MinWidth="200" Width="200*" />
+            <ColumnDefinition MinWidth="200" Width="200*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="40*" MinHeight="40" />
+        </Grid.RowDefinitions>
 
-        <ListView x:Name="ScenariosList" Width="512" Height="730"  HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="ScenariosList_SelectionChanged" Margin="0,45,0,225" BorderThickness="3,3,3,3" />
-        <TextBox x:Name="DescriptionText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="730" Width="448" IsReadOnly="True" Margin="0,45,0,0" />
-        <ListView x:Name="SeedSuggestions" Width="512" Height="730" HorizontalAlignment="Right" VerticalAlignment="Top" SelectionChanged="SeedSuggestions_SelectionChanged" Margin="0,45,0,0" BorderThickness="3,3,3,3" />
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Available Scenarios" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="526,10,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="1074,10,0,0" TextWrapping="Wrap" Text="Suggested Seeds" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Text="Available Scenarios" Margin="3, 3, 3, 3" Grid.Column="0" Grid.Row="0" />
+        <ListView x:Name="ScenariosList" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="ScenariosList_SelectionChanged" BorderThickness="3,3,3,3" Margin="3, 3, 3, 3" Grid.Column="0" Grid.Row="1" />
+
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Text="Description" Margin="3, 3, 3, 3" Grid.Column="1" Grid.Row="0" />
+        <TextBox x:Name="DescriptionText" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextWrapping="Wrap" Text="TextBox" IsReadOnly="True" Margin="3, 3, 3, 3" Grid.Column="1" Grid.Row="1" />
+
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Text="Suggested Seeds" Grid.Column="2" Grid.Row="0" />
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200*" MinHeight="200" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+
+            <ListView x:Name="SeedSuggestions" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="SeedSuggestions_SelectionChanged" BorderThickness="3,3,3,3" Margin="3, 3, 3, 3" Grid.Row="0" />
+            <TextBox x:Name="SeedText" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextWrapping="Wrap" Text="Enter Numerical Seed Here" Margin="3, 3, 3, 3" Grid.Row="1" />
+            <CheckBox x:Name="AutoStartScenarioRunner" Content="Auto Start Scenario Runner" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3, 3, 3, 3" Grid.Row="2" IsChecked="True" />
+            <Button x:Name="LaunchScenarioRunner" Content="Launch Scenario Runner" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="LaunchScenarioRunner_Click" Margin="3, 3, 3, 3" Grid.Row="3" />
+            <Button x:Name="LaunchScenarioUI" Content="Launch Scenario UI" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="LaunchScenarioUI_Click" Margin="3, 3, 3, 3" Grid.Row="4" />
+        </Grid>
     </Grid>
 </Page>

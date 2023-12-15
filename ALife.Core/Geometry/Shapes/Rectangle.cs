@@ -1,9 +1,5 @@
-﻿using System;
-using Windows.Foundation;
-using Windows.UI;
-using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
-using ALife.Core.Utility;
+﻿using ALife.Core.Utility;
+using System.Drawing;
 
 namespace ALife.Core.Geometry.Shapes
 {
@@ -12,13 +8,13 @@ namespace ALife.Core.Geometry.Shapes
         public double FBLength;
         public double RLWidth;
 
-        public Rectangle(Point centrePoint, double fbLength, double rlWidth, Color color)
+        public Rectangle(Geometry.Shapes.Point centrePoint, double fbLength, double rlWidth, Color color)
         {
             CentrePoint = centrePoint;
             FBLength = fbLength;
             RLWidth = rlWidth;
             Color = color;
-            DebugColor = Colors.IndianRed;
+            DebugColor = System.Drawing.Color.IndianRed;
 
             Orientation = new Angle(0);
         }
@@ -28,12 +24,12 @@ namespace ALife.Core.Geometry.Shapes
             FBLength = fbLength;
             RLWidth = rlWidth;
             Color = color;
-            DebugColor = Colors.IndianRed;
+            DebugColor = System.Drawing.Color.IndianRed;
 
             Orientation = new Angle(0);
         }
 
-        public virtual Point CentrePoint
+        public virtual Geometry.Shapes.Point CentrePoint
         {
             get;
             set;
@@ -77,8 +73,8 @@ namespace ALife.Core.Geometry.Shapes
 
         private BoundingBox? myBox;
 
-        private Point topLeft, topRight, bottomLeft, bottomRight;
-        public Point TopLeft
+        private Geometry.Shapes.Point topLeft, topRight, bottomLeft, bottomRight;
+        public Geometry.Shapes.Point TopLeft
         {
             get
             {
@@ -90,7 +86,7 @@ namespace ALife.Core.Geometry.Shapes
             }
             private set { topLeft = value; }
         }
-        public Point TopRight
+        public Geometry.Shapes.Point TopRight
         {
             get
             {
@@ -102,7 +98,7 @@ namespace ALife.Core.Geometry.Shapes
             }
             private set { topRight = value; }
         }
-        public Point BottomRight
+        public Geometry.Shapes.Point BottomRight
         {
             get
             {
@@ -114,7 +110,7 @@ namespace ALife.Core.Geometry.Shapes
             }
             private set { bottomRight = value; }
         }
-        public Point BottomLeft
+        public Geometry.Shapes.Point BottomLeft
         {
             get
             {
@@ -141,7 +137,7 @@ namespace ALife.Core.Geometry.Shapes
                 }
             }
 
-            Point tempPoint = CentrePoint;
+            Geometry.Shapes.Point tempPoint = CentrePoint;
             tempPoint = ExtraMath.TranslateByVector(tempPoint, Orientation, FBLength / 2);
             topLeft = ExtraMath.TranslateByVector(tempPoint, Orientation.Radians - (Math.PI / 2), RLWidth / 2);
             topRight = ExtraMath.TranslateByVector(topLeft, Orientation.Radians + (Math.PI / 2), RLWidth);
@@ -160,7 +156,7 @@ namespace ALife.Core.Geometry.Shapes
 
         public virtual IShape CloneShape()
         {
-            Point cp = new Point(CentrePoint.X, CentrePoint.Y);
+            Geometry.Shapes.Point cp = new Geometry.Shapes.Point(CentrePoint.X, CentrePoint.Y);
             Rectangle rec = new Rectangle(cp, FBLength, RLWidth, Color.Clone());
             rec.Orientation = Orientation.Clone();
             return rec;

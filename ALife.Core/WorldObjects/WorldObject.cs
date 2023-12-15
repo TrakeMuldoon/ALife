@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Windows.Foundation;
-using Windows.UI;
-using ALife.Core;
-using ALife.Core.Geometry.Shapes;
-using ALife.Core.WorldObjects;
-using ALifeUni.ALife;
+﻿using ALife.Core.Geometry.Shapes;
 using ALife.Core.WorldObjects.Agents.Properties;
+using System.Drawing;
 
 namespace ALife.Core.WorldObjects
 {
@@ -52,7 +46,7 @@ namespace ALife.Core.WorldObjects
         }
         public bool Alive;
 
-        protected WorldObject(Point centrePoint, IShape shape, string genusLabel, string individualLabel, string collisionLevel, Color color)
+        protected WorldObject(Geometry.Shapes.Point centrePoint, IShape shape, string genusLabel, string individualLabel, string collisionLevel, Color color)
         {
             NumChildren = 0;
             Shape = shape;

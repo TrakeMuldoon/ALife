@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Windows.UI;
-using ALife.Core;
-using ALife.Core.Utility;
+﻿using ALife.Core.Utility;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
@@ -19,7 +15,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
             TargetZone = targetZone;
 
             int agentRadius = 5;
-            ApplyCircleShapeToAgent(parentZone.Distributor, Colors.Red, agentRadius, 0);
+            ApplyCircleShapeToAgent(parentZone.Distributor, System.Drawing.Color.Red, agentRadius, 0);
 
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {

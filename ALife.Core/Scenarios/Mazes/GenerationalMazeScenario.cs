@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Windows.Foundation;
-using Windows.UI;
-using ALife.Core;
-using ALife.Core.Scenarios;
-using ALife.Core.Scenarios.ScenarioHelpers;
+﻿using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility;
+using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
+using System.Drawing;
 
 namespace ALife.Core.Scenarios.Mazes
 {
@@ -143,8 +138,8 @@ If an agent reaches the goal line, the simuluation stops."
             double height = instance.WorldHeight;
             double width = instance.WorldWidth;
 
-            Zone red = new Zone("Red(Blue)", "Random", Colors.Red, new Point(0, 0), 50, height);
-            Zone blue = new Zone("Blue(Red)", "Random", Colors.Blue, new Point(width - 50, 0), 50, height);
+            Zone red = new Zone("Red(Blue)", "Random", System.Drawing.Color.Red, new Geometry.Shapes.Point(0, 0), 50, height);
+            Zone blue = new Zone("Blue(Red)", "Random", System.Drawing.Color.Blue, new Geometry.Shapes.Point(width - 50, 0), 50, height);
             red.OppositeZone = blue;
             red.OrientationDegrees = 0;
 
@@ -154,7 +149,7 @@ If an agent reaches the goal line, the simuluation stops."
             int numAgents = 30;
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colors.Blue, 0);
+                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, System.Drawing.Color.Blue, 0);
             }
 
             MazeSetups.SetUpMaze();

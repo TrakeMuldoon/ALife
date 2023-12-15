@@ -1,10 +1,4 @@
-﻿using System;
-using Windows.Foundation;
-using Windows.UI;
-using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
-using ALife.Core.Geometry.Shapes.ChildShapes;
-using ALife.Core.Utility;
+﻿using ALife.Core.Utility;
 
 namespace ALife.Core.Geometry.Shapes.ChildShapes
 {
@@ -52,10 +46,10 @@ namespace ALife.Core.Geometry.Shapes.ChildShapes
             OrientationAroundParent = orientationAroundParent;
             distanceFromParentCentre = distFromParentCentre;
             Parent = parent;
-            Color = Colors.White;
+            Color = System.Drawing.Color.White;
         }
 
-        public override Point CentrePoint
+        public override Geometry.Shapes.Point CentrePoint
         {
             get
             {

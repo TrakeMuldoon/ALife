@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Windows.Foundation;
-using Windows.UI;
-using ALife.Core;
-using ALife.Core.Geometry;
+﻿using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility;
-using ALife.Core.WorldObjects;
-using ALife.Core.WorldObjects.Prebuilt;
 
 namespace ALife.Core.WorldObjects.Prebuilt
 {
@@ -32,11 +25,11 @@ namespace ALife.Core.WorldObjects.Prebuilt
             }
         }
 
-        public Wall(Point centrePoint, double Length, Angle orientation, string individualLabel)
+        public Wall(Geometry.Shapes.Point centrePoint, double Length, Angle orientation, string individualLabel)
             : base("Wall", individualLabel, ReferenceValues.CollisionLevelPhysical)
         {
 
-            rShape = new Rectangle(Length, 5, Colors.DarkKhaki);
+            rShape = new Rectangle(Length, 5, System.Drawing.Color.DarkKhaki);
             Shape.CentrePoint = centrePoint;
             Shape.Orientation = orientation;
             Shape.Reset();
@@ -79,7 +72,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
                 Angle ori = wall.Shape.Orientation.Clone();
                 double indexer = i - ((numSplits + 1) / 2.0);
 
-                Point p = ExtraMath.TranslateByVector(wall.Shape.CentrePoint, ori, segmentLength * indexer);
+                Geometry.Shapes.Point p = ExtraMath.TranslateByVector(wall.Shape.CentrePoint, ori, segmentLength * indexer);
                 Wall w = new Wall(p, segmentLength, ori, wall.IndividualLabel + "~" + (i + 1));
                 segments.Add(w);
             }

@@ -1,9 +1,4 @@
-﻿using System;
-using Windows.Foundation;
-using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
-using ALife.Core.Geometry.Shapes.ChildShapes;
-using ALife.Core.Utility;
+﻿using ALife.Core.Utility;
 
 namespace ALife.Core.Geometry.Shapes.ChildShapes
 {
@@ -13,7 +8,7 @@ namespace ALife.Core.Geometry.Shapes.ChildShapes
         public readonly Angle OrientationAroundParent;
         public readonly double DistFromParentCentre;
 
-        public override Point CentrePoint
+        public override Geometry.Shapes.Point CentrePoint
         {
             get
             {

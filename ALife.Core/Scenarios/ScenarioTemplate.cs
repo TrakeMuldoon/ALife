@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Windows.UI;
-using ALife.Core.Scenarios;
+﻿using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
+using System.Drawing;
 
 namespace ALife.Core.Scenarios
 {

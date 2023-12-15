@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ALife.Core.Utility
+﻿namespace ALife.Core.Utility
 {
     /// <summary>
     /// A fast random number generator for .NET
@@ -164,6 +162,39 @@ namespace ALife.Core.Utility
             // 31 bits of precision will suffice if range<=int.MaxValue. This allows us to cast to an int and gain
             // a little more performance.
             return lowerBound + (int)((REAL_UNIT_INT * (double)(int)(0x7FFFFFFF & (w = (w ^ (w >> 19)) ^ (t ^ (t >> 8))))) * (double)range);
+        }
+
+        /// <summary>
+        /// Generates a random byte over the range 0 to byte.MaxValue-1.
+        /// MaxValue is not generated in order to remain functionally equivalent to System.Random.Next().
+        /// This does slightly eat into some of the performance gain over System.Random, but not much.
+        /// </summary>
+        /// <returns></returns>
+        public byte NextByte()
+        {
+            return (byte)Next(255);
+        }
+
+        /// <summary>
+        /// Generates a random byte over the range 0 to upperBound-1, and not including upperBound.
+        /// </summary>
+        /// <param name="upperBound">The upper bound.</param>
+        /// <returns></returns>
+        public byte NextByte(byte upperBound)
+        {
+            return (byte) Next(upperBound);
+        }
+
+        /// <summary>
+        /// Generates a random byte over the range lowerBound to upperBound-1, and not including upperBound.
+        /// upperBound must be >= lowerBound. lowerBound may be negative.
+        /// </summary>
+        /// <param name="lowerBound">The lower bound.</param>
+        /// <param name="upperBound">The upper bound.</param>
+        /// <returns></returns>
+        public byte NextByte(byte lowerBound, byte upperBound)
+        {
+            return (byte)Next(lowerBound, upperBound);
         }
 
         /// <summary>

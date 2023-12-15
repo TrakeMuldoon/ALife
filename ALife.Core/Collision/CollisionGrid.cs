@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Windows.Foundation;
-using ALife.Core.Collision;
-using ALife.Core.Geometry.Shapes;
+﻿using ALife.Core.Geometry.Shapes;
 
 namespace ALife.Core.Collision
 {
@@ -20,7 +15,7 @@ namespace ALife.Core.Collision
         private const int DEFAULT_GRID_SIZE = 25;
         private List<T>[,] objectGrid;
         private List<T> trackedObjects;
-        private Dictionary<T, List<Point>> agentLocationTracker = new Dictionary<T, List<Point>>();
+        private Dictionary<T, List<Geometry.Shapes.Point>> agentLocationTracker = new Dictionary<T, List<Geometry.Shapes.Point>>();
 
         public CollisionGrid(int gridHeight, int gridWidth, string gridName)
             : this(gridHeight, gridWidth, DEFAULT_GRID_SIZE, gridName)
@@ -92,17 +87,17 @@ namespace ALife.Core.Collision
             int yMinBucket = (int)(bb.MinY) / GridSize;
 
             //This creates a list of grid buckets that the agent falls within
-            List<Point> myCoords = new List<Point>();
+            List<Geometry.Shapes.Point> myCoords = new List<Geometry.Shapes.Point>();
             for(int x = xMinBucket; x <= xMaxBucket; x++)
             {
                 for(int y = yMinBucket; y <= yMaxBucket; y++)
                 {
-                    myCoords.Add(new Point(x, y));
+                    myCoords.Add(new Geometry.Shapes.Point(x, y));
                 }
             }
 
             //insert into all applicable buckets
-            foreach(Point gc in myCoords)
+            foreach(Geometry.Shapes.Point gc in myCoords)
             {
                 if(gc.X < 0
                    || gc.Y < 0
@@ -130,8 +125,8 @@ namespace ALife.Core.Collision
         public void RemoveObject(T killMe)
         {
             trackedObjects.Remove(killMe);
-            List<Point> myCoords = agentLocationTracker[killMe];
-            foreach(Point coord in myCoords)
+            List<Geometry.Shapes.Point> myCoords = agentLocationTracker[killMe];
+            foreach(Geometry.Shapes.Point coord in myCoords)
             {
                 //In case some objects go out of bounds.
                 if(coord.X < 0

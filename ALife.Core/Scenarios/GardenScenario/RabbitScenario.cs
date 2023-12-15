@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using Windows.Foundation;
-using Windows.UI;
-using ALife.Core;
-using ALife.Core.Scenarios;
-using ALife.Core.Scenarios.ScenarioHelpers;
+﻿using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility;
+using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
 using ALife.Core.WorldObjects.Prebuilt;
+using System.Drawing;
 
 namespace ALife.Core.Scenarios.GardenScenario
 {
@@ -151,7 +148,7 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
             double height = Planet.World.WorldHeight;
             double width = Planet.World.WorldWidth;
 
-            var worldZone = new Zone("WholeWorld", "Random", Colors.Yellow, new Point(0, 0), width, height);
+            var worldZone = new Zone("WholeWorld", "Random", System.Drawing.Color.Yellow, new Geometry.Shapes.Point(0, 0), width, height);
             Planet.World.AddZone(worldZone);
 
             TargetRabbit = new Rabbit(worldZone);
@@ -159,7 +156,7 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
             var numAgents = 200;
             for (var i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", worldZone, null, Colors.LawnGreen, Planet.World.NumberGen.NextDouble());
+                Agent rag = AgentFactory.CreateAgent("Agent", worldZone, null, System.Drawing.Color.LawnGreen, Planet.World.NumberGen.NextDouble());
             }
 
         }

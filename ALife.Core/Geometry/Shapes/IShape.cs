@@ -1,14 +1,10 @@
-﻿using Newtonsoft.Json;
-using Windows.Foundation;
-using Windows.UI;
-using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
+﻿using System.Drawing;
 
 namespace ALife.Core.Geometry.Shapes
 {
     public interface IShape
     {
-        Point CentrePoint
+        Geometry.Shapes.Point CentrePoint
         {
             get;
             set;

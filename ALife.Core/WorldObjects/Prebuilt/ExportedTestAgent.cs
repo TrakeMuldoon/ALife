@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Windows.UI;
-using ALife.Core;
-using ALife.Core.WorldObjects.Agents;
+﻿using ALife.Core.WorldObjects.Agents;
 
 
 namespace ALife.Core.WorldObjects.Prebuilt

@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Windows.Foundation;
-using Windows.UI;
-using ALife.Core;
-using ALife.Core.Scenarios;
-using ALife.Core.Scenarios.Mazes;
-using ALife.Core.Scenarios.ScenarioHelpers;
+﻿using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility;
+using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
+using System.Drawing;
 
 namespace ALife.Core.Scenarios.Mazes
 {
@@ -147,11 +142,11 @@ namespace ALife.Core.Scenarios.Mazes
         {
             MazeSetups.BuildThinningCarTrack();
 
-            Zone startZone = new Zone("Start", "Random", Colors.Green, new Point(30, 331), 190, 80);
-            Zone midOne = new Zone("Mid1", "Random", Colors.Orange, new Point(800, 585), 20, 200);
-            Zone halfWay = new Zone("Half", "Random", Colors.Orange, new Point(1320, 320), 200, 20);
-            Zone midThree = new Zone("Mid3", "Random", Colors.Orange, new Point(800, 18), 20, 115);
-            Zone endZone = new Zone("End", "Random", Colors.Red, new Point(30, 285), 190, 40);
+            Zone startZone = new Zone("Start", "Random", System.Drawing.Color.Green, new Geometry.Shapes.Point(30, 331), 190, 80);
+            Zone midOne = new Zone("Mid1", "Random", System.Drawing.Color.Orange, new Geometry.Shapes.Point(800, 585), 20, 200);
+            Zone halfWay = new Zone("Half", "Random", System.Drawing.Color.Orange, new Geometry.Shapes.Point(1320, 320), 200, 20);
+            Zone midThree = new Zone("Mid3", "Random", System.Drawing.Color.Orange, new Geometry.Shapes.Point(800, 18), 20, 115);
+            Zone endZone = new Zone("End", "Random", System.Drawing.Color.Red, new Geometry.Shapes.Point(30, 285), 190, 40);
 
             Planet.World.AddZone(startZone);
             Planet.World.AddZone(midOne);

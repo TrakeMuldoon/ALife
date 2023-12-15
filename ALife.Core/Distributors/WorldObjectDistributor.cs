@@ -1,7 +1,4 @@
-﻿using Windows.Foundation;
-using ALifeUni.ALife;
-
-namespace ALife.Core.Distributors
+﻿namespace ALife.Core.Distributors
 {
     public abstract class WorldObjectDistributor
     {
@@ -16,6 +13,6 @@ namespace ALife.Core.Distributors
             CollisionLevel = collisionLevel;
         }
 
-        public abstract Point NextObjectCentre(double BBLength, double BBHeight);
+        public abstract Geometry.Shapes.Point NextObjectCentre(double BBLength, double BBHeight);
     }
 }

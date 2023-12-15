@@ -1,7 +1,5 @@
-﻿using Windows.UI;
-using ALife.Core.Geometry.Shapes;
-using ALife.Core.WorldObjects.Agents;
-using ALife.Core.WorldObjects.Agents.AgentActions;
+﻿using ALife.Core.Geometry.Shapes;
+using System.Drawing;
 
 namespace ALife.Core.WorldObjects.Agents.AgentActions
 {

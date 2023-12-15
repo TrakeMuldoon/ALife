@@ -1,5 +1,3 @@
-using System;
-using Windows.Foundation;
 using ALife.Core.Geometry;
 
 namespace ALife.Core.Utility
@@ -91,20 +89,20 @@ namespace ALife.Core.Utility
             return min;
         }
 
-        public static Point TranslateByVector(Point startPoint, double radians, double distance)
+        public static Geometry.Shapes.Point TranslateByVector(Geometry.Shapes.Point startPoint, double radians, double distance)
         {
             double newX = (distance * Math.Cos(radians)) + startPoint.X;
             double newY = (distance * Math.Sin(radians)) + startPoint.Y;
 
-            return new Point(newX, newY);
+            return new Geometry.Shapes.Point(newX, newY);
         }
 
-        public static Point TranslateByVector(Point startPoint, Angle angle, double distance)
+        public static Geometry.Shapes.Point TranslateByVector(Geometry.Shapes.Point startPoint, Angle angle, double distance)
         {
             return TranslateByVector(startPoint, angle.Radians, distance);
         }
 
-        public static double DistanceBetweenTwoPoints(Point a, Point b)
+        public static double DistanceBetweenTwoPoints(Geometry.Shapes.Point a, Geometry.Shapes.Point b)
         {
             //pythagorean theorem c^2 = a^2 + b^2
             //thus c = square root(a^2 + b^2)
@@ -114,7 +112,7 @@ namespace ALife.Core.Utility
             return Math.Sqrt((delX * delX) + (delY * delY));
         }
 
-        public static double AngleBetweenPoints(Point target, Point source)
+        public static double AngleBetweenPoints(Geometry.Shapes.Point target, Geometry.Shapes.Point source)
         {
             double deltaX = target.X - source.X;
             double deltaY = target.Y - source.Y;

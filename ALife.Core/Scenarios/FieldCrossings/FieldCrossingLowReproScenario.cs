@@ -1,11 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
-using Windows.Foundation;
-using ALife.Core;
 using ALife.Core.Collision;
-using ALife.Core.Scenarios;
-using ALife.Core.Scenarios.FieldCrossings;
 using ALife.Core.Scenarios.ScenarioHelpers;
+using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 
 namespace ALife.Core.Scenarios.FieldCrossings
@@ -48,8 +43,8 @@ If they reach the target zone, they will restart in their own zones, and two evo
             }
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[me.CollisionLevel];
 
-            //Get a new free point within the start zone.
-            Point myPoint = me.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
+            //Get a new free Geometry.Shapes.Point within the start zone.
+            Geometry.Shapes.Point myPoint = me.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
             me.Shape.CentrePoint = myPoint;
             collider.MoveObject(me);
 

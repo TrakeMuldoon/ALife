@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ScenarioRunners\" />
     <Folder Include="Rendering\" />
   </ItemGroup>
 

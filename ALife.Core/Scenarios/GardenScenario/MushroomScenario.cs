@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Windows.Foundation;
-using Windows.UI;
-using ALife.Core;
-using ALife.Core.Scenarios;
-using ALife.Core.Utility;
+﻿using ALife.Core.Utility;
+using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
 using ALife.Core.WorldObjects.Prebuilt;
+using System.Drawing;
 
 namespace ALife.Core.Scenarios.GardenScenario
 {
@@ -145,9 +141,10 @@ If they eat two green mushrooms, they reproduce."
 
 
         const int FruitMax = 100;
-        Color PURE_RED = new Color() { A = 255, R = 255, G = 0, B = 0 };
-        Color PURE_BLUE = new Color() { A = 255, R = 0, G = 0, B = 255 };
-        Color PURE_GREEN = new Color() { A = 255, R = 0, G = 255, B = 0 };
+
+        Color PURE_RED = Color.FromArgb(alpha: 255, red: 255, green: 0, blue: 0);
+        Color PURE_BLUE = Color.FromArgb(alpha: 255, red: 0, green: 0, blue: 255);
+        Color PURE_GREEN = Color.FromArgb(alpha: 255, red: 0, green: 255, blue: 0);
 
         List<Fruit> AllFruits = new List<Fruit>();
         Zone WorldZone = null;
@@ -157,7 +154,7 @@ If they eat two green mushrooms, they reproduce."
             double height = Planet.World.WorldHeight;
             double width = Planet.World.WorldWidth;
 
-            WorldZone = new Zone("WholeWorld", "Random", Colors.Yellow, new Point(0, 0), width, height);
+            WorldZone = new Zone("WholeWorld", "Random", System.Drawing.Color.Yellow, new Geometry.Shapes.Point(0, 0), width, height);
             Planet.World.AddZone(WorldZone);
 
             int numAgents = 200;

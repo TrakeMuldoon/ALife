@@ -100,7 +100,7 @@ namespace ALife.Core.Collision
             //Check if any of the three points of sector are within B
             //Check if the circle breaks the line segments
 
-            //Check if the centre point is within the sweep range
+            //Check if the centre Geometry.Shapes.Point is within the sweep range
             if(IsPointWithinSweep(circle.CentrePoint, sector))
             {
                 //if it is, the either the target is within the radius distance or it's too far.
@@ -110,12 +110,12 @@ namespace ALife.Core.Collision
             //Check the centrepoint of the Sector
             if(PointCircleCollision(sector.CentrePoint, circle)) return true;
 
-            //Check the left point of the sector
-            Point leftPoint = ExtraMath.TranslateByVector(sector.CentrePoint, sector.Orientation, sector.Radius);
+            //Check the left Geometry.Shapes.Point of the sector
+            Geometry.Shapes.Point leftPoint = ExtraMath.TranslateByVector(sector.CentrePoint, sector.Orientation, sector.Radius);
             if(PointCircleCollision(leftPoint, circle)) return true;
 
-            //Check the right point of the sector
-            Point rightPoint = ExtraMath.TranslateByVector(sector.CentrePoint, (sector.Orientation + sector.SweepAngle), sector.Radius);
+            //Check the right Geometry.Shapes.Point of the sector
+            Geometry.Shapes.Point rightPoint = ExtraMath.TranslateByVector(sector.CentrePoint, (sector.Orientation + sector.SweepAngle), sector.Radius);
             if(PointCircleCollision(rightPoint, circle)) return true;
 
             //Now we're checking the line segment collisions
@@ -129,11 +129,11 @@ namespace ALife.Core.Collision
 
         public static Boolean IndividualShapeCollision(Circle circle, Rectangle rectangle)
         {
-            //First check if an arbitrary rectangle point is within the Circle.
+            //First check if an arbitrary rectangle Geometry.Shapes.Point is within the Circle.
             //Then check if the circle intersects with any of the line segments
             //Then check if the circle is entirely within the rectangle.
 
-            //First check if any arbitrary rectangle point is within the circle.
+            //First check if any arbitrary rectangle Geometry.Shapes.Point is within the circle.
             //DNB: Check all four points, because the corner detection isn't perfect.
             if(PointCircleCollision(rectangle.TopLeft, circle)
                 || PointCircleCollision(rectangle.TopRight, circle)
@@ -167,7 +167,7 @@ namespace ALife.Core.Collision
         public static Boolean IndividualShapeCollision(Sector sector, Rectangle rectangle)
         {
             //Very annoying.
-            //First we need to check if any arbitrary point is within the Sector
+            //First we need to check if any arbitrary Geometry.Shapes.Point is within the Sector
             if(IsPointWithinSector(rectangle.TopLeft, sector)
                 || IsPointWithinRectangle(sector.LeftPoint, rectangle))
             {
@@ -220,12 +220,12 @@ namespace ALife.Core.Collision
                     || DoesLineSegmentIntersectSector(r.BottomLeft, r.TopLeft, sector));
         }
 
-        private static Boolean DoesLineSegmentIntersectSector(Point a1, Point a2, Sector sector)
+        private static Boolean DoesLineSegmentIntersectSector(Geometry.Shapes.Point a1, Geometry.Shapes.Point a2, Sector sector)
         {
             Circle sectorAsCircle = new Circle(sector.CentrePoint, sector.Radius);
-            List<Point> potentialPoints = FindLineCircleIntersections(sectorAsCircle, a1, a2);
-            List<Point> pointsInLineSegment = new List<Point>();
-            foreach(Point p in potentialPoints)
+            List<Geometry.Shapes.Point> potentialPoints = FindLineCircleIntersections(sectorAsCircle, a1, a2);
+            List<Geometry.Shapes.Point> pointsInLineSegment = new List<Geometry.Shapes.Point>();
+            foreach(Geometry.Shapes.Point p in potentialPoints)
             {
                 if(IsValueBetweenValues(p.X, a1.X, a2.X))
                 {
@@ -233,7 +233,7 @@ namespace ALife.Core.Collision
                 }
             }
 
-            foreach(Point px in pointsInLineSegment)
+            foreach(Geometry.Shapes.Point px in pointsInLineSegment)
             {
                 if(IsPointWithinSweep(px, sector))
                 {
@@ -259,7 +259,7 @@ namespace ALife.Core.Collision
             }
         }
 
-        private static Boolean DoesLineSegmentIntersectRectangle(Point a1, Point a2, Rectangle rectangle)
+        private static Boolean DoesLineSegmentIntersectRectangle(Geometry.Shapes.Point a1, Geometry.Shapes.Point a2, Rectangle rectangle)
         {
             Rectangle r = rectangle;
             return (LineSegmentLineSegmentCollision(a1, a2, r.TopLeft, r.TopRight)
@@ -268,7 +268,7 @@ namespace ALife.Core.Collision
                     || LineSegmentLineSegmentCollision(a1, a2, r.BottomLeft, r.TopLeft));
         }
 
-        private static Boolean PointRadiusPointRadiusCollision(Point a, float radA, Point b, float radB)
+        private static Boolean PointRadiusPointRadiusCollision(Geometry.Shapes.Point a, float radA, Geometry.Shapes.Point b, float radB)
         {
 
             //If the distance between the points is closer or equal to this, then they overlap/collide
@@ -291,15 +291,15 @@ namespace ALife.Core.Collision
             return PointRadiusPointRadiusCollision(a.CentrePoint, a.Radius, b.CentrePoint, b.Radius);
         }
 
-        private static Boolean PointCircleCollision(Point a, Circle c)
+        private static Boolean PointCircleCollision(Geometry.Shapes.Point a, Circle c)
         {
             return PointRadiusPointRadiusCollision(a, 0, c.CentrePoint, c.Radius);
         }
 
-        private static Boolean LineSegmentCircleCollision(Point p1, Point p2, Circle c)
+        private static Boolean LineSegmentCircleCollision(Geometry.Shapes.Point p1, Geometry.Shapes.Point p2, Circle c)
         {
             //http://www.jeffreythompson.org/collision-detection/line-circle.php
-            Point closest = ClosestPoint_PointToLineSegment(c.CentrePoint, p1, p2);
+            Geometry.Shapes.Point closest = ClosestPoint_PointToLineSegment(c.CentrePoint, p1, p2);
             bool onLine = IsPointOnLine(closest, p1, p2);
             if(!onLine) return false;
 
@@ -308,9 +308,9 @@ namespace ALife.Core.Collision
 
         //Stolen wholesale from this location
         ///http://csharphelper.com/blog/2014/09/determine-where-a-line-intersects-a-circle-in-c/
-        private static List<Point> FindLineCircleIntersections(Circle circle, Point p1, Point p2)
+        private static List<Geometry.Shapes.Point> FindLineCircleIntersections(Circle circle, Geometry.Shapes.Point p1, Geometry.Shapes.Point p2)
         {
-            Point cp = circle.CentrePoint;
+            Geometry.Shapes.Point cp = circle.CentrePoint;
             double radius = circle.Radius;
             double deltaX = p2.X - p1.X;
             double deltaY = p2.Y - p1.Y;
@@ -322,7 +322,7 @@ namespace ALife.Core.Collision
                         - (radius * radius);
 
             double determinant = (B * B) - (4 * A * C);
-            List<Point> intersections = new List<Point>();
+            List<Geometry.Shapes.Point> intersections = new List<Geometry.Shapes.Point>();
             if((A <= 0.0000001) || (determinant < 0))
             {
                 return intersections;
@@ -333,7 +333,7 @@ namespace ALife.Core.Collision
                 double t = -B / (2 * A);
                 double iX = p1.X + t * deltaX;
                 double iY = p1.Y + t * deltaY;
-                intersections.Add(new Point(iX, iY));
+                intersections.Add(new Geometry.Shapes.Point(iX, iY));
                 return intersections;
             }
             else
@@ -344,18 +344,18 @@ namespace ALife.Core.Collision
 
                 double i1X = p1.X + tPos * deltaX;
                 double i1Y = p1.Y + tPos * deltaY;
-                intersections.Add(new Point(i1X, i1Y));
+                intersections.Add(new Geometry.Shapes.Point(i1X, i1Y));
 
                 double i2X = p1.X + tNeg * deltaX;
                 double i2Y = p1.Y + tNeg * deltaY;
-                intersections.Add(new Point(i2X, i2Y));
+                intersections.Add(new Geometry.Shapes.Point(i2X, i2Y));
 
                 return intersections;
             }
         }
 
         //TODO: Move Math to "ExtraMath"
-        private static Boolean IsPointOnLine(Point pt, Point line1, Point line2)
+        private static Boolean IsPointOnLine(Geometry.Shapes.Point pt, Geometry.Shapes.Point line1, Geometry.Shapes.Point line2)
         {
             //This function is determining if P is on a line segment by determining
             // if p is ON the line segment, then distance of 1 -> p, plus p -> 2 will be equal to 1 -> 2
@@ -381,7 +381,7 @@ namespace ALife.Core.Collision
             return Math.Round(diff, 3) == 0;
         }
 
-        private static Point ClosestPoint_PointToLineSegment(Point cCP, Point p1, Point p2)
+        private static Geometry.Shapes.Point ClosestPoint_PointToLineSegment(Geometry.Shapes.Point cCP, Geometry.Shapes.Point p1, Geometry.Shapes.Point p2)
         {
             double distX = p1.X - p2.X;
             double distY = p1.Y - p2.Y;
@@ -391,16 +391,16 @@ namespace ALife.Core.Collision
 
             double closestX = p1.X + (dotProduct * (p2.X - p1.X));
             double closestY = p1.Y + (dotProduct * (p2.Y - p1.Y));
-            Point closest = new Point(closestX, closestY);
+            Geometry.Shapes.Point closest = new Geometry.Shapes.Point(closestX, closestY);
             return closest;
         }
 
-        private static bool IsPointWithinSector(Point targetPoint, Sector sector)
+        private static bool IsPointWithinSector(Geometry.Shapes.Point targetPoint, Sector sector)
         {
-            // To determine if a point is within a sector.
-            // 1. First check if the point is within the circle, which is relatively fast.
+            // To determine if a Geometry.Shapes.Point is within a sector.
+            // 1. First check if the Geometry.Shapes.Point is within the circle, which is relatively fast.
             //    If it is not, then we can bail.
-            // 2. Check if the point is within the sweep, which is slightly harder.
+            // 2. Check if the Geometry.Shapes.Point is within the sweep, which is slightly harder.
             //TODO: Actually check which operation is slower. I might have optimized this in the wrong order
             if(!PointCircleCollision(targetPoint, new Circle(sector.CentrePoint, sector.Radius)))
                 return false;
@@ -408,7 +408,7 @@ namespace ALife.Core.Collision
             return IsPointWithinSweep(targetPoint, sector);
         }
 
-        private static bool IsPointWithinSweep(Point targetPoint, Sector sector)
+        private static bool IsPointWithinSweep(Geometry.Shapes.Point targetPoint, Sector sector)
         {
             double angleBetweenPoints = ExtraMath.AngleBetweenPoints(targetPoint, sector.CentrePoint);
             Angle abp = new Angle(angleBetweenPoints, true);
@@ -420,7 +420,7 @@ namespace ALife.Core.Collision
             return abp.Degrees < maximum.Degrees;
         }
 
-        private static bool IsPointWithinRectangle(Point p, Rectangle rect)
+        private static bool IsPointWithinRectangle(Geometry.Shapes.Point p, Rectangle rect)
         {
 
             //  Globals which should be set before calling this function:
@@ -428,15 +428,15 @@ namespace ALife.Core.Collision
             //  int    polyCorners  =  how many corners the polygon has (no repeats)
             //  float  polyX[]      =  horizontal coordinates of corners
             //  float  polyY[]      =  vertical coordinates of corners
-            //  float  x, y         =  point to be tested
+            //  float  x, y         =  Geometry.Shapes.Point to be tested
             //
             //  (Globals are used in this example for purposes of speed.  Change as
             //  desired.)
             //
-            //  The function will return YES if the point x,y is inside the polygon, or
-            //  NO if it is not.  If the point is exactly on the edge of the polygon,
+            //  The function will return YES if the Geometry.Shapes.Point x,y is inside the polygon, or
+            //  NO if it is not.  If the Geometry.Shapes.Point is exactly on the edge of the polygon,
             //  then the function may return YES or NO. 
-            //    DNB This is fine for us, because if the point is ON the polygon, 
+            //    DNB This is fine for us, because if the Geometry.Shapes.Point is ON the polygon, 
             //        Then the CircleLineSegment collisions will catch it.
             //
             //  Note that division by zero is avoided because the division is protected
@@ -469,9 +469,9 @@ namespace ALife.Core.Collision
             return tltr ^= trbr ^= brbl ^= bltl;
         }
 
-        private static bool LinePointSubCollision(Point p, Point a1, Point a2)
+        private static bool LinePointSubCollision(Geometry.Shapes.Point p, Geometry.Shapes.Point a1, Geometry.Shapes.Point a2)
         {
-            //Check if the point's y value falls between then other two.
+            //Check if the Geometry.Shapes.Point's y value falls between then other two.
             bool yCollision = (a1.Y < p.Y && a2.Y >= p.Y)
                                || (a2.Y < p.Y && a1.Y >= p.Y);
             //Check if the X value is to the left. (we're only checking one direction)
@@ -488,7 +488,7 @@ namespace ALife.Core.Collision
             return false;
         }
 
-        private static bool LineSegmentLineSegmentCollision(Point a1, Point a2, Point b1, Point b2)
+        private static bool LineSegmentLineSegmentCollision(Geometry.Shapes.Point a1, Geometry.Shapes.Point a2, Geometry.Shapes.Point b1, Geometry.Shapes.Point b2)
         {
             //http://devmag.org.za/2009/04/17/basic-collision-detection-in-2d-part-2/
             double deltaAX = a2.X - a1.X;
@@ -516,18 +516,18 @@ namespace ALife.Core.Collision
                 return false;
             }
             return true;
-            //		return LineA1 + ua * (LineA2 – LineA1) //intersection point
+            //		return LineA1 + ua * (LineA2 – LineA1) //intersection Geometry.Shapes.Point
         }
 
 
         //        LineLineCollision
         //Input
-        //    LineA1  Point   First point on line A
-        //    LineA2  Point   Second point on line A
-        //    LineB1  Point   First point on line B
-        //    LineB2  Point   Second point on line B
+        //    LineA1  Geometry.Shapes.Point   First Geometry.Shapes.Point on line A
+        //    LineA2  Geometry.Shapes.Point   Second Geometry.Shapes.Point on line A
+        //    LineB1  Geometry.Shapes.Point   First Geometry.Shapes.Point on line B
+        //    LineB2  Geometry.Shapes.Point   Second Geometry.Shapes.Point on line B
         //Output
-        //    The point of the collision, or null if no collision exists.
+        //    The Geometry.Shapes.Point of the collision, or null if no collision exists.
         //Method
         //    denom = ((LineB2.Y – LineB1.Y) * (LineA2.X – LineA1.X)) – ((LineB2.X – LineB1.X) * (LineA2.Y - LineA1.Y))
         //	if (denom == 0)

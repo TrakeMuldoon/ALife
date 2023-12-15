@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Windows.Foundation;
-using Windows.UI;
-using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
-using ALife.Core.Utility;
+﻿using ALife.Core.Utility;
+using System.Drawing;
 
 namespace ALife.Core.Geometry.Shapes
 {
@@ -32,7 +27,7 @@ namespace ALife.Core.Geometry.Shapes
             set;
         }
 
-        public virtual Point CentrePoint
+        public virtual Geometry.Shapes.Point CentrePoint
         {
             get;
             set;
@@ -44,8 +39,8 @@ namespace ALife.Core.Geometry.Shapes
             set;
         }
 
-        private Point leftPoint;
-        public Point LeftPoint
+        private Geometry.Shapes.Point leftPoint;
+        public Geometry.Shapes.Point LeftPoint
         {
             get
             {
@@ -57,8 +52,8 @@ namespace ALife.Core.Geometry.Shapes
             }
         }
 
-        private Point rightPoint;
-        public Point RightPoint
+        private Geometry.Shapes.Point rightPoint;
+        public Geometry.Shapes.Point RightPoint
         {
             get
             {
@@ -72,7 +67,7 @@ namespace ALife.Core.Geometry.Shapes
 
         private BoundingBox? myBox = null;
 
-        public Sector(Point centrePoint, float radius, Angle sweepAngle, Color color)
+        public Sector(Geometry.Shapes.Point centrePoint, float radius, Angle sweepAngle, Color color)
         {
             CentrePoint = centrePoint;
             Radius = radius;
@@ -106,7 +101,7 @@ namespace ALife.Core.Geometry.Shapes
                 }
             }
             Angle absOrientationAngle = rotation;
-            Point myOriginPoint = CentrePoint;
+            Geometry.Shapes.Point myOriginPoint = CentrePoint;
 
             List<double> xValues = new List<double>();
             List<double> yValues = new List<double>();
@@ -193,7 +188,7 @@ namespace ALife.Core.Geometry.Shapes
 
         public virtual IShape CloneShape()
         {
-            Sector newSec = new Sector(new Point(CentrePoint.X, CentrePoint.Y), Radius, SweepAngle.Clone(), Color.Clone());
+            Sector newSec = new Sector(new Geometry.Shapes.Point(CentrePoint.X, CentrePoint.Y), Radius, SweepAngle.Clone(), Color.Clone());
             newSec.Orientation = Orientation.Clone();
             return newSec;
         }

@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using Windows.Foundation;
-using Windows.UI;
-using ALife.Core;
-using ALife.Core.Collision;
-using ALife.Core.Geometry.Shapes;
-using ALife.Core.Scenarios;
+﻿using ALife.Core.Collision;
 using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility;
+using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
 using ALife.Core.WorldObjects.Prebuilt;
+using System.Drawing;
 
 namespace ALife.Core.Scenarios.FieldCrossings
 {
@@ -109,8 +104,8 @@ If they reach the target zone, they will restart in their own zones, and an evol
         {
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[me.CollisionLevel];
 
-            //Get a new free point within the start zone.
-            Point myPoint = me.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
+            //Get a new free Geometry.Shapes.Point within the start zone.
+            Geometry.Shapes.Point myPoint = me.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
             me.Shape.CentrePoint = myPoint;
             collider.MoveObject(me);
 
@@ -131,7 +126,7 @@ If they reach the target zone, they will restart in their own zones, and an evol
             Agent child = (Agent)me.Reproduce();
             child.HomeZone = specification.StartZone;
             child.TargetZone = specification.TargetZone;
-            Point reverseChildPoint = child.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
+            Geometry.Shapes.Point reverseChildPoint = child.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
             child.Shape.CentrePoint = reverseChildPoint;
             child.Shape.Orientation.Degrees = specification.StartOrientation;
             child.Shape.Color = specification.AgentColor;
@@ -183,9 +178,9 @@ If they reach the target zone, they will restart in their own zones, and an evol
                 }
             }
 
-            Point rockCP = new Point((width / 2) + (width / 3), height / 2);
-            Rectangle rec = new Rectangle(rockCP, 40, 20, Colors.Black);
-            FallingRock fr = new FallingRock(rockCP, rec, Colors.Black);
+            Geometry.Shapes.Point rockCP = new Geometry.Shapes.Point((width / 2) + (width / 3), height / 2);
+            Geometry.Shapes.Rectangle rec = new Geometry.Shapes.Rectangle(rockCP, 40, 20, System.Drawing.Color.Black);
+            FallingRock fr = new FallingRock(rockCP, rec, System.Drawing.Color.Black);
             Planet.World.AddObjectToWorld(fr);
         }
 

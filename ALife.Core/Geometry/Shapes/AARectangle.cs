@@ -1,20 +1,16 @@
-﻿using System;
-using Windows.Foundation;
-using Windows.UI;
-using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
+﻿using System.Drawing;
 
 namespace ALife.Core.Geometry.Shapes
 {
     public class AARectangle : IShape
     {
-        public Point CentrePoint
+        public Geometry.Shapes.Point CentrePoint
         {
             get
             {
                 double cpX = TopLeft.X + XWidth / 2;
                 double cpY = TopLeft.Y + YHeight / 2;
-                return new Point(cpX, cpY);
+                return new Geometry.Shapes.Point(cpX, cpY);
             }
             set
             {
@@ -24,7 +20,7 @@ namespace ALife.Core.Geometry.Shapes
 
         private Angle ori = new Angle(0);
 
-        public AARectangle(Point topLeft, double xWidth, double yHeight, Color color)
+        public AARectangle(Geometry.Shapes.Point topLeft, double xWidth, double yHeight, Color color)
         {
             XWidth = xWidth;
             YHeight = yHeight;
@@ -43,7 +39,7 @@ namespace ALife.Core.Geometry.Shapes
             set;
         }
 
-        public Point TopLeft
+        public Geometry.Shapes.Point TopLeft
         {
             get;
             set;

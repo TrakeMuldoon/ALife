@@ -1,28 +1,20 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Text;
-using Windows.Foundation;
-using Windows.UI;
-using ALife.Core;
-using ALife.Core.Distributors;
+﻿using ALife.Core.Distributors;
 using ALife.Core.Geometry.Shapes;
-using ALife.Core.WorldObjects;
-using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace ALife.Core.WorldObjects.Agents
 {
     [DebuggerDisplay("AgentX:{Shape.CentrePoint.X}")]
     public class Agent : WorldObject
     {
-        [JsonIgnoreAttribute]
+        [JsonIgnore]
         public IBrain MyBrain
         {
             get;
@@ -40,43 +32,43 @@ namespace ALife.Core.WorldObjects.Agents
             private set;
         }
 
-        [JsonIgnoreAttribute]
+        [JsonIgnore]
         public AgentShadow Shadow
         {
             get;
             private set;
         }
 
-        [JsonIgnoreAttribute]
+        [JsonIgnore]
         public Agent Parent
         {
             get;
             set;
         }
-        [JsonIgnoreAttribute]
+        [JsonIgnore]
         public Agent LivingAncestor
         {
             get;
             set;
         }
-        [JsonIgnoreAttribute]
+        [JsonIgnore]
         public int Generation
         {
             get;
             private set;
         }
-        [JsonIgnoreAttribute]
+        [JsonIgnore]
         public bool JustReproduced
         {
             get;
             private set;
         }
 
-        [JsonIgnoreAttribute]
+        [JsonIgnore]
         public Zone HomeZone;
-        [JsonIgnoreAttribute]
+        [JsonIgnore]
         public Zone TargetZone;
-        [JsonIgnoreAttribute]
+        [JsonIgnore]
         public double StartOrientation
         {
             get;
@@ -100,7 +92,7 @@ namespace ALife.Core.WorldObjects.Agents
             TargetZone = targetZone;
         }
 
-        internal void ApplyCircleShapeToAgent(Point centrePoint, Color colour, int circleRadius, double startOrientation)
+        internal void ApplyCircleShapeToAgent(Geometry.Shapes.Point centrePoint, Color colour, int circleRadius, double startOrientation)
         {
             IShape myShape = new Circle(centrePoint, circleRadius);
             StartOrientation = startOrientation;
@@ -111,7 +103,7 @@ namespace ALife.Core.WorldObjects.Agents
 
         internal void ApplyCircleShapeToAgent(WorldObjectDistributor distributor, Color colour, int circleRadius, double startOrientation)
         {
-            Point centrePoint = distributor.NextObjectCentre(circleRadius * 2, circleRadius * 2);
+            Geometry.Shapes.Point centrePoint = distributor.NextObjectCentre(circleRadius * 2, circleRadius * 2);
             IShape myShape = new Circle(centrePoint, circleRadius);
             StartOrientation = startOrientation;
             myShape.Orientation.Degrees = startOrientation;
@@ -150,7 +142,7 @@ namespace ALife.Core.WorldObjects.Agents
         public override void Die()
         {
             Alive = false;
-            Shape.DebugColor = Colors.Maroon;
+            Shape.DebugColor = System.Drawing.Color.Maroon;
             Planet.World.ChangeCollisionLayerForObject(this, ReferenceValues.CollisionLevelDead);
             CollisionLevel = ReferenceValues.CollisionLevelDead;
         }

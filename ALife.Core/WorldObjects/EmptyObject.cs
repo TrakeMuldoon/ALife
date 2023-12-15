@@ -1,19 +1,14 @@
-﻿using System;
-using Windows.Foundation;
-using Windows.UI;
-using ALife.Core;
-using ALife.Core.Geometry.Shapes;
-using ALife.Core.WorldObjects;
+﻿using ALife.Core.Geometry.Shapes;
 
 namespace ALife.Core.WorldObjects
 {
     public class EmptyObject : WorldObject
     {
-        public EmptyObject(Point centrePoint, float startRadius, string collisionLevel) : this(centrePoint, startRadius, collisionLevel, String.Empty)
+        public EmptyObject(Geometry.Shapes.Point centrePoint, float startRadius, string collisionLevel) : this(centrePoint, startRadius, collisionLevel, String.Empty)
         {
         }
-        public EmptyObject(Point centrePoint, float startRadius, string collisionLevel, string name)
-            : base(centrePoint, new Circle(centrePoint, startRadius), "Empty", name, collisionLevel, Colors.Gray)
+        public EmptyObject(Geometry.Shapes.Point centrePoint, float startRadius, string collisionLevel, string name)
+            : base(centrePoint, new Circle(centrePoint, startRadius), "Empty", name, collisionLevel, System.Drawing.Color.Gray)
         {
         }
         public EmptyObject(IShape shape, string collisionLevel)

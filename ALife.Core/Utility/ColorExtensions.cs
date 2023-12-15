@@ -1,5 +1,4 @@
-﻿using Windows.UI;
-using ALife.Core;
+﻿using System.Drawing;
 
 namespace ALife.Core.Utility
 {
@@ -11,13 +10,11 @@ namespace ALife.Core.Utility
         }
         public static Color GetRandomColor()
         {
-            Color color = new Color()
-            {
-                R = (byte)Planet.World.NumberGen.Next(100, 255),
-                G = (byte)Planet.World.NumberGen.Next(100, 255),
-                B = (byte)Planet.World.NumberGen.Next(100, 255),
-                A = 255
-            };
+            byte r = Planet.World.NumberGen.NextByte(100, 255);
+            byte g = Planet.World.NumberGen.NextByte(100, 255);
+            byte b = Planet.World.NumberGen.NextByte(100, 255);
+
+            Color color = Color.FromArgb(255, r, g, b);
             return color;
         }
     }

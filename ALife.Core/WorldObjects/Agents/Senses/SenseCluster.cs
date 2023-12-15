@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Windows.UI;
-using ALife.Core;
-using ALife.Core.Collision;
+﻿using ALife.Core.Collision;
 using ALife.Core.Geometry.Shapes;
-using ALife.Core.WorldObjects;
-using ALife.Core.WorldObjects.Agents.Senses;
 
 namespace ALife.Core.WorldObjects.Agents.Senses
 {
@@ -36,8 +30,8 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[this.CollisionLevel];
             List<WorldObject> collisions = collider.DetectCollisions(this, parent);
 
-            //Shape.DebugColor = collisions.Count > 0 ?  Colors.Red : Colors.Transparent;
-            Shape.Color = collisions.Count > 0 ? Colors.DodgerBlue : Colors.DarkBlue;
+            //Shape.DebugColor = collisions.Count > 0 ?  System.Drawing.Color.Red : System.Drawing.Color.Transparent;
+            Shape.Color = collisions.Count > 0 ? System.Drawing.Color.DodgerBlue : System.Drawing.Color.DarkBlue;
             foreach(SenseInput si in SubInputs)
             {
                 si.SetValue(collisions);

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Windows.Foundation;
-using Windows.UI;
-using ALife.Core;
-using ALife.Core.Collision;
+﻿using ALife.Core.Collision;
 using ALife.Core.Scenarios.ScenarioHelpers;
-using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
@@ -21,7 +15,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
             HomeZone = parentZone;
 
             int agentRadius = 5;
-            ApplyCircleShapeToAgent(parentZone.Distributor, Colors.Red, agentRadius, 0);
+            ApplyCircleShapeToAgent(parentZone.Distributor, System.Drawing.Color.Red, agentRadius, 0);
 
             List<SenseCluster> agentSenses = CommonSenses.QuadrantEyes(this, 0);
 
@@ -66,8 +60,8 @@ namespace ALife.Core.WorldObjects.Prebuilt
         {
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[CollisionLevel];
 
-            //Get a new free point within the start zone.
-            Point myPoint = HomeZone.Distributor.NextObjectCentre(Shape.BoundingBox.XLength, Shape.BoundingBox.YHeight);
+            //Get a new free Geometry.Shapes.Point within the start zone.
+            Geometry.Shapes.Point myPoint = HomeZone.Distributor.NextObjectCentre(Shape.BoundingBox.XLength, Shape.BoundingBox.YHeight);
             Shape.CentrePoint = myPoint;
             collider.MoveObject(this);
 

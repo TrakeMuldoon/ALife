@@ -1,11 +1,7 @@
-﻿using System;
-using Windows.Foundation;
-using ALife.Core.Geometry;
+﻿using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Geometry.Shapes.ChildShapes;
 using ALife.Core.Utility;
-using ALife.Core.WorldObjects;
-using ALife.Core.WorldObjects.Agents.Senses;
 using ALife.Core.WorldObjects.Agents.Senses.GoalSense;
 
 namespace ALife.Core.WorldObjects.Agents.Senses
@@ -69,14 +65,14 @@ namespace ALife.Core.WorldObjects.Agents.Senses
         /// <param name="aar"></param>
         private void DetectAgainstAAR(AARectangle aar)
         {
-            Point myCP = myShape.CentrePoint;
+            Geometry.Shapes.Point myCP = myShape.CentrePoint;
             BoundingBox targBB = aar.BoundingBox;
 
             int distanceValue;
             int rotationValue;
 
 
-            //The point 0,0 is TopLeft of the scenario
+            //The Geometry.Shapes.Point 0,0 is TopLeft of the scenario
 
             //This detects if "myself" is inline with the "X" (Above, Below or Within)            
             if(targBB.MinX <= myCP.X
@@ -122,10 +118,10 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             }
             else
             {
-                //I am not inline with it. Therefore the closest point will be one of the corners. 
+                //I am not inline with it. Therefore the closest Geometry.Shapes.Point will be one of the corners. 
                 double xTarg = myCP.X < targBB.MinX ? targBB.MinX : targBB.MaxX;
                 double yTarg = myCP.Y < targBB.MinY ? targBB.MinY : targBB.MaxY;
-                Point target = new Point(xTarg, yTarg);
+                Geometry.Shapes.Point target = new Geometry.Shapes.Point(xTarg, yTarg);
 
                 distanceValue = (int)ExtraMath.DistanceBetweenTwoPoints(target, myCP);
 
@@ -149,8 +145,8 @@ namespace ALife.Core.WorldObjects.Agents.Senses
 
         private void DetectAgainstCircle(Circle targetCircle)
         {
-            Point myCP = myShape.CentrePoint;
-            Point target = new Point(targetCircle.CentrePoint.X, targetCircle.CentrePoint.Y);
+            Geometry.Shapes.Point myCP = myShape.CentrePoint;
+            Geometry.Shapes.Point target = new Geometry.Shapes.Point(targetCircle.CentrePoint.X, targetCircle.CentrePoint.Y);
 
             int distanceValue = (int)ExtraMath.DistanceBetweenTwoPoints(target, myCP);
             distanceValue -= (int)targetCircle.Radius;

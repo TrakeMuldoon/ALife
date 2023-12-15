@@ -110,7 +110,7 @@ namespace ALife.Core
         internal ICollisionMap<Zone> ZoneMap;
 
         private Dictionary<string, ICollisionMap<WorldObject>> _collisionLevels = new Dictionary<string, ICollisionMap<WorldObject>>();
-        internal IReadOnlyDictionary<string, ICollisionMap<WorldObject>> CollisionLevels
+        public IReadOnlyDictionary<string, ICollisionMap<WorldObject>> CollisionLevels
         {
             get { return _collisionLevels; }
         }

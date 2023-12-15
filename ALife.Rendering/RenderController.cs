@@ -1,7 +1,6 @@
 ﻿namespace ALife.Rendering
 {
-    internal interface IRenderingArguments
+    public class RenderController
     {
-
     }
 }

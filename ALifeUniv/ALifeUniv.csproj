@@ -213,7 +213,16 @@
       <DependentUpon>Launcher.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScenarioRunners\AbstractScenarioRunner.cs" />
-    <Compile Include="ScenarioRunners\ScenarioRunConfigs\ScenarioRunConfig.cs" />
+    <Compile Include="ScenarioRunners\ScenarioLoggers\TextboxLogger.cs" />
+    <Compile Include="ScenarioRunners\ScenarioRunnerConfigs\AbstractScenarionRunnerConfig.cs" />
+    <Compile Include="ScenarioRunners\ScenarioRunnerConfigs\Configs\DefaultRabbitScenarioRunnerConfig.cs" />
+    <Compile Include="ScenarioRunners\ScenarioRunnerConfigs\Configs\DefaultScenarioRunnerConfig.cs" />
+    <Compile Include="ScenarioRunners\ScenarioRunnerConfigs\Constants.cs" />
+    <Compile Include="ScenarioRunners\ScenarioRunnerConfigs\ScenarioRunnerConfigRegister.cs" />
+    <Compile Include="ScenarioRunners\ScenarioRunnerConfigs\ScenarioRunnerConfigRegistration.cs" />
+    <Compile Include="ScenarioRunners\Constants.cs" />
+    <Compile Include="ScenarioRunners\ScenarioLoggers\Logger.cs" />
+    <Compile Include="ScenarioRunners\ScenarioRunnerConfigs\ScenarioState.cs" />
     <Compile Include="ScenarioRunners\UiScenarioRunner.cs" />
     <Compile Include="ScenarioRunner.xaml.cs">
       <DependentUpon>ScenarioRunner.xaml</DependentUpon>
@@ -341,6 +350,7 @@
       <Version>1.27.1</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

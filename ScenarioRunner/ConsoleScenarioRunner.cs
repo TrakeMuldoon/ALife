@@ -1,30 +1,31 @@
-﻿using ALifeUni.ScenarioRunners;
-using System;
+﻿using System;
+using ALifeUni.ScenarioRunners;
+using ALifeUni.ScenarioRunners.ScenarioLoggers;
 
 namespace ScenarioRunner
 {
-    internal class ConsoleScenarioRunner : AbstractScenarioRunner
+    internal class ConsoleLogger : Logger
     {
-        protected override bool ShouldStopRunner()
-        {
-            Console.WriteLine("Done, Hit 'r' to restart, any other key to exit");
-            var key = Console.ReadKey();
-            if(key.Key != ConsoleKey.R)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        protected override void StopRunner()
-        {
-            // blank.
-        }
-
-        protected override void Write(string message)
+        protected override void WriteInternal(string message)
         {
             Console.Write(message);
+        }
+    }
+
+    internal class ConsoleScenarioRunner : AbstractScenarioRunner
+    {
+        public ConsoleScenarioRunner(string scenarioName, int? startingSeed = null, int numberSeedsToExecute = 20, int totalTurns = 50000, int turnBatch = 1000, int updateFrequency = 10000) : base(scenarioName, startingSeed, numberSeedsToExecute, totalTurns, turnBatch, updateFrequency)
+        {
+        }
+
+        protected override Type LoggerType => typeof(ConsoleLogger);
+
+        protected override bool ShouldStopRunner()
+        {
+            Logger.WriteNewLine(3);
+            Console.WriteLine("Done, Hit 'r' to restart, any other key to exit");
+            var key = Console.ReadKey();
+            return key.Key != ConsoleKey.R;
         }
     }
 }

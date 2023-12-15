@@ -1,19 +1,24 @@
-﻿// This example code shows how you could implement the required main function for a 
-// Console UWP Application. You can replace all the code inside Main with your own custom code.
+﻿// This example code shows how you could implement the required main function for a Console UWP Application. You can
+// replace all the code inside Main with your own custom code.
 
-// You should also change the Alias value in the AppExecutionAlias Extension in the 
-// Package.appxmanifest to a value that you define. To edit this file manually, right-click
-// it in Solution Explorer and select View Code, or open it with the XML Editor.
+// You should also change the Alias value in the AppExecutionAlias Extension in the Package.appxmanifest to a value that
+// you define. To edit this file manually, right-click it in Solution Explorer and select View Code, or open it with the
+// XML Editor.
+
+using System.Threading;
 
 namespace ScenarioRunner
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            ConsoleScenarioRunner runner = new ConsoleScenarioRunner();
+            var runner = new ConsoleScenarioRunner("Mushroom Garden");
 
-            runner.ExecuteRunner("Mushrooms", null);
+            while (!runner.IsStoppedAndLoggerStopped)
+            {
+                Thread.Sleep(1000);
+            }
         }
     }
 }

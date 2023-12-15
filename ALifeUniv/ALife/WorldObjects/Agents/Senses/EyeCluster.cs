@@ -4,6 +4,7 @@ using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.WorldObjects.Agents.Senses.Eyes;
 using ALifeUni.ALife.WorldObjects.Agents.Senses.Generic;
 using System;
+using System.Collections.Generic;
 using Windows.UI;
 
 namespace ALifeUni.ALife.WorldObjects.Agents.Senses
@@ -17,7 +18,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Senses
         }
 
         [Obsolete("EyeClusterDefault is deprecated, please use EyeCluster with EvoNumbers instead.")]
-        public EyeCluster(WorldObject parent, String name) : this(parent, name
+        public EyeCluster(WorldObject parent, String name) : this(parent, name, false
                                                                     , new ROEvoNumber(startValue: 5,   evoDeltaMax: 0, hardMin: 5,   hardMax: 5)
                                                                     , new ROEvoNumber(startValue: 355, evoDeltaMax: 0, hardMin: 355, hardMax: 355)
                                                                     , new ROEvoNumber(startValue: 80,  evoDeltaMax: 0, hardMin: 80,  hardMax: 80)
@@ -25,7 +26,11 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Senses
         {
         }
 
-        private bool IncludeColor = false;
+        public bool IncludeColor
+        {
+            get;
+            private set;
+        }
         private EvoNumber EvoOrientationAroundParent;
         private EvoNumber EvoRelativeOrientation;
         private EvoNumber EvoRadius;
@@ -97,6 +102,22 @@ namespace ALifeUni.ALife.WorldObjects.Agents.Senses
                                               , EvoOrientationAroundParent.Evolve(), EvoRelativeOrientation.Evolve(), EvoRadius.Evolve(), EvoSweep.Evolve()
                                               , myShape.Color.Clone(), myShape.DebugColor.Clone());
             return newEC;
+        }
+
+        public Dictionary<string,string> ExportEvoNumbersAsCode()
+        {
+            Dictionary<string, string> properties = new Dictionary<string, string>();
+            PopulateCodeDictionary(properties, "OrientationAroundParent", EvoOrientationAroundParent);
+            PopulateCodeDictionary(properties, "RelativeOrientation", EvoRelativeOrientation);
+            PopulateCodeDictionary(properties, "Radius", EvoRadius);
+            PopulateCodeDictionary(properties, "Sweep", EvoSweep);
+
+            return properties;
+        }
+
+        private void PopulateCodeDictionary(Dictionary<string, string> properties, string name, EvoNumber evo)
+        {
+            properties.Add(name, $", new ROEvoNumber(startValue: {evo.StartValue},\tevoDeltaMax: {evo.DeltaMax},\thardMin: {evo.ValueHardMin},\thardMax: {evo.ValueHardMax})\t//{name}");
         }
     }
 }

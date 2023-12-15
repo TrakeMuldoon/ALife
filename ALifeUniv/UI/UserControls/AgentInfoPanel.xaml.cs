@@ -1,4 +1,6 @@
-﻿using ALifeUni.ALife.Shapes;
+﻿using ALifeUni.ALife.ImportExport;
+using ALifeUni.ALife.Shapes;
+using ALifeUni.ALife.Utility;
 using ALifeUni.ALife.WorldObjects.Agents;
 using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
 using ALifeUni.ALife.WorldObjects.Agents.Brains;
@@ -6,7 +8,9 @@ using ALifeUni.ALife.WorldObjects.Agents.Brains.BehaviourBrains;
 using ALifeUni.ALife.WorldObjects.Agents.Properties;
 using ALifeUni.ALife.WorldObjects.Agents.Senses;
 using System;
+using System.Collections.Generic;
 using System.Text;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml.Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -153,6 +157,15 @@ namespace ALifeUni.UI.UserControls
         private void NeuralNetworkPopupButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             NeuralNetworkBrainViewer.IsOpen = !NeuralNetworkBrainViewer.IsOpen;
+        }
+
+        private void ExportAgent_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            string exportCode = AgentCodeSerializer.ExportAgentDefinitionAsCode(TheAgent);
+
+            DataPackage dp = new DataPackage();
+            dp.SetText(exportCode);
+            Clipboard.SetContent(dp);
         }
     }
 }

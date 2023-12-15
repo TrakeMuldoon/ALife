@@ -54,6 +54,7 @@
 * [ ] Add New GeneologyViewer
 * [ ] Agents select their own target
 * [ ] Agents can tell target orientation
+* [ ] NEAT brain. 
 
 ## Scenario Ideas
 * [ ] Temperature Scenario (Low temps steal energy, high temps restore energy)

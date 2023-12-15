@@ -14,7 +14,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents.CustomAgents
 {
     public class Rabbit : Agent
     {
-        public Rabbit(Zone parentZone) : base("MazeRunner", AgentIDGenerator.GetNextAgentId(), ReferenceValues.CollisionLevelPhysical)
+        public Rabbit(Zone parentZone) : base("Rabbit", AgentIDGenerator.GetNextAgentId(), ReferenceValues.CollisionLevelPhysical)
         {
             HomeZone = parentZone;
 
@@ -42,7 +42,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents.CustomAgents
                                                        "IF EyeStraight.SeeSomething.Value Equals [True] THEN Move.GoBackward AT [0.8]",
                                                        "IF EyeBack.SeeSomething.Value Equals [True] THEN Move.GoForward AT [0.8]",
                                                        "IF ALWAYS THEN Rotate.TurnLeft AT [0.1]"
-                );
+            );
 
             this.CompleteInitialization(null, 1, newBrain);
         }

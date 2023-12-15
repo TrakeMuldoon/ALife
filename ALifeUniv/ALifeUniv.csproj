@@ -118,6 +118,8 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ALife\ImportExport\AgentCodeSerializer.cs" />
+    <Compile Include="ALife\WorldObjects\Prebuilt\ExportedTestAgent.cs" />
     <Compile Include="ALife\WorldObjects\Prebuilt\Rabbit.cs" />
     <Compile Include="ALife\Distributors\RandomObjectDistributor.cs" />
     <Compile Include="ALife\Distributors\StraightLineDistributor.cs" />
@@ -142,7 +144,7 @@
     <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\TypedClasses\BoolConditionFactory.cs" />
     <Compile Include="ALife\WorldObjects\Agents\Brains\IBrain.cs" />
     <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\Behaviour.cs" />
-    <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\BehaviourBrain.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrain.cs" />
     <Compile Include="ALife\WorldObjects\Agents\Brains\NeuralNetworkBrains\ActionNeuron.cs" />
     <Compile Include="ALife\WorldObjects\Agents\Brains\NeuralNetworkBrains\Dendrite.cs" />
     <Compile Include="ALife\WorldObjects\Agents\Brains\NeuralNetworkBrains\FuncNeuron.cs" />
@@ -345,6 +347,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.8.6</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
     </PackageReference>
     <PackageReference Include="Win2D.uwp">
       <Version>1.27.1</Version>

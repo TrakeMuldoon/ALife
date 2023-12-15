@@ -36,8 +36,9 @@
         
         <TextBlock x:Name="ActionsLabel" Text="Actions"/>
         <TextBlock x:Name="Actions" />
-        
+
         <TextBlock x:Name="BrainDisplayLabel" Text="Brain"/>
+        <Button x:Name="ExportAgent" Click="ExportAgent_Click">Export</Button>
         <TextBlock x:Name="BrainDisplay" />
         <Button x:Name="NeuralNetworkPopupButton" Visibility="Collapsed" Click="NeuralNetworkPopupButton_Click">Brain Viewer</Button>
         <Popup x:Name="NeuralNetworkBrainViewer" IsOpen="False"

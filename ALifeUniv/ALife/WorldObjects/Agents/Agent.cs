@@ -1,14 +1,19 @@
-﻿using ALifeUni.ALife.Shapes;
+﻿using ALifeUni.ALife.Scenarios;
+using ALifeUni.ALife.Scenarios.ScenarioHelpers;
+using ALifeUni.ALife.Shapes;
 using ALifeUni.ALife.Utility.WorldObjects;
 using ALifeUni.ALife.WorldObjects.Agents.AgentActions;
 using ALifeUni.ALife.WorldObjects.Agents.Brains;
+using ALifeUni.ALife.WorldObjects.Agents.Brains.BehaviourBrains;
 using ALifeUni.ALife.WorldObjects.Agents.Properties;
 using ALifeUni.ALife.WorldObjects.Agents.Senses;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -17,6 +22,7 @@ namespace ALifeUni.ALife.WorldObjects.Agents
     [DebuggerDisplay("AgentX:{Shape.CentrePoint.X}")]
     public class Agent : WorldObject
     {
+        [JsonIgnoreAttribute]
         public IBrain MyBrain
         {
             get;
@@ -34,39 +40,43 @@ namespace ALifeUni.ALife.WorldObjects.Agents
             private set;
         }
 
+        [JsonIgnoreAttribute]
         public AgentShadow Shadow
         {
             get;
             private set;
         }
 
-
+        [JsonIgnoreAttribute]
         public Agent Parent
         {
             get;
             set;
         }
+        [JsonIgnoreAttribute]
         public Agent LivingAncestor
         {
             get;
             set;
         }
-
+        [JsonIgnoreAttribute]
         public int Generation
         {
             get;
             private set;
         }
-
+        [JsonIgnoreAttribute]
         public bool JustReproduced
         {
             get;
             private set;
         }
 
-
+        [JsonIgnoreAttribute]
         public Zone HomeZone;
+        [JsonIgnoreAttribute]
         public Zone TargetZone;
+        [JsonIgnoreAttribute]
         public double StartOrientation
         {
             get;

@@ -45,7 +45,14 @@ namespace ALife.Core.ScenarioRunners
         /// <param name="turnBatch">The turn batch.</param>
         /// <param name="updateFrequency">The update frequency.</param>
         /// <param name="logger">The logger.</param>
-        public AbstractScenarioRunner(string scenarioName, int? startingSeed = null, int numberSeedsToExecute = ScenarioRunners.Constants.DEFAULT_NUMBER_SEEDS_EXECUTED, int totalTurns = ScenarioRunners.Constants.DEFAULT_TOTAL_TURNS, int turnBatch = ScenarioRunners.Constants.DEFAULT_TURN_BATCH, int updateFrequency = ScenarioRunners.Constants.DEFAULT_UPDATE_FREQUENCY, Logger logger = null, Logger scenarioSeedLogger = null)
+        public AbstractScenarioRunner(string scenarioName
+                                        , int? startingSeed = null
+                                        , int numberSeedsToExecute = Constants.DEFAULT_NUMBER_SEEDS_EXECUTED
+                                        , int totalTurns = Constants.DEFAULT_TOTAL_TURNS
+                                        , int turnBatch = Constants.DEFAULT_TURN_BATCH
+                                        , int updateFrequency = Constants.DEFAULT_UPDATE_FREQUENCY
+                                        , Logger logger = null
+                                        , Logger scenarioSeedLogger = null)
         {
             // instantiate needed variables
             Logger = (Logger)(logger ?? Activator.CreateInstance(LoggerType));
@@ -202,11 +209,11 @@ namespace ALife.Core.ScenarioRunners
                 }
                 else
                 {
-                    var r = new Random();
+                    Random r = new Random();
                     for (var i = 0; i < NumberSeedsToExecute; i++)
                     {
-                        var message = $"Scenario Execution #{ExecutionNumber++}/{NumberSeedsToExecute} -> ";
-                        var seedValue = r.Next();
+                        string message = $"Scenario Execution #{ExecutionNumber++}/{NumberSeedsToExecute} -> ";
+                        int seedValue = r.Next();
                         ScenarioExecutor(seedValue, message, ct);
 
                         if (ct.IsCancellationRequested)
@@ -227,35 +234,35 @@ namespace ALife.Core.ScenarioRunners
         /// <param name="ct">The ct.</param>
         private void ScenarioExecutor(int seedValue, string headerMessage, CancellationToken ct)
         {
-            var config = ScenarioRunnerConfigRegister.GetDefaultConfigForScenarioType(scenario.GetType());
+            AbstractScenarionRunnerConfig config = ScenarioRunnerConfigRegister.GetDefaultConfigForScenarioType(scenario.GetType());
             // Display Header Message
             Logger.Write(headerMessage);
             Logger.WriteNewLine(1);
             Logger.WriteLineSeperator(1);
             Logger.WriteNewLine(1);
 
-            var scenarioDetails = ScenarioRegister.GetScenarioDetails(scenario.GetType());
-            var height = scenario.WorldHeight;
-            var width = scenario.WorldWidth;
+            ScenarioRegistration scenarioDetails = ScenarioRegister.GetScenarioDetails(scenario.GetType());
+            int height = scenario.WorldHeight;
+            int width = scenario.WorldWidth;
 
             //Write Header
-            var topLine = $"Seed: {seedValue}, Name: {scenarioDetails.Name}, Height:{height}, Width:{width}, Max Turns: {TotalTurns}";
+            string topLine = $"Seed: {seedValue}, Name: {scenarioDetails.Name}, Height:{height}, Width:{width}, Max Turns: {TotalTurns}";
             Logger.WriteLine($"{topLine}");
 
             //Get World Ready
-            var start = DateTime.Now;
-            var newCopy = IScenarioHelpers.FreshInstanceOf(scenario);
+            DateTime start = DateTime.Now;
+            IScenario newCopy = IScenarioHelpers.FreshInstanceOf(scenario);
             Planet.CreateWorld(seedValue, newCopy, height, width);
 
             string error = null;
             try
             {
-                var maxTurns = TotalTurns.ToString().Length;
-                var turnStringFormat = $"D{maxTurns}";
-                var initialTurnSpaces = new string(' ', maxTurns - 1);
+                int maxTurns = TotalTurns.ToString().Length;
+                string turnStringFormat = $"D{maxTurns}";
+                string initialTurnSpaces = new string(' ', maxTurns - 1);
                 Logger.WriteLine($"Each . represents {TurnBatch} turns");
                 Logger.Write($"{initialTurnSpaces}[0]");
-                for (var i = 0; i < TotalTurns / TurnBatch; i++)
+                for (int i = 0; i < TotalTurns / TurnBatch; i++)
                 {
                     if (ct.IsCancellationRequested)
                     {
@@ -271,8 +278,8 @@ namespace ALife.Core.ScenarioRunners
 
                     if ((i + 1) % (UpdateFrequency / TurnBatch) == 0)
                     {
-                        var elapsed = DateTime.Now - start;
-                        var stats = $"[{Planet.World.Turns.ToString(turnStringFormat)}]\tElapsed: {elapsed:mm\\:ss\\.ff} TPS: {i * TurnBatch / elapsed.TotalSeconds:0.000} || ";
+                        TimeSpan elapsed = DateTime.Now - start;
+                        string stats = $"[{Planet.World.Turns.ToString(turnStringFormat)}]\tElapsed: {elapsed:mm\\:ss\\.ff} TPS: {i * TurnBatch / elapsed.TotalSeconds:0.000} || ";
                         Logger.Write(stats);
                         config.UpdateStatusDetails(Logger.Write);
 
@@ -286,8 +293,8 @@ namespace ALife.Core.ScenarioRunners
                 var stack = ex.StackTrace.Split(Environment.NewLine);
                 error += Environment.NewLine + stack[0];
             }
-            var end = DateTime.Now;
-            var durationString = (end - start).ToString("mm\\:ss\\.fff");
+            DateTime end = DateTime.Now;
+            string durationString = (end - start).ToString("mm\\:ss\\.fff");
 
             Logger.WriteLine($"\tTotal Time: {durationString}\tTurns:{Planet.World.Turns}");
 

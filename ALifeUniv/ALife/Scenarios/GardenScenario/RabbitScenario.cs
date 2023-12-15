@@ -156,7 +156,7 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
             var numAgents = 200;
             for (var i = 0; i < numAgents; i++)
             {
-                var rag = AgentFactory.CreateAgent("Agent", worldZone, null, Colors.Thistle, Planet.World.NumberGen.NextDouble());
+                Agent rag = AgentFactory.CreateAgent("Agent", worldZone, null, Colors.LawnGreen, Planet.World.NumberGen.NextDouble());
             }
 
         }

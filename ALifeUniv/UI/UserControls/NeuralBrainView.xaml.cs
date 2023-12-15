@@ -16,6 +16,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -32,9 +33,9 @@ namespace ALifeUni.UI.UserControls
         public NeuralBrainView()
         {
             this.InitializeComponent();
-            canvasHeight = (int)brainCanvas.Height;
-            canvasWidth = (int)brainCanvas.Width;
-            brainCanvas.ClearColor = Colors.NavajoWhite;
+            canvasHeight = (int)BrainCanvas.Height;
+            canvasWidth = (int)BrainCanvas.Width;
+            BrainCanvas.ClearColor = Colors.NavajoWhite;
         }
 
         private NeuralNetworkBrain brain;
@@ -64,7 +65,7 @@ namespace ALifeUni.UI.UserControls
             return $"{str.Substring(0, 3)}...{str.Length - 13}...{str.Substring(str.Length - 10)}";
         }
 
-        private void brainCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
+        private void BrainCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
             if(brain == null)
             {
@@ -176,7 +177,7 @@ namespace ALifeUni.UI.UserControls
             args.DrawingSession.DrawText(text, textRoot, Colors.Green, ctf);
         }
 
-        private static void DrawNeuron(CanvasAnimatedDrawEventArgs args, bool textHigh, Neuron neuron, Vector2 point)
+        private void DrawNeuron(CanvasAnimatedDrawEventArgs args, bool textHigh, Neuron neuron, Vector2 point)
         {
             //Draw background to cover the Dendrite ends
             args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS, Colors.Moccasin);
@@ -191,16 +192,75 @@ namespace ALifeUni.UI.UserControls
             neuronColour.A = (byte)(Math.Abs(neuron.Value) * 255);
             args.DrawingSession.FillCircle(point, NEURON_VIS_RADIUS, neuronColour);
 
-            //Draw name of Neuron beneath it.
-            CanvasTextFormat ctf = new CanvasTextFormat() { FontSize = 10 };
+            if(neuron is FuncNeuron)
+            {
+                DrawSenseNeuronName(args, (FuncNeuron)neuron, point);
+            }
+            else
+            {
+                //Draw name of Neuron beneath it.
+                CanvasTextFormat ctf = new CanvasTextFormat() { FontSize = 10 };
 
+                Vector2 textPoint = new Vector2(point.X - 5, point.Y + 8);
+
+                //Draw the name at an angle
+                CanvasDrawingSession ds = args.DrawingSession;
+                ds.Transform = Matrix3x2.CreateRotation((float)new Angle(45).Radians, textPoint);
+                args.DrawingSession.DrawText(neuron.Name, textPoint, Colors.Black, ctf);
+                ds.Transform = Matrix3x2.Identity;
+            }
+        }
+
+        private void DrawSenseNeuronName(CanvasAnimatedDrawEventArgs args, FuncNeuron funcNeuron, Vector2 point)
+        {
+            CanvasTextFormat ctf = new CanvasTextFormat() { FontSize = 10 };
+            int len = funcNeuron.Name.IndexOf('.');
+
+            string topName = funcNeuron.Name.Substring(0, len);
+            string endOfName = funcNeuron.Name.Substring(len);
+
+            //Draw top Half
+            //4 states : First, Middle, Last, First&Last
+
+            Vector2 topPoint = new Vector2(point.X - 5, point.Y - 20);
+            if(LastSenseNeurons.Contains(funcNeuron) 
+                && FirstSenseNeurons.Contains(funcNeuron))
+            {
+                //Handle first and last
+                throw new NotImplementedException("I don't think this is used yet. But it won't be undefined on my watch.");
+            }
+            else if(LastSenseNeurons.Contains(funcNeuron))
+            {
+                //Handle Last
+                args.DrawingSession.DrawText("\\", topPoint, Colors.Black, ctf);
+            }
+            else if(FirstSenseNeurons.Contains(funcNeuron))
+            {
+                //Handle First
+                args.DrawingSession.DrawText("/", topPoint, Colors.Black, ctf);
+
+                Vector2 titlePoint = new Vector2(topPoint.X + 2, topPoint.Y - 5);
+                args.DrawingSession.Transform = Matrix3x2.CreateRotation((float)new Angle(325).Radians, titlePoint);
+                args.DrawingSession.DrawText(topName, titlePoint, Colors.Black, ctf);
+                //args.DrawingSession.Transform = Matrix3x2.Identity; Don't need to reset to identity
+                //, because it will be modified before it is used again in this function.
+            }
+            else
+            {
+                //Handle middle
+                topPoint.X -= 8;  topPoint.Y -= 6; 
+                args.DrawingSession.DrawText("───", topPoint, Colors.Black, ctf);
+            }
+
+
+
+            //Draw bottom half of Neuron beneath it.
             Vector2 textPoint = new Vector2(point.X - 5, point.Y + 8);
 
             //Draw the name at an angle
-            CanvasDrawingSession ds = args.DrawingSession;
-            ds.Transform = Matrix3x2.CreateRotation((float)new Angle(45).Radians, textPoint);
-            args.DrawingSession.DrawText(neuron.Name, textPoint, Colors.Black, ctf);
-            ds.Transform = Matrix3x2.Identity;
+            args.DrawingSession.Transform = Matrix3x2.CreateRotation((float)new Angle(45).Radians, textPoint);
+            args.DrawingSession.DrawText(endOfName, textPoint, Colors.Black, ctf);
+            args.DrawingSession.Transform = Matrix3x2.Identity;
         }
 
         private void DrawDownstreamDendrites(CanvasAnimatedDrawEventArgs args, Neuron selectedNeuron, Dictionary<Neuron, Vector2> nodemap)
@@ -249,9 +309,9 @@ namespace ALifeUni.UI.UserControls
         }
 
         int forgiveness = 0;
-        private void brainCanvas_Tapped(object sender, TappedRoutedEventArgs e)
+        private void BrainCanvas_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Point tapPoint = e.GetPosition(brainCanvas);
+            Point tapPoint = e.GetPosition(BrainCanvas);
             foreach(var (neuron, point) in NodeMap)
             {
                 double dist = ExtraMath.DistanceBetweenTwoPoints(tapPoint, new Point(point.X, point.Y));
@@ -269,16 +329,13 @@ namespace ALifeUni.UI.UserControls
             }
         }
 
-        private void brainCanvas_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        private void BrainCanvas_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             forgiveness = 0;
             SelectedNeuron = null;
         }
 
-        private void brainCanvas_PointerPressed(object sender, PointerRoutedEventArgs e) { }
-        private void brainCanvas_PointerMoved(object sender, PointerRoutedEventArgs e) { }
-        private void brainCanvas_PointerReleased(object sender, PointerRoutedEventArgs e) { }
-        private void brainCanvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args) { }
+        private void BrainCanvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args) { }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
@@ -325,16 +382,42 @@ namespace ALifeUni.UI.UserControls
             }
         }
 
-
+        private HashSet<FuncNeuron> FirstSenseNeurons = new HashSet<FuncNeuron>();
+        private HashSet<FuncNeuron> LastSenseNeurons = new HashSet<FuncNeuron>();
         private Dictionary<Neuron, List<(Dendrite, Neuron)>> NeuronToDownstreamDendrites;
         private void InitializeDownstreamDendriteMap()
         {
             NeuronToDownstreamDendrites = new Dictionary<Neuron, List<(Dendrite, Neuron)>>();
+            string prevFuncNeuronNameStart = null;
+            FuncNeuron last = null;
 
             foreach(Layer lay in brain.Layers)
             {
                 foreach(Neuron n in lay.Neurons)
                 {
+                    if(n is FuncNeuron)
+                    {
+                        string nameStart = n.Name.Substring(0, n.Name.IndexOf('.'));
+                        FuncNeuron fn = (FuncNeuron)n;
+                        if(nameStart != prevFuncNeuronNameStart)
+                        {
+                            FirstSenseNeurons.Add(fn);
+                            prevFuncNeuronNameStart = nameStart;
+                            if(last != null)
+                            {
+                                LastSenseNeurons.Add(last);
+                            }
+                        }
+                        else
+                        {
+                            last = fn;
+                        }
+                    }
+                    else if(last != null)
+                    {
+                        LastSenseNeurons.Add(last);
+                        last = null;
+                    }
                     foreach(Dendrite den in n.UpstreamDendrites)
                     {
                         Neuron targetNeuron = den.TargetNeuron;

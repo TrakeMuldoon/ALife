@@ -51,6 +51,9 @@
 * [ ] Add new Senses "Collided Left, Collided Right, Collided Back, Collided Front"
 * [ ] Reproduction is currently based on the Zone Distributor. Make it so that it could be "next to parent"
 * [ ] Get Logger Working again
+* [ ] Add New GeneologyViewer
+* [ ] Agents select their own target
+* [ ] Agents can tell target orientation
 
 ## Scenario Ideas
 * [ ] Temperature Scenario (Low temps steal energy, high temps restore energy)

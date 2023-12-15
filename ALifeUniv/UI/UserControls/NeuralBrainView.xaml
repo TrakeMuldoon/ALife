@@ -12,12 +12,9 @@
     <StackPanel Background="Azure">
         <TextBlock x:Name="AgentName" Foreground="Black"></TextBlock>
         <Border Background="Black" BorderBrush="Moccasin" BorderThickness="5">
-            <canvas:CanvasAnimatedControl x:Name="brainCanvas" Draw="brainCanvas_Draw" CreateResources="brainCanvas_CreateResources" 
-                                            Tapped="brainCanvas_Tapped"
-                                            DoubleTapped="brainCanvas_DoubleTapped"
-                                            PointerPressed="brainCanvas_PointerPressed"
-                                            PointerMoved="brainCanvas_PointerMoved"
-                                            PointerReleased="brainCanvas_PointerReleased"
+            <canvas:CanvasAnimatedControl x:Name="BrainCanvas" Draw="BrainCanvas_Draw" CreateResources="BrainCanvas_CreateResources" 
+                                            Tapped="BrainCanvas_Tapped"
+                                            DoubleTapped="BrainCanvas_DoubleTapped"
                                             Width="400" Height="550">
             </canvas:CanvasAnimatedControl>
         </Border>

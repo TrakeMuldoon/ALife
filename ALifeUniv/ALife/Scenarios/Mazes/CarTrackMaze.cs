@@ -14,6 +14,7 @@ namespace ALifeUni.ALife.Scenarios
 {
     [ScenarioRegistration("Around The Track", description: "Lorum Ipsum")]
     [SuggestedSeed(1832460063, "Fun scenario!!!")]
+    [SuggestedSeed(1776675068, "Purple Wave")]
     public class CarTrackMaze : IScenario
     {
         /******************/

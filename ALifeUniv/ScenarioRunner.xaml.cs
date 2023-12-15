@@ -133,11 +133,10 @@ namespace ALifeUni
         /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private void Start_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!(runner?.IsStopped ?? true))
+            if (!runner?.IsStopped ?? true)
             {
-                StopRunner();
+                StartScenarioRunner();
             }
-            StartScenarioRunner();
         }
 
         /// <summary>

@@ -30,4 +30,8 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.6" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.6" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\ALife.Core\ALife.Core.csproj" />
+    <ProjectReference Include="..\Core\ALife.Rendering\ALife.Rendering.csproj" />
+  </ItemGroup>
 </Project>

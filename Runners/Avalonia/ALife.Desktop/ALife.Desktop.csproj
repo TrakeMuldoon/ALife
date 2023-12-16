@@ -7,9 +7,17 @@
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>GuiSplash.ico</ApplicationIcon>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="GuiSplash.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ALife\ALife.csproj" />
   </ItemGroup>
 </Project>

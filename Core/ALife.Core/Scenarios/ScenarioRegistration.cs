@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ALife.Core.Scenarios
+﻿namespace ALife.Core.Scenarios
 {
     /// <summary>
     /// An attribute indicating that a class is a registered scenario
@@ -9,15 +7,14 @@ namespace ALife.Core.Scenarios
     public class ScenarioRegistration : Attribute
     {
         /// <summary>
-        /// Set to true to automatically start this scenario without showing the launcher
-        /// NOTE: If multiple have this set to true, an exception will be thrown
+        /// The auto start mode. Only one scenario can be registered with either AutoStartVisual or AutoStartConsole
         /// </summary>
-        public readonly bool AutoStartScenario;
+        public readonly AutoStartMode AutoStartScenario;
 
         /// <summary>
         /// The automatic start seed, used only if AutoStartScenario is true.
         /// </summary>
-        public readonly Nullable<int> AutoStartSeed;
+        public readonly int? AutoStartSeed;
 
         /// <summary>
         /// Set to true to only list this scenario in debug mode
@@ -40,16 +37,16 @@ namespace ALife.Core.Scenarios
         /// <param name="name">The name of the scenario.</param>
         /// <param name="description">The description of the scenario.</param>
         /// <param name="debugModeOnly">True to only list this scenario in debug mode.</param>
-        /// <param name="autoStartScenario">Set to true to automatically start this scenario without showing the launcher. NOTE: If multiple have this set to true, an exception will be thrown.</param>
+        /// <param name="autoStartScenario">The auto start mode. Only one scenario can be registered with either AutoStartVisual or AutoStartConsole.</param>
         /// <param name="autoStartSeed">The automatic start seed, used only if AutoStartScenario is true.</param>
-        public ScenarioRegistration(string name, string description, bool debugModeOnly = false, bool autoStartScenario = false, int autoStartSeed = int.MinValue)
+        public ScenarioRegistration(string name, string description, bool debugModeOnly = false, AutoStartMode autoStartScenario = AutoStartMode.None, int autoStartSeed = int.MinValue)
         {
             Name = name;
             Description = description;
             DebugModeOnly = debugModeOnly;
             AutoStartScenario = autoStartScenario;
             Nullable<int> actualSeed = autoStartSeed;
-            if(AutoStartScenario && autoStartSeed == int.MinValue)
+            if(AutoStartScenario == AutoStartMode.None && autoStartSeed == int.MinValue)
             {
                 actualSeed = null;
             }

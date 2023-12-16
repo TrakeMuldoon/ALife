@@ -9,7 +9,7 @@ using AvPoint = Avalonia.Point;
 using Color = System.Drawing.Color;
 using Point = ALife.Core.Geometry.Shapes.Point;
 
-namespace ALife.Helpers
+namespace ALife
 {
     public class AvaloniaRenderer : AbstractRenderer
     {

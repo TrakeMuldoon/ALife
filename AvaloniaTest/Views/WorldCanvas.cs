@@ -1,10 +1,9 @@
 ﻿using ALife.Core;
 using ALife.Core.Scenarios;
 using ALife.Core.Scenarios.FieldCrossings;
-using ALife.Core.Scenarios.GardenScenario;
 using ALife.Core.WorldObjects;
-using ALife.Helpers;
 using ALife.Rendering;
+using ALifeAvalonia.Helpers;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;

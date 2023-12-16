@@ -4,7 +4,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-    <ApplicationIcon>Assets\GuiSplash.ico</ApplicationIcon>
+    <ApplicationIcon>GuiSplash.ico</ApplicationIcon>
   </PropertyGroup>
 
   
@@ -14,7 +14,7 @@
 
   
   <ItemGroup>
-    <Content Include="Assets\GuiSplash.ico" />
+    <Content Include="GuiSplash.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,13 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ALife.Core\ALife.Core.csproj" />
-    <ProjectReference Include="..\ALife.Rendering\ALife.Rendering.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AvaloniaResource Update="Assets\GuiSplash.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AvaloniaResource>
+    <ProjectReference Include="..\..\..\Core\ALife.Core\ALife.Core.csproj" />
+    <ProjectReference Include="..\..\..\Core\ALife.Rendering\ALife.Rendering.csproj" />
   </ItemGroup>
 </Project>

@@ -12,8 +12,4 @@
     <Content Include="ConsoleSplash.ico" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ALife.Core\ALife.Core.csproj" />
-  </ItemGroup>
-
 </Project>

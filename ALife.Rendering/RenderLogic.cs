@@ -224,6 +224,7 @@ namespace ALife.Rendering
 
             if(ag.JustReproduced)
             {
+                //TODO: this just assumed the agent is a circle which will eventually not always be true.
                 Circle c = ag.Shape as Circle;
                 renderer.DrawCircle(c.CentrePoint, c.Radius + 2, Color.HotPink);
             }

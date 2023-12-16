@@ -108,7 +108,7 @@ namespace ALife.Helpers
             var geoStream = pathGeometry.Open();
             geoStream.BeginFigure(ConvertPoint(currShape.CentrePoint), fillIn);
             geoStream.LineTo(ConvertPoint(currShape.LeftPoint));
-            geoStream.LineTo(ConvertPoint(currShape.RightPoint));
+            geoStream.ArcTo(ConvertPoint(currShape.RightPoint), new Size(currShape.Radius, currShape.Radius), 0, false, SweepDirection.Clockwise);
             geoStream.EndFigure(true);
             Context.DrawGeometry(b, BLACKPEN, pathGeometry);
         }

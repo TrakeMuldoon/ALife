@@ -1,5 +1,6 @@
 ﻿using ALife.Core;
 using ALife.Core.Scenarios;
+using ALife.Core.Scenarios.FieldCrossings;
 using ALife.Core.Scenarios.GardenScenario;
 using ALife.Core.WorldObjects;
 using ALife.Helpers;
@@ -24,7 +25,7 @@ namespace AvaloniaTest.Views
 
         public WorldCanvas()
         {
-            IScenario scenario = new MushroomScenario();
+            IScenario scenario = new FieldCrossingWallsScenario();
             Planet.CreateWorld(scenario);
             renderer = new AvaloniaRenderer();
 
@@ -65,10 +66,12 @@ namespace AvaloniaTest.Views
             int objects = Planet.World.AllActiveObjects.Count;
             Point p1 = new Point(objects, objects);
             Point p2 = new Point(p1.X + 50, p1.Y + 100);
-            Pen pen = new Pen(Brushes.Green, 20, lineCap: PenLineCap.Square);
+            
+            Pen pen = new Pen(Brushes.Green, 1, lineCap: PenLineCap.Square);
             Pen boundPen = new Pen(Brushes.Black);
             drawingContext.DrawLine(pen, p1, p2);
             Point shapePont = new Point(150 + movement, 150 + movement);
+            
             Rect r = new Rect(shapePont.X, shapePont.Y, 12, 20);
             drawingContext.DrawRectangle(boundPen, r);
             drawingContext.DrawEllipse(Brushes.Aqua, pen, shapePont, 5, 5);

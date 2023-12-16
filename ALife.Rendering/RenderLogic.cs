@@ -171,12 +171,12 @@ namespace ALife.Rendering
         /// <summary>
         /// Draws the AA rectangle.
         /// </summary>
-        /// <param name="rectangle">The rectangle.</param>
+        /// <param name="rec">The rectangle.</param>
         /// <param name="renderer">The renderer.</param>
-        public static void DrawAARectangle(AARectangle rectangle, AbstractRenderer renderer)
+        public static void DrawAARectangle(AARectangle rec, AbstractRenderer renderer)
         {
-            renderer.FillRectangle(rectangle.TopLeft, rectangle.XWidth, rectangle.YHeight, rectangle.Color);
-            renderer.FillCircle(rectangle.CentrePoint, 2, rectangle.DebugColor);
+            Point tl = rec.TopLeft;
+            renderer.DrawAARectangle(tl, new Point(tl.X + rec.XWidth, tl.Y + rec.YHeight), rec.Color, 0.4f);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace ALife.Rendering
         /// <param name="renderer">The renderer.</param>
         private static void DrawBoundingBox(BoundingBox bb, Color color, AbstractRenderer renderer)
         {
-            renderer.DrawRectangle(bb.MinX, bb.MinY, bb.MaxX, bb.MaxY, color, 0.3f, true);
+            renderer.DrawAARectangle(new Point(bb.MaxX, bb.MaxY), new Point(bb.MinX, bb.MinY), color, 0.4f);
         }
 
         /// <summary>

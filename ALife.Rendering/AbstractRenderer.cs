@@ -21,27 +21,35 @@ namespace ALife.Rendering
 
         public abstract void DrawAgentAncestry(Agent agent);
 
-        public void DrawRectangle(Rectangle rectangle, Color color, double strokeWidth)
-        {
-            DrawRectangle(rectangle.TopLeft.X, rectangle.TopLeft.Y, rectangle.BottomRight.X, rectangle.BottomRight.Y, color, strokeWidth, true);
-        }
-
-        public abstract void DrawRectangle(double x, double y, double width, double height, Color color, double strokeWidth, bool widthAndHeightAreCoords = false);
-
-        public void FillRectangle(Point xy, double width, double height, Color color)
-        {
-            FillRectangle(xy.X, xy.Y, width, height, color);
-        }
-
-        public abstract void FillRectangle(double x, double y, double width, double height, Color color);
-
-        public abstract void DrawSector(IShape currShape, bool fillIn);
-
-        public abstract void DrawRectangleWithFillIn(Rectangle rectangle, bool fillIn);
+        public abstract void DrawCircle(Point centerPoint, float radius, Color color);
 
         public abstract void FillCircle(Point centerPoint, float radius, Color color);
 
-        public abstract void DrawCircle(Point centerPoint, float radius, Color color);
+        public void DrawRectangle(Rectangle rectangle, Color color, double strokeWidth)
+        {
+            DrawRectangle(rectangle.TopLeft, rectangle.TopRight, rectangle.BottomLeft, rectangle.BottomRight, color, strokeWidth);
+        }
+        public void DrawRectangleWithFillIn(Rectangle rectangle, bool fillIn)
+        {
+            if(fillIn)
+            {
+                FillRectangle(rectangle.TopLeft, rectangle.TopRight, rectangle.BottomLeft, rectangle.BottomRight, rectangle.Color);
+            }
+            else
+            {
+                DrawRectangle(rectangle.TopLeft, rectangle.TopRight, rectangle.BottomLeft, rectangle.BottomRight, rectangle.Color, 0.4f);
+            }
+        }
+
+        public abstract void DrawRectangle(Point topLeft, Point topRight, Point bottomLeft, Point bottomRight, Color color, double strokeWidth);
+
+        public abstract void FillRectangle(Point topLeft, Point topRight, Point bottomLeft, Point bottomRight, Color color);
+
+        public abstract void DrawAARectangle(Point topLeft, Point bottomRight, Color color, double strokeWidth);
+
+        public abstract void FillAARectangle(Point topLeft, Point bottomRight, Color color);
+
+        public abstract void DrawSector(IShape currShape, bool fillIn);
 
         public abstract void DrawLine(Point point1, Point point2, Color color, double strokeWidth);
 
@@ -51,7 +59,7 @@ namespace ALife.Rendering
         {
             Point ori = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 4);
             Point ori2 = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 1);
-            DrawLine(ori, ori2, Color.DarkRed, 1);
+            DrawLine(ori, ori2, Color.DarkRed, 0.4);
         }
     }
 }

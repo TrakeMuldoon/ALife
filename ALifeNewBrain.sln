@@ -15,13 +15,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScenarioRunner", "ScenarioR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ALife.Core", "ALife.Core\ALife.Core.csproj", "{BCEC45E0-7502-466C-9ACA-5422E18EE0B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALife.Rendering", "ALife.Rendering\ALife.Rendering.csproj", "{0C048042-505C-4AD0-9175-916B9F69C6B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ALife.Rendering", "ALife.Rendering\ALife.Rendering.csproj", "{0C048042-505C-4AD0-9175-916B9F69C6B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALife.Tests", "ALife.Tests\ALife.Tests.csproj", "{51B85C28-98CC-4F94-A40C-EDD57B1D4E58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ALife.Tests", "ALife.Tests\ALife.Tests.csproj", "{51B85C28-98CC-4F94-A40C-EDD57B1D4E58}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ALife.Avalonia", "ALife.Avalonia\ALife.Avalonia.csproj", "{C04FF425-B861-469A-9CE1-CCD7AC270ED1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ALife.Avalonia.Desktop", "ALife.Avalonia.Desktop\ALife.Avalonia.Desktop.csproj", "{589571A5-8984-4E5E-9E47-9C0497C98261}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaTest", "AvaloniaTest\AvaloniaTest.csproj", "{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -157,6 +159,26 @@ Global
 		{589571A5-8984-4E5E-9E47-9C0497C98261}.Release|x64.Build.0 = Release|Any CPU
 		{589571A5-8984-4E5E-9E47-9C0497C98261}.Release|x86.ActiveCfg = Release|Any CPU
 		{589571A5-8984-4E5E-9E47-9C0497C98261}.Release|x86.Build.0 = Release|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Debug|ARM.Build.0 = Debug|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Debug|x64.Build.0 = Debug|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Debug|x86.Build.0 = Debug|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Release|ARM.ActiveCfg = Release|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Release|ARM.Build.0 = Release|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Release|ARM64.Build.0 = Release|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Release|x64.ActiveCfg = Release|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Release|x64.Build.0 = Release|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Release|x86.ActiveCfg = Release|Any CPU
+		{77C61BA1-EB6B-4EA1-8C6B-56D3E9B4A919}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

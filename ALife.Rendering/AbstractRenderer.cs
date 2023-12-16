@@ -1,8 +1,7 @@
 ﻿using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility;
 using ALife.Core.WorldObjects.Agents;
-using System.Drawing;
-using Point = ALife.Core.Geometry.Shapes.Point;
+using Color = System.Drawing.Color;
 
 namespace ALife.Rendering
 {
@@ -11,11 +10,18 @@ namespace ALife.Rendering
     /// </summary>
     public abstract class AbstractRenderer
     {
+        /// <summary>
+        /// Most Renderers require context or a drawing session of some kind
+        /// </summary>
+        /// <typeparam name="T">The type of the drawing session</typeparam>
+        /// <param name="context"></param>
+        public abstract void SetContext(Object context);
+
         public abstract void DrawText(string text, Point point, Color color);
 
         public abstract void DrawAgentAncestry(Agent agent);
 
-        public void DrawRectangle(Core.Geometry.Shapes.Rectangle rectangle, Color color, double strokeWidth)
+        public void DrawRectangle(Rectangle rectangle, Color color, double strokeWidth)
         {
             DrawRectangle(rectangle.TopLeft.X, rectangle.TopLeft.Y, rectangle.BottomRight.X, rectangle.BottomRight.Y, color, strokeWidth, true);
         }
@@ -31,11 +37,11 @@ namespace ALife.Rendering
 
         public abstract void DrawSector(IShape currShape, bool fillIn);
 
-        public abstract void DrawRectangleWithFillIn(Core.Geometry.Shapes.Rectangle rectangle, bool fillIn);
+        public abstract void DrawRectangleWithFillIn(Rectangle rectangle, bool fillIn);
 
         public abstract void FillCircle(Point centerPoint, float radius, Color color);
 
-        public abstract void DrawCircle(Point centerPoint, float radius, Color colo);
+        public abstract void DrawCircle(Point centerPoint, float radius, Color color);
 
         public abstract void DrawLine(Point point1, Point point2, Color color, double strokeWidth);
 
@@ -43,8 +49,8 @@ namespace ALife.Rendering
 
         public void DrawOrientation(IShape shape)
         {
-            Core.Geometry.Shapes.Point ori = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 4);
-            Core.Geometry.Shapes.Point ori2 = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 1);
+            Point ori = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 4);
+            Point ori2 = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 1);
             DrawLine(ori, ori2, Color.DarkRed, 1);
         }
     }

@@ -2,7 +2,7 @@
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
-using System.Drawing;
+using Color = System.Drawing.Color;
 
 namespace ALife.Rendering
 {
@@ -246,7 +246,7 @@ namespace ALife.Rendering
             {
                 case Circle cir: DrawCircle(cir, fillIn, renderer); break;
                 case Sector sec: renderer.DrawSector(sec, fillIn); break;
-                case Core.Geometry.Shapes.Rectangle rect: renderer.DrawRectangleWithFillIn(rect, fillIn); break;
+                case Rectangle rect: renderer.DrawRectangleWithFillIn(rect, fillIn); break;
                 case AARectangle aar: DrawAARectangle(aar, renderer); break;
                 default: throw new NotImplementedException("What the heck shape is this?");
             }

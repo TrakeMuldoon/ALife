@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ALife.ViewModels;
 
-public class MainViewModel : ViewModelBase
+public class LauncherViewModel : ViewModelBase
 {
     private string _selectedScenario = string.Empty;
     private string _selectedScenarioDescription = string.Empty;
@@ -14,7 +14,7 @@ public class MainViewModel : ViewModelBase
     private string _currentSeedText = string.Empty;
     private const string CurrentSeedTextDefault = "Enter a Numerical Seed Here";
 
-    public MainViewModel()
+    public LauncherViewModel()
     {
         CurrentSeedText = CurrentSeedTextDefault;
     }

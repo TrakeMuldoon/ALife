@@ -14,6 +14,11 @@
 
   
   <ItemGroup>
+    <None Remove="Assets\GuiSplash.ico" />
+  </ItemGroup>
+
+  
+  <ItemGroup>
     <Content Include="GuiSplash.ico" />
   </ItemGroup>
 
@@ -29,5 +34,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\ALife.Core\ALife.Core.csproj" />
     <ProjectReference Include="..\..\..\Core\ALife.Rendering\ALife.Rendering.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Update="Assets\GuiSplash.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AvaloniaResource>
   </ItemGroup>
 </Project>

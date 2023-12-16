@@ -27,29 +27,32 @@
         <RowDefinition Height="40" />
         <RowDefinition Height="40" />
         <RowDefinition Height="40*" />
+        <RowDefinition Height="40" />
       </Grid.RowDefinitions>
 
-      <Button x:Name="ReturntoLauncher" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="ReturntoLauncher_Click" Margin="3, 3, 3, 3" Grid.Row="0">Return to Launcher</Button>
-      <Button x:Name="Start" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="Start_Click" Margin="3, 3, 3, 3" Grid.Row="1">Start</Button>
-      <Button x:Name="Stop" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="Stop_Click" Margin="3, 3, 3, 3" Grid.Row="2">Stop</Button>
-      <Button x:Name="Restart" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="Restart_Click" Margin="3, 3, 3, 3" Grid.Row="3">Restart</Button>
+      <Button Name="ReturntoLauncher" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="ReturntoLauncher_Click" Margin="3, 3, 3, 3" Grid.Row="0">Return to Launcher</Button>
+      <Button Name="Start" x:CompileBindings="False" IsEnabled="{Binding CanStartRunner}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="Start_Click" Margin="3, 3, 3, 3" Grid.Row="1">Start</Button>
+      <Button Name="Stop" x:CompileBindings="False" IsEnabled="{Binding CanStopRunner}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="Stop_Click" Margin="3, 3, 3, 3" Grid.Row="2">Stop</Button>
+      <Button Name="Restart" x:CompileBindings="False" IsEnabled="{Binding CanRestartRunner}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="Restart_Click" Margin="3, 3, 3, 3" Grid.Row="3">Restart</Button>
 
       <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Number of Scenarios to Execute:" Margin="3, 3, 3, 3" Grid.Row="4" />
-      <TextBox x:Name="NumberExecutions" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="1" Margin="3, 3, 3, 3" Grid.Row="5" />
+      <TextBox Name="NumberExecutions" x:CompileBindings="False" Text="{Binding ExecutionCount}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="3, 3, 3, 3" Grid.Row="5" />
 
       <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Max Number of Scenario Turns:" Margin="3, 3, 3, 3" Grid.Row="6" />
-      <TextBox x:Name="NumberTurns" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="1" Margin="3, 3, 3, 3" Grid.Row="7" />
+      <TextBox Name="NumberTurns" x:CompileBindings="False" Text="{Binding MaxTurnCount}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="3, 3, 3, 3" Grid.Row="7" />
 
       <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Turn Batch:" Margin="3, 3, 3, 3" Grid.Row="8" />
-      <TextBox x:Name="TurnBatch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="1" Margin="3, 3, 3, 3" Grid.Row="9" />
+      <TextBox Name="TurnBatch" x:CompileBindings="False" Text="{Binding TurnBatchCount}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="3, 3, 3, 3" Grid.Row="9" />
 
       <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Update Frequency:" Margin="3, 3, 3, 3" Grid.Row="10" />
-      <TextBox x:Name="UpdateFrequency" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="1" Margin="3, 3, 3, 3" Grid.Row="11" />
+      <TextBox Name="UpdateFrequency" x:CompileBindings="False" Text="{Binding UpdateFrequencyCount}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="3, 3, 3, 3" Grid.Row="11" />
 
       <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" TextWrapping="Wrap" FontStyle="Italic" Text="Note: Updating above scenario parameters will not take effect until the scenario runner is restarted!" Margin="3, 3, 3, 3" Grid.Row="12" />
+
+      <TextBlock x:CompileBindings="False" Text="{Binding State}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="3, 3, 3, 3" Grid.Row="13" />
     </Grid>
 
-    <TextBox x:Name="ConsoleText" TextWrapping="Wrap" Text="TextBox" FontFamily="Consolas" FontSize="13" Margin="3, 3, 3, 3" Grid.Column="1" />
+    <TextBox Name="ConsoleText" x:CompileBindings="False" Text="{Binding ConsoleLog}" CaretIndex="{Binding ConsoleCaretIndex}" IsReadOnly="True" TextWrapping="Wrap" FontFamily="Consolas" FontSize="13" Margin="3, 3, 3, 3" Grid.Column="1" />
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2">
       <Grid.RowDefinitions>
@@ -57,8 +60,8 @@
         <RowDefinition Height="40*" MinHeight="40" />
       </Grid.RowDefinitions>
 
-      <TextBlock Text="Successful Seeds:" FontFamily="Consolas" FontSize="13" Margin="3, 3, 3, 3" Grid.Row="0" />
-      <TextBox x:Name="SeedText" TextWrapping="Wrap" Text="TextBox" FontFamily="Consolas" FontSize="13" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="3, 3, 3, 3" Grid.Row="1" />
+      <TextBlock Text="Successful Seeds:" FontFamily="ConsoleLog" FontSize="13" Margin="3, 3, 3, 3" Grid.Row="0" />
+      <TextBox Name="SeedText" x:CompileBindings="False" Text="{Binding SeedLog}" IsReadOnly="True" TextWrapping="Wrap" FontFamily="Consolas" FontSize="13" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="3, 3, 3, 3" Grid.Row="1" />
     </Grid>
   </Grid>
 </UserControl>

@@ -14,8 +14,4 @@
     <Content Include="WorldObjects\Agents\Brains\BehaviourBrains\spec.txt" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ScenarioRunners\" />
-  </ItemGroup>
-
 </Project>

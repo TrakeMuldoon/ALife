@@ -29,6 +29,8 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
     )]
     [SuggestedSeed(1434557654, "Merry Chase!")]
     [SuggestedSeed(1763573612, "Agents almost die out (start coming back around 10-20k ticks)")]
+    [SuggestedSeed(1735952524, "Barely successful")]
+    [SuggestedSeed(334962087, "Successful from start")]
     public class RabbitScenario : IScenario
     {
         /******************/

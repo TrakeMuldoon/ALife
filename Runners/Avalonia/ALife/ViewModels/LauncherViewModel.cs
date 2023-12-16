@@ -69,7 +69,14 @@ public class LauncherViewModel : ViewModelBase
             CurrentSeedText = CurrentSeedTextDefault;
         }
 
-        CurrentSeedText = _suggestedSeedCache[key].Item1.ToString();
+        if (_suggestedSeedCache.ContainsKey(key))
+        {
+            CurrentSeedText = _suggestedSeedCache[key].Item1.ToString();
+        }
+        else
+        {
+            CurrentSeedText = CurrentSeedTextDefault;
+        }
     }
 
     /// <summary>

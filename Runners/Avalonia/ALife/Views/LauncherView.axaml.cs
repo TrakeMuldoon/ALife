@@ -7,7 +7,7 @@ namespace ALife.Views
 {
     public partial class LauncherView : UserControl
     {
-        private LauncherViewModel _mvm => (LauncherViewModel)DataContext;
+        private LauncherViewModel _vm => (LauncherViewModel)DataContext;
 
         public LauncherView()
         {
@@ -41,23 +41,24 @@ namespace ALife.Views
         {
             var listBox = (ListBox)sender;
             var selectedItem = listBox.SelectedItem?.ToString() ?? string.Empty;
-            _mvm.SelectScenario(selectedItem);
+            _vm.SelectScenario(selectedItem);
         }
 
         public void SeedSuggestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var listBox = (ListBox)sender;
             var selectedItem = listBox.SelectedItem?.ToString() ?? string.Empty;
-            _mvm.SelectSeed(selectedItem);
+            _vm.SelectSeed(selectedItem);
         }
 
         public void LaunchRunner_Click(object sender, RoutedEventArgs args)
         {
-            if (!string.IsNullOrWhiteSpace(_mvm.SelectedScenario))
+            if (!string.IsNullOrWhiteSpace(_vm.SelectedScenario))
             {
                 var windowMvm = (MainWindowViewModel)Parent.DataContext;
-                var runner = new RunnerViewModel();
 
+                int? seed = int.TryParse(_vm.CurrentSeedText, out var x) ? x : null;
+                var runner = new RunnerViewModel(_vm.SelectedScenario, seed, _vm.AutoStartScenarioRunner);
 
                 windowMvm.CurrentPage = runner;
             }

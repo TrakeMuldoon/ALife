@@ -12,8 +12,4 @@
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ALife\ALife.csproj" />
-  </ItemGroup>
 </Project>

@@ -11,7 +11,7 @@ namespace ScenarioRunner
     {
         private static void Main(string[] args)
         {
-            var runner = new ConsoleScenarioRunner("Mushroom Garden");
+            ConsoleScenarioRunner runner = new("Rabbits");
 
             while(!runner.IsStoppedAndLoggerStopped)
             {

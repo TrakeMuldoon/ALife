@@ -23,7 +23,7 @@ namespace ScenarioRunner
         {
             Logger.WriteNewLine(3);
             Console.WriteLine("Done, Hit 'r' to restart, any other key to exit");
-            var key = Console.ReadKey();
+            ConsoleKeyInfo key = Console.ReadKey();
             return key.Key != ConsoleKey.R;
         }
     }

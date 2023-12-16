@@ -18,7 +18,7 @@ namespace ALife.Core.ScenarioRunners
         /// <summary>
         /// The cancellation token source
         /// </summary>
-        private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        private readonly CancellationTokenSource cancellationTokenSource = new();
 
         /// <summary>
         /// The scenario
@@ -46,13 +46,13 @@ namespace ALife.Core.ScenarioRunners
         /// <param name="updateFrequency">The update frequency.</param>
         /// <param name="logger">The logger.</param>
         public AbstractScenarioRunner(string scenarioName
-                                        , int? startingSeed = null
+                                      , int? startingSeed = null
                                         , int numberSeedsToExecute = Constants.DEFAULT_NUMBER_SEEDS_EXECUTED
                                         , int totalTurns = Constants.DEFAULT_TOTAL_TURNS
                                         , int turnBatch = Constants.DEFAULT_TURN_BATCH
                                         , int updateFrequency = Constants.DEFAULT_UPDATE_FREQUENCY
-                                        , Logger logger = null
-                                        , Logger scenarioSeedLogger = null)
+                                        , Logger? logger = null
+                                        , Logger? scenarioSeedLogger = null)
         {
             // instantiate needed variables
             Logger = (Logger)(logger ?? Activator.CreateInstance(LoggerType));
@@ -68,7 +68,7 @@ namespace ALife.Core.ScenarioRunners
             // Execute the runner!
             stopRunner = false;
             cancellationTokenSource = new CancellationTokenSource();
-            var ct = cancellationTokenSource.Token;
+            CancellationToken ct = cancellationTokenSource.Token;
             Logger.StartLogger(ct);
             ScenarioSeedLogger.StartLogger(ct);
             executionTask = new Task(() => ExecuteRunner(ct), ct);
@@ -158,9 +158,9 @@ namespace ALife.Core.ScenarioRunners
         {
             cancellationTokenSource.Cancel();
             stopRunner = true;
-            if (wait)
+            if(wait)
             {
-                while (!IsStopped)
+                while(!IsStopped)
                 {
                     Thread.Sleep(100);
                 }
@@ -175,9 +175,9 @@ namespace ALife.Core.ScenarioRunners
         /// </param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if(!disposedValue)
             {
-                if (disposing)
+                if(disposing)
                 {
                     StopRunner(true);
                 }
@@ -203,27 +203,27 @@ namespace ALife.Core.ScenarioRunners
 
             do
             {
-                if (StartingSeed != null)
+                if(StartingSeed != null)
                 {
                     ScenarioExecutor(StartingSeed.Value, "Executing Single Scenario", ct);
                 }
                 else
                 {
-                    Random r = new Random();
-                    for (var i = 0; i < NumberSeedsToExecute; i++)
+                    Random r = new();
+                    for(int i = 0; i < NumberSeedsToExecute; i++)
                     {
                         string message = $"Scenario Execution #{ExecutionNumber++}/{NumberSeedsToExecute} -> ";
                         int seedValue = r.Next();
                         ScenarioExecutor(seedValue, message, ct);
 
-                        if (ct.IsCancellationRequested)
+                        if(ct.IsCancellationRequested)
                         {
                             ct.ThrowIfCancellationRequested();
                         }
                     }
                 }
                 shouldStop = ShouldStopRunner() || stopRunner;
-            } while (!shouldStop);
+            } while(!shouldStop);
         }
 
         /// <summary>
@@ -259,38 +259,41 @@ namespace ALife.Core.ScenarioRunners
             {
                 int turnsWidth = TotalTurns.ToString().Length;
                 string turnStringFormat = $"D{turnsWidth}";
-                string initialTurnSpaces = new string(' ', turnsWidth - 1);
+                string turnSpaces = new(' ', turnsWidth - 1);
                 Logger.WriteLine($"Each . represents {TurnBatch} turns");
-                Logger.Write($"{initialTurnSpaces}[0]");
-                for (int i = 0; i < TotalTurns / TurnBatch; i++)
+                Logger.Write($"{turnSpaces}[0]");
+                for(int i = 0; i < TotalTurns / TurnBatch; i++)
                 {
-                    if (ct.IsCancellationRequested)
+                    if(ct.IsCancellationRequested)
                     {
                         ct.ThrowIfCancellationRequested();
                     }
                     Planet.World.ExecuteManyTurns(TurnBatch);
                     Logger.Write(".");
 
-                    if (config.ShouldEndSimulation(Logger.Write))
+                    if(config.ShouldEndSimulation(Logger.Write))
                     {
                         break;
                     }
 
-                    if ((i + 1) % (UpdateFrequency / TurnBatch) == 0)
+                    if((i + 1) % (UpdateFrequency / TurnBatch) == 0)
                     {
                         TimeSpan elapsed = DateTime.Now - start;
-                        string stats = $"[{Planet.World.Turns.ToString(turnStringFormat)}]\tElapsed: {elapsed:mm\\:ss\\.ff} TPS: {i * TurnBatch / elapsed.TotalSeconds:0.000} || ";
+                        int turnSpacesNeeded = turnsWidth - Planet.World.Turns.ToString().Length;
+                        turnSpaces = new string(' ', turnSpacesNeeded);
+
+                        string stats = $"{turnSpaces}[{Planet.World.Turns}]\tElapsed: {elapsed:mm\\:ss\\.ff} TPS: {i * TurnBatch / elapsed.TotalSeconds:0.000} || ";
                         Logger.Write(stats);
                         config.UpdateStatusDetails(Logger.Write);
 
-                        Logger.Write($"[{Planet.World.Turns.ToString(turnStringFormat)}]");
+                        Logger.Write($"{turnSpaces}[{Planet.World.Turns}]");
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 error = ex.Message;
-                var stack = ex.StackTrace.Split(Environment.NewLine);
+                string[] stack = ex.StackTrace.Split(Environment.NewLine);
                 error += Environment.NewLine + stack[0];
             }
             DateTime end = DateTime.Now;
@@ -298,14 +301,14 @@ namespace ALife.Core.ScenarioRunners
 
             Logger.WriteLine($"\tTotal Time: {durationString}\tTurns:{Planet.World.Turns}");
 
-            if (!string.IsNullOrEmpty(error))
+            if(!string.IsNullOrEmpty(error))
             {
                 Logger.WriteLine($"\tERROR: {error}");
             }
             else
             {
                 config.SimulationSuccessInformation(Logger.Write);
-                if (config.ScenarioState == ScenarioState.CompleteSuccessful)
+                if(config.ScenarioState == ScenarioState.CompleteSuccessful)
                 {
                     ScenarioSeedLogger.WriteLine(seedValue);
                 }

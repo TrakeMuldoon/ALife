@@ -46,7 +46,7 @@ namespace ALife.Avalonia.Views
             _vm.StopRunner();
 
             MainWindowViewModel? windowMvm = (MainWindowViewModel)Parent.DataContext;
-            windowMvm.CurrentPage = new LauncherViewModel();
+            windowMvm.CurrentViewModel = new LauncherViewModel();
         }
 
         /// <summary>

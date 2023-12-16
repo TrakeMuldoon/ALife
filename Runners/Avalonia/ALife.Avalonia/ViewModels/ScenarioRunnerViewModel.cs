@@ -5,6 +5,10 @@ using ReactiveUI;
 
 namespace ALife.Avalonia.ViewModels
 {
+    /// <summary>
+    /// The View Model for the Scenario Runner view
+    /// </summary>
+    /// <seealso cref="ALife.Avalonia.ViewModels.ViewModelBase"/>
     public class ScenarioRunnerViewModel : ViewModelBase
     {
         /// <summary>

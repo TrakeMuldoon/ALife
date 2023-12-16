@@ -5,15 +5,45 @@ using ReactiveUI;
 
 namespace ALife.Avalonia.ViewModels
 {
+    /// <summary>
+    /// A view model for the launcher view.
+    /// </summary>
+    /// <seealso cref="ALife.Avalonia.ViewModels.ViewModelBase"/>
     public class LauncherViewModel : ViewModelBase
     {
+        /// <summary>
+        /// The current seed text default
+        /// </summary>
         private const string CurrentSeedTextDefault = "Enter a Numerical Seed Here";
+
+        /// <summary>
+        /// The suggested seed cache
+        /// </summary>
         private readonly Dictionary<string, (int, string)> _suggestedSeedCache = [];
+
+        /// <summary>
+        /// The current seed text
+        /// </summary>
         private string _currentSeedText = string.Empty;
+
+        /// <summary>
+        /// The selected scenario
+        /// </summary>
         private string _selectedScenario = string.Empty;
+
+        /// <summary>
+        /// The selected scenario description
+        /// </summary>
         private string _selectedScenarioDescription = string.Empty;
+
+        /// <summary>
+        /// The suggested seeds
+        /// </summary>
         private List<string> _suggestedSeeds = [];
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LauncherViewModel"/> class.
+        /// </summary>
         public LauncherViewModel()
         {
             CurrentSeedText = CurrentSeedTextDefault;

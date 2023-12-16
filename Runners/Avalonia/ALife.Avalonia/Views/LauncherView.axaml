@@ -44,7 +44,7 @@
       <TextBox Name="SeedText" Text="{Binding CurrentSeedText}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextWrapping="Wrap" Margin="3, 3, 3, 3" Grid.Row="1" />
       <CheckBox Name="AutoStartScenarioRunner" IsChecked="{Binding AutoStartScenarioRunner}" Content="Auto Start Scenario Runner" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3, 3, 3, 3" Grid.Row="2" />
       <Button Name="LaunchScenarioRunner" Click="LaunchRunner_Click" Content="Launch Scenario Runner" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3, 3, 3, 3" Grid.Row="3" />
-      <Button Name="LaunchScenarioUI" Content="Launch Scenario UI" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3, 3, 3, 3" Grid.Row="4" />
+      <Button Name="LaunchScenarioUI" Click="LaunchGui_Click" Content="Launch Scenario UI" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3, 3, 3, 3" Grid.Row="4" />
     </Grid>
   </Grid>
 </UserControl>

@@ -10,7 +10,7 @@
         x:Class="ALife.Avalonia.Views.MainWindow"
         xmlns:vm="using:ALife.Avalonia.ViewModels"
         x:DataType="vm:MainWindowViewModel"
-        Content="{Binding CurrentPage}"
+        Content="{Binding CurrentViewModel}"
 >
 
   <Design.DataContext>

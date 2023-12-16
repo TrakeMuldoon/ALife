@@ -100,14 +100,17 @@ namespace ALife
         }
 
 
-        public override void DrawSector(IShape currShape, bool fillIn)
+        public override void DrawSector(Sector currShape, bool fillIn)
         {
-            throw new NotImplementedException();
-        }
-
-        public override void DrawSector(IShape currShape, AbstractRenderer renderer, bool fillIn)
-        {
-            throw new NotImplementedException();
+            Brush b = new SolidColorBrush(ConvertColour(currShape.Color));
+            
+            PathGeometry pathGeometry = new PathGeometry();
+            var geoStream = pathGeometry.Open();
+            geoStream.BeginFigure(ConvertPoint(currShape.CentrePoint), fillIn);
+            geoStream.LineTo(ConvertPoint(currShape.LeftPoint));
+            geoStream.ArcTo(ConvertPoint(currShape.RightPoint), new Size(currShape.Radius, currShape.Radius), 0, false, SweepDirection.Clockwise);
+            geoStream.EndFigure(true);
+            Context.DrawGeometry(b, BLACKPEN, pathGeometry);
         }
 
         public override void DrawText(string text, Point point, Color color)

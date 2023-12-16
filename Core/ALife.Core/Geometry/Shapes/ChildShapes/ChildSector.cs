@@ -49,7 +49,7 @@ namespace ALife.Core.Geometry.Shapes.ChildShapes
             Color = System.Drawing.Color.White;
         }
 
-        public override Geometry.Shapes.Point CentrePoint
+        public override Point CentrePoint
         {
             get
             {

@@ -49,11 +49,9 @@ namespace ALife.Rendering
 
         public abstract void FillAARectangle(Point topLeft, Point bottomRight, Color color);
 
-        public abstract void DrawSector(IShape currShape, bool fillIn);
+        public abstract void DrawSector(Sector currShape, bool fillIn);
 
         public abstract void DrawLine(Point point1, Point point2, Color color, double strokeWidth);
-
-        public abstract void DrawSector(IShape currShape, AbstractRenderer renderer, bool fillIn);
 
         public void DrawOrientation(IShape shape)
         {

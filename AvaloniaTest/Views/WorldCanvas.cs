@@ -57,6 +57,8 @@ namespace AvaloniaTest.Views
 
             LayerUISettings uiSettings = new LayerUISettings("Physical", true);
             AgentUISettings agentUISettings = new AgentUISettings();
+            agentUISettings.ShowSenses = true;
+            agentUISettings.ShowSenseBoundingBoxes = true;
 
             foreach(WorldObject worldObject in Planet.World.AllActiveObjects)
             {

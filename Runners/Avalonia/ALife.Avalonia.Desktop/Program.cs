@@ -3,7 +3,7 @@
 using Avalonia;
 using Avalonia.ReactiveUI;
 
-namespace ALife.Desktop;
+namespace ALife.Avalonia.Desktop;
 
 class Program
 {

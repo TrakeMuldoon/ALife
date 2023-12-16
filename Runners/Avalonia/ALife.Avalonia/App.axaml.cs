@@ -1,11 +1,11 @@
-﻿using ALife.ViewModels;
-using ALife.Views;
+﻿using ALife.Avalonia.ViewModels;
+using ALife.Avalonia.Views;
 
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
-namespace ALife;
+namespace ALife.Avalonia;
 
 public partial class App : Application
 {
@@ -16,7 +16,7 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        if(ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow
             {

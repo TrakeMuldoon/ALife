@@ -5,12 +5,10 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{BD7F9F1B-F088-4C03-A79C-162FB32D797D}"
 	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-		.gitignore = .gitignore
-		GuiSplash.ico = GuiSplash.ico
-		GuiSplash.png = GuiSplash.png
+		NewConfig.txt = NewConfig.txt
 		README.md = README.md
 		Roadmap2024.md = Roadmap2024.md
+		ValuableLinks.txt = ValuableLinks.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{FEC4584F-16BF-44AE-B4AE-96246985810C}"

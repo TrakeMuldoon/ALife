@@ -5,13 +5,16 @@
              xmlns:controls="using:ALife.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ALife.Avalonia.Views.WorldRunnerView">
-  <StackPanel>
-    <TextBlock Text="{Binding #slider.Value}" HorizontalAlignment="Center"/>
-    <Slider x:Name="slider" Minimum ="500" Maximum="2000" />
-    
-    <Viewbox Stretch="Uniform" Width="{Binding #slider.Value}" Height="{Binding #slider.Value}" >
-      <controls:WorldCanvas Height="500" Width="500">
-      </controls:WorldCanvas>
-    </Viewbox>
+  <StackPanel Orientation="Horizontal">
+    <StackPanel Width="100">
+      <TextBlock Text="{Binding #slider.Value}" HorizontalAlignment="Center"/>
+      <Slider x:Name="slider" Minimum ="500" Maximum="2000" />
+    </StackPanel>
+    <ScrollViewer>
+      <Viewbox Stretch="Uniform" Width="{Binding #slider.Value}" Height="{Binding #slider.Value}" >
+        <controls:WorldCanvas Height="1000" Width="1000">
+        </controls:WorldCanvas>
+      </Viewbox>
+    </ScrollViewer>
   </StackPanel>
 </UserControl>

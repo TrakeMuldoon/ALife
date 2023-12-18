@@ -6,6 +6,7 @@ using ALife.Core.WorldObjects;
 using ALife.Rendering;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Threading;
 
@@ -37,6 +38,19 @@ namespace ALife.Avalonia
             };
             timer.Tick += Timer_Tick;
             timer.Start();
+
+            PointerPressed += WorldCanvas_PointerPressed;
+            Tapped += WorldCanvas_Tapped;
+        }
+
+        private void WorldCanvas_Tapped(object? sender, TappedEventArgs e)
+        {
+            movement -= 15;
+        }
+
+        private void WorldCanvas_PointerPressed(object? sender, PointerPressedEventArgs e)
+        {
+            movement += 10;
         }
 
         public int TurnCount
@@ -75,7 +89,7 @@ namespace ALife.Avalonia
             drawingContext.DrawEllipse(Brushes.Aqua, pen, shapePont, 5, 5);
 
             movement += 1;
-            if(movement == 300)
+            if(movement >= 300)
             {
                 movement = 0;
             }

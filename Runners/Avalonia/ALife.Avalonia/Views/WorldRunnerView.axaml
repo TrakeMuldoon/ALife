@@ -12,7 +12,7 @@
     </StackPanel>
     <ScrollViewer Background="Wheat">
       <Viewbox Stretch="Uniform" Width="{Binding #slider.Value}" Height="{Binding #slider.Value}">
-        <controls:WorldCanvas Height="1000" Width="1000">
+        <controls:WorldCanvas Name="WorldCanvas" Height="1000" Width="1000">
         </controls:WorldCanvas>
       </Viewbox>
     </ScrollViewer>

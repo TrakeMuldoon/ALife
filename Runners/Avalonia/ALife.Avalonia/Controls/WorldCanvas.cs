@@ -1,7 +1,6 @@
 ﻿using System;
 using ALife.Core;
 using ALife.Core.Scenarios;
-using ALife.Core.Scenarios.FieldCrossings;
 using ALife.Core.WorldObjects;
 using ALife.Rendering;
 using Avalonia;
@@ -10,15 +9,17 @@ using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Threading;
 
-namespace ALife.Avalonia
+namespace ALife.Avalonia.Controls
 {
-    internal class WorldCanvas : Control
+    public class WorldCanvas : Control
     {
-        public static readonly StyledProperty<int> TurnCountProperty =
-            AvaloniaProperty.Register<WorldCanvas, int>(nameof(TurnCount));
-
+        public static readonly StyledProperty<int> TurnCountProperty = AvaloniaProperty.Register<WorldCanvas, int>(nameof(TurnCount));
+        public static DirectProperty<WorldCanvas, string> ScenarioNameProperty = AvaloniaProperty.RegisterDirect<WorldCanvas, string>(nameof(ScenarioName), x => x.ScenarioName, (x, y) => x.ScenarioName = y);
+        public static DirectProperty<WorldCanvas, int?> StartingSeedProperty = AvaloniaProperty.RegisterDirect<WorldCanvas, int?>(nameof(StartingSeed), x => x.StartingSeed, (x, y) => x.StartingSeed = y);
         private readonly AvaloniaRenderer renderer;
 
+        private string _scenarioName;
+        private int? _startingSeed;
         private int movement = 0;
 
         static WorldCanvas()
@@ -26,15 +27,9 @@ namespace ALife.Avalonia
             AffectsRender<WorldCanvas>(TurnCountProperty);
         }
 
-
-        //TODO: This horrific work around makes me PHYSICALLY SICK.
-        public static String CanvasScenarioName;
-        public static int? StartingSeed;
-
         public WorldCanvas()
         {
-
-            IScenario scenario = ScenarioRegister.GetScenario(CanvasScenarioName);
+            IScenario scenario = ScenarioRegister.GetScenario(ScenarioName);
             if(StartingSeed != null)
             {
                 Planet.CreateWorld(StartingSeed.Value, scenario);
@@ -57,16 +52,19 @@ namespace ALife.Avalonia
             Tapped += WorldCanvas_Tapped;
         }
 
-        private void WorldCanvas_Tapped(object? sender, TappedEventArgs e)
+        public string ScenarioName
         {
-            movement -= 15;
+            get { return _scenarioName; }
+            set { SetAndRaise(ScenarioNameProperty, ref _scenarioName, value); }
         }
 
-        private void WorldCanvas_PointerPressed(object? sender, PointerPressedEventArgs e)
+        public int? StartingSeed
         {
-            movement += 10;
+            get { return _startingSeed; }
+            set { SetAndRaise(StartingSeedProperty, ref _startingSeed, value); }
         }
 
+        //TODO: This horrific work around makes me PHYSICALLY SICK.
         public int TurnCount
         {
             get => GetValue(TurnCountProperty);
@@ -115,6 +113,16 @@ namespace ALife.Avalonia
         {
             Planet.World.ExecuteOneTurn();
             TurnCount++;
+        }
+
+        private void WorldCanvas_PointerPressed(object? sender, PointerPressedEventArgs e)
+        {
+            movement += 10;
+        }
+
+        private void WorldCanvas_Tapped(object? sender, TappedEventArgs e)
+        {
+            movement -= 15;
         }
     }
 }

@@ -5,16 +5,23 @@
              xmlns:controls="using:ALife.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ALife.Avalonia.Views.WorldRunnerView">
-  <StackPanel Orientation="Horizontal" Background="Green">
-    <StackPanel Width="100">
-      <TextBlock Text="{Binding #slider.Value}" HorizontalAlignment="Center"/>
-      <Slider x:Name="slider" Minimum ="500" Maximum="2000" />
+  <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3, 3, 3, 3">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition MinWidth="500" Width="400*" />
+      <ColumnDefinition MinWidth="200" Width="200" />
+      <ColumnDefinition MinWidth="200" Width="200" />
+    </Grid.ColumnDefinitions>
+    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Horizontal" Background="Green" Grid.Column="0">
+      <StackPanel Width="100">
+        <TextBlock Text="{Binding #slider.Value}" HorizontalAlignment="Center" />
+        <Slider x:Name="slider" Minimum ="500" Maximum="2000" />
+      </StackPanel>
+      <ScrollViewer Background="Wheat">
+        <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding #slider.Value}" Height="{Binding #slider.Value}">
+          <controls:WorldCanvas Name="TheWorldCanvas" Height="1000" Width="1000">
+          </controls:WorldCanvas>
+        </Viewbox>
+      </ScrollViewer>
     </StackPanel>
-    <ScrollViewer Background="Wheat">
-      <Viewbox Stretch="Uniform" Width="{Binding #slider.Value}" Height="{Binding #slider.Value}">
-        <controls:WorldCanvas Name="TheWorldCanvas" Height="1000" Width="1000">
-        </controls:WorldCanvas>
-      </Viewbox>
-    </ScrollViewer>
-  </StackPanel>
+  </Grid>
 </UserControl>

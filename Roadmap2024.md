@@ -62,3 +62,9 @@
 * [ ] Fruit Trees, drop food on collision
 * [ ] Rabbit Chasing Scenario (Implement WorldObjectTargetSense)
 
+## Fixing the Basics
+ * [ ] Time Controls
+ * [ ] Layer Controls
+ * [ ] Zoom Controls
+ * [ ] Brain Viewers
+ * [ ] Interactivity

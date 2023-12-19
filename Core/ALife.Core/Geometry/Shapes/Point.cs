@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace ALife.Core.Geometry.Shapes
 {
@@ -112,6 +113,14 @@ namespace ALife.Core.Geometry.Shapes
         public static bool operator !=(Point left, Point right)
         {
             return !(left == right);
+        }
+    }
+
+    public static partial class Extensions
+    {
+        public static Vector2 ToVector2(this Point p)
+        {
+            return new Vector2((float)p.X, (float)p.Y);
         }
     }
 }

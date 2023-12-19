@@ -26,10 +26,24 @@ namespace ALife.Avalonia
             AffectsRender<WorldCanvas>(TurnCountProperty);
         }
 
+
+        //TODO: This horrific work around makes me PHYSICALLY SICK.
+        public static String CanvasScenarioName;
+        public static int? StartingSeed;
+
         public WorldCanvas()
         {
-            IScenario scenario = new FieldCrossingWallsScenario();
-            Planet.CreateWorld(scenario);
+
+            IScenario scenario = ScenarioRegister.GetScenario(CanvasScenarioName);
+            if(StartingSeed != null)
+            {
+                Planet.CreateWorld(StartingSeed.Value, scenario);
+            }
+            else
+            {
+                Planet.CreateWorld(scenario);
+            }
+
             renderer = new AvaloniaRenderer();
 
             DispatcherTimer timer = new()

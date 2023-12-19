@@ -240,7 +240,10 @@ namespace ALife.Avalonia.ViewModels
             {
                 StopRunner();
 
-                ConsoleLog += $"{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}------------------------------------------------------{Environment.NewLine}------------------------------------------------------{Environment.NewLine}------------------------------------------------------{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}";
+                String LINEBLOCK = "------------------------------------------------------";
+                String nl = Environment.NewLine;
+
+                ConsoleLog += $"{nl}{nl}{nl}{nl}{LINEBLOCK}{nl}{LINEBLOCK}{nl}{nl}{nl}";
             }
 
             StartScenarioRunner();

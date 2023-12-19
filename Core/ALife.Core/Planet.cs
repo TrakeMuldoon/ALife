@@ -3,6 +3,8 @@ using ALife.Core.Scenarios;
 using ALife.Core.Utility;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
+using System;
+using System.Collections.Generic;
 
 namespace ALife.Core
 {
@@ -81,7 +83,7 @@ namespace ALife.Core
 
         #region Instance Stuff
 
-        public readonly Dictionary<String, Zone> Zones = new Dictionary<string, Zone>();
+        public readonly Dictionary<string, Zone> Zones = new Dictionary<string, Zone>();
         public List<string> MessagePump = new List<string>();
 
         //All objects which are active

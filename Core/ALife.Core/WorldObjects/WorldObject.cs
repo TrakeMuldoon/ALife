@@ -1,5 +1,7 @@
 ﻿using ALife.Core.Geometry.Shapes;
 using ALife.Core.WorldObjects.Agents.Properties;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace ALife.Core.WorldObjects

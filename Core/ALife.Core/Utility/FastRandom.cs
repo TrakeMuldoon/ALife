@@ -1,4 +1,6 @@
-﻿namespace ALife.Core.Utility
+﻿using System;
+
+namespace ALife.Core.Utility
 {
     /// <summary>
     /// A fast random number generator for .NET

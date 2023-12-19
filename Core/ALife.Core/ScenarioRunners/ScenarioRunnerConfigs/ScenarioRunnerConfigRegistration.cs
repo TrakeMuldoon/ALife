@@ -1,4 +1,6 @@
 ﻿using ALife.Core.Scenarios;
+using System;
+using System.Linq;
 
 namespace ALife.Core.ScenarioRunners.ScenarioRunnerConfigs
 {

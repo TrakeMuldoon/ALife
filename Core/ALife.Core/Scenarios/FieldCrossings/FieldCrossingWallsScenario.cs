@@ -3,6 +3,7 @@ using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Prebuilt;
+using System.Collections.Generic;
 
 namespace ALife.Core.Scenarios.FieldCrossings
 {

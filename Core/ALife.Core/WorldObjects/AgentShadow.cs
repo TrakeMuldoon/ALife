@@ -2,6 +2,7 @@
 using ALife.Core.Geometry.Shapes.ChildShapes;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.Senses;
+using System.Collections.Generic;
 
 namespace ALife.Core.WorldObjects
 {

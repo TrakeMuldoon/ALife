@@ -1,4 +1,6 @@
-﻿namespace ALife.Core.Geometry.Shapes
+﻿using System;
+
+namespace ALife.Core.Geometry.Shapes
 {
     /// <summary>
     /// Defines a Geometry.Shapes.Point in space

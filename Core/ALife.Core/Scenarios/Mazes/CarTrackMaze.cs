@@ -6,6 +6,8 @@ using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace ALife.Core.Scenarios.Mazes
@@ -156,11 +158,11 @@ Reaching the finish line, reproduces 3 times and then dies... Victorious!"
         {
             MazeSetups.BuildThinningCarTrack();
 
-            Zone startZone = new Zone("Start", "Random", System.Drawing.Color.Green, new Geometry.Shapes.Point(30, 331), 190, 80);
-            Zone midOne = new Zone("Mid1", "Random", System.Drawing.Color.Orange, new Geometry.Shapes.Point(800, 585), 20, 200);
-            Zone halfWay = new Zone("Half", "Random", System.Drawing.Color.Orange, new Geometry.Shapes.Point(1320, 320), 200, 20);
-            Zone midThree = new Zone("Mid3", "Random", System.Drawing.Color.Orange, new Geometry.Shapes.Point(800, 18), 20, 115);
-            Zone endZone = new Zone("End", "Random", System.Drawing.Color.Red, new Geometry.Shapes.Point(30, 285), 190, 40);
+            Zone startZone = new Zone("Start", "Random", Color.Green, new Geometry.Shapes.Point(30, 331), 190, 80);
+            Zone midOne = new Zone("Mid1", "Random", Color.Orange, new Geometry.Shapes.Point(800, 585), 20, 200);
+            Zone halfWay = new Zone("Half", "Random", Color.Orange, new Geometry.Shapes.Point(1320, 320), 200, 20);
+            Zone midThree = new Zone("Mid3", "Random", Color.Orange, new Geometry.Shapes.Point(800, 18), 20, 115);
+            Zone endZone = new Zone("End", "Random", Color.Red, new Geometry.Shapes.Point(30, 285), 190, 40);
 
             Planet.World.AddZone(startZone);
             Planet.World.AddZone(midOne);

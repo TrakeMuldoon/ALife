@@ -1,5 +1,7 @@
 ﻿using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace ALife.Core.Scenarios
@@ -10,7 +12,7 @@ namespace ALife.Core.Scenarios
         /*   AGENT STUFF  */
         /******************/
 
-        Agent CreateAgent(String genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation);
+        Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation);
 
         /*** Something that is happening TO an agent, based on external stimulus ***/
         void AgentEndOfTurnTriggers(Agent me);

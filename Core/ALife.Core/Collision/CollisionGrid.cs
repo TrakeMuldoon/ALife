@@ -1,4 +1,7 @@
 ﻿using ALife.Core.Geometry.Shapes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ALife.Core.Collision
 {
@@ -15,7 +18,7 @@ namespace ALife.Core.Collision
         private const int DEFAULT_GRID_SIZE = 25;
         private List<T>[,] objectGrid;
         private List<T> trackedObjects;
-        private Dictionary<T, List<Geometry.Shapes.Point>> agentLocationTracker = new Dictionary<T, List<Geometry.Shapes.Point>>();
+        private Dictionary<T, List<Point>> agentLocationTracker = new Dictionary<T, List<Point>>();
 
         public CollisionGrid(int gridHeight, int gridWidth, string gridName)
             : this(gridHeight, gridWidth, DEFAULT_GRID_SIZE, gridName)

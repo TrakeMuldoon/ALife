@@ -1,5 +1,7 @@
 ﻿using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace ALife.Core.Scenarios

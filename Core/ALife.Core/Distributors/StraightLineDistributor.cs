@@ -2,6 +2,8 @@
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility;
 using ALife.Core.WorldObjects;
+using System;
+using System.Collections.Generic;
 
 namespace ALife.Core.Distributors
 {

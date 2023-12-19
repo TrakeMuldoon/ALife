@@ -1,4 +1,5 @@
 using ALife.Core.Geometry;
+using System;
 
 namespace ALife.Core.Utility
 {

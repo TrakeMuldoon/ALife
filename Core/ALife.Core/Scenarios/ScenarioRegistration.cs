@@ -1,4 +1,6 @@
-﻿namespace ALife.Core.Scenarios
+﻿using System;
+
+namespace ALife.Core.Scenarios
 {
     /// <summary>
     /// An attribute indicating that a class is a registered scenario

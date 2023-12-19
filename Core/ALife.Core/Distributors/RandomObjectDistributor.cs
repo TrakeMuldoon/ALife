@@ -1,5 +1,7 @@
 ﻿using ALife.Core.Geometry.Shapes;
 using ALife.Core.WorldObjects;
+using System;
+using System.Collections.Generic;
 
 namespace ALife.Core.Distributors
 {
@@ -9,7 +11,7 @@ namespace ALife.Core.Distributors
         {
         }
 
-        public override Geometry.Shapes.Point NextObjectCentre(double BBLength, double BBHeight)
+        public override Point NextObjectCentre(double BBLength, double BBHeight)
         {
             double halfLength = BBLength / 2;
             double halfHeight = BBHeight / 2;
@@ -19,12 +21,12 @@ namespace ALife.Core.Distributors
             double yMin = StartZone.TopLeft.Y + halfHeight;
             double yMax = StartZone.TopLeft.Y + StartZone.YHeight - halfHeight;
 
-            //If we aren't tracking collisions, then any Geometry.Shapes.Point in the area is valid
+            //If we aren't tracking collisions, then any Point in the area is valid
             if(!TrackCollisions)
             {
                 double X = Planet.World.NumberGen.Next((int)xMin, (int)xMax);
                 double Y = Planet.World.NumberGen.Next((int)yMin, (int)yMax);
-                return new Geometry.Shapes.Point(X, Y);
+                return new Point(X, Y);
             }
 
             int attempts = 0;
@@ -43,7 +45,7 @@ namespace ALife.Core.Distributors
 
             if(collisions.Count == 0)
             {
-                return new Geometry.Shapes.Point(newX, newY);
+                return new Point(newX, newY);
             }
             else
             {

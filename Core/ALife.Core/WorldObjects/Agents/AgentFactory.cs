@@ -3,13 +3,14 @@ using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace ALife.Core.WorldObjects.Agents
 {
     public static class AgentFactory
     {
-        public static Agent CreateAgent(String genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
+        public static Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
         {
             return Planet.World.Scenario.CreateAgent(genusName, parentZone, targetZone, color, startOrientation);
         }

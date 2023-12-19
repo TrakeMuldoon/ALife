@@ -2,6 +2,8 @@ using ALife.Core.Collision;
 using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ALife.Core.Scenarios.FieldCrossings
 {

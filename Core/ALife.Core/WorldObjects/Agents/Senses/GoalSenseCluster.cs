@@ -3,6 +3,7 @@ using ALife.Core.Geometry.Shapes;
 using ALife.Core.Geometry.Shapes.ChildShapes;
 using ALife.Core.Utility;
 using ALife.Core.WorldObjects.Agents.Senses.GoalSense;
+using System;
 
 namespace ALife.Core.WorldObjects.Agents.Senses
 {
@@ -65,7 +66,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses
         /// <param name="aar"></param>
         private void DetectAgainstAAR(AARectangle aar)
         {
-            Geometry.Shapes.Point myCP = myShape.CentrePoint;
+            Point myCP = myShape.CentrePoint;
             BoundingBox targBB = aar.BoundingBox;
 
             int distanceValue;
@@ -121,7 +122,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses
                 //I am not inline with it. Therefore the closest Geometry.Shapes.Point will be one of the corners. 
                 double xTarg = myCP.X < targBB.MinX ? targBB.MinX : targBB.MaxX;
                 double yTarg = myCP.Y < targBB.MinY ? targBB.MinY : targBB.MaxY;
-                Geometry.Shapes.Point target = new Geometry.Shapes.Point(xTarg, yTarg);
+                Point target = new Point(xTarg, yTarg);
 
                 distanceValue = (int)ExtraMath.DistanceBetweenTwoPoints(target, myCP);
 
@@ -145,8 +146,8 @@ namespace ALife.Core.WorldObjects.Agents.Senses
 
         private void DetectAgainstCircle(Circle targetCircle)
         {
-            Geometry.Shapes.Point myCP = myShape.CentrePoint;
-            Geometry.Shapes.Point target = new Geometry.Shapes.Point(targetCircle.CentrePoint.X, targetCircle.CentrePoint.Y);
+            Point myCP = myShape.CentrePoint;
+            Point target = new Point(targetCircle.CentrePoint.X, targetCircle.CentrePoint.Y);
 
             int distanceValue = (int)ExtraMath.DistanceBetweenTwoPoints(target, myCP);
             distanceValue -= (int)targetCircle.Radius;

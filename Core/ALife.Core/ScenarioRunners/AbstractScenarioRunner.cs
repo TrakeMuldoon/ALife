@@ -1,6 +1,9 @@
 ﻿using ALife.Core.ScenarioRunners.ScenarioLoggers;
 using ALife.Core.ScenarioRunners.ScenarioRunnerConfigs;
 using ALife.Core.Scenarios;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ALife.Core.ScenarioRunners
 {
@@ -18,7 +21,7 @@ namespace ALife.Core.ScenarioRunners
         /// <summary>
         /// The cancellation token source
         /// </summary>
-        private readonly CancellationTokenSource cancellationTokenSource = new();
+        private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
         /// <summary>
         /// The scenario
@@ -209,7 +212,7 @@ namespace ALife.Core.ScenarioRunners
                 }
                 else
                 {
-                    Random r = new();
+                    Random r = new Random();
                     for(int i = 0; i < NumberSeedsToExecute; i++)
                     {
                         string message = $"Scenario Execution #{ExecutionNumber++}/{NumberSeedsToExecute} -> ";
@@ -259,7 +262,7 @@ namespace ALife.Core.ScenarioRunners
             {
                 int turnsWidth = TotalTurns.ToString().Length;
                 string turnStringFormat = $"D{turnsWidth}";
-                string turnSpaces = new(' ', turnsWidth - 1);
+                string turnSpaces = new string(' ', turnsWidth - 1);
                 Logger.WriteLine($"Each . represents {TurnBatch} turns");
                 Logger.Write($"{turnSpaces}[0]");
                 for(int i = 0; i < TotalTurns / TurnBatch; i++)

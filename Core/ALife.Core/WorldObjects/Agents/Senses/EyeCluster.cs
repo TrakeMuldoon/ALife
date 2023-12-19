@@ -4,6 +4,8 @@ using ALife.Core.Geometry.Shapes.ChildShapes;
 using ALife.Core.Utility;
 using ALife.Core.WorldObjects.Agents.Senses.Eyes;
 using ALife.Core.WorldObjects.Agents.Senses.GenericInputs;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace ALife.Core.WorldObjects.Agents.Senses

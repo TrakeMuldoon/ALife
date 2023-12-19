@@ -6,7 +6,10 @@ using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace ALife.Core.Scenarios.Mazes
 {
@@ -126,8 +129,8 @@ If an agent reaches the goal line, the simuluation stops."
             double height = instance.WorldHeight;
             double width = instance.WorldWidth;
 
-            Zone red = new Zone("Red(Blue)", "Random", System.Drawing.Color.Red, new Geometry.Shapes.Point(0, 0), 50, height);
-            Zone blue = new Zone("Blue(Red)", "Random", System.Drawing.Color.Blue, new Geometry.Shapes.Point(width - 50, 0), 50, height);
+            Zone red = new Zone("Red(Blue)", "Random", Color.Red, new Geometry.Shapes.Point(0, 0), 50, height);
+            Zone blue = new Zone("Blue(Red)", "Random", Color.Blue, new Geometry.Shapes.Point(width - 50, 0), 50, height);
             red.OppositeZone = blue;
             red.OrientationDegrees = 0;
 

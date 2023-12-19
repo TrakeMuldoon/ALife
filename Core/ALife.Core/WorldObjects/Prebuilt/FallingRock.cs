@@ -3,7 +3,10 @@ using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility;
 using ALife.Core.WorldObjects.Agents;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace ALife.Core.WorldObjects.Prebuilt
 {

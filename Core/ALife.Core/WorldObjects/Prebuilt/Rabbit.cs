@@ -5,6 +5,8 @@ using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
+using System;
+using System.Collections.Generic;
 
 namespace ALife.Core.WorldObjects.Prebuilt
 {

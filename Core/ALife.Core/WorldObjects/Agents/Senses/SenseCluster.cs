@@ -1,5 +1,7 @@
 ﻿using ALife.Core.Collision;
 using ALife.Core.Geometry.Shapes;
+using System;
+using System.Collections.Generic;
 
 namespace ALife.Core.WorldObjects.Agents.Senses
 {

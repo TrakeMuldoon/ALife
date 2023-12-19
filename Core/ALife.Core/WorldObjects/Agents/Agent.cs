@@ -4,17 +4,17 @@ using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Text.Json.Serialization;
 
 namespace ALife.Core.WorldObjects.Agents
 {
     [DebuggerDisplay("AgentX:{Shape.CentrePoint.X}")]
     public class Agent : WorldObject
     {
-        [JsonIgnore]
         public IBrain MyBrain
         {
             get;
@@ -32,43 +32,35 @@ namespace ALife.Core.WorldObjects.Agents
             private set;
         }
 
-        [JsonIgnore]
         public AgentShadow Shadow
         {
             get;
             private set;
         }
 
-        [JsonIgnore]
         public Agent Parent
         {
             get;
             set;
         }
-        [JsonIgnore]
         public Agent LivingAncestor
         {
             get;
             set;
         }
-        [JsonIgnore]
         public int Generation
         {
             get;
             private set;
         }
-        [JsonIgnore]
         public bool JustReproduced
         {
             get;
             private set;
         }
 
-        [JsonIgnore]
         public Zone HomeZone;
-        [JsonIgnore]
         public Zone TargetZone;
-        [JsonIgnore]
         public double StartOrientation
         {
             get;

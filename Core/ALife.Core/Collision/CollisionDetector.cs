@@ -1,6 +1,8 @@
 ﻿using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility;
+using System;
+using System.Collections.Generic;
 
 namespace ALife.Core.Collision
 {

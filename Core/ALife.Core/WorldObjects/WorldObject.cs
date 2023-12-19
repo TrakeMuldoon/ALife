@@ -3,6 +3,7 @@ using ALife.Core.WorldObjects.Agents.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Point = ALife.Core.Geometry.Shapes.Point;
 
 namespace ALife.Core.WorldObjects
 {
@@ -48,7 +49,7 @@ namespace ALife.Core.WorldObjects
         }
         public bool Alive;
 
-        protected WorldObject(Geometry.Shapes.Point centrePoint, IShape shape, string genusLabel, string individualLabel, string collisionLevel, Color color)
+        protected WorldObject(Point centrePoint, IShape shape, string genusLabel, string individualLabel, string collisionLevel, Color color)
         {
             NumChildren = 0;
             Shape = shape;

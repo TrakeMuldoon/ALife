@@ -1,9 +1,8 @@
-﻿using ALifeUni.ALife;
-using ALifeUni.ALife.Geometry;
-using ALifeUni.ALife.Shapes;
-using ALifeUni.ALife.Utility;
-using ALifeUni.ALife.Utility.WorldObjects;
-using ALifeUni.ALife.WorldObjects.Agents;
+﻿using ALife.Core;
+using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility;
+using ALife.Core.WorldObjects;
+using ALife.Core.WorldObjects.Agents;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.UI.Xaml;
@@ -11,6 +10,8 @@ using System;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
+using Point = Windows.Foundation.Point;
+using Color = System.Drawing.Color;
 
 namespace ALifeUni.UI
 {
@@ -44,7 +45,7 @@ namespace ALifeUni.UI
         internal static void DrawAgentShadow(AgentShadow shadow, LayerUISettings uiSettings, AgentUISettings auiSettings, CanvasAnimatedDrawEventArgs args)
         {
             Color orig = shadow.Shape.DebugColor;
-            shadow.Shape.DebugColor = Colors.White;
+            shadow.Shape.DebugColor = Color.White;
             DrawShape(shadow.Shape, uiSettings.ShowBoundingBoxes, args, true);
             shadow.Shape.DebugColor = orig;
             //Draw Orientation
@@ -73,7 +74,7 @@ namespace ALifeUni.UI
         internal static void DrawPastObject(IShape shape, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
         {
             Color pastDebug = shape.DebugColor;
-            shape.DebugColor = Colors.White;
+            shape.DebugColor = Color.White;
             DrawShape(shape, uiSettings.ShowBoundingBoxes, args, true);
             shape.DebugColor = pastDebug;
         }

@@ -4,7 +4,7 @@ namespace ALife.Core.Geometry.Shapes
 {
     public interface IShape
     {
-        Geometry.Shapes.Point CentrePoint
+        Point CentrePoint
         {
             get;
             set;

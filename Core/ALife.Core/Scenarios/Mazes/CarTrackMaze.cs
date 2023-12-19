@@ -10,7 +10,21 @@ using System.Drawing;
 
 namespace ALife.Core.Scenarios.Mazes
 {
-    [ScenarioRegistration("Around The Track", description: "Lorum Ipsum")]
+    [ScenarioRegistration("Around The Track"
+        , description: @"
+A racetrack where the agents need to go around the track to an endzone which is nearly where they started.
+There are 4 checkpoints (1/4, 1/2, 3/4 and Finish Line)
+
+Failure cases:
+If they do not leave the start zone within 200 turns, they die.
+If they do not reach the next checkpoint within 1000 turns, they die.
+
+Success Cases:
+Reaching 1/4 resets death timer.
+Reaching 1/2 resets death timer, and reproduces at the start line.
+Reaching 3/4 resets death timer, and reproduces twice at the start line.
+Reaching the finish line, reproduces 3 times and then dies... Victorious!"
+    )]
     [SuggestedSeed(1832460063, "Fun scenario!!!")]
     [SuggestedSeed(1776675068, "Purple Wave")]
     public class CarTrackMaze : IScenario

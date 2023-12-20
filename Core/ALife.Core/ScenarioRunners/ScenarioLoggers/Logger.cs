@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ALife.Core.ScenarioRunners;
 
 namespace ALife.Core.ScenarioRunners.ScenarioLoggers
 {

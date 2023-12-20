@@ -11,7 +11,7 @@ namespace ScenarioRunner
         }
     }
 
-    internal class ConsoleScenarioRunner : AbstractScenarioRunner
+    internal class ConsoleScenarioRunner : AbstractLoggedScenarioRunner
     {
         public ConsoleScenarioRunner(string scenarioName, int? startingSeed = null, int numberSeedsToExecute = 20, int totalTurns = 50000, int turnBatch = 1000, int updateFrequency = 10000) : base(scenarioName, startingSeed, numberSeedsToExecute, totalTurns, turnBatch, updateFrequency)
         {

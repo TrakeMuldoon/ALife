@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using ALife.Avalonia.ALifeImplementations;
+using ALife.Core.ScenarioRunners;
 using ReactiveUI;
 
 namespace ALife.Avalonia.ViewModels
@@ -88,10 +89,10 @@ namespace ALife.Avalonia.ViewModels
             _consoleCaretIndex = 0;
             _consoleText = string.Empty;
             _seedText = string.Empty;
-            _executionCount = Core.ScenarioRunners.Constants.DEFAULT_NUMBER_SEEDS_EXECUTED.ToString();
-            _maxTurns = Core.ScenarioRunners.Constants.DEFAULT_TOTAL_TURNS.ToString();
-            _turnBatch = Core.ScenarioRunners.Constants.DEFAULT_TURN_BATCH.ToString();
-            _updateFrequency = Core.ScenarioRunners.Constants.DEFAULT_UPDATE_FREQUENCY.ToString();
+            _executionCount = Constants.DEFAULT_NUMBER_SEEDS_EXECUTED.ToString();
+            _maxTurns = Constants.DEFAULT_TOTAL_TURNS.ToString();
+            _turnBatch = Constants.DEFAULT_TURN_BATCH.ToString();
+            _updateFrequency = Constants.DEFAULT_UPDATE_FREQUENCY.ToString();
 
             if(AutoStartScenarioRunner)
             {
@@ -277,28 +278,28 @@ namespace ALife.Avalonia.ViewModels
             // get the number of scenarios we want to execute
             if(!int.TryParse(ExecutionCount, out int seedCount) || reset)
             {
-                seedCount = Core.ScenarioRunners.Constants.DEFAULT_NUMBER_SEEDS_EXECUTED;
+                seedCount = Constants.DEFAULT_NUMBER_SEEDS_EXECUTED;
                 ExecutionCount = seedCount.ToString();
             }
 
             // get the number of turns we want per scenario
             if(!int.TryParse(MaxTurnCount, out int maxTurns) || reset)
             {
-                maxTurns = Core.ScenarioRunners.Constants.DEFAULT_TOTAL_TURNS;
+                maxTurns = Constants.DEFAULT_TOTAL_TURNS;
                 MaxTurnCount = maxTurns.ToString();
             }
 
             // get the number of turns we want per scenario
             if(!int.TryParse(TurnBatchCount, out int turnBatch) || reset)
             {
-                turnBatch = Core.ScenarioRunners.Constants.DEFAULT_TURN_BATCH;
+                turnBatch = Constants.DEFAULT_TURN_BATCH;
                 TurnBatchCount = turnBatch.ToString();
             }
 
             // get the number of turns we want per scenario
             if(!int.TryParse(UpdateFrequencyCount, out int updateFrequency) || reset)
             {
-                updateFrequency = Core.ScenarioRunners.Constants.DEFAULT_UPDATE_FREQUENCY;
+                updateFrequency = Constants.DEFAULT_UPDATE_FREQUENCY;
                 UpdateFrequencyCount = updateFrequency.ToString();
             }
 

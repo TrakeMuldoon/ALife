@@ -1,17 +1,16 @@
-﻿using ALife.Core.ScenarioRunners.ScenarioLoggers;
-using ALife.Core.ScenarioRunners.ScenarioRunnerConfigs;
-using ALife.Core.Scenarios;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using ALife.Core.ScenarioRunners.ScenarioLoggers;
+using ALife.Core.ScenarioRunners.ScenarioRunnerConfigs;
 
 namespace ALife.Core.ScenarioRunners
 {
     /// <summary>
     /// An abstract scenario runner
     /// </summary>
-    /// <seealso cref="System.IDisposable"/>
-    public abstract class AbstractScenarioRunner : IDisposable
+    /// <seealso cref="IDisposable"/>
+    public abstract class AbstractLoggedScenarioRunner : IDisposable
     {
         /// <summary>
         /// The execution task
@@ -24,9 +23,9 @@ namespace ALife.Core.ScenarioRunners
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
         /// <summary>
-        /// The scenario
+        /// The simulation controller
         /// </summary>
-        private readonly IScenario scenario;
+        private readonly SimulationController simulationController;
 
         /// <summary>
         /// The disposed value
@@ -39,7 +38,7 @@ namespace ALife.Core.ScenarioRunners
         private bool stopRunner = true;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractScenarioRunner"/> class.
+        /// Initializes a new instance of the <see cref="AbstractLoggedScenarioRunner"/> class.
         /// </summary>
         /// <param name="scenarioName">Name of the scenario.</param>
         /// <param name="startingSeed">The starting seed.</param>
@@ -48,20 +47,21 @@ namespace ALife.Core.ScenarioRunners
         /// <param name="turnBatch">The turn batch.</param>
         /// <param name="updateFrequency">The update frequency.</param>
         /// <param name="logger">The logger.</param>
-        public AbstractScenarioRunner(string scenarioName
-                                      , int? startingSeed = null
-                                        , int numberSeedsToExecute = Constants.DEFAULT_NUMBER_SEEDS_EXECUTED
-                                        , int totalTurns = Constants.DEFAULT_TOTAL_TURNS
-                                        , int turnBatch = Constants.DEFAULT_TURN_BATCH
-                                        , int updateFrequency = Constants.DEFAULT_UPDATE_FREQUENCY
-                                        , Logger? logger = null
-                                        , Logger? scenarioSeedLogger = null)
+        public AbstractLoggedScenarioRunner(string scenarioName
+                                            , int? startingSeed = null
+                                            , int numberSeedsToExecute = Constants.DEFAULT_NUMBER_SEEDS_EXECUTED
+                                            , int totalTurns = Constants.DEFAULT_TOTAL_TURNS
+                                            , int turnBatch = Constants.DEFAULT_TURN_BATCH
+                                            , int updateFrequency = Constants.DEFAULT_UPDATE_FREQUENCY
+                                            , Logger? logger = null
+                                            , Logger? scenarioSeedLogger = null)
         {
+            // instantiate the simulation controller
+            simulationController = new SimulationController(scenarioName, startingSeed);
+
             // instantiate needed variables
             Logger = (Logger)(logger ?? Activator.CreateInstance(LoggerType));
             ScenarioSeedLogger = (Logger)(scenarioSeedLogger ?? Activator.CreateInstance(LoggerType));
-            scenario = ScenarioRegister.GetScenario(scenarioName);
-            StartingSeed = startingSeed;
             NumberSeedsToExecute = numberSeedsToExecute;
             TotalTurns = totalTurns;
             TurnBatch = turnBatch;
@@ -105,7 +105,7 @@ namespace ALife.Core.ScenarioRunners
         /// <summary>
         /// The starting seed
         /// </summary>
-        public int? StartingSeed { get; private set; }
+        public int? StartingSeed => simulationController.StartingSeed;
 
         /// <summary>
         /// Gets the total turns.
@@ -237,25 +237,19 @@ namespace ALife.Core.ScenarioRunners
         /// <param name="ct">The ct.</param>
         private void ScenarioExecutor(int seedValue, string headerMessage, CancellationToken ct)
         {
-            AbstractScenarionRunnerConfig config = ScenarioRunnerConfigRegister.GetDefaultConfigForScenarioType(scenario.GetType());
+            AbstractScenarionRunnerConfig config = ScenarioRunnerConfigRegister.GetDefaultConfigForScenarioType(simulationController.Scenario.GetType());
             // Display Header Message
             Logger.Write(headerMessage);
             Logger.WriteNewLine(1);
             Logger.WriteLineSeperator(1);
             Logger.WriteNewLine(1);
 
-            ScenarioRegistration scenarioDetails = ScenarioRegister.GetScenarioDetails(scenario.GetType());
-            int height = scenario.WorldHeight;
-            int width = scenario.WorldWidth;
-
-            //Write Header
-            string topLine = $"Seed: {seedValue}, Name: {scenarioDetails.Name}, Height:{height}, Width:{width}, Max Turns: {TotalTurns}";
+            string topLine = $"Seed: {seedValue}, Name: {simulationController.ScenarioName}, Height:{simulationController.SimulationHeight}, Width:{simulationController.SimulationWidth}, Max Turns: {TotalTurns}";
             Logger.WriteLine($"{topLine}");
 
             //Get World Ready
             DateTime start = DateTime.Now;
-            IScenario newCopy = IScenarioHelpers.FreshInstanceOf(scenario);
-            Planet.CreateWorld(seedValue, newCopy, height, width);
+            simulationController.InitializeSimulation();
 
             string error = null;
             try
@@ -271,7 +265,7 @@ namespace ALife.Core.ScenarioRunners
                     {
                         ct.ThrowIfCancellationRequested();
                     }
-                    Planet.World.ExecuteManyTurns(TurnBatch);
+                    simulationController.ExecuteTicks(TurnBatch);
                     Logger.Write(".");
 
                     if(config.ShouldEndSimulation(Logger.Write))

@@ -1,6 +1,4 @@
-﻿using ALife.Core.Scenarios;
-using ReactiveUI;
-using System;
+﻿using ReactiveUI;
 
 namespace ALife.Avalonia.ViewModels
 {
@@ -11,22 +9,34 @@ namespace ALife.Avalonia.ViewModels
     /// <seealso cref="ALife.Avalonia.ViewModels.ViewModelBase"/>
     public class WorldRunnerViewModel : ViewModelBase
     {
-        private string scenarioName;
-        public String ScenarioName
-        {
-            get => scenarioName;
-            set => this.RaiseAndSetIfChanged(ref scenarioName, value);
-        }
-        private int? Seed {  get; set; }
+        private string _scenarioName;
+        private int? _seed;
+
+        private bool _enabled;
 
         public WorldRunnerViewModel(string scenarioName, int? seed = null)
         {
-            ScenarioName = scenarioName;
-            Seed = seed;
+            this._scenarioName = scenarioName;
+            this._seed = seed;
+            this._enabled = false;
+        }
 
-            //TODO: This. Seriously. Just the worst.
-            WorldCanvas.CanvasScenarioName = scenarioName;
-            WorldCanvas.StartingSeed = seed;
+        public string StartingScenarioName
+        {
+            get => _scenarioName;
+            set => this.RaiseAndSetIfChanged(ref _scenarioName, value);
+        }
+
+        public bool IsEnabled
+        {
+            get => _enabled;
+            set => this.RaiseAndSetIfChanged(ref _enabled, value);
+        }
+
+        public int? StartingSeed
+        {
+            get => _seed;
+            set => this.RaiseAndSetIfChanged(ref _seed, value);
         }
     }
 }

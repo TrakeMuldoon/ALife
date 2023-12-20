@@ -11,9 +11,19 @@ namespace ALife.Avalonia.ViewModels
     public class WorldRunnerViewModel : ViewModelBase
     {
         /// <summary>
+        /// The agents active
+        /// </summary>
+        private int _agentsActive;
+
+        /// <summary>
         /// The enabled
         /// </summary>
         private bool _enabled;
+
+        /// <summary>
+        /// The genes active
+        /// </summary>
+        private int _genesActive;
 
         /// <summary>
         /// The scenario name
@@ -26,12 +36,26 @@ namespace ALife.Avalonia.ViewModels
         private int _seed;
 
         /// <summary>
+        /// The turn count
+        /// </summary>
+        private int _turnCount;
+
+        /// <summary>
+        /// The zone info
+        /// </summary>
+        private string _zoneInfo;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="WorldRunnerViewModel"/> class.
         /// </summary>
         public WorldRunnerViewModel()
         {
             Random r = new();
 
+            _zoneInfo = string.Empty;
+            _turnCount = 0;
+            _genesActive = 0;
+            _agentsActive = 0;
             this._scenarioName = string.Empty;
             this._seed = r.Next();
             this._enabled = false;
@@ -46,9 +70,33 @@ namespace ALife.Avalonia.ViewModels
         {
             Random r = new();
 
+            _zoneInfo = string.Empty;
+            _turnCount = 0;
+            _genesActive = 0;
+            _agentsActive = 0;
             this._scenarioName = scenarioName;
             this._seed = seed ?? r.Next();
             this._enabled = false;
+        }
+
+        /// <summary>
+        /// Gets or sets the agents active.
+        /// </summary>
+        /// <value>The agents active.</value>
+        public int AgentsActive
+        {
+            get => _agentsActive;
+            set => this.RaiseAndSetIfChanged(ref _agentsActive, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the genes active.
+        /// </summary>
+        /// <value>The genes active.</value>
+        public int GenesActive
+        {
+            get => _genesActive;
+            set => this.RaiseAndSetIfChanged(ref _genesActive, value);
         }
 
         /// <summary>
@@ -81,6 +129,26 @@ namespace ALife.Avalonia.ViewModels
         {
             get => _seed;
             set => this.RaiseAndSetIfChanged(ref _seed, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the turn count.
+        /// </summary>
+        /// <value>The turn count.</value>
+        public int TurnCount
+        {
+            get => _turnCount;
+            set => this.RaiseAndSetIfChanged(ref _turnCount, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the zone information.
+        /// </summary>
+        /// <value>The zone information.</value>
+        public string ZoneInfo
+        {
+            get => _zoneInfo;
+            set => this.RaiseAndSetIfChanged(ref _zoneInfo, value);
         }
     }
 }

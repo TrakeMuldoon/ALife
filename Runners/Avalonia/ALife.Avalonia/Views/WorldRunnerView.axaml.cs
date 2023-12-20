@@ -29,7 +29,7 @@ namespace ALife.Avalonia.Views
         /// Gets the vm.
         /// </summary>
         /// <value>The vm.</value>
-        private WorldRunnerViewModel _vm => (WorldRunnerViewModel)DataContext;
+        public WorldRunnerViewModel ViewModel => (WorldRunnerViewModel)DataContext;
 
         public void _Click(object sender, RoutedEventArgs args)
         {
@@ -218,9 +218,9 @@ namespace ALife.Avalonia.Views
         private void SetSimulationRunState(bool isRunning)
         {
             TheWorldCanvas.IsEnabled = isRunning;
-            if(_vm != null)
+            if(ViewModel != null)
             {
-                _vm.IsEnabled = isRunning;
+                ViewModel.IsEnabled = isRunning;
             }
 
             // TODO: Binding for IsEnabled seems like it is delayed by a cycle, so we're manually doing it for now

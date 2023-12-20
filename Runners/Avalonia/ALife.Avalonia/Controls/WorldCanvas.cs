@@ -13,10 +13,14 @@ namespace ALife.Avalonia.Controls
 {
     public class WorldCanvas : Control
     {
-        public static readonly StyledProperty<int> TurnCountProperty = AvaloniaProperty.Register<WorldCanvas, int>(nameof(TurnCount));
         public static DirectProperty<WorldCanvas, string> ScenarioNameProperty = AvaloniaProperty.RegisterDirect<WorldCanvas, string>(nameof(ScenarioName), x => x.ScenarioName, (x, y) => x.ScenarioName = y);
         public static DirectProperty<WorldCanvas, int?> StartingSeedProperty = AvaloniaProperty.RegisterDirect<WorldCanvas, int?>(nameof(StartingSeed), x => x.StartingSeed, (x, y) => x.StartingSeed = y);
-        private readonly AvaloniaRenderer renderer;
+
+        public static DirectProperty<WorldCanvas, int> TurnCountProperty = AvaloniaProperty.RegisterDirect<WorldCanvas, int>(nameof(TurnCount), x => x.TurnCount);
+
+        public static DirectProperty<WorldCanvas, bool> EnabledProperty = AvaloniaProperty.RegisterDirect<WorldCanvas, bool>(nameof(Enabled), x => x.Enabled, (x, y) => x.Enabled = y);
+
+        private AvaloniaRenderer renderer;
 
         private string _scenarioName;
         private int? _startingSeed;
@@ -29,27 +33,20 @@ namespace ALife.Avalonia.Controls
 
         public WorldCanvas()
         {
-            IScenario scenario = ScenarioRegister.GetScenario(ScenarioName);
-            if(StartingSeed != null)
-            {
-                Planet.CreateWorld(StartingSeed.Value, scenario);
-            }
-            else
-            {
-                Planet.CreateWorld(scenario);
-            }
-
-            renderer = new AvaloniaRenderer();
-
             DispatcherTimer timer = new()
             {
                 Interval = TimeSpan.FromSeconds(1 / 60.0)
             };
             timer.Tick += Timer_Tick;
             timer.Start();
+        }
 
-            PointerPressed += WorldCanvas_PointerPressed;
-            Tapped += WorldCanvas_Tapped;
+        private bool _configured = false;
+        private bool _enabled = false;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { SetAndRaise(EnabledProperty, ref _enabled, value); }
         }
 
         public string ScenarioName
@@ -64,55 +61,82 @@ namespace ALife.Avalonia.Controls
             set { SetAndRaise(StartingSeedProperty, ref _startingSeed, value); }
         }
 
-        //TODO: This horrific work around makes me PHYSICALLY SICK.
+        private int _turnCount;
         public int TurnCount
         {
-            get => GetValue(TurnCountProperty);
-            set => SetValue(TurnCountProperty, value);
+            get { return _turnCount; }
+            set { SetAndRaise(TurnCountProperty, ref _turnCount, value); }
         }
 
         public override void Render(DrawingContext drawingContext)
         {
-            renderer.SetContext(drawingContext);
-
-            LayerUISettings uiSettings = new("Physical", true);
-            AgentUISettings agentUISettings = new()
+            if(IsEnabled && _configured)
             {
-                ShowSenses = true,
-                ShowSenseBoundingBoxes = true
-            };
+                renderer.SetContext(drawingContext);
 
-            foreach(WorldObject worldObject in Planet.World.AllActiveObjects)
-            {
-                RenderLogic.DrawWorldObject(worldObject, uiSettings, agentUISettings, renderer);
+                LayerUISettings uiSettings = new("Physical", true);
+                AgentUISettings agentUISettings = new()
+                {
+                    ShowSenses = true,
+                    ShowSenseBoundingBoxes = true
+                };
+
+                foreach(WorldObject worldObject in Planet.World.AllActiveObjects)
+                {
+                    RenderLogic.DrawWorldObject(worldObject, uiSettings, agentUISettings, renderer);
+                }
+
+                int objects = Planet.World.AllActiveObjects.Count;
+                Point p1 = new(objects, objects);
+                Point p2 = new(p1.X + 50, p1.Y + 100);
+
+                Pen pen = new(Brushes.Green, 1, lineCap: PenLineCap.Square);
+                Pen boundPen = new(Brushes.Black);
+                drawingContext.DrawLine(pen, p1, p2);
+                Point shapePont = new(150 + movement, 150 + movement);
+
+                Rect r = new(shapePont.X, shapePont.Y, 12, 20);
+                drawingContext.DrawRectangle(boundPen, r);
+                drawingContext.DrawEllipse(Brushes.Aqua, pen, shapePont, 5, 5);
+
+                movement += 1;
+                if(movement >= 300)
+                {
+                    movement = 0;
+                }
             }
-
-            int objects = Planet.World.AllActiveObjects.Count;
-            Point p1 = new(objects, objects);
-            Point p2 = new(p1.X + 50, p1.Y + 100);
-
-            Pen pen = new(Brushes.Green, 1, lineCap: PenLineCap.Square);
-            Pen boundPen = new(Brushes.Black);
-            drawingContext.DrawLine(pen, p1, p2);
-            Point shapePont = new(150 + movement, 150 + movement);
-
-            Rect r = new(shapePont.X, shapePont.Y, 12, 20);
-            drawingContext.DrawRectangle(boundPen, r);
-            drawingContext.DrawEllipse(Brushes.Aqua, pen, shapePont, 5, 5);
-
-            movement += 1;
-            if(movement >= 300)
-            {
-                movement = 0;
-            }
-
             base.Render(drawingContext);
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            Planet.World.ExecuteOneTurn();
-            TurnCount++;
+            if(IsEnabled)
+            {
+                if (!_configured)
+                {
+                    IScenario scenario = ScenarioRegister.GetScenario(ScenarioName);
+                    if(StartingSeed != null)
+                    {
+                        Planet.CreateWorld(StartingSeed.Value, scenario);
+                    }
+                    else
+                    {
+                        Planet.CreateWorld(scenario);
+                    }
+
+                    renderer = new AvaloniaRenderer();
+
+
+                    PointerPressed += WorldCanvas_PointerPressed;
+                    Tapped += WorldCanvas_Tapped;
+                    _configured = true;
+                }
+                else
+                {
+                    Planet.World.ExecuteOneTurn();
+                    TurnCount++;
+                }
+            }
         }
 
         private void WorldCanvas_PointerPressed(object? sender, PointerPressedEventArgs e)

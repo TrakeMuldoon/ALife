@@ -102,7 +102,7 @@
         <!-- Agent Controls -->
         <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="Blue">
           <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Agent View" />
-          <StackPanel Name ="AgentUI" Orientation="Horizontal">
+          <StackPanel Name ="AgentUI" Orientation="Horizontal" Background="LimeGreen">
             <TextBlock>Senses:</TextBlock>
             <CheckBox Name="AgentSenseBox" IsChecked ="{Binding ShowSenses, Mode=TwoWay}" />
             <TextBlock>SenseBB:</TextBlock>

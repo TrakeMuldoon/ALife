@@ -1,4 +1,5 @@
 ﻿using ALife.Core;
+using ALife.Core.WorldObjects;
 
 namespace ALife.Rendering
 {
@@ -12,12 +13,17 @@ namespace ALife.Rendering
         /// <summary>
         /// The agent UI settings
         /// </summary>
-        public readonly AgentUISettings agentUiSettings = new();
+        public AgentUISettings AgentUiSettings = new();
+
+        /// <summary>
+        /// The drawing errors
+        /// </summary>
+        public int DrawingErrors = 0;
 
         /// <summary>
         /// The UI settings
         /// </summary>
-        public readonly LayerUISettings uiSettings = new("Physical", true);
+        public List<LayerUISettings> Layers = LayerUISettings.GetDefaultSettings();
 
         /// <summary>
         /// Renders the specified renderer.
@@ -25,9 +31,72 @@ namespace ALife.Rendering
         /// <param name="renderer">The renderer.</param>
         public void Render(AbstractRenderer renderer)
         {
-            for(int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
+            IEnumerable<LayerUISettings> renderableLayers = Layers.Where(x => x.ShowObjects);
+            foreach(LayerUISettings ui in renderableLayers)
             {
-                RenderLogic.DrawWorldObject(Planet.World.AllActiveObjects[i], uiSettings, agentUiSettings, renderer);
+                RenderLayer(renderer, ui, AgentUiSettings);
+            }
+        }
+
+        public void RenderLayer(AbstractRenderer renderer, LayerUISettings ui, AgentUISettings aui)
+        {
+            try
+            {
+                //Special Layer, Zones draw different
+                if(ui.LayerName == ReferenceValues.CollisionLevelZone)
+                {
+                    foreach(Zone z in Planet.World.Zones.Values)
+                    {
+                        RenderLogic.DrawZone(z, renderer);
+                    }
+                    return;
+                }
+                //Special Layer, DeadLayer draws different
+                if(ui.LayerName == ReferenceValues.CollisionLevelDead)
+                {
+                    for(int i = 0; i < Planet.World.InactiveObjects.Count; i++)
+                    {
+                        WorldObject obj = Planet.World.InactiveObjects[i];
+                        RenderLogic.DrawInactiveObject(obj, ui, renderer);
+                    }
+                    return;
+                }
+
+                if(!Planet.World.CollisionLevels.ContainsKey(ui.LayerName))        //Layer doesn't exist
+                {
+                    return;
+                }
+
+                /* TODO restore this code
+                 *
+                if(special != null && viewPast)
+                {
+                    //This is for when the 'x' key is depressed, it means we view what the selected agent saw when it's
+                    //turn happened.
+                    //Because each agent executes in order, any agents BEFORE the execution order of the selected agent, are in the correct
+                    //spots, but any agents with a HIGHER execution order will have been moved.
+                    //So they must be drawn in their previous location.
+                    RenderLogic.DrawPastState(ui, aui, renderer, special.ExecutionOrder);
+                }
+                else
+                {
+                    //Default Draw Normal case
+                    foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
+                    {
+                        RenderLogic.DrawWorldObject(wo, ui, aui, renderer);
+                    }
+                }
+                 */
+
+                //Default Draw Normal case
+                foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
+                {
+                    RenderLogic.DrawWorldObject(wo, ui, aui, renderer);
+                }
+            }
+            catch(Exception)
+            {
+                DrawingErrors++;
             }
         }
     }

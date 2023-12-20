@@ -12,7 +12,7 @@
     <vm:WorldRunnerViewModel />
   </Design.DataContext>
 
-  <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+  <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:CompileBindings="False">
     <Grid.ColumnDefinitions>
       <!-- 0: Controls -->
       <ColumnDefinition MinWidth="260" Width="260" />
@@ -55,8 +55,10 @@
           <Button Name="Speed_VerySlowButton" Click="Speed_VerySlowButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&lt;&lt;</Button>
           <Button Name="Speed_SlowButton" Click="Speed_SlowButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&lt;</Button>
           <Button Name="Speed_NormalButton" Click="Speed_NormalButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">-</Button>
-          <Button Name="Speed_FastButton" Click="Speed_FastButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">	&gt;</Button>
-          <Button Name="Speed_VeryFastButton" Click="Speed_VeryFastButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">	&gt;&gt;</Button>
+          <Button Name="Speed_FastButton" Click="Speed_FastButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;</Button>
+          <Button Name="Speed_VeryFastButton" Click="Speed_VeryFastButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;</Button>
+          <Button Name="Speed_VeryVeryFastButton" Click="Speed_VeryVeryFastButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;&gt;</Button>
+          <Button Name="Speed_VeryVeryVeryFastButton" Click="Speed_VeryVeryVeryFastButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">∞</Button>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal">
@@ -82,16 +84,31 @@
 
       <!-- Layers Controls -->
       <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="DarkBlue">
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Layers" />
-        <ListBox Name="VisualSettingsList" Background="Green" Margin="3, 3, 3, 3" HorizontalAlignment="Left">
-          <DataTemplate x:CompileBindings="False">
-            <StackPanel Orientation="Horizontal" Margin="3, 3, 3, 3" Background="LimeGreen">
-              <TextBlock Text="{Binding LayerName}" Width="60" HorizontalAlignment="Left" VerticalAlignment="Center" />
-              <CheckBox IsChecked="{Binding ShowObjects, Mode=TwoWay}" />
-              <CheckBox IsChecked="{Binding ShowBoundingBoxes, Mode=TwoWay}" />
-            </StackPanel>
-          </DataTemplate>
-        </ListBox>
+        <!-- Physical Controls -->
+        <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="Blue">
+          <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Layers Visual Settings" />
+          <ListBox Name="VisualSettingsList" Background="Green" Margin="3, 3, 3, 3" HorizontalAlignment="Left">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <StackPanel Orientation="Horizontal" Margin="3, 3, 3, 3" Background="LimeGreen">
+                  <TextBlock Text="{Binding LayerName}" Width="60" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                  <CheckBox IsChecked="{Binding ShowObjects, Mode=TwoWay}" />
+                  <CheckBox IsChecked="{Binding ShowBoundingBoxes, Mode=TwoWay}" />
+                </StackPanel>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </StackPanel>
+        <!-- Agent Controls -->
+        <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="Blue">
+          <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Agent View" />
+          <StackPanel Name ="AgentUI" Orientation="Horizontal">
+            <TextBlock>Senses:</TextBlock>
+            <CheckBox Name="AgentSenseBox" IsChecked ="{Binding ShowSenses, Mode=TwoWay}" />
+            <TextBlock>SenseBB:</TextBlock>
+            <CheckBox Name="AgentSenseBBBox" IsChecked ="{Binding ShowSenseBoundingBoxes, Mode=TwoWay}" />
+          </StackPanel>
+        </StackPanel>
       </StackPanel>
 
       <!-- Return to Launcher Button -->

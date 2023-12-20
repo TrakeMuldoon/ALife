@@ -35,6 +35,8 @@ namespace ALife.Avalonia.Controls
         /// </summary>
         public static DirectProperty<WorldCanvas, int> TurnCountProperty = AvaloniaProperty.RegisterDirect<WorldCanvas, int>(nameof(TurnCount), x => x.TurnCount);
 
+        public DispatcherTimer Timer;
+
         /// <summary>
         /// The enabled
         /// </summary>
@@ -75,12 +77,7 @@ namespace ALife.Avalonia.Controls
         {
             _enabled = false;
             _simulation = new();
-            DispatcherTimer timer = new()
-            {
-                Interval = TimeSpan.FromSeconds(1 / 60.0)
-            };
-            timer.Tick += Timer_Tick;
-            timer.Start();
+            SetSimulationSpeed(SimulationSpeed.Normal);
         }
 
         /// <summary>
@@ -104,6 +101,17 @@ namespace ALife.Avalonia.Controls
         }
 
         /// <summary>
+        /// Gets the simulation.
+        /// </summary>
+        /// <value>The simulation.</value>
+        public RenderedSimulationController Simulation => _simulation;
+
+        /// <summary>
+        /// The simulation speed
+        /// </summary>
+        public SimulationSpeed SimulationSpeed { get; private set; }
+
+        /// <summary>
         /// Gets or sets the starting seed.
         /// </summary>
         /// <value>The starting seed.</value>
@@ -121,6 +129,16 @@ namespace ALife.Avalonia.Controls
         {
             get { return _turnCount; }
             set { SetAndRaise(TurnCountProperty, ref _turnCount, value); }
+        }
+
+        /// <summary>
+        /// Executes the tick.
+        /// </summary>
+        /// <returns></returns>
+        public void ExecuteTick()
+        {
+            Planet.World.ExecuteOneTurn();
+            TurnCount++;
         }
 
         /// <summary>
@@ -158,6 +176,25 @@ namespace ALife.Avalonia.Controls
         }
 
         /// <summary>
+        /// Sets the simulation speed.
+        /// </summary>
+        /// <param name="speed">The speed.</param>
+        public void SetSimulationSpeed(SimulationSpeed speed)
+        {
+            if(Timer != null)
+            {
+                Timer.Stop();
+            }
+            SimulationSpeed = speed;
+            Timer = new()
+            {
+                Interval = TimeSpan.FromSeconds(1 / (double)speed)
+            };
+            Timer.Tick += Timer_Tick;
+            Timer.Start();
+        }
+
+        /// <summary>
         /// Timers the tick.
         /// </summary>
         /// <param name="sender">The sender.</param>
@@ -177,8 +214,7 @@ namespace ALife.Avalonia.Controls
                 }
                 else
                 {
-                    Planet.World.ExecuteOneTurn();
-                    TurnCount++;
+                    ExecuteTick();
                 }
             }
         }

@@ -75,6 +75,29 @@ namespace ALife.Avalonia.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="ScenarioRunnerViewModel"/> class.
         /// </summary>
+        public ScenarioRunnerViewModel()
+        {
+            ScenarioName = string.Empty;
+            ScenarioSeed = null;
+            AutoStartScenarioRunner = false;
+
+            _state = "Stopped";
+            _canStartRunner = true;
+            _canStopRunner = false;
+            _canRestartRunner = false;
+
+            _consoleCaretIndex = 0;
+            _consoleText = string.Empty;
+            _seedText = string.Empty;
+            _executionCount = Constants.DEFAULT_NUMBER_SEEDS_EXECUTED.ToString();
+            _maxTurns = Constants.DEFAULT_TOTAL_TURNS.ToString();
+            _turnBatch = Constants.DEFAULT_TURN_BATCH.ToString();
+            _updateFrequency = Constants.DEFAULT_UPDATE_FREQUENCY.ToString();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScenarioRunnerViewModel"/> class.
+        /// </summary>
         public ScenarioRunnerViewModel(string scenarioName, int? scenarioSeed, bool autoStartScenarioRunner)
         {
             ScenarioName = scenarioName;

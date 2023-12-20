@@ -118,6 +118,99 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ALife\ImportExport\AgentCodeSerializer.cs" />
+    <Compile Include="ALife\WorldObjects\Prebuilt\ExportedTestAgent.cs" />
+    <Compile Include="ALife\WorldObjects\Prebuilt\Rabbit.cs" />
+    <Compile Include="ALife\Distributors\RandomObjectDistributor.cs" />
+    <Compile Include="ALife\Distributors\StraightLineDistributor.cs" />
+    <Compile Include="ALife\Distributors\WorldObjectDistributor.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\AgentActions\ActionCluster.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\AgentActions\ActionPart.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\AgentActions\ColorCluster.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\AgentActions\MoveCluster.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Agent.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\AgentActions\RotateCluster.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\AgentFactory.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\AgentIDGenerator.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\AlwaysTrueBehaviourCondition.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\BehaviourCondition.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\BehaviourInput.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\BehaviourCabinet.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\BehaviourWaitQueue.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\TypedClasses\BehaviourFactory.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\TypedClasses\IntConditionFactory.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\TypedClasses\StringConditionFactory.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\TypedClasses\DoubleConditionFactory.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\TypedClasses\BoolConditionFactory.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\IBrain.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\Behaviour.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\BehaviourBrain.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\NeuralNetworkBrains\ActionNeuron.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\NeuralNetworkBrains\Dendrite.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\NeuralNetworkBrains\FuncNeuron.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\NeuralNetworkBrains\FuncNeuronFactory.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\NeuralNetworkBrains\Layer.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\NeuralNetworkBrain.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\NeuralNetworkBrains\Neuron.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\RandomBrain.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Brains\TesterBrain.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Properties\IPropertyInput.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Properties\PropertyInput.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Properties\StatisticInput.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Senses\Eyes\EyeIdentifierInput.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Senses\Eyes\ColorBoolInput.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Senses\Eyes\ColorInput.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Senses\GenericInputs\CountInput.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Senses\GoalSense\DistanceToObjectInput.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Senses\GoalSenseCluster.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Senses\GoalSense\RotationToObjecDoubleInput.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Senses\GoalSense\RotationToObjectInput.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Senses\ProximityCluster.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Senses\SquareSenseCluster.cs" />
+    <Compile Include="ALife\WorldObjects\Prebuilt\MushroomGatherer.cs" />
+    <Compile Include="ALife\Scenarios\ScenarioRegistration.cs" />
+    <Compile Include="ALife\Scenarios\RegisteredScenarioMetadata.cs" />
+    <Compile Include="ALife\Scenarios\SuggestedSeed.cs" />
+    <Compile Include="ALife\Scenarios\GardenScenario\RabbitScenario.cs" />
+    <Compile Include="ALife\WorldObjects\Prebuilt\Fruit.cs" />
+    <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildRectangle.cs" />
+    <Compile Include="ALife\Geometry\Shapes\ChildShapes\IChildShape.cs" />
+    <Compile Include="ALife\Scenarios\GardenScenario\MushroomScenario.cs" />
+    <Compile Include="ALife\Scenarios\Mazes\CarTrackMaze.cs" />
+    <Compile Include="ALife\Scenarios\ScenarioRegister.cs" />
+    <Compile Include="ALife\Scenarios\ScenarioHelpers\FieldCrossingHelpers.cs" />
+    <Compile Include="ALife\Scenarios\ScenarioTemplate.cs" />
+    <Compile Include="ALife\Scenarios\ScenarioHelpers\CollisionBehaviours.cs" />
+    <Compile Include="ALife\Scenarios\FieldCrossings\FieldCrossingWallsScenario.cs" />
+    <Compile Include="ALife\Scenarios\Mazes\DripFeedMaze.cs" />
+    <Compile Include="ALife\Scenarios\FieldCrossings\FieldCrossingLowReproScenario.cs" />
+    <Compile Include="ALife\Scenarios\FieldCrossings\FieldCrossingScenario.cs" />
+    <Compile Include="ALife\Scenarios\Mazes\GenerationalMazeScenario.cs" />
+    <Compile Include="ALife\Scenarios\Mazes\MazeScenario.cs" />
+    <Compile Include="ALife\Scenarios\ScenarioHelpers\CommonSenses.cs" />
+    <Compile Include="ALife\Scenarios\ScenarioHelpers\MazeSetups.cs" />
+    <Compile Include="ALife\Scenarios\TestScenarios\GoalsTestScenario.cs" />
+    <Compile Include="ALife\Scenarios\TestScenarios\NeuralNetScenario.cs" />
+    <Compile Include="ALife\Scenarios\TestScenarios\RectangleScenario.cs" />
+    <Compile Include="ALife\Scenarios\IScenario.cs" />
+    <Compile Include="ALife\Utility\EvoNumber.cs" />
+    <Compile Include="ALife\Geometry\Shapes\AARectangle.cs" />
+    <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildCircle.cs" />
+    <Compile Include="ALife\Geometry\Shapes\ChildShapes\ChildSector.cs" />
+    <Compile Include="ALife\Utility\BoundedNumber.cs" />
+    <Compile Include="ALife\Utility\ColorExtensions.cs" />
+    <Compile Include="ALife\Utility\FastRandom.cs" />
+    <Compile Include="ALife\Utility\ListExtensions.cs" />
+    <Compile Include="ALife\Utility\ROEvoNumber.cs" />
+    <Compile Include="ALife\WorldObjects\EmptyObject.cs" />
+    <Compile Include="ALife\WorldObjects\AgentShadow.cs" />
+    <Compile Include="ALife\WorldObjects\WorldObject.cs" />
+    <Compile Include="ALife\Geometry\Shapes\Rectangle.cs" />
+    <Compile Include="ALife\WorldObjects\Prebuilt\FallingRock.cs" />
+    <Compile Include="ALife\WorldObjects\Prebuilt\MazeRunner.cs" />
+    <Compile Include="ALife\WorldObjects\Prebuilt\Spinner.cs" />
+    <Compile Include="ALife\WorldObjects\Prebuilt\Wall.cs" />
+    <Compile Include="ALife\Zone.cs" />
     <Compile Include="Launcher.xaml.cs">
       <DependentUpon>Launcher.xaml</DependentUpon>
     </Compile>
@@ -155,6 +248,24 @@
     <Compile Include="UI\UserControls\WallPanel.xaml.cs">
       <DependentUpon>WallPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ALife\Collision\CollisionGrid.cs" />
+    <Compile Include="ALife\Collision\ICollisionMap.cs" />
+    <Compile Include="ALife\Collision\CollisionDetector.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Input.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Senses\SenseCluster.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Senses\EyeCluster.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Senses\SenseInput.cs" />
+    <Compile Include="ALife\WorldObjects\Agents\Senses\GenericInputs\AnyInput.cs" />
+    <Compile Include="ALife\Geometry\Angle.cs" />
+    <Compile Include="ALife\Geometry\Shapes\BoundingBox.cs" />
+    <Compile Include="ALife\ReferenceValues.cs" />
+    <Compile Include="ALife\Planet.cs" />
+    <Compile Include="ALife\Geometry\Shapes\Circle.cs" />
+    <Compile Include="ALife\Geometry\Shapes\EnumShapes.cs" />
+    <Compile Include="ALife\Utility\ExtraMath.cs" />
+    <Compile Include="ALife\Geometry\Shapes\IHasShape.cs" />
+    <Compile Include="ALife\Geometry\Shapes\IShape.cs" />
+    <Compile Include="ALife\Geometry\Shapes\Sector.cs" />
     <Compile Include="UI\UserControls\AgentInfoPanel.xaml.cs">
       <DependentUpon>AgentInfoPanel.xaml</DependentUpon>
     </Compile>
@@ -172,6 +283,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ALife\WorldObjects\Agents\Brains\BehaviourBrains\spec.txt" />
     <Content Include="PackageAssets\AppSplash.png" />
     <Content Include="PackageAssets\splashscreen.scale-200.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -236,15 +348,14 @@
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.8.6</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
+    </PackageReference>
     <PackageReference Include="Win2D.uwp">
       <Version>1.27.1</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="ALife.Core">
-      <HintPath>..\..\..\Core\ALife.Core\bin\Debug\netstandard2.1\ALife.Core.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

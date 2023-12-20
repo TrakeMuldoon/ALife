@@ -73,6 +73,7 @@ namespace ALife.Avalonia.Controls
         /// </summary>
         public WorldCanvas()
         {
+            _enabled = false;
             _simulation = new();
             DispatcherTimer timer = new()
             {

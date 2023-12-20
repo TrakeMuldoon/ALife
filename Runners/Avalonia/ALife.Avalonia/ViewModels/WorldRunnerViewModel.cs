@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using System;
+using ReactiveUI;
 
 namespace ALife.Avalonia.ViewModels
 {
@@ -22,7 +23,19 @@ namespace ALife.Avalonia.ViewModels
         /// <summary>
         /// The seed
         /// </summary>
-        private int? _seed;
+        private int _seed;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorldRunnerViewModel"/> class.
+        /// </summary>
+        public WorldRunnerViewModel()
+        {
+            Random r = new();
+
+            this._scenarioName = string.Empty;
+            this._seed = r.Next();
+            this._enabled = false;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WorldRunnerViewModel"/> class.
@@ -31,8 +44,10 @@ namespace ALife.Avalonia.ViewModels
         /// <param name="seed">The seed.</param>
         public WorldRunnerViewModel(string scenarioName, int? seed = null)
         {
+            Random r = new();
+
             this._scenarioName = scenarioName;
-            this._seed = seed;
+            this._seed = seed ?? r.Next();
             this._enabled = false;
         }
 
@@ -45,6 +60,8 @@ namespace ALife.Avalonia.ViewModels
             get => _enabled;
             set => this.RaiseAndSetIfChanged(ref _enabled, value);
         }
+
+        public string ScenarioLabel => $"Scenario: {StartingScenarioName}";
 
         /// <summary>
         /// Gets or sets the name of the starting scenario.
@@ -60,7 +77,7 @@ namespace ALife.Avalonia.ViewModels
         /// Gets or sets the starting seed.
         /// </summary>
         /// <value>The starting seed.</value>
-        public int? StartingSeed
+        public int StartingSeed
         {
             get => _seed;
             set => this.RaiseAndSetIfChanged(ref _seed, value);

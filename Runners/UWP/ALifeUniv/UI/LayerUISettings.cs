@@ -1,4 +1,4 @@
-﻿using ALife.Core;
+﻿using ALifeUni.ALife;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

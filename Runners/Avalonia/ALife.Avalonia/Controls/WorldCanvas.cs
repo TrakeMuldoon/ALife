@@ -300,9 +300,8 @@ namespace ALife.Avalonia.Controls
             foreach(string name in zoneCount.Keys)
             {
                 string nameSpaces = new string(' ', maxNameLength - name.Length);
-                string countSpaces = new string(' ', maxZoneCount - zoneCount[name]);
 
-                sb.AppendLine($"{nameSpaces}{name}: {countSpaces}{zoneCount[name]}");
+                sb.AppendLine($"{nameSpaces}{name}: {zoneCount[name]}");
             }
             _vm.ZoneInfo = sb.ToString();
             _vm.AgentsActive = Planet.World.AllActiveObjects.Where(wo => wo.Alive && wo is Agent).Count();

@@ -12,12 +12,12 @@ namespace ALife.Core.Distributors
         readonly public Angle Direction;
         readonly public int LineDepth;
         readonly public double Separation;
-        readonly public Geometry.Shapes.Point StartPoint;
+        readonly public Point StartPoint;
         readonly public bool WrapAround;
         readonly public int Length;
         readonly public bool Initialized;
 
-        public StraightLineDistributorConfig(Angle direction, double separation, Geometry.Shapes.Point startPoint) : this()
+        public StraightLineDistributorConfig(Angle direction, double separation, Point startPoint) : this()
         {
             Direction = direction;
             Separation = separation;
@@ -28,7 +28,7 @@ namespace ALife.Core.Distributors
             LineDepth = 1;
             Initialized = true;
         }
-        public StraightLineDistributorConfig(Angle direction, double separation, Geometry.Shapes.Point startPoint, int lineDepth) : this()
+        public StraightLineDistributorConfig(Angle direction, double separation, Point startPoint, int lineDepth) : this()
         {
             Direction = direction;
             Separation = separation;
@@ -51,7 +51,7 @@ namespace ALife.Core.Distributors
             {
                 throw new ArgumentException("Uninitialized Config is being utilized. This is unacceptable.");
             }
-            Geometry.Shapes.Point sp = config.StartPoint;
+            Point sp = config.StartPoint;
             if(sp.X < startZone.BoundingBox.MinX
                 || sp.X > startZone.BoundingBox.MaxX
                 || sp.Y < startZone.BoundingBox.MinY
@@ -60,16 +60,16 @@ namespace ALife.Core.Distributors
                 throw new ArgumentOutOfRangeException("StartPoint is outside of the zone.");
             }
 
-            Geometry.Shapes.Point nextPoint = ExtraMath.TranslateByVector(config.StartPoint, config.Direction, config.Separation);
-            separationPoint = new Geometry.Shapes.Point(nextPoint.X - config.StartPoint.X, nextPoint.Y - config.StartPoint.Y);
-            deltaStart = new Geometry.Shapes.Point(config.StartPoint.X - startZone.TopLeft.X, config.StartPoint.Y - startZone.TopLeft.Y);
+            Point nextPoint = ExtraMath.TranslateByVector(config.StartPoint, config.Direction, config.Separation);
+            separationPoint = new Point(nextPoint.X - config.StartPoint.X, nextPoint.Y - config.StartPoint.Y);
+            deltaStart = new Point(config.StartPoint.X - startZone.TopLeft.X, config.StartPoint.Y - startZone.TopLeft.Y);
         }
 
         private int counter = 0;
-        private Geometry.Shapes.Point separationPoint;
-        private Geometry.Shapes.Point deltaStart;
+        private Point separationPoint;
+        private Point deltaStart;
 
-        public override Geometry.Shapes.Point NextObjectCentre(double BBLength, double BBHeight)
+        public override Point NextObjectCentre(double BBLength, double BBHeight)
         {
             double halfLength = BBLength / 2;
             double halfHeight = BBHeight / 2;
@@ -95,7 +95,7 @@ namespace ALife.Core.Distributors
 
             if(collisions.Count == 0)
             {
-                return new Geometry.Shapes.Point(newX, newY);
+                return new Point(newX, newY);
             }
             else
             {

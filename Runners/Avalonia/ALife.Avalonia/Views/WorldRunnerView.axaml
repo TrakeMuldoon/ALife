@@ -23,9 +23,9 @@
     </Grid.ColumnDefinitions>
 
     <!-- The controls -->
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3, 3, 3, 3" Background="Gray" Grid.Column="0">
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3, 3, 3, 3" Background="DarkGray" Grid.Column="0">
       <!-- Scenario Details -->
-      <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3">
+      <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="Gray">
         <TextBlock x:CompileBindings="False" Text="{Binding ScenarioLabel}" Margin="3, 3, 3, 3" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
         <StackPanel Orientation="Horizontal" Margin="3, 3, 3, 3">
@@ -42,12 +42,12 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="3, 3, 3, 3">
           <TextBlock VerticalAlignment="Center" Text="Zone Info: " />
-          <TextBox x:CompileBindings="False" Text="{Binding ZoneInfo}" IsReadOnly="True" Height="100" Margin="3, 3, 3, 3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+          <TextBox x:CompileBindings="False" Text="{Binding ZoneInfo}" IsReadOnly="True" Height="100" Margin="3, 3, 3, 3" HorizontalAlignment="Stretch" Width="177" VerticalAlignment="Center" />
         </StackPanel>
       </StackPanel>
 
       <!-- Seed Controls -->
-      <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="DarkBlue">
+      <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="Gray">
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Seed Settings" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
           <TextBox Name="Seed" x:CompileBindings="False" Text="{Binding StartingSeed}" />
@@ -57,7 +57,7 @@
       </StackPanel>
 
       <!-- Simulation Speed Controls -->
-      <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="DarkBlue">
+      <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gray">
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Simulation Speed" />
 
         <!-- Pause/Play/1 Turn -->
@@ -79,53 +79,51 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal">
-          <TextBox Name="FF_NumberTurns" x:CompileBindings="False" Text="SEED" />
+          <TextBox Name="FF_NumberTurns" x:CompileBindings="False" Text="{Binding FastForwardTicks}" />
           <Button Name="FF_FFButton" Click="FF_FFButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Fast Forward</Button>
         </StackPanel>
       </StackPanel>
 
       <!-- Zoom Controls -->
-      <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="DarkBlue">
+      <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="Gray">
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Zoom Controls" />
 
         <StackPanel Orientation="Horizontal">
           <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Current Zoom:" />
-          <TextBlock Text="{Binding #Zoom_Slider.Value}" HorizontalAlignment="Center" Margin="3, 3, 3, 3" />
+          <TextBlock Text="{Binding #Zoom_Slider.Value}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3, 3, 3, 3" />
+          <Slider x:Name="Zoom_Slider" Minimum ="500" Maximum="2000" Width="115" Margin="3, 3, 3, 3" />
         </StackPanel>
-        <Slider x:Name="Zoom_Slider" Minimum ="500" Maximum="2000" Margin="3, 3, 3, 3" />
         <StackPanel Orientation="Horizontal">
           <Button Name="Zoom_InButton" Click="Zoom_InButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Zoom In</Button>
           <Button Name="Zoom_OutButton" Click="Zoom_OutButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Zoom Out</Button>
         </StackPanel>
       </StackPanel>
 
-      <!-- Layers Controls -->
-      <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="DarkBlue">
-        <!-- Physical Controls -->
-        <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="Blue">
-          <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Layers Visual Settings" />
-          <ListBox Name="VisualSettingsList" Background="Green" Margin="3, 3, 3, 3" HorizontalAlignment="Left">
-            <ListBox.ItemTemplate>
-              <DataTemplate>
-                <StackPanel Orientation="Horizontal" Margin="3, 3, 3, 3" Background="LimeGreen">
-                  <TextBlock Text="{Binding LayerName}" Width="60" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                  <CheckBox IsChecked="{Binding ShowObjects, Mode=TwoWay}" />
-                  <CheckBox IsChecked="{Binding ShowBoundingBoxes, Mode=TwoWay}" />
-                </StackPanel>
-              </DataTemplate>
-            </ListBox.ItemTemplate>
-          </ListBox>
+      <!-- Layers Physical Controls -->
+      <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="Gray">
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Layers Visual Settings" />
+        <ListBox Name="VisualSettingsList" Background="LightGray" Margin="3, 3, 3, 3" HorizontalAlignment="Stretch">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal" Margin="3, 3, 3, 3" Background="Gray" HorizontalAlignment="Stretch">
+                <TextBlock Text="{Binding LayerName}" Width="60" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3, 3, 3, 3" />
+                <CheckBox IsChecked="{Binding ShowObjects, Mode=TwoWay}" Margin="3, 3, 3, 3" />
+                <CheckBox IsChecked="{Binding ShowBoundingBoxes, Mode=TwoWay}" Margin="3, 3, 3, 3" />
+              </StackPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </StackPanel>
+      <!-- Agent Controls -->
+      <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="Gray">
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Agent View" />
+        <StackPanel Name ="AgentUI" Orientation="Horizontal" Background="Gray">
+          <TextBlock VerticalAlignment="Center" Margin="3, 3, 3, 3">Senses:</TextBlock>
+          <CheckBox Name="AgentSenseBox" IsChecked ="{Binding ShowSenses, Mode=TwoWay}" Margin="3, 3, 3, 3" />
+          <TextBlock VerticalAlignment="Center" Margin="3, 3, 3, 3">SenseBB:</TextBlock>
+          <CheckBox Name="AgentSenseBBBox" IsChecked ="{Binding ShowSenseBoundingBoxes, Mode=TwoWay}" Margin="3, 3, 3, 3" />
         </StackPanel>
-        <!-- Agent Controls -->
-        <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="Blue">
-          <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Agent View" />
-          <StackPanel Name ="AgentUI" Orientation="Horizontal" Background="LimeGreen">
-            <TextBlock>Senses:</TextBlock>
-            <CheckBox Name="AgentSenseBox" IsChecked ="{Binding ShowSenses, Mode=TwoWay}" />
-            <TextBlock>SenseBB:</TextBlock>
-            <CheckBox Name="AgentSenseBBBox" IsChecked ="{Binding ShowSenseBoundingBoxes, Mode=TwoWay}" />
-          </StackPanel>
-        </StackPanel>
+        <CheckBox x:Name="ShowGeneology" Checked="ShowGeneology_Checked">Show Ancestry</CheckBox>
       </StackPanel>
 
       <!-- Return to Launcher Button -->

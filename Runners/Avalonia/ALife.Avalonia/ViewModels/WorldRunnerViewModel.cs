@@ -21,6 +21,11 @@ namespace ALife.Avalonia.ViewModels
         private bool _enabled;
 
         /// <summary>
+        /// The fast forward ticks
+        /// </summary>
+        private int _fastForwardTicks;
+
+        /// <summary>
         /// The genes active
         /// </summary>
         private int _genesActive;
@@ -56,6 +61,7 @@ namespace ALife.Avalonia.ViewModels
             _turnCount = 0;
             _genesActive = 0;
             _agentsActive = 0;
+            _fastForwardTicks = 0;
             this._scenarioName = string.Empty;
             this._seed = r.Next();
             this._enabled = false;
@@ -74,6 +80,7 @@ namespace ALife.Avalonia.ViewModels
             _turnCount = 0;
             _genesActive = 0;
             _agentsActive = 0;
+            _fastForwardTicks = 0;
             this._scenarioName = scenarioName;
             this._seed = seed ?? r.Next();
             this._enabled = false;
@@ -87,6 +94,16 @@ namespace ALife.Avalonia.ViewModels
         {
             get => _agentsActive;
             set => this.RaiseAndSetIfChanged(ref _agentsActive, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the fast forward ticks.
+        /// </summary>
+        /// <value>The fast forward ticks.</value>
+        public int FastForwardTicks
+        {
+            get => _fastForwardTicks;
+            set => this.RaiseAndSetIfChanged(ref _fastForwardTicks, value);
         }
 
         /// <summary>

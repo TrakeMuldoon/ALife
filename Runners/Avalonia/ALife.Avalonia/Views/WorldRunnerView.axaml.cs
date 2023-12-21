@@ -65,8 +65,14 @@ namespace ALife.Avalonia.Views
             SetSimulationRunState(true);
         }
 
+        /// <summary>
+        /// Handles the Click event of the FF_FFButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         public void FF_FFButton_Click(object sender, RoutedEventArgs args)
         {
+            // TODO: take ViewModel.FastForwardTicks and fast foward
         }
 
         /// <summary>
@@ -112,6 +118,10 @@ namespace ALife.Avalonia.Views
             UpdateSimulationSpeedControls();
             TheWorldCanvas.StartingSeed = seed;
             TheWorldCanvas.Simulation.InitializeSimulation();
+        }
+
+        public void ShowGeneology_Checked(object sender, RoutedEventArgs args)
+        {
         }
 
         /// <summary>

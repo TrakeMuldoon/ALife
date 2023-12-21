@@ -1,5 +1,5 @@
-﻿using System;
-using ReactiveUI;
+﻿using ReactiveUI;
+using System;
 
 namespace ALife.Avalonia.ViewModels
 {
@@ -41,6 +41,26 @@ namespace ALife.Avalonia.ViewModels
         private int _seed;
 
         /// <summary>
+        /// The ticks per second
+        /// </summary>
+        private double _ticksPerSecond;
+
+        /// <summary>
+        /// The ticks per second
+        /// </summary>
+        private string _ticksPerSecondLabel;
+
+        /// <summary>
+        /// The FPS
+        /// </summary>
+        private double _fps;
+
+        /// <summary>
+        /// The FPS label
+        /// </summary>
+        private string _fpsLabel;
+
+        /// <summary>
         /// The turn count
         /// </summary>
         private int _turnCount;
@@ -57,6 +77,10 @@ namespace ALife.Avalonia.ViewModels
         {
             Random r = new();
 
+            _ticksPerSecond = 0;
+            _ticksPerSecondLabel = "TPS: 0.00";
+            _fps = 0;
+            _fpsLabel = "FPS: 0.00";
             _zoneInfo = string.Empty;
             _turnCount = 0;
             _genesActive = 0;
@@ -76,6 +100,10 @@ namespace ALife.Avalonia.ViewModels
         {
             Random r = new();
 
+            _ticksPerSecond = 0;
+            _ticksPerSecondLabel = "TPS: 0.00";
+            _fps = 0;
+            _fpsLabel = "FPS: 0.00";
             _zoneInfo = string.Empty;
             _turnCount = 0;
             _genesActive = 0;
@@ -126,6 +154,10 @@ namespace ALife.Avalonia.ViewModels
             set => this.RaiseAndSetIfChanged(ref _enabled, value);
         }
 
+        /// <summary>
+        /// Gets the scenario label.
+        /// </summary>
+        /// <value>The scenario label.</value>
         public string ScenarioLabel => $"Scenario: {StartingScenarioName}";
 
         /// <summary>
@@ -146,6 +178,58 @@ namespace ALife.Avalonia.ViewModels
         {
             get => _seed;
             set => this.RaiseAndSetIfChanged(ref _seed, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the ticks per second.
+        /// </summary>
+        /// <value>The ticks per second.</value>
+        public double TicksPerSecond
+        {
+            get => _ticksPerSecond;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _ticksPerSecond, value);
+                TicksPerSecondLabel = $"TPS: {Math.Round(_ticksPerSecond, 2)}";
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the ticks per second.
+        /// </summary>
+        /// <value>The ticks per second.</value>
+        public string TicksPerSecondLabel
+        {
+            get => _ticksPerSecondLabel;
+            set => this.RaiseAndSetIfChanged(ref _ticksPerSecondLabel, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the frames per second.
+        /// </summary>
+        /// <value>
+        /// The frames per second.
+        /// </value>
+        public double FramesPerSecond
+        {
+            get => _fps;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _fps, value);
+                FramesPerSecondLabel = $"FPS: {Math.Round(_fps, 2)}";
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the frames per second label.
+        /// </summary>
+        /// <value>
+        /// The frames per second label.
+        /// </value>
+        public string FramesPerSecondLabel
+        {
+            get => _fpsLabel;
+            set => this.RaiseAndSetIfChanged(ref _fpsLabel, value);
         }
 
         /// <summary>

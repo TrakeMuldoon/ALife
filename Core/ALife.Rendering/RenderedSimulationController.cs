@@ -11,6 +11,19 @@ namespace ALife.Rendering
     public class RenderedSimulationController : SimulationController
     {
         /// <summary>
+        /// The FPS counter
+        /// </summary>
+        private PerformanceCounter _fpsCounter = new();
+
+        /// <summary>
+        /// Gets the FPS counter.
+        /// </summary>
+        /// <value>
+        /// The FPS counter.
+        /// </value>
+        public PerformanceCounter FpsCounter => _fpsCounter;
+
+        /// <summary>
         /// The agent UI settings
         /// </summary>
         public AgentUISettings AgentUiSettings = new();
@@ -31,6 +44,7 @@ namespace ALife.Rendering
         /// <param name="renderer">The renderer.</param>
         public void Render(AbstractRenderer renderer)
         {
+            _fpsCounter.Update();
             IEnumerable<LayerUISettings> renderableLayers = Layers.Where(x => x.ShowObjects);
             foreach(LayerUISettings ui in renderableLayers)
             {

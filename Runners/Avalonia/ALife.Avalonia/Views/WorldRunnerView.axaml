@@ -21,13 +21,26 @@
       <!-- 2: The World -->
       <ColumnDefinition MinWidth="200" Width="580*" />
     </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="35" />
+      <RowDefinition MinHeight="100" />
+    </Grid.RowDefinitions>
+
+    <!-- Scenario Info and Basic Controls -->
+    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" Grid.Row="0">
+      <!-- Return to Launcher Button -->
+      <Button Name="ReturntoLauncher" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="ReturntoLauncher_Click" Margin="3, 3, 3, 3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Return to Launcher</Button>
+
+      <TextBlock Name="TicksPerSecond" x:CompileBindings="False" Width="200" Margin="3, 3, 3, 3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+      <TextBlock Name="FramesPerSecond" x:CompileBindings="False" Width="200" Margin="3, 3, 3, 3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+      <TextBlock x:CompileBindings="False" Text="{Binding ScenarioLabel}" Margin="3, 3, 3, 3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    </StackPanel>
 
     <!-- The controls -->
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3, 3, 3, 3" Background="DarkGray" Grid.Column="0">
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3, 3, 3, 3" Background="DarkGray" Grid.Column="0" Grid.Row="1">
       <!-- Scenario Details -->
       <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="Gray">
-        <TextBlock x:CompileBindings="False" Text="{Binding ScenarioLabel}" Margin="3, 3, 3, 3" HorizontalAlignment="Center" VerticalAlignment="Center" />
-
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="World Details" />
         <StackPanel Orientation="Horizontal" Margin="3, 3, 3, 3">
           <TextBlock VerticalAlignment="Center" Text="Current Tick: " />
           <TextBlock x:CompileBindings="False" Text="{Binding TurnCount}" Margin="3, 3, 3, 3" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -49,7 +62,7 @@
       <!-- Seed Controls -->
       <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="Gray">
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Seed Settings" />
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch">
           <TextBox Name="Seed" x:CompileBindings="False" Text="{Binding StartingSeed}" />
           <Button Name="Seed_ResetWorldButton" Click="Seed_ResetWorldButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">RESET</Button>
           <Button Name="Seed_NewSeedButton" Click="Seed_NewSeedButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">RANDOM</Button>
@@ -61,24 +74,24 @@
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Simulation Speed" />
 
         <!-- Pause/Play/1 Turn -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch">
           <Button Name="Execution_PauseButton" Click="Execution_PauseButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Pause</Button>
           <Button Name="Execution_PlayButton" Click="Execution_PlayButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Play</Button>
           <Button Name="Execution_OneTurnButton" Click="Execution_OneTurnButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">One Turn</Button>
         </StackPanel>
 
         <!-- Speed -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-          <Button Name="Speed_VerySlowButton" Click="Speed_VerySlowButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&lt;&lt;</Button>
-          <Button Name="Speed_SlowButton" Click="Speed_SlowButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&lt;</Button>
-          <Button Name="Speed_NormalButton" Click="Speed_NormalButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">-</Button>
-          <Button Name="Speed_FastButton" Click="Speed_FastButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;</Button>
-          <Button Name="Speed_VeryFastButton" Click="Speed_VeryFastButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;</Button>
-          <Button Name="Speed_VeryVeryFastButton" Click="Speed_VeryVeryFastButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;&gt;</Button>
-          <Button Name="Speed_VeryVeryVeryFastButton" Click="Speed_VeryVeryVeryFastButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">∞</Button>
-        </StackPanel>
+        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Stretch">
+          <Button Name="Speed_VerySlowButton" Click="Speed_VerySlowButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;</Button>
+          <Button Name="Speed_SlowButton" Click="Speed_SlowButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;</Button>
+          <Button Name="Speed_NormalButton" Click="Speed_NormalButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;&gt;</Button>
+          <Button Name="Speed_FastButton" Click="Speed_FastButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;&gt;&gt;</Button>
+          <Button Name="Speed_VeryFastButton" Click="Speed_VeryFastButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;&gt;&gt;&gt;</Button>
+          <Button Name="Speed_VeryVeryFastButton" Click="Speed_VeryVeryFastButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;&gt;&gt;&gt;&gt;</Button>
+          <Button Name="Speed_VeryVeryVeryFastButton" Click="Speed_VeryVeryVeryFastButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">∞</Button>
+        </WrapPanel>
 
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
           <TextBox Name="FF_NumberTurns" x:CompileBindings="False" Text="{Binding FastForwardTicks}" />
           <Button Name="FF_FFButton" Click="FF_FFButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Fast Forward</Button>
         </StackPanel>
@@ -93,7 +106,7 @@
           <TextBlock Text="{Binding #Zoom_Slider.Value}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3, 3, 3, 3" />
           <Slider x:Name="Zoom_Slider" Minimum ="500" Maximum="2000" Width="115" Margin="3, 3, 3, 3" />
         </StackPanel>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
           <Button Name="Zoom_InButton" Click="Zoom_InButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Zoom In</Button>
           <Button Name="Zoom_OutButton" Click="Zoom_OutButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Zoom Out</Button>
         </StackPanel>
@@ -123,15 +136,12 @@
           <TextBlock VerticalAlignment="Center" Margin="3, 3, 3, 3">SenseBB:</TextBlock>
           <CheckBox Name="AgentSenseBBBox" IsChecked ="{Binding ShowSenseBoundingBoxes, Mode=TwoWay}" Margin="3, 3, 3, 3" />
         </StackPanel>
-        <CheckBox x:Name="ShowGeneology" Checked="ShowGeneology_Checked">Show Ancestry</CheckBox>
+        <CheckBox x:Name="ShowGeneology" Checked="ShowGeneology_Checked" Margin="3, 3, 3, 3">Show Ancestry</CheckBox>
       </StackPanel>
-
-      <!-- Return to Launcher Button -->
-      <Button Name="ReturntoLauncher" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="ReturntoLauncher_Click" Margin="3, 3, 3, 3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Return to Launcher</Button>
     </StackPanel>
 
     <!-- The world -->
-    <StackPanel Orientation="Horizontal" Background="Green" Margin="3, 3, 3, 3" Grid.Column="2">
+    <StackPanel Orientation="Horizontal" Background="Green" Margin="3, 3, 3, 3" Grid.Column="2" Grid.Row="1">
       <ScrollViewer Background="Wheat">
         <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding #Zoom_Slider.Value}" Height="{Binding #Zoom_Slider.Value}">
           <controls:WorldCanvas Name="TheWorldCanvas" Height="1000" Width="1000" x:CompileBindings="False" ScenarioName="{Binding StartingScenarioName}" StartingSeed="{Binding StartingSeed}" Enabled="{Binding IsEnabled}">

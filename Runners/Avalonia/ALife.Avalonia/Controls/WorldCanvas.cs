@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ALife.Avalonia.ViewModels;
+﻿using ALife.Avalonia.ViewModels;
 using ALife.Core;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
@@ -12,6 +8,10 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Threading;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace ALife.Avalonia.Controls
 {
@@ -41,6 +41,9 @@ namespace ALife.Avalonia.Controls
         /// </summary>
         public static DirectProperty<WorldCanvas, int> TurnCountProperty = AvaloniaProperty.RegisterDirect<WorldCanvas, int>(nameof(TurnCount), x => x.TurnCount);
 
+        /// <summary>
+        /// The timer
+        /// </summary>
         public DispatcherTimer Timer;
 
         /// <summary>
@@ -163,6 +166,8 @@ namespace ALife.Avalonia.Controls
             {
                 _renderer.SetContext(drawingContext);
                 _simulation.Render(_renderer);
+                // TODO: for _whatever_ reason, this updates the FPS item, but _not_ the textblock...
+                _vm.FramesPerSecond = _simulation.FpsCounter.AverageFramesPerTicks;
 
                 int objects = Planet.World.AllActiveObjects.Count;
                 Point p1 = new(objects, objects);
@@ -192,6 +197,15 @@ namespace ALife.Avalonia.Controls
         /// <param name="speed">The speed.</param>
         public void SetSimulationSpeed(SimulationSpeed speed)
         {
+            if (Planet.HasWorld)
+            {
+                Planet.World.SimulationPerformance?.ClearBuffer();
+            }
+            if (_simulation != null)
+            {
+                _simulation.FpsCounter?.ClearBuffer();
+            }
+
             if(Timer != null)
             {
                 Timer.Stop();
@@ -227,6 +241,7 @@ namespace ALife.Avalonia.Controls
                 else
                 {
                     ExecuteTick();
+                    _vm.TicksPerSecond = Planet.World.SimulationPerformance.AverageFramesPerTicks;
                     _vm.TurnCount = TurnCount;
                     UpdateZoneInfo();
                     UpdateGeneology();
@@ -234,6 +249,9 @@ namespace ALife.Avalonia.Controls
             }
         }
 
+        /// <summary>
+        /// Updates the geneology.
+        /// </summary>
         private void UpdateGeneology()
         {
             Dictionary<string, int> geneCount = new Dictionary<string, int>();
@@ -255,6 +273,9 @@ namespace ALife.Avalonia.Controls
             _vm.GenesActive = geneCount.Count;
         }
 
+        /// <summary>
+        /// Updates the zone information.
+        /// </summary>
         private void UpdateZoneInfo()
         {
             Dictionary<string, int> zoneCount = new Dictionary<string, int>();

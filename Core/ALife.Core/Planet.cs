@@ -30,6 +30,7 @@ namespace ALife.Core
             worldWidth = width;
             worldHeight = height;
             Seed = seed;
+            _simulationPerformanceCounter = new();
             NumberGen = new FastRandom(seed);
             Scenario = theScenario;
             AgentIDGenerator.Reset();
@@ -49,6 +50,8 @@ namespace ALife.Core
                 }
             }
         }
+
+        public static bool HasWorld => instance != null;
 
 
         public static void CreateWorld(IScenario scenario)
@@ -105,6 +108,18 @@ namespace ALife.Core
         //Objects which at the end of the turn should be removed from "AllActive", "StableActive" and "NewActive"
         public readonly List<WorldObject> ToRemoveObjects = new List<WorldObject>();
 
+        /// <summary>
+        /// The performance counter
+        /// </summary>
+        private PerformanceCounter _simulationPerformanceCounter = new();
+
+        /// <summary>
+        /// Gets the simulation performance.
+        /// </summary>
+        /// <value>
+        /// The simulation performance.
+        /// </value>
+        public PerformanceCounter SimulationPerformance => _simulationPerformanceCounter;
 
         public readonly int Seed;
         public readonly IScenario Scenario;
@@ -167,6 +182,7 @@ namespace ALife.Core
 
         public void ExecuteOneTurn()
         {
+            _simulationPerformanceCounter.Update();
             ++turns;
             int order = 0;
             //Iterate through all the active objects, and execute their turn.

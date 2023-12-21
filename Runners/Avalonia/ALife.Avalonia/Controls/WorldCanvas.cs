@@ -152,7 +152,7 @@ namespace ALife.Avalonia.Controls
         public void ExecuteTick()
         {
             Planet.World.ExecuteOneTurn();
-            TurnCount++;
+            TurnCount = Planet.World.Turns;
         }
 
         /// <summary>

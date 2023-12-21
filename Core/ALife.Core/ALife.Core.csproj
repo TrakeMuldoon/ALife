@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0</TargetFrameworks>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="WorldObjects\Agents\Brains\BehaviourBrains\spec.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="WorldObjects\Agents\Brains\BehaviourBrains\spec.txt" />
+  </ItemGroup>
+
+</Project>

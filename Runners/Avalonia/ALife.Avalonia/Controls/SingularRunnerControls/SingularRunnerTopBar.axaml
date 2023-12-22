@@ -2,8 +2,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="35"
-             x:Class="ALife.Avalonia.Controls.WorldRunnerTopBar"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ALife.Avalonia.Controls.SingularRunnerControls.SingularRunnerTopBar"
              xmlns:vm="clr-namespace:ALife.Avalonia.ViewModels"
              x:DataType="vm:SingularRunnerViewModel">
   <Design.DataContext>

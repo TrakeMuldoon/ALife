@@ -6,9 +6,9 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 
-namespace ALife.Avalonia.Controls
+namespace ALife.Avalonia.Controls.SingularRunnerControls
 {
-    public partial class WorldRunnerTopBar : UserControl, IDisposable
+    public partial class SingularRunnerTopBar : UserControl, IDisposable
     {
         /// <summary>
         /// The text update thread cancellation token
@@ -26,13 +26,17 @@ namespace ALife.Avalonia.Controls
         private bool disposedValue;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WorldRunnerTopBar"/> class.
+        /// Initializes a new instance of the <see cref="SingularRunnerTopBar"/> class.
         /// </summary>
-        public WorldRunnerTopBar()
+        public SingularRunnerTopBar()
         {
             InitializeComponent();
 
-            Performance.Text = "TPS: 0.00 | FPS: 0.00";
+            string baseNum = "---";
+            string startingSpaces = new string(' ', SingularRunnerViewModel.MAX_CHARACTERS_FOR_TICKS - baseNum.Length);
+
+            string newLabel = $"TPS: {startingSpaces}{baseNum} | FPS: {startingSpaces}{baseNum}";
+            Performance.Text = newLabel;
 
             _cancellationToken = new CancellationTokenSource();
             CancellationToken ct = _cancellationToken.Token;

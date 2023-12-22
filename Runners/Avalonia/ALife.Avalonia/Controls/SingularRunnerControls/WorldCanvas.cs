@@ -1,4 +1,8 @@
-﻿using ALife.Avalonia.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using ALife.Avalonia.ViewModels;
 using ALife.Core;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
@@ -8,17 +12,13 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Threading;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace ALife.Avalonia.Controls
+namespace ALife.Avalonia.Controls.SingularRunnerControls
 {
     /// <summary>
     /// The Avalonia control for rendering the simulation.
     /// </summary>
-    /// <seealso cref="Avalonia.Controls.Control"/>
+    /// <seealso cref="Controls.Control"/>
     public class WorldCanvas : Control
     {
         /// <summary>
@@ -171,7 +171,7 @@ namespace ALife.Avalonia.Controls
 
                 Pen pen = new(Brushes.Green, 1, lineCap: PenLineCap.Square);
                 Pen boundPen = new(Brushes.Black);
-               
+
                 Point shapePont = new(150 + movement, 150 + movement);
                 Rect r = new(shapePont.X, shapePont.Y, 12, 20);
                 drawingContext.DrawRectangle(boundPen, r);
@@ -192,11 +192,11 @@ namespace ALife.Avalonia.Controls
         /// <param name="speed">The speed.</param>
         public void SetSimulationSpeed(SimulationSpeed speed)
         {
-            if (Planet.HasWorld)
+            if(Planet.HasWorld)
             {
                 Planet.World.SimulationPerformance?.ClearBuffer();
             }
-            if (_simulation != null)
+            if(_simulation != null)
             {
                 _simulation.FpsCounter?.ClearBuffer();
             }
@@ -218,7 +218,7 @@ namespace ALife.Avalonia.Controls
         /// Timers the tick.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         /// <returns></returns>
         private void Timer_Tick(object? sender, EventArgs e)
         {

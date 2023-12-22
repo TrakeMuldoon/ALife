@@ -13,7 +13,7 @@ namespace ALife.Avalonia.ViewModels
         /// <summary>
         /// The maximum characters for ticks
         /// </summary>
-        private const int MAX_CHARACTERS_FOR_TICKS = 10;
+        public const int MAX_CHARACTERS_FOR_TICKS = 10;
 
         /// <summary>
         /// The agents active
@@ -79,7 +79,12 @@ namespace ALife.Avalonia.ViewModels
 
             _ticksPerSecond = 0;
             _fps = 0;
-            _performancePerTickLabel = "TPS: 0.00 | FPS: 0.00";
+            string baseNum = "---";
+            string startingSpaces = new string(' ', SingularRunnerViewModel.MAX_CHARACTERS_FOR_TICKS - baseNum.Length);
+
+            string newLabel = $"TPS: {startingSpaces}{baseNum} | FPS: {startingSpaces}{baseNum}";
+            _performancePerTickLabel = newLabel;
+
             _zoneInfo = string.Empty;
             _turnCount = 0;
             _genesActive = 0;
@@ -101,7 +106,11 @@ namespace ALife.Avalonia.ViewModels
 
             _ticksPerSecond = 0;
             _fps = 0;
-            _performancePerTickLabel = "TPS: 0.00 | FPS: 0.00";
+            string baseNum = "---";
+            string startingSpaces = new string(' ', SingularRunnerViewModel.MAX_CHARACTERS_FOR_TICKS - baseNum.Length);
+
+            string newLabel = $"TPS: {startingSpaces}{baseNum} | FPS: {startingSpaces}{baseNum}";
+            _performancePerTickLabel = newLabel;
             _zoneInfo = string.Empty;
             _turnCount = 0;
             _genesActive = 0;
@@ -212,8 +221,8 @@ namespace ALife.Avalonia.ViewModels
                 double tps = Math.Round(_ticksPerSecond, 2);
                 double fps = Math.Round(_fps, 2);
 
-                string tpsSpaces = new string(' ', MAX_CHARACTERS_FOR_TICKS - tps.ToString().Length);
-                string fpsSpaces = new string(' ', MAX_CHARACTERS_FOR_TICKS - fps.ToString().Length);
+                string tpsSpaces = new string(' ', MAX_CHARACTERS_FOR_TICKS - tps.ToString("0.00").Length);
+                string fpsSpaces = new string(' ', MAX_CHARACTERS_FOR_TICKS - fps.ToString("0.00").Length);
 
                 string newLabel = $"TPS: {tpsSpaces}{tps.ToString("0.00")} | FPS: {fpsSpaces}{fps.ToString("0.00")}";
 

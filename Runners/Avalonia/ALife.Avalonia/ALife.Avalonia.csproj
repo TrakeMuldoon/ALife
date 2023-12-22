@@ -35,10 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Controls\WorldRunnerTopBar.axaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Views\BatchRunnerView.axaml.cs">
       <DependentUpon>BatchRunnerView.axaml</DependentUpon>
     </Compile>

@@ -6,11 +6,10 @@ using Avalonia;
 using Avalonia.Media;
 using Color = System.Drawing.Color;
 using Point = ALife.Core.Geometry.Shapes.Point;
-
 using AV = Avalonia;
-
 using AvColor = Avalonia.Media.Color;
 using AvPoint = Avalonia.Point;
+using System.Globalization;
 
 namespace ALife.Avalonia
 {
@@ -81,7 +80,15 @@ namespace ALife.Avalonia
 
         public override void DrawText(string text, Point point, Color color)
         {
-            throw new NotImplementedException();
+            FormattedText ft = new FormattedText(text
+                , CultureInfo.CurrentCulture
+                , FlowDirection.LeftToRight
+                , Typeface.Default
+                , 12
+                , new SolidColorBrush(ConvertColour(color))
+                );
+
+            Context.DrawText(ft, ConvertPoint(point));
         }
 
         public override void FillAARectangle(Point maxXY, Point minXY, Color color)

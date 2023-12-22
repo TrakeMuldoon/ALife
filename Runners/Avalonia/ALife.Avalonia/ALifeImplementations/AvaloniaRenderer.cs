@@ -6,9 +6,6 @@ using Avalonia;
 using Avalonia.Media;
 using Color = System.Drawing.Color;
 using Point = ALife.Core.Geometry.Shapes.Point;
-
-using AV = Avalonia;
-
 using AvColor = Avalonia.Media.Color;
 using AvPoint = Avalonia.Point;
 
@@ -84,9 +81,9 @@ namespace ALife.Avalonia.ALifeImplementations
             throw new NotImplementedException();
         }
 
-        public override void FillAARectangle(Point maxXY, Point minXY, Color color)
+        public override void FillAARectangle(Point minXY, Point maxXY, Color color)
         {
-            AV.Rect rect = new(ConvertPoint(minXY), ConvertPoint(maxXY));
+            Rect rect = new(ConvertPoint(minXY), ConvertPoint(maxXY));
             Brush b = new SolidColorBrush(ConvertColour(color));
             Context.FillRectangle(b, rect);
         }

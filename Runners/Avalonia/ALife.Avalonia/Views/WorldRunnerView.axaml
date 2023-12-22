@@ -14,23 +14,24 @@
 
   <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:CompileBindings="False">
     <Grid.ColumnDefinitions>
-      <!-- 0: Controls -->
-      <ColumnDefinition MinWidth="260" Width="260" />
-      <!-- 1: Agent Viewer -->
-      <ColumnDefinition MinWidth="200" Width="300" />
       <!-- 2: The World -->
-      <ColumnDefinition MinWidth="200" Width="580*" />
+      <ColumnDefinition MinWidth="580" Width="*" />
+      <!-- 0: Controls -->
+      <ColumnDefinition MinWidth="200" Width="Auto" />
+      <!-- 1: Agent Viewer -->
+      <ColumnDefinition MinWidth="200" Width="Auto" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
-      <RowDefinition Height="35" />
-      <RowDefinition MinHeight="100" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
     <!-- Scenario Info and Basic Controls -->
     <controls:WorldRunnerTopBar Name="TopBar" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" />
 
     <!-- The controls -->
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3, 3, 3, 3" Background="DarkGray" Grid.Column="0" Grid.Row="1">
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3, 3, 3, 3" Background="DarkGray" Grid.Column="1" Grid.Row="1">
       <!-- Scenario Details -->
       <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" Background="Gray">
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="World Details" />
@@ -134,9 +135,9 @@
     </StackPanel>
 
     <!-- The world -->
-    <StackPanel Orientation="Horizontal" Background="Green" Margin="3, 3, 3, 3" Grid.Column="2" Grid.Row="1">
+    <StackPanel Orientation="Horizontal" Background="Green" Margin="3, 3, 3, 3" Grid.Column="0" Grid.Row="1">
       <ScrollViewer Background="Wheat">
-        <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding #Zoom_Slider.Value}" Height="{Binding #Zoom_Slider.Value}">
+        <Viewbox Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding #Zoom_Slider.Value}" Height="{Binding #Zoom_Slider.Value}">
           <controls:WorldCanvas Name="TheWorldCanvas" Height="1000" Width="1000" x:CompileBindings="False" ScenarioName="{Binding StartingScenarioName}" StartingSeed="{Binding StartingSeed}" Enabled="{Binding IsEnabled}">
           </controls:WorldCanvas>
         </Viewbox>

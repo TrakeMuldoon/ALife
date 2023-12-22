@@ -27,14 +27,7 @@
     </Grid.RowDefinitions>
 
     <!-- Scenario Info and Basic Controls -->
-    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" Grid.Row="0">
-      <!-- Return to Launcher Button -->
-      <Button Name="ReturntoLauncher" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="ReturntoLauncher_Click" Margin="3, 3, 3, 3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Return to Launcher</Button>
-
-      <TextBlock Name="TicksPerSecond" x:CompileBindings="False" Width="200" Margin="3, 3, 3, 3" HorizontalAlignment="Center" VerticalAlignment="Center" />
-      <TextBlock Name="FramesPerSecond" x:CompileBindings="False" Width="200" Margin="3, 3, 3, 3" HorizontalAlignment="Center" VerticalAlignment="Center" />
-      <TextBlock x:CompileBindings="False" Text="{Binding ScenarioLabel}" Margin="3, 3, 3, 3" HorizontalAlignment="Center" VerticalAlignment="Center" />
-    </StackPanel>
+    <controls:WorldRunnerTopBar Name="TopBar" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" />
 
     <!-- The controls -->
     <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3, 3, 3, 3" Background="DarkGray" Grid.Column="0" Grid.Row="1">

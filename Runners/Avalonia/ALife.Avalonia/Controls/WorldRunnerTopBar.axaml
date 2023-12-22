@@ -1,0 +1,34 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="35"
+             x:Class="ALife.Avalonia.Controls.WorldRunnerTopBar"
+             xmlns:vm="clr-namespace:ALife.Avalonia.ViewModels"
+             x:DataType="vm:WorldRunnerViewModel">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:WorldRunnerViewModel />
+  </Design.DataContext>
+
+  <Grid x:CompileBindings="True">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="420" />
+    </Grid.ColumnDefinitions>
+
+    <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="3, 3, 3, 3">
+      <!-- A label displaying the current scenario -->
+      <TextBlock Text="{Binding ScenarioLabel}" VerticalAlignment="Center" ToolTip.Tip="The current scenario that is executing." />
+    </StackPanel>
+
+    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="3, 3, 3, 3">
+      <!-- A label displaying the ticks per second of the application -->
+      <TextBlock Name="Performance" Width="270" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip.Tip="TPS = Ticks per Second (the turns the simulatione executes every second).\nFPS = Frames per Second (the amount of frames rendered every second)." FontFamily="Consolas" />
+
+      <!-- Return to Launcher Button -->
+      <Button Name="ReturntoLauncher" Click="ReturntoLauncher_Click" Width="150" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip.Tip="Closes the simulation and returns to the launcher.">Return to Launcher</Button>
+    </StackPanel>
+  </Grid>
+</UserControl>

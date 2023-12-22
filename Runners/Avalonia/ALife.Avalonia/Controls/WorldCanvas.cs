@@ -169,13 +169,8 @@ namespace ALife.Avalonia.Controls
                 // TODO: for _whatever_ reason, this updates the FPS item, but _not_ the textblock...
                 _vm.FramesPerSecond = _simulation.FpsCounter.AverageFramesPerTicks;
 
-                int objects = Planet.World.AllActiveObjects.Count;
-                Point p1 = new(objects, objects);
-                Point p2 = new(p1.X + 50, p1.Y + 100);
-
                 Pen pen = new(Brushes.Green, 1, lineCap: PenLineCap.Square);
                 Pen boundPen = new(Brushes.Black);
-                drawingContext.DrawLine(pen, p1, p2);
                 Point shapePont = new(150 + movement, 150 + movement);
 
                 Rect r = new(shapePont.X, shapePont.Y, 12, 20);

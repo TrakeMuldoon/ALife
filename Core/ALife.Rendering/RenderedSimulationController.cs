@@ -46,9 +46,9 @@ namespace ALife.Rendering
         {
             _fpsCounter.Update();
             IEnumerable<LayerUISettings> renderableLayers = Layers.Where(x => x.ShowObjects);
-            foreach(LayerUISettings ui in renderableLayers)
+            foreach(LayerUISettings uiSettings in renderableLayers)
             {
-                RenderLayer(renderer, ui, AgentUiSettings);
+                RenderLayer(renderer, uiSettings, AgentUiSettings);
             }
         }
 

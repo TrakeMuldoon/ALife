@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
-             xmlns:controls="using:ALife.Avalonia.Controls"
+             xmlns:controls="using:ALife.Avalonia.Controls.SingularRunnerControls"
              xmlns:vm="clr-namespace:ALife.Avalonia.ViewModels"
              x:Class="ALife.Avalonia.Views.SingularRunnerView">
   <Design.DataContext>
@@ -28,7 +28,7 @@
     </Grid.RowDefinitions>
 
     <!-- Scenario Info and Basic Controls -->
-    <controls:WorldRunnerTopBar Name="TopBar" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" />
+    <controls:SingularRunnerTopBar Name="TopBar" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" />
 
     <!-- The controls -->
     <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3, 3, 3, 3" Background="DarkGray" Grid.Column="1" Grid.Row="1">
@@ -97,8 +97,8 @@
 
         <StackPanel Orientation="Horizontal">
           <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Current Zoom:" />
-          <TextBlock Text="{Binding #Zoom_Slider.Value}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3, 3, 3, 3" />
-          <Slider x:Name="Zoom_Slider" Minimum ="500" Maximum="2000" Width="115" Margin="3, 3, 3, 3" />
+          <TextBlock Text="{Binding #Zoom_Slider.Value, StringFormat=0.00}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3, 3, 3, 3" />
+          <Slider x:Name="Zoom_Slider" Minimum ="500" Maximum="{Binding #WorldPanel.Bounds.Width}" Value="{Binding #WorldPanel.Bounds.Width}" Width="115" Margin="3, 3, 3, 3" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
           <Button Name="Zoom_InButton" Click="Zoom_InButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Zoom In</Button>
@@ -135,10 +135,10 @@
     </StackPanel>
 
     <!-- The world -->
-    <StackPanel Orientation="Horizontal" Background="Green" Margin="3, 3, 3, 3" Grid.Column="0" Grid.Row="1">
-      <ScrollViewer Background="Wheat">
-        <Viewbox Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding #Zoom_Slider.Value}" Height="{Binding #Zoom_Slider.Value}">
-          <controls:WorldCanvas Name="TheWorldCanvas" Height="1000" Width="1000" x:CompileBindings="False" ScenarioName="{Binding StartingScenarioName}" StartingSeed="{Binding StartingSeed}" Enabled="{Binding IsEnabled}">
+    <StackPanel Name="WorldPanel" Orientation="Horizontal" Background="Green" Margin="3, 3, 3, 3" Grid.Column="0" Grid.Row="1">
+      <ScrollViewer HorizontalAlignment="Center" VerticalAlignment="Center" Background="Wheat" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+        <Viewbox Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{Binding #Zoom_Slider.Value}" Height="{Binding #Zoom_Slider.Value}" MaxWidth="{Binding $parent[1].Bounds.Width}" MaxHeight="{Binding $parent[1].Bounds.Height}">
+          <controls:WorldCanvas Name="TheWorldCanvas" HorizontalAlignment="Center" VerticalAlignment="Center" Height="1000" Width="1000" x:CompileBindings="False" ScenarioName="{Binding StartingScenarioName}" StartingSeed="{Binding StartingSeed}" Enabled="{Binding IsEnabled}">
           </controls:WorldCanvas>
         </Viewbox>
       </ScrollViewer>

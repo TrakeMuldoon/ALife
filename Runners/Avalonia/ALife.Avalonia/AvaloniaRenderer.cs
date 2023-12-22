@@ -25,7 +25,7 @@ namespace ALife.Avalonia
             set => context = value;
         }
 
-        public override void DrawAARectangle(Point maxXY, Point minXY, Color color, double strokeWidth)
+        public override void DrawAARectangle(Point minXY, Point maxXY, Color color, double strokeWidth)
         {
             Rect rect = new(ConvertPoint(minXY), ConvertPoint(maxXY));
             Brush b = new SolidColorBrush(ConvertColour(color));
@@ -91,9 +91,9 @@ namespace ALife.Avalonia
             Context.DrawText(ft, ConvertPoint(point));
         }
 
-        public override void FillAARectangle(Point maxXY, Point minXY, Color color)
+        public override void FillAARectangle(Point minXY, Point maxXY, Color color)
         {
-            AV.Rect rect = new(ConvertPoint(minXY), ConvertPoint(maxXY));
+            Rect rect = new(ConvertPoint(minXY), ConvertPoint(maxXY));
             Brush b = new SolidColorBrush(ConvertColour(color));
             Context.FillRectangle(b, rect);
         }

@@ -18,9 +18,9 @@ namespace ALife.Rendering
         /// <param name="renderer">The renderer.</param>
         public static void DrawZone(Zone zone, AbstractRenderer renderer)
         {
-            DrawAARectangle(zone, renderer);
+            FillAARectangle(zone, renderer);
+            
             Color textColor = Color.FromArgb(255, zone.Color);
-
             renderer.DrawText(zone.Name, zone.TopLeft, textColor);
         }
 
@@ -177,6 +177,17 @@ namespace ALife.Rendering
         {
             Point tl = rec.TopLeft;
             renderer.DrawAARectangle(tl, new Point(tl.X + rec.XWidth, tl.Y + rec.YHeight), rec.Color, 0.4f);
+        }
+
+        /// <summary>
+        /// Fills an AA rectangle.
+        /// </summary>
+        /// <param name="rec">The rectangle.</param>
+        /// <param name="renderer">The renderer.</param>
+        public static void FillAARectangle(AARectangle rec, AbstractRenderer renderer)
+        {
+            Point tl = rec.TopLeft;
+            renderer.FillAARectangle(tl, new Point(tl.X + rec.XWidth, tl.Y + rec.YHeight), rec.Color);
         }
 
         /// <summary>

@@ -2,6 +2,7 @@ using System;
 using ALife.Avalonia.ViewModels;
 using ALife.Rendering;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 
 namespace ALife.Avalonia.Views
@@ -23,7 +24,6 @@ namespace ALife.Avalonia.Views
         {
             InitializeComponent();
             SetSimulationRunState(true);
-            UpdateSimulationSpeedControls();
 
             VisualSettingsList.Items.Clear();
             VisualSettingsList.ItemsSource = TheWorldCanvas.Simulation.Layers;
@@ -127,90 +127,12 @@ namespace ALife.Avalonia.Views
 
             SetSimulationRunState(true);
             TheWorldCanvas.SetSimulationSpeed(SimulationSpeed.Normal);
-            UpdateSimulationSpeedControls();
             TheWorldCanvas.StartingSeed = seed;
             TheWorldCanvas.Simulation.InitializeSimulation();
         }
 
         public void ShowGeneology_Checked(object sender, RoutedEventArgs args)
         {
-        }
-
-        /// <summary>
-        /// Handles the Click event of the Speed_FastButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        public void Speed_FastButton_Click(object sender, RoutedEventArgs args)
-        {
-            TheWorldCanvas.SetSimulationSpeed(SimulationSpeed.Fast);
-            UpdateSimulationSpeedControls();
-        }
-
-        /// <summary>
-        /// Handles the Click event of the Speed_NormalButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        public void Speed_NormalButton_Click(object sender, RoutedEventArgs args)
-        {
-            TheWorldCanvas.SetSimulationSpeed(SimulationSpeed.Normal);
-            UpdateSimulationSpeedControls();
-        }
-
-        /// <summary>
-        /// Handles the Click event of the Speed_SlowButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        public void Speed_SlowButton_Click(object sender, RoutedEventArgs args)
-        {
-            TheWorldCanvas.SetSimulationSpeed(SimulationSpeed.Slow);
-            UpdateSimulationSpeedControls();
-        }
-
-        /// <summary>
-        /// Handles the Click event of the Speed_VeryFastButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        public void Speed_VeryFastButton_Click(object sender, RoutedEventArgs args)
-        {
-            TheWorldCanvas.SetSimulationSpeed(SimulationSpeed.VeryFast);
-            UpdateSimulationSpeedControls();
-        }
-
-        /// <summary>
-        /// Handles the Click event of the Speed_VerySlowButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        public void Speed_VerySlowButton_Click(object sender, RoutedEventArgs args)
-        {
-            TheWorldCanvas.SetSimulationSpeed(SimulationSpeed.VerySlow);
-            UpdateSimulationSpeedControls();
-        }
-
-        /// <summary>
-        /// Handles the Click event of the Speed_VeryVeryFastButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        public void Speed_VeryVeryFastButton_Click(object sender, RoutedEventArgs args)
-        {
-            TheWorldCanvas.SetSimulationSpeed(SimulationSpeed.VeryVeryFast);
-            UpdateSimulationSpeedControls();
-        }
-
-        /// <summary>
-        /// Handles the Click event of the Speed_VeryVeryVeryFastButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        public void Speed_VeryVeryVeryFastButton_Click(object sender, RoutedEventArgs args)
-        {
-            TheWorldCanvas.SetSimulationSpeed(SimulationSpeed.VeryVeryVeryFast);
-            UpdateSimulationSpeedControls();
         }
 
         /// <summary>
@@ -267,53 +189,19 @@ namespace ALife.Avalonia.Views
         }
 
         /// <summary>
-        /// Updates the simulation speed controls.
+        /// Speeds the slider value changed.
         /// </summary>
-        private void UpdateSimulationSpeedControls()
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">
+        /// The <see cref="Avalonia.Controls.Primitives.RangeBaseValueChangedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void SpeedSlider_ValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
         {
-            // TODO: Binding for IsEnabled seems like it is delayed by a cycle, so we're manually doing it for now
-            Speed_FastButton.IsEnabled = true;
-            Speed_NormalButton.IsEnabled = true;
-            Speed_SlowButton.IsEnabled = true;
-            Speed_VeryFastButton.IsEnabled = true;
-            Speed_VeryVeryFastButton.IsEnabled = true;
-            Speed_VeryVeryVeryFastButton.IsEnabled = true;
-            Speed_VerySlowButton.IsEnabled = true;
-
-            switch(TheWorldCanvas.SimulationSpeed)
+            if(ViewModel != null)
             {
-                case SimulationSpeed.Fast:
-                    Speed_FastButton.IsEnabled = false;
-                    break;
-
-                case SimulationSpeed.Normal:
-                    Speed_NormalButton.IsEnabled = false;
-                    break;
-
-                case SimulationSpeed.Slow:
-                    Speed_SlowButton.IsEnabled = false;
-                    break;
-
-                case SimulationSpeed.VeryFast:
-                    Speed_VeryFastButton.IsEnabled = false;
-                    break;
-
-                case SimulationSpeed.VerySlow:
-                    Speed_VerySlowButton.IsEnabled = false;
-                    break;
-
-                case SimulationSpeed.VeryVeryFast:
-                    Speed_VeryVeryFastButton.IsEnabled = false;
-                    break;
-
-                case SimulationSpeed.VeryVeryVeryFast:
-                    Speed_VeryVeryVeryFastButton.IsEnabled = false;
-                    break;
+                int speed = (int)e.NewValue;
+                TheWorldCanvas.SetSimulationSpeed(ViewModel.SimulationSpeeds[speed]);
             }
         }
-
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~SingularRunnerView() { // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        // Dispose(disposing: false); }
     }
 }

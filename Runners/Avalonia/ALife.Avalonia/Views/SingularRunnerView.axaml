@@ -76,13 +76,7 @@
 
         <!-- Speed -->
         <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Stretch">
-          <Button Name="Speed_VerySlowButton" Click="Speed_VerySlowButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;</Button>
-          <Button Name="Speed_SlowButton" Click="Speed_SlowButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;</Button>
-          <Button Name="Speed_NormalButton" Click="Speed_NormalButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;&gt;</Button>
-          <Button Name="Speed_FastButton" Click="Speed_FastButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;&gt;&gt;</Button>
-          <Button Name="Speed_VeryFastButton" Click="Speed_VeryFastButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;&gt;&gt;&gt;</Button>
-          <Button Name="Speed_VeryVeryFastButton" Click="Speed_VeryVeryFastButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;&gt;&gt;&gt;&gt;</Button>
-          <Button Name="Speed_VeryVeryVeryFastButton" Click="Speed_VeryVeryVeryFastButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">∞</Button>
+          <Slider Name="Speed_Slider" Minimum="0" Maximum="60" Value="{Binding Speed}" ValueChanged="SpeedSlider_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="10" TickPlacement="Outside" Width="240" Margin="3, 3, 3, 3" />
         </WrapPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -135,10 +129,10 @@
     </StackPanel>
 
     <!-- The world -->
-    <StackPanel Name="WorldPanel" Orientation="Horizontal" Background="Green" Margin="3, 3, 3, 3" Grid.Column="0" Grid.Row="1">
-      <ScrollViewer HorizontalAlignment="Center" VerticalAlignment="Center" Background="Wheat" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
-        <Viewbox Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{Binding #Zoom_Slider.Value}" Height="{Binding #Zoom_Slider.Value}" MaxWidth="{Binding $parent[1].Bounds.Width}" MaxHeight="{Binding $parent[1].Bounds.Height}">
-          <controls:WorldCanvas Name="TheWorldCanvas" HorizontalAlignment="Center" VerticalAlignment="Center" Height="1000" Width="1000" x:CompileBindings="False" ScenarioName="{Binding StartingScenarioName}" StartingSeed="{Binding StartingSeed}" Enabled="{Binding IsEnabled}">
+    <StackPanel Name="WorldPanel" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Green" Margin="3, 3, 3, 3" Grid.Column="0" Grid.Row="1">
+      <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Wheat" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+        <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding #Zoom_Slider.Value}" Height="{Binding #Zoom_Slider.Value}" MaxWidth="{Binding $parent[1].Bounds.Width}" MaxHeight="{Binding $parent[1].Bounds.Height}">
+          <controls:WorldCanvas Name="TheWorldCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="1000" Width="1000" x:CompileBindings="False" ScenarioName="{Binding StartingScenarioName}" StartingSeed="{Binding StartingSeed}" Enabled="{Binding IsEnabled}">
           </controls:WorldCanvas>
         </Viewbox>
       </ScrollViewer>

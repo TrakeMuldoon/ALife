@@ -35,6 +35,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controls\SingularControls\" />
+    <UpToDateCheckInput Remove="Controls\WorldRunnerTopBar.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\BatchRunnerView.axaml.cs">
+      <DependentUpon>BatchRunnerView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SingularRunnerView.axaml.cs">
+      <DependentUpon>SingularRunnerView.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

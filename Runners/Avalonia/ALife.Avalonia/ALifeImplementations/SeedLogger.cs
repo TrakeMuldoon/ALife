@@ -6,7 +6,7 @@ namespace ALife.Avalonia.ALifeImplementations
     /// Defines the logger used for outputting to the Seed Textbox
     /// </summary>
     /// <seealso cref="ALife.Avalonia.ALifeImplementations.AvaloniaLogger"/>
-    public class SeedLogger(ScenarioRunnerViewModel vm) : AvaloniaLogger(vm)
+    public class SeedLogger(BatchRunnerViewModel vm) : AvaloniaLogger(vm)
     {
         /// <summary>
         /// Writes the message to the actual output.

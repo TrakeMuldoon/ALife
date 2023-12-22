@@ -1,15 +1,20 @@
-﻿using ReactiveUI;
-using System;
+﻿using System;
+using ReactiveUI;
 
 namespace ALife.Avalonia.ViewModels
 {
     /// <summary>
-    /// The ViewModel for the WorldRunnerView.
+    /// The ViewModel for the SingularRunnerView.
     /// TODO: Do this
     /// </summary>
     /// <seealso cref="ALife.Avalonia.ViewModels.ViewModelBase"/>
-    public class WorldRunnerViewModel : ViewModelBase
+    public class SingularRunnerViewModel : ViewModelBase
     {
+        /// <summary>
+        /// The maximum characters for ticks
+        /// </summary>
+        private const int MAX_CHARACTERS_FOR_TICKS = 10;
+
         /// <summary>
         /// The agents active
         /// </summary>
@@ -26,9 +31,19 @@ namespace ALife.Avalonia.ViewModels
         private int _fastForwardTicks;
 
         /// <summary>
+        /// The FPS
+        /// </summary>
+        private double _fps;
+
+        /// <summary>
         /// The genes active
         /// </summary>
         private int _genesActive;
+
+        /// <summary>
+        /// The performance per tick label
+        /// </summary>
+        private string _performancePerTickLabel;
 
         /// <summary>
         /// The scenario name
@@ -46,21 +61,6 @@ namespace ALife.Avalonia.ViewModels
         private double _ticksPerSecond;
 
         /// <summary>
-        /// The ticks per second
-        /// </summary>
-        private string _ticksPerSecondLabel;
-
-        /// <summary>
-        /// The FPS
-        /// </summary>
-        private double _fps;
-
-        /// <summary>
-        /// The FPS label
-        /// </summary>
-        private string _fpsLabel;
-
-        /// <summary>
         /// The turn count
         /// </summary>
         private int _turnCount;
@@ -71,16 +71,15 @@ namespace ALife.Avalonia.ViewModels
         private string _zoneInfo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WorldRunnerViewModel"/> class.
+        /// Initializes a new instance of the <see cref="SingularRunnerViewModel"/> class.
         /// </summary>
-        public WorldRunnerViewModel()
+        public SingularRunnerViewModel()
         {
             Random r = new();
 
             _ticksPerSecond = 0;
-            _ticksPerSecondLabel = "TPS: 0.00";
             _fps = 0;
-            _fpsLabel = "FPS: 0.00";
+            _performancePerTickLabel = "TPS: 0.00 | FPS: 0.00";
             _zoneInfo = string.Empty;
             _turnCount = 0;
             _genesActive = 0;
@@ -92,18 +91,17 @@ namespace ALife.Avalonia.ViewModels
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WorldRunnerViewModel"/> class.
+        /// Initializes a new instance of the <see cref="SingularRunnerViewModel"/> class.
         /// </summary>
         /// <param name="scenarioName">Name of the scenario.</param>
         /// <param name="seed">The seed.</param>
-        public WorldRunnerViewModel(string scenarioName, int? seed = null)
+        public SingularRunnerViewModel(string scenarioName, int? seed = null)
         {
             Random r = new();
 
             _ticksPerSecond = 0;
-            _ticksPerSecondLabel = "TPS: 0.00";
             _fps = 0;
-            _fpsLabel = "FPS: 0.00";
+            _performancePerTickLabel = "TPS: 0.00 | FPS: 0.00";
             _zoneInfo = string.Empty;
             _turnCount = 0;
             _genesActive = 0;
@@ -135,6 +133,16 @@ namespace ALife.Avalonia.ViewModels
         }
 
         /// <summary>
+        /// Gets or sets the frames per second.
+        /// </summary>
+        /// <value>The frames per second.</value>
+        public double FramesPerSecond
+        {
+            get => _fps;
+            set => this.RaiseAndSetIfChanged(ref _fps, value);
+        }
+
+        /// <summary>
         /// Gets or sets the genes active.
         /// </summary>
         /// <value>The genes active.</value>
@@ -152,6 +160,16 @@ namespace ALife.Avalonia.ViewModels
         {
             get => _enabled;
             set => this.RaiseAndSetIfChanged(ref _enabled, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the performance per tick label.
+        /// </summary>
+        /// <value>The performance per tick label.</value>
+        public string PerformancePerTickLabel
+        {
+            get => _performancePerTickLabel;
+            set => this.RaiseAndSetIfChanged(ref _performancePerTickLabel, value);
         }
 
         /// <summary>
@@ -190,46 +208,17 @@ namespace ALife.Avalonia.ViewModels
             set
             {
                 this.RaiseAndSetIfChanged(ref _ticksPerSecond, value);
-                TicksPerSecondLabel = $"TPS: {Math.Round(_ticksPerSecond, 2)}";
+
+                double tps = Math.Round(_ticksPerSecond, 2);
+                double fps = Math.Round(_fps, 2);
+
+                string tpsSpaces = new string(' ', MAX_CHARACTERS_FOR_TICKS - tps.ToString().Length);
+                string fpsSpaces = new string(' ', MAX_CHARACTERS_FOR_TICKS - fps.ToString().Length);
+
+                string newLabel = $"TPS: {tpsSpaces}{tps.ToString("0.00")} | FPS: {fpsSpaces}{fps.ToString("0.00")}";
+
+                PerformancePerTickLabel = newLabel;
             }
-        }
-
-        /// <summary>
-        /// Gets or sets the ticks per second.
-        /// </summary>
-        /// <value>The ticks per second.</value>
-        public string TicksPerSecondLabel
-        {
-            get => _ticksPerSecondLabel;
-            set => this.RaiseAndSetIfChanged(ref _ticksPerSecondLabel, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the frames per second.
-        /// </summary>
-        /// <value>
-        /// The frames per second.
-        /// </value>
-        public double FramesPerSecond
-        {
-            get => _fps;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _fps, value);
-                FramesPerSecondLabel = $"FPS: {Math.Round(_fps, 2)}";
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the frames per second label.
-        /// </summary>
-        /// <value>
-        /// The frames per second label.
-        /// </value>
-        public string FramesPerSecondLabel
-        {
-            get => _fpsLabel;
-            set => this.RaiseAndSetIfChanged(ref _fpsLabel, value);
         }
 
         /// <summary>

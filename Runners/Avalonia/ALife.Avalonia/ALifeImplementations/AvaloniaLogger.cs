@@ -7,11 +7,11 @@ namespace ALife.Avalonia.ALifeImplementations
     /// Defines a base implementation for an Avalonia Scenario Runner Logger
     /// </summary>
     /// <seealso cref="ALife.Core.ScenarioRunners.ScenarioLoggers.Logger"/>
-    public abstract class AvaloniaLogger(ScenarioRunnerViewModel vm) : Logger
+    public abstract class AvaloniaLogger(BatchRunnerViewModel vm) : Logger
     {
         /// <summary>
         /// The View Model
         /// </summary>
-        protected readonly ScenarioRunnerViewModel _vm = vm;
+        protected readonly BatchRunnerViewModel _vm = vm;
     }
 }

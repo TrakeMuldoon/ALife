@@ -43,7 +43,7 @@ namespace ALife.Avalonia.Controls
         /// Gets the view model.
         /// </summary>
         /// <value>The view model.</value>
-        public WorldRunnerViewModel ViewModel => (WorldRunnerViewModel)DataContext;
+        public SingularRunnerViewModel ViewModel => (SingularRunnerViewModel)DataContext;
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

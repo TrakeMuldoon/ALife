@@ -9,7 +9,7 @@ namespace ALife.Avalonia.Views
     /// <summary>
     /// </summary>
     /// <seealso cref="Avalonia.Controls.UserControl"/>
-    public partial class WorldRunnerView : UserControl, IDisposable
+    public partial class SingularRunnerView : UserControl, IDisposable
     {
         /// <summary>
         /// The disposed value
@@ -17,9 +17,9 @@ namespace ALife.Avalonia.Views
         private bool disposedValue;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WorldRunnerView"/> class.
+        /// Initializes a new instance of the <see cref="SingularRunnerView"/> class.
         /// </summary>
-        public WorldRunnerView()
+        public SingularRunnerView()
         {
             InitializeComponent();
             SetSimulationRunState(true);
@@ -34,7 +34,7 @@ namespace ALife.Avalonia.Views
         /// Gets the vm.
         /// </summary>
         /// <value>The vm.</value>
-        public WorldRunnerViewModel ViewModel => (WorldRunnerViewModel)DataContext;
+        public SingularRunnerViewModel ViewModel => (SingularRunnerViewModel)DataContext;
 
         public void _Click(object sender, RoutedEventArgs args)
         {
@@ -313,7 +313,7 @@ namespace ALife.Avalonia.Views
         }
 
         // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~WorldRunnerView() { // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        // ~SingularRunnerView() { // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
         // Dispose(disposing: false); }
     }
 }

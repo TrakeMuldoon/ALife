@@ -6,7 +6,7 @@ namespace ALife.Avalonia.ALifeImplementations
     /// Defines the logger used for outputting to the Console Textbox
     /// </summary>
     /// <seealso cref="ALife.Avalonia.ALifeImplementations.AvaloniaLogger"/>
-    public class ConsoleLogger(ScenarioRunnerViewModel vm) : AvaloniaLogger(vm)
+    public class ConsoleLogger(BatchRunnerViewModel vm) : AvaloniaLogger(vm)
     {
         /// <summary>
         /// Writes the message to the actual output.

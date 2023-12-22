@@ -14,7 +14,7 @@ namespace ALife.Avalonia.ALifeImplementations
     /// <param name="totalTurns">The total turns.</param>
     /// <param name="turnBatch">The turn batch.</param>
     /// <param name="updateFrequency">The update frequency.</param>
-    public class AvaloniaScenarioRunner(ScenarioRunnerViewModel vm, string scenarioName, int? startingSeed, int numberSeedsToExecute, int totalTurns, int turnBatch, int updateFrequency) : AbstractLoggedScenarioRunner(scenarioName, startingSeed, numberSeedsToExecute, totalTurns, turnBatch, updateFrequency, new ConsoleLogger(vm), new SeedLogger(vm))
+    public class AvaloniaScenarioRunner(BatchRunnerViewModel vm, string scenarioName, int? startingSeed, int numberSeedsToExecute, int totalTurns, int turnBatch, int updateFrequency) : AbstractLoggedScenarioRunner(scenarioName, startingSeed, numberSeedsToExecute, totalTurns, turnBatch, updateFrequency, new ConsoleLogger(vm), new SeedLogger(vm))
     {
         /// <summary>
         /// Gets the type of the logger.

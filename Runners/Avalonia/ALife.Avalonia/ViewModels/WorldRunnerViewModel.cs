@@ -4,11 +4,11 @@ using ReactiveUI;
 namespace ALife.Avalonia.ViewModels
 {
     /// <summary>
-    /// The ViewModel for the WorldRunnerView.
+    /// The ViewModel for the SingularRunnerView.
     /// TODO: Do this
     /// </summary>
     /// <seealso cref="ALife.Avalonia.ViewModels.ViewModelBase"/>
-    public class WorldRunnerViewModel : ViewModelBase
+    public class SingularRunnerViewModel : ViewModelBase
     {
         /// <summary>
         /// The maximum characters for ticks
@@ -71,9 +71,9 @@ namespace ALife.Avalonia.ViewModels
         private string _zoneInfo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WorldRunnerViewModel"/> class.
+        /// Initializes a new instance of the <see cref="SingularRunnerViewModel"/> class.
         /// </summary>
-        public WorldRunnerViewModel()
+        public SingularRunnerViewModel()
         {
             Random r = new();
 
@@ -91,11 +91,11 @@ namespace ALife.Avalonia.ViewModels
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WorldRunnerViewModel"/> class.
+        /// Initializes a new instance of the <see cref="SingularRunnerViewModel"/> class.
         /// </summary>
         /// <param name="scenarioName">Name of the scenario.</param>
         /// <param name="seed">The seed.</param>
-        public WorldRunnerViewModel(string scenarioName, int? seed = null)
+        public SingularRunnerViewModel(string scenarioName, int? seed = null)
         {
             Random r = new();
 

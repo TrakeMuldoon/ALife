@@ -8,12 +8,12 @@ namespace ALife.Avalonia.Views
     /// A ScenarioRunner for the Avalonia GUI implementation of ALife
     /// </summary>
     /// <seealso cref="Avalonia.Controls.UserControl"/>
-    public partial class ScenarioRunnerView : UserControl
+    public partial class BatchRunnerView : UserControl
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScenarioRunnerView"/> class.
+        /// Initializes a new instance of the <see cref="BatchRunnerView"/> class.
         /// </summary>
-        public ScenarioRunnerView()
+        public BatchRunnerView()
         {
             InitializeComponent();
         }
@@ -22,7 +22,7 @@ namespace ALife.Avalonia.Views
         /// Gets the vm.
         /// </summary>
         /// <value>The vm.</value>
-        private ScenarioRunnerViewModel _vm => (ScenarioRunnerViewModel)DataContext;
+        private BatchRunnerViewModel _vm => (BatchRunnerViewModel)DataContext;
 
         /// <summary>
         /// Handles the Click event of the Restart control.

@@ -69,7 +69,7 @@ namespace ALife.Avalonia.Controls
         /// <summary>
         /// The view model
         /// </summary>
-        private WorldRunnerViewModel _vm;
+        private SingularRunnerViewModel _vm;
 
         /// <summary>
         /// The movement
@@ -231,7 +231,7 @@ namespace ALife.Avalonia.Controls
             {
                 if(!_simulation.IsInitialized)
                 {
-                    _vm = Parent.DataContext as WorldRunnerViewModel;
+                    _vm = Parent.DataContext as SingularRunnerViewModel;
                     _simulation.InitializeSimulation();
                     _renderer = new AvaloniaRenderer();
 

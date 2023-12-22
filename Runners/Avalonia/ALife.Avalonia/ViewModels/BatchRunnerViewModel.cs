@@ -10,7 +10,7 @@ namespace ALife.Avalonia.ViewModels
     /// The View Model for the Scenario Runner view
     /// </summary>
     /// <seealso cref="ALife.Avalonia.ViewModels.ViewModelBase"/>
-    public class ScenarioRunnerViewModel : ViewModelBase
+    public class BatchRunnerViewModel : ViewModelBase
     {
         /// <summary>
         /// The can restart runner
@@ -73,9 +73,9 @@ namespace ALife.Avalonia.ViewModels
         private string _updateFrequency = string.Empty;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScenarioRunnerViewModel"/> class.
+        /// Initializes a new instance of the <see cref="BatchRunnerViewModel"/> class.
         /// </summary>
-        public ScenarioRunnerViewModel()
+        public BatchRunnerViewModel()
         {
             ScenarioName = string.Empty;
             ScenarioSeed = null;
@@ -96,9 +96,9 @@ namespace ALife.Avalonia.ViewModels
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScenarioRunnerViewModel"/> class.
+        /// Initializes a new instance of the <see cref="BatchRunnerViewModel"/> class.
         /// </summary>
-        public ScenarioRunnerViewModel(string scenarioName, int? scenarioSeed, bool autoStartScenarioRunner)
+        public BatchRunnerViewModel(string scenarioName, int? scenarioSeed, bool autoStartScenarioRunner)
         {
             ScenarioName = scenarioName;
             ScenarioSeed = scenarioSeed;

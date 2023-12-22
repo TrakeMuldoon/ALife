@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ALife.Avalonia.ALifeImplementations;
 using ALife.Avalonia.ViewModels;
 using ALife.Core;
 using ALife.Core.WorldObjects;

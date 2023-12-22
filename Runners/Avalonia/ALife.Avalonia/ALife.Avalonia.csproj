@@ -33,4 +33,8 @@
     <ProjectReference Include="..\..\..\Core\ALife.Core\ALife.Core.csproj" />
     <ProjectReference Include="..\..\..\Core\ALife.Rendering\ALife.Rendering.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controls\SingularControls\" />
+  </ItemGroup>
 </Project>

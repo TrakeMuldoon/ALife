@@ -118,7 +118,7 @@
           </ListBox.Styles>
           <ListBox.ItemTemplate>
             <DataTemplate>
-              <StackPanel Orientation="Horizontal" Margin="5,0" Background="Grey" HorizontalAlignment="Stretch">
+              <StackPanel Orientation="Horizontal" Margin="5,0" HorizontalAlignment="Stretch">
                 <TextBlock Text="{Binding LayerName}" Width="60" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" Padding="0"/>
                 <CheckBox IsChecked="{Binding ShowObjects, Mode=TwoWay}" Margin="3,0" Padding="0"/>
                 <CheckBox IsChecked="{Binding ShowBoundingBoxes, Mode=TwoWay}" Margin="3,0" Padding="0"/>

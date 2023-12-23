@@ -1,4 +1,5 @@
-﻿using ALife.Core;
+﻿using System.Timers;
+using ALife.Core;
 using ALife.Core.WorldObjects;
 
 namespace ALife.Rendering
@@ -8,21 +9,8 @@ namespace ALife.Rendering
     /// TODO: Right now this is pretty threadbare. It should be better populated over time. The goal would be to make the actual WorldCanvas control as light-weight as possible to allow us to move to other rendering engines if/as needed.
     /// </summary>
     /// <seealso cref="ALife.Core.SimulationController"/>
-    public class RenderedSimulationController : SimulationController
+    public class RenderedSimulationController : SimulationController, IDisposable
     {
-        /// <summary>
-        /// The FPS counter
-        /// </summary>
-        private PerformanceCounter _fpsCounter = new();
-
-        /// <summary>
-        /// Gets the FPS counter.
-        /// </summary>
-        /// <value>
-        /// The FPS counter.
-        /// </value>
-        public PerformanceCounter FpsCounter => _fpsCounter;
-
         /// <summary>
         /// The agent UI settings
         /// </summary>
@@ -34,9 +22,92 @@ namespace ALife.Rendering
         public int DrawingErrors = 0;
 
         /// <summary>
+        /// The is simulation enabled
+        /// </summary>
+        public bool IsSimulationEnabled = false;
+
+        /// <summary>
         /// The UI settings
         /// </summary>
         public List<LayerUISettings> Layers = LayerUISettings.GetDefaultSettings();
+
+        /// <summary>
+        /// The FPS counter
+        /// </summary>
+        private PerformanceCounter _fpsCounter = new();
+
+        /// <summary>
+        /// The timer
+        /// </summary>
+        private System.Timers.Timer? _timer;
+
+        /// <summary>
+        /// The disposed value
+        /// </summary>
+        private bool disposedValue;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RenderedSimulationController"/> class.
+        /// </summary>
+        /// <param name="scenarioName">Name of the scenario.</param>
+        /// <param name="startingSeed">The starting seed.</param>
+        /// <param name="width">The width. Defaults to the default world width for the scenario.</param>
+        /// <param name="height">The height. Defaults to the default world height for the scenario.</param>
+        public RenderedSimulationController(string scenarioName, int? startingSeed, int? width = null, int? height = null) : base(scenarioName, startingSeed, width, height)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when [on simulation speed changed event].
+        /// </summary>
+        public event EventHandler<SimulationSpeedChangedEventArgs> OnSimulationSpeedChangedEvent;
+
+        /// <summary>
+        /// Occurs when [on simulation tick event].
+        /// </summary>
+        public event EventHandler<RenderedSimulationTickEventArgs> OnSimulationTickEvent;
+
+        /// <summary>
+        /// Gets the current simulation speed.
+        /// </summary>
+        /// <value>The current simulation speed.</value>
+        public SimulationSpeed CurrentSimulationSpeed { get; private set; }
+
+        /// <summary>
+        /// Gets the FPS counter.
+        /// </summary>
+        /// <value>The FPS counter.</value>
+        public PerformanceCounter FpsCounter => _fpsCounter;
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Executes the tick.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="e">The <see cref="ElapsedEventArgs"/> instance containing the event data.</param>
+        public void ExecuteTick(object? source, ElapsedEventArgs e)
+        {
+            if(IsSimulationEnabled)
+            {
+            }
+            ExecuteTick();
+
+            EventHandler<RenderedSimulationTickEventArgs> raiseEvent = OnSimulationTickEvent;
+            if(raiseEvent != null)
+            {
+                RenderedSimulationTickEventArgs args = new(e.SignalTime, Planet.World.Turns);
+                raiseEvent(this, args);
+            }
+        }
 
         /// <summary>
         /// Renders the specified renderer.
@@ -52,6 +123,12 @@ namespace ALife.Rendering
             }
         }
 
+        /// <summary>
+        /// Renders the layer.
+        /// </summary>
+        /// <param name="renderer">The renderer.</param>
+        /// <param name="ui">The UI.</param>
+        /// <param name="aui">The aui.</param>
         public void RenderLayer(AbstractRenderer renderer, LayerUISettings ui, AgentUISettings aui)
         {
             try
@@ -111,6 +188,72 @@ namespace ALife.Rendering
             catch(Exception)
             {
                 DrawingErrors++;
+            }
+        }
+
+        /// <summary>
+        /// Sets the simulation speed.
+        /// </summary>
+        /// <param name="speed">The speed.</param>
+        public void SetSimulationSpeed(SimulationSpeed speed, bool triggerSpeedChangedEvent = true)
+        {
+            if(Planet.HasWorld)
+            {
+                Planet.World.SimulationPerformance?.ClearBuffer();
+            }
+            _fpsCounter.ClearBuffer();
+
+            if(_timer != null)
+            {
+                _timer.Stop();
+                _timer.Dispose();
+            }
+
+            SimulationSpeed oldSpeed = CurrentSimulationSpeed;
+            CurrentSimulationSpeed = speed;
+            _timer = new(speed.ToTargetMS());
+            _timer.Elapsed += ExecuteTick;
+            _timer.AutoReset = true;
+            _timer.Enabled = true;
+
+            if(triggerSpeedChangedEvent)
+            {
+                EventHandler<SimulationSpeedChangedEventArgs> raiseEvent = OnSimulationSpeedChangedEvent;
+                if(raiseEvent != null)
+                {
+                    SimulationSpeedChangedEventArgs args = new(oldSpeed, speed);
+                    raiseEvent(this, args);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Starts the simulation.
+        /// </summary>
+        public void StartSimulation()
+        {
+            SetSimulationSpeed(SimulationSpeedExtensions.DEFAULT_SPEED, false);
+        }
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing">
+        /// <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
+        /// </param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if(!disposedValue)
+            {
+                if(disposing)
+                {
+                    _timer?.Stop();
+                    _timer?.Dispose();
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                disposedValue = true;
             }
         }
     }

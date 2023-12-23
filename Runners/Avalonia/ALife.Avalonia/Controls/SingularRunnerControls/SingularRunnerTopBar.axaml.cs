@@ -1,62 +1,80 @@
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using ALife.Avalonia.ViewModels;
+using ALife.Rendering;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
-using Avalonia.Threading;
 
 namespace ALife.Avalonia.Controls.SingularRunnerControls
 {
     public partial class SingularRunnerTopBar : UserControl, IDisposable
     {
         /// <summary>
-        /// The text update thread cancellation token
-        /// </summary>
-        private CancellationTokenSource _cancellationToken;
-
-        /// <summary>
-        /// The update task
-        /// </summary>
-        private Task _updateTask;
-
-        /// <summary>
         /// The disposed value
         /// </summary>
         private bool disposedValue;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SingularRunnerTopBar"/> class.
-        /// </summary>
         public SingularRunnerTopBar()
         {
             InitializeComponent();
-
-            string baseNum = "---";
-            string startingSpaces = new string(' ', SingularRunnerViewModel.MAX_CHARACTERS_FOR_TICKS - baseNum.Length);
-
-            string newLabel = $"TPS: {startingSpaces}{baseNum} | FPS: {startingSpaces}{baseNum}";
-            Performance.Text = newLabel;
-
-            _cancellationToken = new CancellationTokenSource();
-            CancellationToken ct = _cancellationToken.Token;
-            _updateTask = Task.Run(() => UpdateTask(ct), ct);
+            SetSimulationRunState(true);
         }
 
         /// <summary>
-        /// Gets the view model.
+        /// Gets the vm.
         /// </summary>
-        /// <value>The view model.</value>
+        /// <value>The vm.</value>
         public SingularRunnerViewModel ViewModel => (SingularRunnerViewModel)DataContext;
 
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
+        public void _Click(object sender, RoutedEventArgs args)
+        {
+        }
+
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// If the simulation is paused, executes a single turn
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        public void Execution_OneTurnButton_Click(object sender, RoutedEventArgs args)
+        {
+            //TheWorldCanvas.ExecuteTick();
+        }
+
+        /// <summary>
+        /// Pauses the execution of the simulation.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        public void Execution_PauseButton_Click(object sender, RoutedEventArgs args)
+        {
+            SetSimulationRunState(false);
+        }
+
+        /// <summary>
+        /// Plays the simulation
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        public void Execution_PlayButton_Click(object sender, RoutedEventArgs args)
+        {
+            SetSimulationRunState(true);
+        }
+
+        /// <summary>
+        /// Handles the Click event of the FF_FFButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        public void FF_FFButton_Click(object sender, RoutedEventArgs args)
+        {
+            // TODO: take ViewModel.FastForwardTicks and fast foward
         }
 
         /// <summary>
@@ -71,68 +89,111 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
         }
 
         /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
+        /// Handles the Click event of the Seed_NewSeedButton control.
         /// </summary>
-        /// <param name="disposing">
-        /// <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-        /// </param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        public void Seed_NewSeedButton_Click(object sender, RoutedEventArgs args)
+        {
+            Random r = new();
+            Seed.Text = r.Next().ToString();
+            Seed_ResetWorldButton_Click(sender, args);
+        }
+
+        /// <summary>
+        /// Handles the Click event of the Seed_ResetWorldButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        public void Seed_ResetWorldButton_Click(object sender, RoutedEventArgs args)
+        {
+            if(!int.TryParse(Seed.Text, out int seed))
+            {
+                // we should never get here (Avalonia's bindings blocks us :) ), but just in case
+                Random r = new();
+                seed = r.Next();
+                Seed.Text = seed.ToString();
+            }
+
+            SetSimulationRunState(true);
+            Speed_Slider.Value = SimulationSpeedExtensions.DEFAULT_SPEED.GetSliderPosition();
+            ViewModel.Simulation.SetSimulationSpeed(SimulationSpeedExtensions.DEFAULT_SPEED);
+            ViewModel.Simulation.StartingSeed = seed;
+            ViewModel.Simulation.InitializeSimulation();
+        }
+
+        public void ShowGeneology_Checked(object sender, RoutedEventArgs args)
+        {
+        }
+
+        /// <summary>
+        /// Handles the Click event of the Zoom_InButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        public void Zoom_InButton_Click(object sender, RoutedEventArgs args)
+        {
+            //Zoom_Slider.Value += 100;
+        }
+
+        /// <summary>
+        /// Handles the Click event of the Zoom_OutButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        public void Zoom_OutButton_Click(object sender, RoutedEventArgs args)
+        {
+            //Zoom_Slider.Value -= 100;
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if(!disposedValue)
             {
                 if(disposing)
                 {
-                    _cancellationToken.Cancel();
-                    while(!_updateTask.IsCanceled && !_updateTask.IsCompleted && !_updateTask.IsFaulted)
-                    {
-                        Thread.Sleep(100);
-                    }
+                    // Managed items go here
                 }
 
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
                 disposedValue = true;
             }
         }
 
         /// <summary>
-        /// Updates the task.
+        /// Sets the state of the simulation run.
         /// </summary>
-        /// <param name="token">The token.</param>
-        private void UpdateTask(CancellationToken token)
+        /// <param name="isRunning">if set to <c>true</c> [is running].</param>
+        private void SetSimulationRunState(bool isRunning)
         {
-            while(true)
+            if(ViewModel != null)
             {
-                if(token.IsCancellationRequested)
-                {
-                    token.ThrowIfCancellationRequested();
-                }
-                // With bindings, TPS updates, but for some reason FPS does _not_ update. So we're doing it manually
-                try
-                {
-                    // Start the job on the ui thread and return immediately.
-                    Dispatcher.UIThread.Post(() => UpdateTextboxes());
-
-                    // Start the job on the ui thread and wait for the result.
-                    Dispatcher.UIThread.InvokeAsync(UpdateTextboxes).Wait();
-
-                    // This invocation would cause an exception because we are running on a worker thread:
-                    // System.InvalidOperationException: 'Call from invalid thread'
-                }
-                catch(Exception)
-                {
-                    throw; // Todo: Handle exception.
-                }
-                Thread.Sleep(500);
+                ViewModel.IsEnabled = isRunning;
+                ViewModel.Simulation.IsSimulationEnabled = isRunning;
             }
+
+            // TODO: Binding for IsEnabled seems like it is delayed by a cycle, so we're manually doing it for now
+            Execution_PauseButton.IsEnabled = isRunning;
+            Execution_OneTurnButton.IsEnabled = !isRunning;
+            Execution_PlayButton.IsEnabled = !isRunning;
         }
 
         /// <summary>
-        /// Updates the textboxes.
+        /// Speeds the slider value changed.
         /// </summary>
-        private void UpdateTextboxes()
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">
+        /// The <see cref="Avalonia.Controls.Primitives.RangeBaseValueChangedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void SpeedSlider_ValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
         {
-            // We can update with bindings, but then it is illegible since it updates so frequently. So doing it
-            // manually instead.
-            this.Performance.Text = ViewModel?.PerformancePerTickLabel;
+            if(ViewModel != null)
+            {
+                int speed = (int)e.NewValue;
+
+                ViewModel.Simulation.SetSimulationSpeed(speed.SimulationSpeedFromSliderValue());
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using ALife.Rendering;
 using ReactiveUI;
 
@@ -18,9 +17,9 @@ namespace ALife.Avalonia.ViewModels
         public const int MAX_CHARACTERS_FOR_TICKS = 10;
 
         /// <summary>
-        /// The simulation speeds
+        /// The simulation
         /// </summary>
-        public Dictionary<int, SimulationSpeed> SimulationSpeeds;
+        public RenderedSimulationController Simulation;
 
         /// <summary>
         /// The agents active
@@ -85,9 +84,8 @@ namespace ALife.Avalonia.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="SingularRunnerViewModel"/> class.
         /// </summary>
-        public SingularRunnerViewModel()
+        public SingularRunnerViewModel() : this(string.Empty, null)
         {
-            Initialize(string.Empty);
         }
 
         /// <summary>
@@ -97,7 +95,25 @@ namespace ALife.Avalonia.ViewModels
         /// <param name="seed">The seed.</param>
         public SingularRunnerViewModel(string scenarioName, int? seed = null)
         {
-            Initialize(scenarioName, seed);
+            Random r = new();
+            this._scenarioName = scenarioName;
+            this._seed = seed ?? r.Next();
+            this._enabled = false;
+            Simulation = new(scenarioName, seed);
+
+            _ticksPerSecond = 0;
+            _fps = 0;
+            string baseNum = "---";
+            string startingSpaces = new string(' ', MAX_CHARACTERS_FOR_TICKS - baseNum.Length);
+            string newLabel = $"TPS: {startingSpaces}{baseNum} | FPS: {startingSpaces}{baseNum}";
+            _performancePerTickLabel = newLabel;
+
+            _speed = SimulationSpeedExtensions.DEFAULT_SPEED.GetSliderPosition();
+            _zoneInfo = string.Empty;
+            _turnCount = 0;
+            _genesActive = 0;
+            _agentsActive = 0;
+            _fastForwardTicks = 0;
         }
 
         /// <summary>
@@ -237,41 +253,6 @@ namespace ALife.Avalonia.ViewModels
         {
             get => _zoneInfo;
             set => this.RaiseAndSetIfChanged(ref _zoneInfo, value);
-        }
-
-        /// <summary>
-        /// Initializes the specified scenario name.
-        /// </summary>
-        /// <param name="scenarioName">Name of the scenario.</param>
-        /// <param name="seed">The seed.</param>
-        private void Initialize(string scenarioName, int? seed = null)
-        {
-            Random r = new();
-
-            _ticksPerSecond = 0;
-            _fps = 0;
-            string baseNum = "---";
-            string startingSpaces = new string(' ', SingularRunnerViewModel.MAX_CHARACTERS_FOR_TICKS - baseNum.Length);
-            string newLabel = $"TPS: {startingSpaces}{baseNum} | FPS: {startingSpaces}{baseNum}";
-            _performancePerTickLabel = newLabel;
-
-            _speed = 20;
-            _zoneInfo = string.Empty;
-            _turnCount = 0;
-            _genesActive = 0;
-            _agentsActive = 0;
-            _fastForwardTicks = 0;
-            this._scenarioName = scenarioName;
-            this._seed = seed ?? r.Next();
-            this._enabled = false;
-
-            SimulationSpeeds = new();
-            int sliderValue = 0;
-            foreach(SimulationSpeed simSpeed in Enum.GetValues(typeof(SimulationSpeed)))
-            {
-                SimulationSpeeds.Add(sliderValue, simSpeed);
-                sliderValue += 10;
-            }
         }
     }
 }

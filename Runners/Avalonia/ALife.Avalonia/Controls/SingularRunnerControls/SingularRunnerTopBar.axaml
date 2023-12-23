@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="35"
+             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="80"
              x:Class="ALife.Avalonia.Controls.SingularRunnerControls.SingularRunnerTopBar"
              xmlns:vm="clr-namespace:ALife.Avalonia.ViewModels"
              x:DataType="vm:SingularRunnerViewModel">
@@ -12,23 +12,65 @@
     <vm:SingularRunnerViewModel />
   </Design.DataContext>
 
-  <Grid x:CompileBindings="True">
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*" />
-      <ColumnDefinition Width="420" />
-    </Grid.ColumnDefinitions>
+  <StackPanel Orientation="Horizontal" Background="Black" ZIndex="99999">
+    <!-- Seed Controls -->
+    <Border BorderBrush="White" BorderThickness="1" CornerRadius="3" Background="Black" Margin="1, 1, 1, 1">
+      <StackPanel Orientation="Vertical" Width="260" VerticalAlignment="Center">
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Seed Settings" Margin="3, 3, 3, 3" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+          <TextBox Name="Seed" x:CompileBindings="False" Text="{Binding StartingSeed}" Width="100" Margin="3, 3, 3, 3" />
+          <Button Name="Seed_ResetWorldButton" Click="Seed_ResetWorldButton_Click" Width="60" Margin="3, 3, 3, 3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">RESET</Button>
+          <Button Name="Seed_NewSeedButton" Click="Seed_NewSeedButton_Click" Width="80" Margin="3, 3, 3, 3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">RANDOM</Button>
+        </StackPanel>
+      </StackPanel>
+    </Border>
 
-    <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="3, 3, 3, 3">
-      <!-- A label displaying the current scenario -->
-      <TextBlock Text="{Binding ScenarioLabel}" VerticalAlignment="Center" ToolTip.Tip="The current scenario that is executing." />
-    </StackPanel>
+    <!-- Zoom Controls -->
+    <Border BorderBrush="White" BorderThickness="1" CornerRadius="3" Background="Black" Margin="1, 1, 1, 1">
+      <StackPanel Orientation="Vertical" Width="360">
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Zoom Controls" Margin="3, 3, 3, 3" />
 
-    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="3, 3, 3, 3">
-      <!-- A label displaying the ticks per second of the application -->
-      <TextBlock Name="Performance" Width="270" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip.Tip="TPS = Ticks per Second (the turns the simulatione executes every second).\nFPS = Frames per Second (the amount of frames rendered every second)." FontFamily="Consolas" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Current Zoom:"  Margin="3, 3, 3, 3" />
+            <TextBlock Text="{Binding #Zoom_Slider.Value, StringFormat=0.00}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3, 3, 3, 3" />
+            <Slider x:Name="Zoom_Slider" Minimum ="500" Maximum="1400" Value="1400" Width="115" Margin="3, 3, 3, 3" />
 
-      <!-- Return to Launcher Button -->
-      <Button Name="ReturntoLauncher" Click="ReturntoLauncher_Click" Width="150" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip.Tip="Closes the simulation and returns to the launcher.">Return to Launcher</Button>
-    </StackPanel>
-  </Grid>
+            <Button Name="Zoom_OutButton" Click="Zoom_OutButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="3, 3, 3, 3">-</Button>
+            <Button Name="Zoom_InButton" Click="Zoom_InButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="3, 3, 3, 3">+</Button>
+          </StackPanel>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+    <!-- Simulation Speed Controls -->
+    <Border BorderBrush="White" BorderThickness="1" CornerRadius="3" Background="Black" Margin="1, 1, 1, 1">
+      <StackPanel Orientation="Vertical" Margin="3, 3, 3, 3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Simulation Speed" />
+
+        <StackPanel Orientation="Horizontal">
+          <!-- Pause/Play/1 Turn -->
+          <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+            <Button Name="Execution_PauseButton" Click="Execution_PauseButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Pause</Button>
+            <Button Name="Execution_PlayButton" Click="Execution_PlayButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Play</Button>
+            <Button Name="Execution_OneTurnButton" Click="Execution_OneTurnButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">One Turn</Button>
+          </StackPanel>
+
+          <!-- Speed -->
+          <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Stretch">
+            <Slider Name="Speed_Slider" Minimum="0" Maximum="60" Value="{Binding Speed}" ValueChanged="SpeedSlider_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="10" TickPlacement="TopLeft" Width="240" Margin="3, 3, 3, 3" />
+          </WrapPanel>
+
+          <!-- Fast Forwarding-->
+          <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBox Name="FF_NumberTurns" x:CompileBindings="False" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding FastForwardTicks}" />
+            <Button Name="FF_FFButton" Click="FF_FFButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Fast Forward</Button>
+          </StackPanel>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+    <!-- Return to Launcher Button -->
+    <Button Name="ReturntoLauncher" Click="ReturntoLauncher_Click" Width="150" VerticalAlignment="Center" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip.Tip="Closes the simulation and returns to the launcher.">Return to Launcher</Button>
+  </StackPanel>
 </UserControl>

@@ -1,6 +1,10 @@
-﻿using System;
+﻿using ALife.Core.Scenarios;
+using ALife.Core.WorldObjects;
+using ALife.Core.WorldObjects.Agents;
+using System;
 using System.Collections.Generic;
-using ALife.Core.Scenarios;
+using System.Linq;
+using System.Text;
 
 namespace ALife.Core
 {
@@ -58,8 +62,40 @@ namespace ALife.Core
             _activeGenes = new();
             ScenarioName = scenarioName;
             StartingSeed = startingSeed;
-            PopulateSimulationDetails(width, height);
+            if(!string.IsNullOrWhiteSpace(scenarioName))
+            {
+                PopulateSimulationDetails(width, height);
+            }
         }
+
+        /// <summary>
+        /// Gets the active agent count.
+        /// </summary>
+        /// <value>The active agent count.</value>
+        public int ActiveAgentCount
+        {
+            get
+            {
+                if(Planet.HasWorld)
+                {
+                    return Planet.World.AllActiveObjects.Where(wo => wo.Alive && wo is Agent).Count();
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the active gene count.
+        /// </summary>
+        /// <value>The active gene count.</value>
+        public int ActiveGeneCount => _activeGenes.Count;
+
+        /// <summary>
+        /// Gets the active genes.
+        /// </summary>
+        /// <value>The active genes.</value>
+        public Dictionary<string, int> ActiveGenes => _activeGenes;
 
         /// <summary>
         /// Gets a value indicating whether this instance is initialized.
@@ -92,22 +128,73 @@ namespace ALife.Core
         public string SimulationName => ScenarioDetails.Name;
 
         /// <summary>
-        /// Executes a world tick.
+        /// Gets the TPS counter.
         /// </summary>
-        public virtual void ExecuteTick()
+        /// <value>The TPS counter.</value>
+        public PerformanceCounter? TpsCounter
+        {
+            get
+            {
+                if(!Planet.HasWorld)
+                {
+                    return null;
+                }
+
+                return Planet.World.SimulationPerformance;
+            }
+        }
+
+        /// <summary>
+        /// Gets the turn count.
+        /// </summary>
+        /// <value>The turn count.</value>
+        public int TurnCount
+        {
+            get
+            {
+                if(Planet.HasWorld)
+                {
+                    return 0;
+                }
+                return Planet.World.Turns;
+            }
+        }
+
+        /// <summary>
+        /// Gets the zone information.
+        /// </summary>
+        /// <value>The zone information.</value>
+        public string ZoneInfo { get; private set; }
+
+        /// <summary>
+        /// Executes a wolrd tick.
+        /// </summary>
+        /// <param name="updateInfo">if set to <c>true</c> [update information].</param>
+        public virtual void ExecuteTick(bool updateInfo = true)
         {
             Planet.World.ExecuteOneTurn();
+            if(updateInfo)
+            {
+                UpdateGeneology();
+                UpdateZoneInfo();
+            }
         }
 
         /// <summary>
         /// Executes multiple world ticks.
         /// </summary>
         /// <param name="numberTicks">The number of ticks to execute.</param>
-        public virtual void ExecuteTicks(int numberTicks = 1)
+        /// <param name="updateInfo">if set to <c>true</c> [update information].</param>
+        public virtual void ExecuteTicks(int numberTicks = 1, bool updateInfo = true)
         {
             for(var i = 0; i < numberTicks; i++)
             {
                 Planet.World.ExecuteOneTurn();
+            }
+            if(updateInfo)
+            {
+                UpdateGeneology();
+                UpdateZoneInfo();
             }
         }
 
@@ -147,6 +234,63 @@ namespace ALife.Core
 
             SimulationWidth = width ?? Scenario.WorldWidth;
             SimulationHeight = height ?? Scenario.WorldHeight;
+        }
+
+        /// <summary>
+        /// Updates the geneology.
+        /// </summary>
+        private void UpdateGeneology()
+        {
+            Dictionary<string, int> geneCount = new Dictionary<string, int>();
+            for(int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
+            {
+                WorldObject wo = Planet.World.AllActiveObjects[i];
+                if(wo is Agent ag
+                    && ag.Alive)
+                {
+                    string gene = ag.IndividualLabel.Substring(0, 3);
+                    if(!geneCount.ContainsKey(gene))
+                    {
+                        geneCount.Add(gene, 0);
+                    }
+                    ++geneCount[gene];
+                }
+            }
+
+            _activeGenes = geneCount;
+        }
+
+        /// <summary>
+        /// Updates the zone information.
+        /// </summary>
+        private void UpdateZoneInfo()
+        {
+            Dictionary<string, int> zoneCount = new Dictionary<string, int>();
+            foreach(Zone z in Planet.World.Zones.Values)
+            {
+                zoneCount.Add(z.Name, 0);
+            }
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
+            {
+                WorldObject wo = Planet.World.AllActiveObjects[i];
+                if(wo is Agent ag
+                    && ag.Alive)
+                {
+                    zoneCount[ag.HomeZone.Name]++;
+                }
+            }
+
+            int maxNameLength = zoneCount.Keys.Max(k => k.Length);
+            int maxZoneCount = zoneCount.Values.Max();
+
+            foreach(string name in zoneCount.Keys)
+            {
+                string nameSpaces = new string(' ', maxNameLength - name.Length);
+
+                sb.AppendLine($"{nameSpaces}{name}: {zoneCount[name]}");
+            }
+            ZoneInfo = sb.ToString();
         }
     }
 }

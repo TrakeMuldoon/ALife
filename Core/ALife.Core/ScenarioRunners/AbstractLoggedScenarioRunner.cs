@@ -265,7 +265,7 @@ namespace ALife.Core.ScenarioRunners
                     {
                         ct.ThrowIfCancellationRequested();
                     }
-                    simulationController.ExecuteTicks(TurnBatch);
+                    simulationController.ExecuteTicks(TurnBatch, false);
                     Logger.Write(".");
 
                     if(config.ShouldEndSimulation(Logger.Write))

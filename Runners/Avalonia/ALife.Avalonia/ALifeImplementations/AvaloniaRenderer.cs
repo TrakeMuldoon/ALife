@@ -8,6 +8,10 @@ using Color = System.Drawing.Color;
 using Point = ALife.Core.Geometry.Shapes.Point;
 using AvColor = Avalonia.Media.Color;
 using AvPoint = Avalonia.Point;
+using AvColors = Avalonia.Media.Colors;
+using AvSize = Avalonia.Size;
+using System.Globalization;
+using System.Drawing;
 
 namespace ALife.Avalonia.ALifeImplementations
 {
@@ -71,14 +75,15 @@ namespace ALife.Avalonia.ALifeImplementations
             StreamGeometryContext geoStream = pathGeometry.Open();
             geoStream.BeginFigure(ConvertPoint(currShape.CentrePoint), fillIn);
             geoStream.LineTo(ConvertPoint(currShape.LeftPoint));
-            geoStream.ArcTo(ConvertPoint(currShape.RightPoint), new Size(currShape.Radius, currShape.Radius), 0, false, SweepDirection.Clockwise);
+            geoStream.ArcTo(ConvertPoint(currShape.RightPoint), new AvSize(currShape.Radius, currShape.Radius), 0, false, SweepDirection.Clockwise);
             geoStream.EndFigure(true);
             Context.DrawGeometry(b, BLACKPEN, pathGeometry);
         }
 
         public override void DrawText(string text, Point point, Color color)
         {
-            throw new NotImplementedException();
+            FormattedText ft = new FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, Typeface.Default, 12, new SolidColorBrush(ConvertColour(color)));
+            Context.DrawText(ft, ConvertPoint(point));
         }
 
         public override void FillAARectangle(Point minXY, Point maxXY, Color color)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ALife.Core.Scenarios;
 
 namespace ALife.Core
@@ -34,9 +35,14 @@ namespace ALife.Core
         public int? StartingSeed;
 
         /// <summary>
+        /// The active genes and their population counts.
+        /// </summary>
+        private Dictionary<string, int> _activeGenes;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SimulationController"/> class.
         /// </summary>
-        public SimulationController()
+        public SimulationController() : this(string.Empty, null, null, null)
         {
         }
 
@@ -49,6 +55,7 @@ namespace ALife.Core
         /// <param name="height">The height. Defaults to the default world height for the scenario.</param>
         public SimulationController(string scenarioName, int? startingSeed, int? width = null, int? height = null)
         {
+            _activeGenes = new();
             ScenarioName = scenarioName;
             StartingSeed = startingSeed;
             PopulateSimulationDetails(width, height);

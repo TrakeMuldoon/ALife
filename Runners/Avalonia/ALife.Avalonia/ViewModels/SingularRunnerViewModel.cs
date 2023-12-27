@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using ALife.Rendering;
 using ReactiveUI;
 
 namespace ALife.Avalonia.ViewModels
@@ -56,6 +58,11 @@ namespace ALife.Avalonia.ViewModels
         private int _seed;
 
         /// <summary>
+        /// The simulation
+        /// </summary>
+        private RenderedSimulationController _simulation;
+
+        /// <summary>
         /// The ticks per second
         /// </summary>
         private double _ticksPerSecond;
@@ -73,26 +80,8 @@ namespace ALife.Avalonia.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="SingularRunnerViewModel"/> class.
         /// </summary>
-        public SingularRunnerViewModel()
+        public SingularRunnerViewModel() : this(string.Empty, null)
         {
-            Random r = new();
-
-            _ticksPerSecond = 0;
-            _fps = 0;
-            string baseNum = "---";
-            string startingSpaces = new string(' ', SingularRunnerViewModel.MAX_CHARACTERS_FOR_TICKS - baseNum.Length);
-
-            string newLabel = $"TPS: {startingSpaces}{baseNum} | FPS: {startingSpaces}{baseNum}";
-            _performancePerTickLabel = newLabel;
-
-            _zoneInfo = string.Empty;
-            _turnCount = 0;
-            _genesActive = 0;
-            _agentsActive = 0;
-            _fastForwardTicks = 0;
-            this._scenarioName = string.Empty;
-            this._seed = r.Next();
-            this._enabled = false;
         }
 
         /// <summary>
@@ -119,6 +108,8 @@ namespace ALife.Avalonia.ViewModels
             this._scenarioName = scenarioName;
             this._seed = seed ?? r.Next();
             this._enabled = false;
+
+            _simulation = new RenderedSimulationController(scenarioName, seed);
         }
 
         /// <summary>
@@ -186,6 +177,27 @@ namespace ALife.Avalonia.ViewModels
         /// </summary>
         /// <value>The scenario label.</value>
         public string ScenarioLabel => $"Scenario: {StartingScenarioName}";
+
+        /// <summary>
+        /// Gets or sets the simulation.
+        /// </summary>
+        /// <value>The simulation.</value>
+        public RenderedSimulationController Simulation
+        {
+            get => _simulation;
+            set => this.RaiseAndSetIfChanged(ref _simulation, value);
+        }
+
+        /// <summary>
+        /// The agent UI settings
+        /// </summary>
+        public AgentUISettings SimulationAgentUiSettings => Simulation.AgentUiSettings;
+
+        /// <summary>
+        /// Gets the simulation layers.
+        /// </summary>
+        /// <value>The simulation layers.</value>
+        public List<LayerUISettings> SimulationLayers => Simulation.Layers;
 
         /// <summary>
         /// Gets or sets the name of the starting scenario.

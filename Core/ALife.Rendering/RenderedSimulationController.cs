@@ -47,6 +47,24 @@ namespace ALife.Rendering
         private bool disposedValue;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="RenderedSimulationController"/> class.
+        /// </summary>
+        public RenderedSimulationController() : this(string.Empty, null, null, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RenderedSimulationController"/> class.
+        /// </summary>
+        /// <param name="scenarioName">Name of the scenario.</param>
+        /// <param name="startingSeed">The starting seed.</param>
+        /// <param name="width">The width. Defaults to the default world width for the scenario.</param>
+        /// <param name="height">The height. Defaults to the default world height for the scenario.</param>
+        public RenderedSimulationController(string scenarioName, int? startingSeed, int? width = null, int? height = null) : base(scenarioName, startingSeed, width, height)
+        {
+        }
+
+        /// <summary>
         /// Occurs when [on simulation speed changed event].
         /// </summary>
         public event EventHandler<SimulationSpeedChangedEventArgs> OnSimulationSpeedChangedEvent;

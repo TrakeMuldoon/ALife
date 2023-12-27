@@ -25,9 +25,9 @@ namespace ALife.Avalonia.Views
             SetSimulationRunState(true);
             UpdateSimulationSpeedControls();
 
-            VisualSettingsList.Items.Clear();
-            VisualSettingsList.ItemsSource = TheWorldCanvas.Simulation.Layers;
-            AgentUI.DataContext = TheWorldCanvas.Simulation.AgentUiSettings;
+            //VisualSettingsList.Items.Clear();
+            //VisualSettingsList.ItemsSource = TheWorldCanvas.Simulation.Layers;
+            //AgentUI.DataContext = TheWorldCanvas.Simulation.AgentUiSettings;
         }
 
         /// <summary>
@@ -128,7 +128,8 @@ namespace ALife.Avalonia.Views
             SetSimulationRunState(true);
             TheWorldCanvas.SetSimulationSpeed((int)SimulationSpeed.Normal);
             UpdateSimulationSpeedControls();
-            TheWorldCanvas.StartingSeed = seed;
+            TheWorldCanvas.Simulation.StartingSeed = seed;
+            //TheWorldCanvas.StartingSeed = seed;
             TheWorldCanvas.Simulation.InitializeSimulation();
         }
 

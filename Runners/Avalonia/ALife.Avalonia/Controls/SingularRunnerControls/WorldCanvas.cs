@@ -6,7 +6,6 @@ using ALife.Avalonia.ALifeImplementations;
 using ALife.Avalonia.ViewModels;
 using ALife.Core;
 using ALife.Core.WorldObjects;
-using ALPoint = ALife.Core.Geometry.Shapes.Point;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Rendering;
 using Avalonia;
@@ -14,6 +13,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Threading;
+using ALPoint = ALife.Core.Geometry.Shapes.Point;
 
 namespace ALife.Avalonia.Controls.SingularRunnerControls
 {
@@ -24,34 +24,16 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
     public class WorldCanvas : Control
     {
         /// <summary>
-        /// The enabled property
-        /// </summary>
-        public static DirectProperty<WorldCanvas, bool> EnabledProperty = AvaloniaProperty.RegisterDirect<WorldCanvas, bool>(nameof(Enabled), x => x.Enabled, (x, y) => x.Enabled = y);
-
-        /// <summary>
-        /// The scenario name property
-        /// </summary>
-        public static DirectProperty<WorldCanvas, string> ScenarioNameProperty = AvaloniaProperty.RegisterDirect<WorldCanvas, string>(nameof(ScenarioName), x => x.ScenarioName, (x, y) => x.ScenarioName = y);
-
-        /// <summary>
-        /// The starting seed property
-        /// </summary>
-        public static DirectProperty<WorldCanvas, int?> StartingSeedProperty = AvaloniaProperty.RegisterDirect<WorldCanvas, int?>(nameof(StartingSeed), x => x.StartingSeed, (x, y) => x.StartingSeed = y);
-
-        /// <summary>
         /// The turn count property
         /// </summary>
-        public static DirectProperty<WorldCanvas, int> TurnCountProperty = AvaloniaProperty.RegisterDirect<WorldCanvas, int>(nameof(TurnCount), x => x.TurnCount);
+        public static DirectProperty<WorldCanvas, RenderedSimulationController> SimulationProperty = AvaloniaProperty.RegisterDirect<WorldCanvas, RenderedSimulationController>(nameof(Simulation), x => x.Simulation, (x, y) => x.Simulation = y);
+
+        public static DirectProperty<WorldCanvas, int> TurnCountProperty = AvaloniaProperty.RegisterDirect<WorldCanvas, int>(nameof(TurnCount), x => x.TurnCount, (x, y) => x.TurnCount = y);
 
         /// <summary>
         /// The timer
         /// </summary>
         public DispatcherTimer Timer;
-
-        /// <summary>
-        /// The enabled
-        /// </summary>
-        private bool _enabled = false;
 
         /// <summary>
         /// The renderer
@@ -63,9 +45,6 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
         /// </summary>
         private RenderedSimulationController _simulation;
 
-        /// <summary>
-        /// The turn count
-        /// </summary>
         private int _turnCount;
 
         /// <summary>
@@ -91,60 +70,28 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
         /// </summary>
         public WorldCanvas()
         {
-            _enabled = false;
-            _simulation = new();
             SetSimulationSpeed((int)SimulationSpeed.Normal);
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="WorldCanvas"/> is enabled.
-        /// </summary>
-        /// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
-        public bool Enabled
-        {
-            get { return _enabled; }
-            set { SetAndRaise(EnabledProperty, ref _enabled, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the name of the scenario.
-        /// </summary>
-        /// <value>The name of the scenario.</value>
-        public string ScenarioName
-        {
-            get { return _simulation.ScenarioName; }
-            set { SetAndRaise(ScenarioNameProperty, ref _simulation.ScenarioName, value); }
-        }
-
-        /// <summary>
-        /// Gets the simulation.
+        /// Gets or sets the simulation.
         /// </summary>
         /// <value>The simulation.</value>
-        public RenderedSimulationController Simulation => _simulation;
+        public RenderedSimulationController Simulation
+        {
+            get { return _simulation; }
+            set { SetAndRaise(SimulationProperty, ref _simulation, value); }
+        }
 
         /// <summary>
         /// The simulation speed
         /// </summary>
         public SimulationSpeed SimulationSpeed { get; private set; }
 
-        /// <summary>
-        /// Gets or sets the starting seed.
-        /// </summary>
-        /// <value>The starting seed.</value>
-        public int? StartingSeed
-        {
-            get { return _simulation.StartingSeed; }
-            set { SetAndRaise(StartingSeedProperty, ref _simulation.StartingSeed, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the turn count.
-        /// </summary>
-        /// <value>The turn count.</value>
         public int TurnCount
         {
-            get { return _turnCount; }
-            set { SetAndRaise(TurnCountProperty, ref _turnCount, value); }
+            get => _turnCount;
+            set => SetAndRaise(TurnCountProperty, ref _turnCount, value);
         }
 
         /// <summary>
@@ -154,7 +101,7 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
         public void ExecuteTick()
         {
             Planet.World.ExecuteOneTurn();
-            TurnCount = Planet.World.Turns;
+            //TurnCount = Planet.World.Turns;
         }
 
         /// <summary>
@@ -164,7 +111,7 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
         /// <returns></returns>
         public override void Render(DrawingContext drawingContext)
         {
-            if(_simulation.IsInitialized)
+            if(_simulation != null && _simulation.IsInitialized)
             {
                 _renderer.SetContext(drawingContext);
                 Planet p = Planet.World;
@@ -225,7 +172,7 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
         /// <returns></returns>
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            if(IsEnabled)
+            if(IsEnabled && _simulation != null)
             {
                 if(!_simulation.IsInitialized)
                 {
@@ -240,7 +187,8 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
                 {
                     ExecuteTick();
                     _vm.TicksPerSecond = Planet.World.SimulationPerformance.AverageFramesPerTicks;
-                    _vm.TurnCount = TurnCount;
+                    _vm.TurnCount = Planet.World.Turns;
+                    TurnCount = Planet.World.Turns;
                     UpdateZoneInfo();
                     UpdateGeneology();
                 }

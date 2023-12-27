@@ -96,9 +96,9 @@ namespace ALife.Core
         /// Executes multiple world ticks.
         /// </summary>
         /// <param name="numberTicks">The number of ticks to execute.</param>
-        public virtual void ExecuteTicks(int numberTicks = 1)
+        public virtual void ExecuteTicks(int numberTicks)
         {
-            for(var i = 0; i < numberTicks; i++)
+            for(int i = 0; i < numberTicks; i++)
             {
                 Planet.World.ExecuteOneTurn();
             }

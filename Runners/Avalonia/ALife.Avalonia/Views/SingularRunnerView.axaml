@@ -75,14 +75,13 @@
         </StackPanel>
 
         <!-- Speed -->
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Turns Per Second" />
         <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Stretch">
-          <Button Name="Speed_VerySlowButton" Click="Speed_VerySlowButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;</Button>
-          <Button Name="Speed_SlowButton" Click="Speed_SlowButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;</Button>
-          <Button Name="Speed_NormalButton" Click="Speed_NormalButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;&gt;</Button>
-          <Button Name="Speed_FastButton" Click="Speed_FastButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;&gt;&gt;</Button>
-          <Button Name="Speed_VeryFastButton" Click="Speed_VeryFastButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;&gt;&gt;&gt;</Button>
-          <Button Name="Speed_VeryVeryFastButton" Click="Speed_VeryVeryFastButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">&gt;&gt;&gt;&gt;&gt;&gt;</Button>
-          <Button Name="Speed_VeryVeryVeryFastButton" Click="Speed_VeryVeryVeryFastButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">∞</Button>
+          <Button Name="Speed_2Button" Click="Speed_Button_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">2</Button>
+          <Button Name="Speed_10Button" Click="Speed_Button_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">10</Button>
+          <Button Name="Speed_30Button" Click="Speed_Button_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">30</Button>
+          <Button Name="Speed_100Button" Click="Speed_Button_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">100</Button>
+          <Button Name="Speed_VeryVeryVeryFastButton" Click="Speed_InfiniteButton_Click" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">∞</Button>
         </WrapPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

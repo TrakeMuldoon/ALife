@@ -93,7 +93,7 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
         {
             _enabled = false;
             _simulation = new();
-            SetSimulationSpeed(SimulationSpeed.Normal);
+            SetSimulationSpeed((int)SimulationSpeed.Normal);
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
         /// Sets the simulation speed.
         /// </summary>
         /// <param name="speed">The speed.</param>
-        public void SetSimulationSpeed(SimulationSpeed speed)
+        public void SetSimulationSpeed(int speed)
         {
             if(Planet.HasWorld)
             {
@@ -209,7 +209,6 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
             {
                 Timer.Stop();
             }
-            SimulationSpeed = speed;
             Timer = new()
             {
                 Interval = TimeSpan.FromSeconds(1 / (double)speed)

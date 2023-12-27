@@ -20,6 +20,7 @@ If they bump into anything, they die.
 
 Success Cases:
 If they reach the target zone, they will restart in their own zones, and an evolved children will be spawned in each of the four zones"
+       //, autoStartScenario: AutoStartMode.AutoStartVisual //#TODO: AutoStarting does not work right now.
      )]
     public class FieldCrossingWallsScenario : FieldCrossingScenario
     {

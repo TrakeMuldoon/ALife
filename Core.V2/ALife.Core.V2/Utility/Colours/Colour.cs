@@ -1,24 +1,12 @@
 ﻿using ALife.Core.Utility.Ranges;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALife.Core.Utility.Colour
 {
     [DebuggerDisplay("r{Red}, g{Green}, b{Blue}, a{Alpha}")]
     public class Colour
     {
-        public byte Alpha { get; set; }
-
-        public byte Red { get; set; }
-
-        public byte Green { get; set; }
-
-        public byte Blue { get; set; }
-
         public Colour(byte alpha, byte red, byte green, byte blue)
         {
             Alpha = alpha;
@@ -43,9 +31,15 @@ namespace ALife.Core.Utility.Colour
             Blue = parent.Blue;
         }
 
+        public byte Alpha { get; set; }
+
+        public byte Blue { get; set; }
+        public byte Green { get; set; }
+        public byte Red { get; set; }
+
         public static Colour GetRandomColour(Nullable<ByteRange> redRange = null, Nullable<ByteRange> blueRange = null, Nullable<ByteRange> greenRange = null, Nullable<ByteRange> alphaRange = null)
         {
-            ByteRange
+            throw new NotImplementedException();
         }
     }
 }

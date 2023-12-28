@@ -1,13 +1,13 @@
 ﻿using ALife.Core.Utility.Maths;
 using System.Diagnostics;
 
-namespace ALife.Core.Utility.Numerics
+namespace ALife.Core.Utility
 {
     /// <summary>
-    /// A bounded number that can be clampped.
+    /// A bounded auto-clamping number.
     /// </summary>
-    [DebuggerDisplay("{_minValue} <= {_value} <= {_maxValue} (Manual)")]
-    public class BoundedManualNumber
+    [DebuggerDisplay("{_minValue} <= {_value} <= {_maxValue}")]
+    public class BoundedNumber
     {
         /// <summary>
         /// The maximum value for the number.
@@ -25,23 +25,23 @@ namespace ALife.Core.Utility.Numerics
         private double _value;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BoundedManualNumber"/> class.
+        /// Initializes a new instance of the <see cref="BoundedNumber"/> class.
         /// </summary>
         /// <param name="value">The starting value.</param>
         /// <param name="minValue">The minimum value.</param>
         /// <param name="maxValue">The maximum value.</param>
-        public BoundedManualNumber(double value, double minValue = double.MinValue, double maxValue = double.MaxValue)
+        public BoundedNumber(double value, double minValue = double.MinValue, double maxValue = double.MaxValue)
         {
-            _value = value;
+            _value = ExtraMath.Clamp(value, minValue, maxValue);
             _minValue = minValue;
             _maxValue = maxValue;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BoundedManualNumber"/> class by copying the values from the parent.
+        /// Initializes a new instance of the <see cref="BoundedNumber"/> class by copying the values from the parent.
         /// </summary>
         /// <param name="parent">The parent.</param>
-        public BoundedManualNumber(BoundedManualNumber parent)
+        public BoundedNumber(BoundedNumber parent)
         {
             Value = parent.Value;
             MinValue = parent.MinValue;
@@ -80,26 +80,7 @@ namespace ALife.Core.Utility.Numerics
         public double Value
         {
             get => _value;
-            set => _value = value;
-        }
-
-        /// <summary>
-        /// Clamps the value to the minimum and maximum values. Does not set the Value property.
-        /// </summary>
-        /// <returns>Returns the clampped value.</returns>
-        public double Clamp()
-        {
-            _value = ExtraMath.Clamp(_value, _minValue, _maxValue);
-            return _value;
-        }
-
-        /// <summary>
-        /// Clamps the value to the minimum and maximum values.
-        /// </summary>
-        /// <returns></returns>
-        public void ClampAndSet()
-        {
-            _value = Clamp();
+            set => ExtraMath.Clamp(value, MinValue, MaxValue);
         }
     }
 }

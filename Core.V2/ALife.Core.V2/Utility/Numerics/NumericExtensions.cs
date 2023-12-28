@@ -16,16 +16,16 @@ namespace ALife.Core.Utility.Numerics
         /// </summary>
         /// <param name="BoundedManualNumber">The BoundedManualNumber to convert</param>
         /// <returns></returns>
-        public static BoundedAutoNumber ToAutoBoundedNumber(this BoundedManualNumber number)
+        public static BoundedNumber ToAutoBoundedNumber(this BoundedManualNumber number)
         {
-            return new BoundedAutoNumber(number.Value, number.MinValue, number.MaxValue);
+            return new BoundedNumber(number.Value, number.MinValue, number.MaxValue);
         }
         /// <summary>
         /// Converts a BoundedAutoNumber to a BoundedManualNumber.
         /// </summary>
         /// <param name="BoundedAutoNumber">The BoundedManualNumber to convert</param>
         /// <returns></returns>
-        public static BoundedManualNumber ToAutoBoundedNumber(this BoundedAutoNumber number)
+        public static BoundedManualNumber ToAutoBoundedNumber(this BoundedNumber number)
         {
             return new BoundedManualNumber(number.Value, number.MinValue, number.MaxValue);
         }

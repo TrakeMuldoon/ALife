@@ -1,20 +1,23 @@
-﻿namespace ALife.Core.Utility.Ranges
+﻿using System.Diagnostics;
+
+namespace ALife.Core.Utility.Ranges
 {
     /// <summary>
     /// Represents a range of values.
     /// </summary>
     /// <typeparam name="T">The type of the range.</typeparam>
+    [DebuggerDisplay("({Minimum} -> {Maximum})")]
     public struct Range<T>
     {
-        /// <summary>
-        /// The minimum value of the range.
-        /// </summary>
-        public T Minimum;
-
         /// <summary>
         /// The maximum value of the range.
         /// </summary>
         public T Maximum;
+
+        /// <summary>
+        /// The minimum value of the range.
+        /// </summary>
+        public T Minimum;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ALife.Core.Utility.Ranges.Range`1"/> struct.

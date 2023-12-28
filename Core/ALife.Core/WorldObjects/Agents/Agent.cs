@@ -148,7 +148,14 @@ namespace ALife.Core.WorldObjects.Agents
         public override void ExecuteAliveTurn()
         {
             //Save the previous state of agent, so we can look back on it next turn.
-            Shadow = new AgentShadow(this);
+            if(Planet.World.GenerateShadow)
+            {
+                Shadow = new AgentShadow(this);
+            }
+            else
+            {
+                Shadow = null;
+            }
             JustReproduced = false;
 
             MyBrain.ExecuteTurn();

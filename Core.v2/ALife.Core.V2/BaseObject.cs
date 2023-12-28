@@ -6,7 +6,7 @@ namespace ALife.Core
     /// A base class for all ALife objects.
     /// </summary>
     [DebuggerDisplay("{_simulation}")]
-    public abstract class ALifeObject
+    public abstract class BaseObject
     {
         /// <summary>
         /// The simulation this object is attached to.
@@ -14,10 +14,10 @@ namespace ALife.Core
         private Simulation _simulation;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ALifeObject"/> class.
+        /// Initializes a new instance of the <see cref="BaseObject"/> class.
         /// </summary>
         /// <param name="sim">The sim.</param>
-        public ALifeObject(Simulation sim)
+        public BaseObject(Simulation sim)
         {
             _simulation = sim;
         }

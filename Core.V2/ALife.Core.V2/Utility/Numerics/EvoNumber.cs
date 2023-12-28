@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace ALife.Core.Utility.Numerics
 {
     [DebuggerDisplay("{_value}")]
-    public class EvoNumber : ALifeObject
+    public class EvoNumber : BaseObject
     {
         /// <summary>
         /// The mean for the evolution of a value.

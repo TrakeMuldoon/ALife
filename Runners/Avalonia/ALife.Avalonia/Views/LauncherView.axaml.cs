@@ -103,7 +103,7 @@ namespace ALife.Avalonia.Views
             ViewModelBase vm = startMode switch
             {
                 AutoStartMode.AutoStartConsole => new BatchRunnerViewModel(_vm.SelectedScenario, seed, _vm.AutoStartScenarioRunner),
-                AutoStartMode.AutoStartVisual => new SingularRunnerViewModel(_vm.SelectedScenario, seed),
+                AutoStartMode.AutoStartVisual => new SingularRunnerViewModel(_vm.SelectedScenario, _vm.AutoStartScenarioRunner, seed),
                 _ => throw new System.Exception($"Invalid start mode: {startMode}"),
             };
 

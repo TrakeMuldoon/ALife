@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ALife.Core;
 using ALife.Rendering;
 using ReactiveUI;
 
@@ -10,7 +11,7 @@ namespace ALife.Avalonia.ViewModels
     /// TODO: Do this
     /// </summary>
     /// <seealso cref="ALife.Avalonia.ViewModels.ViewModelBase"/>
-    public class SingularRunnerViewModel : ViewModelBase
+    public class SingularRunnerViewModel : ViewModelBase, IDisposable
     {
         /// <summary>
         /// The maximum characters for ticks
@@ -78,9 +79,34 @@ namespace ALife.Avalonia.ViewModels
         private string _zoneInfo;
 
         /// <summary>
+        /// Whether the simulation is enabled or not.
+        /// </summary>
+        public bool _isSimulationEnabled;
+
+        /// <summary>
+        /// Whether the play button should be enabled or not.
+        /// </summary>
+        private bool _playButtonEnabled;
+
+        /// <summary>
+        /// Whether the pause button should be enabled or not.
+        /// </summary>
+        private bool _pauseButtonEnabled;
+
+        /// <summary>
+        /// Whether the ExecuteTurnButton should be enabled or not.
+        /// </summary>
+        private bool _oneTurnButtonEnabled;
+
+        /// <summary>
+        /// Whether the object has been disposed or not.
+        /// </summary>
+        private bool disposedValue;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SingularRunnerViewModel"/> class.
         /// </summary>
-        public SingularRunnerViewModel() : this(string.Empty, null)
+        public SingularRunnerViewModel() : this(string.Empty, true, null)
         {
         }
 
@@ -88,8 +114,9 @@ namespace ALife.Avalonia.ViewModels
         /// Initializes a new instance of the <see cref="SingularRunnerViewModel"/> class.
         /// </summary>
         /// <param name="scenarioName">Name of the scenario.</param>
+        /// <param name="isSimulationEnabled">Whether the simulation is enabled or not.</param>
         /// <param name="seed">The seed.</param>
-        public SingularRunnerViewModel(string scenarioName, int? seed = null)
+        public SingularRunnerViewModel(string scenarioName, bool isSimulationEnabled, int? seed = null)
         {
             Random r = new();
 
@@ -105,11 +132,61 @@ namespace ALife.Avalonia.ViewModels
             _genesActive = 0;
             _agentsActive = 0;
             _fastForwardTicks = 0;
+            _isSimulationEnabled = isSimulationEnabled;
             this._scenarioName = scenarioName;
             this._seed = seed ?? r.Next();
-            this._enabled = false;
+
+            _playButtonEnabled = !_isSimulationEnabled;
+            _pauseButtonEnabled = _isSimulationEnabled;
+            _oneTurnButtonEnabled = !_isSimulationEnabled;
 
             _simulation = new RenderedSimulationController(scenarioName, seed);
+            _simulation.OnSimulationTickEvent += Simulation_OnSimulationTickEvent;
+            _simulation.InitializeSimulation();
+            if (_isSimulationEnabled)
+            {
+                _simulation.StartSimulation();
+            }
+        }
+
+        private void Simulation_OnSimulationTickEvent(object? sender, RenderedSimulationTickEventArgs e)
+        {
+            GenesActive = _simulation.ActiveGeneCount;
+            AgentsActive = _simulation.ActiveAgentCount;
+            ZoneInfo = _simulation.ZoneInfo;
+            TurnCount = Planet.World.Turns;
+            FramesPerSecond = _simulation.FpsCounter.AverageFramesPerTicks;
+            TicksPerSecond = _simulation.TpsCounter.AverageFramesPerTicks;
+        }
+
+        public bool IsPlayButtonEnabled
+        {
+            get => _playButtonEnabled;
+            set => this.RaiseAndSetIfChanged(ref _playButtonEnabled, value);
+        }
+
+        public bool IsPauseButtonEnabled
+        {
+            get => _pauseButtonEnabled;
+            set => this.RaiseAndSetIfChanged(ref _pauseButtonEnabled, value);
+        }
+
+        public bool IsSingleTurnButtonEnabled
+        {
+            get => _oneTurnButtonEnabled;
+            set => this.RaiseAndSetIfChanged(ref _oneTurnButtonEnabled, value);
+        }
+
+        public bool IsSimulationEnabled
+        {
+            get => _isSimulationEnabled;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _isSimulationEnabled, value);
+                IsPlayButtonEnabled = !_isSimulationEnabled;
+                IsPauseButtonEnabled = _isSimulationEnabled;
+                IsSingleTurnButtonEnabled = !_isSimulationEnabled;
+            }
         }
 
         /// <summary>
@@ -150,16 +227,6 @@ namespace ALife.Avalonia.ViewModels
         {
             get => _genesActive;
             set => this.RaiseAndSetIfChanged(ref _genesActive, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is enabled.
-        /// </summary>
-        /// <value><c>true</c> if this instance is enabled; otherwise, <c>false</c>.</value>
-        public bool IsEnabled
-        {
-            get => _enabled;
-            set => this.RaiseAndSetIfChanged(ref _enabled, value);
         }
 
         /// <summary>
@@ -260,6 +327,36 @@ namespace ALife.Avalonia.ViewModels
         {
             get => _zoneInfo;
             set => this.RaiseAndSetIfChanged(ref _zoneInfo, value);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if(!disposedValue)
+            {
+                if(disposing)
+                {
+                    _simulation.OnSimulationTickEvent -= Simulation_OnSimulationTickEvent;
+                    _simulation.Dispose();
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~SingularRunnerViewModel()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

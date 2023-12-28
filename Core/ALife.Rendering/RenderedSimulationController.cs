@@ -1,5 +1,6 @@
 ﻿using System.Timers;
 using ALife.Core;
+using ALife.Core.Utility;
 using ALife.Core.WorldObjects;
 
 namespace ALife.Rendering
@@ -46,6 +47,8 @@ namespace ALife.Rendering
         /// </summary>
         private bool disposedValue;
 
+        private Guard _guard;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RenderedSimulationController"/> class.
         /// </summary>
@@ -62,6 +65,7 @@ namespace ALife.Rendering
         /// <param name="height">The height. Defaults to the default world height for the scenario.</param>
         public RenderedSimulationController(string scenarioName, int? startingSeed, int? width = null, int? height = null) : base(scenarioName, startingSeed, width, height)
         {
+            _guard = new();
         }
 
         /// <summary>
@@ -199,7 +203,7 @@ namespace ALife.Rendering
             SimulationSpeed oldSpeed = CurrentSimulationSpeed;
             CurrentSimulationSpeed = speed;
             _tickTimer = new(speed.ToTargetMS());
-            _tickTimer.Elapsed += ExecuteTick;
+            _tickTimer.Elapsed += ExecuteTimerTick;
             _tickTimer.AutoReset = true;
             _tickTimer.Enabled = true;
 
@@ -245,17 +249,26 @@ namespace ALife.Rendering
             }
         }
 
-        private void ExecuteTick(object? source, ElapsedEventArgs e)
+        private void ExecuteTimerTick(object? source, ElapsedEventArgs e)
         {
-            if(AllowTickExecution)
+            if(_guard.CheckSet)
             {
-                ExecuteTick();
-                EventHandler<RenderedSimulationTickEventArgs> raiseEvent = OnSimulationTickEvent;
-                if(raiseEvent != null)
+                if(AllowTickExecution)
                 {
-                    RenderedSimulationTickEventArgs args = new(e.SignalTime, Planet.World.Turns);
-                    raiseEvent(this, args);
+                    ExecuteTickWithArgs(e.SignalTime);
                 }
+                _guard.Reset();
+            }
+        }
+
+        public void ExecuteTickWithArgs(DateTime signalTime)
+        {
+            ExecuteTick();
+            EventHandler<RenderedSimulationTickEventArgs> raiseEvent = OnSimulationTickEvent;
+            if(raiseEvent != null)
+            {
+                RenderedSimulationTickEventArgs args = new(signalTime, Planet.World.Turns);
+                raiseEvent(this, args);
             }
         }
     }

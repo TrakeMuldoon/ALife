@@ -1,10 +1,12 @@
 ﻿using ALife.Core.Scenarios;
+using ALife.Core.Utility;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ALife.Core
 {
@@ -78,7 +80,8 @@ namespace ALife.Core
             {
                 if(Planet.HasWorld)
                 {
-                    return Planet.World.AllActiveObjects.Where(wo => wo.Alive && wo is Agent).Count();
+                    List<WorldObject> objects = new(Planet.World.AllActiveObjects);
+                    return objects.Where(wo => wo.Alive && wo is Agent).Count();
                 }
 
                 return 0;
@@ -201,7 +204,7 @@ namespace ALife.Core
         /// <summary>
         /// Initializes the simulation.
         /// </summary>
-        public void InitializeSimulation()
+        public virtual void InitializeSimulation()
         {
             IsInitialized = false;
             if(string.IsNullOrWhiteSpace(ScenarioName))
@@ -242,9 +245,11 @@ namespace ALife.Core
         private void UpdateGeneology()
         {
             Dictionary<string, int> geneCount = new Dictionary<string, int>();
-            for(int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
+
+            List<WorldObject> objects = new(Planet.World.AllActiveObjects);
+            for(int i = 0; i < objects.Count; i++)
             {
-                WorldObject wo = Planet.World.AllActiveObjects[i];
+                WorldObject wo = objects[i];
                 if(wo is Agent ag
                     && ag.Alive)
                 {
@@ -271,9 +276,10 @@ namespace ALife.Core
                 zoneCount.Add(z.Name, 0);
             }
             StringBuilder sb = new StringBuilder();
-            for(int i = 0; i < Planet.World.AllActiveObjects.Count; i++)
+            List<WorldObject> objects = new(Planet.World.AllActiveObjects);
+            for(int i = 0; i < objects.Count; i++)
             {
-                WorldObject wo = Planet.World.AllActiveObjects[i];
+                WorldObject wo = objects[i];
                 if(wo is Agent ag
                     && ag.Alive)
                 {

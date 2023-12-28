@@ -1,4 +1,5 @@
 using System;
+using System.Timers;
 using ALife.Avalonia.ViewModels;
 using ALife.Rendering;
 using Avalonia.Controls;
@@ -54,7 +55,7 @@ namespace ALife.Avalonia.Views
         /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         public void Execution_OneTurnButton_Click(object sender, RoutedEventArgs args)
         {
-            TheWorldCanvas.ExecuteTick();
+            ViewModel.Simulation.ExecuteTickWithArgs(DateTime.Now);
         }
 
         /// <summary>
@@ -94,6 +95,7 @@ namespace ALife.Avalonia.Views
         /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         public void ReturntoLauncher_Click(object sender, RoutedEventArgs args)
         {
+            ViewModel.Dispose();
             MainWindowViewModel? windowMvm = (MainWindowViewModel)Parent.DataContext;
             windowMvm.CurrentViewModel = new LauncherViewModel();
         }
@@ -126,11 +128,10 @@ namespace ALife.Avalonia.Views
             }
 
             SetSimulationRunState(true);
-            TheWorldCanvas.SetSimulationSpeed((int)SimulationSpeed.Normal);
+            ViewModel.Simulation.SetSimulationSpeed(SimulationSpeed.Normal);
+            ViewModel.Simulation.StartingSeed = seed;
+            ViewModel.Simulation.InitializeSimulation();
             UpdateSimulationSpeedControls();
-            TheWorldCanvas.Simulation.StartingSeed = seed;
-            //TheWorldCanvas.StartingSeed = seed;
-            TheWorldCanvas.Simulation.InitializeSimulation();
         }
 
         public void ShowGeneology_Checked(object sender, RoutedEventArgs args)
@@ -145,7 +146,9 @@ namespace ALife.Avalonia.Views
         public void Speed_Button_Click(object sender, RoutedEventArgs args)
         {
             Button b = sender as Button;
-            TheWorldCanvas.SetSimulationSpeed(int.Parse(b.Content.ToString()));
+            int speed = int.Parse(b.Content.ToString());
+            SimulationSpeed simSpeed = (SimulationSpeed)speed;
+            ViewModel.Simulation.SetSimulationSpeed(simSpeed);
             UpdateSimulationSpeedControls();
         }
 
@@ -156,7 +159,7 @@ namespace ALife.Avalonia.Views
         /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         public void Speed_InfiniteButton_Click(object sender, RoutedEventArgs args)
         {
-            TheWorldCanvas.SetSimulationSpeed((int)SimulationSpeed.VeryVeryVeryFast);
+            ViewModel.Simulation.SetSimulationSpeed(SimulationSpeed.VeryVeryVeryFast);
             UpdateSimulationSpeedControls();
         }
 
@@ -201,16 +204,11 @@ namespace ALife.Avalonia.Views
         /// <param name="isRunning">if set to <c>true</c> [is running].</param>
         private void SetSimulationRunState(bool isRunning)
         {
-            TheWorldCanvas.IsEnabled = isRunning;
             if(ViewModel != null)
             {
-                ViewModel.IsEnabled = isRunning;
+                ViewModel.Simulation.AllowTickExecution = isRunning;
+                ViewModel.IsSimulationEnabled = isRunning;
             }
-
-            // TODO: Binding for IsEnabled seems like it is delayed by a cycle, so we're manually doing it for now
-            Execution_PauseButton.IsEnabled = isRunning;
-            Execution_OneTurnButton.IsEnabled = !isRunning;
-            Execution_PlayButton.IsEnabled = !isRunning;
         }
 
         /// <summary>

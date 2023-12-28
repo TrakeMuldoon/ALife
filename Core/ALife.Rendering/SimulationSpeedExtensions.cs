@@ -23,6 +23,10 @@
         public static int ToTargetMS(this SimulationSpeed speed)
         {
             int ms = (int)Math.Round(1000 / (double)speed);
+            if (ms <= 1)
+            {
+                return 1;
+            }
             return ms;
         }
     }

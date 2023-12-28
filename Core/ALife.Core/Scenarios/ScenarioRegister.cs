@@ -96,7 +96,7 @@ namespace ALife.Core.Scenarios
         /// </summary>
         /// <param name="scenarioName">Name of the scenario.</param>
         /// <returns>The suggested seeds for the specified scenario.</returns>
-        public static Dictionary<int, string>? GetSuggestions(string scenarioName)
+        public static Dictionary<int, string> GetSuggestions(string scenarioName)
         {
             if(!scenarios.TryGetValue(scenarioName, out var type))
             {
@@ -111,7 +111,7 @@ namespace ALife.Core.Scenarios
         /// </summary>
         /// <param name="scenarioName">Name of the scenario.</param>
         /// <returns>Details on the scenario.</returns>
-        public static ScenarioRegistration? GetScenarioDetails(string scenarioName)
+        public static ScenarioRegistration GetScenarioDetails(string scenarioName)
         {
             if(!scenarios.TryGetValue(scenarioName, out var type))
             {

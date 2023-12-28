@@ -15,7 +15,7 @@ namespace ALife.Rendering
         /// </summary>
         /// <typeparam name="T">The type of the drawing session</typeparam>
         /// <param name="context"></param>
-        public abstract void SetContext(Object context);
+        public abstract void SetContext(object context);
 
         public abstract void DrawText(string text, Point point, Color color);
 

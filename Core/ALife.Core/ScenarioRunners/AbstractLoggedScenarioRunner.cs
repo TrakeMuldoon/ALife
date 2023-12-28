@@ -53,8 +53,8 @@ namespace ALife.Core.ScenarioRunners
                                             , int totalTurns = Constants.DEFAULT_TOTAL_TURNS
                                             , int turnBatch = Constants.DEFAULT_TURN_BATCH
                                             , int updateFrequency = Constants.DEFAULT_UPDATE_FREQUENCY
-                                            , Logger? logger = null
-                                            , Logger? scenarioSeedLogger = null)
+                                            , Logger logger = null
+                                            , Logger scenarioSeedLogger = null)
         {
             // instantiate the simulation controller
             simulationController = new SimulationController(scenarioName, startingSeed);
@@ -290,7 +290,8 @@ namespace ALife.Core.ScenarioRunners
             catch(Exception ex)
             {
                 error = ex.Message;
-                string[] stack = ex.StackTrace.Split(Environment.NewLine);
+                string[] splitters = new string[] { Environment.NewLine };
+                string[] stack = ex.StackTrace.Split(splitters, StringSplitOptions.None);
                 error += Environment.NewLine + stack[0];
             }
             DateTime end = DateTime.Now;

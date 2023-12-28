@@ -17,7 +17,7 @@ namespace ALife.Core
         /// <summary>
         /// The sample buffer
         /// </summary>
-        private Queue<double> _sampleBuffer = new(MAXIMUM_SAMPLES + 1);
+        private Queue<double> _sampleBuffer = new Queue<double>(MAXIMUM_SAMPLES + 1);
 
         /// <summary>
         /// Gets the average frames per ticks.

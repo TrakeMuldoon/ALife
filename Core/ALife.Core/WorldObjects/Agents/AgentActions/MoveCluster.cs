@@ -64,7 +64,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
             string stop = "Stop" + direction;
 
             double dirValue = SubActions[go].Intensity - SubActions[stop].Intensity;
-            dirValue = Math.Clamp(dirValue, 0.0, 1.0);
+            dirValue = ExtraMath.Clamp(dirValue, 0.0, 1.0);
             return dirValue;
         }
 
@@ -85,8 +85,8 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
 
             double halfXLength = theShape.BoundingBox.XLength / 2;
             double halfYHeight = theShape.BoundingBox.YHeight / 2;
-            finalPoint.X = Math.Clamp(finalPoint.X, halfXLength, Planet.World.WorldWidth - halfXLength);
-            finalPoint.Y = Math.Clamp(finalPoint.Y, halfYHeight, Planet.World.WorldHeight - halfYHeight);
+            finalPoint.X = ExtraMath.Clamp(finalPoint.X, halfXLength, Planet.World.WorldWidth - halfXLength);
+            finalPoint.Y = ExtraMath.Clamp(finalPoint.Y, halfYHeight, Planet.World.WorldHeight - halfYHeight);
 
             theShape.CentrePoint = finalPoint;
 

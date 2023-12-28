@@ -30,7 +30,7 @@ namespace ALife.Core
             worldWidth = width;
             worldHeight = height;
             Seed = seed;
-            _simulationPerformanceCounter = new();
+            _simulationPerformanceCounter = new PerformanceCounter();
             NumberGen = new FastRandom(seed);
             Scenario = theScenario;
             AgentIDGenerator.Reset();
@@ -111,7 +111,7 @@ namespace ALife.Core
         /// <summary>
         /// The performance counter
         /// </summary>
-        private PerformanceCounter _simulationPerformanceCounter = new();
+        private PerformanceCounter _simulationPerformanceCounter = new PerformanceCounter();
 
         /// <summary>
         /// Gets the simulation performance.

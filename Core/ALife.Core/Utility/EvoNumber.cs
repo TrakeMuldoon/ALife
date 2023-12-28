@@ -13,9 +13,9 @@ namespace ALife.Core.Utility
             set
             {
                 double delta = value - val;
-                double realDelta = Math.Clamp(delta, -StartValueEvoDeltaMax, StartValueEvoDeltaMax);
+                double realDelta = ExtraMath.Clamp(delta, -StartValueEvoDeltaMax, StartValueEvoDeltaMax);
                 double newVal = val + realDelta;
-                startValue = Math.Clamp(newVal, ValueMin, ValueMax);
+                startValue = ExtraMath.Clamp(newVal, ValueMin, ValueMax);
             }
 
         }
@@ -29,7 +29,7 @@ namespace ALife.Core.Utility
             {
                 //Cannot change more than the deltaMax
                 double delta = value - val;
-                double realDelta = Math.Clamp(delta, -DeltaMax, DeltaMax);
+                double realDelta = ExtraMath.Clamp(delta, -DeltaMax, DeltaMax);
                 if(realDelta != delta)
                 {
                     //TODO: Remove this if statement, it's only for debugging.
@@ -42,7 +42,7 @@ namespace ALife.Core.Utility
                 }
                 else
                 {
-                    val = Math.Clamp(newVal, ValueMin, ValueMax);
+                    val = ExtraMath.Clamp(newVal, ValueMin, ValueMax);
                 }
             }
         }
@@ -70,9 +70,9 @@ namespace ALife.Core.Utility
             set
             {
                 double delta = value - val;
-                double realDelta = Math.Clamp(delta, -DeltaEvoMax, DeltaEvoMax);
+                double realDelta = ExtraMath.Clamp(delta, -DeltaEvoMax, DeltaEvoMax);
                 double newVal = val + realDelta;
-                deltaMax = Math.Clamp(newVal, 0, DeltaHardMax);
+                deltaMax = ExtraMath.Clamp(newVal, 0, DeltaHardMax);
             }
         }
         public double DeltaEvoMax;
@@ -141,7 +141,7 @@ namespace ALife.Core.Utility
             //               - deltaMax;
 
             double moddedValue = current + delta;
-            double clampedValue = Math.Clamp(moddedValue, hardMin, hardMax);
+            double clampedValue = ExtraMath.Clamp(moddedValue, hardMin, hardMax);
             return clampedValue;
         }
     }

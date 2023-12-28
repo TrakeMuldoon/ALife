@@ -305,7 +305,9 @@ namespace ALifeUni
         private void OneTurnSim_Click(object sender, RoutedEventArgs e)
         {
             gameTimer.Stop();
+            Planet.World.GenerateShadow = true;
             Dt_Tick(sender, e);
+            Planet.World.GenerateShadow = false;
         }
 
         private void SlowPlaySim_Click(object sender, RoutedEventArgs e)

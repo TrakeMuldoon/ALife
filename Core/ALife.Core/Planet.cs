@@ -124,6 +124,8 @@ namespace ALife.Core
         public readonly int Seed;
         public readonly IScenario Scenario;
 
+        public bool GenerateShadow = false;
+
         internal ICollisionMap<Zone> ZoneMap;
 
         private Dictionary<string, ICollisionMap<WorldObject>> _collisionLevels = new Dictionary<string, ICollisionMap<WorldObject>>();

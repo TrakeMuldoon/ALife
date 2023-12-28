@@ -8,6 +8,7 @@ using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
+using System.Linq;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
@@ -76,6 +77,14 @@ namespace ALifeUni.UI
 
         public static void DrawPastState(LayerUISettings ui, AgentUISettings aui, CanvasAnimatedDrawEventArgs args, int compnumber)
         {
+            Agent arbitraryAgent = Planet.World.CollisionLevels[ui.LayerName].EnumerateItems().OfType<Agent>().FirstOrDefault();
+            if(arbitraryAgent == null
+                || arbitraryAgent.Shadow == null)
+            {
+                //We are not in a ShadowGenerating circumstance.
+                return;
+            }
+
             foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
             {
                 if(compnumber < wo.ExecutionOrder)

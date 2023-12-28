@@ -50,19 +50,20 @@
 * [ ] Comment Every Class and Function
 * [ ] Add new Senses "Collided Left, Collided Right, Collided Back, Collided Front"
 * [ ] Reproduction is currently based on the Zone Distributor. Make it so that it could be "next to parent"
-* [ ] Get Logger Working again
+* [ ] Get FileLogger Working again
 * [ ] Add New GeneologyViewer
 * [ ] Agents select their own target
 * [ ] Agents can tell target orientation
 * [ ] NEAT brain. 
 * [ ] Compile different versions of Point and Color for different targets
+* [ ] Change GoalSenseCluster so it's UI shows the direction of the target.
 
 ## Scenario Ideas
 * [ ] Temperature Scenario (Low temps steal energy, high temps restore energy)
 * [ ] Fruit Trees, drop food on collision
 * [ ] Rabbit Chasing Scenario (Implement WorldObjectTargetSense)
 
-## Fixing the Basics
+## Fixing the Basics - Avalonia
  * [ ] Time Controls
  * [ ] Layer Controls
  * [ ] Zoom Controls

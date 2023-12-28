@@ -1,6 +1,6 @@
-﻿using ALifeUni.ALife;
-using ALifeUni.ALife.Shapes;
-using ALifeUni.ALife.Utility.WorldObjects;
+﻿using ALife.Core;
+using ALife.Core.Geometry.Shapes;
+using ALife.Core.WorldObjects;
 using System;
 using System.Text;
 using Windows.ApplicationModel.DataTransfer;
@@ -33,16 +33,16 @@ namespace ALifeUni.UI.UserControls
 
         private void CreateTestDummies_Click(object sender, RoutedEventArgs e)
         {
-            Point p1 = new Point(50, 50);
-            Circle c1 = new Circle(p1, 10);
-            c1.Color = Colors.Green;
+            Windows.Foundation.Point p1 = new Windows.Foundation.Point(50, 50);
+            Circle c1 = new Circle(p1.ToALifePoint(), 10);
+            c1.Color = Colors.Green.ToSystemColor();
 
             EmptyObject eo = new EmptyObject(c1, ReferenceValues.CollisionLevelPhysical);
             Planet.World.AddObjectToWorld(eo);
             GreenShape.ShapeOwner = eo;
 
-            Point p2 = new Point(100, 100);
-            Rectangle r1 = new Rectangle(p2, 20, 10, Colors.Red);
+            Windows.Foundation.Point p2 = new Windows.Foundation.Point(100, 100);
+            Rectangle r1 = new Rectangle(p2.ToALifePoint(), 20, 10, Colors.Red.ToSystemColor());
             r1.Orientation.Degrees = 45;
 
             EmptyObject e2 = new EmptyObject(r1, ReferenceValues.CollisionLevelPhysical);

@@ -1,10 +1,11 @@
-﻿using ALifeUni.ALife;
-using ALifeUni.ALife.Geometry;
-using ALifeUni.ALife.Scenarios;
-using ALifeUni.ALife.Shapes;
-using ALifeUni.ALife.Utility.WorldObjects;
-using ALifeUni.ALife.WorldObjects.Agents;
-using ALifeUni.ALife.WorldObjects.Agents.Brains;
+﻿using ALife.Core;
+using ALife.Core.Geometry;
+using ALife.Core.Geometry.Shapes;
+using ALife.Core.Scenarios;
+using ALife.Core.WorldObjects;
+using ALife.Core.WorldObjects.Agents;
+using ALife.Core.WorldObjects.Agents.Brains;
+using ALife.Core.WorldObjects.Prebuilt;
 using ALifeUni.UI;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
@@ -188,7 +189,7 @@ namespace ALifeUni
         int numSpecialItemsCreated;
         private void AnimCanvas_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Point tapPoint = e.GetPosition(animCanvas);
+            Windows.Foundation.Point tapPoint = e.GetPosition(animCanvas);
             BoundingBox bb = new BoundingBox(tapPoint.X - 5, tapPoint.Y - 5, tapPoint.X + 5, tapPoint.Y + 5);
             List<WorldObject> colls = Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].QueryForBoundingBoxCollisions(bb);
 
@@ -201,7 +202,7 @@ namespace ALifeUni
                 {
                     //EmptyObject eo = new EmptyObject(tapPoint, 5, ReferenceValues.CollisionLevelPhysical, (numSpecialItemsCreated++).ToString());
                     //Planet.World.AddObjectToWorld(eo);
-                    Wall w = new Wall(tapPoint, 200, new Angle(10), "W" + numSpecialItemsCreated++);
+                    Wall w = new Wall(tapPoint.ToALifePoint(), 200, new Angle(10), "W" + numSpecialItemsCreated++);
                     Planet.World.AddObjectToWorld(w);
                 }
                 else
@@ -479,7 +480,7 @@ namespace ALifeUni
 
         #region Mouse Controls
 
-        Point? dragStart;
+        Windows.Foundation.Point? dragStart;
         private void AnimCanvas_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             dragStart = e.GetCurrentPoint(animCanvas).Position;
@@ -493,10 +494,10 @@ namespace ALifeUni
             {
                 int panMagnifyFactor = (int)(8 * CurrentZoom);
 
-                Point current = e.GetCurrentPoint(animCanvas).Position;
-                Point moveDelta = new Point((current.X - dragStart.Value.X) * panMagnifyFactor * -1
+                Windows.Foundation.Point current = e.GetCurrentPoint(animCanvas).Position;
+                Windows.Foundation.Point moveDelta = new Windows.Foundation.Point((current.X - dragStart.Value.X) * panMagnifyFactor * -1
                                             , (current.Y - dragStart.Value.Y) * panMagnifyFactor * -1);
-                Point offset = new Point(Zoomer.HorizontalOffset + moveDelta.X, Zoomer.VerticalOffset + moveDelta.Y);
+                Windows.Foundation.Point offset = new Windows.Foundation.Point(Zoomer.HorizontalOffset + moveDelta.X, Zoomer.VerticalOffset + moveDelta.Y);
 
                 Zoomer.ChangeView(offset.X, offset.Y, null);
                 dragStart = current;

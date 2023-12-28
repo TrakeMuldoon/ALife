@@ -1,8 +1,8 @@
-﻿using ALifeUni.ALife.Geometry;
-using ALifeUni.ALife.Utility;
-using ALifeUni.ALife.WorldObjects.Agents;
-using ALifeUni.ALife.WorldObjects.Agents.Brains;
-using ALifeUni.ALife.WorldObjects.Agents.Brains.NeuralNetworkBrains;
+﻿using ALife.Core.Geometry;
+using ALife.Core.Utility;
+using ALife.Core.WorldObjects.Agents;
+using ALife.Core.WorldObjects.Agents.Brains;
+using ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI;
@@ -314,7 +314,7 @@ namespace ALifeUni.UI.UserControls
             Point tapPoint = e.GetPosition(BrainCanvas);
             foreach(var (neuron, point) in NodeMap)
             {
-                double dist = ExtraMath.DistanceBetweenTwoPoints(tapPoint, new Point(point.X, point.Y));
+                double dist = ExtraMath.DistanceBetweenTwoPoints(tapPoint.ToALifePoint(), new Point(point.X, point.Y).ToALifePoint());
                 if(dist < NEURON_VIS_RADIUS)
                 {
                     SelectedNeuron = neuron;

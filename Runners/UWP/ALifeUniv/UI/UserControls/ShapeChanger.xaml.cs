@@ -1,8 +1,8 @@
-﻿using ALifeUni.ALife;
-using ALifeUni.ALife.Collision;
-using ALifeUni.ALife.Geometry;
-using ALifeUni.ALife.Shapes;
-using ALifeUni.ALife.Utility.WorldObjects;
+﻿using ALife.Core;
+using ALife.Core.Collision;
+using ALife.Core.Geometry;
+using ALife.Core.Geometry.Shapes;
+using ALife.Core.WorldObjects;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using Windows.Foundation;
@@ -121,8 +121,8 @@ namespace ALifeUni.UI.UserControls
         {
             if(inUpdate) { return; }
             inUpdate = true;
-            Point newPoint = new Point(XVal.Value, YVal.Value);
-            myShape.CentrePoint = newPoint;
+            Windows.Foundation.Point newPoint = new Windows.Foundation.Point(XVal.Value, YVal.Value);
+            myShape.CentrePoint = newPoint.ToALifePoint();
             collider.MoveObject(ShapeOwner);
             myShape.Reset();
             inUpdate = false;

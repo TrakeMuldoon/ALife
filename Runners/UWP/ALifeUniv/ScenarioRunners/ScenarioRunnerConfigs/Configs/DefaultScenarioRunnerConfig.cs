@@ -1,5 +1,5 @@
-﻿using ALifeUni.ALife;
-using ALifeUni.ALife.WorldObjects.Agents;
+﻿using ALife.Core;
+using ALife.Core.WorldObjects.Agents;
 using System;
 using System.Linq;
 

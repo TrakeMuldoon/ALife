@@ -118,6 +118,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Extensions.cs" />
     <Compile Include="Launcher.xaml.cs">
       <DependentUpon>Launcher.xaml</DependentUpon>
     </Compile>
@@ -242,6 +243,16 @@
     <PackageReference Include="Win2D.uwp">
       <Version>1.27.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\ALife.Core\ALife.Core.csproj">
+      <Project>{229AA601-7769-4A81-85C4-9EB24CCF7428}</Project>
+      <Name>ALife.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\ALife.Rendering\ALife.Rendering.csproj">
+      <Project>{C1261458-E720-406D-841D-0211D6F417EF}</Project>
+      <Name>ALife.Rendering</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -149,7 +149,7 @@ namespace ALife.Core
             }
         }
 
-        internal readonly FastRandom NumberGen;
+        public readonly FastRandom NumberGen;
 
         private int turns = 0;
         public int Turns
@@ -257,7 +257,7 @@ namespace ALife.Core
             CollisionLevels[newLevel].Insert(mySelf);
         }
 
-        internal void AddObjectToWorld(WorldObject toAdd)
+        public void AddObjectToWorld(WorldObject toAdd)
         {
             if(!_collisionLevels.ContainsKey(toAdd.CollisionLevel))
             {

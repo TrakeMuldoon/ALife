@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using ALife.Core.Scenarios;
+using System.Collections.Generic;
 using System.Linq;
-using ALifeUni.ALife.Scenarios;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

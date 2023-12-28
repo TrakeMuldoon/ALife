@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using ALifeUni.ALife;
-using ALifeUni.ALife.Scenarios;
+using ALife.Core;
+using ALife.Core.Scenarios;
 using ALifeUni.ScenarioRunners.ScenarioLoggers;
 using ALifeUni.ScenarioRunners.ScenarioRunnerConfigs;
 

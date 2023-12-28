@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using ALifeUni.ALife.Scenarios;
+using ALife.Core.Scenarios;
 using ALifeUni.ScenarioRunners.ScenarioRunnerConfigs.Configs;
 
 namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs

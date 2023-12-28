@@ -1,7 +1,7 @@
-﻿using ALifeUni.ALife;
-using ALifeUni.ALife.Scenarios;
-using ALifeUni.ALife.WorldObjects.Agents;
-using ALifeUni.ALife.WorldObjects.Agents.CustomAgents;
+﻿using ALife.Core;
+using ALife.Core.Scenarios.GardenScenario;
+using ALife.Core.WorldObjects.Agents;
+using ALife.Core.WorldObjects.Prebuilt;
 using System;
 using System.Linq;
 

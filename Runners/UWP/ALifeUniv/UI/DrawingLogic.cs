@@ -1,9 +1,9 @@
-﻿using ALifeUni.ALife;
-using ALifeUni.ALife.Geometry;
-using ALifeUni.ALife.Shapes;
-using ALifeUni.ALife.Utility;
-using ALifeUni.ALife.Utility.WorldObjects;
-using ALifeUni.ALife.WorldObjects.Agents;
+﻿using ALife.Core;
+using ALife.Core.Geometry;
+using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility;
+using ALife.Core.WorldObjects;
+using ALife.Core.WorldObjects.Agents;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.UI.Xaml;
@@ -19,7 +19,7 @@ namespace ALifeUni.UI
         internal static void DrawZone(Zone zone, CanvasAnimatedDrawEventArgs args)
         {
             DrawAARectangle(zone, args);
-            Color textColor = zone.Color;
+            Color textColor = zone.Color.ToWinUiColor();
             textColor.A = 255;
             args.DrawingSession.DrawText(zone.Name, zone.TopLeft.ToVector2(), textColor);
         }
@@ -120,7 +120,7 @@ namespace ALifeUni.UI
             if(ag.JustReproduced)
             {
                 Circle c = ag.Shape as Circle;
-                DrawCircle(new Circle(c.CentrePoint, c.Radius + 2) { Color = Colors.HotPink }, args, false);
+                DrawCircle(new Circle(c.CentrePoint, c.Radius + 2) { Color = Colors.HotPink.ToSystemColor() }, args, false);
             }   
 
             //Draw Orientation
@@ -129,17 +129,17 @@ namespace ALifeUni.UI
 
         private static void DrawOrientation(CanvasAnimatedDrawEventArgs args, IShape shape)
         {
-            Point ori = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 4);
-            Point ori2 = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 1);
+            Windows.Foundation.Point ori = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 4).ToUwpPoint();
+            Windows.Foundation.Point ori2 = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 1).ToUwpPoint();
             args.DrawingSession.DrawLine(ori.ToVector2(), ori2.ToVector2(), Colors.DarkRed, 1);
         }
 
         internal static void DrawAgentShadow(AgentShadow shadow, LayerUISettings uiSettings, AgentUISettings auiSettings, CanvasAnimatedDrawEventArgs args)
         {
-            Color orig = shadow.Shape.DebugColor;
-            shadow.Shape.DebugColor = Colors.White;
+            Color orig = shadow.Shape.DebugColor.ToWinUiColor();
+            shadow.Shape.DebugColor = Colors.White.ToSystemColor();
             DrawShape(shadow.Shape, uiSettings.ShowBoundingBoxes, args, true);
-            shadow.Shape.DebugColor = orig;
+            shadow.Shape.DebugColor = orig.ToSystemColor();
             //Draw Orientation
             DrawOrientation(args, shadow.Shape);
 
@@ -155,20 +155,20 @@ namespace ALifeUni.UI
 
         internal static void DrawInactiveObject(WorldObject wo, LayerUISettings ui, CanvasAnimatedDrawEventArgs args)
         {
-            Color color = wo.Shape.Color;
-            wo.Shape.Color = Color.FromArgb(50, color.R, color.G, color.B);
+            Color color = wo.Shape.Color.ToWinUiColor();
+            wo.Shape.Color = Color.FromArgb(50, color.R, color.G, color.B).ToSystemColor();
             DrawShape(wo.Shape, ui.ShowBoundingBoxes, args, true);
-            wo.Shape.Color = Color.FromArgb(50, 255, 0, 0);
+            wo.Shape.Color = Color.FromArgb(50, 255, 0, 0).ToSystemColor();
             DrawShape(wo.Shape, ui.ShowBoundingBoxes, args, false);
-            wo.Shape.Color = color;
+            wo.Shape.Color = color.ToSystemColor();
         }
 
         internal static void DrawPastObject(IShape shape, LayerUISettings uiSettings, CanvasAnimatedDrawEventArgs args)
         {
-            Color pastDebug = shape.DebugColor;
-            shape.DebugColor = Colors.White;
+            Color pastDebug = shape.DebugColor.ToWinUiColor();
+            shape.DebugColor = Colors.White.ToSystemColor();
             DrawShape(shape, uiSettings.ShowBoundingBoxes, args, true);
-            shape.DebugColor = pastDebug;
+            shape.DebugColor = pastDebug.ToSystemColor();
         }
 
         private static void DrawShape(IShape shape, bool showBoundingBox, CanvasAnimatedDrawEventArgs args, bool fillIn)
@@ -204,11 +204,11 @@ namespace ALifeUni.UI
             //args.DrawingSession.FillGeometry(cg, sec.DebugColor);
             if(fillIn)
             {
-                args.DrawingSession.FillGeometry(cg, sec.Color);
+                args.DrawingSession.FillGeometry(cg, sec.Color.ToWinUiColor());
             }
             else
             {
-                args.DrawingSession.DrawGeometry(cg, sec.Color, 1);
+                args.DrawingSession.DrawGeometry(cg, sec.Color.ToWinUiColor(), 1);
             }
 
             DrawOrientation(args, currShape);
@@ -220,15 +220,15 @@ namespace ALifeUni.UI
             //World Object Body
             if(fillIn)
             {
-                args.DrawingSession.FillCircle(objectCentre, wo.Radius, wo.Color);
+                args.DrawingSession.FillCircle(objectCentre, wo.Radius, wo.Color.ToWinUiColor());
             }
             else
             {
-                args.DrawingSession.DrawCircle(objectCentre, wo.Radius, wo.Color);
+                args.DrawingSession.DrawCircle(objectCentre, wo.Radius, wo.Color.ToWinUiColor());
             }
 
             //Core of the body is the debug colour
-            args.DrawingSession.FillCircle(objectCentre, 2, wo.DebugColor);
+            args.DrawingSession.FillCircle(objectCentre, 2, wo.DebugColor.ToWinUiColor());
 
             DrawOrientation(args, wo);
         }
@@ -260,28 +260,28 @@ namespace ALifeUni.UI
 
             if(fillIn)
             {
-                args.DrawingSession.FillGeometry(cg, rec.Color);
+                args.DrawingSession.FillGeometry(cg, rec.Color.ToWinUiColor());
             }
             else
             {
-                args.DrawingSession.DrawGeometry(cg, rec.Color, 1);
+                args.DrawingSession.DrawGeometry(cg, rec.Color.ToWinUiColor(), 1);
             }
 
-            args.DrawingSession.FillCircle(rec.CentrePoint.ToVector2(), 2, rec.DebugColor);
+            args.DrawingSession.FillCircle(rec.CentrePoint.ToVector2(), 2, rec.DebugColor.ToWinUiColor());
 
             DrawOrientation(args, rec);
         }
 
         private static void DrawAARectangle(AARectangle rec, CanvasAnimatedDrawEventArgs args)
         {
-            args.DrawingSession.FillRectangle((float)rec.TopLeft.X, (float)rec.TopLeft.Y, (float)rec.XWidth, (float)rec.YHeight, rec.Color);
-            args.DrawingSession.FillCircle(rec.CentrePoint.ToVector2(), 2, rec.DebugColor);
+            args.DrawingSession.FillRectangle((float)rec.TopLeft.X, (float)rec.TopLeft.Y, (float)rec.XWidth, (float)rec.YHeight, rec.Color.ToWinUiColor());
+            args.DrawingSession.FillCircle(rec.CentrePoint.ToVector2(), 2, rec.DebugColor.ToWinUiColor());
         }
 
         private static void DrawBoundingBox(BoundingBox bb, Color color, CanvasAnimatedDrawEventArgs args)
         {
-            Point maxPoints = new Point(bb.MaxX, bb.MaxY);
-            Point minPoints = new Point(bb.MinX, bb.MinY);
+            Windows.Foundation.Point maxPoints = new Windows.Foundation.Point(bb.MaxX, bb.MaxY);
+            Windows.Foundation.Point minPoints = new Windows.Foundation.Point(bb.MinX, bb.MinY);
             Rect drawRec = new Rect(maxPoints, minPoints);
             args.DrawingSession.DrawRectangle(drawRec, color, 0.3f);
         }

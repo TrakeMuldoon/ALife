@@ -10,7 +10,7 @@ using ALife.Core.WorldObjects.Agents.Senses;
 
 namespace ALife.Core.WorldObjects.Agents.Brains
 {
-    class NeuralNetworkBrain : IBrain
+    public class NeuralNetworkBrain : IBrain
     {
         private Agent self;
         public double ModificationRate;

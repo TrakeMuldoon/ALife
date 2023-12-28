@@ -1,5 +1,8 @@
 ﻿using ALife.Core;
 using ALife.Core.WorldObjects;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ALife.Rendering
 {
@@ -13,7 +16,7 @@ namespace ALife.Rendering
         /// <summary>
         /// The FPS counter
         /// </summary>
-        private PerformanceCounter _fpsCounter = new();
+        private PerformanceCounter _fpsCounter = new PerformanceCounter();
 
         /// <summary>
         /// Gets the FPS counter.
@@ -26,7 +29,7 @@ namespace ALife.Rendering
         /// <summary>
         /// The agent UI settings
         /// </summary>
-        public AgentUISettings AgentUiSettings = new();
+        public AgentUISettings AgentUiSettings = new AgentUISettings();
 
         /// <summary>
         /// The drawing errors

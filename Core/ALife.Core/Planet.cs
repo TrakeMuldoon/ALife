@@ -30,7 +30,7 @@ namespace ALife.Core
             worldWidth = width;
             worldHeight = height;
             Seed = seed;
-            _simulationPerformanceCounter = new();
+            _simulationPerformanceCounter = new PerformanceCounter();
             NumberGen = new FastRandom(seed);
             Scenario = theScenario;
             AgentIDGenerator.Reset();
@@ -111,7 +111,7 @@ namespace ALife.Core
         /// <summary>
         /// The performance counter
         /// </summary>
-        private PerformanceCounter _simulationPerformanceCounter = new();
+        private PerformanceCounter _simulationPerformanceCounter = new PerformanceCounter();
 
         /// <summary>
         /// Gets the simulation performance.
@@ -149,7 +149,7 @@ namespace ALife.Core
             }
         }
 
-        internal readonly FastRandom NumberGen;
+        public readonly FastRandom NumberGen;
 
         private int turns = 0;
         public int Turns
@@ -257,7 +257,7 @@ namespace ALife.Core
             CollisionLevels[newLevel].Insert(mySelf);
         }
 
-        internal void AddObjectToWorld(WorldObject toAdd)
+        public void AddObjectToWorld(WorldObject toAdd)
         {
             if(!_collisionLevels.ContainsKey(toAdd.CollisionLevel))
             {

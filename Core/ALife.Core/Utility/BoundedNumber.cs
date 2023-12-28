@@ -17,7 +17,7 @@ namespace ALife.Core.Utility
                 }
                 else
                 {
-                    val = Math.Clamp(value, ValueMin, ValueMax);
+                    val = ExtraMath.Clamp(value, ValueMin, ValueMax);
                 }
             }
         }
@@ -48,7 +48,7 @@ namespace ALife.Core.Utility
 
         public double Clamp()
         {
-            val = Math.Clamp(val, ValueMin, ValueMax);
+            val = ExtraMath.Clamp(val, ValueMin, ValueMax);
             return val;
         }
     }

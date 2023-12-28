@@ -3,7 +3,7 @@ using ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains;
 
 namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
 {
-    class FuncNeuron : Neuron
+    public class FuncNeuron : Neuron
     {
         Func<double> GetValue;
 

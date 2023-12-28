@@ -119,7 +119,7 @@ namespace ALife.Core
                 PopulateSimulationDetails(null, null);
             }
 
-            Random r = new();
+            Random r = new Random();
             IScenario newWorld = IScenarioHelpers.FreshInstanceOf(Scenario);
 
             int seed = StartingSeed ?? r.Next();

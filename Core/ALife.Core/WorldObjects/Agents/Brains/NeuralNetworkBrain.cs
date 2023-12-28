@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ALife.Core;
+using ALife.Core.Utility;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
@@ -9,7 +10,7 @@ using ALife.Core.WorldObjects.Agents.Senses;
 
 namespace ALife.Core.WorldObjects.Agents.Brains
 {
-    class NeuralNetworkBrain : IBrain
+    public class NeuralNetworkBrain : IBrain
     {
         private Agent self;
         public double ModificationRate;
@@ -135,7 +136,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
                 double rawMod = Planet.World.NumberGen.NextDouble();
                 double modification = ((rawMod * 2) - 1) * MutabilityRate;
                 val += modification;
-                val = Math.Clamp(val, -1, 1);
+                val = ExtraMath.Clamp(val, -1, 1);
             }
             return val;
         }

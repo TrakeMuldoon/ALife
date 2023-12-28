@@ -2,6 +2,7 @@
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
+using System;
 using Color = System.Drawing.Color;
 
 namespace ALife.Rendering

@@ -1,4 +1,5 @@
 ﻿using ALife.Core;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ALife.Rendering

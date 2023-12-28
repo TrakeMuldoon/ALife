@@ -21,7 +21,7 @@ namespace ALife.Core.ScenarioRunners.ScenarioLoggers
         /// <summary>
         /// The message queue
         /// </summary>
-        private readonly ConcurrentQueue<string> messageQueue = new ConcurrentQueue<string>();
+        private ConcurrentQueue<string> messageQueue = new ConcurrentQueue<string>();
 
         /// <summary>
         /// The disposed value
@@ -65,7 +65,7 @@ namespace ALife.Core.ScenarioRunners.ScenarioLoggers
                 StopLogger(true);
             }
             shouldStop = false;
-            messageQueue.Clear();
+            messageQueue = new ConcurrentQueue<string>();
             task = new Task(() => WriteController(token), token);
             task.Start();
         }
@@ -77,7 +77,7 @@ namespace ALife.Core.ScenarioRunners.ScenarioLoggers
         public void StopLogger(bool wait = false)
         {
             //shouldStop = true;
-            messageQueue.Clear();
+            messageQueue = new ConcurrentQueue<string>();
 
             while (IsRunning && wait)
             {

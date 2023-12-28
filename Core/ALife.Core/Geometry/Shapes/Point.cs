@@ -44,7 +44,7 @@ namespace ALife.Core.Geometry.Shapes
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns>True if equals, False otherwise.</returns>
-        public override bool Equals(object? obj)
+        public override bool Equals(object obj)
         {
             return obj is Point && Equals((Point)obj);
         }
@@ -67,7 +67,7 @@ namespace ALife.Core.Geometry.Shapes
         /// </returns>
         public override int GetHashCode()
         {
-            return HashCode.Combine(X, Y);
+            return (X + Y).GetHashCode();
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿namespace ALife.Core.V2
+﻿namespace ALife.Scenarios
 {
     public class Class1
     {

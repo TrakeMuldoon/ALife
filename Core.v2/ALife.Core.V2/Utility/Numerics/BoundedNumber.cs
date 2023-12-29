@@ -1,13 +1,13 @@
 ﻿using ALife.Core.Utility.Maths;
 using System.Diagnostics;
 
-namespace ALife.Core.Utility
+namespace ALife.Core.Utility.Numerics
 {
     /// <summary>
     /// A bounded auto-clamping number.
     /// </summary>
     [DebuggerDisplay("{_minValue} <= {_value} <= {_maxValue}")]
-    public class BoundedNumber
+    public class BoundedNumber : BaseObject
     {
         /// <summary>
         /// The maximum value for the number.
@@ -30,7 +30,7 @@ namespace ALife.Core.Utility
         /// <param name="value">The starting value.</param>
         /// <param name="minValue">The minimum value.</param>
         /// <param name="maxValue">The maximum value.</param>
-        public BoundedNumber(double value, double minValue = double.MinValue, double maxValue = double.MaxValue)
+        public BoundedNumber(Simulation sim, double value, double minValue = double.MinValue, double maxValue = double.MaxValue) : base(sim)
         {
             _value = ExtraMath.Clamp(value, minValue, maxValue);
             _minValue = minValue;
@@ -41,11 +41,11 @@ namespace ALife.Core.Utility
         /// Initializes a new instance of the <see cref="BoundedNumber"/> class by copying the values from the parent.
         /// </summary>
         /// <param name="parent">The parent.</param>
-        public BoundedNumber(BoundedNumber parent)
+        public BoundedNumber(BoundedNumber parent) : base(parent.Simulation)
         {
+            _minValue = parent.MinValue;
+            _maxValue = parent.MaxValue;
             Value = parent.Value;
-            MinValue = parent.MinValue;
-            MaxValue = parent.MaxValue;
         }
 
         /// <summary>
@@ -80,7 +80,131 @@ namespace ALife.Core.Utility
         public double Value
         {
             get => _value;
-            set => ExtraMath.Clamp(value, MinValue, MaxValue);
+            set => _value = ExtraMath.Clamp(value, MinValue, MaxValue);
+        }
+
+        /// <summary>
+        /// Performs an implicit conversion from <see cref="BoundedNumber"/> to <see cref="System.Double"/>.
+        /// </summary>
+        /// <param name="number">The number.</param>
+        /// <returns>The result of the conversion.</returns>
+        public static implicit operator double(BoundedNumber number)
+        {
+            return number.Value;
+        }
+
+        /// <summary>
+        /// Implements the operator !=.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator !=(BoundedNumber left, BoundedNumber right)
+        {
+            return !left.Equals(right);
+        }
+
+        /// <summary>
+        /// Implements the operator &lt;.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator <(BoundedNumber left, BoundedNumber right)
+        {
+            return left.Value < right.Value;
+        }
+
+        /// <summary>
+        /// Implements the operator &lt;=.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator <=(BoundedNumber left, BoundedNumber right)
+        {
+            return left.Value <= right.Value;
+        }
+
+        /// <summary>
+        /// Implements the operator ==.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator ==(BoundedNumber left, BoundedNumber right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Implements the operator &gt;.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator >(BoundedNumber left, BoundedNumber right)
+        {
+            return left.Value > right.Value;
+        }
+
+        /// <summary>
+        /// Implements the operator &gt;=.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator >=(BoundedNumber left, BoundedNumber right)
+        {
+            return left.Value >= right.Value;
+        }
+
+        /// <summary>
+        /// Clones this instance.
+        /// </summary>
+        /// <returns>A cloned instance.</returns>
+        public BoundedNumber Clone()
+        {
+            return new BoundedNumber(this);
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object"/>, is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object"/> to compare with this instance.</param>
+        /// <returns>
+        /// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
+        public override bool Equals(object obj)
+        {
+            return obj is BoundedNumber number &&
+                   MaxValue == number.MaxValue &&
+                   MinValue == number.MinValue &&
+                   Value == number.Value;
+        }
+
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
+        /// </returns>
+        public override int GetHashCode()
+        {
+            var hashCode = -212977889;
+            hashCode = hashCode * -1521134295 + _maxValue.GetHashCode();
+            hashCode = hashCode * -1521134295 + _minValue.GetHashCode();
+            hashCode = hashCode * -1521134295 + _value.GetHashCode();
+            return hashCode;
+        }
+
+        /// <summary>
+        /// Converts to string.
+        /// </summary>
+        /// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+        public override string ToString()
+        {
+            return $"{_minValue} <= {_value} <= {_maxValue}";
         }
     }
 }

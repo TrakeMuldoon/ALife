@@ -1,6 +1,6 @@
 ﻿using ALife.Core;
 
-namespace ALife.Tests.ROOT
+namespace ALife.Tests
 {
     /// <summary>
     /// Tests for the Settings class.
@@ -20,28 +20,28 @@ namespace ALife.Tests.ROOT
         [Test]
         public void TestSettingsNormal()
         {
-            Assert.AreEqual(_applicationName, _settings.ApplicationName);
-            Assert.AreEqual(_applicationSafeName, _settings.ApplicationSafeName);
+            Assert.That(_settings.ApplicationName, Is.EqualTo(_applicationName));
+            Assert.That(_settings.ApplicationSafeName, Is.EqualTo(_applicationSafeName));
 
             // Root Dir
             var expectedRootDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            Assert.AreEqual(expectedRootDirectory, _settings.RootUserDirectory);
+            Assert.That(_settings.RootUserDirectory, Is.EqualTo(expectedRootDirectory));
 
             // Base Dir
             var expectedBaseDirectory = Path.Combine(expectedRootDirectory, _applicationSafeName);
-            Assert.AreEqual(expectedBaseDirectory, _settings.BaseApplicationDirectory);
+            Assert.That(_settings.BaseApplicationDirectory, Is.EqualTo(expectedBaseDirectory));
 
             // Setting path
             var settingsPath = Path.Combine(expectedBaseDirectory, Settings.SETTINGS_FILE_NAME);
-            Assert.AreEqual(settingsPath, _settings.SettingsFilePath);
+            Assert.That(_settings.SettingsFilePath, Is.EqualTo(settingsPath));
 
             // World Save Dir
             var worldsPath = Path.Combine(expectedBaseDirectory, Settings.WORLD_SAVE_DIRECTORY_NAME);
-            Assert.AreEqual(worldsPath, _settings.WorldSaveDirectoryPath);
+            Assert.That(_settings.WorldSaveDirectoryPath, Is.EqualTo(worldsPath));
 
             // Agent Export Dir
             var agentsPath = Path.Combine(expectedBaseDirectory, Settings.AGENT_SAVE_DIRECTORY_NAME);
-            Assert.AreEqual(agentsPath, _settings.AgentExportDirectoryPath);
+            Assert.That(_settings.AgentExportDirectoryPath, Is.EqualTo(agentsPath));
         }
     }
 }

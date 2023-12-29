@@ -13,7 +13,7 @@ namespace ALife.Tests.Utility.Json
             var obj = JsonHelpers.DeserializeContents<Example>("{\"Field\":5,\"Property\":true}");
             var expected = new Example(true, 5);
 
-            Assert.AreEqual(expected, obj);
+            Assert.That(obj, Is.EqualTo(expected));
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace ALife.Tests.Utility.Json
             var actual = JsonHelpers.SerializeObject(example);
             var expected = "{\"Property\":true,\"Field\":5}";
             var actualWhitespaceCleaned = string.Concat(actual.Where(c => !char.IsWhiteSpace(c)));
-            Assert.AreEqual(expected, actualWhitespaceCleaned);
+            Assert.That(actualWhitespaceCleaned, Is.EqualTo(expected));
         }
 
         private class Example

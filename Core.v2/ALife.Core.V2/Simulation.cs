@@ -7,11 +7,28 @@ namespace ALife.Core
     [DebuggerDisplay("{Id} - {ScenarioName}")]
     public class Simulation
     {
-        public Simulation()
+#if TEST || DEBUG
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Simulation"/> class.
+        /// NOTE: used strictly for testing.
+        /// </summary>
+        /// <param name="seed">The seed.</param>
+        public Simulation(int seed)
         {
+            Id = 0;
+            ScenarioName = string.Empty;
+            StartingSeed = seed;
+
+            SimulationWidth = 0;
+            SimulationHeight = 0;
+
+            Random = new FastRandom(StartingSeed);
         }
 
-        public Simulation(uint id, string scenarioName, Nullable<int> startingSeed, Nullable<int> width = null, Nullable<int> height = null)
+#endif
+
+        internal Simulation(uint id, string scenarioName, Nullable<int> startingSeed, Nullable<int> width = null, Nullable<int> height = null)
         {
             Id = id;
             ScenarioName = scenarioName;

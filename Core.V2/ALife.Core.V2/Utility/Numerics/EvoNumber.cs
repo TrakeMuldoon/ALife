@@ -1,152 +1,282 @@
 ﻿using ALife.Core.Utility.Maths;
 using System;
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 namespace ALife.Core.Utility.Numerics
 {
-    [DebuggerDisplay("{_value}")]
+    /// <summary>
+    /// A number that can be evolved within a range.
+    /// </summary>
+    /// <seealso cref="ALife.Core.BaseObject"/>
+    [DebuggerDisplay("EvoNumber: {Value} (Original: {OriginalValue})")]
     public class EvoNumber : BaseObject
     {
         /// <summary>
         /// The mean for the evolution of a value.
         /// </summary>
+        [JsonIgnore]
         public static double EVOLUTION_MEAN = 0;
 
         /// <summary>
         /// The standard deviation for the evolution of a value.
         /// Devin: This is a magic number to approximate the distribution I like.
         /// </summary>
+        [JsonIgnore]
         public static double EVOLUTION_STANDARD_DEVIATION = 0.2;
 
         /// <summary>
-        /// The delta allowed for the value and start value to change.
+        /// Gets the value maximum and minimum evolution delta maximum. This is the maximum amount htat hte ValueMaximum
+        /// and ValueMinimum can change when they are evolved.
         /// </summary>
-        public DeltaBoundedNumber Delta;
+        /// <value>The value maximum and minimum evolution delta maximum.</value>
+        public double ValueMaximumAndMinimumEvolutionDeltaMax;
 
         /// <summary>
-        /// The maximum value that the value can be.
+        /// The actual value represented by this object.
         /// </summary>
-        public BoundedNumber Maximum;
-
-        /// <summary>
-        /// The minimum value that the value can be.
-        /// </summary>
-        public BoundedNumber Minimum;
-
-        /// <summary>
-        /// The start value. This generally reflects the parents value.
-        /// </summary>
-        private double _startValue;
-
-        /// <summary>
-        /// The maximum delta that the start value can change by.
-        /// </summary>
-        private double _startValueEvoDeltaMax;
-
-        /// <summary>
-        /// The value.
-        /// </summary>
-        private double _value;
+        protected double _value;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EvoNumber"/> class.
         /// </summary>
-        /// <param name="startValue"></param>
-        /// <param name="startValueEvoDeltaMax"></param>
-        /// <param name="valueMin"></param>
-        /// <param name="valueMax"></param>
-        /// <param name="valueHardMin"></param>
-        /// <param name="valueHardMax"></param>
-        /// <param name="valueMinMaxEvoMax"></param>
-        /// <param name="deltaMax"></param>
-        /// <param name="deltaEvoMax"></param>
-        /// <param name="deltaHardMax"></param>
-        public EvoNumber(Simulation sim, double startValue, double startValueEvoDeltaMax
-                        , double valueMin, double valueMax, double valueHardMin, double valueHardMax, double valueMinMaxEvoMax
-                        , double deltaMax, double deltaEvoMax, double deltaHardMax) : base(sim)
+        /// <param name="sim">The sim.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="originalValueEvolutionDeltaMax">The original value evolution delta maximum.</param>
+        /// <param name="minimumValue">The minimum value.</param>
+        /// <param name="maximumValue">The maximum value.</param>
+        /// <param name="valueMaximumAndMinimumEvolutionDeltaMax">The value maximum and minimum evolution delta maximum.</param>
+        /// <param name="valueDelta">The value delta.</param>
+        /// <param name="cloneBoundedNumbers">if set to <c>true</c> [clone bounded numbers].</param>
+        public EvoNumber(Simulation sim, double value, double originalValueEvolutionDeltaMax, BoundedNumber minimumValue, BoundedNumber maximumValue, double valueMaximumAndMinimumEvolutionDeltaMax, DeltaBoundedNumber valueDelta, bool cloneBoundedNumbers = true) : base(sim)
         {
-            _startValue = startValue;
-            _startValueEvoDeltaMax = startValueEvoDeltaMax;
-            _value = startValue;
-            Delta = new DeltaBoundedNumber(deltaMax, deltaEvoMax, 0, deltaHardMax);
-            Minimum = new BoundedNumber(valueMin, valueHardMin, valueMinMaxEvoMax);
-            Maximum = new BoundedNumber(valueMax, valueMinMaxEvoMax, valueHardMax);
+            OriginalValue = value;
+            _value = value;
+            OriginalValueEvolutionDeltaMax = originalValueEvolutionDeltaMax;
+
+            ValueDeltaMaximum = cloneBoundedNumbers ? valueDelta.Clone() : valueDelta;
+            ValueMinimum = cloneBoundedNumbers ? minimumValue.Clone() : minimumValue;
+            ValueMaximum = cloneBoundedNumbers ? maximumValue.Clone() : maximumValue;
+            ValueMaximumAndMinimumEvolutionDeltaMax = valueMaximumAndMinimumEvolutionDeltaMax;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EvoNumber"/> class.
         /// </summary>
-        /// <param name="parent">The parent to clone.</param>
-        public EvoNumber(EvoNumber parent) : base(parent.Simulation)
+        /// <param name="sim">The sim.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="originalValueEvolutionDeltaMax">The original value evolution delta maximum.</param>
+        /// <param name="minimumValue">The minimum value.</param>
+        /// <param name="maximumValue">The maximum value.</param>
+        /// <param name="absoluteMinimumValue">The absolute minimum value.</param>
+        /// <param name="absoluteMaximumValue">The absolute maximum value.</param>
+        /// <param name="valueMaximumAndMinimumEvolutionDeltaMax">The value maximum and minimum evolution delta maximum.</param>
+        /// <param name="valueDeltaMax">The value delta maximum.</param>
+        /// <param name="valueDeltaMaxEvolutionMax">The value delta maximum evolution maximum.</param>
+        /// <param name="valueDeltaMaxEvolutionAbsoluteMax">The value delta maximum evolution absolute maximum.</param>
+        public EvoNumber(Simulation sim, double value, double originalValueEvolutionDeltaMax, double minimumValue, double maximumValue, double absoluteMinimumValue, double absoluteMaximumValue, double valueMaximumAndMinimumEvolutionDeltaMax, double valueDeltaMax, double valueDeltaMaxEvolutionMax, double valueDeltaMaxEvolutionAbsoluteMax) : this(sim, value, originalValueEvolutionDeltaMax, new BoundedNumber(sim, minimumValue, minValue: absoluteMinimumValue), new BoundedNumber(sim, maximumValue, maxValue: absoluteMaximumValue), valueMaximumAndMinimumEvolutionDeltaMax, new DeltaBoundedNumber(sim, valueDeltaMax, valueDeltaMaxEvolutionMax, 0, valueDeltaMaxEvolutionAbsoluteMax), cloneBoundedNumbers: false)
         {
-            _startValue = parent._startValue;
-            _startValueEvoDeltaMax = parent._startValueEvoDeltaMax;
-            _value = parent._value;
-            Delta = new DeltaBoundedNumber(parent.Delta);
-            Minimum = new BoundedNumber(parent.Minimum);
-            Maximum = new BoundedNumber(parent.Maximum);
         }
 
         /// <summary>
-        /// Gets or sets the start value.
+        /// Initializes a new instance of the <see cref="EvoNumber"/> class.
         /// </summary>
-        public double StartValue
+        /// <param name="parent">The parent.</param>
+        public EvoNumber(EvoNumber parent) : this(parent.Simulation, parent.Value, parent.OriginalValueEvolutionDeltaMax, parent.ValueMinimum, parent.ValueMaximum, parent.ValueMaximumAndMinimumEvolutionDeltaMax, parent.ValueDeltaMaximum)
         {
-            get => _startValue;
-            set => _startValue = ExtraMath.DeltaClamp(value, _value, -_startValueEvoDeltaMax, _startValueEvoDeltaMax, Minimum.Value, Maximum.Value);
         }
 
         /// <summary>
-        /// Gets or sets the start value evo delta maximum.
+        /// Gets the original (start) value.
         /// </summary>
-        public double StartValueEvoDeltaMax
-        {
-            get => _startValueEvoDeltaMax;
-            set
-            {
-                _startValueEvoDeltaMax = value;
-                StartValue = _startValue;
-            }
-        }
+        /// <value>The original value.</value>
+        public double OriginalValue { get; }
+
+        /// <summary>
+        /// Gets the original value evolution delta maximum.
+        /// </summary>
+        /// <value>The original value evolution delta maximum.</value>
+        public double OriginalValueEvolutionDeltaMax { get; }
 
         /// <summary>
         /// Gets or sets the value.
         /// </summary>
+        /// <value>The value.</value>
+        [JsonIgnore]
         public double Value
         {
             get => _value;
-            set => _value = ExtraMath.DeltaClamp(value, _value, -Delta.Value, Delta.Value, Minimum.Value, Maximum.Value);
+            set => _value = ExtraMath.DeltaClamp(value, _value, -ValueDeltaMaximum, ValueDeltaMaximum, ValueMinimum.Value, ValueMaximum.Value);
         }
 
         /// <summary>
-        /// Evolves the number.
+        /// Gets the value delta. This is the maximum amount that the Value can change when it is updated.
         /// </summary>
-        /// <returns>An evolved Evo number.</returns>
-        public EvoNumber GetEvolvedNumber()
+        /// <value>The value delta.</value>
+        public DeltaBoundedNumber ValueDeltaMaximum { get; }
+
+        /// <summary>
+        /// The maximum that the value can be.
+        /// </summary>
+        public BoundedNumber ValueMaximum { get; }
+
+        /// <summary>
+        /// The minimum that the value can be.
+        /// </summary>
+        public BoundedNumber ValueMinimum { get; }
+
+        /// <summary>
+        /// Implements the operator !=.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator !=(EvoNumber left, EvoNumber right)
         {
-            double newStartValue = EvolveValue(_startValue, StartValueEvoDeltaMax, Minimum.Value, Maximum.Value);
-            double newValueMin = EvolveValue(Minimum.Value, Maximum.Value, Minimum.Value, Maximum.Value);
-            double newValueMax = EvolveValue(Maximum.Value, Maximum.Value, Minimum.Value, Maximum.Value);
-            double newDeltaMax = EvolveValue(Delta.Value, Delta.Value, 0, Delta.Value);
-
-            return new EvoNumber(
-                Simulation, newStartValue, StartValueEvoDeltaMax
-                , newValueMin, newValueMax, Minimum.Value, Maximum.Value, Maximum.Value
-                , newDeltaMax, Delta.Value, Delta.Value
-            );
+            return !left.Equals(right);
         }
 
         /// <summary>
-        /// Evolves a value.
+        /// Implements the operator &lt;.
         /// </summary>
-        /// <param name="current"></param>
-        /// <param name="deltaMax"></param>
-        /// <param name="hardMin"></param>
-        /// <param name="hardMax"></param>
-        /// <returns>The evolved value.</returns>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator <(EvoNumber left, EvoNumber right)
+        {
+            return left.Value < right.Value;
+        }
+
+        /// <summary>
+        /// Implements the operator &lt;=.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator <=(EvoNumber left, EvoNumber right)
+        {
+            return left.Value <= right.Value;
+        }
+
+        /// <summary>
+        /// Implements the operator ==.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator ==(EvoNumber left, EvoNumber right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Implements the operator &gt;.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator >(EvoNumber left, EvoNumber right)
+        {
+            return left.Value > right.Value;
+        }
+
+        /// <summary>
+        /// Implements the operator &gt;=.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator >=(EvoNumber left, EvoNumber right)
+        {
+            return left.Value >= right.Value;
+        }
+
+        /// <summary>
+        /// Clones this instance.
+        /// </summary>
+        /// <returns>The cloned instance.</returns>
+        public EvoNumber Clone()
+        {
+            return new EvoNumber(this);
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object"/>, is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object"/> to compare with this instance.</param>
+        /// <returns>
+        /// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
+        public override bool Equals(object obj)
+        {
+            return obj is EvoNumber number &&
+                   OriginalValue == number.OriginalValue &&
+                   OriginalValueEvolutionDeltaMax == number.OriginalValueEvolutionDeltaMax &&
+                   Value == number.Value &&
+                   ValueDeltaMaximum.Equals(number.ValueDeltaMaximum) &&
+                   ValueMaximum.Equals(number.ValueMaximum) &&
+                   ValueMinimum.Equals(number.ValueMinimum) &&
+                   ValueMaximumAndMinimumEvolutionDeltaMax == number.ValueMaximumAndMinimumEvolutionDeltaMax;
+        }
+
+        /// <summary>
+        /// Creates a cloned instance with evolved values.
+        /// </summary>
+        /// <returns>The evolved instance.</returns>
+        public EvoNumber Evolve()
+        {
+            double newOriginalValue = EvolveValue(OriginalValue, OriginalValueEvolutionDeltaMax, ValueMinimum, ValueMaximum);
+
+            double newMinimumValue = EvolveValue(ValueMinimum.Value, ValueMaximumAndMinimumEvolutionDeltaMax, ValueMinimum.MinValue, ValueMaximum.MaxValue);
+            BoundedNumber newMinimum = new BoundedNumber(Simulation, newMinimumValue, minValue: ValueMinimum.MinValue);
+
+            double newMaximumValue = EvolveValue(ValueMaximum.Value, ValueMaximumAndMinimumEvolutionDeltaMax, ValueMinimum.MinValue, ValueMaximum.MaxValue);
+            BoundedNumber newMaximum = new BoundedNumber(Simulation, newMaximumValue, maxValue: ValueMaximum.MaxValue);
+
+            double newValueDeltaMaximum = EvolveValue(ValueDeltaMaximum, ValueDeltaMaximum.DeltaMaximum, 0, ValueDeltaMaximum.DeltaMaximum.MaxValue);
+            DeltaBoundedNumber newValueDelta = new DeltaBoundedNumber(Simulation, newValueDeltaMaximum, ValueDeltaMaximum.DeltaMaximum, 0, ValueDeltaMaximum.DeltaMaximum.MaxValue);
+
+            return new EvoNumber(Simulation, newOriginalValue, OriginalValueEvolutionDeltaMax, newMinimum, newMaximum, ValueMaximumAndMinimumEvolutionDeltaMax, newValueDelta);
+        }
+
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
+        /// </returns>
+        public override int GetHashCode()
+        {
+            double hash = 17;
+            hash = hash * 23 + OriginalValue.GetHashCode();
+            hash = hash * 23 + OriginalValueEvolutionDeltaMax.GetHashCode();
+            hash = hash * 23 + Value.GetHashCode();
+            hash = hash * 23 + ValueDeltaMaximum.GetHashCode();
+            hash = hash * 23 + ValueMaximum.GetHashCode();
+            hash = hash * 23 + ValueMinimum.GetHashCode();
+            hash = hash * 23 + ValueMaximumAndMinimumEvolutionDeltaMax.GetHashCode();
+            return (int)hash;
+        }
+
+        /// <summary>
+        /// Converts to string.
+        /// </summary>
+        /// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+        public override string ToString()
+        {
+            return $"EvoNumber: {Value} (Original: {OriginalValue})";
+        }
+
+        /// <summary>
+        /// Evolves the value.
+        /// </summary>
+        /// <param name="current">The current.</param>
+        /// <param name="deltaMax">The delta maximum.</param>
+        /// <param name="hardMin">The hard minimum.</param>
+        /// <param name="hardMax">The hard maximum.</param>
+        /// <returns>The evolved number.</returns>
         private double EvolveValue(double current, double deltaMax, double hardMin, double hardMax)
         {
-            // exit early if no change is allowed
             if(deltaMax == 0)
             {
                 return current;
@@ -154,14 +284,13 @@ namespace ALife.Core.Utility.Numerics
 
             double u1 = 1.0 - Simulation.Random.NextDouble(); //uniform(0,1] random doubles
             double u2 = 1.0 - Simulation.Random.NextDouble(); //uniform(0,1] random doubles
-
             double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1))
                                    * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
             double randNormal = EVOLUTION_MEAN + EVOLUTION_STANDARD_DEVIATION * randStdNormal;     //random normal(mean,stdDev^2)
 
             double delta = randNormal * deltaMax;
-            //double delta = (Planet.World.NumberGen.NextDouble() * deltaMax)
-            //               + (Planet.World.NumberGen.NextDouble() * deltaMax)
+            //double delta = (Simulation.Random.NextDouble() * deltaMax)
+            //               + (Simulation.Random.NextDouble() * deltaMax)
             //               - deltaMax;
 
             double moddedValue = current + delta;

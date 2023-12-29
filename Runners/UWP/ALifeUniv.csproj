@@ -173,11 +173,9 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="PackageAssets\AppSplash.png" />
-    <Content Include="PackageAssets\splashscreen.scale-200.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Assets\Square44x44Logo.scale-400.png" />
     <Content Include="Configs\FullConfig.alife" />
+    <Content Include="Assets\AppSplash.scale-400.png" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -245,11 +243,11 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\ALife.Core\ALife.Core.csproj">
+    <ProjectReference Include="..\..\Core\ALife.Core\ALife.Core.csproj">
       <Project>{229AA601-7769-4A81-85C4-9EB24CCF7428}</Project>
       <Name>ALife.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Core\ALife.Rendering\ALife.Rendering.csproj">
+    <ProjectReference Include="..\..\Core\ALife.Rendering\ALife.Rendering.csproj">
       <Project>{C1261458-E720-406D-841D-0211D6F417EF}</Project>
       <Name>ALife.Rendering</Name>
     </ProjectReference>

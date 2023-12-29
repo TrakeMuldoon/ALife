@@ -33,7 +33,7 @@ namespace ALife.Core.Utility.Random
     /// use or if being used in a multi-threaded environment.
     /// </summary>
     /// SOURCED FROM https://www.codeproject.com/Articles/9187/A-fast-equivalent-for-System-Random All Credit to Colin Green
-    public class FastRandom
+    public class FastRandom : IRandom
     {
         // The +1 ensures NextDouble doesn't generate 1.0
         const double REAL_UNIT_INT = 1.0 / ((double)int.MaxValue + 1.0);
@@ -51,7 +51,7 @@ namespace ALife.Core.Utility.Random
         public FastRandom()
         {
             // Initialise using the system tick count.
-            Reinitialise((int)Environment.TickCount);
+            Reinitalize((int)Environment.TickCount);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace ALife.Core.Utility.Random
         /// </summary>
         public FastRandom(int seed)
         {
-            Reinitialise(seed);
+            Reinitalize(seed);
         }
 
         #endregion Constructors
@@ -70,8 +70,8 @@ namespace ALife.Core.Utility.Random
         /// <summary>
         /// Reinitialises using an int value as a seed.
         /// </summary>
-        /// <param name="seed"></param>
-        public void Reinitialise(int seed)
+        /// <param name="seed">The seed.</param>
+        public void Reinitalize(int seed)
         {
             // The only stipulation stated for the xorshift RNG is that at least one of the seeds x,y,z,w is non-zero.
             // We fulfill that requirement by only allowing resetting of the x seed
@@ -95,7 +95,7 @@ namespace ALife.Core.Utility.Random
         /// Call NextUInt() and cast the result to an int to generate an int over the full Int32 value range including
         /// negative values.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A random number.</returns>
         public int Next()
         {
             uint t = (x ^ (x << 11));
@@ -114,7 +114,7 @@ namespace ALife.Core.Utility.Random
         /// Generates a random int over the range 0 to upperBound-1, and not including upperBound.
         /// </summary>
         /// <param name="upperBound"></param>
-        /// <returns></returns>
+        /// <returns>A random number.</returns>
         public int Next(int upperBound)
         {
             if(upperBound < 0)
@@ -133,7 +133,7 @@ namespace ALife.Core.Utility.Random
         /// </summary>
         /// <param name="lowerBound"></param>
         /// <param name="upperBound"></param>
-        /// <returns></returns>
+        /// <returns>A random number.</returns>
         public int Next(int lowerBound, int upperBound)
         {
             if(lowerBound > upperBound)
@@ -160,7 +160,7 @@ namespace ALife.Core.Utility.Random
         /// functionally equivalent to System.Random.Next(). This does slightly eat into some of the performance gain
         /// over System.Random, but not much.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A random number.</returns>
         public byte NextByte()
         {
             return (byte)Next(255);
@@ -170,7 +170,7 @@ namespace ALife.Core.Utility.Random
         /// Generates a random byte over the range 0 to upperBound-1, and not including upperBound.
         /// </summary>
         /// <param name="upperBound">The upper bound.</param>
-        /// <returns></returns>
+        /// <returns>A random number.</returns>
         public byte NextByte(byte upperBound)
         {
             return (byte)Next(upperBound);
@@ -182,7 +182,7 @@ namespace ALife.Core.Utility.Random
         /// </summary>
         /// <param name="lowerBound">The lower bound.</param>
         /// <param name="upperBound">The upper bound.</param>
-        /// <returns></returns>
+        /// <returns>A random number.</returns>
         public byte NextByte(byte lowerBound, byte upperBound)
         {
             return (byte)Next(lowerBound, upperBound);
@@ -191,7 +191,7 @@ namespace ALife.Core.Utility.Random
         /// <summary>
         /// Fills the provided byte array with random bytes. This method is functionally equivalent to System.Random.NextBytes().
         /// </summary>
-        /// <param name="buffer"></param>
+        /// <param name="buffer">The next bytes.</param>
         public void NextBytes(byte[] buffer)
         {
             // Fill up the bulk of the buffer in chunks of 4 bytes at a time.
@@ -241,7 +241,7 @@ namespace ALife.Core.Utility.Random
         /// <summary>
         /// Generates a random double. Values returned are from 0.0 up to but not including 1.0.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A random number.</returns>
         public double NextDouble()
         {
             uint t = (x ^ (x << 11));
@@ -289,7 +289,7 @@ namespace ALife.Core.Utility.Random
         /// Generates a single random bit. This method's performance is improved by generating 32 bits in one operation
         /// and storing them ready for future calls.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A random bool.</returns>
         public bool NextBool()
         {
             if(bitMask == 1)
@@ -314,7 +314,7 @@ namespace ALife.Core.Utility.Random
         /// The slight difference in range means this method is slightly faster than Next() but is not functionally
         /// equivalent to System.Random.Next().
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A random number.</returns>
         public int NextInt()
         {
             uint t = (x ^ (x << 11));
@@ -328,7 +328,7 @@ namespace ALife.Core.Utility.Random
         /// This is the fastest method for generating a single random number because the underlying random number
         /// generator algorithm generates 32 random bits that can be cast directly to a uint.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A random number.</returns>
         public uint NextUInt()
         {
             uint t = (x ^ (x << 11));

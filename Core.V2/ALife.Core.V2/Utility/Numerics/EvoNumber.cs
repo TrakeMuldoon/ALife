@@ -224,7 +224,7 @@ namespace ALife.Core.Utility.Numerics
         /// </summary>
         /// <param name="randomGenerator">The random generator.</param>
         /// <returns>The evolved instance.</returns>
-        public EvoNumber Evolve(FastRandom randomGenerator)
+        public EvoNumber Evolve(IRandom randomGenerator)
         {
             double newOriginalValue = EvolveValue(randomGenerator, OriginalValue, OriginalValueEvolutionDeltaMax, ValueMinimum, ValueMaximum);
 
@@ -287,7 +287,7 @@ namespace ALife.Core.Utility.Numerics
         /// <param name="hardMin">The hard minimum.</param>
         /// <param name="hardMax">The hard maximum.</param>
         /// <returns>The evolved number.</returns>
-        private double EvolveValue(FastRandom rand, double current, double deltaMax, double hardMin, double hardMax)
+        private double EvolveValue(IRandom rand, double current, double deltaMax, double hardMin, double hardMax)
         {
             if(deltaMax == 0)
             {

@@ -42,7 +42,7 @@ namespace ALife.Core
 
         public uint Id { get; private set; }
 
-        public FastRandom Random { get; private set; }
+        public IRandom Random { get; private set; }
 
         public string ScenarioName { get; private set; }
 

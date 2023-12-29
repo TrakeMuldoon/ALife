@@ -5,10 +5,10 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{BD7F9F1B-F088-4C03-A79C-162FB32D797D}"
 	ProjectSection(SolutionItems) = preProject
-		NewConfig.txt = NewConfig.txt
-		README.md = README.md
-		Roadmap2024.md = Roadmap2024.md
-		ValuableLinks.txt = ValuableLinks.txt
+		Documentation\NewConfig.txt = Documentation\NewConfig.txt
+		Documentation\README.md = Documentation\README.md
+		Documentation\Roadmap2024.md = Documentation\Roadmap2024.md
+		Documentation\ValuableLinks.txt = Documentation\ValuableLinks.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{FEC4584F-16BF-44AE-B4AE-96246985810C}"
@@ -30,12 +30,24 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ALife.Avalonia.Desktop", "Runners\Avalonia\ALife.Avalonia.Desktop\ALife.Avalonia.Desktop.csproj", "{B8553EA0-F0BC-45D9-ABF1-69D31EEA4861}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DocumentationArtifacts", "DocumentationArtifacts", "{42524CDE-3659-4A75-A8ED-75B33A1634AC}"
+	ProjectSection(SolutionItems) = preProject
+		Documentation\DocumentationArtifacts\Config.txt = Documentation\DocumentationArtifacts\Config.txt
+		Documentation\DocumentationArtifacts\HighLevelFeatureScratchpad.txt = Documentation\DocumentationArtifacts\HighLevelFeatureScratchpad.txt
+		Documentation\DocumentationArtifacts\Roadmap.md = Documentation\DocumentationArtifacts\Roadmap.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UWP", "UWP", "{F406F55A-36E1-4E25-9A3F-9CC6358F0625}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALifeUniv", "Runners\UWP\ALifeUniv\ALifeUniv.csproj", "{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{7074191D-6CE3-4680-B43C-69291EE25FD8}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\ConsoleSplash.ico = Assets\ConsoleSplash.ico
+		Assets\ConsoleSplash.png = Assets\ConsoleSplash.png
+		Assets\GuiSplash.ico = Assets\GuiSplash.ico
+		Assets\GuiSplash.png = Assets\GuiSplash.png
+		Runners\UWP\ALifeUniv\PackageAssets\splashscreen.scale-200.png = Runners\UWP\ALifeUniv\PackageAssets\splashscreen.scale-200.png
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScenarioRunner", "Runners\UWP\ScenarioRunner\ScenarioRunner.csproj", "{00A91FB4-A5F7-47CC-B933-7E6DC8302265}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALifeUniv", "Runners\UWP\ALifeUniv.csproj", "{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,9 +183,9 @@ Global
 		{B8553EA0-F0BC-45D9-ABF1-69D31EEA4861}.Release|x64.Build.0 = Release|Any CPU
 		{B8553EA0-F0BC-45D9-ABF1-69D31EEA4861}.Release|x86.ActiveCfg = Release|Any CPU
 		{B8553EA0-F0BC-45D9-ABF1-69D31EEA4861}.Release|x86.Build.0 = Release|Any CPU
-		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Debug|Any CPU.Build.0 = Debug|x64
-		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Debug|Any CPU.Deploy.0 = Debug|x64
+		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Debug|ARM.ActiveCfg = Debug|ARM
 		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Debug|ARM.Build.0 = Debug|ARM
 		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -186,9 +198,9 @@ Global
 		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Debug|x86.ActiveCfg = Debug|x86
 		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Debug|x86.Build.0 = Debug|x86
 		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Debug|x86.Deploy.0 = Debug|x86
-		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Release|Any CPU.ActiveCfg = Release|x64
-		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Release|Any CPU.Build.0 = Release|x64
-		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Release|Any CPU.Deploy.0 = Release|x64
+		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Release|ARM.ActiveCfg = Release|ARM
 		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Release|ARM.Build.0 = Release|ARM
 		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Release|ARM.Deploy.0 = Release|ARM
@@ -201,36 +213,6 @@ Global
 		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Release|x86.ActiveCfg = Release|x86
 		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Release|x86.Build.0 = Release|x86
 		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}.Release|x86.Deploy.0 = Release|x86
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Debug|Any CPU.Build.0 = Debug|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Debug|Any CPU.Deploy.0 = Debug|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Debug|ARM.ActiveCfg = Debug|ARM
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Debug|ARM.Build.0 = Debug|ARM
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Debug|ARM.Deploy.0 = Debug|ARM
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Debug|ARM64.ActiveCfg = Debug|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Debug|ARM64.Build.0 = Debug|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Debug|ARM64.Deploy.0 = Debug|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Debug|x64.ActiveCfg = Debug|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Debug|x64.Build.0 = Debug|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Debug|x64.Deploy.0 = Debug|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Debug|x86.ActiveCfg = Debug|x86
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Debug|x86.Build.0 = Debug|x86
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Debug|x86.Deploy.0 = Debug|x86
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Release|Any CPU.ActiveCfg = Release|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Release|Any CPU.Build.0 = Release|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Release|Any CPU.Deploy.0 = Release|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Release|ARM.ActiveCfg = Release|ARM
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Release|ARM.Build.0 = Release|ARM
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Release|ARM.Deploy.0 = Release|ARM
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Release|ARM64.ActiveCfg = Release|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Release|ARM64.Build.0 = Release|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Release|ARM64.Deploy.0 = Release|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Release|x64.ActiveCfg = Release|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Release|x64.Build.0 = Release|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Release|x64.Deploy.0 = Release|x64
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Release|x86.ActiveCfg = Release|x86
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Release|x86.Build.0 = Release|x86
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -246,7 +228,6 @@ Global
 		{42524CDE-3659-4A75-A8ED-75B33A1634AC} = {BD7F9F1B-F088-4C03-A79C-162FB32D797D}
 		{F406F55A-36E1-4E25-9A3F-9CC6358F0625} = {59D59583-FCFF-4FA9-9226-8B606B28C89B}
 		{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F} = {F406F55A-36E1-4E25-9A3F-9CC6358F0625}
-		{00A91FB4-A5F7-47CC-B933-7E6DC8302265} = {F406F55A-36E1-4E25-9A3F-9CC6358F0625}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3CABACB-F99A-4AE3-8EDE-95035D8156F0}

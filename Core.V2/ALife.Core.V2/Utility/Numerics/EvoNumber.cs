@@ -14,6 +14,7 @@ namespace ALife.Core.Utility.Numerics
     {
         /// <summary>
         /// The mean for the evolution of a value.
+        /// TODO: Find out why this is 0. And why it is a constant.
         /// </summary>
         [JsonIgnore]
         public static double EVOLUTION_MEAN = 0;

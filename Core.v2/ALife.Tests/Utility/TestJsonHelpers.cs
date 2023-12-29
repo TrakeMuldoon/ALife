@@ -1,11 +1,11 @@
 ﻿using ALife.Core.Utility.Json;
 
-namespace ALife.Tests.Utility.Json
+namespace ALife.Tests.Utility
 {
     /// <summary>
-    /// Tests for the Settings class.
+    /// Tests for the JsonHelpers class.
     /// </summary>
-    internal class TestIoHelpers
+    internal class TestJsonHelpers
     {
         [Test]
         public void TestDeserialize()
@@ -32,8 +32,8 @@ namespace ALife.Tests.Utility.Json
 
             public Example(bool property, int field)
             {
-                this.Field = field;
-                this.Property = property;
+                Field = field;
+                Property = property;
             }
 
             public bool Property { get; }
@@ -42,7 +42,7 @@ namespace ALife.Tests.Utility.Json
             {
                 if(obj is Example other)
                 {
-                    return this.Field == other.Field && this.Property == other.Property;
+                    return Field == other.Field && Property == other.Property;
                 }
                 return false;
             }

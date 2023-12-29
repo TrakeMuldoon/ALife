@@ -1,5 +1,4 @@
-﻿using ALife.Core.Utility.Maths;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace ALife.Core.Utility.Numerics
 {

@@ -1,5 +1,4 @@
-﻿using ALife.Core.Utility.Maths;
-using ALife.Core.Utility.Ranges;
+﻿using ALife.Core.Utility.Ranges;
 using System;
 using System.Diagnostics;
 using System.Drawing;

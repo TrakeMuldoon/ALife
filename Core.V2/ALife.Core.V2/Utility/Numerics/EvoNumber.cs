@@ -1,5 +1,4 @@
-﻿using ALife.Core.Utility.Maths;
-using ALife.Core.Utility.Random;
+﻿using ALife.Core.Utility.Random;
 using System;
 using System.Diagnostics;
 using System.Text.Json.Serialization;

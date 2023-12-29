@@ -1,4 +1,4 @@
-﻿using ALife.Core.Utility.IO;
+﻿using ALife.Core.Utility;
 using System;
 using System.IO;
 

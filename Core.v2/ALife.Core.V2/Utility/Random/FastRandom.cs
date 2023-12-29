@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace ALife.Core.Utility.Random
 {
@@ -33,6 +34,7 @@ namespace ALife.Core.Utility.Random
     /// use or if being used in a multi-threaded environment.
     /// </summary>
     /// SOURCED FROM https://www.codeproject.com/Articles/9187/A-fast-equivalent-for-System-Random All Credit to Colin Green
+    [DebuggerDisplay("FastRandom, Seed={x}")]
     public class FastRandom : IRandom
     {
         // The +1 ensures NextDouble doesn't generate 1.0

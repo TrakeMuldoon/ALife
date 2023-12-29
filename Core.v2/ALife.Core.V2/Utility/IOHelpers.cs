@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace ALife.Core.Utility.IO
+namespace ALife.Core.Utility
 {
     /// <summary>
     /// Various IO helpers

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace ALife.Core.Utility.Maths
+namespace ALife.Core.Utility
 {
     /// <summary>
     /// Extra math functions that are not included in the standard library.

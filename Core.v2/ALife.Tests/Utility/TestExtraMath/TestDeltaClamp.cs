@@ -1,6 +1,6 @@
-﻿using ALife.Core.Utility.Maths;
+﻿using ALife.Core.Utility;
 
-namespace ALife.Tests.Utility.Maths.TestExtraMath
+namespace ALife.Tests.Utility.TestExtraMath
 {
     /// <summary>
     /// Tests for ExtraMath.TestDeltaClamp

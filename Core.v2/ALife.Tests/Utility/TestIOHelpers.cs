@@ -1,7 +1,7 @@
-﻿namespace ALife.Tests.Utility.IO
+﻿namespace ALife.Tests.Utility
 {
     /// <summary>
-    /// Tests for the Settings class.
+    /// Tests for the IOHelpers class.
     /// </summary>
     internal class TestIOHelpers
     {

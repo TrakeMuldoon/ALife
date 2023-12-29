@@ -1,11 +1,11 @@
-﻿using ALife.Core.Utility.Maths;
+﻿using ALife.Core.Utility;
 
-namespace ALife.Tests.Utility.Maths.TestExtraMath
+namespace ALife.Tests.Utility.TestExtraMath
 {
     /// <summary>
-    /// Tests for ExtraMath.Clamp
+    /// Tests for ExtraMath.CircularClamp
     /// </summary>
-    internal class TestClamp
+    internal class TestCircularClamp
     {
         /// <summary>
         /// Tests that a value that is too high is clamped to the maximum.
@@ -14,27 +14,27 @@ namespace ALife.Tests.Utility.Maths.TestExtraMath
         [Test(ExpectedResult = 3)]
         public double TestClampNormal()
         {
-            return ExtraMath.Clamp(3, 1, 5);
+            return ExtraMath.CircularClamp(3, 1, 5);
         }
 
         /// <summary>
-        /// Tests that a value that is too high is clamped to the maximum.
+        /// Tests that a value that is too high is clamped around.
         /// </summary>
         /// <returns>The actual value.</returns>
-        [Test(ExpectedResult = 5)]
+        [Test(ExpectedResult = 4)]
         public double TestClampTooHigh()
         {
-            return ExtraMath.Clamp(10, 1, 5);
+            return ExtraMath.CircularClamp(9, 1, 5);
         }
 
         /// <summary>
-        /// Tests that a value that is too low is clamped to the minimum.
+        /// Tests that a value that is too low is clamped around.
         /// </summary>
         /// <returns>The actual value.</returns>
-        [Test(ExpectedResult = 1)]
+        [Test(ExpectedResult = 3)]
         public double TestClampTooLow()
         {
-            return ExtraMath.Clamp(-1, 1, 5);
+            return ExtraMath.CircularClamp(-1, 1, 5);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace ALife.Core.Utility.Numerics
     /// A bounded auto-clamping number that can only change by a certain amount.
     /// </summary>
     [DebuggerDisplay("Value = {Value}, DeltaMaximum = {DeltaMaximum}")]
-    public class DeltaBoundedNumber : BaseObject
+    public class DeltaBoundedNumber
     {
         /// <summary>
         /// The delta maximum
@@ -26,17 +26,17 @@ namespace ALife.Core.Utility.Numerics
         /// <param name="deltaMaxValue">The delta maximum value.</param>
         /// <param name="deltaAbsoluteMinValue">The delta absolute minimum value.</param>
         /// <param name="deltaAbsoluteMaxValue">The delta absolute maximum value.</param>
-        public DeltaBoundedNumber(Simulation sim, double value, double deltaMaxValue, double deltaAbsoluteMinValue, double deltaAbsoluteMaxValue) : base(sim)
+        public DeltaBoundedNumber(double value, double deltaMaxValue, double deltaAbsoluteMinValue, double deltaAbsoluteMaxValue)
         {
             _value = value;
-            DeltaMaximum = new BoundedNumber(sim, deltaMaxValue, deltaAbsoluteMinValue, deltaAbsoluteMaxValue);
+            DeltaMaximum = new BoundedNumber(deltaMaxValue, deltaAbsoluteMinValue, deltaAbsoluteMaxValue);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeltaBoundedNumber"/> class.
         /// </summary>
         /// <param name="parent">The parent to clone.</param>
-        public DeltaBoundedNumber(DeltaBoundedNumber parent) : base(parent.Simulation)
+        public DeltaBoundedNumber(DeltaBoundedNumber parent)
         {
             _value = parent._value;
             DeltaMaximum = parent.DeltaMaximum.Clone();

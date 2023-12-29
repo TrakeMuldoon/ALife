@@ -12,7 +12,7 @@
         /// <returns></returns>
         public static BoundedNumber ToAutoBoundedNumber(this BoundedManualNumber number)
         {
-            return new BoundedNumber(number.Simulation, number.Value, number.MinValue, number.MaxValue);
+            return new BoundedNumber(number.Value, number.MinValue, number.MaxValue);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@
         /// <returns></returns>
         public static BoundedManualNumber ToManuallyBoundedNumber(this BoundedNumber number)
         {
-            return new BoundedManualNumber(number.Simulation, number.Value, number.MinValue, number.MaxValue);
+            return new BoundedManualNumber(number.Value, number.MinValue, number.MaxValue);
         }
 
         /// <summary>

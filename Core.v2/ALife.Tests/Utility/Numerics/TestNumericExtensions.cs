@@ -1,5 +1,4 @@
-﻿using ALife.Core;
-using ALife.Core.Utility.Numerics;
+﻿using ALife.Core.Utility.Numerics;
 
 namespace ALife.Tests.Utility.Numerics
 {
@@ -9,26 +8,12 @@ namespace ALife.Tests.Utility.Numerics
     internal class TestNumericExtensions
     {
         /// <summary>
-        /// The test sim
-        /// </summary>
-        private Simulation _sim;
-
-        /// <summary>
-        /// Setups this instance.
-        /// </summary>
-        [SetUp]
-        public void Setup()
-        {
-            _sim = new Simulation(1);
-        }
-
-        /// <summary>
         /// Tests converting a BoundedNumber to a BoundedManualNumber.
         /// </summary>
         [Test]
         public void TestBoundedToManualBoundedNumbers()
         {
-            var number = new BoundedNumber(_sim, 0, 5, 10);
+            var number = new BoundedNumber(0, 5, 10);
             Assert.That(number.Value, Is.EqualTo(5));
             number.Value = 9;
             Assert.That(number.Value, Is.EqualTo(9));
@@ -73,7 +58,7 @@ namespace ALife.Tests.Utility.Numerics
         [Test]
         public void TestManualBoundedToBoundedNumbers()
         {
-            var number = new BoundedManualNumber(_sim, 0, 5, 10);
+            var number = new BoundedManualNumber(0, 5, 10);
             Assert.That(number.Value, Is.EqualTo(0));
             number.Value = 9;
             Assert.That(number.Value, Is.EqualTo(9));
@@ -117,7 +102,7 @@ namespace ALife.Tests.Utility.Numerics
         /// <returns></returns>
         private EvoNumber GetTestEvoNumber()
         {
-            return new EvoNumber(_sim, 0, 1, 0, 2, -2, 2, 1, 1, 1, 2);
+            return new EvoNumber(0, 1, 0, 2, -2, 2, 1, 1, 1, 2);
         }
 
         /// <summary>
@@ -126,7 +111,7 @@ namespace ALife.Tests.Utility.Numerics
         /// <returns></returns>
         private ReadOnlyEvoNumber GetTestReadOnlyEvoNumber()
         {
-            return new ReadOnlyEvoNumber(_sim, 0, 1, 0, 2, -2, 2, 1, 1, 1, 2);
+            return new ReadOnlyEvoNumber(0, 1, 0, 2, -2, 2, 1, 1, 1, 2);
         }
     }
 }

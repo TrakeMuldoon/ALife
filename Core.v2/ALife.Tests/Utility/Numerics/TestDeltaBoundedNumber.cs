@@ -1,5 +1,4 @@
-﻿using ALife.Core;
-using ALife.Core.Utility.Numerics;
+﻿using ALife.Core.Utility.Numerics;
 
 namespace ALife.Tests.Utility.Numerics
 {
@@ -9,26 +8,12 @@ namespace ALife.Tests.Utility.Numerics
     internal class TestDeltaBoundedNumber
     {
         /// <summary>
-        /// The test sim
-        /// </summary>
-        private Simulation _sim;
-
-        /// <summary>
-        /// Setups this instance.
-        /// </summary>
-        [SetUp]
-        public void Setup()
-        {
-            _sim = new Simulation(1);
-        }
-
-        /// <summary>
         /// Tests the clamping.
         /// </summary>
         [Test]
         public void TestClamping()
         {
-            var number = new DeltaBoundedNumber(_sim, 3, 1, 0, 5);
+            var number = new DeltaBoundedNumber(3, 1, 0, 5);
             Assert.That(number.Value, Is.EqualTo(3));
             number.Value = 9;
             Assert.That(number.Value, Is.EqualTo(4));
@@ -53,7 +38,7 @@ namespace ALife.Tests.Utility.Numerics
         [Test]
         public void TestClonedInitializer()
         {
-            var parent = new DeltaBoundedNumber(_sim, 3, 1, 0, 5);
+            var parent = new DeltaBoundedNumber(3, 1, 0, 5);
             var cloned = new DeltaBoundedNumber(parent);
             Assert.That(cloned, Is.EqualTo(parent));
 
@@ -67,7 +52,7 @@ namespace ALife.Tests.Utility.Numerics
         [Test]
         public void TestCloning()
         {
-            var parent = new DeltaBoundedNumber(_sim, 3, 1, 0, 5);
+            var parent = new DeltaBoundedNumber(3, 1, 0, 5);
             var cloned = parent.Clone();
             Assert.That(cloned, Is.EqualTo(parent));
 

@@ -76,10 +76,10 @@ namespace ALife.Tests.Utility.Numerics
             Assert.That(number.Value, Is.EqualTo(0));
 
             // NOTE: This test will be impacted heavily by any changes we make to the random number generator
-            var evolved1 = number.Evolve();
+            var evolved1 = number.Evolve(_sim.Random);
             Assert.That(evolved1.Value, Is.EqualTo(0));
 
-            var evolved2 = number.Evolve();
+            var evolved2 = number.Evolve(_sim);
             var roundedValue = Math.Round(evolved2.Value, 2);
             var expectedRoundedValue = 0.15d;
             Assert.That(roundedValue, Is.EqualTo(expectedRoundedValue));
@@ -104,7 +104,7 @@ namespace ALife.Tests.Utility.Numerics
         /// <returns></returns>
         private EvoNumber GetTestNumber()
         {
-            return new EvoNumber(_sim, 0, 1, 0, 1, -2, 2, 1, 1, 1, 2);
+            return new EvoNumber(0, 1, 0, 1, -2, 2, 1, 1, 1, 2);
         }
     }
 }

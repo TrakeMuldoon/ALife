@@ -1,5 +1,4 @@
-﻿using ALife.Core;
-using ALife.Core.Utility.Numerics;
+﻿using ALife.Core.Utility.Numerics;
 
 namespace ALife.Tests.Utility.Numerics
 {
@@ -9,26 +8,12 @@ namespace ALife.Tests.Utility.Numerics
     internal class TestBoundedNumber
     {
         /// <summary>
-        /// The test sim
-        /// </summary>
-        private Simulation _sim;
-
-        /// <summary>
-        /// Setups this instance.
-        /// </summary>
-        [SetUp]
-        public void Setup()
-        {
-            _sim = new Simulation(1);
-        }
-
-        /// <summary>
         /// Tests the clamping.
         /// </summary>
         [Test]
         public void TestClamping()
         {
-            var number = new BoundedNumber(_sim, 0, 5, 10);
+            var number = new BoundedNumber(0, 5, 10);
             Assert.That(number.Value, Is.EqualTo(5));
             number.Value = 9;
             Assert.That(number.Value, Is.EqualTo(9));
@@ -42,7 +27,7 @@ namespace ALife.Tests.Utility.Numerics
         [Test]
         public void TestClonedInitializer()
         {
-            var parent = new BoundedNumber(_sim, 0, 5, 10);
+            var parent = new BoundedNumber(0, 5, 10);
             var cloned = new BoundedNumber(parent);
             Assert.That(cloned, Is.EqualTo(parent));
 
@@ -56,7 +41,7 @@ namespace ALife.Tests.Utility.Numerics
         [Test]
         public void TestCloning()
         {
-            var parent = new BoundedNumber(_sim, 0, 5, 10);
+            var parent = new BoundedNumber(0, 5, 10);
             var cloned = parent.Clone();
             Assert.That(cloned, Is.EqualTo(parent));
 

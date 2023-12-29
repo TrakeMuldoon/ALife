@@ -22,7 +22,6 @@ namespace ALife.Core.Utility.Numerics
         /// <summary>
         /// Initializes a new instance of the <see cref="ReadOnlyEvoNumber"/> class.
         /// </summary>
-        /// <param name="sim">The sim.</param>
         /// <param name="value">The value.</param>
         /// <param name="originalValueEvolutionDeltaMax">The original value evolution delta maximum.</param>
         /// <param name="minimumValue">The minimum value.</param>
@@ -30,14 +29,13 @@ namespace ALife.Core.Utility.Numerics
         /// <param name="valueMaximumAndMinimumEvolutionDeltaMax">The value maximum and minimum evolution delta maximum.</param>
         /// <param name="valueDelta">The value delta.</param>
         /// <param name="cloneBoundedNumbers">if set to <c>true</c> [clone bounded numbers].</param>
-        public ReadOnlyEvoNumber(Simulation sim, double value, double originalValueEvolutionDeltaMax, BoundedNumber minimumValue, BoundedNumber maximumValue, double valueMaximumAndMinimumEvolutionDeltaMax, DeltaBoundedNumber valueDelta, bool cloneBoundedNumbers = true) : base(sim, value, originalValueEvolutionDeltaMax, minimumValue, maximumValue, valueMaximumAndMinimumEvolutionDeltaMax, valueDelta, cloneBoundedNumbers)
+        public ReadOnlyEvoNumber(double value, double originalValueEvolutionDeltaMax, BoundedNumber minimumValue, BoundedNumber maximumValue, double valueMaximumAndMinimumEvolutionDeltaMax, DeltaBoundedNumber valueDelta, bool cloneBoundedNumbers = true) : base(value, originalValueEvolutionDeltaMax, minimumValue, maximumValue, valueMaximumAndMinimumEvolutionDeltaMax, valueDelta, cloneBoundedNumbers)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReadOnlyEvoNumber"/> class.
         /// </summary>
-        /// <param name="sim">The sim.</param>
         /// <param name="value">The value.</param>
         /// <param name="originalValueEvolutionDeltaMax">The original value evolution delta maximum.</param>
         /// <param name="minimumValue">The minimum value.</param>
@@ -48,7 +46,7 @@ namespace ALife.Core.Utility.Numerics
         /// <param name="valueDeltaMax">The value delta maximum.</param>
         /// <param name="valueDeltaMaxEvolutionMax">The value delta maximum evolution maximum.</param>
         /// <param name="valueDeltaMaxEvolutionAbsoluteMax">The value delta maximum evolution absolute maximum.</param>
-        public ReadOnlyEvoNumber(Simulation sim, double value, double originalValueEvolutionDeltaMax, double minimumValue, double maximumValue, double absoluteMinimumValue, double absoluteMaximumValue, double valueMaximumAndMinimumEvolutionDeltaMax, double valueDeltaMax, double valueDeltaMaxEvolutionMax, double valueDeltaMaxEvolutionAbsoluteMax) : base(sim, value, originalValueEvolutionDeltaMax, minimumValue, maximumValue, absoluteMinimumValue, absoluteMaximumValue, valueMaximumAndMinimumEvolutionDeltaMax, valueDeltaMax, valueDeltaMaxEvolutionMax, valueDeltaMaxEvolutionAbsoluteMax)
+        public ReadOnlyEvoNumber(double value, double originalValueEvolutionDeltaMax, double minimumValue, double maximumValue, double absoluteMinimumValue, double absoluteMaximumValue, double valueMaximumAndMinimumEvolutionDeltaMax, double valueDeltaMax, double valueDeltaMaxEvolutionMax, double valueDeltaMaxEvolutionAbsoluteMax) : base(value, originalValueEvolutionDeltaMax, minimumValue, maximumValue, absoluteMinimumValue, absoluteMaximumValue, valueMaximumAndMinimumEvolutionDeltaMax, valueDeltaMax, valueDeltaMaxEvolutionMax, valueDeltaMaxEvolutionAbsoluteMax)
         {
         }
 

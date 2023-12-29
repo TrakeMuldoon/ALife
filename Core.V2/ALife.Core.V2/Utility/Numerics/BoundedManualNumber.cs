@@ -7,7 +7,7 @@ namespace ALife.Core.Utility.Numerics
     /// A bounded number that can be clampped.
     /// </summary>
     [DebuggerDisplay("{_minValue} <= {_value} <= {_maxValue} (Manual)")]
-    public class BoundedManualNumber : BaseObject
+    public class BoundedManualNumber
     {
         /// <summary>
         /// The maximum value for the number.
@@ -30,7 +30,7 @@ namespace ALife.Core.Utility.Numerics
         /// <param name="value">The starting value.</param>
         /// <param name="minValue">The minimum value.</param>
         /// <param name="maxValue">The maximum value.</param>
-        public BoundedManualNumber(Simulation sim, double value, double minValue = double.MinValue, double maxValue = double.MaxValue) : base(sim)
+        public BoundedManualNumber(double value, double minValue = double.MinValue, double maxValue = double.MaxValue)
         {
             _value = value;
             _minValue = minValue;
@@ -41,7 +41,7 @@ namespace ALife.Core.Utility.Numerics
         /// Initializes a new instance of the <see cref="BoundedManualNumber"/> class by copying the values from the parent.
         /// </summary>
         /// <param name="parent">The parent.</param>
-        public BoundedManualNumber(BoundedManualNumber parent) : base(parent.Simulation)
+        public BoundedManualNumber(BoundedManualNumber parent)
         {
             MinValue = parent.MinValue;
             MaxValue = parent.MaxValue;

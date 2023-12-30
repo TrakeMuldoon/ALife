@@ -1,27 +1,24 @@
-﻿using System;
+﻿using ALife.Core.Utility.Numerics;
+using System;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
 
-namespace ALife.Core.Utility.Numerics
+namespace ALife.Core.Utility.EvoNumbers
 {
     /// <summary>
-    /// An EvoNumber that where the Value is read-only.
+    /// A number that can be evolved within a range.
     /// </summary>
-    /// <seealso cref="ALife.Core.Utility.Numerics.EvoNumber"/>
-    [DebuggerDisplay("ROEvoNumber: {Value} (Original: {OriginalValue})")]
-    public class ReadOnlyEvoNumber : EvoNumber
+    /// <seealso cref="ALife.Core.BaseObject"/>
+    [DebuggerDisplay("{ToString()}")]
+    public struct ReadOnlyEvoNumber : IEvoNumber
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReadOnlyEvoNumber"/> class.
+        /// The actual value
         /// </summary>
-        /// <param name="parent">The parent.</param>
-        [JsonConstructor]
-        public ReadOnlyEvoNumber(EvoNumber parent) : base(parent)
-        {
-        }
+        private double _value;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReadOnlyEvoNumber"/> class.
+        /// Initializes a new instance of the <see cref="EvoNumber"/> class.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="originalValueEvolutionDeltaMax">The original value evolution delta maximum.</param>
@@ -30,12 +27,21 @@ namespace ALife.Core.Utility.Numerics
         /// <param name="valueMaximumAndMinimumEvolutionDeltaMax">The value maximum and minimum evolution delta maximum.</param>
         /// <param name="valueDelta">The value delta.</param>
         /// <param name="cloneBoundedNumbers">if set to <c>true</c> [clone bounded numbers].</param>
-        public ReadOnlyEvoNumber(double value, double originalValueEvolutionDeltaMax, BoundedNumber minimumValue, BoundedNumber maximumValue, double valueMaximumAndMinimumEvolutionDeltaMax, DeltaBoundedNumber valueDelta, bool cloneBoundedNumbers = true) : base(value, originalValueEvolutionDeltaMax, minimumValue, maximumValue, valueMaximumAndMinimumEvolutionDeltaMax, valueDelta, cloneBoundedNumbers)
+        [JsonConstructor]
+        public ReadOnlyEvoNumber(double value, double originalValueEvolutionDeltaMax, BoundedNumber minimumValue, BoundedNumber maximumValue, double valueMaximumAndMinimumEvolutionDeltaMax, DeltaBoundedNumber valueDelta, bool cloneBoundedNumbers = true)
         {
+            OriginalValue = value;
+            _value = value;
+            OriginalValueEvolutionDeltaMax = originalValueEvolutionDeltaMax;
+
+            ValueDeltaMaximum = cloneBoundedNumbers ? valueDelta.Clone() : valueDelta;
+            ValueMinimum = cloneBoundedNumbers ? minimumValue.Clone() : minimumValue;
+            ValueMaximum = cloneBoundedNumbers ? maximumValue.Clone() : maximumValue;
+            ValueMaximumAndMinimumEvolutionDeltaMax = valueMaximumAndMinimumEvolutionDeltaMax;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReadOnlyEvoNumber"/> class.
+        /// Initializes a new instance of the <see cref="EvoNumber"/> class.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="originalValueEvolutionDeltaMax">The original value evolution delta maximum.</param>
@@ -47,21 +53,63 @@ namespace ALife.Core.Utility.Numerics
         /// <param name="valueDeltaMax">The value delta maximum.</param>
         /// <param name="valueDeltaMaxEvolutionMax">The value delta maximum evolution maximum.</param>
         /// <param name="valueDeltaMaxEvolutionAbsoluteMax">The value delta maximum evolution absolute maximum.</param>
-        public ReadOnlyEvoNumber(double value, double originalValueEvolutionDeltaMax, double minimumValue, double maximumValue, double absoluteMinimumValue, double absoluteMaximumValue, double valueMaximumAndMinimumEvolutionDeltaMax, double valueDeltaMax, double valueDeltaMaxEvolutionMax, double valueDeltaMaxEvolutionAbsoluteMax) : base(value, originalValueEvolutionDeltaMax, minimumValue, maximumValue, absoluteMinimumValue, absoluteMaximumValue, valueMaximumAndMinimumEvolutionDeltaMax, valueDeltaMax, valueDeltaMaxEvolutionMax, valueDeltaMaxEvolutionAbsoluteMax)
+        public ReadOnlyEvoNumber(double value, double originalValueEvolutionDeltaMax, double minimumValue, double maximumValue, double absoluteMinimumValue, double absoluteMaximumValue, double valueMaximumAndMinimumEvolutionDeltaMax, double valueDeltaMax, double valueDeltaMaxEvolutionMax, double valueDeltaMaxEvolutionAbsoluteMax) : this(value, originalValueEvolutionDeltaMax, new BoundedNumber(minimumValue, minValue: absoluteMinimumValue), new BoundedNumber(maximumValue, maxValue: absoluteMaximumValue), valueMaximumAndMinimumEvolutionDeltaMax, new DeltaBoundedNumber(valueDeltaMax, valueDeltaMaxEvolutionMax, 0, valueDeltaMaxEvolutionAbsoluteMax), cloneBoundedNumbers: false)
         {
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EvoNumber"/> class.
+        /// </summary>
+        /// <param name="parent">The parent.</param>
+        public ReadOnlyEvoNumber(ReadOnlyEvoNumber parent) : this(parent.Value, parent.OriginalValueEvolutionDeltaMax, parent.ValueMinimum, parent.ValueMaximum, parent.ValueMaximumAndMinimumEvolutionDeltaMax, parent.ValueDeltaMaximum)
+        {
+        }
+
+        /// <summary>
+        /// Gets the original (start) value.
+        /// </summary>
+        /// <value>The original value.</value>
+        public double OriginalValue { get; }
+
+        /// <summary>
+        /// Gets the original value evolution delta maximum.
+        /// </summary>
+        /// <value>The original value evolution delta maximum.</value>
+        public double OriginalValueEvolutionDeltaMax { get; }
 
         /// <summary>
         /// Gets or sets the value.
         /// </summary>
         /// <value>The value.</value>
-        /// <exception cref="System.InvalidOperationException">Cannot set the value of a ReadOnlyEvoNumber</exception>
         [JsonIgnore]
-        public new double Value
+        public double Value
         {
             get => _value;
             set => throw new InvalidOperationException("Cannot set the value of a ReadOnlyEvoNumber");
         }
+
+        /// <summary>
+        /// Gets the value delta. This is the maximum amount that the Value can change when it is updated.
+        /// </summary>
+        /// <value>The value delta.</value>
+        public DeltaBoundedNumber ValueDeltaMaximum { get; }
+
+        /// <summary>
+        /// The maximum that the value can be.
+        /// </summary>
+        public BoundedNumber ValueMaximum { get; }
+
+        /// <summary>
+        /// Gets or sets the value maximum and minimum evolution delta maximum. This is the maximum amount that the
+        /// ValueMaximum and ValueMinimum can change when they are evolved.
+        /// </summary>
+        /// <value>The value maximum and minimum evolution delta maximum.</value>
+        public double ValueMaximumAndMinimumEvolutionDeltaMax { get; set; }
+
+        /// <summary>
+        /// The minimum that the value can be.
+        /// </summary>
+        public BoundedNumber ValueMinimum { get; }
 
         /// <summary>
         /// Implements the operator !=.
@@ -130,6 +178,16 @@ namespace ALife.Core.Utility.Numerics
         }
 
         /// <summary>
+        /// Clones this instance.
+        /// </summary>
+        /// <returns>The cloned instance.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public IEvoNumber Clone()
+        {
+            return new ReadOnlyEvoNumber(this);
+        }
+
+        /// <summary>
         /// Determines whether the specified <see cref="System.Object"/>, is equal to this instance.
         /// </summary>
         /// <param name="obj">The <see cref="System.Object"/> to compare with this instance.</param>
@@ -142,9 +200,9 @@ namespace ALife.Core.Utility.Numerics
                    OriginalValue == number.OriginalValue &&
                    OriginalValueEvolutionDeltaMax == number.OriginalValueEvolutionDeltaMax &&
                    Value == number.Value &&
-                   ValueDeltaMaximum == number.ValueDeltaMaximum &&
-                   ValueMaximum == number.ValueMaximum &&
-                   ValueMinimum == number.ValueMinimum &&
+                   ValueDeltaMaximum.Equals(number.ValueDeltaMaximum) &&
+                   ValueMaximum.Equals(number.ValueMaximum) &&
+                   ValueMinimum.Equals(number.ValueMinimum) &&
                    ValueMaximumAndMinimumEvolutionDeltaMax == number.ValueMaximumAndMinimumEvolutionDeltaMax;
         }
 
@@ -156,7 +214,7 @@ namespace ALife.Core.Utility.Numerics
         /// </returns>
         public override int GetHashCode()
         {
-            double hash = 18;
+            double hash = 17;
             hash = hash * 23 + OriginalValue.GetHashCode();
             hash = hash * 23 + OriginalValueEvolutionDeltaMax.GetHashCode();
             hash = hash * 23 + Value.GetHashCode();

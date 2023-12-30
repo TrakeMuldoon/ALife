@@ -1,42 +1,20 @@
-﻿using ALife.Core.Utility.Random;
-using System;
+﻿using ALife.Core.Utility.Numerics;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
 
-namespace ALife.Core.Utility.Numerics
+namespace ALife.Core.Utility.EvoNumbers
 {
     /// <summary>
     /// A number that can be evolved within a range.
     /// </summary>
     /// <seealso cref="ALife.Core.BaseObject"/>
-    [DebuggerDisplay("EvoNumber: {Value} (Original: {OriginalValue})")]
-    public struct EvoNumber
+    [DebuggerDisplay("{ToString()}")]
+    public struct EvoNumber : IEvoNumber
     {
         /// <summary>
-        /// The mean for the evolution of a value.
-        /// TODO: Find out why this is 0. And why it is a constant.
+        /// The actual value
         /// </summary>
-        [JsonIgnore]
-        public static double EVOLUTION_MEAN = 0;
-
-        /// <summary>
-        /// The standard deviation for the evolution of a value.
-        /// Devin: This is a magic number to approximate the distribution I like.
-        /// </summary>
-        [JsonIgnore]
-        public static double EVOLUTION_STANDARD_DEVIATION = 0.2;
-
-        /// <summary>
-        /// Gets the value maximum and minimum evolution delta maximum. This is the maximum amount htat hte ValueMaximum
-        /// and ValueMinimum can change when they are evolved.
-        /// </summary>
-        /// <value>The value maximum and minimum evolution delta maximum.</value>
-        public double ValueMaximumAndMinimumEvolutionDeltaMax;
-
-        /// <summary>
-        /// The actual value represented by this object.
-        /// </summary>
-        protected double _value;
+        private double _value;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EvoNumber"/> class.
@@ -121,6 +99,13 @@ namespace ALife.Core.Utility.Numerics
         public BoundedNumber ValueMaximum { get; }
 
         /// <summary>
+        /// Gets or sets the value maximum and minimum evolution delta maximum. This is the maximum amount that the
+        /// ValueMaximum and ValueMinimum can change when they are evolved.
+        /// </summary>
+        /// <value>The value maximum and minimum evolution delta maximum.</value>
+        public double ValueMaximumAndMinimumEvolutionDeltaMax { get; set; }
+
+        /// <summary>
         /// The minimum that the value can be.
         /// </summary>
         public BoundedNumber ValueMinimum { get; }
@@ -195,7 +180,8 @@ namespace ALife.Core.Utility.Numerics
         /// Clones this instance.
         /// </summary>
         /// <returns>The cloned instance.</returns>
-        public EvoNumber Clone()
+        /// <exception cref="System.NotImplementedException"></exception>
+        public IEvoNumber Clone()
         {
             return new EvoNumber(this);
         }
@@ -217,37 +203,6 @@ namespace ALife.Core.Utility.Numerics
                    ValueMaximum.Equals(number.ValueMaximum) &&
                    ValueMinimum.Equals(number.ValueMinimum) &&
                    ValueMaximumAndMinimumEvolutionDeltaMax == number.ValueMaximumAndMinimumEvolutionDeltaMax;
-        }
-
-        /// <summary>
-        /// Creates a cloned instance with evolved values.
-        /// </summary>
-        /// <param name="randomGenerator">The random generator.</param>
-        /// <returns>The evolved instance.</returns>
-        public EvoNumber Evolve(IRandom randomGenerator)
-        {
-            double newOriginalValue = EvolveValue(randomGenerator, OriginalValue, OriginalValueEvolutionDeltaMax, ValueMinimum, ValueMaximum);
-
-            double newMinimumValue = EvolveValue(randomGenerator, ValueMinimum.Value, ValueMaximumAndMinimumEvolutionDeltaMax, ValueMinimum.MinValue, ValueMaximum.MaxValue);
-            BoundedNumber newMinimum = new BoundedNumber(newMinimumValue, minValue: ValueMinimum.MinValue);
-
-            double newMaximumValue = EvolveValue(randomGenerator, ValueMaximum.Value, ValueMaximumAndMinimumEvolutionDeltaMax, ValueMinimum.MinValue, ValueMaximum.MaxValue);
-            BoundedNumber newMaximum = new BoundedNumber(newMaximumValue, maxValue: ValueMaximum.MaxValue);
-
-            double newValueDeltaMaximum = EvolveValue(randomGenerator, ValueDeltaMaximum, ValueDeltaMaximum.DeltaMaximum, 0, ValueDeltaMaximum.DeltaMaximum.MaxValue);
-            DeltaBoundedNumber newValueDelta = new DeltaBoundedNumber(newValueDeltaMaximum, ValueDeltaMaximum.DeltaMaximum, 0, ValueDeltaMaximum.DeltaMaximum.MaxValue);
-
-            return new EvoNumber(newOriginalValue, OriginalValueEvolutionDeltaMax, newMinimum, newMaximum, ValueMaximumAndMinimumEvolutionDeltaMax, newValueDelta);
-        }
-
-        /// <summary>
-        /// Creates a cloned instance with evolved values.
-        /// </summary>
-        /// <param name="sim">The simulation to source the random number generator from.</param>
-        /// <returns>The evolved instance.</returns>
-        public EvoNumber Evolve(Simulation sim)
-        {
-            return Evolve(sim.Random);
         }
 
         /// <summary>
@@ -276,38 +231,6 @@ namespace ALife.Core.Utility.Numerics
         public override string ToString()
         {
             return $"EvoNumber: {Value} (Original: {OriginalValue})";
-        }
-
-        /// <summary>
-        /// Evolves the value.
-        /// </summary>
-        /// <param name="sim">The random number generator.</param>
-        /// <param name="current">The current.</param>
-        /// <param name="deltaMax">The delta maximum.</param>
-        /// <param name="hardMin">The hard minimum.</param>
-        /// <param name="hardMax">The hard maximum.</param>
-        /// <returns>The evolved number.</returns>
-        private double EvolveValue(IRandom rand, double current, double deltaMax, double hardMin, double hardMax)
-        {
-            if(deltaMax == 0)
-            {
-                return current;
-            }
-
-            double u1 = 1.0 - rand.NextDouble(); //uniform(0,1] random doubles
-            double u2 = 1.0 - rand.NextDouble(); //uniform(0,1] random doubles
-            double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1))
-                                   * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
-            double randNormal = EVOLUTION_MEAN + EVOLUTION_STANDARD_DEVIATION * randStdNormal;     //random normal(mean,stdDev^2)
-
-            double delta = randNormal * deltaMax;
-            //double delta = (Simulation.Random.NextDouble() * deltaMax)
-            //               + (Simulation.Random.NextDouble() * deltaMax)
-            //               - deltaMax;
-
-            double moddedValue = current + delta;
-            double clampedValue = ExtraMath.Clamp(moddedValue, hardMin, hardMax);
-            return clampedValue;
         }
     }
 }

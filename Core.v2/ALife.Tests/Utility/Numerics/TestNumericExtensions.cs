@@ -34,25 +34,6 @@ namespace ALife.Tests.Utility.Numerics
         }
 
         /// <summary>
-        /// Tests converting a EvoNumber to a ReadOnlyEvoNumber.
-        /// </summary>
-        [Test]
-        public void TestEvoNumberToReadOnlyEvoNumber()
-        {
-            var number = GetTestEvoNumber();
-
-            Assert.That(number.Value, Is.EqualTo(0));
-            number.Value = 2;
-            Assert.That(number.Value, Is.EqualTo(1));
-
-            var readOnlyNumber = number.ToReadOnlyEvoNumber();
-            Assert.That(readOnlyNumber.Value, Is.EqualTo(1));
-            Assert.Throws<InvalidOperationException>(() => readOnlyNumber.Value = 2);
-            number.Value = 2;
-            Assert.That(number.Value, Is.EqualTo(2));
-        }
-
-        /// <summary>
         /// Tests converting a BoundedManualNumber to a BoundedNumber.
         /// </summary>
         [Test]
@@ -76,42 +57,6 @@ namespace ALife.Tests.Utility.Numerics
             Assert.That(autoNumber.Value, Is.EqualTo(9));
             autoNumber.Value = 15;
             Assert.That(autoNumber.Value, Is.EqualTo(10));
-        }
-
-        /// <summary>
-        /// Tests converting a ReadOnlyEvoNumber to a EvoNumber.
-        /// </summary>
-        [Test]
-        public void TestReadOnlyEvoNumberToEvoNumber()
-        {
-            var number = GetTestReadOnlyEvoNumber();
-
-            Assert.That(number.Value, Is.EqualTo(0));
-            Assert.Throws<InvalidOperationException>(() => number.Value = 2);
-
-            var rwNumber = number.ToEvoNumber();
-            Assert.That(rwNumber.Value, Is.EqualTo(0));
-            rwNumber.Value = 2;
-            Assert.That(rwNumber.Value, Is.EqualTo(1));
-            Assert.Throws<InvalidOperationException>(() => number.Value = 2);
-        }
-
-        /// <summary>
-        /// Gets the test number.
-        /// </summary>
-        /// <returns></returns>
-        private EvoNumber GetTestEvoNumber()
-        {
-            return new EvoNumber(0, 1, 0, 2, -2, 2, 1, 1, 1, 2);
-        }
-
-        /// <summary>
-        /// Gets the test number.
-        /// </summary>
-        /// <returns></returns>
-        private ReadOnlyEvoNumber GetTestReadOnlyEvoNumber()
-        {
-            return new ReadOnlyEvoNumber(0, 1, 0, 2, -2, 2, 1, 1, 1, 2);
         }
     }
 }

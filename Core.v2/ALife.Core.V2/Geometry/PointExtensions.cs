@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace ALife.Core.Utility.Points
+namespace ALife.Core.Geometry
 {
     /// <summary>
     /// Extensions for the Point struct.
@@ -12,9 +12,9 @@ namespace ALife.Core.Utility.Points
         /// </summary>
         /// <param name="p">The p.</param>
         /// <returns>The Vector2</returns>
-        public static Vector2 ToVector2(this Point p)
+        public static Point ToPoint(this Vector2 p)
         {
-            return new Vector2((float)p.X, (float)p.Y);
+            return new Point(p.X, p.Y);
         }
     }
 }

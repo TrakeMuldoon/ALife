@@ -1,7 +1,7 @@
 ﻿using ALife.Core;
-using ALife.Core.Utility.Numerics;
+using ALife.Core.Utility.EvoNumbers;
 
-namespace ALife.Tests.Utility.Numerics
+namespace ALife.Tests.Utility.EvoNumbers
 {
     /// <summary>
     /// Tests for the ReadOnlyEvoNumber class.
@@ -44,9 +44,6 @@ namespace ALife.Tests.Utility.Numerics
             Assert.That(number.Value, Is.EqualTo(0));
             var clone = number.Clone();
             Assert.That(clone.Value, Is.EqualTo(0));
-            clone.Value = 1;
-            Assert.That(number.Value, Is.EqualTo(0));
-            Assert.That(clone.Value, Is.EqualTo(1));
         }
 
         /// <summary>
@@ -58,11 +55,9 @@ namespace ALife.Tests.Utility.Numerics
             var number = GetTestNumber();
 
             Assert.That(number.Value, Is.EqualTo(0));
-            var clone = new EvoNumber(number);
+            var clone = new ReadOnlyEvoNumber(number);
             Assert.That(clone.Value, Is.EqualTo(0));
-            clone.Value = 1;
-            Assert.That(number.Value, Is.EqualTo(0));
-            Assert.That(clone.Value, Is.EqualTo(1));
+            Assert.That(clone, Is.EqualTo(number));
         }
 
         /// <summary>

@@ -1,9 +1,15 @@
-﻿namespace ALife.Core.Utility.Points
+﻿using System;
+using System.Diagnostics;
+using System.Numerics;
+using System.Text.Json.Serialization;
+
+namespace ALife.Core.Geometry
 {
     /// <summary>
     /// Defines a Point in space
     /// </summary>
-    public class Point
+    [DebuggerDisplay("{ToString()}")]
+    public struct Point
     {
         /// <summary>
         /// The x coordinate
@@ -20,6 +26,7 @@
         /// </summary>
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
+        [JsonConstructor]
         public Point(double x, double y)
         {
             X = x;
@@ -35,6 +42,20 @@
             X = Point.X;
             Y = Point.Y;
         }
+
+        /// <summary>
+        /// Gets the x int.
+        /// </summary>
+        /// <value>The x int.</value>
+        [JsonIgnore]
+        public int XInt => (int)Math.Round(X);
+
+        /// <summary>
+        /// Gets the y int.
+        /// </summary>
+        /// <value>The y int.</value>
+        [JsonIgnore]
+        public int YInt => (int)Math.Round(Y);
 
         /// <summary>
         /// Implements the operator op_Inequality.
@@ -105,6 +126,16 @@
         public override string ToString()
         {
             return $"({X}, {Y})";
+        }
+
+        /// <summary>
+        /// Converts a point to a Vector2.
+        /// </summary>
+        /// <param name="p">The p.</param>
+        /// <returns>The Vector2</returns>
+        public Vector2 ToVector2()
+        {
+            return new Vector2((float)X, (float)Y);
         }
     }
 }

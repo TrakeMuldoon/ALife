@@ -1,6 +1,6 @@
-﻿using ALife.Core.Utility.Angles;
+﻿using ALife.Core.Geometry;
 
-namespace ALife.Tests.Utility.Angles
+namespace ALife.Tests.Geometry
 {
     /// <summary>
     /// Tests for the Angle class.

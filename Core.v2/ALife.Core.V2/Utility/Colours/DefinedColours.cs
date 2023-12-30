@@ -5,13 +5,13 @@
     /// </summary>
     public static class DefinedColours
     {
-        public static readonly Colour Black = new Colour(255, 0, 0, 0);
-        public static readonly Colour Blue = new Colour(255, 0, 0, 255);
-        public static readonly Colour Cyan = new Colour(255, 0, 255, 255);
-        public static readonly Colour Green = new Colour(255, 0, 255, 0);
-        public static readonly Colour Magenta = new Colour(255, 255, 0, 255);
-        public static readonly Colour Red = new Colour(255, 255, 0, 0);
-        public static readonly Colour White = new Colour(255, 255, 255, 255);
-        public static readonly Colour Yellow = new Colour(255, 255, 255, 0);
+        public static readonly Colour Black = Colour.PredefineColour(255, 0, 0, 0);
+        public static readonly Colour Blue = Colour.PredefineColour(255, 0, 0, 255);
+        public static readonly Colour Cyan = Colour.PredefineColour(255, 0, 255, 255);
+        public static readonly Colour Green = Colour.PredefineColour(255, 0, 255, 0);
+        public static readonly Colour Magenta = Colour.PredefineColour(255, 255, 0, 255);
+        public static readonly Colour Red = Colour.PredefineColour(255, 255, 0, 0);
+        public static readonly Colour White = Colour.PredefineColour(255, 255, 255, 255);
+        public static readonly Colour Yellow = Colour.PredefineColour(255, 255, 255, 0);
     }
 }

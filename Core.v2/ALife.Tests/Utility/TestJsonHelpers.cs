@@ -1,4 +1,4 @@
-﻿using ALife.Core.Utility.Json;
+﻿using ALife.Core.Utility;
 
 namespace ALife.Tests.Utility
 {

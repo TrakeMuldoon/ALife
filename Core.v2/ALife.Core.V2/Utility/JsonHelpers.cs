@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace ALife.Core.Utility.Json
+namespace ALife.Core.Utility
 {
     /// <summary>
     /// Helpers for dealing with JSON objects

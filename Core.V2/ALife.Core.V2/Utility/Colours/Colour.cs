@@ -20,13 +20,13 @@ namespace ALife.Core.Utility.Colours
         /// <param name="red">The red.</param>
         /// <param name="green">The green.</param>
         /// <param name="blue">The blue.</param>
-        [JsonConstructor]
         public Colour(byte alpha, byte red, byte green, byte blue)
         {
             Alpha = alpha;
             Red = red;
             Green = green;
             Blue = blue;
+            PreDefined = false;
         }
 
         /// <summary>
@@ -79,6 +79,20 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Colour"/> struct.
+        /// </summary>
+        /// <param name="alpha">The alpha.</param>
+        /// <param name="red">The red.</param>
+        /// <param name="green">The green.</param>
+        /// <param name="blue">The blue.</param>
+        /// <param name="preDefined">if set to <c>true</c> [pre defined].</param>
+        [JsonConstructor]
+        private Colour(byte alpha, byte red, byte green, byte blue, bool preDefined) : this(alpha, red, green, blue)
+        {
+            PreDefined = preDefined;
+        }
+
+        /// <summary>
         /// Gets or sets the alpha channel.
         /// </summary>
         /// <value>The alpha.</value>
@@ -95,6 +109,12 @@ namespace ALife.Core.Utility.Colours
         /// </summary>
         /// <value>The green.</value>
         public byte Green { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the colour was a [pre defined] colour.
+        /// </summary>
+        /// <value><c>true</c> if [pre defined]; otherwise, <c>false</c>.</value>
+        public bool PreDefined { get; private set; }
 
         /// <summary>
         /// Gets or sets the red channel.
@@ -533,6 +553,19 @@ namespace ALife.Core.Utility.Colours
         public override string ToString()
         {
             return $"r{Red}, g{Green}, b{Blue}, a{Alpha}";
+        }
+
+        /// <summary>
+        /// Generates a colour as a pre-defined colour.
+        /// </summary>
+        /// <param name="alpha">The alpha.</param>
+        /// <param name="red">The red.</param>
+        /// <param name="green">The green.</param>
+        /// <param name="blue">The blue.</param>
+        /// <returns></returns>
+        internal static Colour PredefineColour(byte alpha, byte red, byte green, byte blue)
+        {
+            return new Colour(alpha, red, green, blue, true);
         }
 
         /// <summary>

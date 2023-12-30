@@ -44,9 +44,9 @@ namespace ALife.Core.Utility.Numerics
         /// <param name="parent">The parent.</param>
         public BoundedManualNumber(BoundedManualNumber parent)
         {
-            MinValue = parent.MinValue;
-            MaxValue = parent.MaxValue;
-            Value = parent.Value;
+            _value = parent.Value;
+            _minValue = parent.MinValue;
+            _maxValue = parent.MaxValue;
         }
 
         /// <summary>

@@ -1,7 +1,7 @@
-﻿using System.Drawing;
-using ALife.Core;
+﻿using ALife.Core;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.Ranges;
+using System.Drawing;
 
 namespace ALife.Tests.Utility.Colours
 {
@@ -38,12 +38,10 @@ namespace ALife.Tests.Utility.Colours
 
             var colorB = new Colour(colorA);
             Assert.That(colorB, Is.EqualTo(colorA));
-            colorA.Red = 255;
-            Assert.That(colorB, Is.Not.EqualTo(colorA));
 
             Color systemColor = colorA.ToSystemColor();
             Assert.That(systemColor.A, Is.EqualTo(255));
-            Assert.That(systemColor.R, Is.EqualTo(255));
+            Assert.That(systemColor.R, Is.EqualTo(0));
             Assert.That(systemColor.G, Is.EqualTo(0));
             Assert.That(systemColor.B, Is.EqualTo(0));
         }

@@ -1,15 +1,26 @@
-﻿using ALife.Core.Utility.Numerics;
-using System;
+﻿/* Unmerged change from project 'ALife.Core.V2 (netstandard2.0)'
+Before:
+using ALife.Core.Utility.Numerics;
+After:
+using ALife;
+using ALife.Core;
+using ALife.Core.Geometry;
+using ALife.Core.Geometry;
+using ALife.Core.Geometry.Angles;
+using ALife.Core.Utility.Numerics;
+*/
+
+using ALife.Core.Utility.Numerics;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 
-namespace ALife.Core.Utility.Angles
+namespace ALife.Core.Geometry
 {
     /// <summary>
     /// Defines an angle in degrees or radians.
     /// </summary>
-    [DebuggerDisplay("Deg:{Degrees}, Rads:{Radians}")]
+    [DebuggerDisplay("{ToString()}")]
     public struct Angle
     {
         /// <summary>
@@ -30,8 +41,8 @@ namespace ALife.Core.Utility.Angles
         [JsonConstructor]
         public Angle(double degrees)
         {
-            _degrees = new CircularBoundedNumber(degrees, 0, 360);
-            _radians = new CircularBoundedNumber(degrees * Math.PI / 180.00, 0, 2 * Math.PI);
+            _degrees = new CircularBoundedNumber(degrees, GeometryMath.MinDegrees, GeometryMath.MaxDegrees);
+            _radians = new CircularBoundedNumber(degrees * GeometryMath.Pi / GeometryMath.HalfDegrees, GeometryMath.ZeroPi, GeometryMath.TwoPi);
         }
 
         /// <summary>
@@ -58,6 +69,20 @@ namespace ALife.Core.Utility.Angles
                 _radians.Value = DegreesToRadians(_degrees);
             }
         }
+
+        /// <summary>
+        /// Gets the inverse degrees.
+        /// </summary>
+        /// <value>The inverse degrees.</value>
+        [JsonIgnore]
+        public double InverseDegrees => -(GeometryMath.MaxDegrees - Degrees);
+
+        /// <summary>
+        /// Gets the inverse radians.
+        /// </summary>
+        /// <value>The inverse radians.</value>
+        [JsonIgnore]
+        public double InverseRadians => -(GeometryMath.TwoPi - Radians);
 
         /// <summary>
         /// Gets or sets the radians.
@@ -91,14 +116,13 @@ namespace ALife.Core.Utility.Angles
         /// <returns>A new angle.</returns>
         public static Angle FromRadians(double radians)
         {
-            double TwoPi = Math.PI * 2;
-            while(radians < 0)
+            while(radians < GeometryMath.ZeroPi)
             {
-                radians += TwoPi;
+                radians += GeometryMath.TwoPi;
             }
-            while(radians > 360)
+            while(radians > GeometryMath.TwoPi)
             {
-                radians -= TwoPi;
+                radians -= GeometryMath.TwoPi;
             }
             double degrees = RadiansToDegrees(radians);
             return new Angle(degrees);
@@ -312,12 +336,10 @@ namespace ALife.Core.Utility.Angles
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="System.Object"/>, is equal to this instance.
+        /// Determines whether the specified <see cref="object"/>, is equal to this instance.
         /// </summary>
-        /// <param name="obj">The <see cref="System.Object"/> to compare with this instance.</param>
-        /// <returns>
-        /// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise, <c>false</c>.
-        /// </returns>
+        /// <param name="obj">The <see cref="object"/> to compare with this instance.</param>
+        /// <returns><c>true</c> if the specified <see cref="object"/> is equal to this instance; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
             return obj is Angle angle &&
@@ -338,7 +360,7 @@ namespace ALife.Core.Utility.Angles
         /// <summary>
         /// Converts to string.
         /// </summary>
-        /// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+        /// <returns>A <see cref="string"/> that represents this instance.</returns>
         public override string ToString()
         {
             return $"Deg:{Degrees}, Rads:{Radians}";
@@ -352,7 +374,7 @@ namespace ALife.Core.Utility.Angles
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static double DegreesToRadians(double degrees)
         {
-            return degrees * Math.PI / 180.00;
+            return degrees * GeometryMath.Pi / GeometryMath.HalfDegrees;
         }
 
         /// <summary>
@@ -363,7 +385,7 @@ namespace ALife.Core.Utility.Angles
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static double RadiansToDegrees(double radians)
         {
-            return radians * 180.00 / Math.PI;
+            return radians * GeometryMath.HalfDegrees / GeometryMath.Pi;
         }
     }
 }

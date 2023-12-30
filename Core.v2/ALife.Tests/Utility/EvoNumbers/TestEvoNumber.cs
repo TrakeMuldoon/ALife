@@ -1,7 +1,7 @@
 ﻿using ALife.Core;
-using ALife.Core.Utility.Numerics;
+using ALife.Core.Utility.EvoNumbers;
 
-namespace ALife.Tests.Utility.Numerics
+namespace ALife.Tests.Utility.EvoNumbers
 {
     /// <summary>
     /// Tests for the EvoNumber class.

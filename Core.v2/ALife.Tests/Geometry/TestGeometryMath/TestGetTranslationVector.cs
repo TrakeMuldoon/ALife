@@ -7,6 +7,9 @@ namespace ALife.Tests.Geometry.TestGeometryMath
     /// </summary>
     internal class TestGetTranslationVector
     {
+        /// <summary>
+        /// Tests the GetTranslationVector method with an angle and distance.
+        /// </summary>
         [Test]
         public void TestWithAngleAndDistance()
         {
@@ -22,6 +25,9 @@ namespace ALife.Tests.Geometry.TestGeometryMath
             Assert.That(actualY, Is.EqualTo(expectedY));
         }
 
+        /// <summary>
+        /// Tests the GetTranslationVector method with radians and distance.
+        /// </summary>
         [Test]
         public void TestWithRadiansAndDistance()
         {

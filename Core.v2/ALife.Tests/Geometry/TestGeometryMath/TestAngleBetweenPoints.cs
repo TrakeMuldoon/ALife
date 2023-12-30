@@ -7,6 +7,9 @@ namespace ALife.Tests.Geometry.TestGeometryMath
     /// </summary>
     internal class TestAngleBetweenPoints
     {
+        /// <summary>
+        /// Tests the AngleBetweenPoints method.
+        /// </summary>
         [Test]
         public void Test1()
         {
@@ -17,6 +20,9 @@ namespace ALife.Tests.Geometry.TestGeometryMath
             Assert.That(result.InverseDegrees, Is.EqualTo(-315d)); // -315 degrees
         }
 
+        /// <summary>
+        /// Tests the AngleBetweenPoints method.
+        /// </summary>
         [Test]
         public void Test2()
         {

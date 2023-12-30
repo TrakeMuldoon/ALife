@@ -7,6 +7,9 @@ namespace ALife.Tests.Geometry.TestGeometryMath
     /// </summary>
     internal class TestRadiansBetweenPoints
     {
+        /// <summary>
+        /// Tests the RadiansBetweenPoints method.
+        /// </summary>
         [Test]
         public void Test1()
         {
@@ -16,6 +19,9 @@ namespace ALife.Tests.Geometry.TestGeometryMath
             Assert.That(result, Is.EqualTo(Math.PI / 4)); // 45 degrees
         }
 
+        /// <summary>
+        /// Tests the RadiansBetweenPoints method.
+        /// </summary>
         [Test]
         public void Test2()
         {

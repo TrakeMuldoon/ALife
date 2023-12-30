@@ -8,6 +8,9 @@ namespace ALife.Tests.Geometry.TestGeometryMath
     /// </summary>
     internal class TestTranslateByVector
     {
+        /// <summary>
+        /// Tests the TranslateByVector method with an angle and distance.
+        /// </summary>
         [Test]
         public void TestWithAngleAndDistance()
         {
@@ -23,6 +26,9 @@ namespace ALife.Tests.Geometry.TestGeometryMath
             Assert.That(actualY, Is.EqualTo(expected.Y));
         }
 
+        /// <summary>
+        /// Tests the TranslateByVector method with radians and distance.
+        /// </summary>
         [Test]
         public void TestWithRadiansAndDistance()
         {
@@ -37,6 +43,9 @@ namespace ALife.Tests.Geometry.TestGeometryMath
             Assert.That(actualY, Is.EqualTo(expected.Y));
         }
 
+        /// <summary>
+        /// Tests the TranslateByVector method with a Vector2.
+        /// </summary>
         [Test]
         public void TestWithVector2()
         {

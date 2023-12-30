@@ -7,6 +7,9 @@ namespace ALife.Tests.Geometry.TestGeometryMath
     /// </summary>
     internal class TestDistance
     {
+        /// <summary>
+        /// Tests the Distance method.
+        /// </summary>
         [Test]
         public void Test1()
         {
@@ -16,6 +19,9 @@ namespace ALife.Tests.Geometry.TestGeometryMath
             Assert.That(result, Is.EqualTo(Math.Sqrt(2)));
         }
 
+        /// <summary>
+        /// Tests the Distance method.
+        /// </summary>
         [Test]
         public void Test2()
         {

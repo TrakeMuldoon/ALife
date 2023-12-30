@@ -86,13 +86,13 @@ namespace ALife.Core.Scenarios.TestScenarios
 
         public virtual void PlanetSetup()
         {
-            Zone nullZone = new Zone("Null", "random", System.Drawing.Color.Black, new Geometry.Shapes.Point(0, 0), 1000, 1000);
+            Zone nullZone = new Zone("Null", "random", Color.Black, new Geometry.Shapes.Point(0, 0), 1000, 1000);
             Planet.World.AddZone(nullZone);
 
             int numAgents = 50;
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", nullZone, null, System.Drawing.Color.Blue, 0);
+                Agent rag = AgentFactory.CreateAgent("Agent", nullZone, null, Color.Blue, 0);
             }
         }
 

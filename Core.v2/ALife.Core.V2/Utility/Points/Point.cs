@@ -1,9 +1,9 @@
 ﻿namespace ALife.Core.Utility.Points
 {
     /// <summary>
-    /// Defines a Geometry.Shapes.Point in space
+    /// Defines a Point in space
     /// </summary>
-    public struct Point
+    public class Point
     {
         /// <summary>
         /// The x coordinate
@@ -44,7 +44,7 @@
         /// <returns>The result of the operator.</returns>
         public static bool operator !=(Point left, Point right)
         {
-            return !(left == right);
+            return !left.Equals(right);
         }
 
         /// <summary>
@@ -56,6 +56,15 @@
         public static bool operator ==(Point left, Point right)
         {
             return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Clones this instance.
+        /// </summary>
+        /// <returns>The cloned instance.</returns>
+        public Point Clone()
+        {
+            return new Point(X, Y);
         }
 
         /// <summary>

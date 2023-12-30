@@ -21,7 +21,7 @@ namespace ALife.Core.Utility
             {
                 value += adder;
             }
-            while(value > max)
+            while(value >= max)
             {
                 value -= adder;
             }
@@ -42,7 +42,7 @@ namespace ALife.Core.Utility
             {
                 value += adder;
             }
-            while(value > adder)
+            while(value >= adder)
             {
                 value -= max;
             }

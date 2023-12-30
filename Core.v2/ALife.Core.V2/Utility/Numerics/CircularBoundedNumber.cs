@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 namespace ALife.Core.Utility.Numerics
 {
@@ -6,7 +7,7 @@ namespace ALife.Core.Utility.Numerics
     /// A bounded number that wraps around when it reaches the minimum or maximum.
     /// </summary>
     [DebuggerDisplay("Value: {Value}, Minimum: {Minimum}, Maximum: {Maximum}")]
-    public class CircularBoundedNumber
+    public struct CircularBoundedNumber
     {
         /// <summary>
         /// The maximum
@@ -29,6 +30,7 @@ namespace ALife.Core.Utility.Numerics
         /// <param name="value">The value.</param>
         /// <param name="minimum">The minimum.</param>
         /// <param name="maximum">The maximum.</param>
+        [JsonConstructor]
         public CircularBoundedNumber(double value, double minimum, double maximum)
         {
             _value = value;
@@ -36,6 +38,10 @@ namespace ALife.Core.Utility.Numerics
             _maximum = maximum;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CircularBoundedNumber"/> class.
+        /// </summary>
+        /// <param name="parent">The parent.</param>
         public CircularBoundedNumber(CircularBoundedNumber parent)
         {
             _value = parent.Value;
@@ -47,6 +53,7 @@ namespace ALife.Core.Utility.Numerics
         /// Gets or sets the maximum.
         /// </summary>
         /// <value>The maximum.</value>
+        [JsonIgnore]
         public double Maximum
         {
             get => _maximum;
@@ -61,6 +68,7 @@ namespace ALife.Core.Utility.Numerics
         /// Gets or sets the minimum.
         /// </summary>
         /// <value>The minimum.</value>
+        [JsonIgnore]
         public double Minimum
         {
             get => _minimum;
@@ -75,6 +83,7 @@ namespace ALife.Core.Utility.Numerics
         /// Gets or sets the value.
         /// </summary>
         /// <value>The value.</value>
+        [JsonIgnore]
         public double Value
         {
             get => _value;

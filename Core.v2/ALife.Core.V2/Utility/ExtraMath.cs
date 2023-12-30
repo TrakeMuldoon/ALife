@@ -12,20 +12,25 @@ namespace ALife.Core.Utility
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="min">The minimum.</param>
-        /// <param name="max">The maximum.</param>
+        /// <param name="max">The maximum. Non-inclusive.</param>
         /// <returns>The clamped value.</returns>
         public static double CircularClamp(double value, double min, double max)
         {
             double adder = max - min;
-            while(value < min)
+            double actualValue = value;
+            while(actualValue < min)
             {
-                value += adder;
+                actualValue += adder;
             }
-            while(value >= max)
+            while(actualValue > max)
             {
-                value -= adder;
+                actualValue -= adder;
             }
-            return value;
+            if (actualValue == max)
+            {
+                return min;
+            }
+            return actualValue;
         }
 
         /// <summary>
@@ -33,20 +38,25 @@ namespace ALife.Core.Utility
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="min">The minimum.</param>
-        /// <param name="max">The maximum.</param>
+        /// <param name="max">The maximum. Non-inclusive.</param>
         /// <returns>The clamped value.</returns>
         public static int CircularClamp(int value, int min, int max)
         {
             int adder = max - min;
-            while(value < min)
+            int actualValue = value;
+            while(actualValue < min)
             {
-                value += adder;
+                actualValue += adder;
             }
-            while(value >= adder)
+            while(actualValue > adder)
             {
-                value -= max;
+                actualValue -= adder;
             }
-            return value;
+            if(actualValue == max)
+            {
+                return min;
+            }
+            return actualValue;
         }
 
         /// <summary>

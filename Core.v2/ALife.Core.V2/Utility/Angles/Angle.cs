@@ -10,7 +10,7 @@ namespace ALife.Core.Utility.Angles
     /// Defines an angle in degrees or radians.
     /// </summary>
     [DebuggerDisplay("Deg:{Degrees}, Rads:{Radians}")]
-    public class Angle
+    public struct Angle
     {
         /// <summary>
         /// The degrees
@@ -20,12 +20,14 @@ namespace ALife.Core.Utility.Angles
         /// <summary>
         /// The radians
         /// </summary>
+        [JsonIgnore]
         private CircularBoundedNumber _radians;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Angle"/> class.
         /// </summary>
         /// <param name="degrees">The degrees.</param>
+        [JsonConstructor]
         public Angle(double degrees)
         {
             _degrees = new CircularBoundedNumber(degrees, 0, 360);

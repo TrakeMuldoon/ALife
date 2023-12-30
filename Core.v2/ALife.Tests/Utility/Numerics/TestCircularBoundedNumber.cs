@@ -18,8 +18,12 @@ namespace ALife.Tests.Utility.Numerics
             Assert.That(number.Value, Is.EqualTo(0));
             number.Value = -1;
             Assert.That(number.Value, Is.EqualTo(359));
-            number.Value = -361;
+
+            number.Value -= 1;
             Assert.That(number.Value, Is.EqualTo(358));
+
+            number.Value = -359;
+            Assert.That(number.Value, Is.EqualTo(1));
         }
 
         /// <summary>

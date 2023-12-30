@@ -15,6 +15,7 @@ namespace ALife.Core.Utility.Numerics
         /// Initializes a new instance of the <see cref="ReadOnlyEvoNumber"/> class.
         /// </summary>
         /// <param name="parent">The parent.</param>
+        [JsonConstructor]
         public ReadOnlyEvoNumber(EvoNumber parent) : base(parent)
         {
         }

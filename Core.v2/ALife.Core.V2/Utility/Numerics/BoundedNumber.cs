@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 namespace ALife.Core.Utility.Numerics
 {
@@ -6,7 +7,7 @@ namespace ALife.Core.Utility.Numerics
     /// A bounded auto-clamping number.
     /// </summary>
     [DebuggerDisplay("{_minValue} <= {_value} <= {_maxValue}")]
-    public class BoundedNumber
+    public struct BoundedNumber
     {
         /// <summary>
         /// The maximum value for the number.
@@ -29,6 +30,7 @@ namespace ALife.Core.Utility.Numerics
         /// <param name="value">The starting value.</param>
         /// <param name="minValue">The minimum value.</param>
         /// <param name="maxValue">The maximum value.</param>
+        [JsonConstructor]
         public BoundedNumber(double value, double minValue = double.MinValue, double maxValue = double.MaxValue)
         {
             _value = ExtraMath.Clamp(value, minValue, maxValue);
@@ -50,6 +52,7 @@ namespace ALife.Core.Utility.Numerics
         /// <summary>
         /// Gets or sets the maximum value for the number.
         /// </summary>
+        [JsonIgnore]
         public double MaxValue
         {
             get => _maxValue;
@@ -63,6 +66,7 @@ namespace ALife.Core.Utility.Numerics
         /// <summary>
         /// Gets or sets the minimum value for the number.
         /// </summary>
+        [JsonIgnore]
         public double MinValue
         {
             get => _minValue;
@@ -76,6 +80,7 @@ namespace ALife.Core.Utility.Numerics
         /// <summary>
         /// Gets or sets the value for the number.
         /// </summary>
+        [JsonIgnore]
         public double Value
         {
             get => _value;

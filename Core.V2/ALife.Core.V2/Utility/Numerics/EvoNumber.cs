@@ -10,7 +10,7 @@ namespace ALife.Core.Utility.Numerics
     /// </summary>
     /// <seealso cref="ALife.Core.BaseObject"/>
     [DebuggerDisplay("EvoNumber: {Value} (Original: {OriginalValue})")]
-    public class EvoNumber
+    public struct EvoNumber
     {
         /// <summary>
         /// The mean for the evolution of a value.
@@ -48,6 +48,7 @@ namespace ALife.Core.Utility.Numerics
         /// <param name="valueMaximumAndMinimumEvolutionDeltaMax">The value maximum and minimum evolution delta maximum.</param>
         /// <param name="valueDelta">The value delta.</param>
         /// <param name="cloneBoundedNumbers">if set to <c>true</c> [clone bounded numbers].</param>
+        [JsonConstructor]
         public EvoNumber(double value, double originalValueEvolutionDeltaMax, BoundedNumber minimumValue, BoundedNumber maximumValue, double valueMaximumAndMinimumEvolutionDeltaMax, DeltaBoundedNumber valueDelta, bool cloneBoundedNumbers = true)
         {
             OriginalValue = value;

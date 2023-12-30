@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 namespace ALife.Core.Utility.Numerics
 {
@@ -6,7 +7,7 @@ namespace ALife.Core.Utility.Numerics
     /// A bounded auto-clamping number that can only change by a certain amount.
     /// </summary>
     [DebuggerDisplay("Value = {Value}, DeltaMaximum = {DeltaMaximum}")]
-    public class DeltaBoundedNumber
+    public struct DeltaBoundedNumber
     {
         /// <summary>
         /// The delta maximum
@@ -25,6 +26,7 @@ namespace ALife.Core.Utility.Numerics
         /// <param name="deltaMaxValue">The delta maximum value.</param>
         /// <param name="deltaAbsoluteMinValue">The delta absolute minimum value.</param>
         /// <param name="deltaAbsoluteMaxValue">The delta absolute maximum value.</param>
+        [JsonConstructor]
         public DeltaBoundedNumber(double value, double deltaMaxValue, double deltaAbsoluteMinValue, double deltaAbsoluteMaxValue)
         {
             _value = value;
@@ -45,6 +47,7 @@ namespace ALife.Core.Utility.Numerics
         /// Gets or sets the value.
         /// </summary>
         /// <value>The value.</value>
+        [JsonIgnore]
         public double Value
         {
             get => _value;

@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace ALife.Core.Utility.Colours
 {
@@ -10,7 +11,7 @@ namespace ALife.Core.Utility.Colours
     /// </summary>
     /// <seealso cref="ALife.Core.BaseObject"/>
     [DebuggerDisplay("r{Red}, g{Green}, b{Blue}, a{Alpha}")]
-    public class Colour
+    public struct Colour
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Colour"/> class.
@@ -19,6 +20,7 @@ namespace ALife.Core.Utility.Colours
         /// <param name="red">The red.</param>
         /// <param name="green">The green.</param>
         /// <param name="blue">The blue.</param>
+        [JsonConstructor]
         public Colour(byte alpha, byte red, byte green, byte blue)
         {
             Alpha = alpha;
@@ -80,25 +82,25 @@ namespace ALife.Core.Utility.Colours
         /// Gets or sets the alpha channel.
         /// </summary>
         /// <value>The alpha.</value>
-        public byte Alpha { get; set; }
+        public byte Alpha { get; }
 
         /// <summary>
         /// Gets or sets the blue channel.
         /// </summary>
         /// <value>The blue.</value>
-        public byte Blue { get; set; }
+        public byte Blue { get; }
 
         /// <summary>
         /// Gets or sets the green channel.
         /// </summary>
         /// <value>The green.</value>
-        public byte Green { get; set; }
+        public byte Green { get; }
 
         /// <summary>
         /// Gets or sets the red channel.
         /// </summary>
         /// <value>The red.</value>
-        public byte Red { get; set; }
+        public byte Red { get; }
 
         /// <summary>
         /// Generates a number from the specified AHSL values.

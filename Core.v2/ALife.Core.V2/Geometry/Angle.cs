@@ -1,16 +1,4 @@
-﻿/* Unmerged change from project 'ALife.Core.V2 (netstandard2.0)'
-Before:
-using ALife.Core.Utility.Numerics;
-After:
-using ALife;
-using ALife.Core;
-using ALife.Core.Geometry;
-using ALife.Core.Geometry;
-using ALife.Core.Geometry.Angles;
-using ALife.Core.Utility.Numerics;
-*/
-
-using ALife.Core.Utility.Numerics;
+﻿using ALife.Core.Utility.Numerics;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
@@ -23,6 +11,11 @@ namespace ALife.Core.Geometry
     [DebuggerDisplay("{ToString()}")]
     public struct Angle
     {
+        /// <summary>
+        /// An angle representing zero degrees.
+        /// </summary>
+        public static readonly Angle Zero = new Angle(0d);
+
         /// <summary>
         /// The degrees
         /// </summary>
@@ -41,8 +34,8 @@ namespace ALife.Core.Geometry
         [JsonConstructor]
         public Angle(double degrees)
         {
-            _degrees = new CircularBoundedNumber(degrees, GeometryMath.MinDegrees, GeometryMath.MaxDegrees);
-            _radians = new CircularBoundedNumber(degrees * GeometryMath.Pi / GeometryMath.HalfDegrees, GeometryMath.ZeroPi, GeometryMath.TwoPi);
+            _degrees = new CircularBoundedNumber(degrees, GeometryConstants.MinDegrees, GeometryConstants.MaxDegrees);
+            _radians = new CircularBoundedNumber(degrees * GeometryConstants.Pi / GeometryConstants.HalfDegrees, GeometryConstants.ZeroPi, GeometryConstants.TwoPi);
         }
 
         /// <summary>
@@ -75,14 +68,14 @@ namespace ALife.Core.Geometry
         /// </summary>
         /// <value>The inverse degrees.</value>
         [JsonIgnore]
-        public double InverseDegrees => -(GeometryMath.MaxDegrees - Degrees);
+        public double InverseDegrees => -(GeometryConstants.MaxDegrees - Degrees);
 
         /// <summary>
         /// Gets the inverse radians.
         /// </summary>
         /// <value>The inverse radians.</value>
         [JsonIgnore]
-        public double InverseRadians => -(GeometryMath.TwoPi - Radians);
+        public double InverseRadians => -(GeometryConstants.TwoPi - Radians);
 
         /// <summary>
         /// Gets or sets the radians.
@@ -116,13 +109,13 @@ namespace ALife.Core.Geometry
         /// <returns>A new angle.</returns>
         public static Angle FromRadians(double radians)
         {
-            while(radians < GeometryMath.ZeroPi)
+            while(radians < GeometryConstants.ZeroPi)
             {
-                radians += GeometryMath.TwoPi;
+                radians += GeometryConstants.TwoPi;
             }
-            while(radians > GeometryMath.TwoPi)
+            while(radians > GeometryConstants.TwoPi)
             {
-                radians -= GeometryMath.TwoPi;
+                radians -= GeometryConstants.TwoPi;
             }
             double degrees = RadiansToDegrees(radians);
             return new Angle(degrees);
@@ -374,7 +367,7 @@ namespace ALife.Core.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static double DegreesToRadians(double degrees)
         {
-            return degrees * GeometryMath.Pi / GeometryMath.HalfDegrees;
+            return degrees * GeometryConstants.Pi / GeometryConstants.HalfDegrees;
         }
 
         /// <summary>
@@ -385,7 +378,7 @@ namespace ALife.Core.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static double RadiansToDegrees(double radians)
         {
-            return radians * GeometryMath.HalfDegrees / GeometryMath.Pi;
+            return radians * GeometryConstants.HalfDegrees / GeometryConstants.Pi;
         }
     }
 }

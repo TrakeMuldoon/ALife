@@ -15,7 +15,7 @@ namespace ALife.Tests.Geometry.TestGeometryMath
         public void TestWithAngleAndDistance()
         {
             var source = new Point(0, 0);
-            var angle = Angle.FromRadians(GeometryMath.QuarterPi);
+            var angle = Angle.FromRadians(GeometryConstants.QuarterPi);
             var result = GeometryMath.TranslateByVector(source, angle, 1d);
 
             var expected = new Point(0.71, 0.71);
@@ -33,7 +33,7 @@ namespace ALife.Tests.Geometry.TestGeometryMath
         public void TestWithRadiansAndDistance()
         {
             var source = new Point(0, 0);
-            var result = GeometryMath.TranslateByVector(source, GeometryMath.QuarterPi, 1d);
+            var result = GeometryMath.TranslateByVector(source, GeometryConstants.QuarterPi, 1d);
 
             var expected = new Point(0.71, 0.71);
             var actualX = Math.Round(result.X, 2);

@@ -13,7 +13,7 @@ namespace ALife.Tests.Geometry.TestGeometryMath
         [Test]
         public void TestWithAngleAndDistance()
         {
-            var angle = Angle.FromRadians(GeometryMath.QuarterPi);
+            var angle = Angle.FromRadians(GeometryConstants.QuarterPi);
             var result = GeometryMath.GetTranslationVector(angle, 1d);
 
             var expectedX = Math.Round(0.71f, 2);
@@ -31,7 +31,7 @@ namespace ALife.Tests.Geometry.TestGeometryMath
         [Test]
         public void TestWithRadiansAndDistance()
         {
-            var result = GeometryMath.GetTranslationVector(GeometryMath.QuarterPi, 1d);
+            var result = GeometryMath.GetTranslationVector(GeometryConstants.QuarterPi, 1d);
 
             var expectedX = Math.Round(0.71f, 2);
             var expectedY = Math.Round(0.71f, 2);

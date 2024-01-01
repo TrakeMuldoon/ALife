@@ -166,7 +166,8 @@ namespace ALife.Avalonia.Views
         /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         public void Zoom_InButton_Click(object sender, RoutedEventArgs args)
         {
-            Zoom_Slider.Value += 100;
+            //Zoom_Slider.Value += 100;
+            
         }
 
         /// <summary>
@@ -176,7 +177,7 @@ namespace ALife.Avalonia.Views
         /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         public void Zoom_OutButton_Click(object sender, RoutedEventArgs args)
         {
-            Zoom_Slider.Value -= 100;
+            //Zoom_Slider.Value -= 100;
         }
 
         protected virtual void Dispose(bool disposing)

@@ -164,29 +164,33 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
         /// <returns></returns>
         public override void Render(DrawingContext drawingContext)
         {
-            if(_simulation.IsInitialized)
+            if(!_simulation.IsInitialized)
             {
-                _renderer.SetContext(drawingContext);
-                Planet p = Planet.World;
-                _renderer.FillAARectangle(new ALPoint(0, 0), new ALPoint(p.WorldHeight, p.WorldWidth), System.Drawing.Color.PapayaWhip);
-                _simulation.Render(_renderer);
-                // TODO: for _whatever_ reason, this updates the FPS item, but _not_ the textblock...
-                _vm.FramesPerSecond = _simulation.FpsCounter.AverageFramesPerTicks;
-
-                Pen pen = new(Brushes.Green, 1, lineCap: PenLineCap.Square);
-                Pen boundPen = new(Brushes.Black);
-
-                Point shapePont = new(150 + movement, 150 + movement);
-                Rect r = new(shapePont.X, shapePont.Y, 12, 20);
-                drawingContext.DrawRectangle(boundPen, r);
-                drawingContext.DrawEllipse(Brushes.Aqua, pen, shapePont, 5, 5);
-
-                movement += 1;
-                if(movement >= 300)
-                {
-                    movement = 0;
-                }
+                base.Render(drawingContext);
+                return;
             }
+
+            _renderer.SetContext(drawingContext);
+            Planet p = Planet.World;
+            _renderer.FillAARectangle(new ALPoint(0, 0), new ALPoint(p.WorldHeight, p.WorldWidth), System.Drawing.Color.PapayaWhip);
+            _simulation.Render(_renderer);
+            // TODO: for _whatever_ reason, this updates the FPS item, but _not_ the textblock...
+            _vm.FramesPerSecond = _simulation.FpsCounter.AverageFramesPerTicks;
+
+            Pen pen = new(Brushes.Green, 1, lineCap: PenLineCap.Square);
+            Pen boundPen = new(Brushes.Black);
+
+            Point shapePont = new(150 + movement, 150 + movement);
+            Rect r = new(shapePont.X, shapePont.Y, 12, 20);
+            drawingContext.DrawRectangle(boundPen, r);
+            drawingContext.DrawEllipse(Brushes.Aqua, pen, shapePont, 5, 5);
+
+            movement += 1;
+            if(movement >= 300)
+            {
+                movement = 0;
+            }
+
             base.Render(drawingContext);
         }
 
@@ -238,13 +242,13 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
                 }
                 else
                 {
-                    ExecuteTick();
-                    _vm.TicksPerSecond = Planet.World.SimulationPerformance.AverageFramesPerTicks;
-                    _vm.TurnCount = TurnCount;
-                    UpdateZoneInfo();
-                    UpdateGeneology();
-                }
+                ExecuteTick();
+                _vm.TicksPerSecond = Planet.World.SimulationPerformance.AverageFramesPerTicks;
+                _vm.TurnCount = TurnCount;
+                UpdateZoneInfo();
+                UpdateGeneology();
             }
+        }
         }
 
         /// <summary>

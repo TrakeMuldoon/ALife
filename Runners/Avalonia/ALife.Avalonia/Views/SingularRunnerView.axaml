@@ -150,7 +150,8 @@
                 MaxWidth="2000">
       <ScrollViewer HorizontalAlignment="Center" VerticalAlignment="Center" 
                     Background="Wheat" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
-        <Viewbox Stretch="Uniform"
+        <Viewbox x:Name="WorldCanvasViewBox"
+                 Stretch="Uniform"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Center"
                  IsHitTestVisible="True"

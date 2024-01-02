@@ -1,8 +1,12 @@
 using System;
 using ALife.Avalonia.ViewModels;
 using ALife.Rendering;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Remote.Protocol.Input;
+using ReactiveUI;
 
 namespace ALife.Avalonia.Views
 {
@@ -28,6 +32,11 @@ namespace ALife.Avalonia.Views
             VisualSettingsList.Items.Clear();
             VisualSettingsList.ItemsSource = TheWorldCanvas.Simulation.Layers;
             AgentUI.DataContext = TheWorldCanvas.Simulation.AgentUiSettings;
+
+
+            TheWorldCanvas.PointerPressed += SRV_WorldCanvas_PointerPressed;
+            TheWorldCanvas.PointerMoved += SRV_WorldCanvas_PointerMoved;
+            TheWorldCanvas.PointerReleased += SRV_WorldCanvas_PointerReleased;
         }
 
         /// <summary>
@@ -220,6 +229,59 @@ namespace ALife.Avalonia.Views
         {
         }
 
+        private void MoveLeft_Click(object? sender, RoutedEventArgs e)
+        {
+            PanWorldCanvas(-10, 0);
+        }
+
+        private void MoveRight_Click(object? sender, RoutedEventArgs e)
+        {
+            PanWorldCanvas(10, 0);
+        }
+
+
+        private bool InMove = false;
+        Point? OriginPoint = null;
+        private double DRAG_FACTOR = 0.5;
+        private void SRV_WorldCanvas_PointerPressed(object? sender, PointerPressedEventArgs e)
+        {
+            InMove = true;
+            OriginPoint = e.GetPosition(WorldCanvasViewBox);
+        }
+
+        private void SRV_WorldCanvas_PointerMoved(object? sender, PointerEventArgs e)
+        {
+            if(!InMove)
+            {
+                return;
+            }
+
+            if(!OriginPoint.HasValue)
+            {
+                OriginPoint = e.GetPosition(WorldCanvasViewBox);
+                return;
+            }
+
+            Point newPoint = e.GetPosition(WorldCanvasViewBox);
+            double deltaX = newPoint.X - OriginPoint.Value.X;
+            double deltaY = newPoint.Y - OriginPoint.Value.Y;
+
+            PanWorldCanvas(deltaX * DRAG_FACTOR, deltaY * DRAG_FACTOR);
+            OriginPoint = newPoint;
+        }
+
+        private void SRV_WorldCanvas_PointerReleased(object? sender, PointerReleasedEventArgs e)
+        {
+            InMove = false;
+            OriginPoint = null;
+        }
+
+        private void PanWorldCanvas(double left, double top)
+        {
+            Thickness margin = TheWorldCanvas.Margin;
+            Thickness newMargin = new Thickness(margin.Left+left, margin.Top+top, margin.Right, margin.Bottom);
+            TheWorldCanvas.Margin = newMargin;
+        }
         // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
         // ~SingularRunnerView() { // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
         // Dispose(disposing: false); }

@@ -96,8 +96,9 @@
 
         <StackPanel Orientation="Horizontal">
           <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Zooma:" />
-          <TextBox x:Name="ZoomText_Value"></TextBox>
           <NumericUpDown x:Name="ZoomNumeric" Maximum="50000" Minimum="0"></NumericUpDown>
+          <Button x:Name="MoveLeft" Click="MoveLeft_Click">LEFT</Button>
+          <Button x:Name="MoveRight" Click="MoveRight_Click">RIGHT</Button>
         </StackPanel>
           <!--<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Current Zoom:" />
           <TextBlock Text="{Binding #Zoom_Slider.Value, StringFormat=0.00}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3, 3, 3, 3" />
@@ -148,20 +149,24 @@
                 ClipToBounds="True"
                 MaxHeight="2000"
                 MaxWidth="2000">
-      <ScrollViewer HorizontalAlignment="Center" VerticalAlignment="Center" 
-                    Background="Wheat" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
-        <Viewbox x:Name="WorldCanvasViewBox"
-                 Stretch="Uniform"
+         <Viewbox x:Name="WorldCanvasViewBox"
+                 Stretch="UniformToFill"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Center"
                  IsHitTestVisible="True"
                  ClipToBounds="True"
+                 Margin="0,0,0,0"
                  Width="{Binding #ZoomNumeric.Value}"
                  Height="{Binding #ZoomNumeric.Value}">
-          <controls:WorldCanvas Name="TheWorldCanvas" HorizontalAlignment="Center" VerticalAlignment="Center" Height="1000" Width="1000" x:CompileBindings="False" ScenarioName="{Binding StartingScenarioName}" StartingSeed="{Binding StartingSeed}" Enabled="{Binding IsEnabled}">
+          <controls:WorldCanvas Name="TheWorldCanvas" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                Width="20000"
+                                Height="5000"
+                                x:CompileBindings="False" 
+                                ScenarioName="{Binding StartingScenarioName}" StartingSeed="{Binding StartingSeed}"
+                                ClipToBounds="True"
+                                Enabled="{Binding IsEnabled}">
           </controls:WorldCanvas>
         </Viewbox>
-      </ScrollViewer>
     </StackPanel>
   </Grid>
 </UserControl>

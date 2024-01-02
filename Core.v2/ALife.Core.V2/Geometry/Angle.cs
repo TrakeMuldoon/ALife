@@ -1,7 +1,8 @@
-﻿using ALife.Core.Utility.Numerics;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
+using ALife.Core.Utility;
+using ALife.Core.Utility.Numerics;
 
 namespace ALife.Core.Geometry
 {
@@ -348,6 +349,39 @@ namespace ALife.Core.Geometry
         public override int GetHashCode()
         {
             return _degrees.GetHashCode() ^ _radians.GetHashCode();
+        }
+
+        /// <summary>
+        /// Gets the transformation matrix representing this angle.
+        /// </summary>
+        /// <returns>The transformation matrix.</returns>
+        public Matrix GetTransformationMatrix()
+        {
+            Matrix output = Matrix.CreateFromAngle(this);
+            return output;
+        }
+
+        /// <summary>
+        /// Gets the transformation matrix representing this angle and a specified translation.
+        /// </summary>
+        /// <param name="translation">The translation.</param>
+        /// <returns>The transformation matrix.</returns>
+        public Matrix GetTransformationMatrix(Point translation)
+        {
+            Matrix output = Matrix.CreateFromTranslationAndAngle(this, translation);
+            return output;
+        }
+
+        /// <summary>
+        /// Gets the transformation matrix representing this angle and a specified translation.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="y">The y.</param>
+        /// <returns>The transformation matrix.</returns>
+        public Matrix GetTransformationMatrix(double x, double y)
+        {
+            Matrix output = Matrix.CreateFromTranslationAndAngle(this, x, y);
+            return output;
         }
 
         /// <summary>

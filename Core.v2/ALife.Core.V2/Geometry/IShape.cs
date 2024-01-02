@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ALife.Core.CollisionDetection;
 using ALife.Core.Utility.Colours;
 
 namespace ALife.Core.Geometry

@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
+using ALife.Core.Geometry;
 
-namespace ALife.Core.Geometry
+namespace ALife.Core.CollisionDetection
 {
     public struct BoundingBox
     {

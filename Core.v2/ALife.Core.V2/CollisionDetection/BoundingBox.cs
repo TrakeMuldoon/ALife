@@ -105,5 +105,20 @@ namespace ALife.Core.Geometry
 
             return new BoundingBox(minX, minY, width, height);
         }
+
+        /// <summary>
+        /// Determines whether the specified interloper is collision.
+        /// </summary>
+        /// <param name="interloper">The interloper.</param>
+        /// <returns><c>true</c> if the specified interloper is collision; otherwise, <c>false</c>.</returns>
+        public bool IsCollision(BoundingBox interloper)
+        {
+            bool result = MinX < interloper.MaxX
+                && MaxX > interloper.MinX
+                && MinY < interloper.MaxY
+                && MaxY > interloper.MinY;
+
+            return result;
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ALife.Core.Shapes
 {
-    internal interface IShape
+    internal class IShapeExtensions
     {
     }
 }

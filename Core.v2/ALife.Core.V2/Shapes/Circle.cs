@@ -1,14 +1,13 @@
 ﻿using System.Diagnostics;
-using ALife.Core.Geometry;
 
 namespace ALife.Core.Shapes
 {
     /// <summary>
     /// Defines a circle.
     /// </summary>
-    /// <seealso cref="IShape"/>
+    /// <seealso cref="AbstractShape"/>
     [DebuggerDisplay("{ToString()}")]
-    public class Circle : IShape
+    public class Circle : AbstractShape
     {
         /// <summary>
         /// Converts to string.

@@ -153,6 +153,8 @@ namespace ALife.Rendering
                 if(!(wo is Agent))
                 {
                     //TODO: Should ALL objects have shadows??
+                    //TODO: Yes, they should, because some objects (like the falling rock) move. 
+                    //TODO: Currently they don't.
                     RenderLogic.DrawPastObject(wo.Shape, uiSettings, renderer);
                     continue;
                 }

@@ -25,6 +25,7 @@ Success Cases:
 If they eat three other agents, they reproduce. 
 If they eat two green mushrooms, they reproduce."
      )]
+    [SuggestedSeed(1559842024, "Loops and Swirls!")]
     public class MushroomScenario : IScenario
     {
         public const double GOOD_MUSH_PERCENT = 0.50;

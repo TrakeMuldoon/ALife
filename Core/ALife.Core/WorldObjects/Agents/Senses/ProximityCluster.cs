@@ -21,12 +21,6 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             }
         }
 
-        [Obsolete("ProximityDefault is deprecated, please use ProximityCluster with EvoNumbers instead.")]
-        public ProximityCluster(WorldObject parent, string name)
-            : this(parent, name, new ROEvoNumber(30, 2, 5, 50))
-        {
-        }
-
         public ProximityCluster(WorldObject parent, string name, EvoNumber radius)
             : base(parent, name)
         {

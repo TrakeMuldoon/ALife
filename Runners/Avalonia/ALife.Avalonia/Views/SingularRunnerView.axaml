@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+             xmlns:paz="using:Avalonia.Controls.PanAndZoom"
              xmlns:controls="using:ALife.Avalonia.Controls.SingularRunnerControls"
              xmlns:vm="clr-namespace:ALife.Avalonia.ViewModels"
              x:Class="ALife.Avalonia.Views.SingularRunnerView">
@@ -140,13 +141,13 @@
     </StackPanel>
 
     <!-- The world -->
-    <StackPanel Name="WorldPanel" Orientation="Horizontal" Background="Green" Margin="3, 3, 3, 3" Grid.Column="0" Grid.Row="1">
-      <ScrollViewer HorizontalAlignment="Center" VerticalAlignment="Center" Background="Wheat" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
-        <Viewbox Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{Binding #Zoom_Slider.Value}" Height="{Binding #Zoom_Slider.Value}" MaxWidth="{Binding $parent[1].Bounds.Width}" MaxHeight="{Binding $parent[1].Bounds.Height}">
+    <StackPanel Name="WorldPanel" Orientation="Horizontal" Margin="3, 3, 3, 3" Grid.Column="0" Grid.Row="1">
+      <paz:ZoomBorder Name="ZoomBorder" Stretch="None" ZoomSpeed="1.2"
+                      Background="SlateBlue" ClipToBounds="True" Focusable="True"
+                      VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
           <controls:WorldCanvas Name="TheWorldCanvas" HorizontalAlignment="Center" VerticalAlignment="Center" Height="1000" Width="1000" x:CompileBindings="False" ScenarioName="{Binding StartingScenarioName}" StartingSeed="{Binding StartingSeed}" Enabled="{Binding IsEnabled}">
           </controls:WorldCanvas>
-        </Viewbox>
-      </ScrollViewer>
+      </paz:ZoomBorder>
     </StackPanel>
   </Grid>
 </UserControl>

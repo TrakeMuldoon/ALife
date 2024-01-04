@@ -70,6 +70,7 @@ namespace ALife.Avalonia.ALifeImplementations
         public override void DrawSector(Sector currShape, bool fillIn)
         {
             Brush b = new SolidColorBrush(ConvertColour(currShape.Color));
+            Pen p = new Pen(b);
 
             PathGeometry pathGeometry = new();
             StreamGeometryContext geoStream = pathGeometry.Open();
@@ -77,7 +78,7 @@ namespace ALife.Avalonia.ALifeImplementations
             geoStream.LineTo(ConvertPoint(currShape.LeftPoint));
             geoStream.ArcTo(ConvertPoint(currShape.RightPoint), new AvSize(currShape.Radius, currShape.Radius), 0, false, SweepDirection.Clockwise);
             geoStream.EndFigure(true);
-            Context.DrawGeometry(b, BLACKPEN, pathGeometry);
+            Context.DrawGeometry(b, p, pathGeometry);
         }
 
         public override void DrawText(string text, Point point, Color color)

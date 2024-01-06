@@ -8,13 +8,41 @@ namespace ALife.Core.Shapes
     {
         public BoundingBox BoundingBox;
 
-        public Point CentrePoint;
-
         public List<Shape> Children;
-        public Angle Orientation;
+
         public Shape Parent;
+
         public ShapeRenderComponents RenderComponents;
-        protected Point PreviousPoint;
+
+        protected Point _centrePoint;
+
+        protected Angle _orientation;
+
+        protected Point PreviousCentrePoint;
+
+        protected Angle PreviousOrientation;
+
+        public Point CentrePoint
+        {
+            get => _centrePoint;
+            set
+            {
+                _centrePoint = value;
+                TriggerRecalculations();
+                PreviousCentrePoint = _centrePoint;
+            }
+        }
+
+        public Angle Orientation
+        {
+            get => _orientation;
+            set
+            {
+                _orientation = value;
+                TriggerRecalculations();
+                PreviousOrientation = _orientation;
+            }
+        }
 
         public abstract Shape Clone();
 

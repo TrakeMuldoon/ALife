@@ -1,80 +1,95 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using ALife.Core.CollisionDetection;
 using ALife.Core.Geometry;
+using ALife.Core.Utility;
+using ALife.Core.Utility.Colours;
 
 namespace ALife.Core.Shapes
 {
     /// <summary>
     /// Defines a circle.
     /// </summary>
-    /// <seealso cref="IShape"/>
+    /// <seealso cref="Shape"/>
     [DebuggerDisplay("{ToString()}")]
-    public class Circle : IShape
+    public class Circle : Shape
     {
-        private Angle _angle;
+        /// <summary>
+        /// The radius
+        /// </summary>
+        private double _radius;
 
-        private Point _centrePoint;
-
-        public BoundingBox AxisAlignedBoundingBox => throw new System.NotImplementedException();
-
-        public BoundingBox BoundingBox => throw new System.NotImplementedException();
-
-        public Point CentrePoint
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Circle"/> class.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="y">The y.</param>
+        /// <param name="radius">The radius.</param>
+        /// <param name="orientation">The orientation.</param>
+        /// <param name="fillColour">The fill colour.</param>
+        /// <param name="fillDebugColour">The fill debug colour.</param>
+        /// <param name="outlineColour">The outline colour.</param>
+        /// <param name="outlineDebugColour">The outline debug colour.</param>
+        public Circle(double x, double y, double radius, Angle orientation, Colour fillColour, Colour fillDebugColour, Colour outlineColour, Colour outlineDebugColour) : base(x, y, orientation, new ShapeRenderComponent(fillColour, fillDebugColour), new ShapeRenderComponent(outlineColour, outlineDebugColour))
         {
-            get => _centrePoint;
-            set => _centrePoint = value;
-        }
-
-        public Angle Orientation
-        {
-            get => _angle;
-            set => _angle = value;
-        }
-
-        public ShapeRenderComponents RenderComponents { get; set; }
-
-        public IShape Clone()
-        {
-            throw new System.NotImplementedException();
+            _radius = radius;
         }
 
         /// <summary>
-        /// Converts to string.
+        /// Initializes a new instance of the <see cref="Circle"/> class.
         /// </summary>
-        /// <returns>A <see cref="string"/> that represents this instance.</returns>
-        public override string ToString()
+        /// <param name="x">The x.</param>
+        /// <param name="y">The y.</param>
+        /// <param name="radius">The radius.</param>
+        /// <param name="orientation">The orientation.</param>
+        public Circle(double x, double y, double radius, Nullable<Angle> orientation = null) : this(x, y, radius, orientation ?? Angle.Zero, DefinedColours.White, DefinedColours.White, DefinedColours.White, DefinedColours.White)
         {
-            return $"Circle: CentrePoint={CentrePoint}, Radius={Radius}";
         }
 
-        public void UpdateCentrePoint(Point newCentrePoint)
+        /// <summary>
+        /// Gets or sets the radius.
+        /// </summary>
+        /// <value>The radius.</value>
+        public double Radius
         {
-            _centrePoint = newCentrePoint;
+            get
+            {
+                return _radius;
+            }
+            set
+            {
+                _radius = value;
+                RecalculateShapeData();
+            }
         }
 
-        public void UpdateCentrePointX(double newCentrePointX)
+        /// <summary>
+        /// Clones the instance.
+        /// </summary>
+        /// <returns>The cloned instance.</returns>
+        public override Shape CloneInstance()
         {
-            _centrePoint.X = newCentrePointX;
+            Circle newInstance = new Circle(CentrePoint.X, CentrePoint.Y, Radius, Orientation, RenderComponents.FillComponent.Colour, RenderComponents.FillComponent.DebugColour, RenderComponents.OutlineComponent.Colour, RenderComponents.OutlineComponent.DebugColour);
+            return newInstance;
         }
 
-        public void UpdateCentrePointY(double newCentrePointY)
+        /// <summary>
+        /// Triggers the recalculations of shape data for the current instance.
+        /// </summary>
+        public override void RecalculateOwnShapeData()
         {
-            _centrePoint.Y = newCentrePointY;
-        }
+            Point actualCentrePoint = _centrePoint;
+            // If this shape has a parent, then the centre point is relative to the parent's centre point. And the
+            // current instance's orientation relative to the parent's orientation.
+            if(Parent != null)
+            {
+                Matrix translationMatrix = Matrix.CreateFromTranslationAndAngle(Orientation, _centrePoint);
+                actualCentrePoint = Point.FromTransformation(actualCentrePoint, translationMatrix);
+            }
 
-        public void UpdateOrientation(Geometry.Angle newOrientation)
-        {
-            _angle = newOrientation;
-        }
-
-        public void UpdateOrientationDegrees(double newOrientationDegrees)
-        {
-            _angle.Degrees = newOrientationDegrees;
-        }
-
-        public void UpdateOrientationRadians(double newOrientationRadians)
-        {
-            _angle.Radians = newOrientationRadians;
+            // For a circle, the bounding box is the same as the axis aligned bounding box
+            _boundingBox = new BoundingBox(actualCentrePoint.X - Radius, actualCentrePoint.Y - Radius, actualCentrePoint.X + Radius, actualCentrePoint.Y + Radius);
+            _axisAlignedBoundingBox = _boundingBox;
         }
     }
 }

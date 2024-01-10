@@ -6,7 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{BD7F9F1B-F088-4C03-A79C-162FB32D797D}"
 	ProjectSection(SolutionItems) = preProject
 		Documentation\NewConfig.txt = Documentation\NewConfig.txt
-		Documentation\README.md = Documentation\README.md
+		README.md = README.md
 		Documentation\Roadmap2024.md = Documentation\Roadmap2024.md
 		Documentation\ValuableLinks.txt = Documentation\ValuableLinks.txt
 	EndProjectSection

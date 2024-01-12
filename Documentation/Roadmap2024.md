@@ -61,11 +61,11 @@
 ## Scenario Ideas
 * [ ] Temperature Scenario (Low temps steal energy, high temps restore energy)
 * [ ] Fruit Trees, drop food on collision
-* [ ] Rabbit Chasing Scenario (Implement WorldObjectTargetSense)
+* [*] Rabbit Chasing Scenario (Implement WorldObjectTargetSense)
 
 ## Fixing the Basics - Avalonia
- * [ ] Time Controls
- * [ ] Layer Controls
- * [ ] Zoom Controls
- * [ ] Brain Viewers
- * [ ] Interactivity
+* [*] Time Controls
+* [*] Layer Controls
+* [ ] Zoom Controls
+* [ ] Brain Viewers
+* [ ] Interactivity

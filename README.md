@@ -31,6 +31,9 @@ Actions are anything the Agent can do
 A Scenario is a set of rules about agents, their interactions with each other and the world.
 
 ## Using the App
+TODO: Documentation in flux, as there are now two differet visualization for the application, the usage for each is different.
+UWP
+Avalonia
 
 Controls
 

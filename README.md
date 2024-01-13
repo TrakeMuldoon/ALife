@@ -42,7 +42,9 @@ To Run the UWP version of the app,
     2. Under "Runners" folder, under "UWP" folder, is the "ALifeUniv" project.
     3. Right Click on that project and "Set As Startup Project"
 
-The "Q" and "E" keys will zoom in and out.
+
+TODO: Direct Actions
+    The "Q" and "E" keys will zoom in and out.
 
 TODO: "Seed Section"
 TODO: "Speed Controls"
@@ -87,7 +89,8 @@ To change the scenario being executed depends on whether you're running the GUI 
 - Console App: Update the string in Program.cs that is passed to the `ConsoleScenarioRunner` to the name of the scenario you want to run.
 - GUI App: Select the scenario you wish to execute from the list. Suggested seeds are available and you can choose to run either a console-like experience or a GUI experience.
 
+TODO: UPDATE PATH here 
 The scenarios themselves are under
 ALife\ALifeUniv\ALife\Scenarios
 
-And each one should have a header with a description of what it is there for.
+Each Scenario has a description of describing its success and failure cases.

@@ -198,6 +198,11 @@ namespace ALife.Core
             //Add all the new objects into the Stable list
             if(NewActiveObjects.Count > 0)
             {
+                foreach(WorldObject wo in NewActiveObjects)
+                {
+                    PutOnCollisionGrid(wo);
+                }
+
                 StableActiveObjects.AddRange(NewActiveObjects);
                 NewActiveObjects.Clear();
             }
@@ -210,6 +215,9 @@ namespace ALife.Core
                 //It needs to be added to the InactiveObjects list, for statistics reasons. 
                 InactiveObjects.Add(ToRemoveObjects[0]);
 
+                //TODO: Could this loop be changed into a "foreach" and then "cleared" instead of RemoveAt every time?
+                // This is actually O(n) when the list is long, although in our case, I think the list is 0-10 items at the most
+                // So there wouldn't be many performance gains from switching it.
                 ToRemoveObjects.RemoveAt(0);
             }
 
@@ -250,25 +258,25 @@ namespace ALife.Core
         {
             string currCollisionLevel = mySelf.CollisionLevel;
             CollisionLevels[currCollisionLevel].RemoveObject(mySelf);
-            //TODO: If I initialize the collision levels at the scenario level, then I don't need to constantly check if the layer exists.
-            //Further Thoughts: This is only called on the death of a world-object right now. So not very frequently. I think safety outweighs any miniscule performance gain.
-            if(!_collisionLevels.ContainsKey(newLevel))
-            {
-                _collisionLevels.Add(newLevel, new CollisionGrid<WorldObject>(WorldHeight, WorldWidth, newLevel));
-            }
-            CollisionLevels[newLevel].Insert(mySelf);
+            PutOnCollisionGrid(mySelf);
         }
 
         public void AddObjectToWorld(WorldObject toAdd)
         {
+            AllActiveObjects.Add(toAdd);
+            NewActiveObjects.Add(toAdd);
+        }
+
+        private void PutOnCollisionGrid(WorldObject toAdd)
+        {
+            //TODO: If I initialize the collision levels at the scenario level, then I don't need to constantly check if the layer exists.
+            //Further Thoughts: This is only called on the death of a world-object right now. So not very frequently. I think safety outweighs any miniscule performance gain.
+            //TODO: Further Thought. This is now potentially used on the "Sound" layer, which will be creating a LOT of objects. So it'd be a microoptimization but it's called a lot.
             if(!_collisionLevels.ContainsKey(toAdd.CollisionLevel))
             {
                 _collisionLevels.Add(toAdd.CollisionLevel, new CollisionGrid<WorldObject>(WorldHeight, WorldWidth, toAdd.CollisionLevel));
             }
             _collisionLevels[toAdd.CollisionLevel].Insert(toAdd);
-
-            AllActiveObjects.Add(toAdd);
-            NewActiveObjects.Add(toAdd);
         }
 
         internal void AddZone(Zone toAdd)

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using ALife.Core.WorldObjects;
-using ALife.Core.WorldObjects.Agents.Senses;
+﻿using System.Collections.Generic;
 
 namespace ALife.Core.WorldObjects.Agents.Senses.Eyes
 {
@@ -9,7 +6,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses.Eyes
     {
         public EyeIdentifierInput(string name) : base(name)
         {
-            Value = String.Empty;
+            Value = string.Empty;
         }
 
         public override void SetValue(List<WorldObject> collisions)
@@ -20,7 +17,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses.Eyes
             }
             else
             {
-                Value = String.Empty;
+                Value = string.Empty;
             }
         }
     }

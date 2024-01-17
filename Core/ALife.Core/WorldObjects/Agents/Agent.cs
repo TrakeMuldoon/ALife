@@ -135,14 +135,15 @@ namespace ALife.Core.WorldObjects.Agents
         {
             Alive = false;
             Shape.DebugColor = System.Drawing.Color.Maroon;
-            Planet.World.ChangeCollisionLayerForObject(this, ReferenceValues.CollisionLevelDead);
             CollisionLevel = ReferenceValues.CollisionLevelDead;
+            Planet.World.ChangeCollisionLayerForObject(this, CollisionLevel);
+
         }
 
         public override void ExecuteDeadTurn()
         {
-            //TODO: Abstract this out
-            Planet.World.RemoveWorldObject(this);
+            //Currently a dead turn for the agent is unnecessary, and they can be trashed immediately.
+            TrashItem();
         }
 
         public override void ExecuteAliveTurn()

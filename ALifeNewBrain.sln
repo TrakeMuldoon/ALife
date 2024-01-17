@@ -12,6 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{FEC4584F-16BF-44AE-B4AE-96246985810C}"
+	ProjectSection(SolutionItems) = preProject
+		soundplan.txt = soundplan.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Runners", "Runners", "{59D59583-FCFF-4FA9-9226-8B606B28C89B}"
 EndProject

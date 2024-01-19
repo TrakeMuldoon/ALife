@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ALife.Core.CollisionDetection;
 using ALife.Core.Geometry;
+using ALife.Core.Utility;
 
 namespace ALife.Core.Shapes
 {
@@ -247,6 +248,26 @@ namespace ALife.Core.Shapes
         {
             Parent = parent;
             RecalculateShapeData();
+        }
+
+        /// <summary>
+        /// Gets the transformation matrix for this object relative to the parent, if it has one.
+        /// </summary>
+        /// <returns>The transformation matrix.</returns>
+        protected Matrix GetTransformationMatrix()
+        {
+            if(Parent != null)
+            {
+                Angle actualOrientation = _orientation + Parent.Orientation;
+
+                Matrix translationMatrix = Matrix.CreateFromTranslationAndAngle(actualOrientation, _centrePoint);
+                return translationMatrix;
+            }
+            else
+            {
+                Matrix translationMatrix = Matrix.CreateFromAngle(_orientation);
+                return translationMatrix;
+            }
         }
     }
 }

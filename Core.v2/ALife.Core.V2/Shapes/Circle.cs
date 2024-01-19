@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 using ALife.Core.CollisionDetection;
 using ALife.Core.Geometry;
 using ALife.Core.Utility;
@@ -50,6 +51,7 @@ namespace ALife.Core.Shapes
         /// Gets or sets the radius.
         /// </summary>
         /// <value>The radius.</value>
+        [JsonIgnore]
         public double Radius
         {
             get

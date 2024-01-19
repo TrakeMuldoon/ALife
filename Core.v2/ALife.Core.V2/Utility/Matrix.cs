@@ -220,10 +220,11 @@ namespace ALife.Core.Utility
             output.M23 = sin * x;
             output.M24 = 0;
 
-            output.M31 = sin * y;
-            output.M32 = -(sin * x);
-            output.M33 = cos;
-            output.M34 = 0;
+            // This is Z
+            //output.M31 = sin * y;
+            //output.M32 = -(sin * x);
+            //output.M33 = cos;
+            //output.M34 = 0;
 
             output.M41 = 0;
             output.M42 = 0;

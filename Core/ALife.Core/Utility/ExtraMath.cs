@@ -129,14 +129,19 @@ namespace ALife.Core.Utility
             return TranslateByVector(startPoint, angle.Radians, distance);
         }
 
-        public static double DistanceBetweenTwoPoints(Geometry.Shapes.Point a, Geometry.Shapes.Point b)
+        public static double SquaredDistanceBetweenTwoPoints(Geometry.Shapes.Point a, Geometry.Shapes.Point b)
         {
             //pythagorean theorem c^2 = a^2 + b^2
             //thus c = square root(a^2 + b^2)
             double delX = (double)(a.X - b.X);
             double delY = (double)(a.Y - b.Y);
 
-            return Math.Sqrt((delX * delX) + (delY * delY));
+            return (delX * delX) + (delY * delY);
+        }
+
+        public static double DistanceBetweenTwoPoints(Geometry.Shapes.Point a, Geometry.Shapes.Point b)
+        {
+            return Math.Sqrt(SquaredDistanceBetweenTwoPoints(a, b));
         }
 
         public static double AngleBetweenPoints(Geometry.Shapes.Point target, Geometry.Shapes.Point source)

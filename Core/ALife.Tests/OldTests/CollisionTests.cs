@@ -3,7 +3,7 @@ using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
 using System.Drawing;
 
-namespace ALife.Tests
+namespace ALife.Tests.OldTests
 {
     internal class ShapeWrapper : IHasShape
     {

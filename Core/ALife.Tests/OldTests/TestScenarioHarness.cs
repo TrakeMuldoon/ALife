@@ -4,7 +4,7 @@ using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using System.Drawing;
 
-namespace ALife.Tests
+namespace ALife.Tests.OldTests
 {
     internal class TestScenarioHarness : IScenario
     {

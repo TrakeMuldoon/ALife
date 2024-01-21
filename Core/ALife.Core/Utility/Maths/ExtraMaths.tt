@@ -1,0 +1,115 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="$(TargetPath)" #>
+<# Type[] types = new[] {
+    typeof(short), typeof(int), typeof(long),
+    typeof(ushort), typeof(uint), typeof(ulong),
+    typeof(double), typeof(float), typeof(decimal),
+    typeof(byte), typeof(sbyte)
+    };
+#>
+using System;
+using System.Linq;
+
+namespace ALife.Core.Utility.Maths
+{
+	/// <summary>
+    /// Provides extra mathematical functions.
+    /// TODO: This should use generic math instead of being generated, but we're stuck with .NET Standard 2 for now...
+    /// </summary>
+    public static class ExtraMaths
+    {
+        <# foreach (var type in types) { 
+		#>
+        /// <summary>
+        /// Applies a circular clamp to the value (i.e. if the value is outside the range, it wraps around).
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="min">The minimum.</param>
+        /// <param name="max">The maximum. Non-inclusive.</param>
+        /// <returns>The clamped value.</returns>
+        public static <#= type.Name #> CircularClamp(<#= type.Name #> value, <#= type.Name #> min, <#= type.Name #> max)
+        {
+            <#= type.Name #> adder = (<#= type.Name #>)(max - min);
+            <#= type.Name #> remainder = (<#= type.Name #>)(value % adder);
+            <#= type.Name #> actualValue = (<#= type.Name #>)(remainder + min);
+            return actualValue;
+        }
+
+        /// <summary>
+        /// Clamps a value between a minimum and maximum value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="min">The minimum.</param>
+        /// <param name="max">The maximum.</param>
+        /// <returns>The (clamped) value.</returns>
+        public static <#= type.Name #> Clamp(<#= type.Name #> value, <#= type.Name #> min, <#= type.Name #> max)
+        {
+            if(value < min)
+            {
+                return min;
+            }
+            else if(value > max)
+            {
+                return max;
+            }
+            return value;
+        }
+
+        /// <summary>
+        /// Applies a delta to a value, clamping the result between a minimum and maximum value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="currentValue">The current value.</param>
+        /// <param name="deltaMin">The delta minimum.</param>
+        /// <param name="deltamax">The deltamax.</param>
+        /// <param name="absoluteMin">The absolute minimum.</param>
+        /// <param name="absoluteMax">The absolute maximum.</param>
+        /// <returns>The delta-clampped value.</returns>
+        public static <#= type.Name #> DeltaClamp(<#= type.Name #> value, <#= type.Name #> currentValue, <#= type.Name #> deltaMin, <#= type.Name #> deltamax, <#= type.Name #> absoluteMin, <#= type.Name #> absoluteMax)
+        {
+            <#= type.Name #> delta = (<#= type.Name #>)(value - currentValue);
+            <#= type.Name #> realDelta = Clamp(delta, deltaMin, deltamax);
+            <#= type.Name #> newValue = (<#= type.Name #>)(currentValue + realDelta);
+            <#= type.Name #> clampedValue = Clamp(newValue, absoluteMin, absoluteMax);
+            return clampedValue;
+        }
+
+        /// <summary>
+        /// Gets the largest of the specified numbers.
+        /// </summary>
+        /// <param name="numbers">The numbers.</param>
+        /// <returns>The maximum.</returns>
+        public static <#= type.Name #> Maximum(params <#= type.Name #>[] numbers)
+        {
+            <#= type.Name #> output = numbers.Max();
+            return output;
+        }
+
+        /// <summary>
+        /// Gets the smallest of the specified numbers.
+        /// </summary>
+        /// <param name="numbers">The numbers.</param>
+        /// <returns>The minimum.</returns>
+        public static <#= type.Name #> Minimum(params <#= type.Name #>[] numbers)
+        {
+            <#= type.Name #> output = numbers.Min();
+            return output;
+        }
+
+        /// <summary>
+        /// Gets the delta between the largest and smallest of the specified numbers.
+        /// </summary>
+        /// <param name="numbers">The numbers.</param>
+        /// <returns>The delta.</returns>
+        public static <#= type.Name #> MinMaxDelta(params <#= type.Name #>[] numbers)
+        {
+            <#= type.Name #> min = numbers.Min();
+            <#= type.Name #> max = numbers.Max();
+            <#= type.Name #> delta = (<#= type.Name #>)(max - min);
+            return delta;
+        }
+		<#
+		} #>
+    }
+}

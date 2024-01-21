@@ -15,7 +15,44 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Utility\Maths\ExtraMaths.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ExtraMaths.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Utility\Maths\ExtraMaths.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ExtraMaths.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Utility\Maths\ExtraMath.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ExtraMath.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Utility\Maths\ExtraMaths.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ExtraMaths.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Utility\Math\ExtraMathTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ExtraMathTemplate.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

@@ -18,15 +18,6 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             get { return myShape; }
         }
 
-        [Obsolete("EyeClusterDefault is deprecated, please use EyeCluster with EvoNumbers instead.")]
-        public EyeCluster(WorldObject parent, String name) : this(parent, name, false
-                                                                    , new ROEvoNumber(startValue: 5,   evoDeltaMax: 0, hardMin: 5,   hardMax: 5)
-                                                                    , new ROEvoNumber(startValue: 355, evoDeltaMax: 0, hardMin: 355, hardMax: 355)
-                                                                    , new ROEvoNumber(startValue: 80,  evoDeltaMax: 0, hardMin: 80,  hardMax: 80)
-                                                                    , new ROEvoNumber(startValue: 25,  evoDeltaMax: 0, hardMin: 25,  hardMax: 25))
-        {
-        }
-
         public bool IncludeColor
         {
             get;
@@ -69,7 +60,15 @@ namespace ALife.Core.WorldObjects.Agents.Senses
 
             //Re: "TODO: HUUGE BUUG." The code there is setting the distance for the root Geometry.Shapes.Point of the childSector (the vision radius of the eye) 
             //to 5.0 away from the parent center Geometry.Shapes.Point. This is a bug, because if the parent radius is modified to be larger than the that distancce, then the eye will be inside it.
-            //The reason we can't set it to be "parent.Shape.Radius" is that the parent is not guaranteed to be a circle. 
+            //The reason we can't set it to be "parent.Shape.Radius" is that the parent is not guaranteed to be a circle.
+            //Technically, there are two "solves" for this. 
+            // 1. Do some sort of math to determine based on a 360 degree orientation, the distance to the shape perimeter at that point. 
+            //      This has some significant drawbacks, the shapes must be concave. Otherwise, there will be angles where the function would 
+            //      Have multiple results. 
+            // 2. Just assume that eyes don't need to be directly on the perimeter of the agent, which implies a more 3D model. This still has 
+            //      Some of the same difficulties as the other solution, because we still need to ensure that the eyes are not external to the agent.
+            // 3. Just let the eyes be anywhere. 
+            //      Simple. No math problems here. The eyes will be 5 units from the agent centre, at any orientation.
         }
 
         public EyeCluster(WorldObject parent, String name

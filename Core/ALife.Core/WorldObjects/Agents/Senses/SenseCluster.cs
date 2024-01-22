@@ -10,7 +10,8 @@ namespace ALife.Core.WorldObjects.Agents.Senses
     {
         public readonly string Name;
         public readonly List<SenseInput> SubInputs = new List<SenseInput>();
-        readonly string CollisionLevel = ReferenceValues.CollisionLevelPhysical;
+        public readonly string CollisionLevel;
+        private readonly ICollisionMap<WorldObject> CollisionMap;
         readonly WorldObject parent;
 
         public abstract IShape Shape
@@ -18,8 +19,11 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             get;
         }
 
-        public SenseCluster(WorldObject parent, String name)
+        public SenseCluster(WorldObject parent, String name, string collisionLevel = ReferenceValues.CollisionLevelPhysical)
         {
+            CollisionLevel = collisionLevel;
+            CollisionMap = Planet.World.CollisionLevels[this.CollisionLevel];
+
             this.parent = parent;
             Name = name;
         }
@@ -28,12 +32,15 @@ namespace ALife.Core.WorldObjects.Agents.Senses
         {
             Shape.Reset();
 
-            //TODO: Factor this out. The SenseClusters shouldn't need to know the details of the collision detection
-            ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[this.CollisionLevel];
-            List<WorldObject> collisions = collider.DetectCollisions(this, parent);
+            //TODO: Perhaps abstract this out into a property of the World itself? The SenseClusters shouldn't necessarily
+            // know about collision maps
+            List<WorldObject> collisions = CollisionMap.DetectCollisions(this, parent);
 
-            //Shape.DebugColor = collisions.Count > 0 ?  System.Drawing.Color.Red : System.Drawing.Color.Transparent;
+            //This is for debug purposes. The shape of a "sense" is not viewable to other WorldObjects, so changing the 
+            // colour does not impact the Simulation Worldstate.
             Shape.Color = collisions.Count > 0 ? System.Drawing.Color.DodgerBlue : System.Drawing.Color.DarkBlue;
+
+            //Set the value for each input based on the collisions detected.
             foreach(SenseInput si in SubInputs)
             {
                 si.SetValue(collisions);

@@ -6,14 +6,22 @@ using System.Drawing;
 
 namespace ALife.Core.Scenarios
 {
+/*
+    [ScenarioRegistration("[ScenarioName]",
+description:
+    @"
+[Scenario description]
+
+Failure cases:
+[What kills an agent]
+
+Success Cases:
+[What causes an agent to reproduce]
+")]
+*/
+    //[SuggestedSeed([SeedNumber], "Seed Description")]
     public class ScenarioTemplate : IScenario
     {
-        /******************/
-        /* SCENARIO STUFF */
-        /******************/
-
-        public virtual string Name => throw new NotImplementedException();
-
         /******************/
         /*   AGENT STUFF  */
         /******************/

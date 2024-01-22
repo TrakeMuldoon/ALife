@@ -4,8 +4,6 @@
 * [ ] Implmenet Arc / Rectangle collision detection (hard)
 * [ ] Investigate why Sector/Rectangle Collision Detection isn't working consistently
 * [ ] Implement INumeric for every value (min, max, modmax, mod%, value, add, sub);
-* [ ] Implement ReadOnlyProperties for Internal/Mandatory values [i.e. Age, NumChildren, etc.]
-* [ ] Give each WorldObject access to its collider (Not sure why I thought this was necessary)
 * [ ] Differentiate between the "Visible" and "physical" layers, so that you can there are things which are visible, but no tangible (perhaps smells and fogs?)
 
 ### Agent Properties
@@ -13,11 +11,10 @@
 
 ### Senses
 * [ ] Ear Clusters, Nose Cluster, and their requisite collision layer stuff.
-* [ ] Ear Clusters
+* [*] Ear Clusters
 * [ ] EarInputs (Volume, Timber, Specific)
-* [ ] SoundWave Object
-* [ ] Soundbased Scenario
-* [ ] Change some hardcoded level stuff.
+* [*] SoundWave Object
+* [*] Soundbased Scenario
 
 ### Actions
 * [ ] Bite

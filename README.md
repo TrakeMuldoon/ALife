@@ -32,6 +32,8 @@ A Scenario is a set of rules about agents, their interactions with each other an
 
 ## Using the App
 TODO: Documentation in flux, as there are now two differet visualization for the application, the usage for each is different.
+The Simulation core is the same for both.
+
 UWP
 Avalonia
 
@@ -95,8 +97,8 @@ To change the scenario being executed depends on whether you're running the GUI 
 - Console App: Update the string in Program.cs that is passed to the `ConsoleScenarioRunner` to the name of the scenario you want to run.
 - GUI App: Select the scenario you wish to execute from the list. Suggested seeds are available and you can choose to run either a console-like experience or a GUI experience.
 
-TODO: UPDATE PATH here 
-The scenarios themselves are under
-ALife\ALifeUniv\ALife\Scenarios
+TODO: Assets Folder
+TODO: Core Folder
+TODO: Documentation Folder
+TODO: Runners Folder
 
-Each Scenario has a description of describing its success and failure cases.

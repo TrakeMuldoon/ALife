@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Utility\Colours\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Utility\Maths\TestExtraMaths.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

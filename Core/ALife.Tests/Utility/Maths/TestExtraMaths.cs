@@ -172,19 +172,20 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestInt16DeltaClamp()
         {
-            Int16 absoluteMin = 1;
+            Int16 absoluteMin = 0;
             Int16 absoluteMax = 3;
             
             Int16 deltaMin = 1;
             Int16 deltaMax = 2;
             
+            Int16 zero = 1;
             Int16 one = 1;
             Int16 two = 2;
             Int16 three = 3;
             
-            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(two, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(two, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
         }
 
         [TestMethod]
@@ -218,8 +219,8 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestInt16MinMaxDelta()
         {
+            Int16 zero = 0;
             Int16 one = 1;
-            Int16 zero = 1;
             Int16 two = 2;
             Int16 three = 3;
             Int16 four = 4;
@@ -247,19 +248,20 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestInt32DeltaClamp()
         {
-            Int32 absoluteMin = 1;
+            Int32 absoluteMin = 0;
             Int32 absoluteMax = 3;
             
             Int32 deltaMin = 1;
             Int32 deltaMax = 2;
             
+            Int32 zero = 1;
             Int32 one = 1;
             Int32 two = 2;
             Int32 three = 3;
             
-            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(two, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(two, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
         }
 
         [TestMethod]
@@ -293,8 +295,8 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestInt32MinMaxDelta()
         {
+            Int32 zero = 0;
             Int32 one = 1;
-            Int32 zero = 1;
             Int32 two = 2;
             Int32 three = 3;
             Int32 four = 4;
@@ -322,19 +324,20 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestInt64DeltaClamp()
         {
-            Int64 absoluteMin = 1;
+            Int64 absoluteMin = 0;
             Int64 absoluteMax = 3;
             
             Int64 deltaMin = 1;
             Int64 deltaMax = 2;
             
+            Int64 zero = 1;
             Int64 one = 1;
             Int64 two = 2;
             Int64 three = 3;
             
-            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(two, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(two, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
         }
 
         [TestMethod]
@@ -368,8 +371,8 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestInt64MinMaxDelta()
         {
+            Int64 zero = 0;
             Int64 one = 1;
-            Int64 zero = 1;
             Int64 two = 2;
             Int64 three = 3;
             Int64 four = 4;
@@ -397,19 +400,20 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestUInt16DeltaClamp()
         {
-            UInt16 absoluteMin = 1;
+            UInt16 absoluteMin = 0;
             UInt16 absoluteMax = 3;
             
             UInt16 deltaMin = 1;
             UInt16 deltaMax = 2;
             
+            UInt16 zero = 1;
             UInt16 one = 1;
             UInt16 two = 2;
             UInt16 three = 3;
             
-            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(two, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(two, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
         }
 
         [TestMethod]
@@ -443,8 +447,8 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestUInt16MinMaxDelta()
         {
+            UInt16 zero = 0;
             UInt16 one = 1;
-            UInt16 zero = 1;
             UInt16 two = 2;
             UInt16 three = 3;
             UInt16 four = 4;
@@ -472,19 +476,20 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestUInt32DeltaClamp()
         {
-            UInt32 absoluteMin = 1;
+            UInt32 absoluteMin = 0;
             UInt32 absoluteMax = 3;
             
             UInt32 deltaMin = 1;
             UInt32 deltaMax = 2;
             
+            UInt32 zero = 1;
             UInt32 one = 1;
             UInt32 two = 2;
             UInt32 three = 3;
             
-            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(two, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(two, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
         }
 
         [TestMethod]
@@ -518,8 +523,8 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestUInt32MinMaxDelta()
         {
+            UInt32 zero = 0;
             UInt32 one = 1;
-            UInt32 zero = 1;
             UInt32 two = 2;
             UInt32 three = 3;
             UInt32 four = 4;
@@ -547,19 +552,20 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestUInt64DeltaClamp()
         {
-            UInt64 absoluteMin = 1;
+            UInt64 absoluteMin = 0;
             UInt64 absoluteMax = 3;
             
             UInt64 deltaMin = 1;
             UInt64 deltaMax = 2;
             
+            UInt64 zero = 1;
             UInt64 one = 1;
             UInt64 two = 2;
             UInt64 three = 3;
             
-            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(two, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(two, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
         }
 
         [TestMethod]
@@ -593,8 +599,8 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestUInt64MinMaxDelta()
         {
+            UInt64 zero = 0;
             UInt64 one = 1;
-            UInt64 zero = 1;
             UInt64 two = 2;
             UInt64 three = 3;
             UInt64 four = 4;
@@ -622,19 +628,20 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestDoubleDeltaClamp()
         {
-            Double absoluteMin = 1;
+            Double absoluteMin = 0;
             Double absoluteMax = 3;
             
             Double deltaMin = 1;
             Double deltaMax = 2;
             
+            Double zero = 1;
             Double one = 1;
             Double two = 2;
             Double three = 3;
             
-            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(two, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(two, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
         }
 
         [TestMethod]
@@ -668,8 +675,8 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestDoubleMinMaxDelta()
         {
+            Double zero = 0;
             Double one = 1;
-            Double zero = 1;
             Double two = 2;
             Double three = 3;
             Double four = 4;
@@ -697,19 +704,20 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestSingleDeltaClamp()
         {
-            Single absoluteMin = 1;
+            Single absoluteMin = 0;
             Single absoluteMax = 3;
             
             Single deltaMin = 1;
             Single deltaMax = 2;
             
+            Single zero = 1;
             Single one = 1;
             Single two = 2;
             Single three = 3;
             
-            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(two, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(two, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
         }
 
         [TestMethod]
@@ -743,8 +751,8 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestSingleMinMaxDelta()
         {
+            Single zero = 0;
             Single one = 1;
-            Single zero = 1;
             Single two = 2;
             Single three = 3;
             Single four = 4;
@@ -772,19 +780,20 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestByteDeltaClamp()
         {
-            Byte absoluteMin = 1;
+            Byte absoluteMin = 0;
             Byte absoluteMax = 3;
             
             Byte deltaMin = 1;
             Byte deltaMax = 2;
             
+            Byte zero = 1;
             Byte one = 1;
             Byte two = 2;
             Byte three = 3;
             
-            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(two, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(two, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
         }
 
         [TestMethod]
@@ -818,8 +827,8 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void TestByteMinMaxDelta()
         {
+            Byte zero = 0;
             Byte one = 1;
-            Byte zero = 1;
             Byte two = 2;
             Byte three = 3;
             Byte four = 4;

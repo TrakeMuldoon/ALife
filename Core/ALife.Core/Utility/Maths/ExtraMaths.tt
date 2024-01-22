@@ -88,19 +88,19 @@ namespace ALife.Core.Utility.Maths
         /// <summary>
         /// Applies a delta to a value, clamping the result between a minimum and maximum value.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="newValue">The new value we want to set.</param>
         /// <param name="currentValue">The current value.</param>
         /// <param name="deltaMin">The delta minimum.</param>
         /// <param name="deltamax">The deltamax.</param>
         /// <param name="absoluteMin">The absolute minimum.</param>
         /// <param name="absoluteMax">The absolute maximum.</param>
         /// <returns>The delta-clampped value.</returns>
-        public static <#= type.Name #> DeltaClamp(<#= type.Name #> value, <#= type.Name #> currentValue, <#= type.Name #> deltaMin, <#= type.Name #> deltamax, <#= type.Name #> absoluteMin, <#= type.Name #> absoluteMax)
+        public static <#= type.Name #> DeltaClamp(<#= type.Name #> newValue, <#= type.Name #> currentValue, <#= type.Name #> deltaMin, <#= type.Name #> deltamax, <#= type.Name #> absoluteMin, <#= type.Name #> absoluteMax)
         {
-            <#= type.Name #> delta = (<#= type.Name #>)(value - currentValue);
+            <#= type.Name #> delta = (<#= type.Name #>)(newValue - currentValue);
             <#= type.Name #> realDelta = Clamp(delta, deltaMin, deltamax);
-            <#= type.Name #> newValue = (<#= type.Name #>)(currentValue + realDelta);
-            <#= type.Name #> clampedValue = Clamp(newValue, absoluteMin, absoluteMax);
+            <#= type.Name #> newActualValue = (<#= type.Name #>)(currentValue + realDelta);
+            <#= type.Name #> clampedValue = Clamp(newActualValue, absoluteMin, absoluteMax);
             return clampedValue;
         }
 

@@ -1,5 +1,5 @@
-﻿using ALife.Core.Utility.Random;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using ALife.Core.Utility.Random;
 
 namespace ALife.Core.Utility.Colours
 {
@@ -212,6 +212,15 @@ namespace ALife.Core.Utility.Colours
         public static bool operator ==(HsvColour left, HsvColour right)
         {
             return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Clones this instance.
+        /// </summary>
+        /// <returns>The cloned instance.</returns>
+        public IColour Clone()
+        {
+            return new Colour(this);
         }
 
         /// <summary>

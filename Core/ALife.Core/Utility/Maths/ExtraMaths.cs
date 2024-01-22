@@ -76,19 +76,19 @@ namespace ALife.Core.Utility.Maths
         /// <summary>
         /// Applies a delta to a value, clamping the result between a minimum and maximum value.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="newValue">The new value we want to set.</param>
         /// <param name="currentValue">The current value.</param>
         /// <param name="deltaMin">The delta minimum.</param>
         /// <param name="deltamax">The deltamax.</param>
         /// <param name="absoluteMin">The absolute minimum.</param>
         /// <param name="absoluteMax">The absolute maximum.</param>
         /// <returns>The delta-clampped value.</returns>
-        public static Int16 DeltaClamp(Int16 value, Int16 currentValue, Int16 deltaMin, Int16 deltamax, Int16 absoluteMin, Int16 absoluteMax)
+        public static Int16 DeltaClamp(Int16 newValue, Int16 currentValue, Int16 deltaMin, Int16 deltamax, Int16 absoluteMin, Int16 absoluteMax)
         {
-            Int16 delta = (Int16)(value - currentValue);
+            Int16 delta = (Int16)(newValue - currentValue);
             Int16 realDelta = Clamp(delta, deltaMin, deltamax);
-            Int16 newValue = (Int16)(currentValue + realDelta);
-            Int16 clampedValue = Clamp(newValue, absoluteMin, absoluteMax);
+            Int16 newActualValue = (Int16)(currentValue + realDelta);
+            Int16 clampedValue = Clamp(newActualValue, absoluteMin, absoluteMax);
             return clampedValue;
         }
 
@@ -193,19 +193,19 @@ namespace ALife.Core.Utility.Maths
         /// <summary>
         /// Applies a delta to a value, clamping the result between a minimum and maximum value.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="newValue">The new value we want to set.</param>
         /// <param name="currentValue">The current value.</param>
         /// <param name="deltaMin">The delta minimum.</param>
         /// <param name="deltamax">The deltamax.</param>
         /// <param name="absoluteMin">The absolute minimum.</param>
         /// <param name="absoluteMax">The absolute maximum.</param>
         /// <returns>The delta-clampped value.</returns>
-        public static Int32 DeltaClamp(Int32 value, Int32 currentValue, Int32 deltaMin, Int32 deltamax, Int32 absoluteMin, Int32 absoluteMax)
+        public static Int32 DeltaClamp(Int32 newValue, Int32 currentValue, Int32 deltaMin, Int32 deltamax, Int32 absoluteMin, Int32 absoluteMax)
         {
-            Int32 delta = (Int32)(value - currentValue);
+            Int32 delta = (Int32)(newValue - currentValue);
             Int32 realDelta = Clamp(delta, deltaMin, deltamax);
-            Int32 newValue = (Int32)(currentValue + realDelta);
-            Int32 clampedValue = Clamp(newValue, absoluteMin, absoluteMax);
+            Int32 newActualValue = (Int32)(currentValue + realDelta);
+            Int32 clampedValue = Clamp(newActualValue, absoluteMin, absoluteMax);
             return clampedValue;
         }
 
@@ -310,19 +310,19 @@ namespace ALife.Core.Utility.Maths
         /// <summary>
         /// Applies a delta to a value, clamping the result between a minimum and maximum value.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="newValue">The new value we want to set.</param>
         /// <param name="currentValue">The current value.</param>
         /// <param name="deltaMin">The delta minimum.</param>
         /// <param name="deltamax">The deltamax.</param>
         /// <param name="absoluteMin">The absolute minimum.</param>
         /// <param name="absoluteMax">The absolute maximum.</param>
         /// <returns>The delta-clampped value.</returns>
-        public static Int64 DeltaClamp(Int64 value, Int64 currentValue, Int64 deltaMin, Int64 deltamax, Int64 absoluteMin, Int64 absoluteMax)
+        public static Int64 DeltaClamp(Int64 newValue, Int64 currentValue, Int64 deltaMin, Int64 deltamax, Int64 absoluteMin, Int64 absoluteMax)
         {
-            Int64 delta = (Int64)(value - currentValue);
+            Int64 delta = (Int64)(newValue - currentValue);
             Int64 realDelta = Clamp(delta, deltaMin, deltamax);
-            Int64 newValue = (Int64)(currentValue + realDelta);
-            Int64 clampedValue = Clamp(newValue, absoluteMin, absoluteMax);
+            Int64 newActualValue = (Int64)(currentValue + realDelta);
+            Int64 clampedValue = Clamp(newActualValue, absoluteMin, absoluteMax);
             return clampedValue;
         }
 
@@ -427,19 +427,19 @@ namespace ALife.Core.Utility.Maths
         /// <summary>
         /// Applies a delta to a value, clamping the result between a minimum and maximum value.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="newValue">The new value we want to set.</param>
         /// <param name="currentValue">The current value.</param>
         /// <param name="deltaMin">The delta minimum.</param>
         /// <param name="deltamax">The deltamax.</param>
         /// <param name="absoluteMin">The absolute minimum.</param>
         /// <param name="absoluteMax">The absolute maximum.</param>
         /// <returns>The delta-clampped value.</returns>
-        public static UInt16 DeltaClamp(UInt16 value, UInt16 currentValue, UInt16 deltaMin, UInt16 deltamax, UInt16 absoluteMin, UInt16 absoluteMax)
+        public static UInt16 DeltaClamp(UInt16 newValue, UInt16 currentValue, UInt16 deltaMin, UInt16 deltamax, UInt16 absoluteMin, UInt16 absoluteMax)
         {
-            UInt16 delta = (UInt16)(value - currentValue);
+            UInt16 delta = (UInt16)(newValue - currentValue);
             UInt16 realDelta = Clamp(delta, deltaMin, deltamax);
-            UInt16 newValue = (UInt16)(currentValue + realDelta);
-            UInt16 clampedValue = Clamp(newValue, absoluteMin, absoluteMax);
+            UInt16 newActualValue = (UInt16)(currentValue + realDelta);
+            UInt16 clampedValue = Clamp(newActualValue, absoluteMin, absoluteMax);
             return clampedValue;
         }
 
@@ -544,19 +544,19 @@ namespace ALife.Core.Utility.Maths
         /// <summary>
         /// Applies a delta to a value, clamping the result between a minimum and maximum value.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="newValue">The new value we want to set.</param>
         /// <param name="currentValue">The current value.</param>
         /// <param name="deltaMin">The delta minimum.</param>
         /// <param name="deltamax">The deltamax.</param>
         /// <param name="absoluteMin">The absolute minimum.</param>
         /// <param name="absoluteMax">The absolute maximum.</param>
         /// <returns>The delta-clampped value.</returns>
-        public static UInt32 DeltaClamp(UInt32 value, UInt32 currentValue, UInt32 deltaMin, UInt32 deltamax, UInt32 absoluteMin, UInt32 absoluteMax)
+        public static UInt32 DeltaClamp(UInt32 newValue, UInt32 currentValue, UInt32 deltaMin, UInt32 deltamax, UInt32 absoluteMin, UInt32 absoluteMax)
         {
-            UInt32 delta = (UInt32)(value - currentValue);
+            UInt32 delta = (UInt32)(newValue - currentValue);
             UInt32 realDelta = Clamp(delta, deltaMin, deltamax);
-            UInt32 newValue = (UInt32)(currentValue + realDelta);
-            UInt32 clampedValue = Clamp(newValue, absoluteMin, absoluteMax);
+            UInt32 newActualValue = (UInt32)(currentValue + realDelta);
+            UInt32 clampedValue = Clamp(newActualValue, absoluteMin, absoluteMax);
             return clampedValue;
         }
 
@@ -661,19 +661,19 @@ namespace ALife.Core.Utility.Maths
         /// <summary>
         /// Applies a delta to a value, clamping the result between a minimum and maximum value.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="newValue">The new value we want to set.</param>
         /// <param name="currentValue">The current value.</param>
         /// <param name="deltaMin">The delta minimum.</param>
         /// <param name="deltamax">The deltamax.</param>
         /// <param name="absoluteMin">The absolute minimum.</param>
         /// <param name="absoluteMax">The absolute maximum.</param>
         /// <returns>The delta-clampped value.</returns>
-        public static UInt64 DeltaClamp(UInt64 value, UInt64 currentValue, UInt64 deltaMin, UInt64 deltamax, UInt64 absoluteMin, UInt64 absoluteMax)
+        public static UInt64 DeltaClamp(UInt64 newValue, UInt64 currentValue, UInt64 deltaMin, UInt64 deltamax, UInt64 absoluteMin, UInt64 absoluteMax)
         {
-            UInt64 delta = (UInt64)(value - currentValue);
+            UInt64 delta = (UInt64)(newValue - currentValue);
             UInt64 realDelta = Clamp(delta, deltaMin, deltamax);
-            UInt64 newValue = (UInt64)(currentValue + realDelta);
-            UInt64 clampedValue = Clamp(newValue, absoluteMin, absoluteMax);
+            UInt64 newActualValue = (UInt64)(currentValue + realDelta);
+            UInt64 clampedValue = Clamp(newActualValue, absoluteMin, absoluteMax);
             return clampedValue;
         }
 
@@ -778,19 +778,19 @@ namespace ALife.Core.Utility.Maths
         /// <summary>
         /// Applies a delta to a value, clamping the result between a minimum and maximum value.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="newValue">The new value we want to set.</param>
         /// <param name="currentValue">The current value.</param>
         /// <param name="deltaMin">The delta minimum.</param>
         /// <param name="deltamax">The deltamax.</param>
         /// <param name="absoluteMin">The absolute minimum.</param>
         /// <param name="absoluteMax">The absolute maximum.</param>
         /// <returns>The delta-clampped value.</returns>
-        public static Double DeltaClamp(Double value, Double currentValue, Double deltaMin, Double deltamax, Double absoluteMin, Double absoluteMax)
+        public static Double DeltaClamp(Double newValue, Double currentValue, Double deltaMin, Double deltamax, Double absoluteMin, Double absoluteMax)
         {
-            Double delta = (Double)(value - currentValue);
+            Double delta = (Double)(newValue - currentValue);
             Double realDelta = Clamp(delta, deltaMin, deltamax);
-            Double newValue = (Double)(currentValue + realDelta);
-            Double clampedValue = Clamp(newValue, absoluteMin, absoluteMax);
+            Double newActualValue = (Double)(currentValue + realDelta);
+            Double clampedValue = Clamp(newActualValue, absoluteMin, absoluteMax);
             return clampedValue;
         }
 
@@ -895,19 +895,19 @@ namespace ALife.Core.Utility.Maths
         /// <summary>
         /// Applies a delta to a value, clamping the result between a minimum and maximum value.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="newValue">The new value we want to set.</param>
         /// <param name="currentValue">The current value.</param>
         /// <param name="deltaMin">The delta minimum.</param>
         /// <param name="deltamax">The deltamax.</param>
         /// <param name="absoluteMin">The absolute minimum.</param>
         /// <param name="absoluteMax">The absolute maximum.</param>
         /// <returns>The delta-clampped value.</returns>
-        public static Single DeltaClamp(Single value, Single currentValue, Single deltaMin, Single deltamax, Single absoluteMin, Single absoluteMax)
+        public static Single DeltaClamp(Single newValue, Single currentValue, Single deltaMin, Single deltamax, Single absoluteMin, Single absoluteMax)
         {
-            Single delta = (Single)(value - currentValue);
+            Single delta = (Single)(newValue - currentValue);
             Single realDelta = Clamp(delta, deltaMin, deltamax);
-            Single newValue = (Single)(currentValue + realDelta);
-            Single clampedValue = Clamp(newValue, absoluteMin, absoluteMax);
+            Single newActualValue = (Single)(currentValue + realDelta);
+            Single clampedValue = Clamp(newActualValue, absoluteMin, absoluteMax);
             return clampedValue;
         }
 
@@ -1012,19 +1012,19 @@ namespace ALife.Core.Utility.Maths
         /// <summary>
         /// Applies a delta to a value, clamping the result between a minimum and maximum value.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="newValue">The new value we want to set.</param>
         /// <param name="currentValue">The current value.</param>
         /// <param name="deltaMin">The delta minimum.</param>
         /// <param name="deltamax">The deltamax.</param>
         /// <param name="absoluteMin">The absolute minimum.</param>
         /// <param name="absoluteMax">The absolute maximum.</param>
         /// <returns>The delta-clampped value.</returns>
-        public static Decimal DeltaClamp(Decimal value, Decimal currentValue, Decimal deltaMin, Decimal deltamax, Decimal absoluteMin, Decimal absoluteMax)
+        public static Decimal DeltaClamp(Decimal newValue, Decimal currentValue, Decimal deltaMin, Decimal deltamax, Decimal absoluteMin, Decimal absoluteMax)
         {
-            Decimal delta = (Decimal)(value - currentValue);
+            Decimal delta = (Decimal)(newValue - currentValue);
             Decimal realDelta = Clamp(delta, deltaMin, deltamax);
-            Decimal newValue = (Decimal)(currentValue + realDelta);
-            Decimal clampedValue = Clamp(newValue, absoluteMin, absoluteMax);
+            Decimal newActualValue = (Decimal)(currentValue + realDelta);
+            Decimal clampedValue = Clamp(newActualValue, absoluteMin, absoluteMax);
             return clampedValue;
         }
 
@@ -1129,19 +1129,19 @@ namespace ALife.Core.Utility.Maths
         /// <summary>
         /// Applies a delta to a value, clamping the result between a minimum and maximum value.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="newValue">The new value we want to set.</param>
         /// <param name="currentValue">The current value.</param>
         /// <param name="deltaMin">The delta minimum.</param>
         /// <param name="deltamax">The deltamax.</param>
         /// <param name="absoluteMin">The absolute minimum.</param>
         /// <param name="absoluteMax">The absolute maximum.</param>
         /// <returns>The delta-clampped value.</returns>
-        public static Byte DeltaClamp(Byte value, Byte currentValue, Byte deltaMin, Byte deltamax, Byte absoluteMin, Byte absoluteMax)
+        public static Byte DeltaClamp(Byte newValue, Byte currentValue, Byte deltaMin, Byte deltamax, Byte absoluteMin, Byte absoluteMax)
         {
-            Byte delta = (Byte)(value - currentValue);
+            Byte delta = (Byte)(newValue - currentValue);
             Byte realDelta = Clamp(delta, deltaMin, deltamax);
-            Byte newValue = (Byte)(currentValue + realDelta);
-            Byte clampedValue = Clamp(newValue, absoluteMin, absoluteMax);
+            Byte newActualValue = (Byte)(currentValue + realDelta);
+            Byte clampedValue = Clamp(newActualValue, absoluteMin, absoluteMax);
             return clampedValue;
         }
 

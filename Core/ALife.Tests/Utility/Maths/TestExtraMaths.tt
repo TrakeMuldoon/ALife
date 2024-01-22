@@ -110,19 +110,20 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void Test<#= type.Name #>DeltaClamp()
         {
-            <#= type.Name #> absoluteMin = 1;
+            <#= type.Name #> absoluteMin = 0;
             <#= type.Name #> absoluteMax = 3;
             
             <#= type.Name #> deltaMin = 1;
             <#= type.Name #> deltaMax = 2;
             
+            <#= type.Name #> zero = 1;
             <#= type.Name #> one = 1;
             <#= type.Name #> two = 2;
             <#= type.Name #> three = 3;
             
-            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(two, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, one, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMaths.DeltaClamp(two, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
         }
 
         [TestMethod]
@@ -156,8 +157,8 @@ namespace ALife.Tests.Utility.Maths
         [TestMethod]
         public void Test<#= type.Name #>MinMaxDelta()
         {
+            <#= type.Name #> zero = 0;
             <#= type.Name #> one = 1;
-            <#= type.Name #> zero = 1;
             <#= type.Name #> two = 2;
             <#= type.Name #> three = 3;
             <#= type.Name #> four = 4;

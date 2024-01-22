@@ -38,6 +38,12 @@ namespace ALife.Core.Utility.Colours
         bool WasPredefined { get; }
 
         /// <summary>
+        /// Clones this instance.
+        /// </summary>
+        /// <returns>The cloned instance.</returns>
+        IColour Clone();
+
+        /// <summary>
         /// Creates a Colour object from the specified AHSL values.
         /// </summary>
         /// <param name="alpha">The alpha.</param>

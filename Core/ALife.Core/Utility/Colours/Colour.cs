@@ -170,6 +170,15 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
+        /// Clones this instance.
+        /// </summary>
+        /// <returns>The cloned instance.</returns>
+        public IColour Clone()
+        {
+            return new Colour(this);
+        }
+
+        /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
         /// <param name="other">An object to compare with this object.</param>

@@ -10,7 +10,6 @@ namespace ALife.Core.WorldObjects.Agents.Senses
     {
         public readonly string Name;
         public readonly List<SenseInput> SubInputs = new List<SenseInput>();
-        //TODO: ON this ticket!! abstract this out. Maybe a default param?
         public readonly string CollisionLevel;
         private readonly ICollisionMap<WorldObject> CollisionMap;
         readonly WorldObject parent;

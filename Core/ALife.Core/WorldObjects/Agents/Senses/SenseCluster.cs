@@ -32,10 +32,12 @@ namespace ALife.Core.WorldObjects.Agents.Senses
         {
             Shape.Reset();
 
+            //TODO: Perhaps abstract this out into a property of the World itself? The SenseClusters shouldn't necessarily
+            // know about collision maps
             List<WorldObject> collisions = CollisionMap.DetectCollisions(this, parent);
 
-            //This is for debug purposes. The shape of a "sense" is not viewable to other WorldObjects, so changing it
-            // does not impact the Simulation Worldstate.
+            //This is for debug purposes. The shape of a "sense" is not viewable to other WorldObjects, so changing the 
+            // colour does not impact the Simulation Worldstate.
             Shape.Color = collisions.Count > 0 ? System.Drawing.Color.DodgerBlue : System.Drawing.Color.DarkBlue;
 
             //Set the value for each input based on the collisions detected.

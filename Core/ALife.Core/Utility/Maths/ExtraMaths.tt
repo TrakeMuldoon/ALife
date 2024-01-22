@@ -5,7 +5,7 @@
     typeof(short), typeof(int), typeof(long),
     typeof(ushort), typeof(uint), typeof(ulong),
     typeof(double), typeof(float), typeof(decimal),
-    typeof(byte), typeof(sbyte)
+    typeof(byte)
     };
 #>
 using System;
@@ -13,14 +13,15 @@ using System.Linq;
 
 namespace ALife.Core.Utility.Maths
 {
-	/// <summary>
+    /// <summary>
     /// Provides extra mathematical functions.
     /// TODO: This should use generic math instead of being generated, but we're stuck with .NET Standard 2 for now...
     /// </summary>
     public static class ExtraMaths
     {
         <# foreach (var type in types) { 
-		#>
+        #>
+
         /// <summary>
         /// Applies a circular clamp to the value (i.e. if the value is outside the range, it wraps around).
         /// </summary>
@@ -30,10 +31,38 @@ namespace ALife.Core.Utility.Maths
         /// <returns>The clamped value.</returns>
         public static <#= type.Name #> CircularClamp(<#= type.Name #> value, <#= type.Name #> min, <#= type.Name #> max)
         {
-            <#= type.Name #> adder = (<#= type.Name #>)(max - min);
-            <#= type.Name #> remainder = (<#= type.Name #>)(value % adder);
-            <#= type.Name #> actualValue = (<#= type.Name #>)(remainder + min);
-            return actualValue;
+            <#= type.Name #> actualValue = value;
+
+            (<#= type.Name #> actualMin, <#= type.Name #> actualMax) = (min, max);
+            if(min > max)
+            {
+                (actualMin, actualMax) = (max, min);
+            }
+            if (value >= actualMin && value < actualMax)
+            {
+                return value;
+            }
+
+            <#= type.Name #> negativeCorrection = 0;
+            if (min < 0)
+            {
+                negativeCorrection = min;
+                actualMin = 0;
+                actualMax = (<#= type.Name #>)(max - negativeCorrection);
+                actualValue = (<#= type.Name #>)(value - negativeCorrection);
+            }
+
+            <#= type.Name #> difference = (<#= type.Name #>)(actualMax - actualMin);
+            <#= type.Name #> remainder = (<#= type.Name #>)(actualValue % difference);
+            
+            <#= type.Name #> actualRemainder = remainder;
+            if (remainder < 0)
+            {
+                actualRemainder = (<#= type.Name #>)(remainder + difference);
+            }
+
+            <#= type.Name #> output = (<#= type.Name #>)(actualRemainder + actualMin + negativeCorrection);
+            return output;
         }
 
         /// <summary>
@@ -109,7 +138,7 @@ namespace ALife.Core.Utility.Maths
             <#= type.Name #> delta = (<#= type.Name #>)(max - min);
             return delta;
         }
-		<#
-		} #>
+        <#
+        } #>
     }
 }

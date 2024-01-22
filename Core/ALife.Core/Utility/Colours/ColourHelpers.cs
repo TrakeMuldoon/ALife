@@ -1,74 +1,36 @@
-﻿using System;
-using ALife.Core.Utility.Maths;
+﻿using ALife.Core.Utility.Maths;
+using System;
 
 namespace ALife.Core.Utility.Colours
 {
     /// <summary>
-    /// Internal Colour helper methods.
+    /// Helper methods for dealing with colours.
     /// </summary>
-    internal static class ColourHelpers
+    public static class ColourHelpers
     {
         /// <summary>
-        /// Converts a double on a 0 to 1 range to the byte representation.
+        /// Converts the HSL values to RGB values.
         /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>The byte representation of the value.</returns>
-        internal static byte DoubleToByte(double value)
+        /// <param name="hue">The hue.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="lightness">The lightness.</param>
+        /// <param name="red">The red channel.</param>
+        /// <param name="green">The green channel.</param>
+        /// <param name="blue">The blue channel.</param>
+        public static void ConvertHslToRgb(int hue, double saturation, double lightness, out byte red, out byte green, out byte blue)
         {
-            if(value < 0)
-            {
-                return byte.MinValue;
-            }
-            if(value > 1)
-            {
-                return byte.MaxValue;
-            }
-            byte output = (byte)Math.Round(value * byte.MaxValue);
-            return output;
-        }
-
-        /// <summary>
-        /// Converts an int on a 0 to 255 range to the byte representation.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>The byte representation of the value.</returns>
-        internal static byte IntToByte(int value)
-        {
-            if(value < byte.MinValue)
-            {
-                return byte.MinValue;
-            }
-            if(value > byte.MaxValue)
-            {
-                return byte.MaxValue;
-            }
-            return (byte)value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="hue"></param>
-        /// <param name="saturation"></param>
-        /// <param name="lightness"></param>
-        /// <param name="r"></param>
-        /// <param name="g"></param>
-        /// <param name="b"></param>
-        internal static void ConvertHslToRgb(int hue, double saturation, double lightness, out byte r, out byte g, out byte b)
-        {
-            double red = 0;
-            double green = 0;
-            double blue = 0;
-
             double actualHue = ExtraMaths.CircularClamp(hue, 0, 360) / 360d;
             double actualSaturation = ExtraMaths.Clamp(saturation, 0, 1);
             double actualLightness = ExtraMaths.Clamp(lightness, 0, 1);
 
+            double r = 0;
+            double g = 0;
+            double b = 0;
             if(actualSaturation == 0)
             {
-                red = 1;
-                green = 1;
-                blue = 1;
+                r = 1;
+                g = 1;
+                b = 1;
             }
             else
             {
@@ -84,31 +46,39 @@ namespace ALife.Core.Utility.Colours
 
                 double p = 2 * actualLightness - q;
                 double third = 1 / 3d;
-                red = GetHslColourComponent(p, q, actualHue + third);
-                green = GetHslColourComponent(p, q, actualHue);
-                blue = GetHslColourComponent(p, q, actualHue - third);
+                r = GetHslColourComponent(p, q, actualHue + third);
+                g = GetHslColourComponent(p, q, actualHue);
+                b = GetHslColourComponent(p, q, actualHue - third);
             }
 
-            r = DoubleToByte(red);
-            g = DoubleToByte(green);
-            b = DoubleToByte(blue);
+            red = DoubleToByte(r);
+            green = DoubleToByte(g);
+            blue = DoubleToByte(b);
         }
 
-        internal static void ConvertHsvToRgb(int hue, double saturation, double value, out byte r, out byte g, out byte v)
+        /// <summary>
+        /// Converts the HSV values to RGB values.
+        /// </summary>
+        /// <param name="hue">The hue.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="red">The red channel.</param>
+        /// <param name="green">The green channel.</param>
+        /// <param name="blue">The blue channel.</param>
+        public static void ConvertHsvToRgb(int hue, double saturation, double value, out byte red, out byte green, out byte blue)
         {
-            double red = 0;
-            double green = 0;
-            double blue = 0;
-
             double actualHue = ExtraMaths.CircularClamp(hue, 0, 360);
             double actualSaturation = ExtraMaths.Clamp(saturation, 0, 1);
             double actualValue = ExtraMaths.Clamp(value, 0, 1);
 
+            double r = 0;
+            double g = 0;
+            double b = 0;
             if(actualSaturation == 0)
             {
-                red = actualValue;
-                green = actualValue;
-                blue = actualValue;
+                r = actualValue;
+                g = actualValue;
+                b = actualValue;
             }
             else if(actualValue > 0)
             {
@@ -118,153 +88,212 @@ namespace ALife.Core.Utility.Colours
                 double pv = actualValue * (1 - actualSaturation);
                 double qv = actualValue * (1 - actualSaturation * f);
                 double tv = actualValue * (1 - actualSaturation * (1 - f));
-
                 switch(i)
                 {
                     // Red is dominant
                     case 0:
-                        red = actualValue;
-                        green = tv;
-                        blue = pv;
+                        r = actualValue;
+                        g = tv;
+                        b = pv;
                         break;
 
                     case 5:
-                        red = actualValue;
-                        green = pv;
-                        blue = qv;
+                        r = actualValue;
+                        g = pv;
+                        b = qv;
                         break;
 
                     // Green is dominant
                     case 1:
-                        red = qv;
-                        green = actualValue;
-                        blue = pv;
+                        r = qv;
+                        g = actualValue;
+                        b = pv;
                         break;
 
                     case 2:
-                        red = pv;
-                        green = actualValue;
-                        blue = tv;
+                        r = pv;
+                        g = actualValue;
+                        b = tv;
                         break;
 
                     // Blue is dominant
                     case 3:
-                        red = pv;
-                        green = qv;
-                        blue = actualValue;
+                        r = pv;
+                        g = qv;
+                        b = actualValue;
                         break;
 
                     case 4:
-                        red = tv;
-                        green = pv;
-                        blue = actualValue;
+                        r = tv;
+                        g = pv;
+                        b = actualValue;
                         break;
 
                     // Boundary Protection
                     case 6:
-                        red = actualValue;
-                        green = tv;
-                        blue = pv;
+                        r = actualValue;
+                        g = tv;
+                        b = pv;
                         break;
 
                     case -1:
-                        red = actualValue;
-                        green = pv;
-                        blue = qv;
+                        r = actualValue;
+                        g = pv;
+                        b = qv;
                         break;
 
                     default:
-                        red = actualValue;
-                        green = actualValue;
-                        blue = actualValue;
+                        r = actualValue;
+                        g = actualValue;
+                        b = actualValue;
                         break;
                 }
             }
 
-            r = DoubleToByte(red);
-            g = DoubleToByte(green);
-            b = DoubleToByte(blue);
+            red = DoubleToByte(r);
+            green = DoubleToByte(g);
+            blue = DoubleToByte(b);
         }
 
         /// <summary>
-        /// Converts RGB colour values to HSL colour values.
+        /// Converts the RGB values to HSL values.
         /// </summary>
-        /// <param name="r">Red Channel.</param>
-        /// <param name="g">Green Channel.</param>
-        /// <param name="b">Blue Channel.</param>
-        /// <param name="h">Hue.</param>
-        /// <param name="s">Saturation.</param>
-        /// <param name="l">Lightness.</param>
-        internal static void ConvertRgbToHsl(byte r, byte g, byte b, out int h, out double s, out double l)
+        /// <param name="red">The red channel.</param>
+        /// <param name="green">The green channel.</param>
+        /// <param name="blue">The blue channel.</param>
+        /// <param name="hue">The hue.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="lightness">The lightness.</param>
+        public static void ConvertRgbToHsl(byte red, byte green, byte blue, out int hue, out double saturation, out double lightness)
         {
-            double rd = r / 255d;
-            double gd = g / 255d;
-            double bd = b / 255d;
+            double r = red / 255d;
+            double g = green / 255d;
+            double b = blue / 255d;
 
-            double min = ExtraMaths.Minimum(rd, gd, bd);
-            double max = ExtraMaths.Maximum(rd, gd, bd);
+            double min = ExtraMaths.Minimum(r, g, b);
+            double max = ExtraMaths.Maximum(r, g, b);
             double delta = max - min;
             double minMaxSum = min + max;
-            l = minMaxSum / 2d;
-            if(l <= 0)
+            lightness = minMaxSum / 2d;
+            if(lightness <= 0)
             {
-                h = 0;
-                s = 0;
-                l = 0;
+                hue = 0;
+                saturation = 0;
+                lightness = 0;
                 return;
             }
 
-            double hD = 0;
+            double h = 0;
             if(delta == 0)
             {
-                s = 0;
+                saturation = 0;
             }
             else
             {
-                if(l < 0.5)
+                if(lightness < 0.5)
                 {
-                    s = delta / minMaxSum;
+                    saturation = delta / minMaxSum;
                 }
                 else
                 {
-                    s = delta / (2 - delta);
+                    saturation = delta / (2 - delta);
                 }
 
-                double deltaR = (((max - rd) / 6d) + (delta / 2d)) / delta;
-                double deltaG = (((max - gd) / 6d) + (delta / 2d)) / delta;
-                double deltaB = (((max - bd) / 6d) + (delta / 2d)) / delta;
-
-                if(rd == max)
+                if(r == max)
                 {
-                    hD = deltaB - deltaG;
+                    h = (g - b) / 6 / delta;
                 }
-                else if(gd == max)
+                else if(g == max)
                 {
-                    hD = (1d / 3d) + deltaR - deltaB;
+                    h = (1 / 3d) + ((b - r) / 6 / delta);
                 }
-                else if(bd == max)
+                else
                 {
-                    hD = (2d / 3d) + deltaG - deltaR;
+                    h = (2 / 3d) + ((r - g) / 6 / delta);
                 }
 
-                if(hD < 0)
+                if(h < 0)
                 {
-                    hD += 1;
+                    h += 1;
                 }
-                if(hD > 1)
+                if(h > 1)
                 {
-                    hD -= 1;
+                    h -= 1;
                 }
             }
 
-            h = (int)Math.Round(hD * 360d);
-            s = Math.Round(s, 3);
-            l = Math.Round(l, 3);
+            hue = (int)Math.Round(h * 360);
         }
 
-        internal static void ConvertRgbToHsv(byte r, byte g, byte b, out int h, out double s, out double v)
+        /// <summary>
+        /// Converts the RGB values to HSV values.
+        /// </summary>
+        /// <param name="red">The red channel.</param>
+        /// <param name="green">The green channel.</param>
+        /// <param name="blue">The blue channel.</param>
+        /// <param name="hue">The hue.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="value">The value.</param>
+        public static void ConvertRgbToHsv(byte red, byte green, byte blue, out int hue, out double saturation, out double value)
         {
+            double r = red / 255d;
+            double g = green / 255d;
+            double b = blue / 255d;
 
+            double min = ExtraMaths.Minimum(r, g, b);
+            double max = ExtraMaths.Maximum(r, g, b);
+            double delta = max - min;
+            value = max;
+
+            double h = 0;
+            if(max == 0)
+            {
+                saturation = 0;
+            }
+            else
+            {
+                saturation = delta / max;
+
+                if(r == max)
+                {
+                    h = (g - b) / delta;
+                }
+                else if(g == max)
+                {
+                    h = 2 + (b - r) / delta;
+                }
+                else
+                {
+                    h = 4 + (r - g) / delta;
+                }
+
+                h *= 60;
+                if(h < 0)
+                {
+                    h += 360;
+                }
+            }
+
+            hue = (int)Math.Round(h);
+        }
+
+        /// <summary>
+        /// Converts a double on a 0 to 1 range to the byte representation.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>The byte representation of the value.</returns>
+        private static byte DoubleToByte(double value)
+        {
+            if(value < 0)
+            {
+                return byte.MinValue;
+            }
+            if(value > 1)
+            {
+                return byte.MaxValue;
+            }
+            byte output = (byte)Math.Round(value * byte.MaxValue);
+            return output;
         }
 
         /// <summary>
@@ -273,7 +302,7 @@ namespace ALife.Core.Utility.Colours
         /// <param name="p">The p.</param>
         /// <param name="q">The q.</param>
         /// <param name="t">The t.</param>
-        /// <returns></returns>
+        /// <returns>The value of the HSL component.</returns>
         private static double GetHslColourComponent(double p, double q, double t)
         {
             double actualT = t;
@@ -298,6 +327,24 @@ namespace ALife.Core.Utility.Colours
                 return p + (q - p) * (2d / 3 - actualT) * 6;
             }
             return p;
+        }
+
+        /// <summary>
+        /// Converts an int on a 0 to 255 range to the byte representation.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>The byte representation of the value.</returns>
+        private static byte IntToByte(int value)
+        {
+            if(value < byte.MinValue)
+            {
+                return byte.MinValue;
+            }
+            if(value > byte.MaxValue)
+            {
+                return byte.MaxValue;
+            }
+            return (byte)value;
         }
     }
 }

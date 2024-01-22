@@ -20,4 +20,35 @@
     <ProjectReference Include="..\ALife.Core\ALife.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Utility\Colours\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Utility\Maths\TestExtraMaths.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TestExtraMaths.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Utility\Maths\TestExtraMaths.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TestExtraMaths.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Utility\Maths\TestExtraMaths.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TestExtraMaths.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

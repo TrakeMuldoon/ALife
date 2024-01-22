@@ -2,6 +2,7 @@
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Geometry.Shapes.ChildShapes;
 using ALife.Core.Utility;
+using ALife.Core.WorldObjects.Agents.Senses.Ears;
 using ALife.Core.WorldObjects.Agents.Senses.GenericInputs;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses
 
         public EarCluster(WorldObject parent, String name
                           , EvoNumber eOrientationAroundParent, EvoNumber eRadius)
-            : base(parent, name)
+            : base(parent, name, ReferenceValues.CollisionLevelSound)
         {
             EvoOrientationAroundParent = eOrientationAroundParent;
             EvoRadius = eRadius;
@@ -32,7 +33,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses
                                       , 5.0 //TODO: Similar to EyeCluster Issue. This is a hack.
                                       , radius);
             SubInputs.Add(new AnyInput(name + ".HearSomething"));
-            //SubInputs.Add(new )
+            SubInputs.Add(new SoundVolume(name + ".HowLoud", myShape));
         }
 
         public override SenseCluster CloneSense(WorldObject newParent)

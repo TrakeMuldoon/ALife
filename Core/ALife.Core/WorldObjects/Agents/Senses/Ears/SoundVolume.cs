@@ -1,5 +1,6 @@
 ﻿using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility;
+using ALife.Core.WorldObjects.Prebuilt;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,16 @@ namespace ALife.Core.WorldObjects.Agents.Senses.Ears
                 SoundWave sw = wo as SoundWave;
                 if(sw is null)
                 {
-                    throw new Exception("Soundwaves are the only supported things for ears to hear at the moment.");
+                    if(wo is SoundEmitter)
+                    {
+                        //This is a little hack, because we need to put the SoundEmitter on some level.
+                        continue; //We're very close to success!!
+                    }
+                    else
+                    {
+                        //Unknown object shouldn't be here.
+                        throw new Exception("Soundwaves are the only supported things for ears to hear at the moment.");
+                    }
                 }
                 if(sw.Intensity > max) 
                 {
@@ -40,11 +50,17 @@ namespace ALife.Core.WorldObjects.Agents.Senses.Ears
                 }
             }
 
-
             foreach(WorldObject wo in collisions)
             {
                 SoundWave sw = wo as SoundWave;
-                //don't need to null check. It happened in the previous loop;
+                if(sw is null)
+                {
+                    if(wo is SoundEmitter)
+                    {
+                        //This is a little hack, because we need to put the SoundEmitter on some level.
+                        continue; //We're very close to success!!
+                    }
+                }
 
                 double distanceBetween = ExtraMath.DistanceBetweenTwoPoints(this.parentShape.CentrePoint, sw.Shape.CentrePoint);
                 double volume = sw.Intensity - distanceBetween;

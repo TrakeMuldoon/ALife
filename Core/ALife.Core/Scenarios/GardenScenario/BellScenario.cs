@@ -30,6 +30,7 @@ Don't follow the sound within 800 units. Die.
 Success Cases:
 Arrive at the source of the sound. Reproduce twice, and get moved to a random location."
  )]
+    [SuggestedSeed(1566464761, "Straight to the emitters")]
     public class BellScenario : IScenario
     {
 
@@ -110,6 +111,7 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
             winner.Reproduce();
             winner.Reproduce();
             winner.Statistics["BellDings"].IncreasePropertyBy(1);
+            winner.Statistics["DeathTimer"].ChangePropertyTo(DEATH_TIMER);
 
             //Move to a random position so they can attempt to find the zone again. 
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[winner.CollisionLevel];
@@ -161,9 +163,9 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
         private void AddEmitterPair(double x, double y)
         {
             Geometry.Shapes.Point targetPoint = new Geometry.Shapes.Point(x, y);
-            Zone targetZone = new Zone($"{TARGET_ZONENAME_PREFIX}{++EmitterPairs}", "Random", Color.Red, targetPoint, 5,5);
+            Zone targetZone = new Zone($"{TARGET_ZONENAME_PREFIX}{++EmitterPairs}", "Random", Color.Red, targetPoint, 12,12);
             Planet.World.AddZone(targetZone);
-            SoundEmitter emitter = new SoundEmitter(new Geometry.Shapes.Point(targetPoint.X + 2, targetPoint.Y + 2));
+            SoundEmitter emitter = new SoundEmitter(new Geometry.Shapes.Point(targetPoint.X + 6, targetPoint.Y + 6));
             Planet.World.AddObjectToWorld(emitter);
         }
 

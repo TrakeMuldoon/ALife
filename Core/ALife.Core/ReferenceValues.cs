@@ -4,7 +4,7 @@
     {
         public const string CollisionLevelZone = "Zone";
         public const string CollisionLevelPhysical = "Physical";
-        public const string COllisionLevelSight = "Sight";
+        public const string CollisionLevelSight = "Sight";
         public const string CollisionLevelScent = "Scent";
         public const string CollisionLevelSound = "Sound";
         public const string CollisionLevelDead = "Dead";

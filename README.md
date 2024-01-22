@@ -79,6 +79,12 @@ CTRL-Clicking on an object will kill that object. KILL. This can also occasional
 
 ### Avalonia Controls
 
+To Run the Avalonia  version of the app, 
+    1. open the Solution in Visual Studio.
+    2. Under "Runners" folder, under "Avalonia" folder is the "ALife.Avalonia.Desktop" project.
+    3. Right Click on that project and "Set As Startup Project"
+
+
 ## Code
 
 The code is meant to be clean, commented and easier to read. 

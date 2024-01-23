@@ -57,8 +57,4 @@
     </Compile>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Utility\EvoNumbers\" />
-  </ItemGroup>
-
 </Project>

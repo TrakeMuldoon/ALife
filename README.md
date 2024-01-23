@@ -1,7 +1,8 @@
 # ALife
 
-Welcome to Devin's Artificial Life Application. This is a simulated world of agents complely independantly learning the rules of their surroundings without any preconcieved notions.
-Each agent grows and, if successful, is able to produce an evolved child. There are over a dozen scenarios with different success and failure conditions each trying to learn 
+Welcome to Devin's Artificial Life Application. This is a simulated world of agents complely independantly learning the rules of their surroundings without any preconcieved notions. 
+The worlds are entirely procedural, and given an identical seed, will produce identical results. 
+During a simulation, each agent grows, lives, and, if successful, is able to produce an evolved child. There are over a dozen scenarios with different success and failure conditions each trying to learn 
 and evolve different behaviours.
 
 # Simulation
@@ -52,22 +53,38 @@ To Run the UWP version of the app,
     2. Under "Runners" folder, under "UWP" folder, is the "ALifeUniv" project.
     3. Right Click on that project and "Set As Startup Project"
 
+The UWP version of the app is still supported, but will not longer be receiving new UI features.
 
-### Direct Actions
-    The "Q" and "E" keys will zoom in and out.
+### Startup Screen
 
-### "Seed Section"
-### "Speed Controls"
+### Simulation
+The "Q" and "E" keys will zoom in and out.
+
+### Seed Section
+The Seed Input is at the top of the control panel. The textbox reveals the worldseed. 
+If you click on reset, a new world will be generated with the seed that is in the textbox. If the seed has not changed, then the world will reset.
+The "New Seed" Button is cut off by the Agent Panel, but it will generate a new random seed, and start a simulation from that.
+
+### Speed Controls
+The Speed Controls section consists of the following buttons. 
+ - "Pause", "1 Turn", "Slow", "Play", "Fast"
+Each of these descibe the speed of the simulation, and should behave as expected.
+ - "FF200", "FF5000", "FF[      ]"
+These are the Fast Forward controls. They will suspend the visualization and run the selected number of turns as fast as possible.
+While this is running a small panel will appear indicating some stats about the fast-forward.
+ - ETA - Estimated time of completion based on the latest segment simulated 
+ - ETC - Estimated time of completion based on the cumulative time elapsed in the Fast Forward
+ - TPSA - Turns Per Second for the latest segment of simulation fast forwarded
+ - TPSC - Turns Per Second cumulative, for the duration of the fast forward
+
+### Zoom Controls
 ### "Layer Controls"
 ### "Special Selector Buttons"
 ### "Wall Panel"
 ### "Agent Panel"
 ### "Neural Network Brain Viewer"
 
-### Original Documentation for This stuff.
-There is a Seed Input at the top. Once it is changed, you can click "reset" and the world will be reset to whatever is currently in the Seed textbox.
-FF will fast forward that many turns. The UI is blanked during this time to save cpu.
-
+### Original Documentation for This stuff
 Beneath that there is a poorly styled grid. 
 Each row of the grid represents a "collision layer" in the world.
 The columns (which will be labeled eventually) are

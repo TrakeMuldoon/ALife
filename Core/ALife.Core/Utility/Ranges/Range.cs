@@ -12,7 +12,7 @@ namespace ALife.Core.Utility.Ranges
     /// TODO: remove Microsoft.CSharp nuget package after the above is done and we won't need the dynamic keywords.
     /// </summary>
     /// <typeparam name="T">The type of the range.</typeparam>
-    [DebuggerDisplay("({Minimum} -> {Maximum})")]
+    [DebuggerDisplay("{ToString()}")]
     public struct Range<T> where T : struct
     {
         /// <summary>
@@ -103,6 +103,28 @@ namespace ALife.Core.Utility.Ranges
         }
 
         /// <summary>
+        /// Implements the operator !=.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator !=(Range<T> left, Range<T> right)
+        {
+            return !left.Equals(right);
+        }
+
+        /// <summary>
+        /// Implements the operator ==.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator ==(Range<T> left, Range<T> right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
         /// Clamps the value to the range in a circular fashion.
         /// TODO: Generic math would make more performant...
         /// </summary>
@@ -124,6 +146,43 @@ namespace ALife.Core.Utility.Ranges
         {
             dynamic output = ExtraMaths.Clamp((dynamic)value, (dynamic)Minimum, (dynamic)Maximum);
             return output;
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object"/>, is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object"/> to compare with this instance.</param>
+        /// <returns>
+        /// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
+        public override bool Equals(object obj)
+        {
+            if(obj is Range<T> other)
+            {
+                return Minimum.Equals(other.Minimum) && Maximum.Equals(other.Maximum);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
+        /// </returns>
+        public override int GetHashCode()
+        {
+            int hashCode = _minimum.GetHashCode() + _maximum.GetHashCode();
+            return hashCode;
+        }
+
+        /// <summary>
+        /// Converts to string.
+        /// </summary>
+        /// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+        public override string ToString()
+        {
+            return $"({Minimum} -> {Maximum})";
         }
     }
 }

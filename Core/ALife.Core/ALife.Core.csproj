@@ -59,7 +59,6 @@
 
   <ItemGroup>
     <Folder Include="Utility\EvoNumbers\" />
-    <Folder Include="Utility\Numerics\" />
   </ItemGroup>
 
 </Project>

@@ -53,11 +53,6 @@ namespace ALife.Core.WorldObjects.Prebuilt
         {
         }
 
-        public override void CollisionBehvaviour(List<WorldObject> collisions)
-        {
-            //So the rabbit doesn't kill things
-        }
-
         public void Caught(Agent caughtMe)
         {
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[CollisionLevel];

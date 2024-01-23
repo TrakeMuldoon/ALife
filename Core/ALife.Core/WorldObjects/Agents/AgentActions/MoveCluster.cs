@@ -102,7 +102,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
             else
             {
                 theShape.CentrePoint = origin; //cancel the move
-                self.CollisionBehvaviour(collisions);
+                Interaction(self, collisions);
                 return false;
             }
         }

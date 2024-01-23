@@ -86,7 +86,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
             else
             {
                 myOrientation.Degrees -= netTurn; //cancel the move
-                self.CollisionBehvaviour(collisions);
+                Interaction(self, collisions);
                 return false;
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.Json.Serialization;
 using ALife.Core.Utility.Maths;
 
 namespace ALife.Core.Utility.Ranges
@@ -17,11 +18,13 @@ namespace ALife.Core.Utility.Ranges
         /// <summary>
         /// The maximum value of the range.
         /// </summary>
+        [JsonIgnore]
         private T _maximum;
 
         /// <summary>
         /// The minimum value of the range.
         /// </summary>
+        [JsonIgnore]
         private T _minimum;
 
         /// <summary>
@@ -40,6 +43,7 @@ namespace ALife.Core.Utility.Ranges
         /// </summary>
         /// <param name="minimum"></param>
         /// <param name="maximum"></param>
+        [JsonConstructor]
         public Range(T minimum, T maximum)
         {
             if(!NumericTypes.SupportedTypes.Contains(typeof(T)))
@@ -59,11 +63,13 @@ namespace ALife.Core.Utility.Ranges
         /// <summary>
         /// No easy support right now because we're stuck on .NET Standard 2.
         /// </summary>
+        [JsonIgnore]
         public T Difference { get; private set; }
 
         /// <summary>
         /// The maximum value of the range.
         /// </summary>
+        [JsonPropertyName("maximum")]
         public T Maximum
         {
             get => _maximum;
@@ -81,6 +87,7 @@ namespace ALife.Core.Utility.Ranges
         /// <summary>
         /// The minimum value of the range.
         /// </summary>
+        [JsonPropertyName("minimum")]
         public T Minimum
         {
             get => _minimum;

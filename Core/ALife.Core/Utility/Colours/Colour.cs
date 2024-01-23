@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text.Json.Serialization;
 using ALife.Core.Utility.Random;
 
 namespace ALife.Core.Utility.Colours
@@ -106,6 +107,7 @@ namespace ALife.Core.Utility.Colours
         /// <param name="green">The green.</param>
         /// <param name="blue">The blue.</param>
         /// <param name="wasPredefined">if set to <c>true</c> [was predefined].</param>
+        [JsonConstructor]
         internal Colour(byte alpha, byte red, byte green, byte blue, bool wasPredefined)
         {
             _alpha = alpha;

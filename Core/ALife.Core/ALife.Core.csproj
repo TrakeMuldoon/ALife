@@ -25,6 +25,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+    <PackageReference Include="System.Text.Json" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,6 +55,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ExtraMathTemplate.tt</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Utility\EvoNumbers\" />
+    <Folder Include="Utility\Numerics\" />
   </ItemGroup>
 
 </Project>

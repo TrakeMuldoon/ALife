@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text.Json.Serialization;
 using ALife.Core.Utility.Random;
 
 namespace ALife.Core.Utility.Colours
@@ -12,61 +13,73 @@ namespace ALife.Core.Utility.Colours
         /// <summary>
         /// A HslColour representing the absence of colour.
         /// </summary>
+        [JsonIgnore]
         public static readonly HslColour Black = new HslColour(Colour.Black);
 
         /// <summary>
         /// A HslColour representing the colour blue.
         /// </summary>
+        [JsonIgnore]
         public static readonly HslColour Blue = new HslColour(Colour.Blue);
 
         /// <summary>
         /// A HslColour representing the colour cyan.
         /// </summary>
+        [JsonIgnore]
         public static readonly HslColour Cyan = new HslColour(Colour.Cyan);
 
         /// <summary>
         /// A HslColour representing the colour green.
         /// </summary>
+        [JsonIgnore]
         public static readonly HslColour Green = new HslColour(Colour.Green);
 
         /// <summary>
         /// A HslColour representing the colour magenta.
         /// </summary>
+        [JsonIgnore]
         public static readonly HslColour Magenta = new HslColour(Colour.Magenta);
 
         /// <summary>
         /// A HslColour representing the colour red.
         /// </summary>
+        [JsonIgnore]
         public static readonly HslColour Red = new HslColour(Colour.Red);
 
         /// <summary>
         /// A HslColour representing the colour white.
         /// </summary>
+        [JsonIgnore]
         public static readonly HslColour White = new HslColour(Colour.White);
 
         /// <summary>
         /// A HslColour representing the colour yellow.
         /// </summary>
+        [JsonIgnore]
         public static readonly HslColour Yellow = new HslColour(Colour.Yellow);
 
         /// <summary>
         /// The alpha channel
         /// </summary>
+        [JsonIgnore]
         private byte _alpha;
 
         /// <summary>
         /// The hue
         /// </summary>
+        [JsonIgnore]
         private int _hue;
 
         /// <summary>
         /// The lightness
         /// </summary>
+        [JsonIgnore]
         private double _lightness;
 
         /// <summary>
         /// The saturation
         /// </summary>
+        [JsonIgnore]
         private double _saturation;
 
         /// <summary>
@@ -89,17 +102,6 @@ namespace ALife.Core.Utility.Colours
         /// <summary>
         /// Initializes a new instance of the <see cref="HslColour"/> struct.
         /// </summary>
-        /// <param name="alpha">The alpha.</param>
-        /// <param name="hue">The hue.</param>
-        /// <param name="saturation">The saturation.</param>
-        /// <param name="lightness">The lightness.</param>
-        public HslColour(byte alpha, int hue, double saturation, double lightness) : this(alpha, hue, saturation, lightness, false)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HslColour"/> struct.
-        /// </summary>
         /// <param name="hue">The hue.</param>
         /// <param name="saturation">The saturation.</param>
         /// <param name="lightness">The lightness.</param>
@@ -115,7 +117,8 @@ namespace ALife.Core.Utility.Colours
         /// <param name="saturation">The saturation.</param>
         /// <param name="value">The lightness.</param>
         /// <param name="wasPredefined">if set to <c>true</c> [was predefined].</param>
-        internal HslColour(byte alpha, int hue, double saturation, double lightness, bool wasPredefined)
+        [JsonConstructor]
+        public HslColour(byte alpha, int hue, double saturation, double lightness, bool wasPredefined = false)
         {
             _alpha = alpha;
             _hue = hue;
@@ -133,6 +136,7 @@ namespace ALife.Core.Utility.Colours
         /// Gets alpha channel.
         /// </summary>
         /// <value>The alpha channel.</value>
+        [JsonPropertyName("alpha")]
         public byte A
         {
             get => _alpha;
@@ -147,18 +151,21 @@ namespace ALife.Core.Utility.Colours
         /// Gets blue channel.
         /// </summary>
         /// <value>The blue channel.</value>
+        [JsonIgnore]
         public byte B { get; private set; }
 
         /// <summary>
         /// Gets green channel.
         /// </summary>
         /// <value>The green channel.</value>
+        [JsonIgnore]
         public byte G { get; private set; }
 
         /// <summary>
         /// Gets the hue.
         /// </summary>
         /// <value>The hue.</value>
+        [JsonPropertyName("hue")]
         public int Hue
         {
             get => _hue;
@@ -177,6 +184,7 @@ namespace ALife.Core.Utility.Colours
         /// Gets the lightness.
         /// </summary>
         /// <value>The lightness.</value>
+        [JsonPropertyName("lightness")]
         public double Lightness
         {
             get => _lightness;
@@ -195,12 +203,14 @@ namespace ALife.Core.Utility.Colours
         /// Gets red channel.
         /// </summary>
         /// <value>The red channel.</value>
+        [JsonIgnore]
         public byte R { get; private set; }
 
         /// <summary>
         /// Gets the saturation.
         /// </summary>
         /// <value>The saturation.</value>
+        [JsonPropertyName("saturation")]
         public double Saturation
         {
             get => _saturation;
@@ -219,6 +229,7 @@ namespace ALife.Core.Utility.Colours
         /// Gets a value indicating whether this colour [was predefined].
         /// </summary>
         /// <value><c>true</c> if [was predefined]; otherwise, <c>false</c>.</value>
+        [JsonPropertyName("wasPredefined")]
         public bool WasPredefined { get; private set; }
 
         /// <summary>

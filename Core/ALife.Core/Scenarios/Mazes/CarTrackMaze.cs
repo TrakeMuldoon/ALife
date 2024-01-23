@@ -63,8 +63,8 @@ Reaching the finish line, reproduces 3 times and then dies... Victorious!"
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
             {
-                new MoveCluster(agent),
-                new RotateCluster(agent)
+                new MoveCluster(agent, ActionCluster.NullInteraction),
+                new RotateCluster(agent, ActionCluster.NullInteraction)
             };
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
@@ -134,11 +134,6 @@ Reaching the finish line, reproduces 3 times and then dies... Victorious!"
             me.Reproduce();
             me.Reproduce();
             me.Die();
-        }
-
-        public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
-        {
-            //me.Die();
         }
 
         /******************/

@@ -10,7 +10,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
     {
         private double Speed = 5; //TODO Abstract this into Scenario
 
-        public MoveCluster(Agent self) : base(self, "Move")
+        public MoveCluster(Agent self, InteractionFunction collisionBehaviour) : base(self, "Move", collisionBehaviour)
         {
             SubActions.Add("GoForward", new ActionPart("GoForward", Name));
             SubActions.Add("StopForward", new ActionPart("StopForward", Name));
@@ -24,7 +24,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
 
         public override ActionCluster CloneAction(Agent newParent)
         {
-            return new MoveCluster(newParent);
+            return new MoveCluster(newParent, Interaction);
         }
 
         protected override bool ValidatePreconditions()

@@ -5,7 +5,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
 {
     public class ColorCluster : ActionCluster
     {
-        public ColorCluster(Agent self) : base(self, "Color")
+        public ColorCluster(Agent self) : base(self, "Color", ActionCluster.NullInteraction)
         {
             SubActions.Add("SetRed", new ActionPart("SetRed", Name));
             SubActions.Add("SetGreen", new ActionPart("SetGreen", Name));

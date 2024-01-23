@@ -63,8 +63,8 @@ If they reach the target zone, they will restart in their own zones, and an evol
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
             {
-                new MoveCluster(agent),
-                new RotateCluster(agent)
+                new MoveCluster(agent, CollisionBehaviour),
+                new RotateCluster(agent, CollisionBehaviour)
             };
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);

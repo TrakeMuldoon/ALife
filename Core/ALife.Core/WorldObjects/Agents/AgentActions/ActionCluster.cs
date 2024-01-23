@@ -11,14 +11,9 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
         public readonly Dictionary<string, ActionPart> SubActions = new Dictionary<string, ActionPart>();
         protected readonly Agent self;
 
-
         public delegate void InteractionFunction(Agent activeAgent, List<WorldObject> reactiveObjects);
+        
         protected readonly InteractionFunction Interaction;
-
-        public ActionCluster(Agent self, String name)
-            : this(self, name, DefaultInteraction)
-        {
-        }
 
         public ActionCluster(Agent self, String name, InteractionFunction interaction)
         {
@@ -73,7 +68,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
         public abstract string LastTurnString();
         public abstract ActionCluster CloneAction(Agent newParent);
 
-        public static void DefaultInteraction(Agent activeAgent, List<WorldObject> reactiveObjects)
+        public static void NullInteraction(Agent activeAgent, List<WorldObject> reactiveObjects)
         {
             return;
         }

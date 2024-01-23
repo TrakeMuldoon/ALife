@@ -45,8 +45,8 @@ namespace ALife.Core.WorldObjects.Prebuilt
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
             {
-                new MoveCluster(this),
-                new RotateCluster(this)
+                new MoveCluster(this, ActionCluster.NullInteraction),
+                new RotateCluster(this, ActionCluster.NullInteraction)
             };
 
             this.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);

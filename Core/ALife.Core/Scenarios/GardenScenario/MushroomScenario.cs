@@ -12,7 +12,7 @@ using System.Drawing;
 
 namespace ALife.Core.Scenarios.GardenScenario
 {
-    [ScenarioRegistration("Mushroom Garden",
+    [ScenarioRegistration("Mushroom Garden (Temporarily Unavailable)",
     description:
         @"
 Mushroom Garden
@@ -70,8 +70,8 @@ If they eat two green mushrooms, they reproduce."
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
             {
-                new MoveCluster(agent),
-                new RotateCluster(agent)
+                new MoveCluster(agent, CollisionBehaviour),
+                new RotateCluster(agent, CollisionBehaviour)
             };
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
@@ -98,7 +98,7 @@ If they eat two green mushrooms, they reproduce."
             }
         }
 
-        public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        private void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
             foreach(WorldObject wo in collisions)
             {
@@ -169,7 +169,8 @@ If they eat two green mushrooms, they reproduce."
 
             for(int k = 0; k < 5; k++)
             {
-                Agent mg = new MushroomGatherer(WorldZone);
+                Agent mg = AgentFactory.CreateAgent("MushroomGatherer", WorldZone, null, PURE_RED, 0);
+                MutateIntoMushroomGatherer(mg);
             }
 
             while(AllFruits.Count < FruitMax)
@@ -185,6 +186,34 @@ If they eat two green mushrooms, they reproduce."
                 AllFruits.Add(rf);
             }
         }
+
+        private void MutateIntoMushroomGatherer(Agent mg)
+        {
+            mg.Senses.Add(new EyeCluster(mg, "BackEye", false
+                            , new ROEvoNumber(startValue: 180, evoDeltaMax: 0.2, hardMin: -360, hardMax: 360) //Orientation Around Parent
+                            , new ROEvoNumber(startValue: -90, evoDeltaMax: 0.2, hardMin: -360, hardMax: 360)    //Relative Orientation
+                            , new ROEvoNumber(startValue: 15, evoDeltaMax: 0.2, hardMin: 5, hardMax: 50)        //Radius
+                            , new ROEvoNumber(startValue: 170, evoDeltaMax: 0.2, hardMin: 160, hardMax: 180)));     //Sweep
+            IBrain newBrain = new BehaviourBrain(mg,
+                "IF EyeLeft.IsRed.Value Equals [True] THEN Rotate.TurnRight AT [0.040]",
+                "IF EyeRight.IsRed.Value Equals [True] THEN Rotate.TurnLeft AT [0.060]",
+                "IF EyeLeft.IsBlue.Value Equals [True] THEN Rotate.TurnLeft AT [0.070]",
+                "IF EyeLeft.IsBlue.Value Equals [True] THEN Move.GoForward AT [1.0]",
+                "IF EyeRight.IsBlue.Value Equals [True] THEN Rotate.TurnRight AT [0.060]",
+                "IF EyeRight.IsBlue.Value Equals [True] THEN Move.GoForward AT [1.0]",
+                "IF EyeLeft.IsGreen.Value Equals [True] THEN Rotate.TurnLeft AT [0.070]",
+                "IF EyeLeft.IsGreen.Value Equals [True] THEN Move.GoForward AT [1.0]",
+                "IF EyeRight.IsGreen.Value Equals [True] THEN Rotate.TurnRight AT [0.060]",
+                "IF EyeRight.IsGreen.Value Equals [True] THEN Move.GoForward AT [0.2]",
+                "IF BackEye.SeeSomething.Value Equals [True] THEN Move.GoForward AT [1.0]",
+                "IF ALWAYS THEN Move.GoForward AT [0.3]",
+                "IF ALWAYS THEN Rotate.TurnRight AT [0.015]"
+                );
+            Planet.World.RemoveWorldObject(mg);
+            mg.CompleteInitialization(null, 1, newBrain);
+        }
+
+
 
         public virtual void GlobalEndOfTurnActions()
         {

@@ -77,8 +77,8 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
 
             var agentActions = new List<ActionCluster>()
             {
-                new MoveCluster(agent),
-                new RotateCluster(agent)
+                new MoveCluster(agent, CollisionBehaviour),
+                new RotateCluster(agent, CollisionBehaviour)
             };
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
@@ -108,8 +108,12 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
             }
         }
 
-        public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        private void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
+            if(me is Rabbit)
+            {
+                return;
+            }
             foreach (var wo in collisions)
             {
                 if (wo is Rabbit rab)

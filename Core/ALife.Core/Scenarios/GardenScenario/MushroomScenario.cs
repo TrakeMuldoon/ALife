@@ -39,8 +39,8 @@ If they eat two green mushrooms, they reproduce."
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
                                     , ReferenceValues.CollisionLevelPhysical
-            , parentZone
-            , targetZone);
+                                    , parentZone
+                                    , targetZone);
 
             int agentRadius = 5;
             agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);

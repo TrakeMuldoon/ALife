@@ -208,8 +208,12 @@ namespace ALife.Core
                 StableActiveObjects.Remove(ToRemoveObjects[0]);
 
                 //It needs to be added to the InactiveObjects list, for statistics reasons. 
+                //If the performance of this list become a problem. It can be truncated; only Agents are ever really inspected after death.
                 InactiveObjects.Add(ToRemoveObjects[0]);
 
+                //TODO: Could this loop be changed into a "foreach" and then "cleared" instead of RemoveAt every time?
+                // This is actually O(n) when the list is long, although in our case, I think the list is 0-10 items at the most
+                // So there wouldn't be many performance gains from switching it.
                 ToRemoveObjects.RemoveAt(0);
             }
 

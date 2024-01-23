@@ -84,6 +84,7 @@ If they reach the target zone, they will restart in their own zones, and an evol
                 me.Die();
                 return;
             }
+            //TODO: Refactor this into a world function called "WhatZonesAmIIn" or something like that. Get the scenario a little further from the nuts/bolts.
             List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(me.Shape.BoundingBox);
             foreach(Zone z in inZones)
             {

@@ -15,12 +15,12 @@ An Input is anything that the creature can read numerically, external or interna
 - "RightEye SeeSomething"
 
 Inputs can come in "Input Clusters" which is a set of related inputs. This helps optimize the performance
-- Eye Cluster is a set of inputs 
+For Example "Eye Cluster" is a set of inputs 
 -- DoISee
 -- HowManyThings (currently disabled)
 -- DoIRecognize (currently disabled)
--- WhatColor(Avg) (currently disabled)
--- HowMuchColor (currently disabled)
+-- WhatColor(Avg) 
+-- HowMuchColor (currently disabled)    
 -- Etc.
 
 Actions are anything the Agent can do
@@ -32,12 +32,29 @@ A Scenario is a set of rules about agents, their interactions with each other an
 
 ## Using the App
 TODO: Documentation in flux, as there are now two differet visualization for the application, the usage for each is different.
+The Simulation core is the same for both.
+
 UWP
 Avalonia
 
-Controls
+### UWP Controls
 
-the "Q" and "E" keys will zoom in and out.
+To Run the UWP version of the app, 
+    1. open the Solution in Visual Studio.
+    2. Under "Runners" folder, under "UWP" folder, is the "ALifeUniv" project.
+    3. Right Click on that project and "Set As Startup Project"
+
+
+TODO: Direct Actions
+    The "Q" and "E" keys will zoom in and out.
+
+TODO: "Seed Section"
+TODO: "Speed Controls"
+TODO: "Layer Controls"
+TODO: "Special Selector Buttons"
+TODO: "Wall Panel"
+TODO: "Agent Panel"
+TODO: "Neural Network Brain Viewer"
 
 There is a Seed Input at the top. Once it is changed, you can click "reset" and the world will be reset to whatever is currently in the Seed textbox.
 FF will fast forward that many turns. The UI is blanked during this time to save cpu.
@@ -59,11 +76,18 @@ Clicking on an agent will "Select" them. They will be circled in Red and their i
 
 Holding "X" while an agent is selected will show the "shadow world" which is what the agent saw last turn. This is really only useful when the simulation is paused.
 
-CTRL-Clicking on empty space will create a "wall" in that space. This sometimes causes bugs, because most things don't know what to do when they collide with rocks. 
-CTRL-Clicking on an object will kill that object. KILL. This is also buggy, because it doesn't always remove them correctly
+CTRL-Clicking on empty space will create a "wall" in that space. If the Scenario does not have a definition for wall collisions, then the behaviour will be undefined and this could cause unexpected behaviour. 
+CTRL-Clicking on an object will kill that object. KILL. This can also occasionally cause unexpected behaviours, as it does not follow any scenario rules.
+
+### Avalonia Controls
+
+To Run the Avalonia  version of the app, 
+    1. open the Solution in Visual Studio.
+    2. Under "Runners" folder, under "Avalonia" folder is the "ALife.Avalonia.Desktop" project.
+    3. Right Click on that project and "Set As Startup Project"
 
 
-## Codewise
+## Code
 
 The code is meant to be clean, commented and easier to read. 
 It is NOT, however, currently easy to understand then WHOLE of it. 
@@ -73,7 +97,8 @@ To change the scenario being executed depends on whether you're running the GUI 
 - Console App: Update the string in Program.cs that is passed to the `ConsoleScenarioRunner` to the name of the scenario you want to run.
 - GUI App: Select the scenario you wish to execute from the list. Suggested seeds are available and you can choose to run either a console-like experience or a GUI experience.
 
-The scenarios themselves are under
-ALife\ALifeUniv\ALife\Scenarios
+TODO: Assets Folder
+TODO: Core Folder
+TODO: Documentation Folder
+TODO: Runners Folder
 
-And each one should have a header with a description of what it is there for.

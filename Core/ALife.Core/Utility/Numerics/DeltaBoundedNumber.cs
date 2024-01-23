@@ -51,8 +51,8 @@ namespace ALife.Core.Utility.Numerics
         [JsonPropertyName("deltaAbsoluteMaxValue")]
         public double DeltaAbsoluteMaximumValue
         {
-            get => _deltaMaximum.MaxValue;
-            set => _deltaMaximum.MaxValue = value;
+            get => _deltaMaximum.Maximum;
+            set => _deltaMaximum.Maximum = value;
         }
 
         /// <summary>
@@ -62,8 +62,8 @@ namespace ALife.Core.Utility.Numerics
         [JsonPropertyName("deltaAbsoluteMinValue")]
         public double DeltaAbsoluteMinimumValue
         {
-            get => _deltaMaximum.MinValue;
-            set => _deltaMaximum.MinValue = value;
+            get => _deltaMaximum.Minimum;
+            set => _deltaMaximum.Minimum = value;
         }
 
         /// <summary>

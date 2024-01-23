@@ -28,11 +28,11 @@ namespace ALife.Core.Utility.Numerics
         /// </summary>
         /// <param name="value">The starting value.</param>
         /// <param name="minValue">The minimum value.</param>
-        /// <param name="maxValue">The maximum value.</param>
+        /// <param name="maximum">The maximum value.</param>
         [JsonConstructor]
-        public ManualBoundedNumber(double value, double minValue, double maxValue)
+        public ManualBoundedNumber(double value, double minimum, double maximum)
         {
-            _range = new Range<double>(minValue, maxValue);
+            _range = new Range<double>(minimum, maximum);
             _value = value;
         }
 
@@ -40,15 +40,15 @@ namespace ALife.Core.Utility.Numerics
         /// Initializes a new instance of the <see cref="ManualBoundedNumber"/> class by copying the values from the parent.
         /// </summary>
         /// <param name="parent">The parent.</param>
-        public ManualBoundedNumber(ManualBoundedNumber parent) : this(parent.Value, parent.MinValue, parent.MaxValue)
+        public ManualBoundedNumber(ManualBoundedNumber parent) : this(parent.Value, parent.Minimum, parent.Maximum)
         {
         }
 
         /// <summary>
         /// Gets or sets the maximum value for the number.
         /// </summary>
-        [JsonPropertyName("maxValue")]
-        public double MaxValue
+        [JsonPropertyName("maximum")]
+        public double Maximum
         {
             get => _range.Maximum;
             set => _range.Maximum = value;
@@ -57,8 +57,8 @@ namespace ALife.Core.Utility.Numerics
         /// <summary>
         /// Gets or sets the minimum value for the number.
         /// </summary>
-        [JsonPropertyName("minValue")]
-        public double MinValue
+        [JsonPropertyName("minimum")]
+        public double Minimum
         {
             get => _range.Minimum;
             set => _range.Minimum = value;
@@ -179,8 +179,8 @@ namespace ALife.Core.Utility.Numerics
         public override bool Equals(object obj)
         {
             return obj is ManualBoundedNumber number &&
-                   MaxValue == number.MaxValue &&
-                   MinValue == number.MinValue &&
+                   Maximum == number.Maximum &&
+                   Minimum == number.Minimum &&
                    Value == number.Value;
         }
 

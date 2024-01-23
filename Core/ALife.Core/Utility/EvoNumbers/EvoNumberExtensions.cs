@@ -2,7 +2,7 @@
 using ALife.Core.Utility.Numerics;
 using ALife.Core.Utility.Random;
 
-namespace ALife.Core.Utility.EvoNumbersV2
+namespace ALife.Core.Utility.EvoNumbers
 {
     /// <summary>
     /// Various extensions for IEvoNumber implementations.
@@ -29,14 +29,17 @@ namespace ALife.Core.Utility.EvoNumbersV2
         {
             double newOriginalValue = EvoNumberHelpers.EvolveValue(randomGenerator, number.OriginalValue, number.OriginalValueEvolutionDeltaMax, number.ValueMinimum, number.ValueMaximum);
 
-            double newMinimumValue = EvoNumberHelpers.EvolveValue(randomGenerator, number.ValueMinimum.Value, number.ValueMaximumAndMinimumEvolutionDeltaMax, number.ValueMinimum.MinValue, number.ValueMaximum.MaxValue);
-            BoundedNumber newMinimum = new BoundedNumber(newMinimumValue, minValue: number.ValueMinimum.MinValue);
+            double newMinimumValue = EvoNumberHelpers.EvolveValue(randomGenerator, number.ValueMinimum.Value, number.ValueMaximumAndMinimumEvolutionDeltaMax, number.ValueMinimum.Minimum, number.ValueMaximum.Maximum);
+            Numerics.BoundedNumber newMinimum = new Numerics.BoundedNumber(newMinimumValue, number.ValueMinimum.Minimum, double.MaxValue);
 
-            double newMaximumValue = EvoNumberHelpers.EvolveValue(randomGenerator, number.ValueMaximum.Value, number.ValueMaximumAndMinimumEvolutionDeltaMax, number.ValueMinimum.MinValue, number.ValueMaximum.MaxValue);
-            BoundedNumber newMaximum = new BoundedNumber(newMaximumValue, maxValue: number.ValueMaximum.MaxValue);
+            double newMaximumValue = EvoNumberHelpers.EvolveValue(randomGenerator, number.ValueMaximum.Value, number.ValueMaximumAndMinimumEvolutionDeltaMax, number.ValueMinimum.Minimum, number.ValueMaximum.Maximum);
+            Numerics.BoundedNumber newMaximum = new Numerics.BoundedNumber(newMaximumValue, double.MinValue, number.ValueMaximum.Maximum);
 
-            double newValueDeltaMaximum = EvoNumberHelpers.EvolveValue(randomGenerator, number.ValueDeltaMaximum, number.ValueDeltaMaximum.DeltaMaximum, 0, number.ValueDeltaMaximum.DeltaMaximum.MaxValue);
-            DeltaBoundedNumber newValueDelta = new DeltaBoundedNumber(newValueDeltaMaximum, number.ValueDeltaMaximum.DeltaMaximum, 0, number.ValueDeltaMaximum.DeltaMaximum.MaxValue);
+            newMinimum.Maximum = newMaximum.Maximum;
+            newMaximum.Minimum = newMinimum.Minimum;
+
+            double newValueDeltaMaximum = EvoNumberHelpers.EvolveValue(randomGenerator, number.ValueDeltaMaximum, number.ValueDeltaMaximum.DeltaMaxValue, 0, number.ValueDeltaMaximum.DeltaAbsoluteMaximumValue);
+            DeltaBoundedNumber newValueDelta = new DeltaBoundedNumber(newValueDeltaMaximum, number.ValueDeltaMaximum.DeltaMaxValue, 0, number.ValueDeltaMaximum.DeltaAbsoluteMaximumValue);
 
             IEvoNumber output = GetEvoNumber(number.GetType(), newOriginalValue, number.OriginalValueEvolutionDeltaMax, newMinimum, newMaximum, number.ValueMaximumAndMinimumEvolutionDeltaMax, newValueDelta);
             return output;
@@ -76,7 +79,7 @@ namespace ALife.Core.Utility.EvoNumbersV2
         /// <param name="newValueDelta">The new value delta.</param>
         /// <returns>The EvoNumber.</returns>
         /// <exception cref="System.NotImplementedException">The type {type} is not supported.</exception>
-        private static IEvoNumber GetEvoNumber(Type type, double newOriginalValue, double originalValueEvolutionDeltaMax, BoundedNumber newMinimum, BoundedNumber newMaximum, double valueMaximumAndMinimumEvolutionDeltaMax, DeltaBoundedNumber newValueDelta)
+        private static IEvoNumber GetEvoNumber(Type type, double newOriginalValue, double originalValueEvolutionDeltaMax, Numerics.BoundedNumber newMinimum, Numerics.BoundedNumber newMaximum, double valueMaximumAndMinimumEvolutionDeltaMax, DeltaBoundedNumber newValueDelta)
         {
             switch(type)
             {

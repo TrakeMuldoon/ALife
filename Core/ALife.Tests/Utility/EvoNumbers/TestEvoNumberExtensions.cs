@@ -1,47 +1,48 @@
-﻿using ALife.Core.Utility.EvoNumbersV2;
+﻿using ALife.Core.Utility.EvoNumbers;
 
-namespace ALife.Tests.Utility.EvoNumbersV2
+namespace ALife.Tests.Utility.EvoNumbers
 {
     /// <summary>
     /// Tests for the EvoNumberExtensions class.
     /// </summary>
-    internal class TestEvoNumberExtensions
+    [TestClass]
+    public class TestEvoNumberExtensions
     {
         /// <summary>
         /// Tests converting a EvoNumber to a ReadOnlyEvoNumber.
         /// </summary>
-        [Test]
+        [TestMethod]
         public void TestEvoNumberToReadOnlyEvoNumber()
         {
             var number = GetTestEvoNumber();
 
-            Assert.That(number.Value, Is.EqualTo(0));
+            Assert.AreEqual(0, number.Value);
             number.Value = 2;
-            Assert.That(number.Value, Is.EqualTo(1));
+            Assert.AreEqual(1, number.Value);
 
             var readOnlyNumber = number.ToReadOnlyEvoNumber();
-            Assert.That(readOnlyNumber.Value, Is.EqualTo(1));
-            Assert.Throws<InvalidOperationException>(() => readOnlyNumber.Value = 2);
+            Assert.AreEqual(1, readOnlyNumber.Value);
+            Assert.ThrowsException<InvalidOperationException>(() => readOnlyNumber.Value = 2);
             number.Value = 2;
-            Assert.That(number.Value, Is.EqualTo(2));
+            Assert.AreEqual(2, number.Value);
         }
 
         /// <summary>
         /// Tests converting a ReadOnlyEvoNumber to a EvoNumber.
         /// </summary>
-        [Test]
+        [TestMethod]
         public void TestReadOnlyEvoNumberToEvoNumber()
         {
             var number = GetTestReadOnlyEvoNumber();
 
-            Assert.That(number.Value, Is.EqualTo(0));
-            Assert.Throws<InvalidOperationException>(() => number.Value = 2);
+            Assert.AreEqual(0, number.Value);
+            Assert.ThrowsException<InvalidOperationException>(() => number.Value = 2);
 
             var rwNumber = number.ToEvoNumber();
-            Assert.That(rwNumber.Value, Is.EqualTo(0));
+            Assert.AreEqual(0, rwNumber.Value);
             rwNumber.Value = 2;
-            Assert.That(rwNumber.Value, Is.EqualTo(1));
-            Assert.Throws<InvalidOperationException>(() => number.Value = 2);
+            Assert.AreEqual(1, rwNumber.Value);
+            Assert.ThrowsException<InvalidOperationException>(() => number.Value = 2);
         }
 
         /// <summary>

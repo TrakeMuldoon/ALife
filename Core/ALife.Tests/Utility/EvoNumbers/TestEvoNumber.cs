@@ -1,100 +1,87 @@
-﻿using ALife.Core.Utility.EvoNumbersV2;
+﻿using ALife.Core.Utility.EvoNumbers;
 
-namespace ALife.Tests.Utility.EvoNumbersV2
+namespace ALife.Tests.Utility.EvoNumbers
 {
     /// <summary>
     /// Tests for the EvoNumber class.
     /// </summary>
-    internal class TestEvoNumber
+    [TestClass]
+    public class TestEvoNumber
     {
-        /// <summary>
-        /// The test sim
-        /// </summary>
-        private Simulation _sim;
-
-        /// <summary>
-        /// Setups this instance.
-        /// </summary>
-        [SetUp]
-        public void Setup()
-        {
-            _sim = new Simulation(1);
-        }
-
         /// <summary>
         /// Tests this instance.
         /// </summary>
-        [Test]
+        [TestMethod]
         public void Test()
         {
             var number = GetTestNumber();
-
-            Assert.That(number.Value, Is.EqualTo(0));
+            Assert.AreEqual(0, number.Value);
         }
 
         /// <summary>
         /// Tests the cloning.
         /// </summary>
-        [Test]
+        [TestMethod]
         public void TestCloning()
         {
             var number = GetTestNumber();
 
-            Assert.That(number.Value, Is.EqualTo(0));
+            Assert.AreEqual(0, number.Value);
             var clone = number.Clone();
-            Assert.That(clone.Value, Is.EqualTo(0));
+            Assert.AreEqual(0, clone.Value);
             clone.Value = 1;
-            Assert.That(number.Value, Is.EqualTo(0));
-            Assert.That(clone.Value, Is.EqualTo(1));
+            Assert.AreEqual(0, number.Value);
+            Assert.AreEqual(1, clone.Value);
         }
 
         /// <summary>
         /// Tests the cloning alternate.
         /// </summary>
-        [Test]
+        [TestMethod]
         public void TestCloningAlternate()
         {
             var number = GetTestNumber();
 
-            Assert.That(number.Value, Is.EqualTo(0));
+            Assert.AreEqual(0, number.Value);
             var clone = new EvoNumber(number);
-            Assert.That(clone.Value, Is.EqualTo(0));
+            Assert.AreEqual(0, clone.Value);
             clone.Value = 1;
-            Assert.That(number.Value, Is.EqualTo(0));
-            Assert.That(clone.Value, Is.EqualTo(1));
+            Assert.AreEqual(0, number.Value);
+            Assert.AreEqual(1, clone.Value);
         }
 
         /// <summary>
         /// Tests the evolve.
         /// </summary>
-        [Test]
+        [TestMethod]
         public void TestEvolve()
         {
             var number = GetTestNumber();
 
-            Assert.That(number.Value, Is.EqualTo(0));
+            Assert.AreEqual(0, number.Value);
 
             // NOTE: This test will be impacted heavily by any changes we make to the random number generator
-            var evolved1 = number.Evolve(_sim.Random);
-            Assert.That(evolved1.Value, Is.EqualTo(0));
+            var randomizer = new Core.Utility.Random.FastRandom(1);
+            var evolved1 = number.Evolve(randomizer);
+            Assert.AreEqual(0, number.Value);
 
-            var evolved2 = number.Evolve(_sim);
+            var evolved2 = number.Evolve(randomizer);
             var roundedValue = Math.Round(evolved2.Value, 2);
             var expectedRoundedValue = 0.15d;
-            Assert.That(roundedValue, Is.EqualTo(expectedRoundedValue));
+            Assert.AreEqual(expectedRoundedValue, roundedValue);
         }
 
         /// <summary>
         /// Tests the value updating.
         /// </summary>
-        [Test]
+        [TestMethod]
         public void TestValueUpdating()
         {
             var number = GetTestNumber();
 
-            Assert.That(number.Value, Is.EqualTo(0));
+            Assert.AreEqual(0, number.Value);
             number.Value = 2;
-            Assert.That(number.Value, Is.EqualTo(1));
+            Assert.AreEqual(1, number.Value);
         }
 
         /// <summary>

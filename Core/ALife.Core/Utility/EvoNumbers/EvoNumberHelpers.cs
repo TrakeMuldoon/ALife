@@ -1,7 +1,7 @@
 ﻿using System;
 using ALife.Core.Utility.Random;
 
-namespace ALife.Core.Utility.EvoNumbersV2
+namespace ALife.Core.Utility.EvoNumbers
 {
     /// <summary>
     /// Helper methods and constants for EvoNumbers

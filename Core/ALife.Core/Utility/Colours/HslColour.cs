@@ -29,16 +29,64 @@ namespace ALife.Core.Utility.Colours
         public static readonly HslColour Cyan = new HslColour(Colour.Cyan);
 
         /// <summary>
+        /// A HslColour representing the colour dark blue.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HslColour DarkBlue = new HslColour(Colour.DarkBlue);
+
+        /// <summary>
+        /// A HslColour representing the colour dark khaki.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HslColour DarkKhaki = new HslColour(Colour.DarkKhaki);
+
+        /// <summary>
+        /// A HslColour representing the colour dodger blue.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HslColour DodgerBlue = new HslColour(Colour.DodgerBlue);
+
+        /// <summary>
         /// A HslColour representing the colour green.
         /// </summary>
         [JsonIgnore]
         public static readonly HslColour Green = new HslColour(Colour.Green);
 
         /// <summary>
+        /// A HslColour representing the colour grey.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HslColour Grey = new HslColour(Colour.Grey);
+
+        /// <summary>
+        /// A HslColour representing the colour indian red.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HslColour IndianRed = new HslColour(Colour.IndianRed);
+
+        /// <summary>
         /// A HslColour representing the colour magenta.
         /// </summary>
         [JsonIgnore]
         public static readonly HslColour Magenta = new HslColour(Colour.Magenta);
+
+        /// <summary>
+        /// A HslColour representing the colour maroon.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HslColour Maroon = new HslColour(Colour.Maroon);
+
+        /// <summary>
+        /// A HslColour representing the colour lawn green.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HslColour LawnGreen = new HslColour(Colour.LawnGreen);
+
+        /// <summary>
+        /// A HslColour representing the colour orange.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HslColour Orange = new HslColour(Colour.Orange);
 
         /// <summary>
         /// A HslColour representing the colour red.
@@ -51,6 +99,12 @@ namespace ALife.Core.Utility.Colours
         /// </summary>
         [JsonIgnore]
         public static readonly HslColour White = new HslColour(Colour.White);
+
+        /// <summary>
+        /// A HslColour representing the colour white smoke.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HslColour WhiteSmoke = new HslColour(Colour.WhiteSmoke);
 
         /// <summary>
         /// A HslColour representing the colour yellow.

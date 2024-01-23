@@ -2,6 +2,7 @@
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Geometry.Shapes.ChildShapes;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents.Senses.GenericInputs;
 using System;
 using System.Drawing;
@@ -35,20 +36,20 @@ namespace ALife.Core.WorldObjects.Agents.Senses
         {
         }
 
-        public SquareSenseCluster(WorldObject parent, string name, double FBLength, double RLWidth, Color myColor)
+        public SquareSenseCluster(WorldObject parent, string name, double FBLength, double RLWidth, Colour myColor)
             : this(parent, name, FBLength, RLWidth)
         {
-            myShape.Color = myColor;
+            myShape.Colour = myColor;
         }
 
         public override SenseCluster CloneSense(WorldObject newParent)
         {
-            return new SquareSenseCluster(newParent, Name, myShape.FBLength, myShape.RLWidth, myShape.Color.Clone());
+            return new SquareSenseCluster(newParent, Name, myShape.FBLength, myShape.RLWidth, (Colour)myShape.Colour.Clone());
         }
 
         public override SenseCluster ReproduceSense(WorldObject newParent)
         {
-            return new SquareSenseCluster(newParent, Name, myShape.FBLength, myShape.RLWidth, myShape.Color.Clone());
+            return new SquareSenseCluster(newParent, Name, myShape.FBLength, myShape.RLWidth, (Colour)myShape.Colour.Clone());
         }
     }
 }

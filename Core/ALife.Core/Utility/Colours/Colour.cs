@@ -13,61 +13,127 @@ namespace ALife.Core.Utility.Colours
         /// <summary>
         /// A Colour representing the absence of colour.
         /// </summary>
+        [JsonIgnore]
         public static readonly Colour Black = new Colour(255, 0, 0, 0, true);
 
         /// <summary>
         /// A Colour representing the colour blue.
         /// </summary>
+        [JsonIgnore]
         public static readonly Colour Blue = new Colour(255, 0, 0, 255, true);
-
+        
         /// <summary>
         /// A Colour representing the colour cyan.
         /// </summary>
+        [JsonIgnore]
         public static readonly Colour Cyan = new Colour(255, 0, 255, 255, true);
+
+        /// <summary>
+        /// A Colour representing the colour dark blue.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly Colour DarkBlue = new Colour(255, 0, 0, 139, true);
+
+        /// <summary>
+        /// A Colour representing the colour dark khaki.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly Colour DarkKhaki = new Colour(255, 189, 183, 107, true);
+
+        /// <summary>
+        /// A Colour representing the colour dodger blue.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly Colour DodgerBlue = new Colour(255, 30, 144, 255, true);
 
         /// <summary>
         /// A Colour representing the colour green.
         /// </summary>
+        [JsonIgnore]
         public static readonly Colour Green = new Colour(255, 0, 255, 0, true);
+
+        /// <summary>
+        /// A Colour representing the colour grey.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly Colour Grey = new Colour(255, 128, 128, 128, true);
+
+        /// <summary>
+        /// A Colour representing the colour indian red.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly Colour IndianRed = new Colour(255, 205, 92, 92, true);
 
         /// <summary>
         /// A Colour representing the colour magenta.
         /// </summary>
+        [JsonIgnore]
         public static readonly Colour Magenta = new Colour(255, 255, 0, 255, true);
+
+        /// <summary>
+        /// A Colour representing the colour maroon.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly Colour Maroon = new Colour(255, 128, 0, 0, true);
+
+        /// <summary>
+        /// A Colour representing the colour lawn green.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly Colour LawnGreen = new Colour(255, 124, 252, 0, true);
+
+        /// <summary>
+        /// A Colour representing the colour orange.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly Colour Orange = new Colour(255, 255, 165, 0, true);
 
         /// <summary>
         /// A Colour representing the colour red.
         /// </summary>
+        [JsonIgnore]
         public static readonly Colour Red = new Colour(255, 255, 0, 0, true);
 
         /// <summary>
         /// A Colour representing the colour white.
         /// </summary>
+        [JsonIgnore]
         public static readonly Colour White = new Colour(255, 255, 255, 255, true);
+
+        /// <summary>
+        /// A Colour representing the colour white smoke.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly Colour WhiteSmoke = new Colour(255, 245, 245, 245, true);
 
         /// <summary>
         /// A Colour representing the colour yellow.
         /// </summary>
+        [JsonIgnore]
         public static readonly Colour Yellow = new Colour(255, 255, 255, 0, true);
 
         /// <summary>
         /// The alpha channel
         /// </summary>
+        [JsonIgnore]
         private byte _alpha;
 
         /// <summary>
         /// The blue channel
         /// </summary>
+        [JsonIgnore]
         private byte _blue;
 
         /// <summary>
         /// The green channel
         /// </summary>
+        [JsonIgnore]
         private byte _green;
 
         /// <summary>
         /// The red channel
         /// </summary>
+        [JsonIgnore]
         private byte _red;
 
         /// <summary>
@@ -121,6 +187,7 @@ namespace ALife.Core.Utility.Colours
         /// Gets alpha channel.
         /// </summary>
         /// <value>The alpha channel.</value>
+        [JsonPropertyName("alpha")]
         public byte A
         {
             get => _alpha;
@@ -135,6 +202,7 @@ namespace ALife.Core.Utility.Colours
         /// Gets blue channel.
         /// </summary>
         /// <value>The blue channel.</value>
+        [JsonPropertyName("blue")]
         public byte B
         {
             get => _blue;
@@ -149,6 +217,7 @@ namespace ALife.Core.Utility.Colours
         /// Gets green channel.
         /// </summary>
         /// <value>The green channel.</value>
+        [JsonPropertyName("green")]
         public byte G
         {
             get => _green;
@@ -163,6 +232,7 @@ namespace ALife.Core.Utility.Colours
         /// Gets red channel.
         /// </summary>
         /// <value>The red channel.</value>
+        [JsonPropertyName("red")]
         public byte R
         {
             get => _red;
@@ -177,6 +247,7 @@ namespace ALife.Core.Utility.Colours
         /// Gets a value indicating whether this colour [was predefined].
         /// </summary>
         /// <value><c>true</c> if [was predefined]; otherwise, <c>false</c>.</value>
+        [JsonPropertyName("wasPredefined")]
         public bool WasPredefined { get; private set; }
 
         /// <summary>

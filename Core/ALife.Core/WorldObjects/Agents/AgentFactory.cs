@@ -1,4 +1,5 @@
 ﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
@@ -10,7 +11,7 @@ namespace ALife.Core.WorldObjects.Agents
 {
     public static class AgentFactory
     {
-        public static Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
+        public static Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour color, double startOrientation)
         {
             return Planet.World.Scenario.CreateAgent(genusName, parentZone, targetZone, color, startOrientation);
         }

@@ -29,16 +29,64 @@ namespace ALife.Core.Utility.Colours
         public static readonly HsvColour Cyan = new HsvColour(Colour.Cyan);
 
         /// <summary>
+        /// A HsvColour representing the colour dark blue.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HsvColour DarkBlue = new HsvColour(Colour.DarkBlue);
+
+        /// <summary>
+        /// A HsvColour representing the colour dark khaki.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HsvColour DarkKhaki = new HsvColour(Colour.DarkKhaki);
+
+        /// <summary>
+        /// A HsvColour representing the colour dodger blue.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HsvColour DodgerBlue = new HsvColour(Colour.DodgerBlue);
+
+        /// <summary>
         /// A HsvColour representing the colour green.
         /// </summary>
         [JsonIgnore]
         public static readonly HsvColour Green = new HsvColour(Colour.Green);
 
         /// <summary>
+        /// A HsvColour representing the colour grey.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HsvColour Grey = new HsvColour(Colour.Grey);
+
+        /// <summary>
+        /// A HsvColour representing the colour indian red.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HsvColour IndianRed = new HsvColour(Colour.IndianRed);
+
+        /// <summary>
         /// A HsvColour representing the colour magenta.
         /// </summary>
         [JsonIgnore]
         public static readonly HsvColour Magenta = new HsvColour(Colour.Magenta);
+
+        /// <summary>
+        /// A HsvColour representing the colour maroon.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HsvColour Maroon = new HsvColour(Colour.Maroon);
+
+        /// <summary>
+        /// A HsvColour representing the colour lawn green.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HsvColour LawnGreen = new HsvColour(Colour.LawnGreen);
+
+        /// <summary>
+        /// A HsvColour representing the colour orange.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HsvColour Orange = new HsvColour(Colour.Orange);
 
         /// <summary>
         /// A HsvColour representing the colour red.
@@ -51,6 +99,12 @@ namespace ALife.Core.Utility.Colours
         /// </summary>
         [JsonIgnore]
         public static readonly HsvColour White = new HsvColour(Colour.White);
+
+        /// <summary>
+        /// A HsvColour representing the colour white smoke.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HsvColour WhiteSmoke = new HsvColour(Colour.WhiteSmoke);
 
         /// <summary>
         /// A HsvColour representing the colour yellow.

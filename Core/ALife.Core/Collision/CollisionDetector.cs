@@ -1,6 +1,7 @@
 ﻿using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Maths;
 using System;
 using System.Collections.Generic;
 
@@ -113,11 +114,11 @@ namespace ALife.Core.Collision
             if(PointCircleCollision(sector.CentrePoint, circle)) return true;
 
             //Check the left Geometry.Shapes.Point of the sector
-            Geometry.Shapes.Point leftPoint = ExtraMath.TranslateByVector(sector.CentrePoint, sector.Orientation, sector.Radius);
+            Geometry.Shapes.Point leftPoint = GeometryMaths.TranslateByVector(sector.CentrePoint, sector.Orientation, sector.Radius);
             if(PointCircleCollision(leftPoint, circle)) return true;
 
             //Check the right Geometry.Shapes.Point of the sector
-            Geometry.Shapes.Point rightPoint = ExtraMath.TranslateByVector(sector.CentrePoint, (sector.Orientation + sector.SweepAngle), sector.Radius);
+            Geometry.Shapes.Point rightPoint = GeometryMaths.TranslateByVector(sector.CentrePoint, (sector.Orientation + sector.SweepAngle), sector.Radius);
             if(PointCircleCollision(rightPoint, circle)) return true;
 
             //Now we're checking the line segment collisions
@@ -412,7 +413,7 @@ namespace ALife.Core.Collision
 
         private static bool IsPointWithinSweep(Geometry.Shapes.Point targetPoint, Sector sector)
         {
-            double angleBetweenPoints = ExtraMath.AngleBetweenPoints(targetPoint, sector.CentrePoint);
+            double angleBetweenPoints = GeometryMaths.AngleBetweenPoints(targetPoint, sector.CentrePoint);
             Angle abp = new Angle(angleBetweenPoints, true);
 
             //Angle minimum = new Angle(0);

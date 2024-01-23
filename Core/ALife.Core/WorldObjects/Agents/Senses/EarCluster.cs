@@ -1,7 +1,7 @@
 ﻿using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Geometry.Shapes.ChildShapes;
-using ALife.Core.Utility;
+using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects.Agents.Senses.Ears;
 using ALife.Core.WorldObjects.Agents.Senses.GenericInputs;
 using System;
@@ -17,18 +17,18 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             get { return myShape; }
         }
 
-        private EvoNumber EvoOrientationAroundParent;
-        private EvoNumber EvoRadius;
+        private IEvoNumber EvoOrientationAroundParent;
+        private IEvoNumber EvoRadius;
 
         public EarCluster(WorldObject parent, String name
-                          , EvoNumber eOrientationAroundParent, EvoNumber eRadius)
+                          , IEvoNumber eOrientationAroundParent, IEvoNumber eRadius)
             : base(parent, name, ReferenceValues.CollisionLevelSound)
         {
             EvoOrientationAroundParent = eOrientationAroundParent;
             EvoRadius = eRadius;
 
-            Angle orientationAroundParent = new Angle(eOrientationAroundParent.StartValue);
-            float radius = (float)eRadius.StartValue;
+            Angle orientationAroundParent = new Angle(eOrientationAroundParent.OriginalValue);
+            float radius = (float)eRadius.OriginalValue;
             myShape = new ChildCircle(parent.Shape, orientationAroundParent
                                       , 5.0 //TODO: Similar to EyeCluster Issue. This is a hack.
                                       , radius);
@@ -39,14 +39,14 @@ namespace ALife.Core.WorldObjects.Agents.Senses
         public override SenseCluster CloneSense(WorldObject newParent)
         {
             EarCluster newEC = new EarCluster(newParent, Name
-                                              , EvoOrientationAroundParent.Clone(), EvoRadius.Clone());
+                                              , (EvoNumber)EvoOrientationAroundParent.Clone(), (EvoNumber)EvoRadius.Clone());
             return newEC;
         }
 
         public override SenseCluster ReproduceSense(WorldObject newParent)
         {
             EarCluster newEC = new EarCluster(newParent, Name
-                                              , EvoOrientationAroundParent.Evolve(), EvoRadius.Evolve());
+                                              , (EvoNumber)EvoOrientationAroundParent.Evolve(Planet.World.NumberGen), (EvoNumber)EvoRadius.Evolve(Planet.World.NumberGen));
             return newEC;
         }
 
@@ -59,9 +59,9 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             return properties;
         }
 
-        private void PopulateCodeDictionary(Dictionary<string, string> properties, string name, EvoNumber evo)
+        private void PopulateCodeDictionary(Dictionary<string, string> properties, string name, IEvoNumber evo)
         {
-            properties.Add(name, $", new ROEvoNumber(startValue: {evo.StartValue},\tevoDeltaMax: {evo.DeltaMax},\thardMin: {evo.ValueHardMin},\thardMax: {evo.ValueHardMax})\t//{name}");
+            properties.Add(name, $", new ReadOnlyEvoNumber(startValue: {evo.OriginalValue},\tevoDeltaMax: {evo.ValueDeltaMaximumValue},\thardMin: {evo.ValueAbsoluteMinimum},\thardMax: {evo.ValueAbsoluteMaximum})\t//{name}");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents.Properties;
 using System;
 using System.Collections.Generic;
@@ -49,11 +50,11 @@ namespace ALife.Core.WorldObjects
         }
         public bool Alive;
 
-        protected WorldObject(Point centrePoint, IShape shape, string genusLabel, string individualLabel, string collisionLevel, Color color)
+        protected WorldObject(Point centrePoint, IShape shape, string genusLabel, string individualLabel, string collisionLevel, Colour color)
         {
             NumChildren = 0;
             Shape = shape;
-            Shape.Color = color;
+            Shape.Colour = color;
             Shape.CentrePoint = centrePoint;
 
             GenusLabel = genusLabel;

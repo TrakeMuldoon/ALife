@@ -1,4 +1,7 @@
 ﻿using ALife.Core.Utility;
+using ALife.Core.Utility.Collections;
+using ALife.Core.Utility.Colours;
+using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
@@ -34,7 +37,7 @@ If they eat two green mushrooms, they reproduce."
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -45,17 +48,17 @@ If they eat two green mushrooms, they reproduce."
             int agentRadius = 5;
             agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
 
-            List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(null,
+            List<SenseCluster> agentSenses = ListHelpers.CompileList<SenseCluster>(
                 new EyeCluster(agent, "EyeLeft", true
-                    , new ROEvoNumber(startValue: -20, evoDeltaMax: 1, hardMin: -360, hardMax: 360)    //Orientation Around Parent
-                    , new ROEvoNumber(startValue: 5,  evoDeltaMax: 1, hardMin: -360,  hardMax: 360)     //Relative Orientation
-                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 1, hardMin: 40,    hardMax: 120)       //Radius
-                    , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15,    hardMax: 40)),      //Sweep
+                    , new ReadOnlyEvoNumber(startValue: -20, evoDeltaMax: 1, hardMin: -360, hardMax: 360)    //Orientation Around Parent
+                    , new ReadOnlyEvoNumber(startValue: 5,  evoDeltaMax: 1, hardMin: -360,  hardMax: 360)     //Relative Orientation
+                    , new ReadOnlyEvoNumber(startValue: 80, evoDeltaMax: 1, hardMin: 40,    hardMax: 120)       //Radius
+                    , new ReadOnlyEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15,    hardMax: 40)),      //Sweep
                 new EyeCluster(agent, "EyeRight", true
-                    , new ROEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: -360, hardMax: 360)     //Orientation Around Parent
-                    , new ROEvoNumber(startValue: -5, evoDeltaMax: 1, hardMin: -360, hardMax: 360)    //Relative Orientation
-                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 1, hardMin: 40,    hardMax: 120)       //Radius
-                    , new ROEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15,    hardMax: 40))       //Sweep
+                    , new ReadOnlyEvoNumber(startValue: 20, evoDeltaMax: 1, hardMin: -360, hardMax: 360)     //Orientation Around Parent
+                    , new ReadOnlyEvoNumber(startValue: -5, evoDeltaMax: 1, hardMin: -360, hardMax: 360)    //Relative Orientation
+                    , new ReadOnlyEvoNumber(startValue: 80, evoDeltaMax: 1, hardMin: 40,    hardMax: 120)       //Radius
+                    , new ReadOnlyEvoNumber(startValue: 25, evoDeltaMax: 1, hardMin: 15,    hardMax: 40))       //Sweep
             );
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
@@ -110,13 +113,13 @@ If they eat two green mushrooms, they reproduce."
                 }
                 else if(wo is Fruit f)
                 {
-                    if(f.Shape.Color == PURE_GREEN)
+                    if(f.Shape.Colour == PURE_GREEN)
                     {
                         me.Statistics["HowFullAmI"].IncreasePropertyBy(3);
                         me.Statistics["DeathTimer"].ChangePropertyTo(0);
                         f.Die();
                     }
-                    else if(f.Shape.Color == PURE_RED)
+                    else if(f.Shape.Colour == PURE_RED)
                     {
                         me.Die();
                         f.Die();
@@ -145,9 +148,9 @@ If they eat two green mushrooms, they reproduce."
 
         const int FruitMax = 100;
 
-        Color PURE_RED = Color.FromArgb(alpha: 255, red: 255, green: 0, blue: 0);
-        Color PURE_BLUE = Color.FromArgb(alpha: 255, red: 0, green: 0, blue: 255);
-        Color PURE_GREEN = Color.FromArgb(alpha: 255, red: 0, green: 255, blue: 0);
+        Colour PURE_RED = Colour.Red;
+        Colour PURE_BLUE = Colour.Blue;
+        Colour PURE_GREEN = Colour.Green;
 
         List<Fruit> AllFruits = new List<Fruit>();
         Zone WorldZone = null;
@@ -157,7 +160,7 @@ If they eat two green mushrooms, they reproduce."
             double height = Planet.World.WorldHeight;
             double width = Planet.World.WorldWidth;
 
-            WorldZone = new Zone("WholeWorld", "Random", System.Drawing.Color.Yellow, new Geometry.Shapes.Point(0, 0), width, height);
+            WorldZone = new Zone("WholeWorld", "Random", Colour.Yellow, new Geometry.Shapes.Point(0, 0), width, height);
             Planet.World.AddZone(WorldZone);
 
             int numAgents = 200;

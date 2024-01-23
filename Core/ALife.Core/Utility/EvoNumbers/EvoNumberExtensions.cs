@@ -46,7 +46,7 @@ namespace ALife.Core.Utility.EvoNumbers
         }
 
         /// <summary>
-        /// Converts the ROEvoNumber to a EvoNumber.
+        /// Converts the ReadOnlyEvoNumber to a EvoNumber.
         /// </summary>
         /// <param name="number">The number.</param>
         /// <returns>The EvoNumber.</returns>
@@ -57,7 +57,7 @@ namespace ALife.Core.Utility.EvoNumbers
         }
 
         /// <summary>
-        /// Converts the EvoNumber to a ROEvoNumber.
+        /// Converts the EvoNumber to a ReadOnlyEvoNumber.
         /// </summary>
         /// <param name="number">The number.</param>
         /// <returns>The RPEvoNumber.</returns>

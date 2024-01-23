@@ -1,4 +1,5 @@
 ﻿using ALife.Core.Utility;
+using ALife.Core.Utility.Maths;
 using System;
 
 namespace ALife.Core.Geometry.Shapes.ChildShapes
@@ -47,7 +48,7 @@ namespace ALife.Core.Geometry.Shapes.ChildShapes
             OrientationAroundParent = orientationAroundParent;
             distanceFromParentCentre = distFromParentCentre;
             Parent = parent;
-            Color = System.Drawing.Color.White;
+            Colour = Utility.Colours.Colour.White;
         }
 
         public override Point CentrePoint
@@ -55,7 +56,7 @@ namespace ALife.Core.Geometry.Shapes.ChildShapes
             get
             {
                 Angle startAngle = Parent.Orientation + OrientationAroundParent;
-                return ExtraMath.TranslateByVector(Parent.CentrePoint, startAngle, distanceFromParentCentre);
+                return GeometryMaths.TranslateByVector(Parent.CentrePoint, startAngle, distanceFromParentCentre);
             }
             set
             {
@@ -79,7 +80,7 @@ namespace ALife.Core.Geometry.Shapes.ChildShapes
         public IShape CloneChildShape(IShape parent)
         {
             ChildSector cs = new ChildSector(parent, OrientationAroundParent.Clone(), distanceFromParentCentre, RelativeOrientation.Clone(), Radius, SweepAngle.Clone());
-            cs.Color = this.Color;
+            cs.Colour = this.Colour;
             return cs;
         }
     }

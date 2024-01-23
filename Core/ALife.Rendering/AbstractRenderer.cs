@@ -1,5 +1,7 @@
 ﻿using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Colours;
+using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Agents;
 using Color = System.Drawing.Color;
 
@@ -33,11 +35,11 @@ namespace ALife.Rendering
         {
             if(fillIn)
             {
-                FillRectangle(rectangle.TopLeft, rectangle.TopRight, rectangle.BottomLeft, rectangle.BottomRight, rectangle.Color);
+                FillRectangle(rectangle.TopLeft, rectangle.TopRight, rectangle.BottomLeft, rectangle.BottomRight, rectangle.Colour.ToColor());
             }
             else
             {
-                DrawRectangle(rectangle.TopLeft, rectangle.TopRight, rectangle.BottomLeft, rectangle.BottomRight, rectangle.Color, 0.4f);
+                DrawRectangle(rectangle.TopLeft, rectangle.TopRight, rectangle.BottomLeft, rectangle.BottomRight, rectangle.Colour.ToColor(), 0.4f);
             }
         }
 
@@ -55,8 +57,8 @@ namespace ALife.Rendering
 
         public void DrawOrientation(IShape shape)
         {
-            Point ori = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 4);
-            Point ori2 = ExtraMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 1);
+            Point ori = GeometryMaths.TranslateByVector(shape.CentrePoint, shape.Orientation, 4);
+            Point ori2 = GeometryMaths.TranslateByVector(shape.CentrePoint, shape.Orientation, 1);
             DrawLine(ori, ori2, Color.DarkRed, 0.4);
         }
     }

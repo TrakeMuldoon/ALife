@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ALife.Core;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
@@ -136,7 +137,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
                 double rawMod = Planet.World.NumberGen.NextDouble();
                 double modification = ((rawMod * 2) - 1) * MutabilityRate;
                 val += modification;
-                val = ExtraMath.Clamp(val, -1, 1);
+                val = ExtraMaths.Clamp(val, -1, 1);
             }
             return val;
         }

@@ -1,4 +1,5 @@
 ﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using System;
 
 namespace ALife.Core.WorldObjects
@@ -9,7 +10,7 @@ namespace ALife.Core.WorldObjects
         {
         }
         public EmptyObject(Geometry.Shapes.Point centrePoint, float startRadius, string collisionLevel, string name)
-            : base(centrePoint, new Circle(centrePoint, startRadius), "Empty", name, collisionLevel, System.Drawing.Color.Gray)
+            : base(centrePoint, new Circle(centrePoint, startRadius), "Empty", name, collisionLevel, Colour.Grey)
         {
         }
         public EmptyObject(IShape shape, string collisionLevel)

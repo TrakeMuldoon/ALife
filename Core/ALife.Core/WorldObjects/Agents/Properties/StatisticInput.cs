@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.Properties;
 
@@ -81,14 +82,14 @@ namespace ALife.Core.WorldObjects.Agents.Properties
 
         public void ChangePropertyTo(int value)
         {
-            Value = ExtraMath.Clamp(value, StatisticMinimum, StatisticMaximum);
+            Value = ExtraMaths.Clamp(value, StatisticMinimum, StatisticMaximum);
             modified = true;
         }
 
         public override int Value
         {
             get { return base.Value; }
-            set { base.Value = ExtraMath.Clamp(value, StatisticMinimum, StatisticMaximum); }
+            set { base.Value = ExtraMaths.Clamp(value, StatisticMinimum, StatisticMaximum); }
 
         }
 

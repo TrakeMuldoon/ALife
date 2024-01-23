@@ -2,6 +2,7 @@
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Geometry.Shapes.ChildShapes;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Agents.Senses.GoalSense;
 using System;
 
@@ -124,9 +125,9 @@ namespace ALife.Core.WorldObjects.Agents.Senses
                 double yTarg = myCP.Y < targBB.MinY ? targBB.MinY : targBB.MaxY;
                 Point target = new Point(xTarg, yTarg);
 
-                distanceValue = (int)ExtraMath.DistanceBetweenTwoPoints(target, myCP);
+                distanceValue = (int)GeometryMaths.DistanceBetweenTwoPoints(target, myCP);
 
-                double angleBetweenPoints = ExtraMath.AngleBetweenPoints(target, myCP);
+                double angleBetweenPoints = GeometryMaths.AngleBetweenPoints(target, myCP);
                 Angle abp = new Angle(angleBetweenPoints, true);
                 rotationValue = CalculateRotationFrom((int)abp.Degrees);
             }
@@ -149,10 +150,10 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             Point myCP = myShape.CentrePoint;
             Point target = new Point(targetCircle.CentrePoint.X, targetCircle.CentrePoint.Y);
 
-            int distanceValue = (int)ExtraMath.DistanceBetweenTwoPoints(target, myCP);
+            int distanceValue = (int)GeometryMaths.DistanceBetweenTwoPoints(target, myCP);
             distanceValue -= (int)targetCircle.Radius;
 
-            double angleBetweenPoints = ExtraMath.AngleBetweenPoints(target, myCP);
+            double angleBetweenPoints = GeometryMaths.AngleBetweenPoints(target, myCP);
             Angle abp = new Angle(angleBetweenPoints, true);
             int rotationValue = CalculateRotationFrom((int)abp.Degrees);
 

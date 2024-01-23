@@ -1,4 +1,5 @@
 ﻿using System;
+using ALife.Core.Utility.Maths;
 using ALife.Core.Utility.Random;
 
 namespace ALife.Core.Utility.EvoNumbers
@@ -48,7 +49,7 @@ namespace ALife.Core.Utility.EvoNumbers
             //               - deltaMax;
 
             double moddedValue = current + delta;
-            double clampedValue = ExtraMath.Clamp(moddedValue, hardMin, hardMax);
+            double clampedValue = ExtraMaths.Clamp(moddedValue, hardMin, hardMax);
             return clampedValue;
         }
     }

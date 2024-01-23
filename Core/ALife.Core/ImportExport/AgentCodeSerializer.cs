@@ -30,7 +30,7 @@ namespace ALife.Core.ImportExport
 
             StringBuilder outputCode = new StringBuilder();
             outputCode.AppendLine("int agentRadius = 5;");
-            outputCode.AppendLine("ApplyCircleShapeToAgent(parentZone.Distributor, System.Drawing.Color.Blue, agentRadius, 0);");
+            outputCode.AppendLine("ApplyCircleShapeToAgent(parentZone.Distributor, System.Drawing.Colour.Blue, agentRadius, 0);");
 
             outputCode.AppendLine();
             outputCode.AppendLine("List<SenseCluster> agentSenses = new List<SenseCluster>()");

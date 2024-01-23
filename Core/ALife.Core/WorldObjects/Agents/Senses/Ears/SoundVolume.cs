@@ -1,5 +1,6 @@
 ﻿using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Prebuilt;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses.Ears
                     }
                 }
 
-                double distanceBetween = ExtraMath.DistanceBetweenTwoPoints(this.parentShape.CentrePoint, sw.Shape.CentrePoint);
+                double distanceBetween = GeometryMaths.DistanceBetweenTwoPoints(this.parentShape.CentrePoint, sw.Shape.CentrePoint);
                 double volume = sw.Intensity - distanceBetween;
                 sum += volume * (double)volume / max;
             }

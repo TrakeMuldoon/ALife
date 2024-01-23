@@ -1,5 +1,6 @@
 ﻿using ALife.Core.Collision;
 using ALife.Core.Scenarios.ScenarioHelpers;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
@@ -17,7 +18,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
             HomeZone = parentZone;
 
             int agentRadius = 5;
-            ApplyCircleShapeToAgent(parentZone.Distributor, System.Drawing.Color.Red, agentRadius, 0);
+            ApplyCircleShapeToAgent(parentZone.Distributor, Colour.Red, agentRadius, 0);
 
             List<SenseCluster> agentSenses = CommonSenses.QuadrantEyes(this, 0);
 

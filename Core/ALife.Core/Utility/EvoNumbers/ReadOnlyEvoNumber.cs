@@ -60,6 +60,17 @@ namespace ALife.Core.Utility.EvoNumbers
         /// <summary>
         /// Initializes a new instance of the <see cref="ReadOnlyEvoNumber"/> class.
         /// </summary>
+        /// <param name="startValue">The value.</param>
+        /// <param name="evoDeltaMax">The evolution delta maximum.</param>
+        /// <param name="absoluteMinimum">The absolute minimum.</param>
+        /// <param name="hardMax">The absolute maximum.</param>
+        public ReadOnlyEvoNumber(double startValue, double evoDeltaMax, double hardMin, double hardMax) : this(startValue, evoDeltaMax, new BoundedNumber(hardMin, hardMin, hardMax), new BoundedNumber(hardMax, hardMin, hardMax), evoDeltaMax, new DeltaBoundedNumber(evoDeltaMax, evoDeltaMax, evoDeltaMax - 1, evoDeltaMax + 1))
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReadOnlyEvoNumber"/> class.
+        /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="originalValueEvolutionDeltaMax">The original value evolution delta maximum.</param>
         /// <param name="minimumValue">The minimum value.</param>

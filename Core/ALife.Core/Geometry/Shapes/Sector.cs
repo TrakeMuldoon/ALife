@@ -1,4 +1,6 @@
 ﻿using ALife.Core.Utility;
+using ALife.Core.Utility.Colours;
+using ALife.Core.Utility.Maths;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -18,12 +20,12 @@ namespace ALife.Core.Geometry.Shapes
             }
         }
 
-        public Color Color
+        public Colour Colour
         {
             get;
             set;
         }
-        public Color DebugColor
+        public Colour DebugColor
         {
             get;
             set;
@@ -69,12 +71,12 @@ namespace ALife.Core.Geometry.Shapes
 
         private BoundingBox? myBox = null;
 
-        public Sector(Geometry.Shapes.Point centrePoint, float radius, Angle sweepAngle, Color color)
+        public Sector(Geometry.Shapes.Point centrePoint, float radius, Angle sweepAngle, Colour color)
         {
             CentrePoint = centrePoint;
             Radius = radius;
             SweepAngle = sweepAngle;
-            Color = color;
+            Colour = color;
             Orientation = new Angle(0);
         }
 
@@ -112,12 +114,12 @@ namespace ALife.Core.Geometry.Shapes
             yValues.Add(myOriginPoint.Y);
 
             //Get the points that are the edges of the sector
-            leftPoint = ExtraMath.TranslateByVector(myOriginPoint, absOrientationAngle, Radius);
+            leftPoint = GeometryMaths.TranslateByVector(myOriginPoint, absOrientationAngle, Radius);
             xValues.Add(leftPoint.X);
             yValues.Add(leftPoint.Y);
 
             Angle endAngle = absOrientationAngle + SweepAngle;
-            rightPoint = ExtraMath.TranslateByVector(myOriginPoint, endAngle, Radius);
+            rightPoint = GeometryMaths.TranslateByVector(myOriginPoint, endAngle, Radius);
             xValues.Add(rightPoint.X);
             yValues.Add(rightPoint.Y);
 
@@ -173,10 +175,10 @@ namespace ALife.Core.Geometry.Shapes
                 }
             }
 
-            double minX = ExtraMath.MultiMin(xValues.ToArray());
-            double minY = ExtraMath.MultiMin(yValues.ToArray());
-            double maxX = ExtraMath.MultiMax(xValues.ToArray());
-            double maxY = ExtraMath.MultiMax(yValues.ToArray());
+            double minX = ExtraMaths.Minimum(xValues.ToArray());
+            double minY = ExtraMaths.Minimum(yValues.ToArray());
+            double maxX = ExtraMaths.Maximum(xValues.ToArray());
+            double maxY = ExtraMaths.Maximum(yValues.ToArray());
 
             BoundingBox sectorBB = new BoundingBox(minX, minY, maxX, maxY);
             myBox = sectorBB;
@@ -190,7 +192,7 @@ namespace ALife.Core.Geometry.Shapes
 
         public virtual IShape CloneShape()
         {
-            Sector newSec = new Sector(new Geometry.Shapes.Point(CentrePoint.X, CentrePoint.Y), Radius, SweepAngle.Clone(), Color.Clone());
+            Sector newSec = new Sector(new Geometry.Shapes.Point(CentrePoint.X, CentrePoint.Y), Radius, SweepAngle.Clone(), (Colour)Colour.Clone());
             newSec.Orientation = Orientation.Clone();
             return newSec;
         }

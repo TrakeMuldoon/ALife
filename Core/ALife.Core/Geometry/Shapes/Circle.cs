@@ -1,4 +1,5 @@
 ﻿using ALife.Core.Utility;
+using ALife.Core.Utility.Colours;
 using System.Drawing;
 
 namespace ALife.Core.Geometry.Shapes
@@ -30,12 +31,12 @@ namespace ALife.Core.Geometry.Shapes
             set;
         }
 
-        public virtual Color Color
+        public virtual Colour Colour
         {
             get;
             set;
         }
-        public virtual Color DebugColor
+        public virtual Colour DebugColor
         {
             get;
             set;
@@ -68,7 +69,7 @@ namespace ALife.Core.Geometry.Shapes
         {
             Circle cir = new Circle(new Geometry.Shapes.Point(CentrePoint.X, CentrePoint.Y), Radius);
             cir.Orientation = Orientation.Clone();
-            cir.Color = Color.Clone();
+            cir.Colour = (Colour)Colour.Clone();
             return cir;
         }
     }

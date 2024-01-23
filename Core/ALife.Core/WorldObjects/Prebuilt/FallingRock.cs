@@ -2,6 +2,8 @@
 using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Colours;
+using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Agents;
 using System;
 using System.Collections.Generic;
@@ -16,7 +18,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
         private Zone start;
         private Zone finish;
 
-        public FallingRock(Geometry.Shapes.Point centrePoint, IShape shape, Color color, Zone startZone, Zone targetZone)
+        public FallingRock(Geometry.Shapes.Point centrePoint, IShape shape, Colour color, Zone startZone, Zone targetZone)
             : base(centrePoint, shape, "Rock", AgentIDGenerator.GetNextAgentId(), ReferenceValues.CollisionLevelPhysical, color)
         {
             Shape.Orientation = new Angle(90);
@@ -24,7 +26,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
             finish = targetZone;
         }
 
-        public FallingRock(Geometry.Shapes.Point centrePoint, IShape shape, Color color)
+        public FallingRock(Geometry.Shapes.Point centrePoint, IShape shape, Colour color)
             : base(centrePoint, shape, "Rock", AgentIDGenerator.GetNextAgentId(), ReferenceValues.CollisionLevelPhysical, color)
         {
             Shape.Orientation = new Angle(90);
@@ -46,7 +48,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
             Geometry.Shapes.Point origin = new Geometry.Shapes.Point(Shape.CentrePoint.X, Shape.CentrePoint.Y);
             Angle turnRotation = new Angle(2);
 
-            Geometry.Shapes.Point newCentre = ExtraMath.TranslateByVector(Shape.CentrePoint, Shape.Orientation, 10);
+            Geometry.Shapes.Point newCentre = GeometryMaths.TranslateByVector(Shape.CentrePoint, Shape.Orientation, 10);
             Shape.CentrePoint = newCentre;
 
             Shape.Orientation += turnRotation;

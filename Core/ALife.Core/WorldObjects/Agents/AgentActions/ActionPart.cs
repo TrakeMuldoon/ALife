@@ -1,4 +1,5 @@
 ﻿using ALife.Core.Utility;
+using ALife.Core.Utility.Maths;
 using System;
 
 namespace ALife.Core.WorldObjects.Agents.AgentActions
@@ -38,7 +39,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
 
         public void Clamp()
         {
-            intensity = ExtraMath.Clamp(intensity, IntensityMin, IntensityMax);
+            intensity = ExtraMaths.Clamp(intensity, IntensityMin, IntensityMax);
         }
 
         public virtual void Reset()

@@ -1,5 +1,6 @@
 ﻿using ALife.Core;
 using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using System;
@@ -21,7 +22,7 @@ namespace ALife.Rendering
         {
             FillAARectangle(zone, renderer);
             
-            Color textColor = Color.FromArgb(255, zone.Color);
+            Color textColor = Color.FromArgb(255, zone.Colour.R, zone.Colour.G, zone.Colour.B);
             renderer.DrawText(zone.Name, zone.TopLeft, textColor);
         }
 
@@ -56,8 +57,8 @@ namespace ALife.Rendering
         /// <param name="renderer">The renderer.</param>
         public static void DrawAgentShadow(AgentShadow shadow, LayerUISettings uiSettings, AgentUISettings auiSettings, AbstractRenderer renderer)
         {
-            Color orig = shadow.Shape.DebugColor;
-            shadow.Shape.DebugColor = Color.White;
+            Colour orig = shadow.Shape.DebugColor;
+            shadow.Shape.DebugColor = Colour.White;
             DrawShape(shadow.Shape, uiSettings.ShowBoundingBoxes, renderer, true);
             shadow.Shape.DebugColor = orig;
             //Draw Orientation
@@ -80,12 +81,12 @@ namespace ALife.Rendering
         /// <param name="renderer">The renderer.</param>
         public static void DrawInactiveObject(WorldObject wo, LayerUISettings uiSettings, AbstractRenderer renderer)
         {
-            Color color = wo.Shape.Color;
-            wo.Shape.Color = Color.FromArgb(50, color.R, color.G, color.B);
+            Colour color = wo.Shape.Colour;
+            wo.Shape.Colour = new Colour(50, color.R, color.G, color.B);
             DrawShape(wo.Shape, uiSettings.ShowBoundingBoxes, renderer, true);
-            wo.Shape.Color = Color.FromArgb(50, 255, 0, 0);
+            wo.Shape.Colour = new Colour(50, 255, 0, 0);
             DrawShape(wo.Shape, uiSettings.ShowBoundingBoxes, renderer, false);
-            wo.Shape.Color = color;
+            wo.Shape.Colour = color;
         }
 
         /// <summary>
@@ -96,8 +97,8 @@ namespace ALife.Rendering
         /// <param name="renderer">The renderer.</param>
         public static void DrawPastObject(IShape shape, LayerUISettings uiSettings, AbstractRenderer renderer)
         {
-            Color pastDebug = shape.DebugColor;
-            shape.DebugColor = Color.White;
+            Colour pastDebug = shape.DebugColor;
+            shape.DebugColor = Colour.White;
             DrawShape(shape, uiSettings.ShowBoundingBoxes, renderer, true);
             shape.DebugColor = pastDebug;
         }
@@ -179,7 +180,7 @@ namespace ALife.Rendering
         public static void DrawAARectangle(AARectangle rec, AbstractRenderer renderer)
         {
             Point tl = rec.TopLeft;
-            renderer.DrawAARectangle(tl, new Point(tl.X + rec.XWidth, tl.Y + rec.YHeight), rec.Color, 0.4f);
+            renderer.DrawAARectangle(tl, new Point(tl.X + rec.XWidth, tl.Y + rec.YHeight), rec.Colour, 0.4f);
         }
 
         /// <summary>

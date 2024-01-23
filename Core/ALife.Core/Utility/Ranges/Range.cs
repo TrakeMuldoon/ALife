@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using ALife.Core.Utility.Maths;
 
 namespace ALife.Core.Utility.Ranges
 {
@@ -102,19 +103,7 @@ namespace ALife.Core.Utility.Ranges
         /// <returns>The clampped value.</returns>
         public T CircularClampValue(T value)
         {
-            dynamic remainder = (dynamic)value % (dynamic)Difference;
-            if(remainder == 0)
-            {
-                return Minimum;
-            }
-
-            dynamic actualRemainder = remainder;
-            if(remainder < 0)
-            {
-                actualRemainder = Difference + remainder;
-            }
-
-            dynamic output = (dynamic)Minimum + actualRemainder;
+            dynamic output = ExtraMaths.CircularClamp((dynamic)value, (dynamic)Minimum, (dynamic)Maximum);
             return output;
         }
 
@@ -126,18 +115,8 @@ namespace ALife.Core.Utility.Ranges
         /// <returns>The clampped value.</returns>
         public T ClampValue(T value)
         {
-            dynamic min = Minimum;
-            dynamic max = Maximum;
-            dynamic v = value;
-            if(v < min)
-            {
-                return Minimum;
-            }
-            if(v > max)
-            {
-                return Maximum;
-            }
-            return value;
+            dynamic output = ExtraMaths.Clamp((dynamic)value, (dynamic)Minimum, (dynamic)Maximum);
+            return output;
         }
     }
 }

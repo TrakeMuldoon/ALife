@@ -1,5 +1,5 @@
-﻿using ALife.Core.Utility.Maths;
-using System;
+﻿using System;
+using ALife.Core.Utility.Maths;
 
 namespace ALife.Core.Utility.Colours
 {
@@ -327,24 +327,6 @@ namespace ALife.Core.Utility.Colours
                 return p + (q - p) * (2d / 3 - actualT) * 6;
             }
             return p;
-        }
-
-        /// <summary>
-        /// Converts an int on a 0 to 255 range to the byte representation.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>The byte representation of the value.</returns>
-        private static byte IntToByte(int value)
-        {
-            if(value < byte.MinValue)
-            {
-                return byte.MinValue;
-            }
-            if(value > byte.MaxValue)
-            {
-                return byte.MaxValue;
-            }
-            return (byte)value;
         }
     }
 }

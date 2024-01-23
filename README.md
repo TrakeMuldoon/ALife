@@ -1,6 +1,10 @@
 # ALife
 
-## Introduction
+Welcome to Devin's Artificial Life Application. This is a simulated world of agents complely independantly learning the rules of their surroundings without any preconcieved notions.
+Each agent grows and, if successful, is able to produce an evolved child. There are over a dozen scenarios with different success and failure conditions each trying to learn 
+and evolve different behaviours.
+
+# Simulation
 
 This system is intended so simulate a set of agents following a set of non-declarative rules, interacting with each other with the hopes to show off some emergent behaviour(s).
 
@@ -16,28 +20,32 @@ An Input is anything that the creature can read numerically, external or interna
 
 Inputs can come in "Input Clusters" which is a set of related inputs. This helps optimize the performance
 For Example "Eye Cluster" is a set of inputs 
--- DoISee
--- HowManyThings (currently disabled)
--- DoIRecognize (currently disabled)
--- WhatColor(Avg) 
--- HowMuchColor (currently disabled)    
--- Etc.
+- DoISeeSomething
+- HowManyThings (currently disabled)
+- DoISeeBlue
+- DoISeeRed
+- DoISeeGreen
+- DoIRecognize (currently disabled)
+- Etc.
 
 Actions are anything the Agent can do
 - Move
 - Turn
 - Bite (not implemented yet)
 
+
 A Scenario is a set of rules about agents, their interactions with each other and the world.
 
-## Using the App
+The Scenarios each contain the definitions of the agents, as well as the definition for what allows them to reproduce or die. It also contains the instructions for the intial set up of the world.
+
+# Using the App
 TODO: Documentation in flux, as there are now two differet visualization for the application, the usage for each is different.
 The Simulation core is the same for both.
 
 UWP
 Avalonia
 
-### UWP Controls
+## UWP Controls
 
 To Run the UWP version of the app, 
     1. open the Solution in Visual Studio.
@@ -45,17 +53,18 @@ To Run the UWP version of the app,
     3. Right Click on that project and "Set As Startup Project"
 
 
-TODO: Direct Actions
+### Direct Actions
     The "Q" and "E" keys will zoom in and out.
 
-TODO: "Seed Section"
-TODO: "Speed Controls"
-TODO: "Layer Controls"
-TODO: "Special Selector Buttons"
-TODO: "Wall Panel"
-TODO: "Agent Panel"
-TODO: "Neural Network Brain Viewer"
+### "Seed Section"
+### "Speed Controls"
+### "Layer Controls"
+### "Special Selector Buttons"
+### "Wall Panel"
+### "Agent Panel"
+### "Neural Network Brain Viewer"
 
+### Original Documentation for This stuff.
 There is a Seed Input at the top. Once it is changed, you can click "reset" and the world will be reset to whatever is currently in the Seed textbox.
 FF will fast forward that many turns. The UI is blanked during this time to save cpu.
 

@@ -50,6 +50,26 @@ namespace ALife.Core.Utility.Colours
         public static readonly Colour Yellow = new Colour(255, 255, 255, 0, true);
 
         /// <summary>
+        /// The alpha channel
+        /// </summary>
+        private byte _alpha;
+
+        /// <summary>
+        /// The blue channel
+        /// </summary>
+        private byte _blue;
+
+        /// <summary>
+        /// The green channel
+        /// </summary>
+        private byte _green;
+
+        /// <summary>
+        /// The red channel
+        /// </summary>
+        private byte _red;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Colour"/> struct.
         /// </summary>
         /// <param name="alpha">The alpha.</param>
@@ -88,10 +108,10 @@ namespace ALife.Core.Utility.Colours
         /// <param name="wasPredefined">if set to <c>true</c> [was predefined].</param>
         internal Colour(byte alpha, byte red, byte green, byte blue, bool wasPredefined)
         {
-            A = alpha;
-            R = red;
-            G = green;
-            B = blue;
+            _alpha = alpha;
+            _red = red;
+            _green = green;
+            _blue = blue;
             WasPredefined = wasPredefined;
         }
 
@@ -99,31 +119,63 @@ namespace ALife.Core.Utility.Colours
         /// Gets alpha channel.
         /// </summary>
         /// <value>The alpha channel.</value>
-        public byte A { get; }
+        public byte A
+        {
+            get => _alpha;
+            set
+            {
+                _alpha = value;
+                WasPredefined = false;
+            }
+        }
 
         /// <summary>
         /// Gets blue channel.
         /// </summary>
         /// <value>The blue channel.</value>
-        public byte B { get; }
+        public byte B
+        {
+            get => _blue;
+            set
+            {
+                _blue = value;
+                WasPredefined = false;
+            }
+        }
 
         /// <summary>
         /// Gets green channel.
         /// </summary>
         /// <value>The green channel.</value>
-        public byte G { get; }
+        public byte G
+        {
+            get => _green;
+            set
+            {
+                _green = value;
+                WasPredefined = false;
+            }
+        }
 
         /// <summary>
         /// Gets red channel.
         /// </summary>
         /// <value>The red channel.</value>
-        public byte R { get; }
+        public byte R
+        {
+            get => _red;
+            set
+            {
+                _red = value;
+                WasPredefined = false;
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether this colour [was predefined].
         /// </summary>
         /// <value><c>true</c> if [was predefined]; otherwise, <c>false</c>.</value>
-        public bool WasPredefined { get; }
+        public bool WasPredefined { get; private set; }
 
         /// <summary>
         /// Generates a random Colour.

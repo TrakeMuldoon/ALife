@@ -50,16 +50,36 @@ namespace ALife.Core.Utility.Colours
         public static readonly HslColour Yellow = new HslColour(Colour.Yellow);
 
         /// <summary>
+        /// The alpha channel
+        /// </summary>
+        private byte _alpha;
+
+        /// <summary>
+        /// The hue
+        /// </summary>
+        private int _hue;
+
+        /// <summary>
+        /// The lightness
+        /// </summary>
+        private double _lightness;
+
+        /// <summary>
+        /// The saturation
+        /// </summary>
+        private double _saturation;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="HslColour"/> struct.
         /// </summary>
         /// <param name="colour">The colour.</param>
         public HslColour(IColour colour)
         {
             ColourHelpers.ConvertRgbToHsl(colour.R, colour.G, colour.B, out int hue, out double saturation, out double lightness);
-            A = colour.A;
-            Hue = hue;
-            Saturation = saturation;
-            Lightness = lightness;
+            _alpha = colour.A;
+            _hue = hue;
+            _saturation = saturation;
+            _lightness = lightness;
             R = colour.R;
             G = colour.G;
             B = colour.B;
@@ -97,10 +117,10 @@ namespace ALife.Core.Utility.Colours
         /// <param name="wasPredefined">if set to <c>true</c> [was predefined].</param>
         internal HslColour(byte alpha, int hue, double saturation, double lightness, bool wasPredefined)
         {
-            A = alpha;
-            Hue = hue;
-            Saturation = saturation;
-            Lightness = lightness;
+            _alpha = alpha;
+            _hue = hue;
+            _saturation = saturation;
+            _lightness = lightness;
 
             ColourHelpers.ConvertHslToRgb(hue, saturation, lightness, out byte red, out byte green, out byte blue);
             R = red;
@@ -113,49 +133,93 @@ namespace ALife.Core.Utility.Colours
         /// Gets alpha channel.
         /// </summary>
         /// <value>The alpha channel.</value>
-        public byte A { get; }
+        public byte A
+        {
+            get => _alpha;
+            set
+            {
+                _alpha = value;
+                WasPredefined = false;
+            }
+        }
 
         /// <summary>
         /// Gets blue channel.
         /// </summary>
         /// <value>The blue channel.</value>
-        public byte B { get; }
+        public byte B { get; private set; }
 
         /// <summary>
         /// Gets green channel.
         /// </summary>
         /// <value>The green channel.</value>
-        public byte G { get; }
+        public byte G { get; private set; }
 
         /// <summary>
         /// Gets the hue.
         /// </summary>
         /// <value>The hue.</value>
-        public int Hue { get; }
+        public int Hue
+        {
+            get => _hue;
+            set
+            {
+                _hue = value;
+                WasPredefined = false;
+                ColourHelpers.ConvertHslToRgb(_hue, _saturation, _lightness, out byte red, out byte green, out byte blue);
+                R = red;
+                G = green;
+                B = blue;
+            }
+        }
 
         /// <summary>
         /// Gets the lightness.
         /// </summary>
         /// <value>The lightness.</value>
-        public double Lightness { get; }
+        public double Lightness
+        {
+            get => _lightness;
+            set
+            {
+                _lightness = value;
+                WasPredefined = false;
+                ColourHelpers.ConvertHslToRgb(_hue, _saturation, _lightness, out byte red, out byte green, out byte blue);
+                R = red;
+                G = green;
+                B = blue;
+            }
+        }
 
         /// <summary>
         /// Gets red channel.
         /// </summary>
         /// <value>The red channel.</value>
-        public byte R { get; }
+        public byte R { get; private set; }
 
         /// <summary>
         /// Gets the saturation.
         /// </summary>
         /// <value>The saturation.</value>
-        public double Saturation { get; }
+        public double Saturation
+        {
+            get => _saturation;
+            set
+            {
+                _saturation = value;
+                WasPredefined = false;
+                ColourHelpers.ConvertHslToRgb(_hue, _saturation, _lightness, out byte red, out byte green, out byte blue);
+                R = red;
+                G = green;
+                B = blue;
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether this colour [was predefined].
         /// </summary>
         /// <value><c>true</c> if [was predefined]; otherwise, <c>false</c>.</value>
-        public bool WasPredefined { get; }
+        public bool WasPredefined { get; private set; }
 
         /// <summary>
         /// Generates a random HslColour.
@@ -313,7 +377,7 @@ namespace ALife.Core.Utility.Colours
         /// <returns>A <see cref="System.String"/> that represents this instance.</returns>
         public override string ToString()
         {
-            return $"a{A}, h{Hue}, s{Saturation}, l{Lightness} (r{R}, g{G}, b{B})";
+            return $"a{A}, h{Hue}, s{Saturation:0.00}, l{Lightness:0.00} (r{R}, g{G}, b{B})";
         }
     }
 }

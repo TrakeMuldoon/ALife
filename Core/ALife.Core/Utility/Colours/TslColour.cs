@@ -5,137 +5,137 @@ using ALife.Core.Utility.Random;
 namespace ALife.Core.Utility.Colours
 {
     /// <summary>
-    /// Defines an AHSL colour for the ALife simulation.
-    /// See: https://en.wikipedia.org/wiki/HSL_and_HSV
+    /// Defines an ATSL colour for the ALife simulation.
+    /// See: https://en.wikipedia.org/wiki/TSL_color_space
     /// </summary>
     [DebuggerDisplay("{ToString()}")]
-    public struct HslColour : IColour
+    public struct TslColour : IColour
     {
         /// <summary>
         /// A colour representing the absence of colour.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour Black = PredefineColour("000000");
+        public static readonly TslColour Black = PredefineColour("000000");
 
         /// <summary>
         /// A colour representing the colour blue.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour Blue = PredefineColour("0000ff");
+        public static readonly TslColour Blue = PredefineColour("0000ff");
 
         /// <summary>
         /// A colour representing the colour cyan.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour Cyan = PredefineColour("00FFFF");
+        public static readonly TslColour Cyan = PredefineColour("00FFFF");
 
         /// <summary>
         /// A colour representing the colour dark blue.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour DarkBlue = PredefineColour("00008B");
+        public static readonly TslColour DarkBlue = PredefineColour("00008B");
 
         /// <summary>
         /// A colour representing the colour dark khaki.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour DarkKhaki = PredefineColour("Bdb76b");
+        public static readonly TslColour DarkKhaki = PredefineColour("Bdb76b");
 
         /// <summary>
         /// A colour representing the colour dark red.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour DarkRed = PredefineColour("8B0000");
+        public static readonly TslColour DarkRed = PredefineColour("8B0000");
 
         /// <summary>
         /// A colour representing the colour dodger blue.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour DodgerBlue = PredefineColour("1e90ff");
+        public static readonly TslColour DodgerBlue = PredefineColour("1e90ff");
 
         /// <summary>
         /// A colour representing the colour green.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour Green = PredefineColour("00ff00");
+        public static readonly TslColour Green = PredefineColour("00ff00");
 
         /// <summary>
         /// A colour representing the colour grey.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour Grey = PredefineColour("808080");
+        public static readonly TslColour Grey = PredefineColour("808080");
 
         /// <summary>
         /// A colour representing the colour hot pink.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour HotPink = PredefineColour("FF69B4");
+        public static readonly TslColour HotPink = PredefineColour("FF69B4");
 
         /// <summary>
         /// A colour representing the colour indian red.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour IndianRed = PredefineColour("CD5C5C");
+        public static readonly TslColour IndianRed = PredefineColour("CD5C5C");
 
         /// <summary>
         /// A colour representing the colour magenta.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour Magenta = PredefineColour("FF00FF");
+        public static readonly TslColour Magenta = PredefineColour("FF00FF");
 
         /// <summary>
         /// A colour representing the colour maroon.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour Maroon = PredefineColour("800000");
+        public static readonly TslColour Maroon = PredefineColour("800000");
 
         /// <summary>
         /// A colour representing the colour lawn green.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour LawnGreen = PredefineColour("7cfc00");
+        public static readonly TslColour LawnGreen = PredefineColour("7cfc00");
 
         /// <summary>
         /// A colour representing the colour orange.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour Orange = PredefineColour("FFA500");
+        public static readonly TslColour Orange = PredefineColour("FFA500");
 
         /// <summary>
         /// A colour representing the colour papaya whip.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour PapayaWhip = PredefineColour("Ffefd5");
+        public static readonly TslColour PapayaWhip = PredefineColour("Ffefd5");
 
         /// <summary>
         /// A colour representing the colour pink.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour Pink = PredefineColour("FFC0CB");
+        public static readonly TslColour Pink = PredefineColour("FFC0CB");
 
         /// <summary>
         /// A colour representing the colour red.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour Red = PredefineColour("Ff0000");
+        public static readonly TslColour Red = PredefineColour("Ff0000");
 
         /// <summary>
         /// A colour representing the colour white.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour White = PredefineColour("FFFFFF");
+        public static readonly TslColour White = PredefineColour("FFFFFF");
 
         /// <summary>
         /// A colour representing the colour white smoke.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour WhiteSmoke = PredefineColour("F5f5f5");
+        public static readonly TslColour WhiteSmoke = PredefineColour("F5f5f5");
 
         /// <summary>
         /// A colour representing the colour yellow.
         /// </summary>
         [JsonIgnore]
-        public static readonly HslColour Yellow = PredefineColour("ffff00");
+        public static readonly TslColour Yellow = PredefineColour("ffff00");
 
         /// <summary>
         /// The alpha channel
@@ -144,10 +144,10 @@ namespace ALife.Core.Utility.Colours
         private byte _alpha;
 
         /// <summary>
-        /// The hue
+        /// The tint
         /// </summary>
         [JsonIgnore]
-        private int _hue;
+        private double _tint;
 
         /// <summary>
         /// The lightness
@@ -162,14 +162,14 @@ namespace ALife.Core.Utility.Colours
         private double _saturation;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HslColour"/> struct.
+        /// Initializes a new instance of the <see cref="TslColour"/> struct.
         /// </summary>
         /// <param name="colour">The colour.</param>
-        public HslColour(IColour colour)
+        public TslColour(IColour colour)
         {
-            ColourHelpers.ConvertRgbToHsl(colour.R, colour.G, colour.B, out int hue, out double saturation, out double lightness);
+            ColourHelpers.ConvertRgbToTsl(colour.R, colour.G, colour.B, out double tint, out double saturation, out double lightness);
             _alpha = colour.A;
-            _hue = hue;
+            _tint = tint;
             _saturation = saturation;
             _lightness = lightness;
             R = colour.R;
@@ -179,32 +179,32 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HslColour"/> struct.
+        /// Initializes a new instance of the <see cref="TslColour"/> struct.
         /// </summary>
-        /// <param name="hue">The hue.</param>
+        /// <param name="tint">The tint.</param>
         /// <param name="saturation">The saturation.</param>
         /// <param name="lightness">The lightness.</param>
-        public HslColour(int hue, double saturation, double lightness) : this(255, hue, saturation, lightness, false)
+        public TslColour(double tint, double saturation, double lightness) : this(255, tint, saturation, lightness, false)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HslColour"/> struct.
+        /// Initializes a new instance of the <see cref="TslColour"/> struct.
         /// </summary>
         /// <param name="alpha">The alpha.</param>
-        /// <param name="hue">The hue.</param>
+        /// <param name="tint">The tint.</param>
         /// <param name="saturation">The saturation.</param>
         /// <param name="value">The lightness.</param>
         /// <param name="wasPredefined">if set to <c>true</c> [was predefined].</param>
         [JsonConstructor]
-        public HslColour(byte alpha, int hue, double saturation, double lightness, bool wasPredefined = false)
+        public TslColour(byte alpha, double tint, double saturation, double lightness, bool wasPredefined = false)
         {
             _alpha = alpha;
-            _hue = hue;
+            _tint = tint;
             _saturation = saturation;
             _lightness = lightness;
 
-            ColourHelpers.ConvertHslToRgb(hue, saturation, lightness, out byte red, out byte green, out byte blue);
+            ColourHelpers.ConvertTslToRgb(tint, saturation, lightness, out byte red, out byte green, out byte blue);
             R = red;
             G = green;
             B = blue;
@@ -241,18 +241,18 @@ namespace ALife.Core.Utility.Colours
         public byte G { get; private set; }
 
         /// <summary>
-        /// Gets the hue.
+        /// Gets the tint.
         /// </summary>
-        /// <value>The hue.</value>
-        [JsonPropertyName("hue")]
-        public int Hue
+        /// <value>The tint.</value>
+        [JsonPropertyName("tint")]
+        public double Tint
         {
-            get => _hue;
+            get => _tint;
             set
             {
-                _hue = value;
+                _tint = value;
                 WasPredefined = false;
-                ColourHelpers.ConvertHslToRgb(_hue, _saturation, _lightness, out byte red, out byte green, out byte blue);
+                ColourHelpers.ConvertTslToRgb(_tint, _saturation, _lightness, out byte red, out byte green, out byte blue);
                 R = red;
                 G = green;
                 B = blue;
@@ -271,7 +271,7 @@ namespace ALife.Core.Utility.Colours
             {
                 _lightness = value;
                 WasPredefined = false;
-                ColourHelpers.ConvertHslToRgb(_hue, _saturation, _lightness, out byte red, out byte green, out byte blue);
+                ColourHelpers.ConvertTslToRgb(_tint, _saturation, _lightness, out byte red, out byte green, out byte blue);
                 R = red;
                 G = green;
                 B = blue;
@@ -297,7 +297,7 @@ namespace ALife.Core.Utility.Colours
             {
                 _saturation = value;
                 WasPredefined = false;
-                ColourHelpers.ConvertHslToRgb(_hue, _saturation, _lightness, out byte red, out byte green, out byte blue);
+                ColourHelpers.ConvertTslToRgb(_tint, _saturation, _lightness, out byte red, out byte green, out byte blue);
                 R = red;
                 G = green;
                 B = blue;
@@ -312,174 +312,176 @@ namespace ALife.Core.Utility.Colours
         public bool WasPredefined { get; private set; }
 
         /// <summary>
-        /// Creates a HslColour object from the specified AHex values.
+        /// Creates a TslColour object from the specified AHex values.
         /// </summary>
         /// <param name="alpha">The alpha channel.</param>
         /// <param name="hex">The red channel.</param>
-        /// <returns>The HslColour object.</returns>
-        public static HslColour FromAHex(byte alpha, string hex)
+        /// <returns>The TslColour object.</returns>
+        public static TslColour FromAHex(byte alpha, string hex)
         {
             ColourHelpers.ConvertHexToRgb(hex, out byte red, out byte green, out byte blue);
             return FromARGB(alpha, red, green, blue);
         }
 
         /// <summary>
-        /// Creates a HslColour object from the specified AHSL values.
+        /// Creates a TslColour object from the specified AHSL values.
         /// </summary>
         /// <param name="alpha">The alpha channel.</param>
         /// <param name="hue">The hue.</param>
         /// <param name="saturation">The saturation.</param>
         /// <param name="lightness">The lightness.</param>
-        /// <returns>The HslColour object.</returns>
-        public static HslColour FromAHSL(byte alpha, int hue, double saturation, double lightness)
+        /// <returns>The TslColour object.</returns>
+        public static TslColour FromAHSL(byte alpha, int hue, double saturation, double lightness)
         {
             ColourHelpers.ConvertHslToRgb(hue, saturation, lightness, out byte red, out byte green, out byte blue);
             return FromARGB(alpha, red, green, blue);
         }
 
         /// <summary>
-        /// Creates a HslColour object from the specified AHSV values.
+        /// Creates a TslColour object from the specified AHSV values.
         /// </summary>
         /// <param name="alpha">The alpha channel.</param>
         /// <param name="hue">The hue.</param>
         /// <param name="saturation">The saturation.</param>
         /// <param name="value">The value.</param>
-        /// <returns>The HslColour object.</returns>
-        public static HslColour FromAHSV(byte alpha, int hue, double saturation, double value)
+        /// <returns>The TslColour object.</returns>
+        public static TslColour FromAHSV(byte alpha, int hue, double saturation, double value)
         {
             ColourHelpers.ConvertHsvToRgb(hue, saturation, value, out byte red, out byte green, out byte blue);
             return FromARGB(alpha, red, green, blue);
         }
 
         /// <summary>
-        /// Creates a HslColour object from the specified ARGB values.
+        /// Creates a TslColour object from the specified ARGB values.
         /// </summary>
         /// <param name="alpha">The alpha channel.</param>
         /// <param name="red">The red channel.</param>
         /// <param name="green">The green channel.</param>
         /// <param name="blue">The blue channel.</param>
-        /// <returns>The HslColour object.</returns>
-        public static HslColour FromARGB(byte alpha, byte red, byte green, byte blue)
+        /// <returns>The TslColour object.</returns>
+        public static TslColour FromARGB(byte alpha, byte red, byte green, byte blue)
         {
-            ColourHelpers.ConvertRgbToHsl(red, green, blue, out int hue, out double saturation, out double lightness);
-            return new HslColour(alpha, hue, saturation, lightness);
+            ColourHelpers.ConvertRgbToTsl(red, green, blue, out double tint, out double saturation, out double lightness);
+            return new TslColour(alpha, tint, saturation, lightness);
         }
 
         /// <summary>
-        /// Creates a HslColour object from the specified ATSL values.
+        /// Creates a TslColour object from the specified ATSL values.
         /// </summary>
         /// <param name="alpha">The alpha channel.</param>
         /// <param name="tint">The tint.</param>
         /// <param name="saturation">The saturation.</param>
         /// <param name="lightness">The lightness.</param>
-        /// <returns>The HslColour object.</returns>
-        public static HslColour FromATSL(byte alpha, double tint, double saturation, double value)
+        /// <returns>The TslColour object.</returns>
+        public static TslColour FromATSL(byte alpha, double tint, double saturation, double value)
         {
             ColourHelpers.ConvertTslToRgb(tint, saturation, value, out byte red, out byte green, out byte blue);
             return FromARGB(alpha, red, green, blue);
         }
 
         /// <summary>
-        /// Creates a HslColour object from the specified Hex value.
+        /// Creates a TslColour object from the specified Hex value.
         /// </summary>
         /// <param name="hex">The hex code.</param>
-        /// <returns>The HslColour object.</returns>
-        public static HslColour FromHex(string hex)
+        /// <returns>The TslColour object.</returns>
+        public static TslColour FromHex(string hex)
         {
             return FromAHex(255, hex);
         }
 
         /// <summary>
-        /// Creates a HslColour object from the specified HSL values.
+        /// Creates a TslColour object from the specified HSL values.
         /// </summary>
         /// <param name="hue">The hue.</param>
         /// <param name="saturation">The saturation.</param>
         /// <param name="lightness">The lightness.</param>
-        /// <returns>The HslColour object.</returns>
-        public static HslColour FromHSL(int hue, double saturation, double lightness)
+        /// <returns>The TslColour object.</returns>
+        public static TslColour FromHSL(int hue, double saturation, double lightness)
         {
             return FromAHSL(255, hue, saturation, lightness);
         }
 
         /// <summary>
-        /// Creates a HslColour object from the specified HSV values.
+        /// Creates a TslColour object from the specified HSV values.
         /// </summary>
         /// <param name="hue">The hue.</param>
         /// <param name="saturation">The saturation.</param>
         /// <param name="value">The value.</param>
-        /// <returns>The HslColour object.</returns>
-        public static HslColour FromHSV(int hue, double saturation, double value)
+        /// <returns>The TslColour object.</returns>
+        public static TslColour FromHSV(int hue, double saturation, double value)
         {
             return FromAHSV(255, hue, saturation, value);
         }
 
         /// <summary>
-        /// Creates a HslColour object from the specified TSL values.
+        /// Creates a TslColour object from the specified TSL values.
         /// </summary>
         /// <param name="tint"></param>
         /// <param name="saturation"></param>
         /// <param name="value"></param>
-        /// <returns>The HslColour object.</returns>
-        public static HslColour FromTsl(double tint, double saturation, double value)
+        /// <returns>The TslColour object.</returns>
+        public static TslColour FromTsl(double tint, double saturation, double value)
         {
             return FromATSL(255, tint, saturation, value);
         }
 
         /// <summary>
-        /// Creates a HslColour object from the specified RGB value.
+        /// Creates a TslColour object from the specified RGB value.
         /// </summary>
         /// <param name="red">The red channel.</param>
         /// <param name="green">The green channel.</param>
         /// <param name="blue">The blue channel.</param>
-        /// <returns>The HslColour object.</returns>
-        public static HslColour FromRGB(byte red, byte green, byte blue)
+        /// <returns>The TslColour object.</returns>
+        public static TslColour FromRGB(byte red, byte green, byte blue)
         {
             return FromARGB(255, red, green, blue);
         }
 
         /// <summary>
-        /// Generates a random HslColour.
+        /// Generates a random TslColour.
         /// </summary>
         /// <param name="randomizer">The randomizer.</param>
         /// <param name="alphaMin">The alpha minimum.</param>
         /// <param name="alphaMax">The alpha maximum.</param>
-        /// <param name="hueMin">The hue minimum.</param>
-        /// <param name="hueMax">The hue maximum.</param>
+        /// <param name="tintMin">The tint minimum.</param>
+        /// <param name="tintMax">The tint maximum.</param>
         /// <param name="saturationMin">The saturation minimum.</param>
         /// <param name="saturationMax">The saturation maximum.</param>
         /// <param name="lightnessMin">The lightness minimum.</param>
         /// <param name="lightnessMax">The lightness maximum.</param>
-        /// <returns>The HslColour.</returns>
-        public static HslColour GetRandomColour(IRandom randomizer, byte alphaMin = 0, byte alphaMax = 255, int hueMin = 0, int hueMax = 361, double saturationMin = 0d, double saturationMax = 1d, double lightnessMin = 0d, double lightnessMax = 1d)
+        /// <returns>The TslColour.</returns>
+        public static TslColour GetRandomColour(IRandom randomizer, byte alphaMin = 0, byte alphaMax = 255, double tintMin = 0d, double tintMax = 1d, double saturationMin = 0d, double saturationMax = 1d, double lightnessMin = 0d, double lightnessMax = 1d)
         {
             byte alpha = randomizer.NextByte(alphaMin, alphaMax);
-            int hue = randomizer.Next(hueMin, hueMax);
+
+            double tintModifier = randomizer.NextDouble();
+            double tint = tintModifier * tintMax + (1 - tintModifier) * tintMin;
 
             double saturationModifier = randomizer.NextDouble();
             double saturation = saturationModifier * saturationMax + (1 - saturationModifier) * saturationMin;
 
             double lightnessModifier = randomizer.NextDouble();
             double lightness = lightnessModifier * lightnessMax + (1 - lightnessModifier) * lightnessMin;
-            return new HslColour(alpha, hue, saturation, lightness);
+            return new TslColour(alpha, tint, saturation, lightness);
         }
 
         /// <summary>
         /// Predefines the colour specified by the hex code.
         /// </summary>
         /// <param name="hex">The hex code.</param>
-        /// <returns>The HslColour object.</returns>
-        internal static HslColour PredefineColour(string hex)
+        /// <returns>The TslColour object.</returns>
+        internal static TslColour PredefineColour(string hex)
         {
-            ColourHelpers.ConvertHexToHsl(hex, out var hue, out var saturation, out var lightness);
-            return new HslColour(255, hue, saturation, lightness, true);
+            ColourHelpers.ConvertHexToTsl(hex, out var tint, out var saturation, out var lightness);
+            return new TslColour(255, tint, saturation, lightness, true);
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="HslColour"/> to <see cref="Colour"/>.
+        /// Performs an implicit conversion from <see cref="TslColour"/> to <see cref="Colour"/>.
         /// </summary>
         /// <param name="colour">The colour.</param>
         /// <returns>The result of the conversion.</returns>
-        public static implicit operator Colour(HslColour colour)
+        public static implicit operator Colour(TslColour colour)
         {
             return new Colour(colour);
         }
@@ -490,7 +492,7 @@ namespace ALife.Core.Utility.Colours
         /// <param name="left">The left.</param>
         /// <param name="right">The right.</param>
         /// <returns>The result of the operator.</returns>
-        public static bool operator !=(HslColour left, HslColour right)
+        public static bool operator !=(TslColour left, TslColour right)
         {
             return !left.Equals(right);
         }
@@ -501,7 +503,7 @@ namespace ALife.Core.Utility.Colours
         /// <param name="left">The left.</param>
         /// <param name="right">The right.</param>
         /// <returns>The result of the operator.</returns>
-        public static bool operator ==(HslColour left, HslColour right)
+        public static bool operator ==(TslColour left, TslColour right)
         {
             return left.Equals(right);
         }
@@ -563,7 +565,7 @@ namespace ALife.Core.Utility.Colours
         public override string ToString()
         {
             string hex = this.ToHexadecimal();
-            string output = $"a{A}#{hex} (h{Hue}, s{Saturation:0.00}, l{Lightness:0.00})";
+            string output = $"a{A}#{hex} (t{Tint:0.00}, s{Saturation:0.00}, l{Lightness:0.00})";
             return output;
         }
     }

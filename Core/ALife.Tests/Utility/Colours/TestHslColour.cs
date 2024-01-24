@@ -63,10 +63,10 @@ namespace ALife.Tests.Utility.Colours
             var randomizerB = new ALife.Core.Utility.Random.FastRandom(1);
 
             var colour = HslColour.GetRandomColour(randomizerA, alphaMin: 255, alphaMax: 255);
-            Assert.AreEqual(randomizerB.NextByte(255, 255), colour.A);
-            Assert.AreEqual(138, colour.R);
-            Assert.AreEqual(124, colour.G);
-            Assert.AreEqual(85, colour.B);
+            Assert.AreEqual(255, colour.A);
+            Assert.AreEqual(242, colour.R);
+            Assert.AreEqual(255, colour.G);
+            Assert.AreEqual(129, colour.B);
         }
     }
 }

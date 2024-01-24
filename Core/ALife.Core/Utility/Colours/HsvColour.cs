@@ -6,6 +6,7 @@ namespace ALife.Core.Utility.Colours
 {
     /// <summary>
     /// Defines an AHSV colour for the ALife simulation.
+    /// See: https://en.wikipedia.org/wiki/HSL_and_HSV
     /// </summary>
     [DebuggerDisplay("{ToString()}")]
     public struct HsvColour : IColour
@@ -318,8 +319,8 @@ namespace ALife.Core.Utility.Colours
         /// <returns>The HsvColour object.</returns>
         public static HsvColour FromAHex(byte alpha, string hex)
         {
-            ColourHelpers.ConvertHexToRgb(hex, out var r, out var g, out var b);
-            return FromARGB(alpha, r, g, b);
+            ColourHelpers.ConvertHexToRgb(hex, out byte red, out byte green, out byte blue);
+            return FromARGB(alpha, red, green, blue);
         }
 
         /// <summary>
@@ -332,9 +333,8 @@ namespace ALife.Core.Utility.Colours
         /// <returns>The HsvColour object.</returns>
         public static HsvColour FromAHSL(byte alpha, int hue, double saturation, double lightness)
         {
-            ColourHelpers.ConvertHslToRgb(hue, saturation, lightness, out var r, out var g, out var b);
-            ColourHelpers.ConvertRgbToHsv(r, g, b, out hue, out saturation, out var value);
-            return FromAHSV(alpha, hue, saturation, value);
+            ColourHelpers.ConvertHslToRgb(hue, saturation, lightness, out byte red, out byte green, out byte blue);
+            return FromARGB(alpha, red, green, blue);
         }
 
         /// <summary>
@@ -347,7 +347,8 @@ namespace ALife.Core.Utility.Colours
         /// <returns>The HsvColour object.</returns>
         public static HsvColour FromAHSV(byte alpha, int hue, double saturation, double value)
         {
-            return new HsvColour(alpha, hue, saturation, value, false);
+            ColourHelpers.ConvertHsvToRgb(hue, saturation, value, out byte red, out byte green, out byte blue);
+            return FromARGB(alpha, red, green, blue);
         }
 
         /// <summary>
@@ -360,8 +361,22 @@ namespace ALife.Core.Utility.Colours
         /// <returns>The HsvColour object.</returns>
         public static HsvColour FromARGB(byte alpha, byte red, byte green, byte blue)
         {
-            ColourHelpers.ConvertRgbToHsv(red, green, blue, out var hue, out var saturation, out var value);
-            return FromAHSV(alpha, hue, saturation, value);
+            ColourHelpers.ConvertRgbToHsv(red, green, blue, out int hue, out double saturation, out double value);
+            return new HsvColour(alpha, hue, saturation, value);
+        }
+
+        /// <summary>
+        /// Creates a HsvColour object from the specified ATSL values.
+        /// </summary>
+        /// <param name="alpha">The alpha channel.</param>
+        /// <param name="tint">The tint.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="lightness">The lightness.</param>
+        /// <returns>The HsvColour object.</returns>
+        public static HsvColour FromATSL(byte alpha, double tint, double saturation, double value)
+        {
+            ColourHelpers.ConvertTslToRgb(tint, saturation, value, out byte red, out byte green, out byte blue);
+            return FromARGB(alpha, red, green, blue);
         }
 
         /// <summary>
@@ -375,7 +390,7 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
-        /// Creates a HsvColour object from the specified HSL value.
+        /// Creates a HsvColour object from the specified HSL values.
         /// </summary>
         /// <param name="hue">The hue.</param>
         /// <param name="saturation">The saturation.</param>
@@ -387,7 +402,7 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
-        /// Creates a HsvColour object from the specified HSV value.
+        /// Creates a HsvColour object from the specified HSV values.
         /// </summary>
         /// <param name="hue">The hue.</param>
         /// <param name="saturation">The saturation.</param>
@@ -396,6 +411,18 @@ namespace ALife.Core.Utility.Colours
         public static HsvColour FromHSV(int hue, double saturation, double value)
         {
             return FromAHSV(255, hue, saturation, value);
+        }
+
+        /// <summary>
+        /// Creates a HsvColour object from the specified TSL values.
+        /// </summary>
+        /// <param name="tint"></param>
+        /// <param name="saturation"></param>
+        /// <param name="value"></param>
+        /// <returns>The HsvColour object.</returns>
+        public static HsvColour FromTsl(double tint, double saturation, double value)
+        {
+            return FromATSL(255, tint, saturation, value);
         }
 
         /// <summary>
@@ -425,6 +452,7 @@ namespace ALife.Core.Utility.Colours
         /// <returns>The HsvColour.</returns>
         public static HsvColour GetRandomColour(IRandom randomizer, byte alphaMin = 0, byte alphaMax = 255, int hueMin = 0, int hueMax = 361, double saturationMin = 0d, double saturationMax = 1d, double valueMin = 0d, double valueMax = 1d)
         {
+            byte alpha = randomizer.NextByte(alphaMin, alphaMax);
             int hue = randomizer.Next(hueMin, hueMax);
 
             double saturationModifier = randomizer.NextDouble();
@@ -432,7 +460,7 @@ namespace ALife.Core.Utility.Colours
 
             double valueModifier = randomizer.NextDouble();
             double value = valueModifier * valueMax + (1 - valueModifier) * valueMin;
-            return new HsvColour(hue, saturation, value);
+            return new HsvColour(alpha, hue, saturation, value);
         }
 
         /// <summary>
@@ -534,7 +562,9 @@ namespace ALife.Core.Utility.Colours
         /// <returns>A <see cref="System.String"/> that represents this instance.</returns>
         public override string ToString()
         {
-            return $"a{A}, h{Hue}, s{Saturation:0.00}, v{Value:0.00} (r{R}, g{G}, b{B})";
+            string hex = this.ToHexadecimal();
+            string output = $"a{A}#{hex} (h{Hue}, s{Saturation:0.00}, v{Value:0.00})";
+            return output;
         }
     }
 }

@@ -282,8 +282,8 @@ namespace ALife.Core.Utility.Colours
         /// <returns>The Colour object.</returns>
         public static Colour FromAHex(byte alpha, string hex)
         {
-            ColourHelpers.ConvertHexToRgb(hex, out var r, out var g, out var b);
-            return FromARGB(alpha, r, g, b);
+            ColourHelpers.ConvertHexToRgb(hex, out byte red, out byte green, out byte blue);
+            return FromARGB(alpha, red, green, blue);
         }
 
         /// <summary>
@@ -296,8 +296,8 @@ namespace ALife.Core.Utility.Colours
         /// <returns>The Colour object.</returns>
         public static Colour FromAHSL(byte alpha, int hue, double saturation, double lightness)
         {
-            ColourHelpers.ConvertHslToRgb(hue, saturation, lightness, out var r, out var g, out var b);
-            return FromARGB(alpha, r, g, b);
+            ColourHelpers.ConvertHslToRgb(hue, saturation, lightness, out byte red, out byte green, out byte blue);
+            return FromARGB(alpha, red, green, blue);
         }
 
         /// <summary>
@@ -310,8 +310,8 @@ namespace ALife.Core.Utility.Colours
         /// <returns>The Colour object.</returns>
         public static Colour FromAHSV(byte alpha, int hue, double saturation, double value)
         {
-            ColourHelpers.ConvertHsvToRgb(hue, saturation, value, out var r, out var g, out var b);
-            return FromARGB(alpha, r, g, b);
+            ColourHelpers.ConvertHsvToRgb(hue, saturation, value, out byte red, out byte green, out byte blue);
+            return FromARGB(alpha, red, green, blue);
         }
 
         /// <summary>
@@ -324,7 +324,21 @@ namespace ALife.Core.Utility.Colours
         /// <returns>The Colour object.</returns>
         public static Colour FromARGB(byte alpha, byte red, byte green, byte blue)
         {
-            return new Colour(alpha, red, green, blue, false);
+            return new Colour(alpha, red, green, blue);
+        }
+
+        /// <summary>
+        /// Creates a Colour object from the specified ATSL values.
+        /// </summary>
+        /// <param name="alpha">The alpha channel.</param>
+        /// <param name="tint">The tint.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="lightness">The lightness.</param>
+        /// <returns>The Colour object.</returns>
+        public static Colour FromATSL(byte alpha, double tint, double saturation, double value)
+        {
+            ColourHelpers.ConvertTslToRgb(tint, saturation, value, out byte red, out byte green, out byte blue);
+            return FromARGB(alpha, red, green, blue);
         }
 
         /// <summary>
@@ -338,7 +352,7 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
-        /// Creates a Colour object from the specified HSL value.
+        /// Creates a Colour object from the specified HSL values.
         /// </summary>
         /// <param name="hue">The hue.</param>
         /// <param name="saturation">The saturation.</param>
@@ -350,7 +364,7 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
-        /// Creates a Colour object from the specified HSV value.
+        /// Creates a Colour object from the specified HSV values.
         /// </summary>
         /// <param name="hue">The hue.</param>
         /// <param name="saturation">The saturation.</param>
@@ -359,6 +373,18 @@ namespace ALife.Core.Utility.Colours
         public static Colour FromHSV(int hue, double saturation, double value)
         {
             return FromAHSV(255, hue, saturation, value);
+        }
+
+        /// <summary>
+        /// Creates a Colour object from the specified TSL values.
+        /// </summary>
+        /// <param name="tint"></param>
+        /// <param name="saturation"></param>
+        /// <param name="value"></param>
+        /// <returns>The Colour object.</returns>
+        public static Colour FromTsl(double tint, double saturation, double value)
+        {
+            return FromATSL(255, tint, saturation, value);
         }
 
         /// <summary>
@@ -484,7 +510,9 @@ namespace ALife.Core.Utility.Colours
         /// <returns>A <see cref="System.String"/> that represents this instance.</returns>
         public override string ToString()
         {
-            return $"r{R}, g{G}, b{B}, a{A}";
+            string hex = this.ToHexadecimal();
+            string output = $"a{A}#{hex}";
+            return output;
         }
     }
 }

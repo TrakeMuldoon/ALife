@@ -14,6 +14,31 @@ namespace ALife.Core.Utility.Colours
         private static readonly string[] HEX_REPLACEMENTS = { "#", "0x", "0X", " " };
 
         /// <summary>
+        /// The R modifier for the TSL lightness.
+        /// </summary>
+        private const double TSL_LIGHTNESS_R_COMPONENT = 0.299d;
+
+        /// <summary>
+        /// The R modifier for the TSL lightness when converting back to RGB.
+        /// </summary>
+        private const double TSL_LIGHTNESS_R_RGB_COMPONENT = 0.185d;
+
+        /// <summary>
+        /// The G modifier for the TSL lightness.
+        /// </summary>
+        private const double TSL_LIGHTNESS_G_COMPONENT = 0.587d;
+
+        /// <summary>
+        /// The G modifier for the TSL lightness when converting back to RGB.
+        /// </summary>
+        private const double TSL_LIGHTNESS_G_RGB_COMPONENT = 0.473d;
+
+        /// <summary>
+        /// The B modifier for the TSL lightness.
+        /// </summary>
+        private const double TSL_LIGHTNESS_B_COMPONENT = 0.114d;
+
+        /// <summary>
         /// Converts the hexadecimal value to RGB values.
         /// </summary>
         /// <param name="hex">The hexidecimal value.</param>
@@ -57,6 +82,19 @@ namespace ALife.Core.Utility.Colours
         {
             ConvertHexToRgb(hex, out var red, out var green, out var blue);
             ConvertRgbToHsv(red, green, blue, out hue, out saturation, out value);
+        }
+
+        /// <summary>
+        /// Converts the hexadecimal value to TSL values.
+        /// </summary>
+        /// <param name="hex">The hexidecimal value.</param>
+        /// <param name="tint">The tint.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="lightness">The lightness.</param>
+        public static void ConvertHexToTsl(string hex, out double tint, out double saturation, out double lightness)
+        {
+            ConvertHexToRgb(hex, out var red, out var green, out var blue);
+            ConvertRgbToTsl(red, green, blue, out tint, out saturation, out lightness);
         }
 
         /// <summary>
@@ -329,6 +367,126 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
+        /// Converts RGB values to TSL values.
+        /// </summary>
+        /// <param name="red">The red channel.</param>
+        /// <param name="green">The green channel.</param>
+        /// <param name="blue">The blue channel.</param>
+        /// <param name="tint">The tint.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="lightness">The lightness.</param>
+        public static void ConvertRgbToTsl(byte red, byte green, byte blue, out double tint, out double saturation, out double lightness)
+        {
+            if (red + green + blue == 0)
+            {
+                tint = 0;
+                saturation = 0;
+                lightness = 0;
+                return;
+            }
+            double redPercentage = red / 255d;
+            double greenPercentage = green / 255d;
+            double bluePercentage = blue / 255d;
+            double totalPercentage = redPercentage + greenPercentage + bluePercentage;
+
+            double r = redPercentage / totalPercentage;
+            double g = greenPercentage / totalPercentage;
+            double rPrime = r - (1 / 3d);
+            double rPrimeSquared = rPrime * rPrime;
+            double gPrime = g - (1 / 3d);
+            double gPrimeSquared = gPrime * gPrime;
+
+            // Calculate the tint
+            if (ApproximatelyEqual(gPrime, 0, 0.0001))
+            {
+                tint = 0;
+            }
+            else
+            {
+                tint = 0.5 - (Math.Atan2(gPrime, rPrime) / (2 * Math.PI));
+            }
+
+            // Calculate the saturation
+            saturation = Math.Sqrt((9 / 5d) * (rPrimeSquared + gPrimeSquared));
+
+            // Calculate the lightness
+            double redComponent = TSL_LIGHTNESS_R_COMPONENT * redPercentage;
+            double greenComponent = TSL_LIGHTNESS_G_COMPONENT * greenPercentage;
+            double blueComponent = TSL_LIGHTNESS_B_COMPONENT * bluePercentage;
+            lightness = redComponent + greenComponent + blueComponent;
+        }
+
+        /// <summary>
+        /// Converts TSL values to RGB values.
+        /// Note: https://stackoverflow.com/a/43712296 (the formula on Wikipedia is wrong)
+        /// </summary>
+        /// <param name="tint">The tint.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="lightness">The lightness.</param>
+        /// <param name="red">The red channel.</param>
+        /// <param name="green">The green channel.</param>
+        /// <param name="blue">The blue channel.</param>
+        public static void ConvertTslToRgb(double tint, double saturation, double lightness, out byte red, out byte green, out byte blue)
+        {
+            if (ApproximatelyEqual(lightness, 0, 0.0001))
+            {
+                red = 0;
+                green = 0;
+                blue = 0;
+                return;
+            }
+
+            double rPrime = 0;
+            double gPrime = 0;
+            if (IsNegativeZero(tint))
+            {
+                rPrime = -Math.Sqrt(5d) / 3d * saturation;
+            }
+            else if (ApproximatelyEqual(tint, 0, 0.0001))
+            {
+                rPrime = Math.Sqrt(5d) / 3d * saturation;
+            }
+            else
+            {
+                double x = -1d / Math.Tan(2 * Math.PI * tint);
+                gPrime = Math.Sqrt(5d / (1 + x * x)) / 3d * saturation;
+                if (tint > 0.5)
+                {
+                    gPrime = -gPrime;
+                }
+                rPrime = x * gPrime;
+            }
+
+            double r = rPrime + 1 / 3d;
+            double g = gPrime + 1 / 3d;
+            double b = 1 - r - g;
+            double kRed = TSL_LIGHTNESS_R_RGB_COMPONENT * r;
+            double kGreen = TSL_LIGHTNESS_G_RGB_COMPONENT * g;
+            double k = lightness / (kRed + kGreen + TSL_LIGHTNESS_B_COMPONENT);
+
+            double redDouble = k * r;
+            double greenDouble = k * g;
+            double blueDouble = k * b;
+
+            red = DoubleToByte(redDouble);
+            green = DoubleToByte(greenDouble);
+            blue = DoubleToByte(blueDouble);
+        }
+
+        /// <summary>
+        /// Determines if the two numbers are approximately equal.
+        /// </summary>
+        /// <param name="a">Number a.</param>
+        /// <param name="b">Number b.</param>
+        /// <param name="maxDifference">The maximum difference.</param>
+        /// <returns>True if approximately equal, False otherwise.</returns>
+        private static bool ApproximatelyEqual(double a, double b, double maxDifference)
+        {
+            double difference = Math.Abs(a - b);
+            return difference <= maxDifference;
+        }
+
+        /// <summary>
         /// Converts a double on a 0 to 1 range to the byte representation.
         /// </summary>
         /// <param name="value">The value.</param>
@@ -378,6 +536,16 @@ namespace ALife.Core.Utility.Colours
                 return p + (q - p) * (2d / 3 - actualT) * 6;
             }
             return p;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        private static bool IsNegativeZero(double x)
+        {
+            return ApproximatelyEqual(x, 0, 0.0001) && double.IsNegativeInfinity(1d / x);
         }
     }
 }

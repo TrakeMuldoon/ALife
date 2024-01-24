@@ -3,10 +3,10 @@
 namespace ALife.Tests.Utility.Colours
 {
     /// <summary>
-    /// Tests for the HsvColour struct.
+    /// Tests for the TslColour struct.
     /// </summary>
     [TestClass]
-    public class TestHsvColour
+    public class TestTslColour
     {
         /// <summary>
         /// Tests basic functionality.
@@ -14,13 +14,13 @@ namespace ALife.Tests.Utility.Colours
         [TestMethod]
         public void TestBasicColour()
         {
-            var colourA = new HsvColour(0, 0, 0);
+            var colourA = new TslColour(0, 0, 0);
             Assert.AreEqual(255, colourA.A);
             Assert.AreEqual(0, colourA.R);
             Assert.AreEqual(0, colourA.G);
             Assert.AreEqual(0, colourA.B);
 
-            var colourB = new HsvColour(0, 0, 0);
+            var colourB = new TslColour(0, 0, 0);
             Assert.AreEqual(colourA, colourB);
 
             var colourC = colourA.Clone();
@@ -34,13 +34,13 @@ namespace ALife.Tests.Utility.Colours
         [TestMethod]
         public void TestPredefinedColour()
         {
-            var colourA = HsvColour.Red;
+            var colourA = TslColour.Red;
             Assert.AreEqual(255, colourA.A);
             Assert.AreEqual(255, colourA.R);
             Assert.AreEqual(0, colourA.G);
             Assert.AreEqual(0, colourA.B);
 
-            var colourB = new HsvColour(0, 1, 1);
+            var colourB = TslColour.FromRGB(255, 0, 0);
             Assert.IsTrue(colourA.WasPredefined);
             Assert.IsFalse(colourB.WasPredefined);
             Assert.AreEqual(colourA, colourB);
@@ -62,11 +62,11 @@ namespace ALife.Tests.Utility.Colours
             var randomizerA = new ALife.Core.Utility.Random.FastRandom(1);
             var randomizerB = new ALife.Core.Utility.Random.FastRandom(1);
 
-            var colour = HsvColour.GetRandomColour(randomizerA, alphaMin: 255, alphaMax: 255);
+            var colour = TslColour.GetRandomColour(randomizerA, alphaMin: 255, alphaMax: 255);
             Assert.AreEqual(255, colour.A);
-            Assert.AreEqual(185, colour.R);
-            Assert.AreEqual(229, colour.G);
-            Assert.AreEqual(129, colour.B);
+            Assert.AreEqual(147, colour.R);
+            Assert.AreEqual(255, colour.G);
+            Assert.AreEqual(15, colour.B);
         }
     }
 }

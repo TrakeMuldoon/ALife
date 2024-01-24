@@ -6,7 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{BD7F9F1B-F088-4C03-A79C-162FB32D797D}"
 	ProjectSection(SolutionItems) = preProject
 		Documentation\NewConfig.txt = Documentation\NewConfig.txt
-		Documentation\README.md = Documentation\README.md
+		README.md = README.md
 		Documentation\Roadmap2024.md = Documentation\Roadmap2024.md
 		Documentation\ValuableLinks.txt = Documentation\ValuableLinks.txt
 	EndProjectSection
@@ -37,6 +37,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UWP", "UWP", "{F406F55A-36E1-4E25-9A3F-9CC6358F0625}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{7074191D-6CE3-4680-B43C-69291EE25FD8}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\ConsoleSplash.ico = Assets\ConsoleSplash.ico
+		Assets\ConsoleSplash.png = Assets\ConsoleSplash.png
+		Assets\GuiSplash.ico = Assets\GuiSplash.ico
+		Assets\GuiSplash.png = Assets\GuiSplash.png
+		Runners\UWP\ALifeUniv\PackageAssets\splashscreen.scale-200.png = Runners\UWP\ALifeUniv\PackageAssets\splashscreen.scale-200.png
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALifeUniv", "Runners\UWP\ALifeUniv.csproj", "{755B3EA2-F7AA-4756-BB87-7F4E5CE6E91F}"
 EndProject

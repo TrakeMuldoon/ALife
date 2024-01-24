@@ -12,7 +12,7 @@ using System.Drawing;
 
 namespace ALife.Core.Scenarios.GardenScenario
 {
-    [ScenarioRegistration("Mushroom Garden (Temporarily Unavailable)",
+    [ScenarioRegistration("Mushroom Garden",
     description:
         @"
 Mushroom Garden
@@ -209,8 +209,7 @@ If they eat two green mushrooms, they reproduce."
                 "IF ALWAYS THEN Move.GoForward AT [0.3]",
                 "IF ALWAYS THEN Rotate.TurnRight AT [0.015]"
                 );
-            Planet.World.RemoveWorldObject(mg);
-            mg.CompleteInitialization(null, 1, newBrain);
+            mg.CompleteInitialization(null, 1, newBrain, false);
         }
 
 

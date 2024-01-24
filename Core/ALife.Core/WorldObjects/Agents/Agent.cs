@@ -103,7 +103,7 @@ namespace ALife.Core.WorldObjects.Agents
             SetShape(myShape);
         }
 
-        internal void CompleteInitialization(Agent parent, int generation, IBrain newBrain)
+        internal void CompleteInitialization(Agent parent, int generation, IBrain newBrain, bool AddToWorld = true)
         {
             Generation = generation;
             MyBrain = newBrain;
@@ -111,8 +111,11 @@ namespace ALife.Core.WorldObjects.Agents
             Parent = parent;
             LivingAncestor = parent;
             Shadow = new AgentShadow(this);
-            //Release them out into the world
-            Planet.World.AddObjectToWorld(this);
+            if(AddToWorld)
+            {
+                //Release them out into the world
+                Planet.World.AddObjectToWorld(this);
+            }
         }
 
         internal void AttachAttributes(List<SenseCluster> senses, List<PropertyInput> properties, List<StatisticInput> statistics, List<ActionCluster> actions)

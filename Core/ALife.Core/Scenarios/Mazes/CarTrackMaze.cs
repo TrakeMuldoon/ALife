@@ -29,6 +29,7 @@ Reaching the finish line, reproduces 3 times and then dies... Victorious!"
     )]
     [SuggestedSeed(1832460063, "Fun scenario!!!")]
     [SuggestedSeed(1776675068, "Purple Wave")]
+    [SuggestedSeed(736342082, "Addorable Ducks")]
     public class CarTrackMaze : IScenario
     {
         /******************/
@@ -50,7 +51,12 @@ Reaching the finish line, reproduces 3 times and then dies... Victorious!"
                 new IEnumerable<SenseCluster>[]
                 {
                     CommonSenses.PairOfEyes(agent)
-                }
+                },
+                new EyeCluster(agent, "ShortEye"
+                    , new ROEvoNumber(startValue: 0, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
+                    , new ROEvoNumber(startValue: 0, evoDeltaMax: 5, hardMin: -360, hardMax: 360)   //Relative Orientation
+                    , new ROEvoNumber(startValue: 40, evoDeltaMax: 3, hardMin: 40, hardMax: 120)     //Radius
+                    , new ROEvoNumber(startValue: 30, evoDeltaMax: 1, hardMin: 15, hardMax: 45))    //Sweep
             );
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
@@ -128,6 +134,7 @@ Reaching the finish line, reproduces 3 times and then dies... Victorious!"
                 me.Die();
             }
         }
+
         private static void VictoryBehaviour(Agent me)
         {
             me.Reproduce();

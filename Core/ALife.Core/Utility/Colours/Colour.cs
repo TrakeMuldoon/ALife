@@ -11,106 +11,130 @@ namespace ALife.Core.Utility.Colours
     public struct Colour : IColour
     {
         /// <summary>
-        /// A Colour representing the absence of colour.
+        /// A colour representing the absence of colour.
         /// </summary>
         [JsonIgnore]
-        public static readonly Colour Black = new Colour(255, 0, 0, 0, true);
+        public static readonly Colour Black = PredefineColour("000000");
 
         /// <summary>
-        /// A Colour representing the colour blue.
+        /// A colour representing the colour blue.
         /// </summary>
         [JsonIgnore]
-        public static readonly Colour Blue = new Colour(255, 0, 0, 255, true);
-        
-        /// <summary>
-        /// A Colour representing the colour cyan.
-        /// </summary>
-        [JsonIgnore]
-        public static readonly Colour Cyan = new Colour(255, 0, 255, 255, true);
+        public static readonly Colour Blue = PredefineColour("0000ff");
 
         /// <summary>
-        /// A Colour representing the colour dark blue.
+        /// A colour representing the colour cyan.
         /// </summary>
         [JsonIgnore]
-        public static readonly Colour DarkBlue = new Colour(255, 0, 0, 139, true);
+        public static readonly Colour Cyan = PredefineColour("00FFFF");
 
         /// <summary>
-        /// A Colour representing the colour dark khaki.
+        /// A colour representing the colour dark blue.
         /// </summary>
         [JsonIgnore]
-        public static readonly Colour DarkKhaki = new Colour(255, 189, 183, 107, true);
+        public static readonly Colour DarkBlue = PredefineColour("00008B");
 
         /// <summary>
-        /// A Colour representing the colour dodger blue.
+        /// A colour representing the colour dark khaki.
         /// </summary>
         [JsonIgnore]
-        public static readonly Colour DodgerBlue = new Colour(255, 30, 144, 255, true);
+        public static readonly Colour DarkKhaki = PredefineColour("Bdb76b");
 
         /// <summary>
-        /// A Colour representing the colour green.
+        /// A colour representing the colour dark red.
         /// </summary>
         [JsonIgnore]
-        public static readonly Colour Green = new Colour(255, 0, 255, 0, true);
+        public static readonly Colour DarkRed = PredefineColour("8B0000");
 
         /// <summary>
-        /// A Colour representing the colour grey.
+        /// A colour representing the colour dodger blue.
         /// </summary>
         [JsonIgnore]
-        public static readonly Colour Grey = new Colour(255, 128, 128, 128, true);
+        public static readonly Colour DodgerBlue = PredefineColour("1e90ff");
 
         /// <summary>
-        /// A Colour representing the colour indian red.
+        /// A colour representing the colour green.
         /// </summary>
         [JsonIgnore]
-        public static readonly Colour IndianRed = new Colour(255, 205, 92, 92, true);
+        public static readonly Colour Green = PredefineColour("00ff00");
 
         /// <summary>
-        /// A Colour representing the colour magenta.
+        /// A colour representing the colour grey.
         /// </summary>
         [JsonIgnore]
-        public static readonly Colour Magenta = new Colour(255, 255, 0, 255, true);
+        public static readonly Colour Grey = PredefineColour("808080");
 
         /// <summary>
-        /// A Colour representing the colour maroon.
+        /// A colour representing the colour hot pink.
         /// </summary>
         [JsonIgnore]
-        public static readonly Colour Maroon = new Colour(255, 128, 0, 0, true);
+        public static readonly Colour HotPink = PredefineColour("FF69B4");
 
         /// <summary>
-        /// A Colour representing the colour lawn green.
+        /// A colour representing the colour indian red.
         /// </summary>
         [JsonIgnore]
-        public static readonly Colour LawnGreen = new Colour(255, 124, 252, 0, true);
+        public static readonly Colour IndianRed = PredefineColour("CD5C5C");
 
         /// <summary>
-        /// A Colour representing the colour orange.
+        /// A colour representing the colour magenta.
         /// </summary>
         [JsonIgnore]
-        public static readonly Colour Orange = new Colour(255, 255, 165, 0, true);
+        public static readonly Colour Magenta = PredefineColour("FF00FF");
 
         /// <summary>
-        /// A Colour representing the colour red.
+        /// A colour representing the colour maroon.
         /// </summary>
         [JsonIgnore]
-        public static readonly Colour Red = new Colour(255, 255, 0, 0, true);
+        public static readonly Colour Maroon = PredefineColour("800000");
 
         /// <summary>
-        /// A Colour representing the colour white.
+        /// A colour representing the colour lawn green.
         /// </summary>
         [JsonIgnore]
-        public static readonly Colour White = new Colour(255, 255, 255, 255, true);
+        public static readonly Colour LawnGreen = PredefineColour("7cfc00");
 
         /// <summary>
-        /// A Colour representing the colour white smoke.
+        /// A colour representing the colour orange.
         /// </summary>
         [JsonIgnore]
-        public static readonly Colour WhiteSmoke = new Colour(255, 245, 245, 245, true);
+        public static readonly Colour Orange = PredefineColour("FFA500");
 
         /// <summary>
-        /// A Colour representing the colour yellow.
+        /// A colour representing the colour papaya whip.
         /// </summary>
         [JsonIgnore]
-        public static readonly Colour Yellow = new Colour(255, 255, 255, 0, true);
+        public static readonly Colour PapayaWhip = PredefineColour("Ffefd5");
+
+        /// <summary>
+        /// A colour representing the colour pink.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly Colour Pink = PredefineColour("FFC0CB");
+
+        /// <summary>
+        /// A colour representing the colour red.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly Colour Red = PredefineColour("Ff0000");
+
+        /// <summary>
+        /// A colour representing the colour white.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly Colour White = PredefineColour("FFFFFF");
+
+        /// <summary>
+        /// A colour representing the colour white smoke.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly Colour WhiteSmoke = PredefineColour("F5f5f5");
+
+        /// <summary>
+        /// A colour representing the colour yellow.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly Colour Yellow = PredefineColour("ffff00");
 
         /// <summary>
         /// The alpha channel
@@ -251,6 +275,105 @@ namespace ALife.Core.Utility.Colours
         public bool WasPredefined { get; private set; }
 
         /// <summary>
+        /// Creates a Colour object from the specified AHex values.
+        /// </summary>
+        /// <param name="alpha">The alpha channel.</param>
+        /// <param name="hex">The red channel.</param>
+        /// <returns>The Colour object.</returns>
+        public static Colour FromAHex(byte alpha, string hex)
+        {
+            ColourHelpers.ConvertHexToRgb(hex, out var r, out var g, out var b);
+            return FromARGB(alpha, r, g, b);
+        }
+
+        /// <summary>
+        /// Creates a Colour object from the specified AHSL values.
+        /// </summary>
+        /// <param name="alpha">The alpha channel.</param>
+        /// <param name="hue">The hue.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="lightness">The lightness.</param>
+        /// <returns>The Colour object.</returns>
+        public static Colour FromAHSL(byte alpha, int hue, double saturation, double lightness)
+        {
+            ColourHelpers.ConvertHslToRgb(hue, saturation, lightness, out var r, out var g, out var b);
+            return FromARGB(alpha, r, g, b);
+        }
+
+        /// <summary>
+        /// Creates a Colour object from the specified AHSV values.
+        /// </summary>
+        /// <param name="alpha">The alpha channel.</param>
+        /// <param name="hue">The hue.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>The Colour object.</returns>
+        public static Colour FromAHSV(byte alpha, int hue, double saturation, double value)
+        {
+            ColourHelpers.ConvertHsvToRgb(hue, saturation, value, out var r, out var g, out var b);
+            return FromARGB(alpha, r, g, b);
+        }
+
+        /// <summary>
+        /// Creates a Colour object from the specified ARGB values.
+        /// </summary>
+        /// <param name="alpha">The alpha channel.</param>
+        /// <param name="red">The red channel.</param>
+        /// <param name="green">The green channel.</param>
+        /// <param name="blue">The blue channel.</param>
+        /// <returns>The Colour object.</returns>
+        public static Colour FromARGB(byte alpha, byte red, byte green, byte blue)
+        {
+            return new Colour(alpha, red, green, blue, false);
+        }
+
+        /// <summary>
+        /// Creates a Colour object from the specified Hex value.
+        /// </summary>
+        /// <param name="hex">The hex code.</param>
+        /// <returns>The Colour object.</returns>
+        public static Colour FromHex(string hex)
+        {
+            return FromAHex(255, hex);
+        }
+
+        /// <summary>
+        /// Creates a Colour object from the specified HSL value.
+        /// </summary>
+        /// <param name="hue">The hue.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="lightness">The lightness.</param>
+        /// <returns>The Colour object.</returns>
+        public static Colour FromHSL(int hue, double saturation, double lightness)
+        {
+            return FromAHSL(255, hue, saturation, lightness);
+        }
+
+        /// <summary>
+        /// Creates a Colour object from the specified HSV value.
+        /// </summary>
+        /// <param name="hue">The hue.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>The Colour object.</returns>
+        public static Colour FromHSV(int hue, double saturation, double value)
+        {
+            return FromAHSV(255, hue, saturation, value);
+        }
+
+        /// <summary>
+        /// Creates a Colour object from the specified RGB value.
+        /// </summary>
+        /// <param name="red">The red channel.</param>
+        /// <param name="green">The green channel.</param>
+        /// <param name="blue">The blue channel.</param>
+        /// <returns>The Colour object.</returns>
+        public static Colour FromRGB(byte red, byte green, byte blue)
+        {
+            return FromARGB(255, red, green, blue);
+        }
+
+        /// <summary>
         /// Generates a random Colour.
         /// </summary>
         /// <param name="randomizer">The randomizer.</param>
@@ -270,6 +393,17 @@ namespace ALife.Core.Utility.Colours
             byte green = randomizer.NextByte(greenMin, greenMax);
             byte blue = randomizer.NextByte(blueMin, blueMax);
             return new Colour(alpha, red, green, blue);
+        }
+
+        /// <summary>
+        /// Predefines the colour specified by the hex code.
+        /// </summary>
+        /// <param name="hex">The hex code.</param>
+        /// <returns>The Colour object.</returns>
+        internal static Colour PredefineColour(string hex)
+        {
+            ColourHelpers.ConvertHexToRgb(hex, out var r, out var g, out var b);
+            return new Colour(255, r, g, b, true);
         }
 
         /// <summary>
@@ -330,47 +464,6 @@ namespace ALife.Core.Utility.Colours
                 return false;
             }
             return Equals((IColour)obj);
-        }
-
-        /// <summary>
-        /// Creates a Colour object from the specified AHSL values.
-        /// </summary>
-        /// <param name="alpha">The alpha.</param>
-        /// <param name="hue">The hue.</param>
-        /// <param name="saturation">The saturation.</param>
-        /// <param name="lightness">The lightness.</param>
-        /// <returns>The Colour object.</returns>
-        public IColour FromAHSL(byte alpha, int hue, double saturation, double lightness)
-        {
-            ColourHelpers.ConvertHslToRgb(hue, saturation, lightness, out byte red, out byte green, out byte blue);
-            return new Colour(alpha, red, green, blue);
-        }
-
-        /// <summary>
-        /// Creates a Colour object from the specified AHSV values.
-        /// </summary>
-        /// <param name="alpha">The alpha.</param>
-        /// <param name="hue">The hue.</param>
-        /// <param name="saturation">The saturation.</param>
-        /// <param name="value">The value.</param>
-        /// <returns>The Colour object.</returns>
-        public IColour FromAHSV(byte alpha, int hue, double saturation, double value)
-        {
-            ColourHelpers.ConvertHsvToRgb(hue, saturation, value, out byte red, out byte green, out byte blue);
-            return new Colour(alpha, red, green, blue);
-        }
-
-        /// <summary>
-        /// Creates a Colour object from the specified ARGB values.
-        /// </summary>
-        /// <param name="alpha">The alpha.</param>
-        /// <param name="red">The red.</param>
-        /// <param name="green">The green.</param>
-        /// <param name="blue">The blue.</param>
-        /// <returns>The Colour object.</returns>
-        public IColour FromARGB(byte alpha, byte red, byte green, byte blue)
-        {
-            return new Colour(alpha, red, green, blue);
         }
 
         /// <summary>

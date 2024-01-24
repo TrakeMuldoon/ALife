@@ -4,7 +4,6 @@ using ALife.Core.WorldObjects.Agents;
 using ALife.Rendering;
 using Avalonia;
 using Avalonia.Media;
-using Color = System.Drawing.Color;
 using Point = ALife.Core.Geometry.Shapes.Point;
 using AvColor = Avalonia.Media.Color;
 using AvPoint = Avalonia.Point;
@@ -12,6 +11,7 @@ using AvColors = Avalonia.Media.Colors;
 using AvSize = Avalonia.Size;
 using System.Globalization;
 using System.Drawing;
+using ALife.Core.Utility.Colours;
 
 namespace ALife.Avalonia.ALifeImplementations
 {
@@ -27,7 +27,7 @@ namespace ALife.Avalonia.ALifeImplementations
             set => context = value;
         }
 
-        public override void DrawAARectangle(Point maxXY, Point minXY, Color color, double strokeWidth)
+        public override void DrawAARectangle(Point maxXY, Point minXY, Colour color, double strokeWidth)
         {
             Rect rect = new(ConvertPoint(minXY), ConvertPoint(maxXY));
             Brush b = new SolidColorBrush(ConvertColour(color));
@@ -40,19 +40,19 @@ namespace ALife.Avalonia.ALifeImplementations
             throw new NotImplementedException();
         }
 
-        public override void DrawCircle(Point centerPoint, float radius, Color color)
+        public override void DrawCircle(Point centerPoint, float radius, Colour color)
         {
             Brush b = new SolidColorBrush(ConvertColour(color));
             Context.DrawEllipse(null, new Pen(b, 1), new AvPoint(centerPoint.X, centerPoint.Y), radius, radius);
         }
 
-        public override void DrawLine(Point point1, Point point2, Color color, double strokeWidth)
+        public override void DrawLine(Point point1, Point point2, Colour color, double strokeWidth)
         {
             Brush brush = new SolidColorBrush(ConvertColour(color), strokeWidth);
             Context.DrawLine(new Pen(brush), ConvertPoint(point1), ConvertPoint(point2));
         }
 
-        public override void DrawRectangle(Point topLeft, Point topRight, Point bottomLeft, Point bottomRight, Color color, double strokeWidth)
+        public override void DrawRectangle(Point topLeft, Point topRight, Point bottomLeft, Point bottomRight, Colour color, double strokeWidth)
         {
             Brush b = new SolidColorBrush(ConvertColour(color));
             Pen pen = new(b, strokeWidth);
@@ -69,7 +69,7 @@ namespace ALife.Avalonia.ALifeImplementations
 
         public override void DrawSector(Sector currShape, bool fillIn)
         {
-            Brush b = new SolidColorBrush(ConvertColour(currShape.Color));
+            Brush b = new SolidColorBrush(ConvertColour(currShape.Colour));
             Pen p = new Pen(b);
 
             PathGeometry pathGeometry = new();
@@ -81,26 +81,26 @@ namespace ALife.Avalonia.ALifeImplementations
             Context.DrawGeometry(b, p, pathGeometry);
         }
 
-        public override void DrawText(string text, Point point, Color color)
+        public override void DrawText(string text, Point point, Colour color)
         {
             FormattedText ft = new FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, Typeface.Default, 12, new SolidColorBrush(ConvertColour(color)));
             Context.DrawText(ft, ConvertPoint(point));
         }
 
-        public override void FillAARectangle(Point minXY, Point maxXY, Color color)
+        public override void FillAARectangle(Point minXY, Point maxXY, Colour color)
         {
             Rect rect = new(ConvertPoint(minXY), ConvertPoint(maxXY));
             Brush b = new SolidColorBrush(ConvertColour(color));
             Context.FillRectangle(b, rect);
         }
 
-        public override void FillCircle(Point centerPoint, float radius, Color color)
+        public override void FillCircle(Point centerPoint, float radius, Colour color)
         {
             Brush b = new SolidColorBrush(ConvertColour(color));
             Context.DrawEllipse(b, BLACKPEN, ConvertPoint(centerPoint), radius, radius);
         }
 
-        public override void FillRectangle(Point topLeft, Point topRight, Point bottomLeft, Point bottomRight, Color color)
+        public override void FillRectangle(Point topLeft, Point topRight, Point bottomLeft, Point bottomRight, Colour color)
         {
             Brush b = new SolidColorBrush(ConvertColour(color));
             PathGeometry pathGeometry = new();
@@ -118,7 +118,7 @@ namespace ALife.Avalonia.ALifeImplementations
             Context = (DrawingContext)drawingContext;
         }
 
-        private AvColor ConvertColour(Color c)
+        private AvColor ConvertColour(Colour c)
         {
             return AvColor.FromArgb(c.A, c.R, c.G, c.B);
         }

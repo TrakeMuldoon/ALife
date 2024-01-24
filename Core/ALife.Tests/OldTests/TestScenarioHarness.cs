@@ -1,8 +1,8 @@
 ﻿using ALife.Core;
 using ALife.Core.Scenarios;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
-using System.Drawing;
 
 namespace ALife.Tests.OldTests
 {
@@ -23,7 +23,7 @@ namespace ALife.Tests.OldTests
         {
         }
 
-        public Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
+        public Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour color, double startOrientation)
         {
             throw new NotImplementedException();
         }

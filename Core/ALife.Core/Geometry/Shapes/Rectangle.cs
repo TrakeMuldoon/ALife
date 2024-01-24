@@ -16,7 +16,7 @@ namespace ALife.Core.Geometry.Shapes
             FBLength = fbLength;
             RLWidth = rlWidth;
             Colour = color;
-            DebugColor = Colour.IndianRed;
+            DebugColour = Colour.IndianRed;
 
             Orientation = new Angle(0);
         }
@@ -26,7 +26,7 @@ namespace ALife.Core.Geometry.Shapes
             FBLength = fbLength;
             RLWidth = rlWidth;
             Colour = color;
-            DebugColor = Colour.IndianRed;
+            DebugColour = Colour.IndianRed;
 
             Orientation = new Angle(0);
         }
@@ -57,7 +57,7 @@ namespace ALife.Core.Geometry.Shapes
             set;
         }
 
-        public Colour DebugColor
+        public Colour DebugColour
         {
             get;
             set;

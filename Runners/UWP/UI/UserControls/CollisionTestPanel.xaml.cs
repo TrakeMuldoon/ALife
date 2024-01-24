@@ -1,5 +1,6 @@
 ﻿using ALife.Core;
 using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
 using System;
 using System.Text;
@@ -35,14 +36,14 @@ namespace ALifeUni.UI.UserControls
         {
             Windows.Foundation.Point p1 = new Windows.Foundation.Point(50, 50);
             Circle c1 = new Circle(p1.ToALifePoint(), 10);
-            c1.Color = Colors.Green.ToSystemColor();
+            c1.Colour = Colour.Green;
 
             EmptyObject eo = new EmptyObject(c1, ReferenceValues.CollisionLevelPhysical);
             Planet.World.AddObjectToWorld(eo);
             GreenShape.ShapeOwner = eo;
 
             Windows.Foundation.Point p2 = new Windows.Foundation.Point(100, 100);
-            Rectangle r1 = new Rectangle(p2.ToALifePoint(), 20, 10, Colors.Red.ToSystemColor());
+            Rectangle r1 = new Rectangle(p2.ToALifePoint(), 20, 10, Colour.Red);
             r1.Orientation.Degrees = 45;
 
             EmptyObject e2 = new EmptyObject(r1, ReferenceValues.CollisionLevelPhysical);

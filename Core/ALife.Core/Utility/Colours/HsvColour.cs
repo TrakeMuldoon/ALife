@@ -11,106 +11,130 @@ namespace ALife.Core.Utility.Colours
     public struct HsvColour : IColour
     {
         /// <summary>
-        /// A HsvColour representing the absence of colour.
+        /// A colour representing the absence of colour.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour Black = new HsvColour(Colour.Black);
+        public static readonly HsvColour Black = PredefineColour("000000");
 
         /// <summary>
-        /// A HsvColour representing the colour blue.
+        /// A colour representing the colour blue.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour Blue = new HsvColour(Colour.Blue);
+        public static readonly HsvColour Blue = PredefineColour("0000ff");
 
         /// <summary>
-        /// A HsvColour representing the colour cyan.
+        /// A colour representing the colour cyan.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour Cyan = new HsvColour(Colour.Cyan);
+        public static readonly HsvColour Cyan = PredefineColour("00FFFF");
 
         /// <summary>
-        /// A HsvColour representing the colour dark blue.
+        /// A colour representing the colour dark blue.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour DarkBlue = new HsvColour(Colour.DarkBlue);
+        public static readonly HsvColour DarkBlue = PredefineColour("00008B");
 
         /// <summary>
-        /// A HsvColour representing the colour dark khaki.
+        /// A colour representing the colour dark khaki.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour DarkKhaki = new HsvColour(Colour.DarkKhaki);
+        public static readonly HsvColour DarkKhaki = PredefineColour("Bdb76b");
 
         /// <summary>
-        /// A HsvColour representing the colour dodger blue.
+        /// A colour representing the colour dark red.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour DodgerBlue = new HsvColour(Colour.DodgerBlue);
+        public static readonly HsvColour DarkRed = PredefineColour("8B0000");
 
         /// <summary>
-        /// A HsvColour representing the colour green.
+        /// A colour representing the colour dodger blue.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour Green = new HsvColour(Colour.Green);
+        public static readonly HsvColour DodgerBlue = PredefineColour("1e90ff");
 
         /// <summary>
-        /// A HsvColour representing the colour grey.
+        /// A colour representing the colour green.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour Grey = new HsvColour(Colour.Grey);
+        public static readonly HsvColour Green = PredefineColour("00ff00");
 
         /// <summary>
-        /// A HsvColour representing the colour indian red.
+        /// A colour representing the colour grey.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour IndianRed = new HsvColour(Colour.IndianRed);
+        public static readonly HsvColour Grey = PredefineColour("808080");
 
         /// <summary>
-        /// A HsvColour representing the colour magenta.
+        /// A colour representing the colour hot pink.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour Magenta = new HsvColour(Colour.Magenta);
+        public static readonly HsvColour HotPink = PredefineColour("FF69B4");
 
         /// <summary>
-        /// A HsvColour representing the colour maroon.
+        /// A colour representing the colour indian red.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour Maroon = new HsvColour(Colour.Maroon);
+        public static readonly HsvColour IndianRed = PredefineColour("CD5C5C");
 
         /// <summary>
-        /// A HsvColour representing the colour lawn green.
+        /// A colour representing the colour magenta.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour LawnGreen = new HsvColour(Colour.LawnGreen);
+        public static readonly HsvColour Magenta = PredefineColour("FF00FF");
 
         /// <summary>
-        /// A HsvColour representing the colour orange.
+        /// A colour representing the colour maroon.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour Orange = new HsvColour(Colour.Orange);
+        public static readonly HsvColour Maroon = PredefineColour("800000");
 
         /// <summary>
-        /// A HsvColour representing the colour red.
+        /// A colour representing the colour lawn green.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour Red = new HsvColour(Colour.Red);
+        public static readonly HsvColour LawnGreen = PredefineColour("7cfc00");
 
         /// <summary>
-        /// A HsvColour representing the colour white.
+        /// A colour representing the colour orange.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour White = new HsvColour(Colour.White);
+        public static readonly HsvColour Orange = PredefineColour("FFA500");
 
         /// <summary>
-        /// A HsvColour representing the colour white smoke.
+        /// A colour representing the colour papaya whip.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour WhiteSmoke = new HsvColour(Colour.WhiteSmoke);
+        public static readonly HsvColour PapayaWhip = PredefineColour("Ffefd5");
 
         /// <summary>
-        /// A HsvColour representing the colour yellow.
+        /// A colour representing the colour pink.
         /// </summary>
         [JsonIgnore]
-        public static readonly HsvColour Yellow = new HsvColour(Colour.Yellow);
+        public static readonly HsvColour Pink = PredefineColour("FFC0CB");
+
+        /// <summary>
+        /// A colour representing the colour red.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HsvColour Red = PredefineColour("Ff0000");
+
+        /// <summary>
+        /// A colour representing the colour white.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HsvColour White = PredefineColour("FFFFFF");
+
+        /// <summary>
+        /// A colour representing the colour white smoke.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HsvColour WhiteSmoke = PredefineColour("F5f5f5");
+
+        /// <summary>
+        /// A colour representing the colour yellow.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HsvColour Yellow = PredefineColour("ffff00");
 
         /// <summary>
         /// The alpha channel
@@ -287,6 +311,106 @@ namespace ALife.Core.Utility.Colours
         public bool WasPredefined { get; private set; }
 
         /// <summary>
+        /// Creates a HsvColour object from the specified AHex values.
+        /// </summary>
+        /// <param name="alpha">The alpha channel.</param>
+        /// <param name="hex">The red channel.</param>
+        /// <returns>The HsvColour object.</returns>
+        public static HsvColour FromAHex(byte alpha, string hex)
+        {
+            ColourHelpers.ConvertHexToRgb(hex, out var r, out var g, out var b);
+            return FromARGB(alpha, r, g, b);
+        }
+
+        /// <summary>
+        /// Creates a HsvColour object from the specified AHSL values.
+        /// </summary>
+        /// <param name="alpha">The alpha channel.</param>
+        /// <param name="hue">The hue.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="lightness">The lightness.</param>
+        /// <returns>The HsvColour object.</returns>
+        public static HsvColour FromAHSL(byte alpha, int hue, double saturation, double lightness)
+        {
+            ColourHelpers.ConvertHslToRgb(hue, saturation, lightness, out var r, out var g, out var b);
+            ColourHelpers.ConvertRgbToHsv(r, g, b, out hue, out saturation, out var value);
+            return FromAHSV(alpha, hue, saturation, value);
+        }
+
+        /// <summary>
+        /// Creates a HsvColour object from the specified AHSV values.
+        /// </summary>
+        /// <param name="alpha">The alpha channel.</param>
+        /// <param name="hue">The hue.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>The HsvColour object.</returns>
+        public static HsvColour FromAHSV(byte alpha, int hue, double saturation, double value)
+        {
+            return new HsvColour(alpha, hue, saturation, value, false);
+        }
+
+        /// <summary>
+        /// Creates a HsvColour object from the specified ARGB values.
+        /// </summary>
+        /// <param name="alpha">The alpha channel.</param>
+        /// <param name="red">The red channel.</param>
+        /// <param name="green">The green channel.</param>
+        /// <param name="blue">The blue channel.</param>
+        /// <returns>The HsvColour object.</returns>
+        public static HsvColour FromARGB(byte alpha, byte red, byte green, byte blue)
+        {
+            ColourHelpers.ConvertRgbToHsv(red, green, blue, out var hue, out var saturation, out var value);
+            return FromAHSV(alpha, hue, saturation, value);
+        }
+
+        /// <summary>
+        /// Creates a HsvColour object from the specified Hex value.
+        /// </summary>
+        /// <param name="hex">The hex code.</param>
+        /// <returns>The HsvColour object.</returns>
+        public static HsvColour FromHex(string hex)
+        {
+            return FromAHex(255, hex);
+        }
+
+        /// <summary>
+        /// Creates a HsvColour object from the specified HSL value.
+        /// </summary>
+        /// <param name="hue">The hue.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="lightness">The lightness.</param>
+        /// <returns>The HsvColour object.</returns>
+        public static HsvColour FromHSL(int hue, double saturation, double lightness)
+        {
+            return FromAHSL(255, hue, saturation, lightness);
+        }
+
+        /// <summary>
+        /// Creates a HsvColour object from the specified HSV value.
+        /// </summary>
+        /// <param name="hue">The hue.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>The HsvColour object.</returns>
+        public static HsvColour FromHSV(int hue, double saturation, double value)
+        {
+            return FromAHSV(255, hue, saturation, value);
+        }
+
+        /// <summary>
+        /// Creates a HsvColour object from the specified RGB value.
+        /// </summary>
+        /// <param name="red">The red channel.</param>
+        /// <param name="green">The green channel.</param>
+        /// <param name="blue">The blue channel.</param>
+        /// <returns>The HsvColour object.</returns>
+        public static HsvColour FromRGB(byte red, byte green, byte blue)
+        {
+            return FromARGB(255, red, green, blue);
+        }
+
+        /// <summary>
         /// Generates a random HsvColour.
         /// </summary>
         /// <param name="randomizer">The randomizer.</param>
@@ -309,6 +433,17 @@ namespace ALife.Core.Utility.Colours
             double valueModifier = randomizer.NextDouble();
             double value = valueModifier * valueMax + (1 - valueModifier) * valueMin;
             return new HsvColour(hue, saturation, value);
+        }
+
+        /// <summary>
+        /// Predefines the colour specified by the hex code.
+        /// </summary>
+        /// <param name="hex">The hex code.</param>
+        /// <returns>The HsvColour object.</returns>
+        internal static HsvColour PredefineColour(string hex)
+        {
+            ColourHelpers.ConvertHexToHsv(hex, out var hue, out var saturation, out var value);
+            return new HsvColour(255, hue, saturation, value, true);
         }
 
         /// <summary>
@@ -379,47 +514,6 @@ namespace ALife.Core.Utility.Colours
                 return false;
             }
             return Equals((IColour)obj);
-        }
-
-        /// <summary>
-        /// Creates a HsvColour object from the specified AHSL values.
-        /// </summary>
-        /// <param name="alpha">The alpha.</param>
-        /// <param name="hue">The hue.</param>
-        /// <param name="saturation">The saturation.</param>
-        /// <param name="lightness">The lightness.</param>
-        /// <returns>The HsvColour object.</returns>
-        public IColour FromAHSL(byte alpha, int hue, double saturation, double lightness)
-        {
-            ColourHelpers.ConvertHslToRgb(hue, saturation, lightness, out byte red, out byte green, out byte blue);
-            return new HsvColour(alpha, red, green, blue);
-        }
-
-        /// <summary>
-        /// Creates a HsvColour object from the specified AHSV values.
-        /// </summary>
-        /// <param name="alpha">The alpha.</param>
-        /// <param name="hue">The hue.</param>
-        /// <param name="saturation">The saturation.</param>
-        /// <param name="value">The value.</param>
-        /// <returns>The HsvColour object.</returns>
-        public IColour FromAHSV(byte alpha, int hue, double saturation, double value)
-        {
-            return new HsvColour(alpha, hue, saturation, value);
-        }
-
-        /// <summary>
-        /// Creates a HsvColour object from the specified ARGB values.
-        /// </summary>
-        /// <param name="alpha">The alpha.</param>
-        /// <param name="red">The red.</param>
-        /// <param name="green">The green.</param>
-        /// <param name="blue">The blue.</param>
-        /// <returns>The HsvColour object.</returns>
-        public IColour FromARGB(byte alpha, byte red, byte green, byte blue)
-        {
-            ColourHelpers.ConvertRgbToHsv(red, green, blue, out int hue, out double saturation, out double value);
-            return new HsvColour(alpha, hue, saturation, value);
         }
 
         /// <summary>

@@ -135,7 +135,7 @@ namespace ALife.Core.WorldObjects.Agents
         public override void Die()
         {
             Alive = false;
-            Shape.DebugColor = Colour.Maroon;
+            Shape.DebugColour = Colour.Maroon;
             Planet.World.ChangeCollisionLayerForObject(this, ReferenceValues.CollisionLevelDead);
             CollisionLevel = ReferenceValues.CollisionLevelDead;
         }

@@ -14,7 +14,7 @@ namespace ALife.Core.WorldObjects
         public AgentShadow(Agent self)
         {
             shape = self.Shape.CloneShape();
-            shape.DebugColor = Colour.Yellow;
+            shape.DebugColour = Colour.Yellow;
             shape.Orientation = self.Shape.Orientation.Clone();
             foreach(SenseCluster sc in self.Senses)
             {

@@ -8,6 +8,54 @@ namespace ALife.Core.Utility.Colours
     /// </summary>
     public static class ColourHelpers
     {
+        private static readonly string[] HEX_REPLACEMENTS = { "#", "0x", "0X", " " };
+
+        /// <summary>
+        /// Converts the hexadecimal value to RGB values.
+        /// </summary>
+        /// <param name="hex">The hexidecimal value.</param>
+        /// <param name="red">The red channel.</param>
+        /// <param name="green">The green channel.</param>
+        /// <param name="blue">The blue channel.</param>
+        public static void ConvertHexToRgb(string hex, out byte red, out byte green, out byte blue)
+        {
+            string cleanedHexCode = hex.ReplaceAny(string.Empty, HEX_REPLACEMENTS);
+            int hexColor = Convert.ToInt32(cleanedHexCode, 16);
+            int r = (hexColor >> 16) & 0xFF;
+            int g = (hexColor >> 8) & 0xFF;
+            int b = hexColor & 0xFF;
+
+            red = (byte)ExtraMaths.Clamp(r, 0, 255);
+            green = (byte)ExtraMaths.Clamp(g, 0, 255);
+            blue = (byte)ExtraMaths.Clamp(b, 0, 255);
+        }
+
+        /// <summary>
+        /// Converts the hexadecimal value to HSL values.
+        /// </summary>
+        /// <param name="hex">The hexidecimal value.</param>
+        /// <param name="hue">The hue.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="lightness">The lightness.</param>
+        public static void ConvertHexToHsl(string hex, out int hue, out double saturation, out double lightness)
+        {
+            ConvertHexToRgb(hex, out var red, out var green, out var blue);
+            ConvertRgbToHsl(red, green, blue, out hue, out saturation, out lightness);
+        }
+
+        /// <summary>
+        /// Converts the hexadecimal value to HSV values.
+        /// </summary>
+        /// <param name="hex">The hexidecimal value.</param>
+        /// <param name="hue">The hue.</param>
+        /// <param name="saturation">The saturation.</param>
+        /// <param name="value">The value.</param>
+        public static void ConvertHexToHsv(string hex, out int hue, out double saturation, out double value)
+        {
+            ConvertHexToRgb(hex, out var red, out var green, out var blue);
+            ConvertRgbToHsv(red, green, blue, out hue, out saturation, out value);
+        }
+
         /// <summary>
         /// Converts the HSL values to RGB values.
         /// </summary>

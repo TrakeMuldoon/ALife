@@ -84,7 +84,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             : this(parent, name, includeColor
                   , eOrientationAroundParent, eRelativeOrientation, eRadius, eSweep)
         {
-            this.myShape.DebugColor = myDebugColor;
+            this.myShape.DebugColour = myDebugColor;
             this.myShape.Colour = myColor;
         }
 
@@ -92,7 +92,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses
         {
             EyeCluster newEC = new EyeCluster(newParent, Name, IncludeColor
                                               , EvoOrientationAroundParent.Clone(), EvoRelativeOrientation.Clone(), EvoRadius.Clone(), EvoSweep.Clone()
-                                              , (Colour)myShape.Colour.Clone(), (Colour)myShape.DebugColor.Clone());
+                                              , (Colour)myShape.Colour.Clone(), (Colour)myShape.DebugColour.Clone());
             return newEC;
         }
 
@@ -100,7 +100,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses
         {
             EyeCluster newEC = new EyeCluster(newParent, Name, IncludeColor
                                               , EvoOrientationAroundParent.Evolve(Planet.World.NumberGen), EvoRelativeOrientation.Evolve(Planet.World.NumberGen), EvoRadius.Evolve(Planet.World.NumberGen), EvoSweep.Evolve(Planet.World.NumberGen)
-                                              , (Colour)myShape.Colour.Clone(), (Colour)myShape.DebugColor.Clone());
+                                              , (Colour)myShape.Colour.Clone(), (Colour)myShape.DebugColour.Clone());
             return newEC;
         }
 

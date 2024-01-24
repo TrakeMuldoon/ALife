@@ -36,7 +36,7 @@ namespace ALife.Core.Geometry.Shapes
             get;
             set;
         }
-        public virtual Colour DebugColor
+        public virtual Colour DebugColour
         {
             get;
             set;

@@ -14,6 +14,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Threading;
+using ALife.Core.Utility.Colours;
 
 namespace ALife.Avalonia.Controls.SingularRunnerControls
 {
@@ -168,7 +169,7 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
             {
                 _renderer.SetContext(drawingContext);
                 Planet p = Planet.World;
-                _renderer.FillAARectangle(new ALPoint(0, 0), new ALPoint(p.WorldWidth, p.WorldHeight), System.Drawing.Color.PapayaWhip);
+                _renderer.FillAARectangle(new ALPoint(0, 0), new ALPoint(p.WorldWidth, p.WorldHeight), Colour.PapayaWhip);
                 _simulation.Render(_renderer);
                 // TODO: for _whatever_ reason, this updates the FPS item, but _not_ the textblock...
                 _vm.FramesPerSecond = _simulation.FpsCounter.AverageFramesPerTicks;

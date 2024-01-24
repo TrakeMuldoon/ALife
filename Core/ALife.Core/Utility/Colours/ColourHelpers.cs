@@ -8,6 +8,9 @@ namespace ALife.Core.Utility.Colours
     /// </summary>
     public static class ColourHelpers
     {
+        /// <summary>
+        /// Hex code text we should ignore.
+        /// </summary>
         private static readonly string[] HEX_REPLACEMENTS = { "#", "0x", "0X", " " };
 
         /// <summary>

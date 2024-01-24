@@ -39,14 +39,14 @@ namespace ALife.Core.WorldObjects.Agents.Senses
         public override SenseCluster CloneSense(WorldObject newParent)
         {
             EarCluster newEC = new EarCluster(newParent, Name
-                                              , (EvoNumber)EvoOrientationAroundParent.Clone(), (EvoNumber)EvoRadius.Clone());
+                                              , EvoOrientationAroundParent.Clone(), EvoRadius.Clone());
             return newEC;
         }
 
         public override SenseCluster ReproduceSense(WorldObject newParent)
         {
             EarCluster newEC = new EarCluster(newParent, Name
-                                              , (EvoNumber)EvoOrientationAroundParent.Evolve(Planet.World.NumberGen), (EvoNumber)EvoRadius.Evolve(Planet.World.NumberGen));
+                                              , EvoOrientationAroundParent.Evolve(Planet.World.NumberGen), EvoRadius.Evolve(Planet.World.NumberGen));
             return newEC;
         }
 

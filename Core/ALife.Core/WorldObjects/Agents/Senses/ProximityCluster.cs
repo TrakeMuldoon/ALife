@@ -37,12 +37,12 @@ namespace ALife.Core.WorldObjects.Agents.Senses
 
         public override SenseCluster CloneSense(WorldObject newParent)
         {
-            return new ProximityCluster(newParent, Name, (EvoNumber)evoRadius.Evolve(Planet.World.NumberGen), (Colour)myShape.Colour.Clone());
+            return new ProximityCluster(newParent, Name, evoRadius.Evolve(Planet.World.NumberGen), (Colour)myShape.Colour.Clone());
         }
 
         public override SenseCluster ReproduceSense(WorldObject newParent)
         {
-            return new ProximityCluster(newParent, Name, (EvoNumber)evoRadius.Evolve(Planet.World.NumberGen), (Colour)myShape.Colour.Clone());
+            return new ProximityCluster(newParent, Name, evoRadius.Evolve(Planet.World.NumberGen), (Colour)myShape.Colour.Clone());
         }
 
         public Dictionary<string, string> ExportEvoNumbersAsCode()

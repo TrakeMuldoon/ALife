@@ -20,4 +20,36 @@
     <ProjectReference Include="..\ALife.Core\ALife.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Utility\Maths\TestExtraMath.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TestExtraMath.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Utility\Maths\TestExtraMath.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TestExtraMath.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Utility\Maths\TestExtraMath.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TestExtraMath.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Utility\Maths\TestExtraMaths.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TestExtraMaths.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

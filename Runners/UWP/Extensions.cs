@@ -1,3 +1,5 @@
+using ALife.Core.Utility.Colours;
+
 namespace ALifeUni
 {
     public static class Extensions
@@ -23,23 +25,23 @@ namespace ALifeUni
         }
 
         /// <summary>
-        /// Convert a System.Drawing.Color to a Windows.UI.Color
+        /// Convert a Colour to a Windows.UI.Color
         /// </summary>
         /// <param name="color"></param>
         /// <returns></returns>
-        public static Windows.UI.Color ToWinUiColor(this System.Drawing.Color color)
+        public static Windows.UI.Color ToWinUiColor(this Colour color)
         {
             return Windows.UI.Color.FromArgb(color.A, color.R, color.G, color.B);
         }
 
         /// <summary>
-        /// Converts a Windows.UI.Color to a System.Drawing.Color
+        /// Converts a Windows.UI.Color to a Colour
         /// </summary>
         /// <param name="color"></param>
         /// <returns></returns>
-        public static System.Drawing.Color ToSystemColor(this Windows.UI.Color color)
+        public static Colour ToALifeColor(this Windows.UI.Color color)
         {
-            return System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+            return Colour.FromARGB(color.A, color.R, color.G, color.B);
         }
     }
 }

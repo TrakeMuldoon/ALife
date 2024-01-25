@@ -15,7 +15,46 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Utility\Maths\ExtraMath.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ExtraMath.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+    <PackageReference Include="System.Text.Json" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Utility\Maths\ExtraMath.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ExtraMath.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Utility\Maths\ExtraMath.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ExtraMath.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Utility\Maths\ExtraMath.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ExtraMath.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Utility\Math\ExtraMathTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ExtraMathTemplate.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

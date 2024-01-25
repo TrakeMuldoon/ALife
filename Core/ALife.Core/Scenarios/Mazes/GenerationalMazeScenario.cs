@@ -1,5 +1,8 @@
 ﻿using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Collections;
+using ALife.Core.Utility.Colours;
+using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
@@ -33,7 +36,7 @@ If an agent reaches the goal line, the simuluation stops."
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -44,13 +47,13 @@ If an agent reaches the goal line, the simuluation stops."
             int agentRadius = 5;
             agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
 
-            List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(
+            List<SenseCluster> agentSenses = ListHelpers.CompileList(
                 new IEnumerable<SenseCluster>[]
                 {
                     CommonSenses.PairOfEyes(agent)
                 },
                 new ProximityCluster(agent, "Proximity1"
-                                    , new ROEvoNumber(startValue: 20, evoDeltaMax: 4, hardMin: 10, hardMax: 40)), //Radius
+                                    , new ReadOnlyEvoNumber(startValue: 20, evoDeltaMax: 4, hardMin: 10, hardMax: 40)), //Radius
                 new GoalSenseCluster(agent, "GoalSense", targetZone)
             );
 
@@ -141,8 +144,8 @@ If an agent reaches the goal line, the simuluation stops."
             double height = instance.WorldHeight;
             double width = instance.WorldWidth;
 
-            Zone red = new Zone("Red(Blue)", "Random", System.Drawing.Color.Red, new Geometry.Shapes.Point(0, 0), 50, height);
-            Zone blue = new Zone("Blue(Red)", "Random", System.Drawing.Color.Blue, new Geometry.Shapes.Point(width - 50, 0), 50, height);
+            Zone red = new Zone("Red(Blue)", "Random", Colour.Red, new Geometry.Shapes.Point(0, 0), 50, height);
+            Zone blue = new Zone("Blue(Red)", "Random", Colour.Blue, new Geometry.Shapes.Point(width - 50, 0), 50, height);
             red.OppositeZone = blue;
             red.OrientationDegrees = 0;
 
@@ -152,7 +155,7 @@ If an agent reaches the goal line, the simuluation stops."
             int numAgents = 30;
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, System.Drawing.Color.Blue, 0);
+                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colour.Blue, 0);
             }
 
             MazeSetups.SetUpMaze();

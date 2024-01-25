@@ -1,5 +1,7 @@
 ﻿using ALife.Core.Scenarios.ScenarioHelpers;
-using ALife.Core.Utility;
+using ALife.Core.Utility.Collections;
+using ALife.Core.Utility.Colours;
+using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
@@ -8,7 +10,6 @@ using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
 namespace ALife.Core.Scenarios.Mazes
@@ -31,7 +32,7 @@ If an agent reaches the goal line, the simuluation stops."
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -42,13 +43,13 @@ If an agent reaches the goal line, the simuluation stops."
             int agentRadius = 5;
             agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
 
-            List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(
+            List<SenseCluster> agentSenses = ListHelpers.CompileList(
                 new IEnumerable<SenseCluster>[]
                 {
                     CommonSenses.PairOfEyes(agent)
                 },
                 new ProximityCluster(agent, "Proximity1"
-                                    , new ROEvoNumber(startValue: 20, evoDeltaMax: 4, hardMin: 10, hardMax: 40)), //Radius
+                                    , new ReadOnlyEvoNumber(startValue: 20, evoDeltaMax: 4, hardMin: 10, hardMax: 40)), //Radius
                 new GoalSenseCluster(agent, "GoalSense", targetZone)
             );
 
@@ -123,8 +124,8 @@ If an agent reaches the goal line, the simuluation stops."
             double height = instance.WorldHeight;
             double width = instance.WorldWidth;
 
-            Zone red = new Zone("Red(Blue)", "Random", Color.Red, new Geometry.Shapes.Point(0, 0), 50, height);
-            Zone blue = new Zone("Blue(Red)", "Random", Color.Blue, new Geometry.Shapes.Point(width - 50, 0), 50, height);
+            Zone red = new Zone("Red(Blue)", "Random", Colour.Red, new Geometry.Shapes.Point(0, 0), 50, height);
+            Zone blue = new Zone("Blue(Red)", "Random", Colour.Blue, new Geometry.Shapes.Point(width - 50, 0), 50, height);
             red.OppositeZone = blue;
             red.OrientationDegrees = 0;
 
@@ -135,7 +136,8 @@ If an agent reaches the goal line, the simuluation stops."
 
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, ColorExtensions.GetRandomColor(), 0);
+                Colour randomColour = Colour.GetRandomColour(Planet.World.NumberGen);
+                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, randomColour, 0);
             }
             //MazeRunner mr = new MazeRunner(red, blue);
 
@@ -190,9 +192,12 @@ If an agent reaches the goal line, the simuluation stops."
                 Planet.World.ReproduceBest();
                 Planet.World.ReproduceBest();
                 Planet.World.ReproduceBest();
-                Agent ag1 = AgentFactory.CreateAgent("Agent", red, blue, ColorExtensions.GetRandomColor(), 0);
-                Agent ag2 = AgentFactory.CreateAgent("Agent", red, blue, ColorExtensions.GetRandomColor(), 0);
-                Agent ag3 = AgentFactory.CreateAgent("Agent", red, blue, ColorExtensions.GetRandomColor(), 0);
+                Colour randomColourA = Colour.GetRandomColour(Planet.World.NumberGen);
+                Colour randomColourB = Colour.GetRandomColour(Planet.World.NumberGen);
+                Colour randomColourC = Colour.GetRandomColour(Planet.World.NumberGen);
+                Agent ag1 = AgentFactory.CreateAgent("Agent", red, blue, randomColourA, 0);
+                Agent ag2 = AgentFactory.CreateAgent("Agent", red, blue, randomColourB, 0);
+                Agent ag3 = AgentFactory.CreateAgent("Agent", red, blue, randomColourC, 0);
 
                 var weaklings = Planet.World.InactiveObjects.Where((wo) => wo.Shape.CentrePoint.X < 50).ToList();
                 foreach(WorldObject wo in weaklings)

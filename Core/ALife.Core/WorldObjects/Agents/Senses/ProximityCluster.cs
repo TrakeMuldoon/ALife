@@ -1,17 +1,16 @@
 ﻿using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Geometry.Shapes.ChildShapes;
-using ALife.Core.Utility;
+using ALife.Core.Utility.Colours;
+using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects.Agents.Senses.GenericInputs;
-using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace ALife.Core.WorldObjects.Agents.Senses
 {
     public class ProximityCluster : SenseCluster
     {
-        private EvoNumber evoRadius;
+        private IEvoNumber evoRadius;
         private ChildCircle myShape;
         public override IShape Shape
         {
@@ -21,29 +20,29 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             }
         }
 
-        public ProximityCluster(WorldObject parent, string name, EvoNumber radius)
+        public ProximityCluster(WorldObject parent, string name, IEvoNumber radius)
             : base(parent, name)
         {
             evoRadius = radius;
 
-            myShape = new ChildCircle(parent.Shape, new Angle(0), 0, (float)radius.StartValue);
+            myShape = new ChildCircle(parent.Shape, new Angle(0), 0, (float)radius.OriginalValue);
 
             SubInputs.Add(new AnyInput(name + ".SomethingClose"));
         }
-        public ProximityCluster(WorldObject parent, string name, EvoNumber radius, Color newColor)
+        public ProximityCluster(WorldObject parent, string name, IEvoNumber radius, Colour newColor)
             : this(parent, name, radius)
         {
-            myShape.Color = newColor;
+            myShape.Colour = newColor;
         }
 
         public override SenseCluster CloneSense(WorldObject newParent)
         {
-            return new ProximityCluster(newParent, Name, evoRadius.Evolve(), myShape.Color.Clone());
+            return new ProximityCluster(newParent, Name, evoRadius.Evolve(Planet.World.NumberGen), (Colour)myShape.Colour.Clone());
         }
 
         public override SenseCluster ReproduceSense(WorldObject newParent)
         {
-            return new ProximityCluster(newParent, Name, evoRadius.Evolve(), myShape.Color.Clone());
+            return new ProximityCluster(newParent, Name, evoRadius.Evolve(Planet.World.NumberGen), (Colour)myShape.Colour.Clone());
         }
 
         public Dictionary<string, string> ExportEvoNumbersAsCode()
@@ -54,9 +53,9 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             return properties;
         }
 
-        private void PopulateCodeDictionary(Dictionary<string, string> properties, string name, EvoNumber evo)
+        private void PopulateCodeDictionary(Dictionary<string, string> properties, string name, IEvoNumber evo)
         {
-            properties.Add(name, $", new ROEvoNumber(startValue: {evo.StartValue},\tevoDeltaMax: {evo.DeltaMax},\thardMin: {evo.ValueHardMin},\thardMax: {evo.ValueHardMax})\t//{name}");
+            properties.Add(name, $", new ReadOnlyEvoNumber(startValue: {evo.OriginalValue},\tevoDeltaMax: {evo.ValueDeltaMaximumValue},\thardMin: {evo.ValueAbsoluteMinimum},\thardMax: {evo.ValueAbsoluteMaximum})\t//{name}");
         }
     }
 }

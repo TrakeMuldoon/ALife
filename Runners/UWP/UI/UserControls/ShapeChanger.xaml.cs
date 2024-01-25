@@ -105,10 +105,10 @@ namespace ALifeUni.UI.UserControls
             switch(ShapeChooser.SelectedValue)
             {
                 case "Circle": newShape = new Circle(myShape.CentrePoint, (float)keyValue); break;
-                case "Sector": newShape = new Sector(myShape.CentrePoint, (float)keyValue, new Angle(20), myShape.Color); break;
-                case "Rectangle": newShape = new Rectangle(myShape.CentrePoint, keyValue, keyValue + 5, myShape.Color); break;
+                case "Sector": newShape = new Sector(myShape.CentrePoint, (float)keyValue, new Angle(20), myShape.Colour); break;
+                case "Rectangle": newShape = new Rectangle(myShape.CentrePoint, keyValue, keyValue + 5, myShape.Colour); break;
             }
-            newShape.Color = myShape.Color;
+            newShape.Colour = myShape.Colour;
             EmptyObject eoOwner = ShapeOwner as EmptyObject;
             eoOwner.SetShape(newShape);
             myShape = shapeOwner.Shape;

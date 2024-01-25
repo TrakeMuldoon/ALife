@@ -1,6 +1,8 @@
 ﻿using ALife.Core.Collision;
 using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Collections;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
@@ -33,7 +35,7 @@ If they reach the target zone, they will restart in their own zones, and an evol
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -44,7 +46,7 @@ If they reach the target zone, they will restart in their own zones, and an evol
             int agentRadius = 5;
             agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
 
-            List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(
+            List<SenseCluster> agentSenses = ListHelpers.CompileList(
                 new IEnumerable<SenseCluster>[]
                 {
                     CommonSenses.PairOfEyes(agent)
@@ -132,7 +134,7 @@ If they reach the target zone, they will restart in their own zones, and an evol
             Geometry.Shapes.Point reverseChildPoint = child.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
             child.Shape.CentrePoint = reverseChildPoint;
             child.Shape.Orientation.Degrees = specification.StartOrientation;
-            child.Shape.Color = specification.AgentColor;
+            child.Shape.Colour = specification.AgentColor;
             (child.Senses[0] as GoalSenseCluster).ChangeTarget(specification.TargetZone);
 
             collider.MoveObject(child);
@@ -182,8 +184,8 @@ If they reach the target zone, they will restart in their own zones, and an evol
             }
 
             Geometry.Shapes.Point rockCP = new Geometry.Shapes.Point((width / 2) + (width / 3), height / 2);
-            Geometry.Shapes.Rectangle rec = new Geometry.Shapes.Rectangle(rockCP, 40, 20, System.Drawing.Color.Black);
-            FallingRock fr = new FallingRock(rockCP, rec, System.Drawing.Color.Black);
+            Geometry.Shapes.Rectangle rec = new Geometry.Shapes.Rectangle(rockCP, 40, 20, Colour.Black);
+            FallingRock fr = new FallingRock(rockCP, rec, Colour.Black);
             Planet.World.AddObjectToWorld(fr);
         }
 

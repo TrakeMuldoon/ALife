@@ -1,5 +1,6 @@
 ﻿using ALife.Core.Distributors;
 using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
@@ -84,22 +85,22 @@ namespace ALife.Core.WorldObjects.Agents
             TargetZone = targetZone;
         }
 
-        internal void ApplyCircleShapeToAgent(Geometry.Shapes.Point centrePoint, Color colour, int circleRadius, double startOrientation)
+        internal void ApplyCircleShapeToAgent(Geometry.Shapes.Point centrePoint, Colour colour, int circleRadius, double startOrientation)
         {
             IShape myShape = new Circle(centrePoint, circleRadius);
             StartOrientation = startOrientation;
             myShape.Orientation.Degrees = startOrientation;
-            myShape.Color = colour;
+            myShape.Colour = colour;
             SetShape(myShape);
         }
 
-        internal void ApplyCircleShapeToAgent(WorldObjectDistributor distributor, Color colour, int circleRadius, double startOrientation)
+        internal void ApplyCircleShapeToAgent(WorldObjectDistributor distributor, Colour colour, int circleRadius, double startOrientation)
         {
             Geometry.Shapes.Point centrePoint = distributor.NextObjectCentre(circleRadius * 2, circleRadius * 2);
             IShape myShape = new Circle(centrePoint, circleRadius);
             StartOrientation = startOrientation;
             myShape.Orientation.Degrees = startOrientation;
-            myShape.Color = colour;
+            myShape.Colour = colour;
             SetShape(myShape);
         }
 
@@ -137,7 +138,7 @@ namespace ALife.Core.WorldObjects.Agents
         public override void Die()
         {
             Alive = false;
-            Shape.DebugColor = System.Drawing.Color.Maroon;
+            Shape.DebugColour = Colour.Maroon;
             Planet.World.ChangeCollisionLayerForObject(this, ReferenceValues.CollisionLevelDead);
             CollisionLevel = ReferenceValues.CollisionLevelDead;
         }

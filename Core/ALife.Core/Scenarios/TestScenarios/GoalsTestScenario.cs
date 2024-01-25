@@ -1,4 +1,5 @@
 ﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
@@ -17,7 +18,7 @@ namespace ALife.Core.Scenarios.TestScenarios
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour color, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -30,7 +31,7 @@ namespace ALife.Core.Scenarios.TestScenarios
             IShape myShape = new Circle(centrePoint, 5);
             agent.StartOrientation = startOrientation;
             myShape.Orientation.Degrees = startOrientation;
-            myShape.Color = color;
+            myShape.Colour = color;
             agent.SetShape(myShape);
 
             List<SenseCluster> agentSenses = new List<SenseCluster>()
@@ -77,12 +78,12 @@ namespace ALife.Core.Scenarios.TestScenarios
 
         public virtual void PlanetSetup()
         {
-            Zone nullZone = new Zone("Null", "random", System.Drawing.Color.Green, new Geometry.Shapes.Point(0, 0), 500, 500);
-            Zone blueZone = new Zone("Blue", "random", System.Drawing.Color.Blue, new Geometry.Shapes.Point(200, 200), 50, 50);
+            Zone nullZone = new Zone("Null", "random", Colour.Green, new Geometry.Shapes.Point(0, 0), 500, 500);
+            Zone blueZone = new Zone("Blue", "random", Colour.Blue, new Geometry.Shapes.Point(200, 200), 50, 50);
             Planet.World.AddZone(nullZone);
             Planet.World.AddZone(blueZone);
 
-            Agent a = AgentFactory.CreateAgent("Agent", nullZone, blueZone, System.Drawing.Color.Red, 0);
+            Agent a = AgentFactory.CreateAgent("Agent", nullZone, blueZone, Colour.Red, 0);
         }
 
         public void GlobalEndOfTurnActions()

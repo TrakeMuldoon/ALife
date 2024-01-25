@@ -1,6 +1,7 @@
 ﻿using ALife.Core.Utility;
+using ALife.Core.Utility.Colours;
+using ALife.Core.Utility.Maths;
 using System;
-using Color = System.Drawing.Color;
 
 namespace ALife.Core.Geometry.Shapes
 {
@@ -9,23 +10,23 @@ namespace ALife.Core.Geometry.Shapes
         public double FBLength;
         public double RLWidth;
 
-        public Rectangle(Point centrePoint, double fbLength, double rlWidth, Color color)
+        public Rectangle(Point centrePoint, double fbLength, double rlWidth, Colour color)
         {
             CentrePoint = centrePoint;
             FBLength = fbLength;
             RLWidth = rlWidth;
-            Color = color;
-            DebugColor = Color.IndianRed;
+            Colour = color;
+            DebugColour = Colour.IndianRed;
 
             Orientation = new Angle(0);
         }
 
-        internal Rectangle(double fbLength, double rlWidth, Color color)
+        internal Rectangle(double fbLength, double rlWidth, Colour color)
         {
             FBLength = fbLength;
             RLWidth = rlWidth;
-            Color = color;
-            DebugColor = Color.IndianRed;
+            Colour = color;
+            DebugColour = Colour.IndianRed;
 
             Orientation = new Angle(0);
         }
@@ -50,13 +51,13 @@ namespace ALife.Core.Geometry.Shapes
             }
         }
 
-        public Color Color
+        public Colour Colour
         {
             get;
             set;
         }
 
-        public Color DebugColor
+        public Colour DebugColour
         {
             get;
             set;
@@ -139,16 +140,16 @@ namespace ALife.Core.Geometry.Shapes
             }
 
             Point tempPoint = CentrePoint;
-            tempPoint = ExtraMath.TranslateByVector(tempPoint, Orientation, FBLength / 2);
-            topLeft = ExtraMath.TranslateByVector(tempPoint, Orientation.Radians - (Math.PI / 2), RLWidth / 2);
-            topRight = ExtraMath.TranslateByVector(topLeft, Orientation.Radians + (Math.PI / 2), RLWidth);
-            bottomRight = ExtraMath.TranslateByVector(topRight, Orientation.Radians + Math.PI, FBLength);
-            bottomLeft = ExtraMath.TranslateByVector(bottomRight, Orientation.Radians + (Math.PI * 3 / 2), RLWidth);
+            tempPoint = GeometryMath.TranslateByVector(tempPoint, Orientation, FBLength / 2);
+            topLeft = GeometryMath.TranslateByVector(tempPoint, Orientation.Radians - (Math.PI / 2), RLWidth / 2);
+            topRight = GeometryMath.TranslateByVector(topLeft, Orientation.Radians + (Math.PI / 2), RLWidth);
+            bottomRight = GeometryMath.TranslateByVector(topRight, Orientation.Radians + Math.PI, FBLength);
+            bottomLeft = GeometryMath.TranslateByVector(bottomRight, Orientation.Radians + (Math.PI * 3 / 2), RLWidth);
 
-            double maxX = ExtraMath.MultiMax(topLeft.X, topRight.X, bottomLeft.X, bottomRight.X);
-            double minX = ExtraMath.MultiMin(topLeft.X, topRight.X, bottomLeft.X, bottomRight.X);
-            double maxY = ExtraMath.MultiMax(topLeft.Y, topRight.Y, bottomLeft.Y, bottomRight.Y);
-            double minY = ExtraMath.MultiMin(topLeft.Y, topRight.Y, bottomLeft.Y, bottomRight.Y);
+            double maxX = ExtraMath.Maximum(topLeft.X, topRight.X, bottomLeft.X, bottomRight.X);
+            double minX = ExtraMath.Minimum(topLeft.X, topRight.X, bottomLeft.X, bottomRight.X);
+            double maxY = ExtraMath.Maximum(topLeft.Y, topRight.Y, bottomLeft.Y, bottomRight.Y);
+            double minY = ExtraMath.Minimum(topLeft.Y, topRight.Y, bottomLeft.Y, bottomRight.Y);
 
             BoundingBox bb = new BoundingBox(minX, minY, maxX, maxY);
             myBox = bb;
@@ -158,7 +159,7 @@ namespace ALife.Core.Geometry.Shapes
         public virtual IShape CloneShape()
         {
             Point cp = new Point(CentrePoint.X, CentrePoint.Y);
-            Rectangle rec = new Rectangle(cp, FBLength, RLWidth, Color.Clone());
+            Rectangle rec = new Rectangle(cp, FBLength, RLWidth, (Colour)Colour.Clone());
             rec.Orientation = Orientation.Clone();
             return rec;
         }

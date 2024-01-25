@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ALife.Core;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;

@@ -1,6 +1,7 @@
 ﻿using ALife.Core.Collision;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Maths;
 using System;
 using System.Collections.Generic;
 
@@ -80,8 +81,8 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
             forwardDist = Speed * forwardMagnitude;
             rightDist = Speed * rightMagnitude;
 
-            Geometry.Shapes.Point tempPoint = ExtraMath.TranslateByVector(origin, theShape.Orientation, forwardDist);
-            Geometry.Shapes.Point finalPoint = ExtraMath.TranslateByVector(tempPoint, theShape.Orientation.Radians + (Math.PI / 2), rightDist);
+            Geometry.Shapes.Point tempPoint = GeometryMath.TranslateByVector(origin, theShape.Orientation, forwardDist);
+            Geometry.Shapes.Point finalPoint = GeometryMath.TranslateByVector(tempPoint, theShape.Orientation.Radians + (Math.PI / 2), rightDist);
 
             double halfXLength = theShape.BoundingBox.XLength / 2;
             double halfYHeight = theShape.BoundingBox.YHeight / 2;

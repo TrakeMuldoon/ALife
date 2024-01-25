@@ -1,5 +1,7 @@
 ﻿using ALife.Core.Collision;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Colours;
+using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
@@ -42,7 +44,7 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -56,13 +58,13 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {
                 new ProximityCluster(agent, "Proximity"
-                                    , new ROEvoNumber(startValue: 20, evoDeltaMax: 4, hardMin: 10, hardMax: 40)) //Radius
+                                    , new ReadOnlyEvoNumber(20, 4, 10, 40)) //Radius
                 , new EarCluster(agent, "LeftEar"
-                                 , new ROEvoNumber(startValue: 270, evoDeltaMax: 3, hardMin:190, hardMax: 350) //Orientation around parent
-                                 , new ROEvoNumber(startValue: 10, evoDeltaMax: 1, hardMin: 7, hardMax: 13))   //Radius
+                                 , new ReadOnlyEvoNumber(270, 3, 190, 350) //Orientation around parent
+                                 , new ReadOnlyEvoNumber(10, 1, 7, 13)) // Radius
                 , new EarCluster(agent, "RightEar"
-                                 , new ROEvoNumber(startValue: 90, evoDeltaMax: 3, hardMin:10, hardMax: 170) //Orientation around parent
-                                 , new ROEvoNumber(startValue: 10, evoDeltaMax: 1, hardMin: 7, hardMax: 13)) //Radius
+                                 , new ReadOnlyEvoNumber(90, 3, 10, 170) //Orientation around parent
+                                 , new ReadOnlyEvoNumber(10, 1, 7, 13)) // Radius
             };
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
@@ -144,7 +146,7 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
             double height = Planet.World.WorldHeight;
             double width = Planet.World.WorldWidth;
 
-            Zone WorldZone = new Zone("WholeWorld", "Random", Color.Yellow, new Geometry.Shapes.Point(0, 0), width, height);
+            Zone WorldZone = new Zone("WholeWorld", "Random", Colour.Yellow, new Geometry.Shapes.Point(0, 0), width, height);
             Planet.World.AddZone(WorldZone);
 
 
@@ -155,7 +157,7 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
 
             for(int i = 0; i < NUM_AGENTS; ++i)
             {
-                AgentFactory.CreateAgent("Agent", WorldZone, WorldZone, Color.Blue, 0);
+                AgentFactory.CreateAgent("Agent", WorldZone, WorldZone, Colour.Blue, 0);
             }
         }
 
@@ -163,7 +165,7 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
         private void AddEmitterPair(double x, double y)
         {
             Geometry.Shapes.Point targetPoint = new Geometry.Shapes.Point(x, y);
-            Zone targetZone = new Zone($"{TARGET_ZONENAME_PREFIX}{++EmitterPairs}", "Random", Color.Red, targetPoint, 12,12);
+            Zone targetZone = new Zone($"{TARGET_ZONENAME_PREFIX}{++EmitterPairs}", "Random", Colour.Red, targetPoint, 12,12);
             Planet.World.AddZone(targetZone);
             SoundEmitter emitter = new SoundEmitter(new Geometry.Shapes.Point(targetPoint.X + 6, targetPoint.Y + 6));
             Planet.World.AddObjectToWorld(emitter);

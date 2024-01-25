@@ -1,5 +1,6 @@
 ﻿using ALife.Core;
 using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using System;
@@ -21,7 +22,7 @@ namespace ALife.Rendering
         {
             FillAARectangle(zone, renderer);
             
-            Color textColor = Color.FromArgb(255, zone.Color);
+            Colour textColor = new Colour(255, zone.Colour.R, zone.Colour.G, zone.Colour.B);
             renderer.DrawText(zone.Name, zone.TopLeft, textColor);
         }
 
@@ -56,10 +57,10 @@ namespace ALife.Rendering
         /// <param name="renderer">The renderer.</param>
         public static void DrawAgentShadow(AgentShadow shadow, LayerUISettings uiSettings, AgentUISettings auiSettings, AbstractRenderer renderer)
         {
-            Color orig = shadow.Shape.DebugColor;
-            shadow.Shape.DebugColor = Color.White;
+            Colour orig = shadow.Shape.DebugColour;
+            shadow.Shape.DebugColour = Colour.White;
             DrawShape(shadow.Shape, uiSettings.ShowBoundingBoxes, renderer, true);
-            shadow.Shape.DebugColor = orig;
+            shadow.Shape.DebugColour = orig;
             //Draw Orientation
             DrawOrientation(renderer, shadow.Shape);
 
@@ -80,12 +81,12 @@ namespace ALife.Rendering
         /// <param name="renderer">The renderer.</param>
         public static void DrawInactiveObject(WorldObject wo, LayerUISettings uiSettings, AbstractRenderer renderer)
         {
-            Color color = wo.Shape.Color;
-            wo.Shape.Color = Color.FromArgb(50, color.R, color.G, color.B);
+            Colour color = wo.Shape.Colour;
+            wo.Shape.Colour = new Colour(50, color.R, color.G, color.B);
             DrawShape(wo.Shape, uiSettings.ShowBoundingBoxes, renderer, true);
-            wo.Shape.Color = Color.FromArgb(50, 255, 0, 0);
+            wo.Shape.Colour = new Colour(50, 255, 0, 0);
             DrawShape(wo.Shape, uiSettings.ShowBoundingBoxes, renderer, false);
-            wo.Shape.Color = color;
+            wo.Shape.Colour = color;
         }
 
         /// <summary>
@@ -96,10 +97,10 @@ namespace ALife.Rendering
         /// <param name="renderer">The renderer.</param>
         public static void DrawPastObject(IShape shape, LayerUISettings uiSettings, AbstractRenderer renderer)
         {
-            Color pastDebug = shape.DebugColor;
-            shape.DebugColor = Color.White;
+            Colour pastDebug = shape.DebugColour;
+            shape.DebugColour = Colour.White;
             DrawShape(shape, uiSettings.ShowBoundingBoxes, renderer, true);
-            shape.DebugColor = pastDebug;
+            shape.DebugColour = pastDebug;
         }
 
         /// <summary>
@@ -121,7 +122,7 @@ namespace ALife.Rendering
                     if(ag.LivingAncestor == null)
                     {
                         Circle c = (Circle)ag.Shape;
-                        renderer.DrawCircle(ag.Shape.CentrePoint, c.Radius + 3, Color.Blue);
+                        renderer.DrawCircle(ag.Shape.CentrePoint, c.Radius + 3, Colour.Blue);
                     }
 
                     else
@@ -179,7 +180,7 @@ namespace ALife.Rendering
         public static void DrawAARectangle(AARectangle rec, AbstractRenderer renderer)
         {
             Point tl = rec.TopLeft;
-            renderer.DrawAARectangle(tl, new Point(tl.X + rec.XWidth, tl.Y + rec.YHeight), rec.Color, 0.4f);
+            renderer.DrawAARectangle(tl, new Point(tl.X + rec.XWidth, tl.Y + rec.YHeight), rec.Colour, 0.4f);
         }
 
         /// <summary>
@@ -190,7 +191,7 @@ namespace ALife.Rendering
         public static void FillAARectangle(AARectangle rec, AbstractRenderer renderer)
         {
             Point tl = rec.TopLeft;
-            renderer.FillAARectangle(tl, new Point(tl.X + rec.XWidth, tl.Y + rec.YHeight), rec.Color);
+            renderer.FillAARectangle(tl, new Point(tl.X + rec.XWidth, tl.Y + rec.YHeight), rec.Colour);
         }
 
         /// <summary>
@@ -199,7 +200,7 @@ namespace ALife.Rendering
         /// <param name="bb">The bb.</param>
         /// <param name="color">The color.</param>
         /// <param name="renderer">The renderer.</param>
-        private static void DrawBoundingBox(BoundingBox bb, Color color, AbstractRenderer renderer)
+        private static void DrawBoundingBox(BoundingBox bb, Colour color, AbstractRenderer renderer)
         {
             renderer.DrawAARectangle(new Point(bb.MaxX, bb.MaxY), new Point(bb.MinX, bb.MinY), color, 0.4f);
         }
@@ -240,7 +241,7 @@ namespace ALife.Rendering
             {
                 //TODO: this just assumed the agent is a circle which will eventually not always be true.
                 Circle c = ag.Shape as Circle;
-                renderer.DrawCircle(c.CentrePoint, c.Radius + 2, Color.HotPink);
+                renderer.DrawCircle(c.CentrePoint, c.Radius + 2, Colour.HotPink);
             }
 
             //Draw Orientation
@@ -267,7 +268,7 @@ namespace ALife.Rendering
             }
             if(showBoundingBox)
             {
-                DrawBoundingBox(shape.BoundingBox, Color.Black, renderer);
+                DrawBoundingBox(shape.BoundingBox, Colour.Black, renderer);
             }
         }
 
@@ -276,15 +277,15 @@ namespace ALife.Rendering
             //World Object Body
             if(fillIn)
             {
-                renderer.FillCircle(wo.CentrePoint, wo.Radius, wo.Color);
+                renderer.FillCircle(wo.CentrePoint, wo.Radius, wo.Colour);
             }
             else
             {
-                renderer.DrawCircle(wo.CentrePoint, wo.Radius, wo.Color);
+                renderer.DrawCircle(wo.CentrePoint, wo.Radius, wo.Colour);
             }
 
             //Core of the body is the debug colour
-            renderer.FillCircle(wo.CentrePoint, 2, wo.DebugColor);
+            renderer.FillCircle(wo.CentrePoint, 2, wo.DebugColour);
 
             DrawOrientation(renderer, wo);
         }

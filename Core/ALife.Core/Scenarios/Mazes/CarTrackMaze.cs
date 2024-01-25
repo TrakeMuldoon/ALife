@@ -1,5 +1,7 @@
 ﻿using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Collections;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
@@ -36,7 +38,7 @@ Reaching the finish line, reproduces 3 times and then dies... Victorious!"
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -47,7 +49,7 @@ Reaching the finish line, reproduces 3 times and then dies... Victorious!"
             int agentRadius = 5;
             agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
 
-            List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(
+            List<SenseCluster> agentSenses = ListHelpers.CompileList<SenseCluster>(
                 new IEnumerable<SenseCluster>[]
                 {
                     CommonSenses.PairOfEyes(agent)
@@ -160,11 +162,11 @@ Reaching the finish line, reproduces 3 times and then dies... Victorious!"
         {
             MazeSetups.BuildThinningCarTrack();
 
-            Zone startZone = new Zone("Start", "Random", Color.Green, new Geometry.Shapes.Point(30, 331), 190, 80);
-            Zone midOne = new Zone("Mid1", "Random", Color.Orange, new Geometry.Shapes.Point(800, 585), 20, 200);
-            Zone halfWay = new Zone("Half", "Random", Color.Orange, new Geometry.Shapes.Point(1320, 320), 200, 20);
-            Zone midThree = new Zone("Mid3", "Random", Color.Orange, new Geometry.Shapes.Point(800, 18), 20, 115);
-            Zone endZone = new Zone("End", "Random", Color.Red, new Geometry.Shapes.Point(30, 285), 190, 40);
+            Zone startZone = new Zone("Start", "Random", Colour.Green, new Geometry.Shapes.Point(30, 331), 190, 80);
+            Zone midOne = new Zone("Mid1", "Random", Colour.Orange, new Geometry.Shapes.Point(800, 585), 20, 200);
+            Zone halfWay = new Zone("Half", "Random", Colour.Orange, new Geometry.Shapes.Point(1320, 320), 200, 20);
+            Zone midThree = new Zone("Mid3", "Random", Colour.Orange, new Geometry.Shapes.Point(800, 18), 20, 115);
+            Zone endZone = new Zone("End", "Random", Colour.Red, new Geometry.Shapes.Point(30, 285), 190, 40);
 
             Planet.World.AddZone(startZone);
             Planet.World.AddZone(midOne);
@@ -175,7 +177,8 @@ Reaching the finish line, reproduces 3 times and then dies... Victorious!"
             int numAgents = 20;
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", startZone, endZone, ColorExtensions.GetRandomColor(), 90);
+                Colour randomColour = Colour.GetRandomColour(Planet.World.NumberGen);
+                Agent rag = AgentFactory.CreateAgent("Agent", startZone, endZone, randomColour, 90);
             }
         }
 

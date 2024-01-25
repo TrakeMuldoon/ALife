@@ -2,6 +2,8 @@
 using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Colours;
+using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
@@ -21,7 +23,7 @@ namespace ALife.Core.Scenarios.TestScenarios
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour color, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -34,16 +36,16 @@ namespace ALife.Core.Scenarios.TestScenarios
             IShape myShape = new Geometry.Shapes.Rectangle(centrePoint, 40, 80, color);
             agent.StartOrientation = startOrientation;
             myShape.Orientation.Degrees = startOrientation;
-            myShape.Color = color;
+            myShape.Colour = color;
             agent.SetShape(myShape);
 
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {
                 new EyeCluster(agent, "Eye1"
-                                , new ROEvoNumber(0, 20, -360, 360)  //Orientation Around Parent
-                                , new ROEvoNumber(0, 30, -360, 360)  //Relative Orientation
-                                , new ROEvoNumber(80, 3, 40, 120)      //Radius
-                                , new ROEvoNumber(25, 1, 15, 40)),      //Sweep
+                                , new ReadOnlyEvoNumber(0, 20, -360, 360)  //Orientation Around Parent
+                                , new ReadOnlyEvoNumber(0, 30, -360, 360)  //Relative Orientation
+                                , new ReadOnlyEvoNumber(80, 3, 40, 120)      //Radius
+                                , new ReadOnlyEvoNumber(25, 1, 15, 40)),      //Sweep
                 new SquareSenseCluster(agent, "Square")
             };
 
@@ -83,15 +85,15 @@ namespace ALife.Core.Scenarios.TestScenarios
 
         public virtual void PlanetSetup()
         {
-            Zone nullZone = new Zone("Null", "random", System.Drawing.Color.Black, new Geometry.Shapes.Point(0, 0), 1000, 1000);
+            Zone nullZone = new Zone("Null", "random", Colour.Black, new Geometry.Shapes.Point(0, 0), 1000, 1000);
             Planet.World.AddZone(nullZone);
 
             //Geometry.Shapes.Point ap = new Geometry.Shapes.Point(30, 30);
-            //Agent a = AgentFactory.CreateAgent("Agent", nullZone, nullZone, System.Drawing.Color.Red, 0);
+            //Agent a = AgentFactory.CreateAgent("Agent", nullZone, nullZone, Colour.Red, 0);
             //a.Shape.CentrePoint = ap;
 
             //Geometry.Shapes.Point bp = new Geometry.Shapes.Point(60, 100);
-            //Agent b = AgentFactory.CreateAgent("Agent", nullZone, nullZone, System.Drawing.Color.Red, 0);
+            //Agent b = AgentFactory.CreateAgent("Agent", nullZone, nullZone, Colour.Red, 0);
             //b.Shape.CentrePoint = bp;
 
             Geometry.Shapes.Point mp = new Geometry.Shapes.Point(60, 60);

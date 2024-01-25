@@ -120,7 +120,7 @@ namespace ALife.Core.ScenarioRunners.ScenarioLoggers
                 StringBuilder sb = new StringBuilder();
                 for(int i = 0; i < MaxMessages; i++)
                 {
-                    if(messageQueue.TryDequeue(out var message))
+                    if(messageQueue.TryDequeue(out string message))
                     {
                         _ = sb.Append(message);
                     }

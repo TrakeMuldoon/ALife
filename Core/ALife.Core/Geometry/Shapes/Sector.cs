@@ -48,7 +48,7 @@ namespace ALife.Core.Geometry.Shapes
             {
                 if(myBox == null)
                 {
-                    var dummy = BoundingBox;
+                    _ = BoundingBox;
                 }
                 return leftPoint;
             }
@@ -61,7 +61,7 @@ namespace ALife.Core.Geometry.Shapes
             {
                 if(myBox == null)
                 {
-                    var dummy = BoundingBox;
+                    _ = BoundingBox;
                 }
                 return rightPoint;
             }

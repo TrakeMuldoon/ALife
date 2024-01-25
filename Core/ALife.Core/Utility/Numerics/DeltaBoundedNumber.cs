@@ -205,9 +205,10 @@ namespace ALife.Core.Utility.Numerics
         /// <returns>
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
+        //TODO: This hashcode calculation is incorrect and may not be necessary
         public override int GetHashCode()
         {
-            var hashCode = Value.GetHashCode() + DeltaMaximum.GetHashCode();
+            int hashCode = Value.GetHashCode() + DeltaMaximum.GetHashCode();
             return hashCode;
         }
 

@@ -82,12 +82,12 @@ namespace ALife.Core.Scenarios
         /// <exception cref="System.Exception">Scenario not found</exception>
         public static IScenario GetScenario(string scenarioName)
         {
-            if(!scenarios.TryGetValue(scenarioName, out var type))
+            if(!scenarios.TryGetValue(scenarioName, out RegisteredScenarioMetadata type))
             {
                 throw new Exception("Scenario not found");
             }
 
-            var instance = (IScenario)Activator.CreateInstance(type.Type);
+            IScenario instance = (IScenario)Activator.CreateInstance(type.Type);
             return instance;
         }
 
@@ -98,7 +98,7 @@ namespace ALife.Core.Scenarios
         /// <returns>The suggested seeds for the specified scenario.</returns>
         public static Dictionary<int, string> GetSuggestions(string scenarioName)
         {
-            if(!scenarios.TryGetValue(scenarioName, out var type))
+            if(!scenarios.TryGetValue(scenarioName, out RegisteredScenarioMetadata type))
             {
                 return new Dictionary<int, string>();
             }
@@ -113,7 +113,7 @@ namespace ALife.Core.Scenarios
         /// <returns>Details on the scenario.</returns>
         public static ScenarioRegistration GetScenarioDetails(string scenarioName)
         {
-            if(!scenarios.TryGetValue(scenarioName, out var type))
+            if(!scenarios.TryGetValue(scenarioName, out RegisteredScenarioMetadata type))
             {
                 return null;
             }

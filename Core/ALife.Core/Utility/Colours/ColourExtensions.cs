@@ -1,4 +1,6 @@
-﻿namespace ALife.Core.Utility.Colours
+﻿using System;
+
+namespace ALife.Core.Utility.Colours
 {
     /// <summary>
     /// Various extension methods for the IColour interface.
@@ -22,7 +24,7 @@
         /// <returns>The HslColour object.</returns>
         public static HslColour ToHslColour(this IColour colour)
         {
-            ColourHelpers.ConvertRgbToHsl(colour.R, colour.G, colour.B, out var h, out var s, out var l);
+            ColourHelpers.ConvertRgbToHsl(colour.R, colour.G, colour.B, out int h, out double s, out double l);
             return new HslColour(colour.A, h, s, l, colour.WasPredefined);
         }
 
@@ -33,7 +35,7 @@
         /// <returns>The HsvColour object.</returns>
         public static HsvColour ToHsvColour(this IColour colour)
         {
-            ColourHelpers.ConvertRgbToHsv(colour.R, colour.G, colour.B, out var h, out var s, out var v);
+            ColourHelpers.ConvertRgbToHsv(colour.R, colour.G, colour.B, out int h, out double s, out double v);
             return new HsvColour(colour.A, h, s, v, colour.WasPredefined);
         }
 
@@ -44,7 +46,7 @@
         /// <returns>The TslColour object.</returns>
         public static TslColour ToTslColour(this IColour colour)
         {
-            ColourHelpers.ConvertRgbToTsl(colour.R, colour.G, colour.B, out var t, out var s, out var l);
+            ColourHelpers.ConvertRgbToTsl(colour.R, colour.G, colour.B, out double t, out double s, out double l);
             return new TslColour(colour.A, t, s, l, colour.WasPredefined);
         }
 

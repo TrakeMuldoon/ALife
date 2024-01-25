@@ -23,7 +23,7 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs.Configs
         /// <returns>A bool indicating whether or not the simulation should end</returns>
         public override bool ShouldEndSimulationInternal(Action<string> WriteMessage)
         {
-            var population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
+            int population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
             if(population == 1)
             {
                 WriteMessage($"|> Only the Rabbit Remains!{Environment.NewLine}");
@@ -39,10 +39,10 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs.Configs
         /// <param name="WriteMessage">An Action to write a message</param>
         public override void SimulationSuccessInformationInternal(Action<string> WriteMessage)
         {
-            var count = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
+            int count = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
             WriteMessage($"\tSurviving: {count}{Environment.NewLine}");
 
-            var r = Planet.World.AllActiveObjects.OfType<Rabbit>().First();
+            Rabbit r = Planet.World.AllActiveObjects.OfType<Rabbit>().First();
 
             if(count > 0 && r.Statistics["Caught"].Value > 0)
             {
@@ -57,9 +57,9 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs.Configs
         /// <param name="WriteMessage">An Action to write a message</param>
         public override void UpdateStatusDetails(Action<string> WriteMessage)
         {
-            var population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
+            int population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
 
-            var r = Planet.World.AllActiveObjects.OfType<Rabbit>().First();
+            Rabbit r = Planet.World.AllActiveObjects.OfType<Rabbit>().First();
             WriteMessage($"Pop: {population} (including rabbit) | Caught: {r.Statistics["Caught"].Value}{Environment.NewLine}");
         }
     }

@@ -37,7 +37,7 @@ namespace ALifeUni
                 SeedSuggestions.Items.Clear();
                 ScenariosList.Items.Clear();
 
-                var sortedNameList = new List<string>();
+                List<string> sortedNameList = new List<string>();
                 foreach(string scenarioName in ScenarioRegister.Scenarios)
                 {
                     sortedNameList.Add(scenarioName);

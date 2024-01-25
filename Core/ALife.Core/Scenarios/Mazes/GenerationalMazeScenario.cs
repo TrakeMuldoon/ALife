@@ -166,10 +166,10 @@ If an agent reaches the goal line, the simuluation stops."
         {
             IEnumerable<Agent> someAgents = Planet.World.AllActiveObjects.OfType<Agent>();
 
-            var LivingAgents =
-                from ag in someAgents
-                where ag.Alive == true
-                select ag;
+            IEnumerable<Agent> LivingAgents =
+                                    from ag in someAgents
+                                    where ag.Alive == true
+                                    select ag;
             int living = LivingAgents.Count();
 
             if(Planet.World.Turns % 10000 == 0

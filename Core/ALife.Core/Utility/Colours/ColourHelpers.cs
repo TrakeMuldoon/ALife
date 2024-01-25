@@ -67,7 +67,7 @@ namespace ALife.Core.Utility.Colours
         /// <param name="lightness">The lightness.</param>
         public static void ConvertHexToHsl(string hex, out int hue, out double saturation, out double lightness)
         {
-            ConvertHexToRgb(hex, out var red, out var green, out var blue);
+            ConvertHexToRgb(hex, out byte red, out byte green, out byte blue);
             ConvertRgbToHsl(red, green, blue, out hue, out saturation, out lightness);
         }
 
@@ -80,7 +80,7 @@ namespace ALife.Core.Utility.Colours
         /// <param name="value">The value.</param>
         public static void ConvertHexToHsv(string hex, out int hue, out double saturation, out double value)
         {
-            ConvertHexToRgb(hex, out var red, out var green, out var blue);
+            ConvertHexToRgb(hex, out byte red, out byte green, out byte blue);
             ConvertRgbToHsv(red, green, blue, out hue, out saturation, out value);
         }
 
@@ -93,7 +93,7 @@ namespace ALife.Core.Utility.Colours
         /// <param name="lightness">The lightness.</param>
         public static void ConvertHexToTsl(string hex, out double tint, out double saturation, out double lightness)
         {
-            ConvertHexToRgb(hex, out var red, out var green, out var blue);
+            ConvertHexToRgb(hex, out byte red, out byte green, out byte blue);
             ConvertRgbToTsl(red, green, blue, out tint, out saturation, out lightness);
         }
 

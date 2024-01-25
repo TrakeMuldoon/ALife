@@ -5,6 +5,7 @@ using ALife.Core.Utility.Colours;
 
 namespace ALife.Tests.OldTests
 {
+    //TODO: Rename this folder and namespace.
     internal class ShapeWrapper : IHasShape
     {
         public ShapeWrapper(string name, IShape myShape)

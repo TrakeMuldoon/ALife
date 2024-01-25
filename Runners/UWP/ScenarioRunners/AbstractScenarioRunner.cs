@@ -247,19 +247,19 @@ namespace ALifeUni.ScenarioRunners
             Logger.WriteLine($"{topLine}");
 
             //Get World Ready
-            var start = DateTime.Now;
-            var newCopy = IScenarioHelpers.FreshInstanceOf(scenario);
+            DateTime start = DateTime.Now;
+            IScenario newCopy = IScenarioHelpers.FreshInstanceOf(scenario);
             Planet.CreateWorld(seedValue, newCopy, height, width);
 
             string error = null;
             try
             {
                 int maxTurns = TotalTurns.ToString().Length;
-                var turnStringFormat = $"D{maxTurns}";
-                var initialTurnSpaces = new string(' ', maxTurns - 1);
+                string turnStringFormat = $"D{maxTurns}";
+                string initialTurnSpaces = new string(' ', maxTurns - 1);
                 Logger.WriteLine($"Each . represents {TurnBatch} turns");
                 Logger.Write($"{initialTurnSpaces}[0]");
-                for(var i = 0; i < TotalTurns / TurnBatch; i++)
+                for(int i = 0; i < TotalTurns / TurnBatch; i++)
                 {
                     if(ct.IsCancellationRequested)
                     {
@@ -275,8 +275,8 @@ namespace ALifeUni.ScenarioRunners
 
                     if((i + 1) % (UpdateFrequency / TurnBatch) == 0)
                     {
-                        var elapsed = DateTime.Now - start;
-                        var stats = $"[{Planet.World.Turns.ToString(turnStringFormat)}]\tElapsed: {elapsed:mm\\:ss\\.ff} TPS: {i * TurnBatch / elapsed.TotalSeconds:0.000} || ";
+                        TimeSpan elapsed = DateTime.Now - start;
+                        string stats = $"[{Planet.World.Turns.ToString(turnStringFormat)}]\tElapsed: {elapsed:mm\\:ss\\.ff} TPS: {i * TurnBatch / elapsed.TotalSeconds:0.000} || ";
                         Logger.Write(stats);
                         config.UpdateStatusDetails(Logger.Write);
 
@@ -287,11 +287,11 @@ namespace ALifeUni.ScenarioRunners
             catch(Exception ex)
             {
                 error = ex.Message;
-                var stack = ex.StackTrace.Split(Environment.NewLine);
+                string[] stack = ex.StackTrace.Split(Environment.NewLine);
                 error += Environment.NewLine + stack[0];
             }
-            var end = DateTime.Now;
-            var durationString = (end - start).ToString("mm\\:ss\\.fff");
+            DateTime end = DateTime.Now;
+            string durationString = (end - start).ToString("mm\\:ss\\.fff");
 
             Logger.WriteLine($"\tTotal Time: {durationString}\tTurns:{Planet.World.Turns}");
 

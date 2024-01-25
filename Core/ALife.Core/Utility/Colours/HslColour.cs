@@ -470,7 +470,7 @@ namespace ALife.Core.Utility.Colours
         /// <returns>The HslColour object.</returns>
         internal static HslColour PredefineColour(string hex)
         {
-            ColourHelpers.ConvertHexToHsl(hex, out var hue, out var saturation, out var lightness);
+            ColourHelpers.ConvertHexToHsl(hex, out int hue, out double saturation, out double lightness);
             return new HslColour(255, hue, saturation, lightness, true);
         }
 

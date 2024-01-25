@@ -230,7 +230,7 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
             {
                 if(!_simulation.IsInitialized)
                 {
-                    _vm = Parent.DataContext as SingularRunnerViewModel;
+                    _vm = (SingularRunnerViewModel)Parent.DataContext;
                     _simulation.InitializeSimulation();
                     _renderer = new AvaloniaRenderer();
 

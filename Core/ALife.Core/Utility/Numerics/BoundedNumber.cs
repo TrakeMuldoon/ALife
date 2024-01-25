@@ -188,9 +188,10 @@ namespace ALife.Core.Utility.Numerics
         /// <returns>
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
+        //TODO: Is there an integeroverflow risk here?
         public override int GetHashCode()
         {
-            var hashCode = _range.GetHashCode() + _value.GetHashCode();
+            int hashCode = _range.GetHashCode() + _value.GetHashCode();
             return hashCode;
         }
 

@@ -65,28 +65,28 @@ namespace ALifeUni
         private (int, int, int, int) GetOrResetScenarioParameters(bool reset = false)
         {
             // get the number of scenarios we want to execute
-            if(!int.TryParse(NumberExecutions.Text, out var seedCount) || reset)
+            if(!int.TryParse(NumberExecutions.Text, out int seedCount) || reset)
             {
                 seedCount = ScenarioRunners.Constants.DEFAULT_NUMBER_SEEDS_EXECUTED;
                 NumberExecutions.Text = seedCount.ToString();
             }
 
             // get the number of turns we want per scenario
-            if(!int.TryParse(NumberTurns.Text, out var maxTurns) || reset)
+            if(!int.TryParse(NumberTurns.Text, out int maxTurns) || reset)
             {
                 maxTurns = ScenarioRunners.Constants.DEFAULT_TOTAL_TURNS;
                 NumberTurns.Text = maxTurns.ToString();
             }
 
             // get the number of turns we want per scenario
-            if(!int.TryParse(TurnBatch.Text, out var turnBatch) || reset)
+            if(!int.TryParse(TurnBatch.Text, out int turnBatch) || reset)
             {
                 turnBatch = ScenarioRunners.Constants.DEFAULT_TURN_BATCH;
                 TurnBatch.Text = turnBatch.ToString();
             }
 
             // get the number of turns we want per scenario
-            if(!int.TryParse(UpdateFrequency.Text, out var updateFrequency) || reset)
+            if(!int.TryParse(UpdateFrequency.Text, out int updateFrequency) || reset)
             {
                 updateFrequency = ScenarioRunners.Constants.DEFAULT_UPDATE_FREQUENCY;
                 UpdateFrequency.Text = updateFrequency.ToString();
@@ -144,7 +144,7 @@ namespace ALifeUni
         /// </summary>
         private void StartScenarioRunner()
         {
-            (var seedCount, var maxTurns, var turnBatch, var updateFrequency) = GetOrResetScenarioParameters();
+            (int seedCount, int maxTurns, int turnBatch, int updateFrequency) = GetOrResetScenarioParameters();
 
             runner = new UiScenarioRunner(ConsoleText, SeedText, ScenarioName, ScenarioSeed, numberSeedsToExecute: seedCount, totalTurns: maxTurns, turnBatch: turnBatch, updateFrequency: updateFrequency);
         }

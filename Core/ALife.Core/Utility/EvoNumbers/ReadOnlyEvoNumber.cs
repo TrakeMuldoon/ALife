@@ -334,7 +334,7 @@ namespace ALife.Core.Utility.EvoNumbers
         /// </returns>
         public override int GetHashCode()
         {
-            var hashCode = Value.GetHashCode() ^ ValueDeltaMaximum.GetHashCode() ^ ValueMaximum.GetHashCode() ^ ValueMinimum.GetHashCode();
+            int hashCode = Value.GetHashCode() ^ ValueDeltaMaximum.GetHashCode() ^ ValueMaximum.GetHashCode() ^ ValueMinimum.GetHashCode();
             return hashCode;
         }
 

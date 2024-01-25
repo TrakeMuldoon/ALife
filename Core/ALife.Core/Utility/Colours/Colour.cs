@@ -432,7 +432,7 @@ namespace ALife.Core.Utility.Colours
         /// <returns>The Colour object.</returns>
         internal static Colour PredefineColour(string hex)
         {
-            ColourHelpers.ConvertHexToRgb(hex, out var r, out var g, out var b);
+            ColourHelpers.ConvertHexToRgb(hex, out byte r, out byte g, out byte b);
             return new Colour(255, r, g, b, true);
         }
 

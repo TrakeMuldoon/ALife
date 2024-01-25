@@ -117,10 +117,10 @@ namespace ALifeUni.ScenarioRunners.ScenarioLoggers
                 {
                     ct.ThrowIfCancellationRequested();
                 }
-                var sb = new StringBuilder();
-                for(var i = 0; i < MaxMessages; i++)
+                StringBuilder sb = new StringBuilder();
+                for(int i = 0; i < MaxMessages; i++)
                 {
-                    if(messageQueue.TryDequeue(out var message))
+                    if(messageQueue.TryDequeue(out string message))
                     {
                         _ = sb.Append(message);
                     }
@@ -130,7 +130,7 @@ namespace ALifeUni.ScenarioRunners.ScenarioLoggers
                     }
                 }
 
-                var output = sb.ToString();
+                string output = sb.ToString();
                 if(!string.IsNullOrWhiteSpace(output))
                 {
                     WriteInternal(output);

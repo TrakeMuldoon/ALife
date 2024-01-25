@@ -1,6 +1,4 @@
-﻿using ALife.Core.WorldObjects;
-using ALife.Core.WorldObjects.Agents.Senses;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ALife.Core.WorldObjects.Agents.Senses.GenericInputs
 {

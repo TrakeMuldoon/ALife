@@ -1,5 +1,4 @@
-﻿using ALife.Core.Scenarios;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 

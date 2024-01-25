@@ -1,5 +1,5 @@
-﻿using System;
-using ALife.Core.WorldObjects.Agents;
+﻿using ALife.Core.WorldObjects.Agents;
+using System;
 using System.Diagnostics;
 
 namespace ALife.Core.WorldObjects.Agents

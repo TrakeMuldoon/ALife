@@ -1,6 +1,4 @@
-﻿using ALife.Core.WorldObjects.Agents;
-using ALife.Core.WorldObjects.Agents.AgentActions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ALife.Core.WorldObjects.Agents.AgentActions

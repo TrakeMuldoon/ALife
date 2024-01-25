@@ -1,6 +1,5 @@
 ﻿using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
-using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;

@@ -1,5 +1,6 @@
 ﻿using ALife.Core.Collision;
 using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using System;
 using System.Collections.Generic;
 
@@ -38,7 +39,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses
 
             //This is for debug purposes. The shape of a "sense" is not viewable to other WorldObjects, so changing the 
             // colour does not impact the Simulation Worldstate.
-            Shape.Color = collisions.Count > 0 ? System.Drawing.Color.DodgerBlue : System.Drawing.Color.DarkBlue;
+            Shape.Colour = collisions.Count > 0 ? Colour.DodgerBlue : Colour.DarkBlue;
 
             //Set the value for each input based on the collisions detected.
             foreach(SenseInput si in SubInputs)

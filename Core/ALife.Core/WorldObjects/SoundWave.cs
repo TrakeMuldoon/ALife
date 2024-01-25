@@ -1,4 +1,5 @@
 ﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using System;
 
 namespace ALife.Core.WorldObjects
@@ -12,7 +13,7 @@ namespace ALife.Core.WorldObjects
         public byte Timbre;
 
         public SoundWave(byte intensity, byte pitch, byte timbre, Point coords)
-            : base(coords, new Circle(coords, intensity), "Sound", (SoundUniqueID++).ToString(), ReferenceValues.CollisionLevelSound, System.Drawing.Color.WhiteSmoke)
+            : base(coords, new Circle(coords, intensity), "Sound", (SoundUniqueID++).ToString(), ReferenceValues.CollisionLevelSound, Colour.WhiteSmoke)
         {
             Intensity = intensity;
             Pitch = pitch;

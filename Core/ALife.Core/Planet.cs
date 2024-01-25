@@ -1,6 +1,7 @@
 ﻿using ALife.Core.Collision;
 using ALife.Core.Scenarios;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Random;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using System;
@@ -151,7 +152,7 @@ namespace ALife.Core
             }
         }
 
-        public readonly FastRandom NumberGen;
+        public readonly IRandom NumberGen;
 
         private int turns = 0;
         public int Turns

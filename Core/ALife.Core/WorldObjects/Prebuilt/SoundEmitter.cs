@@ -1,4 +1,5 @@
 ﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,7 +13,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
     {
         private static int EmitterCount = 1;
         public SoundEmitter(Geometry.Shapes.Point centrePoint) :
-            base(centrePoint, new Circle(1), "SoundEmitter", (++EmitterCount).ToString(), ReferenceValues.CollisionLevelSound, Color.Black)
+            base(centrePoint, new Circle(1), "SoundEmitter", (++EmitterCount).ToString(), ReferenceValues.CollisionLevelSound, Colour.Black)
         {
         }
 

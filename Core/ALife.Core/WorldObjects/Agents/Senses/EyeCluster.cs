@@ -1,12 +1,12 @@
 ﻿using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Geometry.Shapes.ChildShapes;
-using ALife.Core.Utility;
+using ALife.Core.Utility.Colours;
+using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects.Agents.Senses.Eyes;
 using ALife.Core.WorldObjects.Agents.Senses.GenericInputs;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace ALife.Core.WorldObjects.Agents.Senses
 {
@@ -23,13 +23,13 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             get;
             private set;
         }
-        private EvoNumber EvoOrientationAroundParent;
-        private EvoNumber EvoRelativeOrientation;
-        private EvoNumber EvoRadius;
-        private EvoNumber EvoSweep;
+        private IEvoNumber EvoOrientationAroundParent;
+        private IEvoNumber EvoRelativeOrientation;
+        private IEvoNumber EvoRadius;
+        private IEvoNumber EvoSweep;
 
         public EyeCluster(WorldObject parent, String name, bool withColour
-                          , EvoNumber eOrientationAroundParent, EvoNumber eRelativeOrientation, EvoNumber eRadius, EvoNumber eSweep)
+                          , IEvoNumber eOrientationAroundParent, IEvoNumber eRelativeOrientation, IEvoNumber eRadius, IEvoNumber eSweep)
             : base(parent, name)
         {
             IncludeColor = withColour;
@@ -38,10 +38,10 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             EvoRadius = eRadius;
             EvoSweep = eSweep;
 
-            Angle orientationAroundParent = new Angle(eOrientationAroundParent.StartValue);
-            Angle relativeOrientation = new Angle(eRelativeOrientation.StartValue);
-            float radius = (float)eRadius.StartValue;
-            Angle sweep = new Angle(eSweep.StartValue);
+            Angle orientationAroundParent = new Angle(eOrientationAroundParent.OriginalValue);
+            Angle relativeOrientation = new Angle(eRelativeOrientation.OriginalValue);
+            float radius = (float)eRadius.OriginalValue;
+            Angle sweep = new Angle(eSweep.OriginalValue);
             myShape = new ChildSector(parent.Shape, orientationAroundParent
                                       , 5.0 //TODO: HUUUUUUGE BUG. See explanation below
                                       , relativeOrientation, radius, sweep);
@@ -50,12 +50,12 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             //SubInputs.Add(new EyeIdentifierInput(name + ".WhoISee"));
             if(IncludeColor)
             {
-                SubInputs.Add(new ColorBoolInput(name + ".IsRed", (WorldObject wo) => wo.Shape.Color.R));
-                SubInputs.Add(new ColorBoolInput(name + ".IsBlue", (WorldObject wo) => wo.Shape.Color.B));
-                SubInputs.Add(new ColorBoolInput(name + ".IsGreen", (WorldObject wo) => wo.Shape.Color.G));
-                //SubInputs.Add(new ColorInput(name + ".HowRed", (WorldObject wo) => wo.Shape.Color.R));
-                //SubInputs.Add(new ColorInput(name + ".HowBlue", (WorldObject wo) => wo.Shape.Color.B));
-                //SubInputs.Add(new ColorInput(name + ".HowGreen", (WorldObject wo) => wo.Shape.Color.G));
+                SubInputs.Add(new ColorBoolInput(name + ".IsRed", (WorldObject wo) => wo.Shape.Colour.R));
+                SubInputs.Add(new ColorBoolInput(name + ".IsBlue", (WorldObject wo) => wo.Shape.Colour.B));
+                SubInputs.Add(new ColorBoolInput(name + ".IsGreen", (WorldObject wo) => wo.Shape.Colour.G));
+                //SubInputs.Add(new ColorInput(name + ".HowRed", (WorldObject wo) => wo.Shape.Colour.R));
+                //SubInputs.Add(new ColorInput(name + ".HowBlue", (WorldObject wo) => wo.Shape.Colour.B));
+                //SubInputs.Add(new ColorInput(name + ".HowGreen", (WorldObject wo) => wo.Shape.Colour.G));
             }
 
             //Re: "TODO: HUUGE BUUG." The code there is setting the distance for the root Geometry.Shapes.Point of the childSector (the vision radius of the eye) 
@@ -72,35 +72,35 @@ namespace ALife.Core.WorldObjects.Agents.Senses
         }
 
         public EyeCluster(WorldObject parent, String name
-                  , EvoNumber eOrientationAroundParent, EvoNumber eRelativeOrientation, EvoNumber eRadius, EvoNumber eSweep)
+                  , IEvoNumber eOrientationAroundParent, IEvoNumber eRelativeOrientation, IEvoNumber eRadius, IEvoNumber eSweep)
             : this(parent, name, false
                   , eOrientationAroundParent, eRelativeOrientation, eRadius, eSweep)
         { }
 
 
         public EyeCluster(WorldObject parent, String name, bool includeColor
-                          , EvoNumber eOrientationAroundParent, EvoNumber eRelativeOrientation, EvoNumber eRadius, EvoNumber eSweep
-                          , Color myColor, Color myDebugColor)
+                          , IEvoNumber eOrientationAroundParent, IEvoNumber eRelativeOrientation, IEvoNumber eRadius, IEvoNumber eSweep
+                          , Colour myColor, Colour myDebugColor)
             : this(parent, name, includeColor
                   , eOrientationAroundParent, eRelativeOrientation, eRadius, eSweep)
         {
-            this.myShape.DebugColor = myDebugColor;
-            this.myShape.Color = myColor;
+            this.myShape.DebugColour = myDebugColor;
+            this.myShape.Colour = myColor;
         }
 
         public override SenseCluster CloneSense(WorldObject newParent)
         {
             EyeCluster newEC = new EyeCluster(newParent, Name, IncludeColor
                                               , EvoOrientationAroundParent.Clone(), EvoRelativeOrientation.Clone(), EvoRadius.Clone(), EvoSweep.Clone()
-                                              , myShape.Color.Clone(), myShape.DebugColor.Clone());
+                                              , (Colour)myShape.Colour.Clone(), (Colour)myShape.DebugColour.Clone());
             return newEC;
         }
 
         public override SenseCluster ReproduceSense(WorldObject newParent)
         {
             EyeCluster newEC = new EyeCluster(newParent, Name, IncludeColor
-                                              , EvoOrientationAroundParent.Evolve(), EvoRelativeOrientation.Evolve(), EvoRadius.Evolve(), EvoSweep.Evolve()
-                                              , myShape.Color.Clone(), myShape.DebugColor.Clone());
+                                              , EvoOrientationAroundParent.Evolve(Planet.World.NumberGen), EvoRelativeOrientation.Evolve(Planet.World.NumberGen), EvoRadius.Evolve(Planet.World.NumberGen), EvoSweep.Evolve(Planet.World.NumberGen)
+                                              , (Colour)myShape.Colour.Clone(), (Colour)myShape.DebugColour.Clone());
             return newEC;
         }
 
@@ -115,9 +115,9 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             return properties;
         }
 
-        private void PopulateCodeDictionary(Dictionary<string, string> properties, string name, EvoNumber evo)
+        private void PopulateCodeDictionary(Dictionary<string, string> properties, string name, IEvoNumber evo)
         {
-            properties.Add(name, $", new ROEvoNumber(startValue: {evo.StartValue},\tevoDeltaMax: {evo.DeltaMax},\thardMin: {evo.ValueHardMin},\thardMax: {evo.ValueHardMax})\t//{name}");
+            properties.Add(name, $", new ReadOnlyEvoNumber(startValue: {evo.OriginalValue},\tevoDeltaMax: {evo.ValueDeltaMaximumValue},\thardMin: {evo.ValueAbsoluteMinimum},\thardMax: {evo.ValueAbsoluteMaximum})\t//{name}");
         }
     }
 }

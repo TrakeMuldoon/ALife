@@ -1,4 +1,5 @@
-﻿using ALife.Core.WorldObjects;
+﻿using ALife.Core.Utility.Colours;
+using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ Success Cases:
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
             //TODO: Fully Comment This
             throw new NotImplementedException();

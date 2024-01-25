@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ALife.Core.Utility.Colours;
+using System;
 using System.Drawing;
 
 namespace ALife.Core.Geometry.Shapes
@@ -21,11 +22,11 @@ namespace ALife.Core.Geometry.Shapes
 
         private Angle ori = new Angle(0);
 
-        public AARectangle(Geometry.Shapes.Point topLeft, double xWidth, double yHeight, Color color)
+        public AARectangle(Geometry.Shapes.Point topLeft, double xWidth, double yHeight, Colour color)
         {
             XWidth = xWidth;
             YHeight = yHeight;
-            Color = color;
+            Colour = color;
             TopLeft = topLeft;
         }
 
@@ -59,13 +60,13 @@ namespace ALife.Core.Geometry.Shapes
             get { return new BoundingBox(TopLeft.X, TopLeft.Y, TopLeft.X + XWidth, TopLeft.Y + YHeight); }
         }
 
-        public Color Color
+        public Colour Colour
         {
             get;
             set;
         }
 
-        public Color DebugColor
+        public Colour DebugColour
         {
             get;
             set;
@@ -83,7 +84,7 @@ namespace ALife.Core.Geometry.Shapes
 
         public IShape CloneShape()
         {
-            return new AARectangle(TopLeft, XWidth, YHeight, Color);
+            return new AARectangle(TopLeft, XWidth, YHeight, Colour);
         }
     }
 }

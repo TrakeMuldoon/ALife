@@ -1,9 +1,10 @@
 ﻿using ALife.Core.Collision;
 using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using System.Drawing;
 
-namespace ALife.Tests
+namespace ALife.Tests.OldTests
 {
     internal class ShapeWrapper : IHasShape
     {
@@ -125,7 +126,7 @@ namespace ALife.Tests
             ShapeWrapper wrapC = new ShapeWrapper("Circle", circle);
 
             Core.Geometry.Shapes.Point rcp = new Core.Geometry.Shapes.Point(50, 64);
-            Core.Geometry.Shapes.Rectangle rectangle = new Core.Geometry.Shapes.Rectangle(rcp, 10, 10, Color.Red);
+            Core.Geometry.Shapes.Rectangle rectangle = new Core.Geometry.Shapes.Rectangle(rcp, 10, 10, Colour.Red);
             ShapeWrapper wrapR = new ShapeWrapper("Rectangle", rectangle);
 
             if(!collMap.Insert(wrapC)) { Assert.Fail("Failed To Insert"); }
@@ -148,7 +149,7 @@ namespace ALife.Tests
             ShapeWrapper wrapC = new ShapeWrapper("Circle", circle);
 
             Core.Geometry.Shapes.Point rcp = new Core.Geometry.Shapes.Point(50, 64);
-            Core.Geometry.Shapes.Rectangle rectangle = new Core.Geometry.Shapes.Rectangle(rcp, 10, 10, Color.Red);
+            Core.Geometry.Shapes.Rectangle rectangle = new Core.Geometry.Shapes.Rectangle(rcp, 10, 10, Colour.Red);
             rectangle.Orientation = new Angle(90);
             ShapeWrapper wrapR = new ShapeWrapper("Rectangle", rectangle);
 
@@ -172,7 +173,7 @@ namespace ALife.Tests
             ShapeWrapper wrapC = new ShapeWrapper("Circle", circle);
 
             Core.Geometry.Shapes.Point rcp = new Core.Geometry.Shapes.Point(50, 64);
-            Core.Geometry.Shapes.Rectangle rectangle = new Core.Geometry.Shapes.Rectangle(rcp, 10, 10, Color.Red);
+            Core.Geometry.Shapes.Rectangle rectangle = new Core.Geometry.Shapes.Rectangle(rcp, 10, 10, Colour.Red);
             rectangle.Orientation = new Angle(180);
             ShapeWrapper wrapR = new ShapeWrapper("Rectangle", rectangle);
 
@@ -196,7 +197,7 @@ namespace ALife.Tests
             ShapeWrapper wrapC = new ShapeWrapper("Circle", circle);
 
             Core.Geometry.Shapes.Point rcp = new Core.Geometry.Shapes.Point(50, 64);
-            Core.Geometry.Shapes.Rectangle rectangle = new Core.Geometry.Shapes.Rectangle(rcp, 10, 10, Color.Red);
+            Core.Geometry.Shapes.Rectangle rectangle = new Core.Geometry.Shapes.Rectangle(rcp, 10, 10, Colour.Red);
             rectangle.Orientation = new Angle(270);
             ShapeWrapper wrapR = new ShapeWrapper("Rectangle", rectangle);
 
@@ -220,7 +221,7 @@ namespace ALife.Tests
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(100, 100);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 30, 20, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 30, 20, Colour.Pink);
             shape2.Orientation.Degrees = 45;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -244,7 +245,7 @@ namespace ALife.Tests
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(100, 100);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 40, 20, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 40, 20, Colour.Pink);
             shape2.Orientation.Degrees = 45;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -268,7 +269,7 @@ namespace ALife.Tests
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(100, 100);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 40, 20, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 40, 20, Colour.Pink);
             shape2.Orientation.Degrees = 45;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -292,7 +293,7 @@ namespace ALife.Tests
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(100, 100);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 40, 20, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 40, 20, Colour.Pink);
             shape2.Orientation.Degrees = 45;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -316,7 +317,7 @@ namespace ALife.Tests
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(100, 100);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 40, 20, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 40, 20, Colour.Pink);
             shape2.Orientation.Degrees = 45;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -340,7 +341,7 @@ namespace ALife.Tests
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(120, 110);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 40, 20, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 40, 20, Colour.Pink);
             shape2.Orientation.Degrees = 45;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -364,7 +365,7 @@ namespace ALife.Tests
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(120, 110);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 70, 40, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 70, 40, Colour.Pink);
             shape2.Orientation.Degrees = 45;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -388,7 +389,7 @@ namespace ALife.Tests
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(120, 110);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 70, 40, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 70, 40, Colour.Pink);
             shape2.Orientation.Degrees = 45;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -409,12 +410,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 20, new Angle(50), Color.Pink);
+            Sector shape1 = new Sector(point1, 20, new Angle(50), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(60, 40);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 10, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 10, Colour.Pink);
             shape2.Orientation.Degrees = 45;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -433,12 +434,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 20, new Angle(50), Color.Pink);
+            Sector shape1 = new Sector(point1, 20, new Angle(50), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(60, 45);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 10, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 10, Colour.Pink);
             shape2.Orientation.Degrees = 45;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -457,12 +458,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 20, new Angle(50), Color.Pink);
+            Sector shape1 = new Sector(point1, 20, new Angle(50), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(65, 45);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 10, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 10, Colour.Pink);
             shape2.Orientation.Degrees = 135;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -481,12 +482,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 20, new Angle(50), Color.Pink);
+            Sector shape1 = new Sector(point1, 20, new Angle(50), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(60, 45);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 10, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 10, Colour.Pink);
             shape2.Orientation.Degrees = 215;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -505,12 +506,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 20, new Angle(50), Color.Pink);
+            Sector shape1 = new Sector(point1, 20, new Angle(50), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(60, 41);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 10, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 10, Colour.Pink);
             shape2.Orientation.Degrees = 305;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -529,12 +530,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 30, new Angle(50), Color.Pink);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(80, 66);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 10, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 10, Colour.Pink);
             shape2.Orientation.Degrees = 299;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -553,12 +554,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 30, new Angle(50), Color.Pink);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(84, 69);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 50, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 50, Colour.Pink);
             shape2.Orientation.Degrees = 27;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -577,12 +578,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 30, new Angle(50), Color.Pink);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(80, 66);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 10, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 10, Colour.Pink);
             shape2.Orientation.Degrees = 117;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -601,12 +602,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 30, new Angle(50), Color.Pink);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(84, 69);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 50, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 50, Colour.Pink);
             shape2.Orientation.Degrees = 207;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -625,12 +626,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 30, new Angle(50), Color.Pink);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(45, 85);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 50, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 50, Colour.Pink);
             shape2.Orientation.Degrees = 200;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -649,12 +650,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 30, new Angle(50), Color.Pink);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(45, 73);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 40, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 40, Colour.Pink);
             shape2.Orientation.Degrees = 110;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -673,12 +674,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 30, new Angle(50), Color.Pink);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(45, 85);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 50, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 50, Colour.Pink);
             shape2.Orientation.Degrees = 20;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -697,12 +698,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 30, new Angle(50), Color.Pink);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(45, 65);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 40, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 40, Colour.Pink);
             shape2.Orientation.Degrees = 120;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -721,12 +722,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 30, new Angle(50), Color.Pink);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(87, 69);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 50, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 50, Colour.Pink);
             shape2.Orientation.Degrees = 207;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -745,12 +746,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 30, new Angle(50), Color.Pink);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(35, 65);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 40, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 40, Colour.Pink);
             shape2.Orientation.Degrees = 120;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -769,12 +770,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(40, 50);
-            Sector shape1 = new Sector(point1, 50, new Angle(70), Color.Pink);
+            Sector shape1 = new Sector(point1, 50, new Angle(70), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(65, 65);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 10, 20, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 10, 20, Colour.Pink);
             shape2.Orientation.Degrees = 120;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -793,12 +794,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(40, 50);
-            Sector shape1 = new Sector(point1, 25, new Angle(40), Color.Pink);
+            Sector shape1 = new Sector(point1, 25, new Angle(40), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(50, 65);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 40, 60, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 40, 60, Colour.Pink);
             shape2.Orientation.Degrees = 120;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -817,12 +818,12 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 30, new Angle(50), Color.Pink);
+            Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
             shape1.Orientation.Degrees = 5;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Core.Geometry.Shapes.Point point2 = new Core.Geometry.Shapes.Point(25, 65);
-            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 40, Color.Pink);
+            Core.Geometry.Shapes.Rectangle shape2 = new Core.Geometry.Shapes.Rectangle(point2, 20, 40, Colour.Pink);
             shape2.Orientation.Degrees = 120;
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
@@ -843,7 +844,7 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(80, 116);
-            Sector shape1 = new Sector(point1, 50, new Angle(45), Color.Pink);
+            Sector shape1 = new Sector(point1, 50, new Angle(45), Colour.Pink);
             shape1.Orientation.Degrees = 0;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
@@ -867,7 +868,7 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(120, 116);
-            Sector shape1 = new Sector(point1, 50, new Angle(45), Color.Pink);
+            Sector shape1 = new Sector(point1, 50, new Angle(45), Colour.Pink);
             shape1.Orientation.Degrees = 0;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
@@ -891,7 +892,7 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(170, 92);
-            Sector shape1 = new Sector(point1, 50, new Angle(45), Color.Pink);
+            Sector shape1 = new Sector(point1, 50, new Angle(45), Colour.Pink);
             shape1.Orientation.Degrees = 150;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
@@ -915,7 +916,7 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(95, 65);
-            Sector shape1 = new Sector(point1, 50, new Angle(45), Color.Pink);
+            Sector shape1 = new Sector(point1, 50, new Angle(45), Colour.Pink);
             shape1.Orientation.Degrees = 0;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
@@ -939,7 +940,7 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(95, 65);
-            Sector shape1 = new Sector(point1, 50, new Angle(45), Color.Pink);
+            Sector shape1 = new Sector(point1, 50, new Angle(45), Colour.Pink);
             shape1.Orientation.Degrees = 0;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
@@ -963,7 +964,7 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(95, 65);
-            Sector shape1 = new Sector(point1, 20, new Angle(45), Color.Pink);
+            Sector shape1 = new Sector(point1, 20, new Angle(45), Colour.Pink);
             shape1.Orientation.Degrees = 0;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
@@ -987,7 +988,7 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(50, 50);
-            Sector shape1 = new Sector(point1, 50, new Angle(45), Color.Pink);
+            Sector shape1 = new Sector(point1, 50, new Angle(45), Colour.Pink);
             shape1.Orientation.Degrees = 0;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
@@ -1011,7 +1012,7 @@ namespace ALife.Tests
         {
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Core.Geometry.Shapes.Point point1 = new Core.Geometry.Shapes.Point(20, 20);
-            Sector shape1 = new Sector(point1, 50, new Angle(45), Color.Pink);
+            Sector shape1 = new Sector(point1, 50, new Angle(45), Colour.Pink);
             shape1.Orientation.Degrees = 0;
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 

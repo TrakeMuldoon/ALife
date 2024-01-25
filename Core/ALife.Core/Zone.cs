@@ -1,5 +1,6 @@
 ﻿using ALife.Core.Distributors;
 using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -28,11 +29,14 @@ namespace ALife.Core
 
         public readonly WorldObjectDistributor Distributor;
 
-        public Zone(String name, String distributorType, Color color
+        public Zone(String name, String distributorType, Colour color
                     , Geometry.Shapes.Point topLeft, double xWidth, double yHeight) : base(topLeft, xWidth, yHeight, color)
         {
-            Color lowAlpha = Color.FromArgb(50, Color);
-            Color = lowAlpha;
+            Colour lowAlpha = new Colour(Colour)
+            {
+                A = 50,
+            };
+            Colour = lowAlpha;
 
             Name = name;
 

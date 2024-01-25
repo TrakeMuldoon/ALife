@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using ALife.Core.Utility.Colours;
+using System.Drawing;
 
 namespace ALife.Core.Geometry.Shapes
 {
@@ -21,13 +22,13 @@ namespace ALife.Core.Geometry.Shapes
             get;
         }
 
-        Color Color
+        Colour Colour
         {
             get;
             set;
         }
 
-        Color DebugColor
+        Colour DebugColour
         {
             get;
             set;

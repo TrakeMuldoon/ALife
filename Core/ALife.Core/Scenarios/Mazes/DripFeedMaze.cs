@@ -1,5 +1,7 @@
 ﻿using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Collections;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
@@ -29,7 +31,7 @@ If an agent reaches the goal line, the simuluation stops."
     )]
     public class DripFeedMaze : IScenario
     {
-        public Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation)
+        public Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -40,7 +42,7 @@ If an agent reaches the goal line, the simuluation stops."
             int agentRadius = 5;
             agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
 
-            List<SenseCluster> agentSenses = ListExtensions.CompileList<SenseCluster>(
+            List<SenseCluster> agentSenses = ListHelpers.CompileList(
                 new IEnumerable<SenseCluster>[]
                 {
                     CommonSenses.PairOfEyes(agent)
@@ -141,8 +143,8 @@ If an agent reaches the goal line, the simuluation stops."
             double height = instance.WorldHeight;
             double width = instance.WorldWidth;
 
-            startZone = new Zone("Red(Blue)", "Random", System.Drawing.Color.Red, new Geometry.Shapes.Point(0, 0), 50, height);
-            endZone = new Zone("Blue(Red)", "Random", System.Drawing.Color.Blue, new Geometry.Shapes.Point(width - 50, 0), 50, height);
+            startZone = new Zone("Red(Blue)", "Random", Colour.Red, new Geometry.Shapes.Point(0, 0), 50, height);
+            endZone = new Zone("Blue(Red)", "Random", Colour.Blue, new Geometry.Shapes.Point(width - 50, 0), 50, height);
             startZone.OppositeZone = endZone;
             startZone.OrientationDegrees = 0;
 
@@ -153,7 +155,8 @@ If an agent reaches the goal line, the simuluation stops."
 
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", startZone, endZone, ColorExtensions.GetRandomColor(), 0);
+                Colour randomColour = Colour.GetRandomColour(Planet.World.NumberGen);
+                Agent rag = AgentFactory.CreateAgent("Agent", startZone, endZone, randomColour, 0);
             }
 
             MazeSetups.SetUpMaze();
@@ -164,8 +167,10 @@ If an agent reaches the goal line, the simuluation stops."
             if(Planet.World.Turns % 10 == 0
                 && Planet.World.AllActiveObjects.OfType<Agent>().Count() < 50)
             {
-                AgentFactory.CreateAgent("Agent", startZone, endZone, ColorExtensions.GetRandomColor(), 0);
-                AgentFactory.CreateAgent("Agent", startZone, endZone, ColorExtensions.GetRandomColor(), 0);
+                Colour randomColourA = Colour.GetRandomColour(Planet.World.NumberGen);
+                Colour randomColourB = Colour.GetRandomColour(Planet.World.NumberGen);
+                AgentFactory.CreateAgent("Agent", startZone, endZone, randomColourA, 0);
+                AgentFactory.CreateAgent("Agent", startZone, endZone, randomColourB, 0);
             }
         }
     }

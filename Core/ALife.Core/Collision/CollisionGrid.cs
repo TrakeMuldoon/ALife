@@ -1,5 +1,6 @@
 ﻿using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Maths;
 using System;
 using System.Collections.Generic;
 using System.Linq;

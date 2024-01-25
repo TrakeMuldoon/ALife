@@ -5,7 +5,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
 {
     public class ColorCluster : ActionCluster
     {
-        public ColorCluster(Agent self) : base(self, "Color")
+        public ColorCluster(Agent self) : base(self, "Colour")
         {
             SubActions.Add("SetRed", new ActionPart("SetRed", Name));
             SubActions.Add("SetGreen", new ActionPart("SetGreen", Name));
@@ -40,11 +40,11 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
         protected override bool AttemptEnact()
         {
             IShape shape = self.Shape;
-            byte rByte = GetNewColour("Red", shape.Color.R);
-            byte gByte = GetNewColour("Green", shape.Color.G);
-            byte bByte = GetNewColour("Blue", shape.Color.B);
+            byte rByte = GetNewColour("Red", shape.Colour.R);
+            byte gByte = GetNewColour("Green", shape.Colour.G);
+            byte bByte = GetNewColour("Blue", shape.Colour.B);
 
-            shape.Color = Color.FromArgb(255, rByte, gByte, bByte);
+            shape.Colour = new Utility.Colours.Colour(255, rByte, gByte, bByte);
             return true;
         }
 
@@ -84,7 +84,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
         {
             if(ActivatedLastTurn)
             {
-                return "Set Colour to " + self.Shape.Color.ToString();
+                return "Set Colour to " + self.Shape.Colour.ToString();
             }
             else
             {

@@ -1,5 +1,7 @@
 ﻿using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Colours;
+using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
@@ -18,7 +20,7 @@ namespace ALife.Core.Scenarios.TestScenarios
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color color, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour color, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -31,18 +33,18 @@ namespace ALife.Core.Scenarios.TestScenarios
             IShape myShape = new Circle(centrePoint, 5);
             agent.StartOrientation = startOrientation;
             myShape.Orientation.Degrees = startOrientation;
-            myShape.Color = color;
+            myShape.Colour = color;
             agent.SetShape(myShape);
 
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {
                 new EyeCluster(agent, "Eye1"
-                                , new ROEvoNumber(0, 20, -360, 360)  //Orientation Around Parent
-                                , new ROEvoNumber(0, 30, -360, 360)  //Relative Orientation
-                                , new ROEvoNumber(80, 3, 40, 120)    //Radius
-                                , new ROEvoNumber(25, 1, 15, 40)),   //Sweep
+                                , new ReadOnlyEvoNumber(0, 20, -360, 360)  //Orientation Around Parent
+                                , new ReadOnlyEvoNumber(0, 30, -360, 360)  //Relative Orientation
+                                , new ReadOnlyEvoNumber(80, 3, 40, 120)    //Radius
+                                , new ReadOnlyEvoNumber(25, 1, 15, 40)),   //Sweep
                 new ProximityCluster(agent, "Proximity1"
-                                , new ROEvoNumber(20, 4, 10, 40))    //Radius
+                                , new ReadOnlyEvoNumber(20, 4, 10, 40))    //Radius
             };
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
@@ -86,13 +88,13 @@ namespace ALife.Core.Scenarios.TestScenarios
 
         public virtual void PlanetSetup()
         {
-            Zone nullZone = new Zone("Null", "random", System.Drawing.Color.Black, new Geometry.Shapes.Point(0, 0), 1000, 1000);
+            Zone nullZone = new Zone("Null", "random", Colour.Black, new Geometry.Shapes.Point(0, 0), 1000, 1000);
             Planet.World.AddZone(nullZone);
 
             int numAgents = 50;
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", nullZone, null, System.Drawing.Color.Blue, 0);
+                Agent rag = AgentFactory.CreateAgent("Agent", nullZone, null, Colour.Blue, 0);
             }
         }
 

@@ -1,5 +1,9 @@
 ﻿using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility;
+using ALife.Core.Utility.Collections;
+using ALife.Core.Utility.Colours;
+using ALife.Core.Utility.EvoNumbers;
+using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
@@ -44,7 +48,7 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Color colour, double startOrientation)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
 
             Agent agent = new Agent(genusName
@@ -57,13 +61,13 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
             var agentRadius = 5;
             agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
 
-            var agentSenses = ListExtensions.CompileList<SenseCluster>(
+            var agentSenses = ListHelpers.CompileList<SenseCluster>(
                 new[] { CommonSenses.QuadrantEyes(agent, 0) },
                 new EyeCluster(agent, "ColourForward", true
-                    , new ROEvoNumber(startValue: 0,  evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Orientation Around Parent
-                    , new ROEvoNumber(startValue: -8, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Relative Orientation
-                    , new ROEvoNumber(startValue: 80, evoDeltaMax: 3, hardMin: 40,   hardMax: 120)     //Radius
-                    , new ROEvoNumber(startValue: 16, evoDeltaMax: 1, hardMin: 15,   hardMax: 40)),    //Sweep
+                    , new ReadOnlyEvoNumber(startValue: 0,  evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Orientation Around Parent
+                    , new ReadOnlyEvoNumber(startValue: -8, evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Relative Orientation
+                    , new ReadOnlyEvoNumber(startValue: 80, evoDeltaMax: 3, hardMin: 40,   hardMax: 120)     //Radius
+                    , new ReadOnlyEvoNumber(startValue: 16, evoDeltaMax: 1, hardMin: 15,   hardMax: 40)),    //Sweep
                 new GoalSenseCluster(agent, "RabbitSense", TargetRabbit.Shape)
             );
 
@@ -99,7 +103,7 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
                 return;
             }
 
-            var distanceFromRabbit = ExtraMath.DistanceBetweenTwoPoints(me.Shape.CentrePoint, TargetRabbit.Shape.CentrePoint);
+            var distanceFromRabbit = GeometryMath.DistanceBetweenTwoPoints(me.Shape.CentrePoint, TargetRabbit.Shape.CentrePoint);
             if (distanceFromRabbit < me.Statistics["ReproDistance"].Value)
             {
                 var newValue = me.Statistics["ReproDistance"].Value / 2;
@@ -151,7 +155,7 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
             double height = Planet.World.WorldHeight;
             double width = Planet.World.WorldWidth;
 
-            var worldZone = new Zone("WholeWorld", "Random", System.Drawing.Color.Yellow, new Geometry.Shapes.Point(0, 0), width, height);
+            var worldZone = new Zone("WholeWorld", "Random", Colour.Yellow, new Geometry.Shapes.Point(0, 0), width, height);
             Planet.World.AddZone(worldZone);
 
             TargetRabbit = new Rabbit(worldZone);
@@ -159,7 +163,7 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
             var numAgents = 200;
             for (var i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", worldZone, null, System.Drawing.Color.LawnGreen, Planet.World.NumberGen.NextDouble());
+                Agent rag = AgentFactory.CreateAgent("Agent", worldZone, null, Colour.LawnGreen, Planet.World.NumberGen.NextDouble());
             }
 
         }

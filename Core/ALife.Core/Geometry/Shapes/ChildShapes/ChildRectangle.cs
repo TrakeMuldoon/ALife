@@ -1,4 +1,5 @@
-﻿using ALife.Core.Utility;
+﻿using ALife.Core.Utility.Colours;
+using ALife.Core.Utility.Maths;
 using System;
 
 namespace ALife.Core.Geometry.Shapes.ChildShapes
@@ -29,7 +30,7 @@ namespace ALife.Core.Geometry.Shapes.ChildShapes
 
         public ChildRectangle(IShape parent, Angle relativeToParentOrientation, double distFromParentCentre
                                 , double FBLength, double RLWidth)
-            : base(FBLength, RLWidth, System.Drawing.Color.Red)
+            : base(FBLength, RLWidth, Colour.Red)
         {
             RelativeOrientation = relativeToParentOrientation;
             DistFromParentCentre = distFromParentCentre;
@@ -55,7 +56,7 @@ namespace ALife.Core.Geometry.Shapes.ChildShapes
 
         private void GenerateCentrePoint()
         {
-            Geometry.Shapes.Point centre = ExtraMath.TranslateByVector(Parent.CentrePoint, AbsoluteOrientation, DistFromParentCentre + (FBLength / 2));
+            Geometry.Shapes.Point centre = GeometryMath.TranslateByVector(Parent.CentrePoint, AbsoluteOrientation, DistFromParentCentre + (FBLength / 2));
             myCentrePoint = centre;
         }
 

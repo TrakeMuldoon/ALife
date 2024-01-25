@@ -2,10 +2,10 @@
 using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
-using System.Drawing;
 
 namespace ALife.Tests.OldTests
 {
+    //TODO: Rename this folder and namespace.
     internal class ShapeWrapper : IHasShape
     {
         public ShapeWrapper(string name, IShape myShape)

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ALife.Core.Utility.Random;
+using ALife.Core.Utility.Ranges;
+using System;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
-using ALife.Core.Utility.Random;
-using ALife.Core.Utility.Ranges;
 
 namespace ALife.Core.Utility.Colours
 {
@@ -470,7 +470,7 @@ namespace ALife.Core.Utility.Colours
         /// <returns>The TslColour object.</returns>
         internal static TslColour PredefineColour(string hex)
         {
-            ColourHelpers.ConvertHexToTsl(hex, out var tint, out var saturation, out var lightness);
+            ColourHelpers.ConvertHexToTsl(hex, out double tint, out double saturation, out double lightness);
             return new TslColour(255, tint, saturation, lightness, true);
         }
 

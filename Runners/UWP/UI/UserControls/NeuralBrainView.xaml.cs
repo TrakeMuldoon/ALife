@@ -1,5 +1,4 @@
 ﻿using ALife.Core.Geometry;
-using ALife.Core.Utility;
 using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.Brains;
@@ -17,7 +16,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -158,7 +156,7 @@ namespace ALifeUni.UI.UserControls
                 float textY = drawTextUp ? UpstreamCentrePoint.Y - 30 : UpstreamCentrePoint.Y - 50;
                 Vector2 textPoint = new Vector2(textX, textY);
                 CanvasTextFormat ctf = new CanvasTextFormat() { FontSize = 12 };
-                
+
                 DrawBackedText(args, den.TargetNeuron.Value.ToString("0.00"), textPoint, ctf);
 
                 //Move text to below the Neuron, for the DenValue
@@ -224,7 +222,7 @@ namespace ALifeUni.UI.UserControls
             //4 states : First, Middle, Last, First&Last
 
             Vector2 topPoint = new Vector2(point.X - 5, point.Y - 20);
-            if(LastSenseNeurons.Contains(funcNeuron) 
+            if(LastSenseNeurons.Contains(funcNeuron)
                 && FirstSenseNeurons.Contains(funcNeuron))
             {
                 //Handle first and last
@@ -249,7 +247,7 @@ namespace ALifeUni.UI.UserControls
             else
             {
                 //Handle middle
-                topPoint.X -= 8;  topPoint.Y -= 6; 
+                topPoint.X -= 8; topPoint.Y -= 6;
                 args.DrawingSession.DrawText("───", topPoint, Colors.Black, ctf);
             }
 

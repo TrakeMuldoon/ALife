@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using ALife.Core.Utility;
-using ALife.Core.Utility.EvoNumbers;
+﻿using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.Senses;
+using System.Collections.Generic;
 
 namespace ALife.Core.Scenarios.ScenarioHelpers
 {

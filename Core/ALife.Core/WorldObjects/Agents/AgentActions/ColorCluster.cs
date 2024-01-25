@@ -1,5 +1,4 @@
 ﻿using ALife.Core.Geometry.Shapes;
-using System.Drawing;
 
 namespace ALife.Core.WorldObjects.Agents.AgentActions
 {

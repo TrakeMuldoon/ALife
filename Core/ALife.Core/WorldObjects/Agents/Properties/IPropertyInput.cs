@@ -1,5 +1,4 @@
 ﻿using System;
-using ALife.Core.WorldObjects.Agents.Properties;
 
 namespace ALife.Core.WorldObjects.Agents.Properties
 {

@@ -1,7 +1,3 @@
-using System.Text;
-using System;
-using System.Collections.Generic;
-using ALife.Core;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Scenarios;
 using ALife.Core.WorldObjects.Agents;
@@ -10,10 +6,13 @@ using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace ALife.Core.ImportExport
 {
-    public static class AgentCodeSerializer 
+    public static class AgentCodeSerializer
     {
         public static string ExportAgentDefinitionAsCode(Agent theAgent)
         {

@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
-using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;

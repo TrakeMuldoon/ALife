@@ -1,8 +1,8 @@
-﻿using System;
-using System.Threading;
-using ALife.Avalonia.ALifeImplementations;
+﻿using ALife.Avalonia.ALifeImplementations;
 using ALife.Core.ScenarioRunners;
 using ReactiveUI;
+using System;
+using System.Threading;
 
 namespace ALife.Avalonia.ViewModels
 {

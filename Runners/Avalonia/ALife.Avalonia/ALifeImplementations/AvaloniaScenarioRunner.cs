@@ -1,6 +1,6 @@
-﻿using System;
-using ALife.Avalonia.ViewModels;
+﻿using ALife.Avalonia.ViewModels;
 using ALife.Core.ScenarioRunners;
+using System;
 
 namespace ALife.Avalonia.ALifeImplementations
 {

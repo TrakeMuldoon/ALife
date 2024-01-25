@@ -1,5 +1,5 @@
-﻿using System;
-using ALife.Core.Geometry;
+﻿using ALife.Core.Geometry;
+using System;
 
 namespace ALife.Core.Utility.Maths
 {

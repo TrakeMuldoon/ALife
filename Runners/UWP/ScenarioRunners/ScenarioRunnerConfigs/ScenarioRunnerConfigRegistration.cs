@@ -29,9 +29,9 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs
         public ScenarioRunnerConfigRegistration(Type scenarioType)
         {
             ScenarioType = scenarioType;
-            var hasInterface = scenarioType.GetInterfaces().Where(x => x == typeof(IScenario)).FirstOrDefault() != null;
+            bool hasInterface = scenarioType.GetInterfaces().Where(x => x == typeof(IScenario)).FirstOrDefault() != null;
 
-            if (!hasInterface)
+            if(!hasInterface)
             {
                 throw new ArgumentException($"ScenarioType must be a subclass of {nameof(IScenario)}!");
             }

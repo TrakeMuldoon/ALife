@@ -4,7 +4,6 @@ using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using System;
-using Color = System.Drawing.Color;
 
 namespace ALife.Rendering
 {
@@ -21,7 +20,7 @@ namespace ALife.Rendering
         public static void DrawZone(Zone zone, AbstractRenderer renderer)
         {
             FillAARectangle(zone, renderer);
-            
+
             Colour textColor = new Colour(255, zone.Colour.R, zone.Colour.G, zone.Colour.B);
             renderer.DrawText(zone.Name, zone.TopLeft, textColor);
         }

@@ -29,8 +29,8 @@ namespace ALife.Core.Utility
                 return default(T);
             }
 
-            var options = serializerOptions ?? DefaultJsonOptions;
-            var output = JsonSerializer.Deserialize<T>(contents, options);
+            JsonSerializerOptions options = serializerOptions ?? DefaultJsonOptions;
+            T output = JsonSerializer.Deserialize<T>(contents, options);
             return output;
         }
 
@@ -42,7 +42,7 @@ namespace ALife.Core.Utility
         /// <returns>The deserialized object</returns>
         public static T DeserializeFile<T>(string file, JsonSerializerOptions serializerOptions = null)
         {
-            var contents = File.ReadAllText(file);
+            string contents = File.ReadAllText(file);
             return DeserializeContents<T>(contents, serializerOptions);
         }
 
@@ -54,8 +54,8 @@ namespace ALife.Core.Utility
         /// <returns>The serialized object.</returns>
         public static string SerializeObject(object obj, JsonSerializerOptions serializerOptions = null)
         {
-            var options = serializerOptions ?? DefaultJsonOptions;
-            var contents = JsonSerializer.Serialize(obj, options);
+            JsonSerializerOptions options = serializerOptions ?? DefaultJsonOptions;
+            string contents = JsonSerializer.Serialize(obj, options);
             return contents;
         }
 
@@ -67,8 +67,8 @@ namespace ALife.Core.Utility
         /// <param name="serializerOptions">The serializer options to use.</param>
         public static void WriteObjectToFile<T>(T obj, string filePath, JsonSerializerOptions serializerOptions = null)
         {
-            var options = serializerOptions ?? DefaultJsonOptions;
-            var contents = JsonSerializer.Serialize(obj, options);
+            JsonSerializerOptions options = serializerOptions ?? DefaultJsonOptions;
+            string contents = JsonSerializer.Serialize(obj, options);
             File.WriteAllText(filePath, contents);
         }
     }

@@ -20,7 +20,7 @@ namespace ALife.Core.Utility.Collections
             List<T> toReturn = individuals.ToList();
             if(lists != null)
             {
-                foreach(var list in lists)
+                foreach(IEnumerable<T> list in lists)
                 {
                     toReturn.AddRange(list);
                 }

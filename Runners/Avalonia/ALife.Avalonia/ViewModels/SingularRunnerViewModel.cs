@@ -1,5 +1,5 @@
-﻿using System;
-using ReactiveUI;
+﻿using ReactiveUI;
+using System;
 
 namespace ALife.Avalonia.ViewModels
 {

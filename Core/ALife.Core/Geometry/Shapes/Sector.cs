@@ -1,9 +1,7 @@
-﻿using ALife.Core.Utility;
-using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.Maths;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace ALife.Core.Geometry.Shapes
 {
@@ -50,7 +48,7 @@ namespace ALife.Core.Geometry.Shapes
             {
                 if(myBox == null)
                 {
-                    var dummy = BoundingBox;
+                    _ = BoundingBox;
                 }
                 return leftPoint;
             }
@@ -63,7 +61,7 @@ namespace ALife.Core.Geometry.Shapes
             {
                 if(myBox == null)
                 {
-                    var dummy = BoundingBox;
+                    _ = BoundingBox;
                 }
                 return rightPoint;
             }

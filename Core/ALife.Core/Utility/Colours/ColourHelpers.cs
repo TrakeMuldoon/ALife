@@ -1,5 +1,5 @@
-﻿using System;
-using ALife.Core.Utility.Maths;
+﻿using ALife.Core.Utility.Maths;
+using System;
 
 namespace ALife.Core.Utility.Colours
 {
@@ -67,7 +67,7 @@ namespace ALife.Core.Utility.Colours
         /// <param name="lightness">The lightness.</param>
         public static void ConvertHexToHsl(string hex, out int hue, out double saturation, out double lightness)
         {
-            ConvertHexToRgb(hex, out var red, out var green, out var blue);
+            ConvertHexToRgb(hex, out byte red, out byte green, out byte blue);
             ConvertRgbToHsl(red, green, blue, out hue, out saturation, out lightness);
         }
 
@@ -80,7 +80,7 @@ namespace ALife.Core.Utility.Colours
         /// <param name="value">The value.</param>
         public static void ConvertHexToHsv(string hex, out int hue, out double saturation, out double value)
         {
-            ConvertHexToRgb(hex, out var red, out var green, out var blue);
+            ConvertHexToRgb(hex, out byte red, out byte green, out byte blue);
             ConvertRgbToHsv(red, green, blue, out hue, out saturation, out value);
         }
 
@@ -93,7 +93,7 @@ namespace ALife.Core.Utility.Colours
         /// <param name="lightness">The lightness.</param>
         public static void ConvertHexToTsl(string hex, out double tint, out double saturation, out double lightness)
         {
-            ConvertHexToRgb(hex, out var red, out var green, out var blue);
+            ConvertHexToRgb(hex, out byte red, out byte green, out byte blue);
             ConvertRgbToTsl(red, green, blue, out tint, out saturation, out lightness);
         }
 
@@ -377,7 +377,7 @@ namespace ALife.Core.Utility.Colours
         /// <param name="lightness">The lightness.</param>
         public static void ConvertRgbToTsl(byte red, byte green, byte blue, out double tint, out double saturation, out double lightness)
         {
-            if (red + green + blue == 0)
+            if(red + green + blue == 0)
             {
                 tint = 0;
                 saturation = 0;
@@ -397,7 +397,7 @@ namespace ALife.Core.Utility.Colours
             double gPrimeSquared = gPrime * gPrime;
 
             // Calculate the tint
-            if (ApproximatelyEqual(gPrime, 0, 0.0001))
+            if(ApproximatelyEqual(gPrime, 0, 0.0001))
             {
                 tint = 0;
             }
@@ -428,7 +428,7 @@ namespace ALife.Core.Utility.Colours
         /// <param name="blue">The blue channel.</param>
         public static void ConvertTslToRgb(double tint, double saturation, double lightness, out byte red, out byte green, out byte blue)
         {
-            if (ApproximatelyEqual(lightness, 0, 0.0001))
+            if(ApproximatelyEqual(lightness, 0, 0.0001))
             {
                 red = 0;
                 green = 0;
@@ -438,11 +438,11 @@ namespace ALife.Core.Utility.Colours
 
             double rPrime = 0;
             double gPrime = 0;
-            if (IsNegativeZero(tint))
+            if(IsNegativeZero(tint))
             {
                 rPrime = -Math.Sqrt(5d) / 3d * saturation;
             }
-            else if (ApproximatelyEqual(tint, 0, 0.0001))
+            else if(ApproximatelyEqual(tint, 0, 0.0001))
             {
                 rPrime = Math.Sqrt(5d) / 3d * saturation;
             }
@@ -450,7 +450,7 @@ namespace ALife.Core.Utility.Colours
             {
                 double x = -1d / Math.Tan(2 * Math.PI * tint);
                 gPrime = Math.Sqrt(5d / (1 + x * x)) / 3d * saturation;
-                if (tint > 0.5)
+                if(tint > 0.5)
                 {
                     gPrime = -gPrime;
                 }

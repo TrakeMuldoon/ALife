@@ -19,8 +19,8 @@ namespace ALife.Core.ScenarioRunners.ScenarioRunnerConfigs.Configs
         /// <returns>A bool indicating whether or not the simulation should end</returns>
         public override bool ShouldEndSimulationInternal(Action<string> WriteMessage)
         {
-            var population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
-            if (population == 0)
+            int population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
+            if(population == 0)
             {
                 WriteMessage($"|> All Dead{Environment.NewLine}");
                 return true;
@@ -35,10 +35,10 @@ namespace ALife.Core.ScenarioRunners.ScenarioRunnerConfigs.Configs
         /// <param name="WriteMessage">An Action to write a message</param>
         public override void SimulationSuccessInformationInternal(Action<string> WriteMessage)
         {
-            var count = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
+            int count = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
             WriteMessage($"\tSurviving: {count}{Environment.NewLine}");
 
-            if (count > 0)
+            if(count > 0)
             {
                 ScenarioState = ScenarioState.CompleteSuccessful;
             }
@@ -51,7 +51,7 @@ namespace ALife.Core.ScenarioRunners.ScenarioRunnerConfigs.Configs
         /// <param name="WriteMessage">An Action to write a message</param>
         public override void UpdateStatusDetails(Action<string> WriteMessage)
         {
-            var population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
+            int population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
             WriteMessage($"Pop: {population}{Environment.NewLine}");
         }
     }

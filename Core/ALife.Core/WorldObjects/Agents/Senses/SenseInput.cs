@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using ALife.Core.WorldObjects;
-using ALife.Core.WorldObjects.Agents;
-using ALife.Core.WorldObjects.Agents.Senses;
 
 namespace ALife.Core.WorldObjects.Agents.Senses
 {

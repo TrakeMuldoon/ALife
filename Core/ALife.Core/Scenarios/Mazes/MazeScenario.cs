@@ -199,7 +199,8 @@ If an agent reaches the goal line, the simuluation stops."
                 Agent ag2 = AgentFactory.CreateAgent("Agent", red, blue, randomColourB, 0);
                 Agent ag3 = AgentFactory.CreateAgent("Agent", red, blue, randomColourC, 0);
 
-                var weaklings = Planet.World.InactiveObjects.Where((wo) => wo.Shape.CentrePoint.X < 50).ToList();
+                //TODO: This should be rewritten to only capture Agents.
+                List<WorldObject> weaklings = Planet.World.InactiveObjects.Where((wo) => wo.Shape.CentrePoint.X < 50).ToList();
                 foreach(WorldObject wo in weaklings)
                 {
                     Planet.World.InactiveObjects.Remove(wo);

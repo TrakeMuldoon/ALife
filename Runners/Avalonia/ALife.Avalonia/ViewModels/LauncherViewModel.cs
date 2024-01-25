@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using ALife.Core.Scenarios;
+﻿using ALife.Core.Scenarios;
 using ReactiveUI;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ALife.Avalonia.ViewModels
 {

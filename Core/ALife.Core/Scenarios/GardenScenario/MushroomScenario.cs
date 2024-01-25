@@ -1,5 +1,4 @@
-﻿using ALife.Core.Utility;
-using ALife.Core.Utility.Collections;
+﻿using ALife.Core.Utility.Collections;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects;
@@ -11,7 +10,6 @@ using ALife.Core.WorldObjects.Agents.Senses;
 using ALife.Core.WorldObjects.Prebuilt;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace ALife.Core.Scenarios.GardenScenario
 {
@@ -193,10 +191,10 @@ If they eat two green mushrooms, they reproduce."
         private void MutateIntoMushroomGatherer(Agent mg)
         {
             mg.Senses.Add(new EyeCluster(mg, "BackEye", false
-                            , new ROEvoNumber(startValue: 180, evoDeltaMax: 0.2, hardMin: -360, hardMax: 360) //Orientation Around Parent
-                            , new ROEvoNumber(startValue: -90, evoDeltaMax: 0.2, hardMin: -360, hardMax: 360)    //Relative Orientation
-                            , new ROEvoNumber(startValue: 15, evoDeltaMax: 0.2, hardMin: 5, hardMax: 50)        //Radius
-                            , new ROEvoNumber(startValue: 170, evoDeltaMax: 0.2, hardMin: 160, hardMax: 180)));     //Sweep
+                            , new ReadOnlyEvoNumber(startValue: 180, evoDeltaMax: 0.2, hardMin: -360, hardMax: 360) //Orientation Around Parent
+                            , new ReadOnlyEvoNumber(startValue: -90, evoDeltaMax: 0.2, hardMin: -360, hardMax: 360)    //Relative Orientation
+                            , new ReadOnlyEvoNumber(startValue: 15, evoDeltaMax: 0.2, hardMin: 5, hardMax: 50)        //Radius
+                            , new ReadOnlyEvoNumber(startValue: 170, evoDeltaMax: 0.2, hardMin: 160, hardMax: 180)));     //Sweep
             IBrain newBrain = new BehaviourBrain(mg,
                 "IF EyeLeft.IsRed.Value Equals [True] THEN Rotate.TurnRight AT [0.040]",
                 "IF EyeRight.IsRed.Value Equals [True] THEN Rotate.TurnLeft AT [0.060]",

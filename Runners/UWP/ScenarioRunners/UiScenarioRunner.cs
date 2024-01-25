@@ -1,5 +1,5 @@
-﻿using System;
-using ALifeUni.ScenarioRunners.ScenarioLoggers;
+﻿using ALifeUni.ScenarioRunners.ScenarioLoggers;
+using System;
 using Windows.UI.Xaml.Controls;
 
 namespace ALifeUni.ScenarioRunners

@@ -37,7 +37,7 @@ namespace ScenarioRunner
             {
                 selected = Console.ReadLine();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Console.WriteLine(ex);
                 Console.WriteLine("Try Again.");

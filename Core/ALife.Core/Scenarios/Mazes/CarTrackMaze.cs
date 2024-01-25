@@ -1,8 +1,7 @@
 ﻿using ALife.Core.Scenarios.ScenarioHelpers;
-using ALife.Core.Utility;
 using ALife.Core.Utility.Collections;
 using ALife.Core.Utility.Colours;
-using ALife.Core.WorldObjects;
+using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
@@ -10,7 +9,6 @@ using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace ALife.Core.Scenarios.Mazes
 {
@@ -30,8 +28,6 @@ Reaching 3/4 resets death timer, and reproduces twice at the start line.
 Reaching the finish line, reproduces 3 times and then dies... Victorious!"
     )]
     [SuggestedSeed(1832460063, "Fun scenario!!!")]
-    [SuggestedSeed(1776675068, "Purple Wave")]
-    [SuggestedSeed(736342082, "Addorable Ducks")]
     public class CarTrackMaze : IScenario
     {
         /******************/
@@ -55,10 +51,10 @@ Reaching the finish line, reproduces 3 times and then dies... Victorious!"
                     CommonSenses.PairOfEyes(agent)
                 },
                 new EyeCluster(agent, "ShortEye"
-                    , new ROEvoNumber(startValue: 0, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
-                    , new ROEvoNumber(startValue: 0, evoDeltaMax: 5, hardMin: -360, hardMax: 360)   //Relative Orientation
-                    , new ROEvoNumber(startValue: 40, evoDeltaMax: 3, hardMin: 40, hardMax: 120)     //Radius
-                    , new ROEvoNumber(startValue: 30, evoDeltaMax: 1, hardMin: 15, hardMax: 45))    //Sweep
+                    , new ReadOnlyEvoNumber(startValue: 0, evoDeltaMax: 5, hardMin: -360, hardMax: 360)    //Orientation Around Parent
+                    , new ReadOnlyEvoNumber(startValue: 0, evoDeltaMax: 5, hardMin: -360, hardMax: 360)   //Relative Orientation
+                    , new ReadOnlyEvoNumber(startValue: 40, evoDeltaMax: 3, hardMin: 40, hardMax: 120)     //Radius
+                    , new ReadOnlyEvoNumber(startValue: 30, evoDeltaMax: 1, hardMin: 15, hardMax: 45))    //Sweep
             );
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();

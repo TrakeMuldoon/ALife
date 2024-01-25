@@ -15,7 +15,7 @@
         public static string ReplaceAny(this string str, string replacement, params string[] stringsToReplace)
         {
             string output = str;
-            for (var i = 0; i < stringsToReplace.Length; i++)
+            for(int i = 0; i < stringsToReplace.Length; i++)
             {
                 output = output.Replace(stringsToReplace[i], replacement);
             }

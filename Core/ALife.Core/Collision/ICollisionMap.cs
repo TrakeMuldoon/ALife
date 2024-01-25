@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using ALife.Core.Geometry.Shapes;
+﻿using ALife.Core.Geometry.Shapes;
+using System.Collections.Generic;
 
 namespace ALife.Core.Collision
 {

@@ -1,5 +1,4 @@
 ﻿using ALife.Core.WorldObjects.Agents.AgentActions;
-using ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains;
 
 namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
 {

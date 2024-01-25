@@ -1,7 +1,7 @@
-﻿using System;
-using ALife.Avalonia.ViewModels;
+﻿using ALife.Avalonia.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
+using System;
 
 namespace ALife.Avalonia
 {

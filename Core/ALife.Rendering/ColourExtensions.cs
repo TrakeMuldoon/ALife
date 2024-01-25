@@ -1,5 +1,5 @@
-﻿using System.Drawing;
-using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Utility.Colours;
+using System.Drawing;
 
 namespace ALife.Rendering
 {

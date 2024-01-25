@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ALife.Core.WorldObjects.Agents;
-using ALife.Core.WorldObjects.Agents.AgentActions;
 
 namespace ALife.Core.WorldObjects.Agents.AgentActions
 {
@@ -12,7 +10,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
         protected readonly Agent self;
 
         public delegate void InteractionFunction(Agent activeAgent, List<WorldObject> reactiveObjects);
-        
+
         protected readonly InteractionFunction Interaction;
 
         public ActionCluster(Agent self, String name, InteractionFunction interaction)

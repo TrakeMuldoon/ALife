@@ -1,5 +1,4 @@
-﻿using ALife.Core.Utility;
-using ALife.Core.Utility.Maths;
+﻿using ALife.Core.Utility.Maths;
 using System;
 
 namespace ALife.Core.WorldObjects.Agents.AgentActions

@@ -104,7 +104,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             return newEC;
         }
 
-        public Dictionary<string,string> ExportEvoNumbersAsCode()
+        public Dictionary<string, string> ExportEvoNumbersAsCode()
         {
             Dictionary<string, string> properties = new Dictionary<string, string>();
             PopulateCodeDictionary(properties, "OrientationAroundParent", EvoOrientationAroundParent);

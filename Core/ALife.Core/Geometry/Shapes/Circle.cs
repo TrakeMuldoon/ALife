@@ -1,6 +1,4 @@
-﻿using ALife.Core.Utility;
-using ALife.Core.Utility.Colours;
-using System.Drawing;
+﻿using ALife.Core.Utility.Colours;
 
 namespace ALife.Core.Geometry.Shapes
 {

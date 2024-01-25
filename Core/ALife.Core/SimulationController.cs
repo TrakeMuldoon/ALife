@@ -1,5 +1,5 @@
-﻿using System;
-using ALife.Core.Scenarios;
+﻿using ALife.Core.Scenarios;
+using System;
 
 namespace ALife.Core
 {

@@ -1,5 +1,4 @@
 ﻿using ALife.Core.Scenarios.ScenarioHelpers;
-using ALife.Core.Utility;
 using ALife.Core.Utility.Collections;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.EvoNumbers;
@@ -12,7 +11,6 @@ using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
 using ALife.Core.WorldObjects.Prebuilt;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace ALife.Core.Scenarios.GardenScenario
 {
@@ -58,10 +56,10 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
                                     , targetZone);
 
 
-            var agentRadius = 5;
+            int agentRadius = 5;
             agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
 
-            var agentSenses = ListHelpers.CompileList<SenseCluster>(
+            List<SenseCluster> agentSenses = ListHelpers.CompileList<SenseCluster>(
                 new[] { CommonSenses.QuadrantEyes(agent, 0) },
                 new EyeCluster(agent, "ColourForward", true
                     , new ReadOnlyEvoNumber(startValue: 0,  evoDeltaMax: 5, hardMin: -360, hardMax: 360)     //Orientation Around Parent
@@ -71,15 +69,15 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
                 new GoalSenseCluster(agent, "RabbitSense", TargetRabbit.Shape)
             );
 
-            var agentProperties = new List<PropertyInput>();
-            var agentStatistics = new List<StatisticInput>()
+            List<PropertyInput> agentProperties = new List<PropertyInput>();
+            List<StatisticInput> agentStatistics = new List<StatisticInput>()
             {
                 new StatisticInput("Age", 0, int.MaxValue, StatisticInputType.Incrementing),
                 new StatisticInput("RabbitKills", 0, int.MaxValue),
                 new StatisticInput("ReproDistance", 0, int.MaxValue, 64),
             };
 
-            var agentActions = new List<ActionCluster>()
+            List<ActionCluster> agentActions = new List<ActionCluster>()
             {
                 new MoveCluster(agent, CollisionBehaviour),
                 new RotateCluster(agent, CollisionBehaviour)
@@ -97,16 +95,16 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
 
         public virtual void AgentEndOfTurnTriggers(Agent me)
         {
-            if (me.Statistics["Age"].Value > 1000)
+            if(me.Statistics["Age"].Value > 1000)
             {
                 me.Die();
                 return;
             }
 
-            var distanceFromRabbit = GeometryMath.DistanceBetweenTwoPoints(me.Shape.CentrePoint, TargetRabbit.Shape.CentrePoint);
-            if (distanceFromRabbit < me.Statistics["ReproDistance"].Value)
+            double distanceFromRabbit = GeometryMath.DistanceBetweenTwoPoints(me.Shape.CentrePoint, TargetRabbit.Shape.CentrePoint);
+            if(distanceFromRabbit < me.Statistics["ReproDistance"].Value)
             {
-                var newValue = me.Statistics["ReproDistance"].Value / 2;
+                int newValue = me.Statistics["ReproDistance"].Value / 2;
                 me.Statistics["ReproDistance"].ChangePropertyTo(newValue);
                 _ = me.Reproduce();
             }
@@ -118,9 +116,9 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
             {
                 return;
             }
-            foreach (var wo in collisions)
+            foreach(WorldObject wo in collisions)
             {
-                if (wo is Rabbit rab)
+                if(wo is Rabbit rab)
                 {
                     rab.Caught(me);
                     me.Statistics["RabbitKills"].IncreasePropertyBy(1);
@@ -130,7 +128,7 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
                     _ = me.Reproduce();
                     _ = me.Reproduce();
                 }
-                else if (wo is Agent ag)
+                else if(wo is Agent ag)
                 {
                     ag.Die();
                     me.Die();
@@ -159,13 +157,13 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
             double height = Planet.World.WorldHeight;
             double width = Planet.World.WorldWidth;
 
-            var worldZone = new Zone("WholeWorld", "Random", Colour.Yellow, new Geometry.Shapes.Point(0, 0), width, height);
+            Zone worldZone = new Zone("WholeWorld", "Random", Colour.Yellow, new Geometry.Shapes.Point(0, 0), width, height);
             Planet.World.AddZone(worldZone);
 
             TargetRabbit = new Rabbit(worldZone);
 
-            var numAgents = 200;
-            for (var i = 0; i < numAgents; i++)
+            int numAgents = 200;
+            for(int i = 0; i < numAgents; i++)
             {
                 Agent rag = AgentFactory.CreateAgent("Agent", worldZone, null, Colour.LawnGreen, Planet.World.NumberGen.NextDouble());
             }

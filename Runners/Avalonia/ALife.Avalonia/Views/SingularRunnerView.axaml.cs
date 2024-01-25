@@ -1,8 +1,8 @@
-using System;
 using ALife.Avalonia.ViewModels;
 using ALife.Rendering;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using System;
 
 namespace ALife.Avalonia.Views
 {
@@ -143,7 +143,7 @@ namespace ALife.Avalonia.Views
         /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         public void Speed_Button_Click(object sender, RoutedEventArgs args)
         {
-            Button b = sender as Button;
+            Button b = (Button)sender;
             TheWorldCanvas.SetSimulationSpeed(int.Parse(b.Content.ToString()));
             UpdateSimulationSpeedControls();
         }

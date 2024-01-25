@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ALife.Core.Utility.Maths;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.Json.Serialization;
-using ALife.Core.Utility.Maths;
 
 namespace ALife.Core.Utility.Ranges
 {

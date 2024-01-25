@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using ALife.Core;
-using ALife.Core.WorldObjects.Agents;
-using ALife.Core.WorldObjects.Agents.AgentActions;
-using ALife.Core.WorldObjects.Agents.Brains;
+﻿using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains;
 using ALife.Core.WorldObjects.Agents.Senses;
+using System;
+using System.Collections.Generic;
 
 namespace ALife.Core.WorldObjects.Agents.Brains
 {

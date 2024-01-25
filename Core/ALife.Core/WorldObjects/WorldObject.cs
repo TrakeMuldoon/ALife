@@ -3,7 +3,6 @@ using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents.Properties;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using Point = ALife.Core.Geometry.Shapes.Point;
 
 namespace ALife.Core.WorldObjects

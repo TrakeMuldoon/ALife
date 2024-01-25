@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ALife.Core.ScenarioRunners.ScenarioLoggers;
+using ALife.Core.ScenarioRunners.ScenarioRunnerConfigs;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using ALife.Core.ScenarioRunners.ScenarioLoggers;
-using ALife.Core.ScenarioRunners.ScenarioRunnerConfigs;
 
 namespace ALife.Core.ScenarioRunners
 {

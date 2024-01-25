@@ -1,6 +1,4 @@
-﻿using ALife.Core.WorldObjects.Agents;
-using ALife.Core.WorldObjects.Agents.AgentActions;
-using ALife.Core.WorldObjects.Agents.Brains;
+﻿using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Senses;
 
 namespace ALife.Core.WorldObjects.Agents.Brains

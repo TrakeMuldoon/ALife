@@ -18,8 +18,8 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs
         /// <returns>A bool indicating whether or not the simulation should end</returns>
         public bool ShouldEndSimulation(Action<string> WriteMessage)
         {
-            var result = ShouldEndSimulationInternal(WriteMessage);
-            if (result)
+            bool result = ShouldEndSimulationInternal(WriteMessage);
+            if(result)
             {
                 ScenarioState = ScenarioState.Complete;
             }

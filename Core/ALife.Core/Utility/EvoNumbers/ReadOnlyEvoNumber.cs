@@ -1,7 +1,7 @@
-﻿using System;
+﻿using ALife.Core.Utility.Numerics;
+using System;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
-using ALife.Core.Utility.Numerics;
 
 namespace ALife.Core.Utility.EvoNumbers
 {
@@ -334,7 +334,7 @@ namespace ALife.Core.Utility.EvoNumbers
         /// </returns>
         public override int GetHashCode()
         {
-            var hashCode = Value.GetHashCode() ^ ValueDeltaMaximum.GetHashCode() ^ ValueMaximum.GetHashCode() ^ ValueMinimum.GetHashCode();
+            int hashCode = Value.GetHashCode() ^ ValueDeltaMaximum.GetHashCode() ^ ValueMaximum.GetHashCode() ^ ValueMinimum.GetHashCode();
             return hashCode;
         }
 

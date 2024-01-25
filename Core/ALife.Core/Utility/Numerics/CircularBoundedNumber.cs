@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
+﻿using ALife.Core.Utility.Ranges;
+using System.Diagnostics;
 using System.Text.Json.Serialization;
-using ALife.Core.Utility.Ranges;
 
 namespace ALife.Core.Utility.Numerics
 {
@@ -149,7 +149,7 @@ namespace ALife.Core.Utility.Numerics
         /// </returns>
         public override int GetHashCode()
         {
-            var hashCode = Value.GetHashCode() + _range.GetHashCode();
+            int hashCode = Value.GetHashCode() + _range.GetHashCode();
             return hashCode;
         }
 

@@ -9,7 +9,7 @@ namespace ALife.Core.Utility.Maths
     /// </summary>
     public static class ExtraMath
     {
-        
+
         /// <summary>
         /// Applies a circular clamp to the value (i.e. if the value is outside the range, it wraps around).
         /// </summary>
@@ -26,13 +26,13 @@ namespace ALife.Core.Utility.Maths
             {
                 (actualMin, actualMax) = (max, min);
             }
-            if (value >= actualMin && value < actualMax)
+            if(value >= actualMin && value < actualMax)
             {
                 return value;
             }
 
             Int16 negativeCorrection = 0;
-            if (min < 0)
+            if(min < 0)
             {
                 negativeCorrection = min;
                 actualMin = 0;
@@ -42,9 +42,9 @@ namespace ALife.Core.Utility.Maths
 
             Int16 difference = (Int16)(actualMax - actualMin);
             Int16 remainder = (Int16)(actualValue % difference);
-            
+
             Int16 actualRemainder = remainder;
-            if (remainder < 0)
+            if(remainder < 0)
             {
                 actualRemainder = (Int16)(remainder + difference);
             }
@@ -126,7 +126,7 @@ namespace ALife.Core.Utility.Maths
             Int16 delta = (Int16)(max - min);
             return delta;
         }
-        
+
         /// <summary>
         /// Applies a circular clamp to the value (i.e. if the value is outside the range, it wraps around).
         /// </summary>
@@ -143,13 +143,13 @@ namespace ALife.Core.Utility.Maths
             {
                 (actualMin, actualMax) = (max, min);
             }
-            if (value >= actualMin && value < actualMax)
+            if(value >= actualMin && value < actualMax)
             {
                 return value;
             }
 
             Int32 negativeCorrection = 0;
-            if (min < 0)
+            if(min < 0)
             {
                 negativeCorrection = min;
                 actualMin = 0;
@@ -159,9 +159,9 @@ namespace ALife.Core.Utility.Maths
 
             Int32 difference = (Int32)(actualMax - actualMin);
             Int32 remainder = (Int32)(actualValue % difference);
-            
+
             Int32 actualRemainder = remainder;
-            if (remainder < 0)
+            if(remainder < 0)
             {
                 actualRemainder = (Int32)(remainder + difference);
             }
@@ -243,7 +243,7 @@ namespace ALife.Core.Utility.Maths
             Int32 delta = (Int32)(max - min);
             return delta;
         }
-        
+
         /// <summary>
         /// Applies a circular clamp to the value (i.e. if the value is outside the range, it wraps around).
         /// </summary>
@@ -260,13 +260,13 @@ namespace ALife.Core.Utility.Maths
             {
                 (actualMin, actualMax) = (max, min);
             }
-            if (value >= actualMin && value < actualMax)
+            if(value >= actualMin && value < actualMax)
             {
                 return value;
             }
 
             Int64 negativeCorrection = 0;
-            if (min < 0)
+            if(min < 0)
             {
                 negativeCorrection = min;
                 actualMin = 0;
@@ -276,9 +276,9 @@ namespace ALife.Core.Utility.Maths
 
             Int64 difference = (Int64)(actualMax - actualMin);
             Int64 remainder = (Int64)(actualValue % difference);
-            
+
             Int64 actualRemainder = remainder;
-            if (remainder < 0)
+            if(remainder < 0)
             {
                 actualRemainder = (Int64)(remainder + difference);
             }
@@ -360,7 +360,7 @@ namespace ALife.Core.Utility.Maths
             Int64 delta = (Int64)(max - min);
             return delta;
         }
-        
+
         /// <summary>
         /// Applies a circular clamp to the value (i.e. if the value is outside the range, it wraps around).
         /// </summary>
@@ -377,13 +377,13 @@ namespace ALife.Core.Utility.Maths
             {
                 (actualMin, actualMax) = (max, min);
             }
-            if (value >= actualMin && value < actualMax)
+            if(value >= actualMin && value < actualMax)
             {
                 return value;
             }
 
             UInt16 negativeCorrection = 0;
-            if (min < 0)
+            if(min < 0)
             {
                 negativeCorrection = min;
                 actualMin = 0;
@@ -393,9 +393,9 @@ namespace ALife.Core.Utility.Maths
 
             UInt16 difference = (UInt16)(actualMax - actualMin);
             UInt16 remainder = (UInt16)(actualValue % difference);
-            
+
             UInt16 actualRemainder = remainder;
-            if (remainder < 0)
+            if(remainder < 0)
             {
                 actualRemainder = (UInt16)(remainder + difference);
             }
@@ -477,7 +477,7 @@ namespace ALife.Core.Utility.Maths
             UInt16 delta = (UInt16)(max - min);
             return delta;
         }
-        
+
         /// <summary>
         /// Applies a circular clamp to the value (i.e. if the value is outside the range, it wraps around).
         /// </summary>
@@ -494,13 +494,13 @@ namespace ALife.Core.Utility.Maths
             {
                 (actualMin, actualMax) = (max, min);
             }
-            if (value >= actualMin && value < actualMax)
+            if(value >= actualMin && value < actualMax)
             {
                 return value;
             }
 
             UInt32 negativeCorrection = 0;
-            if (min < 0)
+            if(min < 0)
             {
                 negativeCorrection = min;
                 actualMin = 0;
@@ -510,9 +510,9 @@ namespace ALife.Core.Utility.Maths
 
             UInt32 difference = (UInt32)(actualMax - actualMin);
             UInt32 remainder = (UInt32)(actualValue % difference);
-            
+
             UInt32 actualRemainder = remainder;
-            if (remainder < 0)
+            if(remainder < 0)
             {
                 actualRemainder = (UInt32)(remainder + difference);
             }
@@ -594,7 +594,7 @@ namespace ALife.Core.Utility.Maths
             UInt32 delta = (UInt32)(max - min);
             return delta;
         }
-        
+
         /// <summary>
         /// Applies a circular clamp to the value (i.e. if the value is outside the range, it wraps around).
         /// </summary>
@@ -611,13 +611,13 @@ namespace ALife.Core.Utility.Maths
             {
                 (actualMin, actualMax) = (max, min);
             }
-            if (value >= actualMin && value < actualMax)
+            if(value >= actualMin && value < actualMax)
             {
                 return value;
             }
 
             UInt64 negativeCorrection = 0;
-            if (min < 0)
+            if(min < 0)
             {
                 negativeCorrection = min;
                 actualMin = 0;
@@ -627,9 +627,9 @@ namespace ALife.Core.Utility.Maths
 
             UInt64 difference = (UInt64)(actualMax - actualMin);
             UInt64 remainder = (UInt64)(actualValue % difference);
-            
+
             UInt64 actualRemainder = remainder;
-            if (remainder < 0)
+            if(remainder < 0)
             {
                 actualRemainder = (UInt64)(remainder + difference);
             }
@@ -711,7 +711,7 @@ namespace ALife.Core.Utility.Maths
             UInt64 delta = (UInt64)(max - min);
             return delta;
         }
-        
+
         /// <summary>
         /// Applies a circular clamp to the value (i.e. if the value is outside the range, it wraps around).
         /// </summary>
@@ -728,13 +728,13 @@ namespace ALife.Core.Utility.Maths
             {
                 (actualMin, actualMax) = (max, min);
             }
-            if (value >= actualMin && value < actualMax)
+            if(value >= actualMin && value < actualMax)
             {
                 return value;
             }
 
             Double negativeCorrection = 0;
-            if (min < 0)
+            if(min < 0)
             {
                 negativeCorrection = min;
                 actualMin = 0;
@@ -744,9 +744,9 @@ namespace ALife.Core.Utility.Maths
 
             Double difference = (Double)(actualMax - actualMin);
             Double remainder = (Double)(actualValue % difference);
-            
+
             Double actualRemainder = remainder;
-            if (remainder < 0)
+            if(remainder < 0)
             {
                 actualRemainder = (Double)(remainder + difference);
             }
@@ -828,7 +828,7 @@ namespace ALife.Core.Utility.Maths
             Double delta = (Double)(max - min);
             return delta;
         }
-        
+
         /// <summary>
         /// Applies a circular clamp to the value (i.e. if the value is outside the range, it wraps around).
         /// </summary>
@@ -845,13 +845,13 @@ namespace ALife.Core.Utility.Maths
             {
                 (actualMin, actualMax) = (max, min);
             }
-            if (value >= actualMin && value < actualMax)
+            if(value >= actualMin && value < actualMax)
             {
                 return value;
             }
 
             Single negativeCorrection = 0;
-            if (min < 0)
+            if(min < 0)
             {
                 negativeCorrection = min;
                 actualMin = 0;
@@ -861,9 +861,9 @@ namespace ALife.Core.Utility.Maths
 
             Single difference = (Single)(actualMax - actualMin);
             Single remainder = (Single)(actualValue % difference);
-            
+
             Single actualRemainder = remainder;
-            if (remainder < 0)
+            if(remainder < 0)
             {
                 actualRemainder = (Single)(remainder + difference);
             }
@@ -945,7 +945,7 @@ namespace ALife.Core.Utility.Maths
             Single delta = (Single)(max - min);
             return delta;
         }
-        
+
         /// <summary>
         /// Applies a circular clamp to the value (i.e. if the value is outside the range, it wraps around).
         /// </summary>
@@ -962,13 +962,13 @@ namespace ALife.Core.Utility.Maths
             {
                 (actualMin, actualMax) = (max, min);
             }
-            if (value >= actualMin && value < actualMax)
+            if(value >= actualMin && value < actualMax)
             {
                 return value;
             }
 
             Decimal negativeCorrection = 0;
-            if (min < 0)
+            if(min < 0)
             {
                 negativeCorrection = min;
                 actualMin = 0;
@@ -978,9 +978,9 @@ namespace ALife.Core.Utility.Maths
 
             Decimal difference = (Decimal)(actualMax - actualMin);
             Decimal remainder = (Decimal)(actualValue % difference);
-            
+
             Decimal actualRemainder = remainder;
-            if (remainder < 0)
+            if(remainder < 0)
             {
                 actualRemainder = (Decimal)(remainder + difference);
             }
@@ -1062,7 +1062,7 @@ namespace ALife.Core.Utility.Maths
             Decimal delta = (Decimal)(max - min);
             return delta;
         }
-        
+
         /// <summary>
         /// Applies a circular clamp to the value (i.e. if the value is outside the range, it wraps around).
         /// </summary>
@@ -1079,13 +1079,13 @@ namespace ALife.Core.Utility.Maths
             {
                 (actualMin, actualMax) = (max, min);
             }
-            if (value >= actualMin && value < actualMax)
+            if(value >= actualMin && value < actualMax)
             {
                 return value;
             }
 
             Byte negativeCorrection = 0;
-            if (min < 0)
+            if(min < 0)
             {
                 negativeCorrection = min;
                 actualMin = 0;
@@ -1095,9 +1095,9 @@ namespace ALife.Core.Utility.Maths
 
             Byte difference = (Byte)(actualMax - actualMin);
             Byte remainder = (Byte)(actualValue % difference);
-            
+
             Byte actualRemainder = remainder;
-            if (remainder < 0)
+            if(remainder < 0)
             {
                 actualRemainder = (Byte)(remainder + difference);
             }
@@ -1179,5 +1179,5 @@ namespace ALife.Core.Utility.Maths
             Byte delta = (Byte)(max - min);
             return delta;
         }
-            }
+    }
 }

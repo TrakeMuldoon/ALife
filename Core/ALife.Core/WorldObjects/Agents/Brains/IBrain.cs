@@ -1,7 +1,4 @@
-﻿using ALife.Core.WorldObjects.Agents;
-using ALife.Core.WorldObjects.Agents.Brains;
-
-namespace ALife.Core.WorldObjects.Agents.Brains
+﻿namespace ALife.Core.WorldObjects.Agents.Brains
 {
     public interface IBrain
     {

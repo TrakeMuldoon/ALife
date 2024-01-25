@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Drawing;
 
 namespace ALife.Core.WorldObjects.Agents
 {
@@ -175,7 +174,7 @@ namespace ALife.Core.WorldObjects.Agents
             //The shape has moved, so its bounding box needs to be reset
             Shape.Reset();
         }
-        
+
         public void InternalAgentUpkeep()
         {
             //Reset all the senses.

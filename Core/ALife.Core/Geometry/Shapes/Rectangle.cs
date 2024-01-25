@@ -1,5 +1,4 @@
-﻿using ALife.Core.Utility;
-using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.Maths;
 using System;
 

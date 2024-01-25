@@ -1,9 +1,6 @@
-﻿using System;
+﻿using ALife.Core.Utility.Maths;
+using System;
 using System.Runtime.InteropServices;
-using ALife.Core.Utility;
-using ALife.Core.Utility.Maths;
-using ALife.Core.WorldObjects.Agents;
-using ALife.Core.WorldObjects.Agents.Properties;
 
 namespace ALife.Core.WorldObjects.Agents.Properties
 {
@@ -21,7 +18,7 @@ namespace ALife.Core.WorldObjects.Agents.Properties
         public StatisticInputType Disposition;
         public int StartValue;
 
-        public StatisticInput(string name, int statisticMinimum, int statisticMaximum, [Optional] int startValue) 
+        public StatisticInput(string name, int statisticMinimum, int statisticMaximum, [Optional] int startValue)
             : this(name, statisticMinimum, statisticMaximum, StatisticInputType.Manual, startValue)
         {
         }

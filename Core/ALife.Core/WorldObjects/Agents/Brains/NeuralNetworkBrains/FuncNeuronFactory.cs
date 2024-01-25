@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using ALife.Core.WorldObjects.Agents;
-using ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains;
-using ALife.Core.WorldObjects.Agents.Senses;
+﻿using ALife.Core.WorldObjects.Agents.Senses;
+using System.Collections.Generic;
 
 namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
 {

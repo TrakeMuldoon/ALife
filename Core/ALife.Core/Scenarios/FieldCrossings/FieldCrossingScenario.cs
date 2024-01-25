@@ -1,6 +1,5 @@
 ﻿using ALife.Core.Collision;
 using ALife.Core.Scenarios.ScenarioHelpers;
-using ALife.Core.Utility;
 using ALife.Core.Utility.Collections;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
@@ -12,7 +11,6 @@ using ALife.Core.WorldObjects.Agents.Senses;
 using ALife.Core.WorldObjects.Prebuilt;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace ALife.Core.Scenarios.FieldCrossings
 {

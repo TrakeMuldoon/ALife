@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ALife.Core;
-using ALife.Core.WorldObjects.Agents;
-using ALife.Core.WorldObjects.Agents.AgentActions;
-using ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains;
+﻿using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains.TypedClasses;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains
 {
     public class BehaviourCabinet
     {
         //TODO: Note that the dictionaries are unordered, which could cause reproducability problems.
-        Dictionary<String, BehaviourInput> StringToBI = new Dictionary<string, BehaviourInput>();
+        Dictionary<string, BehaviourInput> StringToBI = new Dictionary<string, BehaviourInput>();
         Dictionary<Type, List<BehaviourInput>> TypeToListBI = new Dictionary<Type, List<BehaviourInput>>();
-        Dictionary<String, ActionPart> FullStringToActionPart = new Dictionary<string, ActionPart>();
+        Dictionary<string, ActionPart> FullStringToActionPart = new Dictionary<string, ActionPart>();
         int totalInputs = 0;
         Agent myParent;
 

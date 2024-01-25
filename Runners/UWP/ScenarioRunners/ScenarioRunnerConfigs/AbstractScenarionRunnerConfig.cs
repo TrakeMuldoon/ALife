@@ -19,7 +19,7 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs
         public bool ShouldEndSimulation(Action<string> WriteMessage)
         {
             var result = ShouldEndSimulationInternal(WriteMessage);
-            if (result)
+            if(result)
             {
                 ScenarioState = ScenarioState.Complete;
             }

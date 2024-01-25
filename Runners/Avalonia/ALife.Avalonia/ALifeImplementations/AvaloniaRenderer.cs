@@ -1,17 +1,15 @@
-﻿using System;
-using ALife.Core.Geometry.Shapes;
+﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Rendering;
 using Avalonia;
 using Avalonia.Media;
-using Point = ALife.Core.Geometry.Shapes.Point;
+using System;
+using System.Globalization;
 using AvColor = Avalonia.Media.Color;
 using AvPoint = Avalonia.Point;
-using AvColors = Avalonia.Media.Colors;
 using AvSize = Avalonia.Size;
-using System.Globalization;
-using System.Drawing;
-using ALife.Core.Utility.Colours;
+using Point = ALife.Core.Geometry.Shapes.Point;
 
 namespace ALife.Avalonia.ALifeImplementations
 {

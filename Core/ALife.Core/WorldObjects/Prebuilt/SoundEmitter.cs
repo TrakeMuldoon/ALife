@@ -1,11 +1,6 @@
 ﻿using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALife.Core.WorldObjects.Prebuilt
 {

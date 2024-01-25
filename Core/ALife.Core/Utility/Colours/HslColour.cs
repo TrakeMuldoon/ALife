@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ALife.Core.Utility.Random;
+using ALife.Core.Utility.Ranges;
+using System;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
-using ALife.Core.Utility.Random;
-using ALife.Core.Utility.Ranges;
 
 namespace ALife.Core.Utility.Colours
 {

@@ -1,10 +1,10 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using ALife.Avalonia.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ALife.Avalonia.Controls.SingularRunnerControls
 {

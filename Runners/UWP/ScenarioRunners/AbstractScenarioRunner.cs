@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using ALife.Core;
+﻿using ALife.Core;
 using ALife.Core.Scenarios;
 using ALifeUni.ScenarioRunners.ScenarioLoggers;
 using ALifeUni.ScenarioRunners.ScenarioRunnerConfigs;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ALifeUni.ScenarioRunners
 {
@@ -155,9 +155,9 @@ namespace ALifeUni.ScenarioRunners
         {
             cancellationTokenSource.Cancel();
             stopRunner = true;
-            if (wait)
+            if(wait)
             {
-                while (!IsStopped)
+                while(!IsStopped)
                 {
                     Thread.Sleep(100);
                 }
@@ -172,9 +172,9 @@ namespace ALifeUni.ScenarioRunners
         /// </param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if(!disposedValue)
             {
-                if (disposing)
+                if(disposing)
                 {
                     StopRunner(true);
                 }
@@ -200,27 +200,27 @@ namespace ALifeUni.ScenarioRunners
 
             do
             {
-                if (StartingSeed != null)
+                if(StartingSeed != null)
                 {
                     ScenarioExecutor(StartingSeed.Value, "Executing Single Scenario", ct);
                 }
                 else
                 {
-                    var r = new Random();
-                    for (var i = 0; i < NumberSeedsToExecute; i++)
+                    Random r = new Random();
+                    for(int i = 0; i < NumberSeedsToExecute; i++)
                     {
-                        var message = $"Scenario Execution #{ExecutionNumber++}/{NumberSeedsToExecute} -> ";
-                        var seedValue = r.Next();
+                        string message = $"Scenario Execution #{ExecutionNumber++}/{NumberSeedsToExecute} -> ";
+                        int seedValue = r.Next();
                         ScenarioExecutor(seedValue, message, ct);
 
-                        if (ct.IsCancellationRequested)
+                        if(ct.IsCancellationRequested)
                         {
                             ct.ThrowIfCancellationRequested();
                         }
                     }
                 }
                 shouldStop = ShouldStopRunner() || stopRunner;
-            } while (!shouldStop);
+            } while(!shouldStop);
         }
 
         /// <summary>
@@ -239,8 +239,8 @@ namespace ALifeUni.ScenarioRunners
             Logger.WriteNewLine(1);
 
             var scenarioDetails = ScenarioRegister.GetScenarioDetails(scenario.GetType());
-            var height = scenario.WorldHeight;
-            var width = scenario.WorldWidth;
+            int height = scenario.WorldHeight;
+            int width = scenario.WorldWidth;
 
             //Write Header
             var topLine = $"Seed: {seedValue}, Name: {scenarioDetails.Name}, Height:{height}, Width:{width}, Max Turns: {TotalTurns}";
@@ -254,26 +254,26 @@ namespace ALifeUni.ScenarioRunners
             string error = null;
             try
             {
-                var maxTurns = TotalTurns.ToString().Length;
+                int maxTurns = TotalTurns.ToString().Length;
                 var turnStringFormat = $"D{maxTurns}";
                 var initialTurnSpaces = new string(' ', maxTurns - 1);
                 Logger.WriteLine($"Each . represents {TurnBatch} turns");
                 Logger.Write($"{initialTurnSpaces}[0]");
-                for (var i = 0; i < TotalTurns / TurnBatch; i++)
+                for(var i = 0; i < TotalTurns / TurnBatch; i++)
                 {
-                    if (ct.IsCancellationRequested)
+                    if(ct.IsCancellationRequested)
                     {
                         ct.ThrowIfCancellationRequested();
                     }
                     Planet.World.ExecuteManyTurns(TurnBatch);
                     Logger.Write(".");
 
-                    if (config.ShouldEndSimulation(Logger.Write))
+                    if(config.ShouldEndSimulation(Logger.Write))
                     {
                         break;
                     }
 
-                    if ((i + 1) % (UpdateFrequency / TurnBatch) == 0)
+                    if((i + 1) % (UpdateFrequency / TurnBatch) == 0)
                     {
                         var elapsed = DateTime.Now - start;
                         var stats = $"[{Planet.World.Turns.ToString(turnStringFormat)}]\tElapsed: {elapsed:mm\\:ss\\.ff} TPS: {i * TurnBatch / elapsed.TotalSeconds:0.000} || ";
@@ -284,7 +284,7 @@ namespace ALifeUni.ScenarioRunners
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 error = ex.Message;
                 var stack = ex.StackTrace.Split(Environment.NewLine);
@@ -295,14 +295,14 @@ namespace ALifeUni.ScenarioRunners
 
             Logger.WriteLine($"\tTotal Time: {durationString}\tTurns:{Planet.World.Turns}");
 
-            if (!string.IsNullOrEmpty(error))
+            if(!string.IsNullOrEmpty(error))
             {
                 Logger.WriteLine($"\tERROR: {error}");
             }
             else
             {
                 config.SimulationSuccessInformation(Logger.Write);
-                if (config.ScenarioState == ScenarioState.CompleteSuccessful)
+                if(config.ScenarioState == ScenarioState.CompleteSuccessful)
                 {
                     ScenarioSeedLogger.WriteLine(seedValue);
                 }

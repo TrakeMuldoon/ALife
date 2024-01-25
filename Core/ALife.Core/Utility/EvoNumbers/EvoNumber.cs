@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
-using System.Text.Json.Serialization;
-using ALife.Core.Utility.Maths;
+﻿using ALife.Core.Utility.Maths;
 using ALife.Core.Utility.Numerics;
+using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 namespace ALife.Core.Utility.EvoNumbers
 {

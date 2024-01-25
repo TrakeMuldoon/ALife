@@ -1,5 +1,4 @@
 ﻿using ALife.Core.Scenarios.ScenarioHelpers;
-using ALife.Core.Utility;
 using ALife.Core.Utility.Collections;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
@@ -10,7 +9,6 @@ using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
 namespace ALife.Core.Scenarios.Mazes

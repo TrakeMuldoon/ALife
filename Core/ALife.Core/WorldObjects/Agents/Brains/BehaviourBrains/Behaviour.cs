@@ -1,17 +1,15 @@
+using ALife.Core.WorldObjects.Agents.AgentActions;
+using ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains.TypedClasses;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using ALife.Core;
-using ALife.Core.WorldObjects.Agents.AgentActions;
-using ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains;
-using ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains.TypedClasses;
 
 namespace ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains
 {
     public class Behaviour
     {
-        public readonly String AsEnglish;
+        public readonly string AsEnglish;
         public bool PassedThisTurn;
         public readonly List<BehaviourCondition> Conditions = new List<BehaviourCondition>();
         public ActionPart SuccessAction;

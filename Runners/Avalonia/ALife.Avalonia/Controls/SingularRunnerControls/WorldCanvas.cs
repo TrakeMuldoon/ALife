@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ALife.Avalonia.ALifeImplementations;
+﻿using ALife.Avalonia.ALifeImplementations;
 using ALife.Avalonia.ViewModels;
 using ALife.Core;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
-using ALPoint = ALife.Core.Geometry.Shapes.Point;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Rendering;
 using Avalonia;
@@ -14,7 +10,11 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Threading;
-using ALife.Core.Utility.Colours;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using ALPoint = ALife.Core.Geometry.Shapes.Point;
 
 namespace ALife.Avalonia.Controls.SingularRunnerControls
 {

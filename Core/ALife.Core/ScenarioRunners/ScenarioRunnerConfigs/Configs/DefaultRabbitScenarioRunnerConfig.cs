@@ -23,7 +23,7 @@ namespace ALife.Core.ScenarioRunners.ScenarioRunnerConfigs.Configs
         public override bool ShouldEndSimulationInternal(Action<string> WriteMessage)
         {
             var population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
-            if (population == 1)
+            if(population == 1)
             {
                 WriteMessage($"|> Only the Rabbit Remains!{Environment.NewLine}");
                 return true;
@@ -43,7 +43,7 @@ namespace ALife.Core.ScenarioRunners.ScenarioRunnerConfigs.Configs
 
             var r = Planet.World.AllActiveObjects.OfType<Rabbit>().First();
 
-            if (count > 0 && r.Statistics["Caught"].Value > 0)
+            if(count > 0 && r.Statistics["Caught"].Value > 0)
             {
                 ScenarioState = ScenarioState.CompleteSuccessful;
             }

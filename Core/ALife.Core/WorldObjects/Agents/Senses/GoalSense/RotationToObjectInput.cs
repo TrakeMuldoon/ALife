@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using ALife.Core.WorldObjects;
+﻿using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents.Senses;
+using System;
+using System.Collections.Generic;
 
 namespace ALife.Core.WorldObjects.Agents.Senses.GoalSense
 {

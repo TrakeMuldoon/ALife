@@ -1,7 +1,5 @@
 ﻿using System;
-using ALife.Core;
-using ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains;
-using ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains.TypedClasses;
+
 
 namespace ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains.TypedClasses
 {

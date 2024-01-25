@@ -1,5 +1,4 @@
 ﻿using ALife.Core.Collision;
-using ALife.Core.Utility;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects;
@@ -11,11 +10,6 @@ using ALife.Core.WorldObjects.Agents.Senses;
 using ALife.Core.WorldObjects.Prebuilt;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALife.Core.Scenarios.GardenScenario
 {
@@ -122,7 +116,7 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
             collider.MoveObject(winner);
         }
 
-        private void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
             me.Die();
         }

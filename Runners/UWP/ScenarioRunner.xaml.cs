@@ -1,6 +1,6 @@
-﻿using System;
+﻿using ALifeUni.ScenarioRunners;
+using System;
 using System.Threading;
-using ALifeUni.ScenarioRunners;
 using Windows.UI.Xaml.Controls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -42,7 +42,7 @@ namespace ALifeUni
 
             ConsoleText.Text = string.Empty;
             SeedText.Text = string.Empty;
-            if (AutoStartScenarioRunner)
+            if(AutoStartScenarioRunner)
             {
                 StartScenarioRunner();
             }
@@ -65,28 +65,28 @@ namespace ALifeUni
         private (int, int, int, int) GetOrResetScenarioParameters(bool reset = false)
         {
             // get the number of scenarios we want to execute
-            if (!int.TryParse(NumberExecutions.Text, out var seedCount) || reset)
+            if(!int.TryParse(NumberExecutions.Text, out var seedCount) || reset)
             {
                 seedCount = ScenarioRunners.Constants.DEFAULT_NUMBER_SEEDS_EXECUTED;
                 NumberExecutions.Text = seedCount.ToString();
             }
 
             // get the number of turns we want per scenario
-            if (!int.TryParse(NumberTurns.Text, out var maxTurns) || reset)
+            if(!int.TryParse(NumberTurns.Text, out var maxTurns) || reset)
             {
                 maxTurns = ScenarioRunners.Constants.DEFAULT_TOTAL_TURNS;
                 NumberTurns.Text = maxTurns.ToString();
             }
 
             // get the number of turns we want per scenario
-            if (!int.TryParse(TurnBatch.Text, out var turnBatch) || reset)
+            if(!int.TryParse(TurnBatch.Text, out var turnBatch) || reset)
             {
                 turnBatch = ScenarioRunners.Constants.DEFAULT_TURN_BATCH;
                 TurnBatch.Text = turnBatch.ToString();
             }
 
             // get the number of turns we want per scenario
-            if (!int.TryParse(UpdateFrequency.Text, out var updateFrequency) || reset)
+            if(!int.TryParse(UpdateFrequency.Text, out var updateFrequency) || reset)
             {
                 updateFrequency = ScenarioRunners.Constants.DEFAULT_UPDATE_FREQUENCY;
                 UpdateFrequency.Text = updateFrequency.ToString();
@@ -102,7 +102,7 @@ namespace ALifeUni
         /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private void Restart_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!runner.IsStopped)
+            if(!runner.IsStopped)
             {
                 StopRunner();
             }
@@ -119,7 +119,7 @@ namespace ALifeUni
         /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private void ReturntoLauncher_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if ((bool)!runner?.IsStopped)
+            if((bool)!runner?.IsStopped)
             {
                 StopRunner();
             }
@@ -133,7 +133,7 @@ namespace ALifeUni
         /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private void Start_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!runner?.IsStopped ?? true)
+            if(!runner?.IsStopped ?? true)
             {
                 StartScenarioRunner();
             }
@@ -164,7 +164,7 @@ namespace ALifeUni
         /// </summary>
         private void StopRunner()
         {
-            if (runner != null)
+            if(runner != null)
             {
                 runner.StopRunner(true);
                 // add some extra sleep time to make sure we're done writing to the console

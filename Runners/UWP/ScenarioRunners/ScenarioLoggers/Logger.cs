@@ -60,7 +60,7 @@ namespace ALifeUni.ScenarioRunners.ScenarioLoggers
         /// </summary>
         public void StartLogger(CancellationToken token)
         {
-            if (IsRunning)
+            if(IsRunning)
             {
                 StopLogger(true);
             }
@@ -79,7 +79,7 @@ namespace ALifeUni.ScenarioRunners.ScenarioLoggers
             //shouldStop = true;
             messageQueue.Clear();
 
-            while (IsRunning && wait)
+            while(IsRunning && wait)
             {
                 Thread.Sleep(50);
             }
@@ -91,7 +91,7 @@ namespace ALifeUni.ScenarioRunners.ScenarioLoggers
         /// <param name="message">The message.</param>
         public void Write(string message)
         {
-            if (IsRunning)
+            if(IsRunning)
             {
                 messageQueue.Enqueue(message);
             }
@@ -111,16 +111,16 @@ namespace ALifeUni.ScenarioRunners.ScenarioLoggers
         /// </summary>
         public void WriteController(CancellationToken ct)
         {
-            while (true)
+            while(true)
             {
-                if (ct.IsCancellationRequested)
+                if(ct.IsCancellationRequested)
                 {
                     ct.ThrowIfCancellationRequested();
                 }
                 var sb = new StringBuilder();
-                for (var i = 0; i < MaxMessages; i++)
+                for(var i = 0; i < MaxMessages; i++)
                 {
-                    if (messageQueue.TryDequeue(out var message))
+                    if(messageQueue.TryDequeue(out var message))
                     {
                         _ = sb.Append(message);
                     }
@@ -131,7 +131,7 @@ namespace ALifeUni.ScenarioRunners.ScenarioLoggers
                 }
 
                 var output = sb.ToString();
-                if (!string.IsNullOrWhiteSpace(output))
+                if(!string.IsNullOrWhiteSpace(output))
                 {
                     WriteInternal(output);
                 }
@@ -166,7 +166,7 @@ namespace ALifeUni.ScenarioRunners.ScenarioLoggers
         /// <param name="numLines">The number lines.</param>
         public void WriteLineSeperator(int numLines)
         {
-            for (var i = 0; i < numLines; i++)
+            for(int i = 0; i < numLines; i++)
             {
                 Write($"{Constants.LINE_SEPERATOR}{Environment.NewLine}");
             }
@@ -178,7 +178,7 @@ namespace ALifeUni.ScenarioRunners.ScenarioLoggers
         /// <param name="numLines">The number lines.</param>
         public void WriteNewLine(int numLines)
         {
-            for (var i = 0; i < numLines; i++)
+            for(int i = 0; i < numLines; i++)
             {
                 Write($" {Environment.NewLine}");
             }
@@ -192,9 +192,9 @@ namespace ALifeUni.ScenarioRunners.ScenarioLoggers
         /// </param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if(!disposedValue)
             {
-                if (disposing)
+                if(disposing)
                 {
                     StopLogger(true);
                 }

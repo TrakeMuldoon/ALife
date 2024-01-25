@@ -1,8 +1,8 @@
-using System;
 using ALife.Avalonia.ViewModels;
 using ALife.Rendering;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using System;
 
 namespace ALife.Avalonia.Views
 {

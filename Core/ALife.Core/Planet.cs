@@ -1,6 +1,5 @@
 ﻿using ALife.Core.Collision;
 using ALife.Core.Scenarios;
-using ALife.Core.Utility;
 using ALife.Core.Utility.Random;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;

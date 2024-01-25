@@ -5,7 +5,6 @@ using ALife.Core.Geometry.Shapes;
 using ALife.Core.WorldObjects;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

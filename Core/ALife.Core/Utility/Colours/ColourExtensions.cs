@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace ALife.Core.Utility.Colours
+﻿namespace ALife.Core.Utility.Colours
 {
     /// <summary>
     /// Various extension methods for the IColour interface.

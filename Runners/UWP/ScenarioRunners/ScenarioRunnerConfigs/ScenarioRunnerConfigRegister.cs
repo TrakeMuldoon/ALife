@@ -1,9 +1,9 @@
-﻿using System;
+﻿using ALife.Core.Scenarios;
+using ALifeUni.ScenarioRunners.ScenarioRunnerConfigs.Configs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using ALife.Core.Scenarios;
-using ALifeUni.ScenarioRunners.ScenarioRunnerConfigs.Configs;
 
 namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs
 {
@@ -30,11 +30,11 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs
             var potentialConfigs = typesInAssembly.Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(AbstractScenarionRunnerConfig)) && x.IsDefined(typeof(ScenarioRunnerConfigRegistration), false)).ToList();
 
             // Loop through and register them
-            foreach (var config in potentialConfigs)
+            foreach(var config in potentialConfigs)
             {
                 var registrationAttribute = (ScenarioRunnerConfigRegistration)config.GetCustomAttribute(typeof(ScenarioRunnerConfigRegistration), false);
 
-                if (!scenarioConfigs.ContainsKey(registrationAttribute.ScenarioType))
+                if(!scenarioConfigs.ContainsKey(registrationAttribute.ScenarioType))
                 {
                     scenarioConfigs.Add(registrationAttribute.ScenarioType, new Dictionary<string, Type>());
                 }
@@ -49,14 +49,14 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs
         /// <returns>The default scenario config, or null.</returns>
         public static AbstractScenarionRunnerConfig GetDefaultConfigForScenarioType(Type scenarioType)
         {
-            if (!IsInstanceOfInterface(scenarioType, typeof(IScenario)))
+            if(!IsInstanceOfInterface(scenarioType, typeof(IScenario)))
             {
                 throw new ArgumentException($"ScenarioType must be a subclass of {nameof(IScenario)}!");
             }
 
             var configs = GetConfigsForScenarioType(scenarioType);
 
-            if (configs.Count == 0 || !configs.ContainsKey(Constants.DEFAULT_SCENARIO_RUNNER_CONFIG_NAME))
+            if(configs.Count == 0 || !configs.ContainsKey(Constants.DEFAULT_SCENARIO_RUNNER_CONFIG_NAME))
             {
                 return new DefaultScenarioRunnerConfig();
             }
@@ -72,14 +72,14 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs
         /// <returns>A dictioanry of the registered configs.</returns>
         private static Dictionary<string, Type> GetConfigsForScenarioType(Type scenarioType)
         {
-            if (!IsInstanceOfInterface(scenarioType, typeof(IScenario)))
+            if(!IsInstanceOfInterface(scenarioType, typeof(IScenario)))
             {
                 throw new ArgumentException($"ScenarioType must be a subclass of {nameof(IScenario)}!");
             }
 
             var configs = new Dictionary<string, Type>();
 
-            if (scenarioConfigs.ContainsKey(scenarioType))
+            if(scenarioConfigs.ContainsKey(scenarioType))
             {
                 configs = scenarioConfigs[scenarioType];
             }

@@ -1,5 +1,5 @@
-﻿using System;
-using ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains;
+﻿using ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains;
+using System;
 
 namespace ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains
 {

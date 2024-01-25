@@ -1,5 +1,5 @@
-﻿using System;
-using ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains;
+﻿using ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains;
+using System;
 
 namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
 {

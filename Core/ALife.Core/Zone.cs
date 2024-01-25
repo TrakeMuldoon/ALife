@@ -3,7 +3,6 @@ using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using System;
 using System.Diagnostics;
-using System.Drawing;
 
 namespace ALife.Core
 {

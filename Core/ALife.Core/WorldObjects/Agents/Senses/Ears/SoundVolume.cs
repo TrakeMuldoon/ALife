@@ -1,12 +1,8 @@
 ﻿using ALife.Core.Geometry.Shapes;
-using ALife.Core.Utility;
 using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Prebuilt;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ALife.Core.WorldObjects.Agents.Senses.Ears
 {
@@ -29,7 +25,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses.Ears
             //This approximates the fact that many small sounds can add up to being cacophonous, but they don't drown out the loud sound if there is one.
 
             double max = double.MinValue;
-            foreach(WorldObject wo in collisions) 
+            foreach(WorldObject wo in collisions)
             {
                 SoundWave sw = wo as SoundWave;
                 if(sw is null)
@@ -45,9 +41,9 @@ namespace ALife.Core.WorldObjects.Agents.Senses.Ears
                         throw new Exception("Soundwaves are the only supported things for ears to hear at the moment.");
                     }
                 }
-                if(sw.Intensity > max) 
+                if(sw.Intensity > max)
                 {
-                    max = sw.Intensity; 
+                    max = sw.Intensity;
                 }
             }
 

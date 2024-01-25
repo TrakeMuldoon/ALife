@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
+﻿using ALife.Core.Utility.Maths;
+using System.Diagnostics;
 using System.Text.Json.Serialization;
-using ALife.Core.Utility.Maths;
 
 namespace ALife.Core.Utility.Numerics
 {

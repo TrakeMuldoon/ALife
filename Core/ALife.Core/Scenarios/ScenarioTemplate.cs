@@ -3,23 +3,22 @@ using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace ALife.Core.Scenarios
 {
-/*
-    [ScenarioRegistration("[ScenarioName]",
-description:
-    @"
-[Scenario description]
+    /*
+        [ScenarioRegistration("[ScenarioName]",
+    description:
+        @"
+    [Scenario description]
 
-Failure cases:
-[What kills an agent]
+    Failure cases:
+    [What kills an agent]
 
-Success Cases:
-[What causes an agent to reproduce]
-")]
-*/
+    Success Cases:
+    [What causes an agent to reproduce]
+    ")]
+    */
     //[SuggestedSeed([SeedNumber], "Seed Description")]
     public class ScenarioTemplate : IScenario
     {

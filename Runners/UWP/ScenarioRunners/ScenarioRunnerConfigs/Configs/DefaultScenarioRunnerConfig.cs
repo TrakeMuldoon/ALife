@@ -21,7 +21,7 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs.Configs
         public override bool ShouldEndSimulationInternal(Action<string> WriteMessage)
         {
             var population = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
-            if (population == 0)
+            if(population == 0)
             {
                 WriteMessage($"|> All Dead{Environment.NewLine}");
                 return true;
@@ -39,7 +39,7 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs.Configs
             var count = Planet.World.AllActiveObjects.OfType<Agent>().Where(wo => wo.Alive).Count();
             WriteMessage($"\tSurviving: {count}{Environment.NewLine}");
 
-            if (count > 0)
+            if(count > 0)
             {
                 ScenarioState = ScenarioState.CompleteSuccessful;
             }

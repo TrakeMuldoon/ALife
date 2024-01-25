@@ -23,7 +23,7 @@ namespace ALifeUni
             // See ALife.Scenarios.ScenarioFactory.cs for a list of scenarios To skip straight to a scenario and skip
             // the launcher, set the AutoStartScenario in the ScenarioRegistration attribute for a scenario to true.
             var startingScenario = ScenarioRegister.GetAutoStartScenario();
-            if (startingScenario != null)
+            if(startingScenario != null)
             {
                 MainPage.ScenarioName = startingScenario.Value.Item1;
                 MainPage.ScenarioSeed = startingScenario.Value.Item2;
@@ -38,13 +38,13 @@ namespace ALifeUni
                 ScenariosList.Items.Clear();
 
                 var sortedNameList = new List<string>();
-                foreach (var scenarioName in ScenarioRegister.Scenarios)
+                foreach(string scenarioName in ScenarioRegister.Scenarios)
                 {
                     sortedNameList.Add(scenarioName);
                 }
                 sortedNameList.Sort();
 
-                foreach (var scenarioName in sortedNameList)
+                foreach(string scenarioName in sortedNameList)
                 {
                     ScenariosList.Items.Add(scenarioName);
                 }
@@ -58,7 +58,7 @@ namespace ALifeUni
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void LaunchScenarioRunner_Click(object sender, RoutedEventArgs e)
         {
-            if (ScenariosList.SelectedItem is string scenarioName)
+            if(ScenariosList.SelectedItem is string scenarioName)
             {
                 var autoStart = AutoStartScenarioRunner?.IsChecked ?? true;
                 ScenarioRunner.ScenarioName = scenarioName;
@@ -75,7 +75,7 @@ namespace ALifeUni
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void LaunchScenarioUI_Click(object sender, RoutedEventArgs e)
         {
-            if (ScenariosList.SelectedItem is string scenarioName)
+            if(ScenariosList.SelectedItem is string scenarioName)
             {
                 MainPage.ScenarioName = scenarioName;
                 MainPage.ScenarioSeed = int.TryParse(SeedText.Text, out var seed) ? seed : (int?)null;
@@ -94,17 +94,17 @@ namespace ALifeUni
             DescriptionText.Text = string.Empty;
             SeedSuggestions.Items.Clear();
             currentSeedSuggestions.Clear();
-            if (ScenariosList.SelectedItem is string scenarioName)
+            if(ScenariosList.SelectedItem is string scenarioName)
             {
-                var scenarioDetails = ScenarioRegister.GetScenarioDetails(scenarioName);
+                ScenarioRegistration scenarioDetails = ScenarioRegister.GetScenarioDetails(scenarioName);
                 DescriptionText.Text = scenarioDetails.Description;
 
                 var suggestions = ScenarioRegister.GetSuggestions(scenarioName);
-                if (suggestions.Count > 0)
+                if(suggestions.Count > 0)
                 {
-                    var maxSeedLength = suggestions.Select(x => x.Key).Max().ToString().Length;
+                    int maxSeedLength = suggestions.Select(x => x.Key).Max().ToString().Length;
 
-                    foreach (var suggestion in suggestions)
+                    foreach(var suggestion in suggestions)
                     {
                         var seedDescription = $"{suggestion.Key.ToString($"D{maxSeedLength}")} : {suggestion.Value}";
                         currentSeedSuggestions.Add(seedDescription, (suggestion.Key, suggestion.Value));
@@ -122,9 +122,9 @@ namespace ALifeUni
         private void SeedSuggestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SeedText.Text = StartingSeedText;
-            if (SeedSuggestions.SelectedItem is string seedDescription)
+            if(SeedSuggestions.SelectedItem is string seedDescription)
             {
-                if (currentSeedSuggestions.TryGetValue(seedDescription, out var seedDetails))
+                if(currentSeedSuggestions.TryGetValue(seedDescription, out var seedDetails))
                 {
                     SeedText.Text = seedDetails.Item1.ToString();
                 }

@@ -1,6 +1,5 @@
 ﻿using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
-using ALife.Core.Utility;
 using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects;
 using System;

@@ -1,9 +1,7 @@
 ﻿using ALife.Core.Scenarios.ScenarioHelpers;
-using ALife.Core.Utility;
 using ALife.Core.Utility.Collections;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.EvoNumbers;
-using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
@@ -11,7 +9,6 @@ using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace ALife.Core.Scenarios.Mazes
 {
@@ -31,8 +28,6 @@ Reaching 3/4 resets death timer, and reproduces twice at the start line.
 Reaching the finish line, reproduces 3 times and then dies... Victorious!"
     )]
     [SuggestedSeed(1832460063, "Fun scenario!!!")]
-    [SuggestedSeed(1776675068, "Purple Wave")]
-    [SuggestedSeed(736342082, "Addorable Ducks")]
     public class CarTrackMaze : IScenario
     {
         /******************/

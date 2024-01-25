@@ -7,7 +7,6 @@ using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace ALife.Core.Scenarios.TestScenarios
 {

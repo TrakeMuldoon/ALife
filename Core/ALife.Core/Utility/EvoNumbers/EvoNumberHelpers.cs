@@ -1,6 +1,6 @@
-﻿using System;
-using ALife.Core.Utility.Maths;
+﻿using ALife.Core.Utility.Maths;
 using ALife.Core.Utility.Random;
+using System;
 
 namespace ALife.Core.Utility.EvoNumbers
 {

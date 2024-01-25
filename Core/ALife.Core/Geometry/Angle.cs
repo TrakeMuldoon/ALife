@@ -1,7 +1,6 @@
-﻿
-using System;
+﻿using System;
 using System.Diagnostics;
-using ALife.Core.Geometry;
+
 
 namespace ALife.Core.Geometry
 {

@@ -1,9 +1,6 @@
-﻿using System;
+﻿using ALife.Core.WorldObjects.Agents.AgentActions;
+using System;
 using System.Collections.Generic;
-using ALife.Core.WorldObjects.Agents;
-using ALife.Core.WorldObjects.Agents.AgentActions;
-using ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains;
-using ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains.TypedClasses;
 
 namespace ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains.TypedClasses
 {
@@ -94,13 +91,13 @@ namespace ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains.TypedClasses
             switch(b1)
             {
                 case BehaviourInput<bool> boo1:     bool bval = bool.Parse(con);
-                                                    return new BehaviourInput<bool>(untrimmedConstant, () => bval);
+                    return new BehaviourInput<bool>(untrimmedConstant, () => bval);
                 case BehaviourInput<double> dob1:   double dval = double.Parse(con);
-                                                    return new BehaviourInput<double>(untrimmedConstant, () => dval);
+                    return new BehaviourInput<double>(untrimmedConstant, () => dval);
                 case BehaviourInput<int> int1:      int ival = int.Parse(con);
-                                                    return new BehaviourInput<int>(untrimmedConstant, () => ival);
+                    return new BehaviourInput<int>(untrimmedConstant, () => ival);
                 case BehaviourInput<string> str1:   string sval = untrimmedConstant;
-                                                    return new BehaviourInput<string>(untrimmedConstant, () => sval);
+                    return new BehaviourInput<string>(untrimmedConstant, () => sval);
                 default: throw new NotImplementedException("unimiplemented condition type: " + b1.GetContainedType());
             }
         }

@@ -168,10 +168,10 @@ namespace ALife.Core.Collision
             int yMinBucket = (int)(queryBox.MinY) / GridSize;
 
             //Clamp Them
-            xMaxBucket = ExtraMaths.Clamp(xMaxBucket, 0, objectGrid.GetLength(0) - 1);
-            xMinBucket = ExtraMaths.Clamp(xMinBucket, 0, objectGrid.GetLength(0) - 1);
-            yMaxBucket = ExtraMaths.Clamp(yMaxBucket, 0, objectGrid.GetLength(1) - 1);
-            yMinBucket = ExtraMaths.Clamp(yMinBucket, 0, objectGrid.GetLength(1) - 1);
+            xMaxBucket = ExtraMath.Clamp(xMaxBucket, 0, objectGrid.GetLength(0) - 1);
+            xMinBucket = ExtraMath.Clamp(xMinBucket, 0, objectGrid.GetLength(0) - 1);
+            yMaxBucket = ExtraMath.Clamp(yMaxBucket, 0, objectGrid.GetLength(1) - 1);
+            yMinBucket = ExtraMath.Clamp(yMinBucket, 0, objectGrid.GetLength(1) - 1);
 
             //This creates a list of grid buckets that the bounding box falls within
             HashSet<T> potentialCollisions = new HashSet<T>();

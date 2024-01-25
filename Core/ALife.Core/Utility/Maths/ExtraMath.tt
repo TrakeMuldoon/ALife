@@ -17,7 +17,7 @@ namespace ALife.Core.Utility.Maths
     /// Provides extra mathematical functions.
     /// TODO: This should use generic math instead of being generated, but we're stuck with .NET Standard 2 for now...
     /// </summary>
-    public static class ExtraMaths
+    public static class ExtraMath
     {
         <# foreach (var type in types) { 
         #>

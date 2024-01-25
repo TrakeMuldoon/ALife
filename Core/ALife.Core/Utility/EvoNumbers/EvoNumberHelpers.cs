@@ -49,7 +49,7 @@ namespace ALife.Core.Utility.EvoNumbers
             //               - deltaMax;
 
             double moddedValue = current + delta;
-            double clampedValue = ExtraMaths.Clamp(moddedValue, hardMin, hardMax);
+            double clampedValue = ExtraMath.Clamp(moddedValue, hardMin, hardMax);
             return clampedValue;
         }
     }

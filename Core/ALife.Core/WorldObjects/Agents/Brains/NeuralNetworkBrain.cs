@@ -137,7 +137,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
                 double rawMod = Planet.World.NumberGen.NextDouble();
                 double modification = ((rawMod * 2) - 1) * MutabilityRate;
                 val += modification;
-                val = ExtraMaths.Clamp(val, -1, 1);
+                val = ExtraMath.Clamp(val, -1, 1);
             }
             return val;
         }

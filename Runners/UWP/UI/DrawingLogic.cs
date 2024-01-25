@@ -140,8 +140,8 @@ namespace ALifeUni.UI
 
         private static void DrawOrientation(CanvasAnimatedDrawEventArgs args, IShape shape)
         {
-            Windows.Foundation.Point ori = GeometryMaths.TranslateByVector(shape.CentrePoint, shape.Orientation, 4).ToUwpPoint();
-            Windows.Foundation.Point ori2 = GeometryMaths.TranslateByVector(shape.CentrePoint, shape.Orientation, 1).ToUwpPoint();
+            Windows.Foundation.Point ori = GeometryMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 4).ToUwpPoint();
+            Windows.Foundation.Point ori2 = GeometryMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 1).ToUwpPoint();
             args.DrawingSession.DrawLine(ori.ToVector2(), ori2.ToVector2(), Colors.DarkRed, 1);
         }
 

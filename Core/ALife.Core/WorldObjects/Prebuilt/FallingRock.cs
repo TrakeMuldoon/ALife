@@ -48,7 +48,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
             Geometry.Shapes.Point origin = new Geometry.Shapes.Point(Shape.CentrePoint.X, Shape.CentrePoint.Y);
             Angle turnRotation = new Angle(2);
 
-            Geometry.Shapes.Point newCentre = GeometryMaths.TranslateByVector(Shape.CentrePoint, Shape.Orientation, 10);
+            Geometry.Shapes.Point newCentre = GeometryMath.TranslateByVector(Shape.CentrePoint, Shape.Orientation, 10);
             Shape.CentrePoint = newCentre;
 
             Shape.Orientation += turnRotation;

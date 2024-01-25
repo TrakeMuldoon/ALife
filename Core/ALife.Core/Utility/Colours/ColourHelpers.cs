@@ -53,9 +53,9 @@ namespace ALife.Core.Utility.Colours
             int g = (hexColor >> 8) & 0xFF;
             int b = hexColor & 0xFF;
 
-            red = (byte)ExtraMaths.Clamp(r, 0, 255);
-            green = (byte)ExtraMaths.Clamp(g, 0, 255);
-            blue = (byte)ExtraMaths.Clamp(b, 0, 255);
+            red = (byte)ExtraMath.Clamp(r, 0, 255);
+            green = (byte)ExtraMath.Clamp(g, 0, 255);
+            blue = (byte)ExtraMath.Clamp(b, 0, 255);
         }
 
         /// <summary>
@@ -108,9 +108,9 @@ namespace ALife.Core.Utility.Colours
         /// <param name="blue">The blue channel.</param>
         public static void ConvertHslToRgb(int hue, double saturation, double lightness, out byte red, out byte green, out byte blue)
         {
-            double actualHue = ExtraMaths.CircularClamp(hue, 0, 360) / 360d;
-            double actualSaturation = ExtraMaths.Clamp(saturation, 0, 1);
-            double actualLightness = ExtraMaths.Clamp(lightness, 0, 1);
+            double actualHue = ExtraMath.CircularClamp(hue, 0, 360) / 360d;
+            double actualSaturation = ExtraMath.Clamp(saturation, 0, 1);
+            double actualLightness = ExtraMath.Clamp(lightness, 0, 1);
 
             double r = 0;
             double g = 0;
@@ -156,9 +156,9 @@ namespace ALife.Core.Utility.Colours
         /// <param name="blue">The blue channel.</param>
         public static void ConvertHsvToRgb(int hue, double saturation, double value, out byte red, out byte green, out byte blue)
         {
-            double actualHue = ExtraMaths.CircularClamp(hue, 0, 360);
-            double actualSaturation = ExtraMaths.Clamp(saturation, 0, 1);
-            double actualValue = ExtraMaths.Clamp(value, 0, 1);
+            double actualHue = ExtraMath.CircularClamp(hue, 0, 360);
+            double actualSaturation = ExtraMath.Clamp(saturation, 0, 1);
+            double actualValue = ExtraMath.Clamp(value, 0, 1);
 
             double r = 0;
             double g = 0;
@@ -259,8 +259,8 @@ namespace ALife.Core.Utility.Colours
             double g = green / 255d;
             double b = blue / 255d;
 
-            double min = ExtraMaths.Minimum(r, g, b);
-            double max = ExtraMaths.Maximum(r, g, b);
+            double min = ExtraMath.Minimum(r, g, b);
+            double max = ExtraMath.Maximum(r, g, b);
             double delta = max - min;
             double minMaxSum = min + max;
             lightness = minMaxSum / 2d;
@@ -329,8 +329,8 @@ namespace ALife.Core.Utility.Colours
             double g = green / 255d;
             double b = blue / 255d;
 
-            double min = ExtraMaths.Minimum(r, g, b);
-            double max = ExtraMaths.Maximum(r, g, b);
+            double min = ExtraMath.Minimum(r, g, b);
+            double max = ExtraMath.Maximum(r, g, b);
             double delta = max - min;
             value = max;
 

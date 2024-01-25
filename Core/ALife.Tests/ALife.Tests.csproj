@@ -21,17 +21,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Utility\Maths\TestExtraMaths.cs">
+    <None Include="Utility\Maths\TestExtraMath.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>TestExtraMaths.tt</DependentUpon>
+      <DependentUpon>TestExtraMath.tt</DependentUpon>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Utility\Maths\TestExtraMaths.tt">
+    <None Update="Utility\Maths\TestExtraMath.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TestExtraMaths.cs</LastGenOutput>
+      <LastGenOutput>TestExtraMath.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -40,6 +40,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Utility\Maths\TestExtraMath.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TestExtraMath.tt</DependentUpon>
+    </Compile>
     <Compile Update="Utility\Maths\TestExtraMaths.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

@@ -57,8 +57,8 @@ namespace ALife.Rendering
 
         public void DrawOrientation(IShape shape)
         {
-            Point ori = GeometryMaths.TranslateByVector(shape.CentrePoint, shape.Orientation, 4);
-            Point ori2 = GeometryMaths.TranslateByVector(shape.CentrePoint, shape.Orientation, 1);
+            Point ori = GeometryMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 4);
+            Point ori2 = GeometryMath.TranslateByVector(shape.CentrePoint, shape.Orientation, 1);
             DrawLine(ori, ori2, Colour.DarkRed, 0.4);
         }
     }

@@ -82,14 +82,14 @@ namespace ALife.Core.WorldObjects.Agents.Properties
 
         public void ChangePropertyTo(int value)
         {
-            Value = ExtraMaths.Clamp(value, StatisticMinimum, StatisticMaximum);
+            Value = ExtraMath.Clamp(value, StatisticMinimum, StatisticMaximum);
             modified = true;
         }
 
         public override int Value
         {
             get { return base.Value; }
-            set { base.Value = ExtraMaths.Clamp(value, StatisticMinimum, StatisticMaximum); }
+            set { base.Value = ExtraMath.Clamp(value, StatisticMinimum, StatisticMaximum); }
 
         }
 

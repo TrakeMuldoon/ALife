@@ -104,7 +104,7 @@ namespace ALife.Core.Utility.EvoNumbers
         public double Value
         {
             get => _value;
-            set => _value = ExtraMaths.DeltaClamp(value, _value, -ValueDeltaMaximum, ValueDeltaMaximum, ValueMinimum.Value, ValueMaximum.Value);
+            set => _value = ExtraMath.DeltaClamp(value, _value, -ValueDeltaMaximum, ValueDeltaMaximum, ValueMinimum.Value, ValueMaximum.Value);
         }
 
         /// <summary>

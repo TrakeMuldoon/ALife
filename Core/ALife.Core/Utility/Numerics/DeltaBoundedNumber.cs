@@ -86,7 +86,7 @@ namespace ALife.Core.Utility.Numerics
         {
             get => _value;
             // _value cannot change by more than the deltaMax
-            set => _value = ExtraMaths.DeltaClamp(value, _value, -DeltaMaxValue, DeltaMaxValue, DeltaAbsoluteMinimumValue, DeltaAbsoluteMaximumValue);
+            set => _value = ExtraMath.DeltaClamp(value, _value, -DeltaMaxValue, DeltaMaxValue, DeltaAbsoluteMinimumValue, DeltaAbsoluteMaximumValue);
         }
 
         /// <summary>

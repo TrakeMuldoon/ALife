@@ -15,10 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Utility\Maths\ExtraMaths.cs">
+    <None Include="Utility\Maths\ExtraMath.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ExtraMaths.tt</DependentUpon>
+      <DependentUpon>ExtraMath.tt</DependentUpon>
     </None>
   </ItemGroup>
 
@@ -29,9 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Utility\Maths\ExtraMaths.tt">
+    <None Update="Utility\Maths\ExtraMath.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ExtraMaths.cs</LastGenOutput>
+      <LastGenOutput>ExtraMath.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -45,10 +45,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ExtraMath.tt</DependentUpon>
     </Compile>
-    <Compile Update="Utility\Maths\ExtraMaths.cs">
+    <Compile Update="Utility\Maths\ExtraMath.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ExtraMaths.tt</DependentUpon>
+      <DependentUpon>ExtraMath.tt</DependentUpon>
     </Compile>
     <Compile Update="Utility\Math\ExtraMathTemplate.cs">
       <DesignTime>True</DesignTime>

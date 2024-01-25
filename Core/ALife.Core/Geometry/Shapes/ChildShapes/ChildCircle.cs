@@ -15,7 +15,7 @@ namespace ALife.Core.Geometry.Shapes.ChildShapes
             get
             {
                 Angle startAngle = Parent.Orientation + OrientationAroundParent;
-                return GeometryMaths.TranslateByVector(Parent.CentrePoint, startAngle, DistFromParentCentre);
+                return GeometryMath.TranslateByVector(Parent.CentrePoint, startAngle, DistFromParentCentre);
             }
             set
             {

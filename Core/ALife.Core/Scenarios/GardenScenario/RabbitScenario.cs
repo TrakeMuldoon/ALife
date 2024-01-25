@@ -103,7 +103,7 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
                 return;
             }
 
-            var distanceFromRabbit = GeometryMaths.DistanceBetweenTwoPoints(me.Shape.CentrePoint, TargetRabbit.Shape.CentrePoint);
+            var distanceFromRabbit = GeometryMath.DistanceBetweenTwoPoints(me.Shape.CentrePoint, TargetRabbit.Shape.CentrePoint);
             if (distanceFromRabbit < me.Statistics["ReproDistance"].Value)
             {
                 var newValue = me.Statistics["ReproDistance"].Value / 2;

@@ -114,12 +114,12 @@ namespace ALife.Core.Geometry.Shapes
             yValues.Add(myOriginPoint.Y);
 
             //Get the points that are the edges of the sector
-            leftPoint = GeometryMaths.TranslateByVector(myOriginPoint, absOrientationAngle, Radius);
+            leftPoint = GeometryMath.TranslateByVector(myOriginPoint, absOrientationAngle, Radius);
             xValues.Add(leftPoint.X);
             yValues.Add(leftPoint.Y);
 
             Angle endAngle = absOrientationAngle + SweepAngle;
-            rightPoint = GeometryMaths.TranslateByVector(myOriginPoint, endAngle, Radius);
+            rightPoint = GeometryMath.TranslateByVector(myOriginPoint, endAngle, Radius);
             xValues.Add(rightPoint.X);
             yValues.Add(rightPoint.Y);
 
@@ -175,10 +175,10 @@ namespace ALife.Core.Geometry.Shapes
                 }
             }
 
-            double minX = ExtraMaths.Minimum(xValues.ToArray());
-            double minY = ExtraMaths.Minimum(yValues.ToArray());
-            double maxX = ExtraMaths.Maximum(xValues.ToArray());
-            double maxY = ExtraMaths.Maximum(yValues.ToArray());
+            double minX = ExtraMath.Minimum(xValues.ToArray());
+            double minY = ExtraMath.Minimum(yValues.ToArray());
+            double maxX = ExtraMath.Maximum(xValues.ToArray());
+            double maxY = ExtraMath.Maximum(yValues.ToArray());
 
             BoundingBox sectorBB = new BoundingBox(minX, minY, maxX, maxY);
             myBox = sectorBB;

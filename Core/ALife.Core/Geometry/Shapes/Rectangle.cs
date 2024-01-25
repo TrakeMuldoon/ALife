@@ -140,16 +140,16 @@ namespace ALife.Core.Geometry.Shapes
             }
 
             Point tempPoint = CentrePoint;
-            tempPoint = GeometryMaths.TranslateByVector(tempPoint, Orientation, FBLength / 2);
-            topLeft = GeometryMaths.TranslateByVector(tempPoint, Orientation.Radians - (Math.PI / 2), RLWidth / 2);
-            topRight = GeometryMaths.TranslateByVector(topLeft, Orientation.Radians + (Math.PI / 2), RLWidth);
-            bottomRight = GeometryMaths.TranslateByVector(topRight, Orientation.Radians + Math.PI, FBLength);
-            bottomLeft = GeometryMaths.TranslateByVector(bottomRight, Orientation.Radians + (Math.PI * 3 / 2), RLWidth);
+            tempPoint = GeometryMath.TranslateByVector(tempPoint, Orientation, FBLength / 2);
+            topLeft = GeometryMath.TranslateByVector(tempPoint, Orientation.Radians - (Math.PI / 2), RLWidth / 2);
+            topRight = GeometryMath.TranslateByVector(topLeft, Orientation.Radians + (Math.PI / 2), RLWidth);
+            bottomRight = GeometryMath.TranslateByVector(topRight, Orientation.Radians + Math.PI, FBLength);
+            bottomLeft = GeometryMath.TranslateByVector(bottomRight, Orientation.Radians + (Math.PI * 3 / 2), RLWidth);
 
-            double maxX = ExtraMaths.Maximum(topLeft.X, topRight.X, bottomLeft.X, bottomRight.X);
-            double minX = ExtraMaths.Minimum(topLeft.X, topRight.X, bottomLeft.X, bottomRight.X);
-            double maxY = ExtraMaths.Maximum(topLeft.Y, topRight.Y, bottomLeft.Y, bottomRight.Y);
-            double minY = ExtraMaths.Minimum(topLeft.Y, topRight.Y, bottomLeft.Y, bottomRight.Y);
+            double maxX = ExtraMath.Maximum(topLeft.X, topRight.X, bottomLeft.X, bottomRight.X);
+            double minX = ExtraMath.Minimum(topLeft.X, topRight.X, bottomLeft.X, bottomRight.X);
+            double maxY = ExtraMath.Maximum(topLeft.Y, topRight.Y, bottomLeft.Y, bottomRight.Y);
+            double minY = ExtraMath.Minimum(topLeft.Y, topRight.Y, bottomLeft.Y, bottomRight.Y);
 
             BoundingBox bb = new BoundingBox(minX, minY, maxX, maxY);
             myBox = bb;

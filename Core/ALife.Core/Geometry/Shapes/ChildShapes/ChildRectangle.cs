@@ -56,7 +56,7 @@ namespace ALife.Core.Geometry.Shapes.ChildShapes
 
         private void GenerateCentrePoint()
         {
-            Geometry.Shapes.Point centre = GeometryMaths.TranslateByVector(Parent.CentrePoint, AbsoluteOrientation, DistFromParentCentre + (FBLength / 2));
+            Geometry.Shapes.Point centre = GeometryMath.TranslateByVector(Parent.CentrePoint, AbsoluteOrientation, DistFromParentCentre + (FBLength / 2));
             myCentrePoint = centre;
         }
 

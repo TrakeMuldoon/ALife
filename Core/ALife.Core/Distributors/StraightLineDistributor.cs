@@ -61,7 +61,7 @@ namespace ALife.Core.Distributors
                 throw new ArgumentOutOfRangeException("StartPoint is outside of the zone.");
             }
 
-            Point nextPoint = GeometryMaths.TranslateByVector(config.StartPoint, config.Direction, config.Separation);
+            Point nextPoint = GeometryMath.TranslateByVector(config.StartPoint, config.Direction, config.Separation);
             separationPoint = new Point(nextPoint.X - config.StartPoint.X, nextPoint.Y - config.StartPoint.Y);
             deltaStart = new Point(config.StartPoint.X - startZone.TopLeft.X, config.StartPoint.Y - startZone.TopLeft.Y);
         }

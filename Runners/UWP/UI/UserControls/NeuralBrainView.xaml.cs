@@ -315,7 +315,7 @@ namespace ALifeUni.UI.UserControls
             Point tapPoint = e.GetPosition(BrainCanvas);
             foreach(var (neuron, point) in NodeMap)
             {
-                double dist = GeometryMaths.DistanceBetweenTwoPoints(tapPoint.ToALifePoint(), new Point(point.X, point.Y).ToALifePoint());
+                double dist = GeometryMath.DistanceBetweenTwoPoints(tapPoint.ToALifePoint(), new Point(point.X, point.Y).ToALifePoint());
                 if(dist < NEURON_VIS_RADIUS)
                 {
                     SelectedNeuron = neuron;

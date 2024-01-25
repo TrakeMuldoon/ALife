@@ -7,7 +7,7 @@ namespace ALife.Core.Utility.Maths
     /// THe remaining math functions (related to geometry) from the old ExtraMath class.
     /// TODO: remove this and/or move it to a more appropriate location once one is in place.
     /// </summary>
-    public class GeometryMaths
+    public class GeometryMath
     {
         public static double AngleBetweenPoints(Geometry.Shapes.Point target, Geometry.Shapes.Point source)
         {

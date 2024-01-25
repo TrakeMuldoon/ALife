@@ -132,7 +132,7 @@ namespace ALife.Core.Utility.Ranges
         /// <returns>The clampped value.</returns>
         public T CircularClampValue(T value)
         {
-            dynamic output = ExtraMaths.CircularClamp((dynamic)value, (dynamic)Minimum, (dynamic)Maximum);
+            dynamic output = ExtraMath.CircularClamp((dynamic)value, (dynamic)Minimum, (dynamic)Maximum);
             return output;
         }
 
@@ -144,7 +144,7 @@ namespace ALife.Core.Utility.Ranges
         /// <returns>The clampped value.</returns>
         public T ClampValue(T value)
         {
-            dynamic output = ExtraMaths.Clamp((dynamic)value, (dynamic)Minimum, (dynamic)Maximum);
+            dynamic output = ExtraMath.Clamp((dynamic)value, (dynamic)Minimum, (dynamic)Maximum);
             return output;
         }
 

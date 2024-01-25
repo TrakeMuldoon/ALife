@@ -39,7 +39,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
 
         public void Clamp()
         {
-            intensity = ExtraMaths.Clamp(intensity, IntensityMin, IntensityMax);
+            intensity = ExtraMath.Clamp(intensity, IntensityMin, IntensityMax);
         }
 
         public virtual void Reset()

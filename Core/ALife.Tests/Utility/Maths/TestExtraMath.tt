@@ -29,10 +29,10 @@ using ALife.Core.Utility.Maths;
 namespace ALife.Tests.Utility.Maths
 {
     /// <summary>
-    /// Tests for the ExtraMaths class.
+    /// Tests for the ExtraMath class.
     /// </summary>
     [TestClass]
-    public class TestExtraMaths
+    public class TestExtraMath
     {
         <# foreach (var type in signedtypes) { 
         #>
@@ -45,10 +45,10 @@ namespace ALife.Tests.Utility.Maths
             <#= type.Name #> max = (<#= type.Name #>)Math.Round((decimal)(<#= type.Name #>.MaxValue / two));
             <#= type.Name #> negativeNum = -2;
             
-            Assert.AreEqual(min, ExtraMaths.CircularClamp(min, min, max));
-            Assert.AreEqual(min, ExtraMaths.CircularClamp(max, min, max));
-            Assert.AreEqual(max - 1, ExtraMaths.CircularClamp(negativeNum, min, max));
-            Assert.AreEqual(min + 1, ExtraMaths.CircularClamp((<#= type.Name #>)(max + 1), min, max));
+            Assert.AreEqual(min, ExtraMath.CircularClamp(min, min, max));
+            Assert.AreEqual(min, ExtraMath.CircularClamp(max, min, max));
+            Assert.AreEqual(max - 1, ExtraMath.CircularClamp(negativeNum, min, max));
+            Assert.AreEqual(min + 1, ExtraMath.CircularClamp((<#= type.Name #>)(max + 1), min, max));
         }
 
         <#
@@ -65,9 +65,9 @@ namespace ALife.Tests.Utility.Maths
             <#= type.Name #> max = (<#= type.Name #>)Math.Round(<#= type.Name #>.MaxValue / two);
             <#= type.Name #> negativeNum = -2;
             
-            Assert.AreEqual(min, ExtraMaths.CircularClamp(min, min, max));
-            Assert.AreEqual(min, ExtraMaths.CircularClamp(max, min, max));
-            Assert.AreEqual(max - 1, ExtraMaths.CircularClamp(negativeNum, min, max));
+            Assert.AreEqual(min, ExtraMath.CircularClamp(min, min, max));
+            Assert.AreEqual(min, ExtraMath.CircularClamp(max, min, max));
+            Assert.AreEqual(max - 1, ExtraMath.CircularClamp(negativeNum, min, max));
         }
 
         <#
@@ -83,9 +83,9 @@ namespace ALife.Tests.Utility.Maths
             <#= type.Name #> max = (<#= type.Name #>)Math.Round(<#= type.Name #>.MaxValue / 2d);
             
             
-            Assert.AreEqual(min, ExtraMaths.CircularClamp(min, min, max));
-            Assert.AreEqual(min, ExtraMaths.CircularClamp(max, min, max));
-            Assert.AreEqual(min + 1, ExtraMaths.CircularClamp(max + 1, min, max));
+            Assert.AreEqual(min, ExtraMath.CircularClamp(min, min, max));
+            Assert.AreEqual(min, ExtraMath.CircularClamp(max, min, max));
+            Assert.AreEqual(min + 1, ExtraMath.CircularClamp(max + 1, min, max));
         }
 
         <#
@@ -100,11 +100,11 @@ namespace ALife.Tests.Utility.Maths
             <#= type.Name #> min = 1;
             <#= type.Name #> max = 5;
             
-            Assert.AreEqual(min, ExtraMaths.Clamp((<#= type.Name #>)(min - 1), min, max));
-            Assert.AreEqual(min, ExtraMaths.Clamp(min, min, max));
-            Assert.AreEqual((<#= type.Name #>)(max - 1), ExtraMaths.Clamp((<#= type.Name #>)(max - 1), min, max));
-            Assert.AreEqual(max, ExtraMaths.Clamp(max, min, max));
-            Assert.AreEqual(max, ExtraMaths.Clamp((<#= type.Name #>)(max + 1), min, max));
+            Assert.AreEqual(min, ExtraMath.Clamp((<#= type.Name #>)(min - 1), min, max));
+            Assert.AreEqual(min, ExtraMath.Clamp(min, min, max));
+            Assert.AreEqual((<#= type.Name #>)(max - 1), ExtraMath.Clamp((<#= type.Name #>)(max - 1), min, max));
+            Assert.AreEqual(max, ExtraMath.Clamp(max, min, max));
+            Assert.AreEqual(max, ExtraMath.Clamp((<#= type.Name #>)(max + 1), min, max));
         }
 
         [TestMethod]
@@ -121,9 +121,9 @@ namespace ALife.Tests.Utility.Maths
             <#= type.Name #> two = 2;
             <#= type.Name #> three = 3;
             
-            Assert.AreEqual(two, ExtraMaths.DeltaClamp(one, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(two, ExtraMaths.DeltaClamp(two, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
-            Assert.AreEqual(three, ExtraMaths.DeltaClamp(three, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMath.DeltaClamp(one, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(two, ExtraMath.DeltaClamp(two, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
+            Assert.AreEqual(three, ExtraMath.DeltaClamp(three, zero, deltaMin, deltaMax, absoluteMin, absoluteMax));
         }
 
         [TestMethod]
@@ -134,10 +134,10 @@ namespace ALife.Tests.Utility.Maths
             <#= type.Name #> three = 3;
             <#= type.Name #> four = 4;
             
-            Assert.AreEqual(four, ExtraMaths.Maximum(one, two, three, four));
-            Assert.AreEqual(four, ExtraMaths.Maximum(one, four, two, three));
-            Assert.AreEqual(four, ExtraMaths.Maximum(one, four));
-            Assert.AreEqual(one, ExtraMaths.Maximum(one));
+            Assert.AreEqual(four, ExtraMath.Maximum(one, two, three, four));
+            Assert.AreEqual(four, ExtraMath.Maximum(one, four, two, three));
+            Assert.AreEqual(four, ExtraMath.Maximum(one, four));
+            Assert.AreEqual(one, ExtraMath.Maximum(one));
         }
 
         [TestMethod]
@@ -148,10 +148,10 @@ namespace ALife.Tests.Utility.Maths
             <#= type.Name #> three = 3;
             <#= type.Name #> four = 4;
             
-            Assert.AreEqual(one, ExtraMaths.Minimum(one, two, three, four));
-            Assert.AreEqual(one, ExtraMaths.Minimum(four, two, one, three));
-            Assert.AreEqual(one, ExtraMaths.Minimum(one, four));
-            Assert.AreEqual(four, ExtraMaths.Minimum(four));
+            Assert.AreEqual(one, ExtraMath.Minimum(one, two, three, four));
+            Assert.AreEqual(one, ExtraMath.Minimum(four, two, one, three));
+            Assert.AreEqual(one, ExtraMath.Minimum(one, four));
+            Assert.AreEqual(four, ExtraMath.Minimum(four));
         }
 
         [TestMethod]
@@ -163,10 +163,10 @@ namespace ALife.Tests.Utility.Maths
             <#= type.Name #> three = 3;
             <#= type.Name #> four = 4;
             
-            Assert.AreEqual(three, ExtraMaths.MinMaxDelta(one, two, three, four));
-            Assert.AreEqual(three, ExtraMaths.MinMaxDelta(four, two, one, three));
-            Assert.AreEqual(three, ExtraMaths.MinMaxDelta(one, four));
-            Assert.AreEqual(zero, ExtraMaths.MinMaxDelta(four));
+            Assert.AreEqual(three, ExtraMath.MinMaxDelta(one, two, three, four));
+            Assert.AreEqual(three, ExtraMath.MinMaxDelta(four, two, one, three));
+            Assert.AreEqual(three, ExtraMath.MinMaxDelta(one, four));
+            Assert.AreEqual(zero, ExtraMath.MinMaxDelta(four));
         }
 
         <#

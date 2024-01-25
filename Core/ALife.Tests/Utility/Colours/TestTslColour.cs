@@ -62,11 +62,11 @@ namespace ALife.Tests.Utility.Colours
             var randomizerA = new ALife.Core.Utility.Random.FastRandom(1);
             var randomizerB = new ALife.Core.Utility.Random.FastRandom(1);
 
-            var colour = TslColour.GetRandomColour(randomizerA, alphaMin: 255, alphaMax: 255);
-            Assert.AreEqual(255, colour.A);
-            Assert.AreEqual(147, colour.R);
-            Assert.AreEqual(255, colour.G);
-            Assert.AreEqual(15, colour.B);
+            var colour = TslColour.GetRandomColour(randomizerA);
+            Assert.AreEqual(randomizerB.NextByte(255, 255), colour.A);
+            Assert.AreEqual(randomizerB.NextDouble(0, 1), colour.Tint);
+            Assert.AreEqual(randomizerB.NextDouble(0, 1), colour.Saturation);
+            Assert.AreEqual(randomizerB.NextDouble(0, 1), colour.Lightness);
         }
     }
 }

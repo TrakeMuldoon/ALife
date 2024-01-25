@@ -26,9 +26,14 @@
         public static readonly Range<byte> FullByteRange = new Range<byte>(byte.MinValue, byte.MaxValue);
 
         /// <summary>
+        /// The default range we use for Alpha in random colours.
+        /// </summary>
+        public static readonly Range<byte> RandomDefaultAlphaRange = new Range<byte>(255, 255);
+
+        /// <summary>
         /// A range representing the default range we generally want for random colours.
         /// </summary>
-        public static readonly Range<byte> RandomColourRange = new Range<byte>(100, 255);
+        public static readonly Range<byte> RandomDefaultRgbColourRange = new Range<byte>(100, 255);
 
         /// <summary>
         /// A range representing the degrees in a circle.

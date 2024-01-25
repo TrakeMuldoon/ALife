@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Text.Json.Serialization;
 using ALife.Core.Utility.Random;
+using ALife.Core.Utility.Ranges;
 
 namespace ALife.Core.Utility.Colours
 {
@@ -438,28 +440,26 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
-        /// Generates a random HsvColour.
+        /// Generates a random Colour.
         /// </summary>
-        /// <param name="randomizer">The randomizer.</param>
-        /// <param name="alphaMin">The alpha minimum.</param>
-        /// <param name="alphaMax">The alpha maximum.</param>
-        /// <param name="hueMin">The hue minimum.</param>
-        /// <param name="hueMax">The hue maximum.</param>
-        /// <param name="saturationMin">The saturation minimum.</param>
-        /// <param name="saturationMax">The saturation maximum.</param>
-        /// <param name="valueMin">The value minimum.</param>
-        /// <param name="valueMax">The value maximum.</param>
-        /// <returns>The HsvColour.</returns>
-        public static HsvColour GetRandomColour(IRandom randomizer, byte alphaMin = 0, byte alphaMax = 255, int hueMin = 0, int hueMax = 361, double saturationMin = 0d, double saturationMax = 1d, double valueMin = 0d, double valueMax = 1d)
+        /// <param name="randomizer">The random number generator. TODO: this should use a Simulation object once those exist.</param>
+        /// <param name="alphaRange">The range of valid byte values for the Alpha channel. Defaults to 255-255.</param>
+        /// <param name="hueRange">The range of valid int values for the Hue. Defaults to 0-360.</param>
+        /// <param name="saturationRange">The range of valid double values for the Saturation. Defaults to 0-1.</param>
+        /// <param name="valueRange">The range of valid double values for the Value. Defaults to 0-1.</param>
+        /// <returns>The new random colour.</returns>
+        public static HsvColour GetRandomColour(IRandom randomizer, Nullable<Range<byte>> alphaRange = null, Nullable<Range<int>> hueRange = null, Nullable<Range<double>> saturationRange = null, Nullable<Range<double>> valueRange = null)
         {
-            byte alpha = randomizer.NextByte(alphaMin, alphaMax);
-            int hue = randomizer.Next(hueMin, hueMax);
+            Range<byte> actualAlphaRange = alphaRange ?? DefaultRanges.RandomDefaultAlphaRange;
+            Range<int> actualHueRange = hueRange ?? DefaultRanges.DegreeRange;
+            Range<double> actualSaturationRange = saturationRange ?? DefaultRanges.DoublePercentageRange;
+            Range<double> actualValueRange = valueRange ?? DefaultRanges.DoublePercentageRange;
 
-            double saturationModifier = randomizer.NextDouble();
-            double saturation = saturationModifier * saturationMax + (1 - saturationModifier) * saturationMin;
+            byte alpha = randomizer.NextByte(actualAlphaRange.Minimum, actualAlphaRange.Maximum);
+            int hue = randomizer.Next(actualHueRange.Minimum, actualHueRange.Maximum);
+            double saturation = randomizer.NextDouble(actualSaturationRange.Minimum, actualSaturationRange.Maximum);
+            double value = randomizer.NextDouble(actualValueRange.Minimum, actualValueRange.Maximum);
 
-            double valueModifier = randomizer.NextDouble();
-            double value = valueModifier * valueMax + (1 - valueModifier) * valueMin;
             return new HsvColour(alpha, hue, saturation, value);
         }
 

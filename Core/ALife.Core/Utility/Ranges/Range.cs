@@ -35,7 +35,6 @@ namespace ALife.Core.Utility.Ranges
         {
             _minimum = parent.Minimum;
             _maximum = parent.Maximum;
-            Difference = parent.Difference;
         }
 
         /// <summary>
@@ -57,14 +56,7 @@ namespace ALife.Core.Utility.Ranges
             {
                 (_minimum, _maximum) = (_maximum, _minimum);
             }
-            Difference = (T)(object)((dynamic)_maximum - (dynamic)_minimum);
         }
-
-        /// <summary>
-        /// No easy support right now because we're stuck on .NET Standard 2.
-        /// </summary>
-        [JsonIgnore]
-        public T Difference { get; private set; }
 
         /// <summary>
         /// The maximum value of the range.
@@ -80,7 +72,6 @@ namespace ALife.Core.Utility.Ranges
                 {
                     (_minimum, _maximum) = (_maximum, _minimum);
                 }
-                Difference = (T)(object)((dynamic)_maximum - (dynamic)_minimum);
             }
         }
 
@@ -98,7 +89,6 @@ namespace ALife.Core.Utility.Ranges
                 {
                     (_minimum, _maximum) = (_maximum, _minimum);
                 }
-                Difference = (T)(object)((dynamic)_maximum - (dynamic)_minimum);
             }
         }
 

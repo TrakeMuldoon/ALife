@@ -115,15 +115,12 @@ namespace ALife.Tests.Utility.Ranges
             var range = new Range<int>(0, 10);
             Assert.AreEqual(0, range.Minimum);
             Assert.AreEqual(10, range.Maximum);
-            Assert.AreEqual(10, range.Difference);
             range.Minimum = 5;
             Assert.AreEqual(5, range.Minimum);
             Assert.AreEqual(10, range.Maximum);
-            Assert.AreEqual(5, range.Difference);
             range.Minimum = 17;
             Assert.AreEqual(10, range.Minimum);
             Assert.AreEqual(17, range.Maximum);
-            Assert.AreEqual(7, range.Difference);
         }
 
         /// <summary>

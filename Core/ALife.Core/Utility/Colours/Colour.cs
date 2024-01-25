@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Text.Json.Serialization;
 using ALife.Core.Utility.Random;
+using ALife.Core.Utility.Ranges;
 
 namespace ALife.Core.Utility.Colours
 {
@@ -402,22 +404,24 @@ namespace ALife.Core.Utility.Colours
         /// <summary>
         /// Generates a random Colour.
         /// </summary>
-        /// <param name="randomizer">The randomizer.</param>
-        /// <param name="alphaMin">The alpha minimum.</param>
-        /// <param name="alphaMax">The alpha maximum.</param>
-        /// <param name="redMin">The red minimum.</param>
-        /// <param name="redMax">The red maximum.</param>
-        /// <param name="greenMin">The green minimum.</param>
-        /// <param name="greenMax">The green maximum.</param>
-        /// <param name="blueMin">The blue minimum.</param>
-        /// <param name="blueMax">The blue maximum.</param>
-        /// <returns>The Colour.</returns>
-        public static Colour GetRandomColour(IRandom randomizer, byte alphaMin = 0, byte alphaMax = 255, byte redMin = 0, byte redMax = 255, byte greenMin = 0, byte greenMax = 255, byte blueMin = 0, byte blueMax = 255)
+        /// <param name="randomizer">The random number generator. TODO: this should use a Simulation object once those exist.</param>
+        /// <param name="alphaRange">The range of valid byte values for the Alpha channel. Defaults to 255-255.</param>
+        /// <param name="redRange">The range of valid byte values for the Red channel. Defaults to 100-255.</param>
+        /// <param name="greenRange">The range of valid byte values for the Green channel. Defaults to 100-255.</param>
+        /// <param name="blueRange">The range of valid byte values for the Blue channel. Defaults to 100-255.</param>
+        /// <returns>The new random colour.</returns>
+        public static Colour GetRandomColour(IRandom randomizer, Nullable<Range<byte>> alphaRange = null, Nullable<Range<byte>> redRange = null, Nullable<Range<byte>> greenRange = null, Nullable<Range<byte>> blueRange = null)
         {
-            byte alpha = randomizer.NextByte(alphaMin, alphaMax);
-            byte red = randomizer.NextByte(redMin, redMax);
-            byte green = randomizer.NextByte(greenMin, greenMax);
-            byte blue = randomizer.NextByte(blueMin, blueMax);
+            Range<byte> actualAlphaRange = alphaRange ?? DefaultRanges.RandomDefaultAlphaRange;
+            Range<byte> actualRedRange = redRange ?? DefaultRanges.RandomDefaultRgbColourRange;
+            Range<byte> actualGreenRange = greenRange ?? DefaultRanges.RandomDefaultRgbColourRange;
+            Range<byte> actualBlueRange = blueRange ?? DefaultRanges.RandomDefaultRgbColourRange;
+
+            byte alpha = randomizer.NextByte(actualAlphaRange.Minimum, actualAlphaRange.Maximum);
+            byte red = randomizer.NextByte(actualRedRange.Minimum, actualRedRange.Maximum);
+            byte green = randomizer.NextByte(actualGreenRange.Minimum, actualGreenRange.Maximum);
+            byte blue = randomizer.NextByte(actualBlueRange.Minimum, actualBlueRange.Maximum);
+
             return new Colour(alpha, red, green, blue);
         }
 

@@ -175,7 +175,7 @@ Reaching the finish line, reproduces 3 times and then dies... Victorious!"
             int numAgents = 20;
             for(int i = 0; i < numAgents; i++)
             {
-                Colour randomColour = Colour.GetRandomColour(Planet.World.NumberGen, 255, 255, redMin: 100, greenMin: 100, blueMin: 100);
+                Colour randomColour = Colour.GetRandomColour(Planet.World.NumberGen);
                 Agent rag = AgentFactory.CreateAgent("Agent", startZone, endZone, randomColour, 90);
             }
         }

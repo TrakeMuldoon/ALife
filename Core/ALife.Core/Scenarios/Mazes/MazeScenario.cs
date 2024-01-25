@@ -141,7 +141,7 @@ If an agent reaches the goal line, the simuluation stops."
 
             for(int i = 0; i < numAgents; i++)
             {
-                Colour randomColour = Colour.GetRandomColour(Planet.World.NumberGen, 255, 255, redMin: 100, greenMin: 100, blueMin: 100);
+                Colour randomColour = Colour.GetRandomColour(Planet.World.NumberGen);
                 Agent rag = AgentFactory.CreateAgent("Agent", red, blue, randomColour, 0);
             }
             //MazeRunner mr = new MazeRunner(red, blue);
@@ -197,9 +197,9 @@ If an agent reaches the goal line, the simuluation stops."
                 Planet.World.ReproduceBest();
                 Planet.World.ReproduceBest();
                 Planet.World.ReproduceBest();
-                Colour randomColourA = Colour.GetRandomColour(Planet.World.NumberGen, 255, 255, redMin: 100, greenMin: 100, blueMin: 100);
-                Colour randomColourB = Colour.GetRandomColour(Planet.World.NumberGen, 255, 255, redMin: 100, greenMin: 100, blueMin: 100);
-                Colour randomColourC = Colour.GetRandomColour(Planet.World.NumberGen, 255, 255, redMin: 100, greenMin: 100, blueMin: 100);
+                Colour randomColourA = Colour.GetRandomColour(Planet.World.NumberGen);
+                Colour randomColourB = Colour.GetRandomColour(Planet.World.NumberGen);
+                Colour randomColourC = Colour.GetRandomColour(Planet.World.NumberGen);
                 Agent ag1 = AgentFactory.CreateAgent("Agent", red, blue, randomColourA, 0);
                 Agent ag2 = AgentFactory.CreateAgent("Agent", red, blue, randomColourB, 0);
                 Agent ag3 = AgentFactory.CreateAgent("Agent", red, blue, randomColourC, 0);

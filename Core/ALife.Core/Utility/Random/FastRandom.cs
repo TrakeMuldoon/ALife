@@ -338,6 +338,28 @@ namespace ALife.Core.Utility.Random
             return (w = (w ^ (w >> 19)) ^ (t ^ (t >> 8)));
         }
 
+        /// <summary>
+        /// Generates a random double over the range 0 to upperBound-1, and not including upperBound.
+        /// </summary>
+        /// <param name="upperBound">The upper bound.</param>
+        /// <returns>A random number.</returns>
+        public double NextDouble(double upperBound)
+        {
+            return NextDouble() * upperBound;
+        }
+
+        /// <summary>
+        /// Generates a random double over the range lowerBound to upperBound-1, and not including upperBound. upperBound
+        /// must be &gt;= lowerBound. lowerBound may be negative.
+        /// </summary>
+        /// <param name="lowerBound">The lower bound.</param>
+        /// <param name="upperBound">The upper bound.</param>
+        /// <returns>A random number.</returns>
+        public double NextDouble(double lowerBound, double upperBound)
+        {
+            return lowerBound + NextDouble() * (upperBound - lowerBound);
+        }
+
         #endregion Public Methods [Methods not present on System.Random]
     }
 }

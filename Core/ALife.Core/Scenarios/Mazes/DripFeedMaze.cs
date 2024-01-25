@@ -155,7 +155,7 @@ If an agent reaches the goal line, the simuluation stops."
 
             for(int i = 0; i < numAgents; i++)
             {
-                Colour randomColour = Colour.GetRandomColour(Planet.World.NumberGen, 255, 255, redMin: 100, greenMin: 100, blueMin: 100);
+                Colour randomColour = Colour.GetRandomColour(Planet.World.NumberGen);
                 Agent rag = AgentFactory.CreateAgent("Agent", startZone, endZone, randomColour, 0);
             }
 
@@ -167,8 +167,8 @@ If an agent reaches the goal line, the simuluation stops."
             if(Planet.World.Turns % 10 == 0
                 && Planet.World.AllActiveObjects.OfType<Agent>().Count() < 50)
             {
-                Colour randomColourA = Colour.GetRandomColour(Planet.World.NumberGen, 255, 255, redMin: 100, greenMin: 100, blueMin: 100);
-                Colour randomColourB = Colour.GetRandomColour(Planet.World.NumberGen, 255, 255, redMin: 100, greenMin: 100, blueMin: 100);
+                Colour randomColourA = Colour.GetRandomColour(Planet.World.NumberGen);
+                Colour randomColourB = Colour.GetRandomColour(Planet.World.NumberGen);
                 AgentFactory.CreateAgent("Agent", startZone, endZone, randomColourA, 0);
                 AgentFactory.CreateAgent("Agent", startZone, endZone, randomColourB, 0);
             }

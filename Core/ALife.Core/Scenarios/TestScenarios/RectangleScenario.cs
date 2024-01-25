@@ -94,11 +94,11 @@ namespace ALife.Core.Scenarios.TestScenarios
             Planet.World.AddZone(nullZone);
 
             //Geometry.Shapes.Point ap = new Geometry.Shapes.Point(30, 30);
-            //Agent a = AgentFactory.CreateAgent("Agent", nullZone, nullZone, System.Drawing.Colour.Red, 0);
+            //Agent a = AgentFactory.CreateAgent("Agent", nullZone, nullZone, Colour.Red, 0);
             //a.Shape.CentrePoint = ap;
 
             //Geometry.Shapes.Point bp = new Geometry.Shapes.Point(60, 100);
-            //Agent b = AgentFactory.CreateAgent("Agent", nullZone, nullZone, System.Drawing.Colour.Red, 0);
+            //Agent b = AgentFactory.CreateAgent("Agent", nullZone, nullZone, Colour.Red, 0);
             //b.Shape.CentrePoint = bp;
 
             Geometry.Shapes.Point mp = new Geometry.Shapes.Point(60, 60);

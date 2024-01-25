@@ -78,6 +78,22 @@
         double NextDouble();
 
         /// <summary>
+        /// Generates a random double over the range 0 to upperBound-1, and not including upperBound.
+        /// </summary>
+        /// <param name="upperBound">The upper bound.</param>
+        /// <returns>A random number.</returns>
+        double NextDouble(double upperBound);
+
+        /// <summary>
+        /// Generates a random double over the range lowerBound to upperBound-1, and not including upperBound. upperBound
+        /// must be &gt;= lowerBound. lowerBound may be negative.
+        /// </summary>
+        /// <param name="lowerBound">The lower bound.</param>
+        /// <param name="upperBound">The upper bound.</param>
+        /// <returns>A random number.</returns>
+        double NextDouble(double lowerBound, double upperBound);
+
+        /// <summary>
         /// Generates a random int over the range 0 to int.MaxValue, inclusive. This method differs from Next() only in
         /// that the range is 0 to int.MaxValue and not 0 to int.MaxValue-1.
         ///

@@ -53,8 +53,8 @@ namespace ALife.Core.Scenarios.TestScenarios
             List<ActionCluster> agentActions = new List<ActionCluster>()
             {
                 new ColorCluster(agent),
-                new MoveCluster(agent),
-                new RotateCluster(agent)
+                new MoveCluster(agent, ActionCluster.NullInteraction),
+                new RotateCluster(agent, ActionCluster.NullInteraction)
             };
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
@@ -67,11 +67,6 @@ namespace ALife.Core.Scenarios.TestScenarios
         }
 
         public virtual void AgentEndOfTurnTriggers(Agent me)
-        {
-            //Do Nothing
-        }
-
-        public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
             //Do Nothing
         }

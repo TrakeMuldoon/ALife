@@ -30,8 +30,8 @@ namespace ALife.Core.WorldObjects.Prebuilt
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
             {
-                new MoveCluster(this),
-                new RotateCluster(this)
+                new MoveCluster(this, ActionCluster.NullInteraction),
+                new RotateCluster(this, ActionCluster.NullInteraction)
             };
 
             this.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
@@ -52,11 +52,6 @@ namespace ALife.Core.WorldObjects.Prebuilt
 
         public override void Die()
         {
-        }
-
-        public override void CollisionBehvaviour(List<WorldObject> collisions)
-        {
-            //So the rabbit doesn't kill things
         }
 
         public void Caught(Agent caughtMe)

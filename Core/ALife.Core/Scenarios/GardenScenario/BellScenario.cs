@@ -78,8 +78,8 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
             {
-                new MoveCluster(agent),
-                new RotateCluster(agent)
+                new MoveCluster(agent, CollisionBehaviour),
+                new RotateCluster(agent, CollisionBehaviour)
             };
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
@@ -122,7 +122,7 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
             collider.MoveObject(winner);
         }
 
-        public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        private void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
             me.Die();
         }

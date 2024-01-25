@@ -63,8 +63,8 @@ If an agent reaches the goal line, the simuluation stops."
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
             {
-                new MoveCluster(agent),
-                new RotateCluster(agent)
+                new MoveCluster(agent, CollisionBehaviour),
+                new RotateCluster(agent, CollisionBehaviour)
             };
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
@@ -76,7 +76,7 @@ If an agent reaches the goal line, the simuluation stops."
             return agent;
         }
 
-        public void CollisionBehaviour(Agent me, List<WorldObject> collisions)
+        private void CollisionBehaviour(Agent me, List<WorldObject> collisions)
         {
             foreach(WorldObject wo in collisions)
             {

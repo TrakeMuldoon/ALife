@@ -13,7 +13,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
     {
         const int MAXIMUM_TURN_DEGREES = 70;  //TODO: Abstract this into a config or the scenario
 
-        public RotateCluster(Agent self) : base(self, "Rotate")
+        public RotateCluster(Agent self, InteractionFunction collisionBehaviour) : base(self, "Rotate", collisionBehaviour)
         {
             SubActions.Add("TurnLeft", new ActionPart("TurnLeft", Name));
             SubActions.Add("TurnRight", new ActionPart("TurnRight", Name));
@@ -22,7 +22,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
 
         public override ActionCluster CloneAction(Agent newParent)
         {
-            return new RotateCluster(newParent);
+            return new RotateCluster(newParent, Interaction);
         }
 
         protected override bool ValidatePreconditions()
@@ -86,7 +86,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
             else
             {
                 myOrientation.Degrees -= netTurn; //cancel the move
-                self.CollisionBehvaviour(collisions);
+                Interaction(self, collisions);
                 return false;
             }
         }

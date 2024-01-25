@@ -18,8 +18,6 @@ namespace ALife.Core.Scenarios
         /*** Something that is happening TO an agent, based on external stimulus ***/
         void AgentEndOfTurnTriggers(Agent me);
 
-        void CollisionBehaviour(Agent me, List<WorldObject> collisions);
-
         /******************/
         /*  PLANET STUFF  */
         /******************/

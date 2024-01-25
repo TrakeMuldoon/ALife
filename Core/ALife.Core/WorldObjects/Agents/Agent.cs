@@ -210,11 +210,6 @@ namespace ALife.Core.WorldObjects.Agents
             Planet.World.Scenario.AgentEndOfTurnTriggers(this);
         }
 
-        //public virtual void CollisionBehaviour(List<WorldObject> collisions)
-        //{
-        //    Planet.World.Scenario.CollisionBehaviour(this, collisions);
-        //}
-
         public override WorldObject Clone()
         {
             JustReproduced = true;

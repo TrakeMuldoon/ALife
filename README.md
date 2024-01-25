@@ -34,7 +34,6 @@ Actions are anything the Agent can do
 - Turn
 - Bite (not implemented yet)
 
-
 A Scenario is a set of rules about agents, their interactions with each other and the world.
 
 The Scenarios each contain the definitions of the agents, as well as the definition for what allows them to reproduce or die. It also contains the instructions for the intial set up of the world.
@@ -58,7 +57,11 @@ The UWP version of the app is still supported, but will not longer be receiving 
 ### Startup Screen
 
 ### Simulation
-The "Q" and "E" keys will zoom in and out.
+1. The "Q" and "E" keys will zoom in and out.
+2. Clicking on an agent will "Select" them. They will be circled in Red and their information displayed in the Agent Information display on the right.
+3. Holding "X" while an agent is selected will show the "shadow world" which is what the agent saw last turn. This is really only useful when the simulation is paused.
+4. CTRL-Clicking on empty space will create a "wall" in that space. If the Scenario does not have a definition for wall collisions, then the behaviour will be undefined and this could cause unexpected behaviour. 
+5. CTR-Clicking on an object will kill that object. KILL. This can also occasionally cause unexpected behaviours, as it does not follow any scenario rules.
 
 ### Seed Section
 The Seed Input is at the top of the control panel. The textbox reveals the worldseed. 
@@ -80,6 +83,10 @@ While this is running a small panel will appear indicating some stats about the 
 ### Zoom Controls
 ### "Layer Controls"
 ### "Special Selector Buttons"
+1. "Show Ancestry" tickbox will show the ancestry of each living agent. It highlights the "Eldest Living" in a blue circle.
+2. The "Oldest", and "Most Children" buttons will CYCLE through any tied agents who match that description and Select them.
+3. The "Smallest Brain" button will select the smallest Behaviour Brain. In Neural Network Brain scenario, this will crash.
+
 ### "Wall Panel"
 ### "Agent Panel"
 ### "Neural Network Brain Viewer"
@@ -93,17 +100,6 @@ The columns (which will be labeled eventually) are
     Show Objects Bounding Boxes
     Show Agent Senses
     Show Agent Senses Bounding Boxes
-
-Show Ancestry tickbox will show the ancestry of each living agent. It highlights the "Eldest Living" in a blue circle.
-
-The Smallest Brain, Oldest, and Most Children buttons will CYCLE through any tied agents who match that description and Select them.
-
-Clicking on an agent will "Select" them. They will be circled in Red and their information displayed in the Agent Information display on the right.
-
-Holding "X" while an agent is selected will show the "shadow world" which is what the agent saw last turn. This is really only useful when the simulation is paused.
-
-CTRL-Clicking on empty space will create a "wall" in that space. If the Scenario does not have a definition for wall collisions, then the behaviour will be undefined and this could cause unexpected behaviour. 
-CTRL-Clicking on an object will kill that object. KILL. This can also occasionally cause unexpected behaviours, as it does not follow any scenario rules.
 
 ### Avalonia Controls
 

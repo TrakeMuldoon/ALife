@@ -1,8 +1,8 @@
-﻿using ALife.Core.Geometry.New;
-using ALife.Core.Scenarios.ScenarioHelpers;
+﻿using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility.Collections;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.EvoNumbers;
+using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;

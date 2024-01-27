@@ -1,7 +1,8 @@
 ﻿using ALife.Core.Geometry;
+using ALife.Core.Geometry.New;
 using System;
 
-namespace ALife.Core.Geometry.New
+namespace ALife.Core.Utility.Maths
 {
     /// <summary>
     /// THe remaining math functions (related to geometry) from the old ExtraMath class.

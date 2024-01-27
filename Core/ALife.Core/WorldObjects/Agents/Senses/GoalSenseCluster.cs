@@ -2,6 +2,7 @@
 using ALife.Core.Geometry.New;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Geometry.Shapes.ChildShapes;
+using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Agents.Senses.GoalSense;
 using System;
 

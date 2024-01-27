@@ -1,5 +1,5 @@
-﻿using ALife.Core.Geometry.New;
-using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Utility.Colours;
+using ALife.Core.Utility.Maths;
 using System;
 
 namespace ALife.Core.Geometry.Shapes.ChildShapes

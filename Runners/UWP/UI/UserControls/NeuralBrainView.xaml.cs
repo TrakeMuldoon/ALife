@@ -1,5 +1,6 @@
 ﻿using ALife.Core.Geometry;
 using ALife.Core.Geometry.New;
+using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains;

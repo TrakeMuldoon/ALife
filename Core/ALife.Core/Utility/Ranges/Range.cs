@@ -162,8 +162,7 @@ namespace ALife.Core.Utility.Ranges
         /// </returns>
         public override int GetHashCode()
         {
-            int hashCode = _minimum.GetHashCode() + _maximum.GetHashCode();
-            return hashCode;
+            return HashCodeHelper.Combine(_minimum, _maximum);
         }
 
         /// <summary>

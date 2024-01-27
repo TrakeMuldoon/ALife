@@ -149,8 +149,7 @@ namespace ALife.Core.Utility.Numerics
         /// </returns>
         public override int GetHashCode()
         {
-            int hashCode = Value.GetHashCode() + _range.GetHashCode();
-            return hashCode;
+            return HashCodeHelper.Combine(_range, _value);
         }
 
         /// <summary>

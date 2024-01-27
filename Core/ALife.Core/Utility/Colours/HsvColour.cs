@@ -552,8 +552,7 @@ namespace ALife.Core.Utility.Colours
         /// </returns>
         public override int GetHashCode()
         {
-            int hash = A + B + G + R;
-            return hash.GetHashCode();
+            return HashCodeHelper.Combine(A, R, G, B);
         }
 
         /// <summary>

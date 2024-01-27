@@ -1,4 +1,5 @@
-﻿using ALife.Core.Utility.Ranges;
+﻿using ALife.Core.Utility.Maths;
+using ALife.Core.Utility.Ranges;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
 
@@ -188,11 +189,9 @@ namespace ALife.Core.Utility.Numerics
         /// <returns>
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
-        //TODO: Is there an integeroverflow risk here?
         public override int GetHashCode()
         {
-            int hashCode = _range.GetHashCode() + _value.GetHashCode();
-            return hashCode;
+            return HashCodeHelper.Combine(_range, _value);
         }
 
         /// <summary>

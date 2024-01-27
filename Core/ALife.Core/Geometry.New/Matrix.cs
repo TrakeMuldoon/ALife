@@ -1,17 +1,24 @@
-﻿using System;
+﻿using ALife.Core.Utility.Maths;
+using System;
+using System.Diagnostics;
 using System.Numerics;
+using System.Text.Json.Serialization;
 
 namespace ALife.Core.Geometry.New
 {
     /// <summary>
     /// Represents a right-handed 4x4 matrix. Used by us for translation and rotation info.
     /// Note: overkill atm a little bit since the simulation is in 2D, but maybe we'll add a third dimension later.
+    /// TODO: Add a third dimension later.
+    /// TODO: If staying 2D and performance/memory is an issue, consider using a 3x3 matrix instead.
     /// </summary>
+    [DebuggerDisplay("{ToString()}")]
     public struct Matrix
     {
         /// <summary>
         /// A matrix pre-populated with 0's for everything.
         /// </summary>
+        [JsonIgnore]
         public static Matrix Zero = new Matrix();
 
         /// <summary>
@@ -113,6 +120,7 @@ namespace ALife.Core.Geometry.New
         /// <param name="m42">Row 4, Column 2.</param>
         /// <param name="m43">Row 4, Column 3.</param>
         /// <param name="m44">Row 4, Column 4.</param>
+        [JsonConstructor]
         public Matrix(
             double m11 = 0, double m12 = 0, double m13 = 0, double m14 = 0,
             double m21 = 0, double m22 = 0, double m23 = 0, double m24 = 0,
@@ -349,7 +357,40 @@ namespace ALife.Core.Geometry.New
 
             output.M41 = x;
             output.M42 = y;
+            //output.M43 = z;
 
+            return output;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Matrix mat &&
+              M11 == mat.M11 &&
+                     M12 == mat.M12 &&
+                     M13 == mat.M13 &&
+                     M14 == mat.M14 &&
+                     M21 == mat.M21 &&
+                     M22 == mat.M22 &&
+                     M23 == mat.M23 &&
+                     M24 == mat.M24 &&
+                     M31 == mat.M31 &&
+                     M32 == mat.M32 &&
+                     M33 == mat.M33 &&
+                     M34 == mat.M34 &&
+                     M41 == mat.M41 &&
+                     M42 == mat.M42 &&
+                     M43 == mat.M43 &&
+                     M44 == mat.M44;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCodeHelper.Combine(M11, M12, M13, M14, M21, M22, M23, M24, M31, M32, M33, M34, M41, M42, M43, M44);
+        }
+
+        public override string ToString()
+        {
+            string output = $"[[[{M11}], [{M12}], [{M13}], [{M14}]], [[{M21}], [{M22}], [{M23}], [{M24}]], [[{M31}], [{M32}], [{M33}], [{M34}]], [[{M41}], [{M42}], [{M43}], [{M44}]]]";
             return output;
         }
     }

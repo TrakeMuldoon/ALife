@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
-using ALife.Core.Utility;
+using ALife.Core.Utility.Maths;
 using ALife.Core.Utility.Numerics;
 
 namespace ALife.Core.Geometry.New
@@ -15,11 +15,13 @@ namespace ALife.Core.Geometry.New
         /// <summary>
         /// An angle representing zero degrees.
         /// </summary>
+        [JsonIgnore]
         public static readonly Angle Zero = new Angle(0d);
 
         /// <summary>
         /// The degrees
         /// </summary>
+        [JsonIgnore]
         private CircularBoundedNumber _degrees;
 
         /// <summary>
@@ -53,7 +55,7 @@ namespace ALife.Core.Geometry.New
         /// Gets or sets the degrees.
         /// </summary>
         /// <value>The degrees.</value>
-        [JsonIgnore]
+        [JsonPropertyName("degrees")]
         public double Degrees
         {
             get => _degrees;
@@ -348,7 +350,7 @@ namespace ALife.Core.Geometry.New
         /// </returns>
         public override int GetHashCode()
         {
-            return _degrees.GetHashCode() ^ _radians.GetHashCode();
+            return _degrees.GetHashCode();
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using ALife.Core.Utility.Maths;
+﻿using ALife.Core.Geometry.New;
 using System;
 
 namespace ALife.Core.Geometry.Shapes.ChildShapes

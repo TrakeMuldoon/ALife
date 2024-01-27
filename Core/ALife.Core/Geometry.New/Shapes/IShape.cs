@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ALife.Core.Shapes
+namespace ALife.Core.Geometry.New.Shapes
 {
     internal interface IShape
     {

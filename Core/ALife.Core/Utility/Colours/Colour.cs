@@ -1,4 +1,5 @@
-﻿using ALife.Core.Utility.Random;
+﻿using ALife.Core.Utility.Maths;
+using ALife.Core.Utility.Random;
 using ALife.Core.Utility.Ranges;
 using System;
 using System.Diagnostics;
@@ -504,8 +505,7 @@ namespace ALife.Core.Utility.Colours
         /// </returns>
         public override int GetHashCode()
         {
-            int hash = A + B + G + R;
-            return hash.GetHashCode();
+            return HashCodeHelper.Combine(A, R, G, B);
         }
 
         /// <summary>

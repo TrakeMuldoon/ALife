@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ALife.Core.Utility.Maths;
+using System;
 using System.Diagnostics;
 using System.Numerics;
 using System.Text.Json.Serialization;
@@ -19,12 +20,12 @@ namespace ALife.Core.Geometry.New
         /// <summary>
         /// The x coordinate
         /// </summary>
-        public double X;
+        private double _x;
 
         /// <summary>
         /// The y coordinate
         /// </summary>
-        public double Y;
+        private double _y;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Point"/> struct.
@@ -34,8 +35,8 @@ namespace ALife.Core.Geometry.New
         [JsonConstructor]
         public Point(double x, double y)
         {
-            X = x;
-            Y = y;
+            _x = x;
+            _y = y;
         }
 
         /// <summary>
@@ -44,23 +45,37 @@ namespace ALife.Core.Geometry.New
         /// <param name="Geometry.Shapes.Point">The Geometry.Shapes.Point.</param>
         public Point(Point Point)
         {
-            X = Point.X;
-            Y = Point.Y;
+            _x = Point.X;
+            _y = Point.Y;
         }
+
+        /// <summary>
+        /// Gets the X coordinate.
+        /// </summary>
+        /// <value>The x int.</value>
+        [JsonIgnore]
+        public double X => _x;
 
         /// <summary>
         /// Gets the x int.
         /// </summary>
         /// <value>The x int.</value>
         [JsonIgnore]
-        public int XInt => (int)Math.Round(X);
+        public int XInt => (int)Math.Round(_x);
+
+        /// <summary>
+        /// Gets the X coordinate.
+        /// </summary>
+        /// <value>The x int.</value>
+        [JsonIgnore]
+        public double Y => _y;
 
         /// <summary>
         /// Gets the y int.
         /// </summary>
         /// <value>The y int.</value>
         [JsonIgnore]
-        public int YInt => (int)Math.Round(Y);
+        public int YInt => (int)Math.Round(_y);
 
         /// <summary>
         /// Transforms the specified point by the matrix.
@@ -70,8 +85,8 @@ namespace ALife.Core.Geometry.New
         /// <returns>The transformed point.</returns>
         public static Point FromTransformation(Point point, Matrix matrix)
         {
-            double newX = point.X * matrix.M11 + point.Y * matrix.M21 + matrix.M41;
-            double newY = point.X * matrix.M12 + point.Y * matrix.M22 + matrix.M42;
+            double newX = point._x * matrix.M11 + point._y * matrix.M21 + matrix.M41;
+            double newY = point._x * matrix.M12 + point._y * matrix.M22 + matrix.M42;
 
             return new Point(newX, newY);
         }
@@ -104,7 +119,7 @@ namespace ALife.Core.Geometry.New
         /// <returns>The cloned instance.</returns>
         public Point Clone()
         {
-            return new Point(X, Y);
+            return new Point(_x, _y);
         }
 
         /// <summary>
@@ -124,7 +139,7 @@ namespace ALife.Core.Geometry.New
         /// <returns>True if equals, False otherwise.</returns>
         public bool Equals(Point value)
         {
-            return X.Equals(value.X) && Y.Equals(value.Y);
+            return _x.Equals(value.X) && _y.Equals(value.Y);
         }
 
         /// <summary>
@@ -135,7 +150,7 @@ namespace ALife.Core.Geometry.New
         /// </returns>
         public override int GetHashCode()
         {
-            return (X + Y).GetHashCode();
+            return HashCodeHelper.Combine(this._x, this._y);
         }
 
         /// <summary>
@@ -169,12 +184,41 @@ namespace ALife.Core.Geometry.New
         }
 
         /// <summary>
+        /// Updates the x coord.
+        /// </summary>
+        /// <param name="newX">The new x.</param>
+        public void SetX(double newX)
+        {
+            _x = newX;
+        }
+
+        /// <summary>
+        /// Updates the x and y coords.
+        /// </summary>
+        /// <param name="newX">The new x.</param>
+        /// <param name="newY">The new y.</param>
+        public void SetXY(double newX, double newY)
+        {
+            _x = newX;
+            _y = newY;
+        }
+
+        /// <summary>
+        /// Updates the y coord.
+        /// </summary>
+        /// <param name="newY">The new y.</param>
+        public void SetY(double newY)
+        {
+            _y = newY;
+        }
+
+        /// <summary>
         /// Converts to string.
         /// </summary>
         /// <returns>The string representation of the Geometry.Shapes.Point.</returns>
         public override string ToString()
         {
-            return $"({X}, {Y})";
+            return $"({_x}, {_y})";
         }
 
         /// <summary>
@@ -184,7 +228,7 @@ namespace ALife.Core.Geometry.New
         /// <returns>The Vector2</returns>
         public Vector2 ToVector2()
         {
-            return new Vector2((float)X, (float)Y);
+            return new Vector2((float)_x, (float)_y);
         }
 
         /// <summary>
@@ -194,8 +238,8 @@ namespace ALife.Core.Geometry.New
         public void Transform(Matrix matrix)
         {
             Point transformed = FromTransformation(this, matrix);
-            X = transformed.X;
-            Y = transformed.Y;
+            _x = transformed._x;
+            _y = transformed._y;
         }
 
         /// <summary>
@@ -272,35 +316,6 @@ namespace ALife.Core.Geometry.New
         {
             Matrix matrix = Matrix.CreateFromTranslationAndAngle(angle, translation);
             Transform(matrix);
-        }
-
-        /// <summary>
-        /// Updates the x coord.
-        /// </summary>
-        /// <param name="newX">The new x.</param>
-        public void UpdateX(double newX)
-        {
-            X = newX;
-        }
-
-        /// <summary>
-        /// Updates the x and y coords.
-        /// </summary>
-        /// <param name="newX">The new x.</param>
-        /// <param name="newY">The new y.</param>
-        public void UpdateXY(double newX, double newY)
-        {
-            X = newX;
-            Y = newY;
-        }
-
-        /// <summary>
-        /// Updates the y coord.
-        /// </summary>
-        /// <param name="newY">The new y.</param>
-        public void UpdateY(double newY)
-        {
-            Y = newY;
         }
     }
 }

@@ -1,12 +1,12 @@
 ﻿using ALife.Core;
 using ALife.Core.Collision;
-using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
 using ALife.Core.WorldObjects;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using ALife.Core.GeometryOld;
+using ALife.Core.GeometryOld.Shapes;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 

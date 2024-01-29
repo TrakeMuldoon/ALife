@@ -1,5 +1,4 @@
 ﻿using ALife.Core;
-using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
 using System;
@@ -7,6 +6,7 @@ using System.Text;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using ALife.Core.GeometryOld.Shapes;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 

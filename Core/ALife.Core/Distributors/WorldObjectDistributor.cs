@@ -13,6 +13,6 @@
             CollisionLevel = collisionLevel;
         }
 
-        public abstract Geometry.Shapes.Point NextObjectCentre(double BBLength, double BBHeight);
+        public abstract ALife.Core.GeometryOld.Shapes.Point NextObjectCentre(double BBLength, double BBHeight);
     }
 }

@@ -59,7 +59,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[CollisionLevel];
 
             //Get a new free Geometry.Shapes.Point within the start zone.
-            Geometry.Shapes.Point myPoint = HomeZone.Distributor.NextObjectCentre(Shape.BoundingBox.XLength, Shape.BoundingBox.YHeight);
+            ALife.Core.GeometryOld.Shapes.Point myPoint = HomeZone.Distributor.NextObjectCentre(Shape.BoundingBox.XLength, Shape.BoundingBox.YHeight);
             Shape.CentrePoint = myPoint;
             collider.MoveObject(this);
 

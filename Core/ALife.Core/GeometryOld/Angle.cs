@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
+using ALife.Core.GeometryOld;
 
 
-namespace ALife.Core.Geometry
+namespace ALife.Core.GeometryOld
 {
     [DebuggerDisplay("Deg:{Degrees}, Rads:{Radians}")]
     public class Angle

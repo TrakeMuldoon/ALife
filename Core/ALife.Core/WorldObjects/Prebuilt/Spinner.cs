@@ -1,13 +1,13 @@
-﻿using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
-using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Utility.Colours;
 using System;
+using ALife.Core.GeometryOld;
+using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.WorldObjects.Prebuilt
 {
     class Spinner : WorldObject
     {
-        public Spinner(Geometry.Shapes.Point centrePoint, IShape shape, string genusLabel, string individualLabel, string collisionLevel, Colour color)
+        public Spinner(ALife.Core.GeometryOld.Shapes.Point centrePoint, IShape shape, string genusLabel, string individualLabel, string collisionLevel, Colour color)
             : base(centrePoint, shape, genusLabel, individualLabel, collisionLevel, color)
         {
         }

@@ -1,6 +1,8 @@
 ﻿using ALife.Core.Utility.Colours;
+using ALife.Core.GeometryOld;
+using ALife.Core.GeometryOld.Shapes;
 
-namespace ALife.Core.Geometry.Shapes
+namespace ALife.Core.GeometryOld.Shapes
 {
     public interface IShape
     {

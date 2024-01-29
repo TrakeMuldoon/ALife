@@ -108,7 +108,7 @@ If they reach the target zone, they will restart in their own zones, and an evol
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[me.CollisionLevel];
 
             //Get a new free Geometry.Shapes.Point within the start zone.
-            Geometry.Shapes.Point myPoint = me.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
+            ALife.Core.GeometryOld.Shapes.Point myPoint = me.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
             me.Shape.CentrePoint = myPoint;
             collider.MoveObject(me);
 
@@ -129,7 +129,7 @@ If they reach the target zone, they will restart in their own zones, and an evol
             Agent child = (Agent)me.Reproduce();
             child.HomeZone = specification.StartZone;
             child.TargetZone = specification.TargetZone;
-            Geometry.Shapes.Point reverseChildPoint = child.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
+            ALife.Core.GeometryOld.Shapes.Point reverseChildPoint = child.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
             child.Shape.CentrePoint = reverseChildPoint;
             child.Shape.Orientation.Degrees = specification.StartOrientation;
             child.Shape.Colour = specification.AgentColor;
@@ -181,8 +181,8 @@ If they reach the target zone, they will restart in their own zones, and an evol
                 }
             }
 
-            Geometry.Shapes.Point rockCP = new Geometry.Shapes.Point((width / 2) + (width / 3), height / 2);
-            Geometry.Shapes.Rectangle rec = new Geometry.Shapes.Rectangle(rockCP, 40, 20, Colour.Black);
+            ALife.Core.GeometryOld.Shapes.Point rockCP = new ALife.Core.GeometryOld.Shapes.Point((width / 2) + (width / 3), height / 2);
+            ALife.Core.GeometryOld.Shapes.Rectangle rec = new ALife.Core.GeometryOld.Shapes.Rectangle(rockCP, 40, 20, Colour.Black);
             FallingRock fr = new FallingRock(rockCP, rec, Colour.Black);
             Planet.World.AddObjectToWorld(fr);
         }

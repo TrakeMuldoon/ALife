@@ -1,5 +1,4 @@
-﻿using ALife.Core.Geometry.Shapes;
-using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
@@ -7,6 +6,7 @@ using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
 using System.Collections.Generic;
+using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.Scenarios.TestScenarios
 {
@@ -25,7 +25,7 @@ namespace ALife.Core.Scenarios.TestScenarios
             agent.HomeZone = parentZone;
             agent.TargetZone = targetZone;
 
-            Geometry.Shapes.Point centrePoint = parentZone.Distributor.NextObjectCentre(10, 10);
+            ALife.Core.GeometryOld.Shapes.Point centrePoint = parentZone.Distributor.NextObjectCentre(10, 10);
 
             IShape myShape = new Circle(centrePoint, 5);
             agent.StartOrientation = startOrientation;
@@ -80,7 +80,7 @@ namespace ALife.Core.Scenarios.TestScenarios
 
         public virtual void PlanetSetup()
         {
-            Zone nullZone = new Zone("Null", "random", Colour.Black, new Geometry.Shapes.Point(0, 0), 1000, 1000);
+            Zone nullZone = new Zone("Null", "random", Colour.Black, new ALife.Core.GeometryOld.Shapes.Point(0, 0), 1000, 1000);
             Planet.World.AddZone(nullZone);
 
             int numAgents = 50;

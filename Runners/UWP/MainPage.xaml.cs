@@ -1,6 +1,4 @@
 ﻿using ALife.Core;
-using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
 using ALife.Core.Scenarios;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
@@ -21,6 +19,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using ALife.Core.GeometryOld;
+using ALife.Core.GeometryOld.Shapes;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 

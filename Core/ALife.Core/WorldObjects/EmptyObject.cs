@@ -1,15 +1,15 @@
-﻿using ALife.Core.Geometry.Shapes;
-using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Utility.Colours;
 using System;
+using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.WorldObjects
 {
     public class EmptyObject : WorldObject
     {
-        public EmptyObject(Geometry.Shapes.Point centrePoint, float startRadius, string collisionLevel) : this(centrePoint, startRadius, collisionLevel, String.Empty)
+        public EmptyObject(ALife.Core.GeometryOld.Shapes.Point centrePoint, float startRadius, string collisionLevel) : this(centrePoint, startRadius, collisionLevel, String.Empty)
         {
         }
-        public EmptyObject(Geometry.Shapes.Point centrePoint, float startRadius, string collisionLevel, string name)
+        public EmptyObject(ALife.Core.GeometryOld.Shapes.Point centrePoint, float startRadius, string collisionLevel, string name)
             : base(centrePoint, new Circle(centrePoint, startRadius), "Empty", name, collisionLevel, Colour.Grey)
         {
         }

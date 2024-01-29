@@ -1,13 +1,13 @@
-﻿using ALife.Core.Geometry.Shapes;
-using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Utility.Colours;
 using System;
+using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.WorldObjects.Prebuilt
 {
     public class SoundEmitter : WorldObject
     {
         private static int EmitterCount = 1;
-        public SoundEmitter(Geometry.Shapes.Point centrePoint) :
+        public SoundEmitter(ALife.Core.GeometryOld.Shapes.Point centrePoint) :
             base(centrePoint, new Circle(1), "SoundEmitter", (++EmitterCount).ToString(), ReferenceValues.CollisionLevelSound, Colour.Black)
         {
         }

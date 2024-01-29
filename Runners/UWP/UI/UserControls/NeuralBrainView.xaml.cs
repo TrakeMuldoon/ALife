@@ -1,5 +1,4 @@
-﻿using ALife.Core.Geometry;
-using ALife.Core.Utility.Maths;
+﻿using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains;
@@ -16,6 +15,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
+using ALife.Core.GeometryOld;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 

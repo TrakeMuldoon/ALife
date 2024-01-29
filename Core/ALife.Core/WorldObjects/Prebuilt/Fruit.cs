@@ -1,6 +1,6 @@
-﻿using ALife.Core.Geometry.Shapes;
-using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Utility.Colours;
 using System;
+using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.WorldObjects.Prebuilt
 {
@@ -11,7 +11,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
         static int FruitID = 1;
         Zone StartZone = null;
 
-        public Fruit(Geometry.Shapes.Point centrePoint, IShape shape, Colour colour, Zone startZone)
+        public Fruit(ALife.Core.GeometryOld.Shapes.Point centrePoint, IShape shape, Colour colour, Zone startZone)
              : base(centrePoint, shape, "Fruit", (Fruit.FruitID++).ToString(), ReferenceValues.CollisionLevelPhysical, colour)
         {
             StartZone = startZone;
@@ -21,7 +21,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
         {
             int fruitRadius = FRUIT_RADIUS;
             int fruitDiameter = fruitRadius * 2;
-            Geometry.Shapes.Point centrePoint = creationZone.Distributor.NextObjectCentre(fruitDiameter, fruitDiameter);
+            ALife.Core.GeometryOld.Shapes.Point centrePoint = creationZone.Distributor.NextObjectCentre(fruitDiameter, fruitDiameter);
 
             Circle fruitCircle = new Circle(centrePoint, fruitRadius);
             Fruit newFruit = new Fruit(centrePoint, fruitCircle, colour, creationZone);

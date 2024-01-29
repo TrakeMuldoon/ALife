@@ -1,13 +1,13 @@
 ﻿using ALife.Core;
 using ALife.Core.Collision;
-using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Prebuilt;
 using System;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using ALife.Core.GeometryOld;
+using ALife.Core.GeometryOld.Shapes;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -90,7 +90,7 @@ namespace ALifeUni.UI.UserControls
             double result;
             if(double.TryParse(tb.Text, out result))
             {
-                theWall.Shape.CentrePoint = new ALife.Core.Geometry.Shapes.Point(result, theWall.Shape.CentrePoint.Y);
+                theWall.Shape.CentrePoint = new ALife.Core.GeometryOld.Shapes.Point(result, theWall.Shape.CentrePoint.Y);
                 FinishChange();
             }
         }
@@ -106,7 +106,7 @@ namespace ALifeUni.UI.UserControls
             double result;
             if(double.TryParse(tb.Text, out result))
             {
-                theWall.Shape.CentrePoint = new ALife.Core.Geometry.Shapes.Point(theWall.Shape.CentrePoint.X, result);
+                theWall.Shape.CentrePoint = new ALife.Core.GeometryOld.Shapes.Point(theWall.Shape.CentrePoint.X, result);
                 FinishChange();
             }
         }
@@ -159,7 +159,7 @@ namespace ALifeUni.UI.UserControls
         {
             try
             {
-                ALife.Core.Geometry.Shapes.Point centre = new ALife.Core.Geometry.Shapes.Point(Double.Parse(WallXPos.Text), Double.Parse(WallYPos.Text));
+                ALife.Core.GeometryOld.Shapes.Point centre = new ALife.Core.GeometryOld.Shapes.Point(Double.Parse(WallXPos.Text), Double.Parse(WallYPos.Text));
                 int Length = Int32.Parse(WallLength.Text);
                 Angle angle = new Angle(Int32.Parse(WallOrientation.Text));
                 Wall w = new Wall(centre, Length, angle, $"Custom_{++customCreated}");

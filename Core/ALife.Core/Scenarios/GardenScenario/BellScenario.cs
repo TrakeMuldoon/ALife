@@ -111,7 +111,7 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
 
             //Move to a random position so they can attempt to find the zone again. 
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[winner.CollisionLevel];
-            Geometry.Shapes.Point myPoint = winner.HomeZone.Distributor.NextObjectCentre(winner.Shape.BoundingBox.XLength, winner.Shape.BoundingBox.YHeight);
+            ALife.Core.GeometryOld.Shapes.Point myPoint = winner.HomeZone.Distributor.NextObjectCentre(winner.Shape.BoundingBox.XLength, winner.Shape.BoundingBox.YHeight);
             winner.Shape.CentrePoint = myPoint;
             collider.MoveObject(winner);
         }
@@ -140,7 +140,7 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
             double height = Planet.World.WorldHeight;
             double width = Planet.World.WorldWidth;
 
-            Zone WorldZone = new Zone("WholeWorld", "Random", Colour.Yellow, new Geometry.Shapes.Point(0, 0), width, height);
+            Zone WorldZone = new Zone("WholeWorld", "Random", Colour.Yellow, new ALife.Core.GeometryOld.Shapes.Point(0, 0), width, height);
             Planet.World.AddZone(WorldZone);
 
 
@@ -158,10 +158,10 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
         private int EmitterPairs = 0;
         private void AddEmitterPair(double x, double y)
         {
-            Geometry.Shapes.Point targetPoint = new Geometry.Shapes.Point(x, y);
+            ALife.Core.GeometryOld.Shapes.Point targetPoint = new ALife.Core.GeometryOld.Shapes.Point(x, y);
             Zone targetZone = new Zone($"{TARGET_ZONENAME_PREFIX}{++EmitterPairs}", "Random", Colour.Red, targetPoint, 12,12);
             Planet.World.AddZone(targetZone);
-            SoundEmitter emitter = new SoundEmitter(new Geometry.Shapes.Point(targetPoint.X + 6, targetPoint.Y + 6));
+            SoundEmitter emitter = new SoundEmitter(new ALife.Core.GeometryOld.Shapes.Point(targetPoint.X + 6, targetPoint.Y + 6));
             Planet.World.AddObjectToWorld(emitter);
         }
 

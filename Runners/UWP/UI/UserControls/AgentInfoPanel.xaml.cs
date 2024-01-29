@@ -1,5 +1,4 @@
-﻿using ALife.Core.Geometry.Shapes;
-using ALife.Core.ImportExport;
+﻿using ALife.Core.ImportExport;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
@@ -10,6 +9,7 @@ using System;
 using System.Text;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml.Controls;
+using ALife.Core.GeometryOld.Shapes;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 

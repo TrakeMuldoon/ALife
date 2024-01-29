@@ -1,6 +1,4 @@
 ﻿using ALife.Core.Collision;
-using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects;
@@ -11,6 +9,8 @@ using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
 using ALife.Core.WorldObjects.Prebuilt;
 using System.Collections.Generic;
+using ALife.Core.GeometryOld;
+using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.Scenarios.TestScenarios
 {
@@ -29,9 +29,9 @@ namespace ALife.Core.Scenarios.TestScenarios
             agent.HomeZone = parentZone;
             agent.TargetZone = targetZone;
 
-            Geometry.Shapes.Point centrePoint = parentZone.Distributor.NextObjectCentre(40, 80);
+            ALife.Core.GeometryOld.Shapes.Point centrePoint = parentZone.Distributor.NextObjectCentre(40, 80);
 
-            IShape myShape = new Geometry.Shapes.Rectangle(centrePoint, 40, 80, color);
+            IShape myShape = new ALife.Core.GeometryOld.Shapes.Rectangle(centrePoint, 40, 80, color);
             agent.StartOrientation = startOrientation;
             myShape.Orientation.Degrees = startOrientation;
             myShape.Colour = color;
@@ -83,7 +83,7 @@ namespace ALife.Core.Scenarios.TestScenarios
 
         public virtual void PlanetSetup()
         {
-            Zone nullZone = new Zone("Null", "random", Colour.Black, new Geometry.Shapes.Point(0, 0), 1000, 1000);
+            Zone nullZone = new Zone("Null", "random", Colour.Black, new ALife.Core.GeometryOld.Shapes.Point(0, 0), 1000, 1000);
             Planet.World.AddZone(nullZone);
 
             //Geometry.Shapes.Point ap = new Geometry.Shapes.Point(30, 30);
@@ -94,7 +94,7 @@ namespace ALife.Core.Scenarios.TestScenarios
             //Agent b = AgentFactory.CreateAgent("Agent", nullZone, nullZone, Colour.Red, 0);
             //b.Shape.CentrePoint = bp;
 
-            Geometry.Shapes.Point mp = new Geometry.Shapes.Point(60, 60);
+            ALife.Core.GeometryOld.Shapes.Point mp = new ALife.Core.GeometryOld.Shapes.Point(60, 60);
             MazeRunner mr = new MazeRunner(nullZone, nullZone);
 
             mr.Shape.CentrePoint = mp;
@@ -103,7 +103,7 @@ namespace ALife.Core.Scenarios.TestScenarios
             //collider.MoveObject(b);
             collider.MoveObject(mr);
 
-            Planet.World.AddObjectToWorld(new Wall(new Geometry.Shapes.Point(299, 78), 200, new Angle(35), "wa"));
+            Planet.World.AddObjectToWorld(new Wall(new ALife.Core.GeometryOld.Shapes.Point(299, 78), 200, new Angle(35), "wa"));
         }
 
         public void GlobalEndOfTurnActions()

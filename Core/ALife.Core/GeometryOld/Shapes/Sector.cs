@@ -2,8 +2,10 @@
 using ALife.Core.Utility.Maths;
 using System;
 using System.Collections.Generic;
+using ALife.Core.GeometryOld;
+using ALife.Core.GeometryOld.Shapes;
 
-namespace ALife.Core.Geometry.Shapes
+namespace ALife.Core.GeometryOld.Shapes
 {
     public class Sector : IShape
     {
@@ -29,7 +31,7 @@ namespace ALife.Core.Geometry.Shapes
             set;
         }
 
-        public virtual Geometry.Shapes.Point CentrePoint
+        public virtual ALife.Core.GeometryOld.Shapes.Point CentrePoint
         {
             get;
             set;
@@ -41,8 +43,8 @@ namespace ALife.Core.Geometry.Shapes
             set;
         }
 
-        private Geometry.Shapes.Point leftPoint;
-        public Geometry.Shapes.Point LeftPoint
+        private ALife.Core.GeometryOld.Shapes.Point leftPoint;
+        public ALife.Core.GeometryOld.Shapes.Point LeftPoint
         {
             get
             {
@@ -54,8 +56,8 @@ namespace ALife.Core.Geometry.Shapes
             }
         }
 
-        private Geometry.Shapes.Point rightPoint;
-        public Geometry.Shapes.Point RightPoint
+        private ALife.Core.GeometryOld.Shapes.Point rightPoint;
+        public ALife.Core.GeometryOld.Shapes.Point RightPoint
         {
             get
             {
@@ -69,7 +71,7 @@ namespace ALife.Core.Geometry.Shapes
 
         private BoundingBox? myBox = null;
 
-        public Sector(Geometry.Shapes.Point centrePoint, float radius, Angle sweepAngle, Colour color)
+        public Sector(ALife.Core.GeometryOld.Shapes.Point centrePoint, float radius, Angle sweepAngle, Colour color)
         {
             CentrePoint = centrePoint;
             Radius = radius;
@@ -103,7 +105,7 @@ namespace ALife.Core.Geometry.Shapes
                 }
             }
             Angle absOrientationAngle = rotation;
-            Geometry.Shapes.Point myOriginPoint = CentrePoint;
+            ALife.Core.GeometryOld.Shapes.Point myOriginPoint = CentrePoint;
 
             List<double> xValues = new List<double>();
             List<double> yValues = new List<double>();
@@ -190,7 +192,7 @@ namespace ALife.Core.Geometry.Shapes
 
         public virtual IShape CloneShape()
         {
-            Sector newSec = new Sector(new Geometry.Shapes.Point(CentrePoint.X, CentrePoint.Y), Radius, SweepAngle.Clone(), (Colour)Colour.Clone());
+            Sector newSec = new Sector(new ALife.Core.GeometryOld.Shapes.Point(CentrePoint.X, CentrePoint.Y), Radius, SweepAngle.Clone(), (Colour)Colour.Clone());
             newSec.Orientation = Orientation.Clone();
             return newSec;
         }

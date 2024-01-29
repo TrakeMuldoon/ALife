@@ -26,15 +26,15 @@ namespace ALife.Core.Scenarios.ScenarioHelpers
             double width = Planet.World.WorldWidth;
 
             Dictionary<Zone, AgentZoneSpec> zoneSpecs = new Dictionary<Zone, AgentZoneSpec>();
-            Zone red = new Zone("Red(->Blue)", "Random", Colour.Red, new Geometry.Shapes.Point(0, 0), 50, height);
-            Zone blue = new Zone("Blue(->Red)", "Random", Colour.Blue, new Geometry.Shapes.Point(width - 50, 0), 50, height);
+            Zone red = new Zone("Red(->Blue)", "Random", Colour.Red, new ALife.Core.GeometryOld.Shapes.Point(0, 0), 50, height);
+            Zone blue = new Zone("Blue(->Red)", "Random", Colour.Blue, new ALife.Core.GeometryOld.Shapes.Point(width - 50, 0), 50, height);
             red.OppositeZone = blue;
             red.OrientationDegrees = 0;
             blue.OppositeZone = red;
             blue.OrientationDegrees = 180;
 
-            Zone green = new Zone("Green(->Orange)", "Random", Colour.Green, new Geometry.Shapes.Point(0, 0), width, 40);
-            Zone orange = new Zone("Orange(->Green)", "Random", Colour.Orange, new Geometry.Shapes.Point(0, height - 40), width, 40);
+            Zone green = new Zone("Green(->Orange)", "Random", Colour.Green, new ALife.Core.GeometryOld.Shapes.Point(0, 0), width, 40);
+            Zone orange = new Zone("Orange(->Green)", "Random", Colour.Orange, new ALife.Core.GeometryOld.Shapes.Point(0, height - 40), width, 40);
             green.OppositeZone = orange;
             green.OrientationDegrees = 90;
             orange.OppositeZone = green;

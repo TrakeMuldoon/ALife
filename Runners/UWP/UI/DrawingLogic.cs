@@ -1,6 +1,4 @@
 ﻿using ALife.Core;
-using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects;
@@ -13,6 +11,8 @@ using System.Linq;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
+using ALife.Core.GeometryOld;
+using ALife.Core.GeometryOld.Shapes;
 
 namespace ALifeUni.UI
 {

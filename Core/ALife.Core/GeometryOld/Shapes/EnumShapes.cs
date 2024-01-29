@@ -1,4 +1,4 @@
-﻿namespace ALife.Core.Geometry.Shapes
+﻿namespace ALife.Core.GeometryOld.Shapes
 {
     public enum ShapesEnum
     {

@@ -1,4 +1,3 @@
-using ALife.Core.Geometry.Shapes;
 using ALife.Core.Scenarios;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
@@ -9,6 +8,7 @@ using ALife.Core.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.ImportExport
 {

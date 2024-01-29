@@ -1,4 +1,8 @@
-﻿using ALife.Avalonia.ALifeImplementations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using ALife.Avalonia.ALifeImplementations;
 using ALife.Avalonia.ViewModels;
 using ALife.Core;
 using ALife.Core.Utility.Colours;
@@ -10,11 +14,8 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Threading;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ALPoint = ALife.Core.Geometry.Shapes.Point;
+using ALPoint = ALife.Core.GeometryOld.Shapes.Point;
+using AvPoint = Avalonia.Point;
 
 namespace ALife.Avalonia.Controls.SingularRunnerControls
 {
@@ -177,7 +178,7 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
                 Pen pen = new(Brushes.Green, 1, lineCap: PenLineCap.Square);
                 Pen boundPen = new(Brushes.Black);
 
-                Point shapePont = new(150 + movement, 150 + movement);
+                AvPoint shapePont = new(150 + movement, 150 + movement);
                 Rect r = new(shapePont.X, shapePont.Y, 12, 20);
                 drawingContext.DrawRectangle(boundPen, r);
                 drawingContext.DrawEllipse(Brushes.Aqua, pen, shapePont, 5, 5);

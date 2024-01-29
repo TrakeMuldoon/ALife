@@ -1,7 +1,10 @@
 ﻿using ALife.Core.Utility.Maths;
 using System;
+using ALife.Core.GeometryOld;
+using ALife.Core.GeometryOld.Shapes;
+using ALife.Core.GeometryOld.Shapes.ChildShapes;
 
-namespace ALife.Core.Geometry.Shapes.ChildShapes
+namespace ALife.Core.GeometryOld.Shapes.ChildShapes
 {
     public class ChildCircle : Circle, IChildShape
     {
@@ -9,7 +12,7 @@ namespace ALife.Core.Geometry.Shapes.ChildShapes
         public readonly Angle OrientationAroundParent;
         public readonly double DistFromParentCentre;
 
-        public override Geometry.Shapes.Point CentrePoint
+        public override ALife.Core.GeometryOld.Shapes.Point CentrePoint
         {
             get
             {

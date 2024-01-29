@@ -158,7 +158,7 @@ If they eat two green mushrooms, they reproduce."
             double height = Planet.World.WorldHeight;
             double width = Planet.World.WorldWidth;
 
-            WorldZone = new Zone("WholeWorld", "Random", Colour.Yellow, new Geometry.Shapes.Point(0, 0), width, height);
+            WorldZone = new Zone("WholeWorld", "Random", Colour.Yellow, new ALife.Core.GeometryOld.Shapes.Point(0, 0), width, height);
             Planet.World.AddZone(WorldZone);
 
             int numAgents = 200;

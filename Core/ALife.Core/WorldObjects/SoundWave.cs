@@ -1,6 +1,6 @@
-﻿using ALife.Core.Geometry.Shapes;
-using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Utility.Colours;
 using System;
+using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.WorldObjects
 {

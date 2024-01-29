@@ -1,12 +1,7 @@
-﻿/*** 
- * This is a historical artifact, and not currently in use 
- * It remains because it might represent something of value someday
- * And it reflects a time when I was very thoroughly thinking about the design of the inheritance tree
- * */
-using ALife.Core.Geometry;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Windows.Foundation;
+using ALife.Core.GeometryOld;
 
 
 namespace ALifeUni.Configs

@@ -1,8 +1,8 @@
 ﻿using ALife.Core.Collision;
-using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Maths;
 using System;
 using System.Collections.Generic;
+using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.WorldObjects.Agents.AgentActions
 {
@@ -74,14 +74,14 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
         private bool Move(double forwardMagnitude, double rightMagnitude)
         {
             IShape theShape = self.Shape;
-            Geometry.Shapes.Point origin = new Geometry.Shapes.Point(theShape.CentrePoint.X, theShape.CentrePoint.Y);
+            ALife.Core.GeometryOld.Shapes.Point origin = new ALife.Core.GeometryOld.Shapes.Point(theShape.CentrePoint.X, theShape.CentrePoint.Y);
 
             //Move forward, then move right from that Geometry.Shapes.Point
             forwardDist = Speed * forwardMagnitude;
             rightDist = Speed * rightMagnitude;
 
-            Geometry.Shapes.Point tempPoint = GeometryMath.TranslateByVector(origin, theShape.Orientation, forwardDist);
-            Geometry.Shapes.Point finalPoint = GeometryMath.TranslateByVector(tempPoint, theShape.Orientation.Radians + (Math.PI / 2), rightDist);
+            ALife.Core.GeometryOld.Shapes.Point tempPoint = GeometryMath.TranslateByVector(origin, theShape.Orientation, forwardDist);
+            ALife.Core.GeometryOld.Shapes.Point finalPoint = GeometryMath.TranslateByVector(tempPoint, theShape.Orientation.Radians + (Math.PI / 2), rightDist);
 
             double halfXLength = theShape.BoundingBox.XLength / 2;
             double halfYHeight = theShape.BoundingBox.YHeight / 2;

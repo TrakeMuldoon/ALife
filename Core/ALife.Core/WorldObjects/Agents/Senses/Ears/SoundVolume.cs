@@ -1,8 +1,8 @@
-﻿using ALife.Core.Geometry.Shapes;
-using ALife.Core.Utility.Maths;
+﻿using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Prebuilt;
 using System;
 using System.Collections.Generic;
+using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.WorldObjects.Agents.Senses.Ears
 {

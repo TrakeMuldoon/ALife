@@ -1,9 +1,9 @@
-﻿using ALife.Core.Geometry.Shapes;
-using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents.Properties;
 using System;
 using System.Collections.Generic;
-using Point = ALife.Core.Geometry.Shapes.Point;
+using Point = ALife.Core.GeometryOld.Shapes.Point;
+using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.WorldObjects
 {

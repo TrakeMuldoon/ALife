@@ -1,8 +1,8 @@
-﻿using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
-using ALife.Core.WorldObjects.Prebuilt;
+﻿using ALife.Core.WorldObjects.Prebuilt;
 using System;
 using System.Collections.Generic;
+using ALife.Core.GeometryOld;
+using ALife.Core.GeometryOld.Shapes;
 
 
 namespace ALife.Core.Scenarios.ScenarioHelpers
@@ -132,7 +132,7 @@ namespace ALife.Core.Scenarios.ScenarioHelpers
 
             walls.AddRange(Build60Curve(230, 280, 1, "Inside NW"));
 
-            walls.Add(new Wall(new Geometry.Shapes.Point(128, 330), 200, new Angle(0), "FinishLine"));
+            walls.Add(new Wall(new ALife.Core.GeometryOld.Shapes.Point(128, 330), 200, new Angle(0), "FinishLine"));
 
             foreach(Wall w in walls)
             {

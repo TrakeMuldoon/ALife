@@ -1,8 +1,8 @@
 ﻿using ALife.Core.Collision;
-using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using System;
 using System.Collections.Generic;
+using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.WorldObjects.Agents.Senses
 {

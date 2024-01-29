@@ -57,9 +57,4 @@
     </Compile>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CollisionDetection\" />
-    <Folder Include="Geometry\" />
-  </ItemGroup>
-
 </Project>

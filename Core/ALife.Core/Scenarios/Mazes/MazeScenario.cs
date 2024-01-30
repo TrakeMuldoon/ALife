@@ -147,7 +147,7 @@ If an agent reaches the goal line, the simuluation stops."
         int bestXNum = 5;
         public virtual void GlobalEndOfTurnActions()
         {
-            List<Agent> winners = Planet.World.BestXAgents;
+            List<Agent> winners = BestXAgents;
             foreach(Agent ag in Planet.World.AllActiveObjects.OfType<Agent>())
             {
                 if(winners.Count < bestXNum)
@@ -189,9 +189,9 @@ If an agent reaches the goal line, the simuluation stops."
             Zone blue = Planet.World.Zones["Blue(Red)"];
             if(Planet.World.AllActiveObjects.OfType<Agent>().Count() < 50)
             {
-                Planet.World.ReproduceBest();
-                Planet.World.ReproduceBest();
-                Planet.World.ReproduceBest();
+                ReproduceBest();
+                ReproduceBest();
+                ReproduceBest();
                 Colour randomColourA = Colour.GetRandomColour(Planet.World.NumberGen);
                 Colour randomColourB = Colour.GetRandomColour(Planet.World.NumberGen);
                 Colour randomColourC = Colour.GetRandomColour(Planet.World.NumberGen);
@@ -206,6 +206,22 @@ If an agent reaches the goal line, the simuluation stops."
                     Planet.World.InactiveObjects.Remove(wo);
                 }
             }
+        }
+
+        public List<Agent> BestXAgents = new List<Agent>();
+        private int bestAgentCounter = 0;
+        public void ReproduceBest()
+        {
+            if(BestXAgents.Count == 0)
+            {
+                return;
+            }
+            if(bestAgentCounter >= BestXAgents.Count)
+            {
+                bestAgentCounter = 0;
+            }
+            BestXAgents[bestAgentCounter].Reproduce();
+            bestAgentCounter++;
         }
     }
 }

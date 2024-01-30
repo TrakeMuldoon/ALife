@@ -225,23 +225,6 @@ namespace ALife.Core
             Scenario.GlobalEndOfTurnActions();
         }
 
-        //TODO: Move this out to a Scenario helper. The Planet shouldn't have a concept of "BEST"
-        public List<Agent> BestXAgents = new List<Agent>();
-        private int bestAgentCounter = 0;
-        public void ReproduceBest()
-        {
-            if(BestXAgents.Count == 0)
-            {
-                return;
-            }
-            if(bestAgentCounter >= BestXAgents.Count)
-            {
-                bestAgentCounter = 0;
-            }
-            BestXAgents[bestAgentCounter].Reproduce();
-            bestAgentCounter++;
-        }
-
         internal void RemoveWorldObject(WorldObject mySelf)
         {
             string collisionLevel = mySelf.CollisionLevel;

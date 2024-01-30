@@ -26,35 +26,42 @@ namespace ALife.Core.Scenarios
         /*   AGENT STUFF  */
         /******************/
 
+        //TODO: Fully Comment This
         public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
-            //TODO: Fully Comment This
+
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Agent End Of Turn Triggers is a function which will be executed at the end of every Scenario Agent's turn.
+        /// Any manual statistic updating, state checking, win conditions or other activities should be done here.
+        /// </summary>
+        /// <param name="me"></param>
         public virtual void AgentEndOfTurnTriggers(Agent me)
         {
-            //TODO: Fully Comment This
             //Default, nothing happens
-        }
-
-        public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
-        {
-            //TODO: Fully Comment This
-            //Default, nothing
         }
 
         /******************/
         /*  PLANET STUFF  */
         /******************/
 
-        //TODO: Fully Comment This
+        /// <summary>
+        /// The width of the Simulation space.
+        /// </summary>
         public virtual int WorldWidth => throw new NotImplementedException();
 
-        //TODO: Fully Comment This
+        /// <summary>
+        /// The height of the simulation space.
+        /// </summary>
         public virtual int WorldHeight => throw new NotImplementedException();
 
-        //TODO: Fully Comment This
+        /// <summary>
+        /// This property is to indicate if the Scenario makes sense at arbitrary widths and heights.
+        /// For instance, most of the maze scenarios are fixed width/height, because the mazes are fixed position.
+        /// The Garden scenarios tend to not be fixed width/height, as the size of the garden does not impact the scenario.
+        /// </summary>
         public virtual bool FixedWidthHeight
         {
             get { return false; }
@@ -66,7 +73,13 @@ namespace ALife.Core.Scenarios
             throw new NotImplementedException();
         }
 
-        //TODO: Fully Comment This
+        /// <summary>
+        /// This function is executed after:
+        /// 1. Every Active WorldObject has taken a turn
+        /// 2. all the new WorldObjects have been added to the Active list.
+        /// 3. all the discarded WorldObjects have been removed from the ActiveList.
+        /// This function is executed, and then a new WorldTurn begins.
+        /// </summary>
         public virtual void GlobalEndOfTurnActions()
         {
             //Default, no special actions

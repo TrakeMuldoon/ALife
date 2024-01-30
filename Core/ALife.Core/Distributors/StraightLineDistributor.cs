@@ -43,6 +43,7 @@ namespace ALife.Core.Distributors
 
     public class StraightLineAgentDistributor : WorldObjectDistributor
     {
+        private const int MAX_PLACEMENT_ATTEMPTS = 15;
         private readonly StraightLineDistributorConfig Config;
 
         public StraightLineAgentDistributor(Zone startZone, bool trackCollisions, string collisionLevel, StraightLineDistributorConfig config) : base(startZone, trackCollisions, collisionLevel)
@@ -91,7 +92,7 @@ namespace ALife.Core.Distributors
                 counter++;
                 attempts++;
             } while(collisions.Count > 0
-                    && attempts < 10); //TODO: number of attempts is hardcoded here
+                    && attempts < MAX_PLACEMENT_ATTEMPTS); 
 
             if(collisions.Count == 0)
             {

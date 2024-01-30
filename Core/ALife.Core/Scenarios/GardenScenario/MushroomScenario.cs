@@ -130,14 +130,10 @@ If they eat two green mushrooms, they reproduce."
         /******************/
         /*  PLANET STUFF  */
         /******************/
-
-        //TODO: Fully Comment This
         public virtual int WorldWidth => 850;
 
-        //TODO: Fully Comment This
         public virtual int WorldHeight => 850;
 
-        //TODO: Fully Comment This
         public virtual bool FixedWidthHeight
         {
             get { return false; }

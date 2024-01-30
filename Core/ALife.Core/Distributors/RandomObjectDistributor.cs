@@ -7,6 +7,8 @@ namespace ALife.Core.Distributors
 {
     public class RandomObjectDistributor : WorldObjectDistributor
     {
+        private const int MAX_PLACEMENT_ATTEMPTS = 15;
+
         public RandomObjectDistributor(Zone startZone, bool trackCollisions, string collisionLevel) : base(startZone, trackCollisions, collisionLevel)
         {
         }
@@ -41,7 +43,7 @@ namespace ALife.Core.Distributors
                 collisions = Planet.World.CollisionLevels[CollisionLevel].QueryForBoundingBoxCollisions(bb);
                 attempts++;
             } while(collisions.Count > 0
-                    && attempts < 15); //TODO: number of attempts is hardcoded here
+                    && attempts < MAX_PLACEMENT_ATTEMPTS);
 
             if(collisions.Count == 0)
             {

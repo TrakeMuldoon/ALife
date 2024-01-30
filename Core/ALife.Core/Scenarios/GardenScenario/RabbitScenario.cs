@@ -142,13 +142,10 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
         /*  PLANET STUFF  */
         /******************/
 
-        //TODO: Fully Comment This
         public virtual int WorldWidth => 735;
 
-        //TODO: Fully Comment This
         public virtual int WorldHeight => 735;
 
-        //TODO: Fully Comment This
         public virtual bool FixedWidthHeight => false;
 
 
@@ -170,7 +167,6 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
 
         }
 
-        //TODO: Fully Comment This
         public virtual void GlobalEndOfTurnActions()
         {
             //Default, no special actions

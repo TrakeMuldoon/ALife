@@ -148,36 +148,15 @@ namespace ALife.Core.CollisionDetection
         public double Y => _y;
 
         /// <summary>
-        /// Clones this instance.
-        /// </summary>
-        /// <returns>The cloned instance.</returns>
-        public BoundingBox Clone()
-        {
-            return new BoundingBox(this);
-        }
-
-        /// <summary>
-        /// Determines whether the specified <see cref="System.Object"/>, is equal to this instance.
-        /// </summary>
-        /// <param name="obj">The <see cref="System.Object"/> to compare with this instance.</param>
-        /// <returns>
-        /// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise, <c>false</c>.
-        /// </returns>
-        public override bool Equals(object obj)
-        {
-            return obj is BoundingBox bb && bb.X == _x && bb.Y == _y && bb.Width == _width && bb.Height == _height;
-        }
-
-        /// <summary>
         /// Combines the specified bounding boxes into a single bounding box.
         /// </summary>
         /// <param name="boxes">The boxes.</param>
-        public BoundingBox FromBoundingBoxes(params BoundingBox[] boxes)
+        public static BoundingBox FromBoundingBoxes(params BoundingBox[] boxes)
         {
-            double minX = _x;
-            double minY = _y;
-            double maxX = MaxX;
-            double maxY = MaxY;
+            double minX = int.MaxValue;
+            double minY = int.MaxValue;
+            double maxX = int.MinValue;
+            double maxY = int.MinValue;
 
             foreach(BoundingBox box in boxes)
             {
@@ -211,7 +190,7 @@ namespace ALife.Core.CollisionDetection
         /// <param name="maxX">The maximum x.</param>
         /// <param name="maxY">The maximum y.</param>
         /// <returns>The new BoundingBox.</returns>
-        public BoundingBox FromMinXMinYMaxXMaxY(double minX, double minY, double maxX, double maxY)
+        public static BoundingBox FromMinXMinYMaxXMaxY(double minX, double minY, double maxX, double maxY)
         {
             if(minX > maxX)
             {
@@ -236,9 +215,30 @@ namespace ALife.Core.CollisionDetection
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
         /// <returns>The new BoundingBox.</returns>
-        public BoundingBox FromXYWidthHeight(double x, double y, double width, double height)
+        public static BoundingBox FromXYWidthHeight(double x, double y, double width, double height)
         {
             return new BoundingBox(x, y, width, height);
+        }
+
+        /// <summary>
+        /// Clones this instance.
+        /// </summary>
+        /// <returns>The cloned instance.</returns>
+        public BoundingBox Clone()
+        {
+            return new BoundingBox(this);
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object"/>, is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object"/> to compare with this instance.</param>
+        /// <returns>
+        /// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
+        public override bool Equals(object obj)
+        {
+            return obj is BoundingBox bb && bb.X == _x && bb.Y == _y && bb.Width == _width && bb.Height == _height;
         }
 
         /// <summary>

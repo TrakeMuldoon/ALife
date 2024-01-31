@@ -91,17 +91,17 @@ namespace ALife.Core.Collision
             int yMinBucket = (int)(bb.MinY) / GridSize;
 
             //This creates a list of grid buckets that the agent falls within
-            List<Geometry.Shapes.Point> myCoords = new List<Geometry.Shapes.Point>();
+            List<Point> myCoords = new List<Point>();
             for(int x = xMinBucket; x <= xMaxBucket; x++)
             {
                 for(int y = yMinBucket; y <= yMaxBucket; y++)
                 {
-                    myCoords.Add(new Geometry.Shapes.Point(x, y));
+                    myCoords.Add(new Point(x, y));
                 }
             }
 
             //insert into all applicable buckets
-            foreach(Geometry.Shapes.Point gc in myCoords)
+            foreach(Point gc in myCoords)
             {
                 if(gc.X < 0
                    || gc.Y < 0
@@ -129,8 +129,8 @@ namespace ALife.Core.Collision
         public void RemoveObject(T killMe)
         {
             trackedObjects.Remove(killMe);
-            List<Geometry.Shapes.Point> myCoords = agentLocationTracker[killMe];
-            foreach(Geometry.Shapes.Point coord in myCoords)
+            List<Point> myCoords = agentLocationTracker[killMe];
+            foreach(Point coord in myCoords)
             {
                 //In case some objects go out of bounds.
                 if(coord.X < 0

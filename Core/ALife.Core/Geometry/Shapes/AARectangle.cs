@@ -5,13 +5,13 @@ namespace ALife.Core.Geometry.Shapes
 {
     public class AARectangle : IShape
     {
-        public Geometry.Shapes.Point CentrePoint
+        public Point CentrePoint
         {
             get
             {
                 double cpX = TopLeft.X + XWidth / 2;
                 double cpY = TopLeft.Y + YHeight / 2;
-                return new Geometry.Shapes.Point(cpX, cpY);
+                return new Point(cpX, cpY);
             }
             set
             {
@@ -21,7 +21,7 @@ namespace ALife.Core.Geometry.Shapes
 
         private Angle ori = new Angle(0);
 
-        public AARectangle(Geometry.Shapes.Point topLeft, double xWidth, double yHeight, Colour color)
+        public AARectangle(Point topLeft, double xWidth, double yHeight, Colour color)
         {
             XWidth = xWidth;
             YHeight = yHeight;
@@ -40,7 +40,7 @@ namespace ALife.Core.Geometry.Shapes
             set;
         }
 
-        public Geometry.Shapes.Point TopLeft
+        public Point TopLeft
         {
             get;
             set;

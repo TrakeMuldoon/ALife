@@ -1,4 +1,7 @@
-﻿using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Geometry;
+using ALife.Core.Geometry.Shapes;
+using ALife.Core.Geometry.Shapes.ChildShapes;
+using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.Maths;
 using System;
 
@@ -37,8 +40,8 @@ namespace ALife.Core.Geometry.Shapes.ChildShapes
             Parent = parent;
         }
 
-        private Geometry.Shapes.Point? myCentrePoint;
-        public override Geometry.Shapes.Point CentrePoint
+        private Point? myCentrePoint;
+        public override Point CentrePoint
         {
             get
             {
@@ -56,7 +59,7 @@ namespace ALife.Core.Geometry.Shapes.ChildShapes
 
         private void GenerateCentrePoint()
         {
-            Geometry.Shapes.Point centre = GeometryMath.TranslateByVector(Parent.CentrePoint, AbsoluteOrientation, DistFromParentCentre + (FBLength / 2));
+            Point centre = GeometryMath.TranslateByVector(Parent.CentrePoint, AbsoluteOrientation, DistFromParentCentre + (FBLength / 2));
             myCentrePoint = centre;
         }
 

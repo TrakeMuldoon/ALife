@@ -7,7 +7,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
     public class SoundEmitter : WorldObject
     {
         private static int EmitterCount = 1;
-        public SoundEmitter(Geometry.Shapes.Point centrePoint) :
+        public SoundEmitter(Point centrePoint) :
             base(centrePoint, new Circle(1), "SoundEmitter", (++EmitterCount).ToString(), ReferenceValues.CollisionLevelSound, Colour.Black)
         {
         }

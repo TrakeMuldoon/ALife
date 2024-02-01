@@ -9,7 +9,7 @@ namespace ALife.Core.Geometry.Shapes.ChildShapes
         public readonly Angle OrientationAroundParent;
         public readonly double DistFromParentCentre;
 
-        public override Geometry.Shapes.Point CentrePoint
+        public override Point CentrePoint
         {
             get
             {

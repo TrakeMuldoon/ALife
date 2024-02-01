@@ -24,7 +24,7 @@ namespace ALife.Core.Scenarios.TestScenarios
             agent.HomeZone = parentZone;
             agent.TargetZone = targetZone;
 
-            Geometry.Shapes.Point centrePoint = parentZone.Distributor.NextObjectCentre(10, 10);
+            Point centrePoint = parentZone.Distributor.NextObjectCentre(10, 10);
 
             IShape myShape = new Circle(centrePoint, 5);
             agent.StartOrientation = startOrientation;
@@ -76,8 +76,8 @@ namespace ALife.Core.Scenarios.TestScenarios
 
         public virtual void PlanetSetup()
         {
-            Zone nullZone = new Zone("Null", "random", Colour.Green, new Geometry.Shapes.Point(0, 0), 500, 500);
-            Zone blueZone = new Zone("Blue", "random", Colour.Blue, new Geometry.Shapes.Point(200, 200), 50, 50);
+            Zone nullZone = new Zone("Null", "random", Colour.Green, new Point(0, 0), 500, 500);
+            Zone blueZone = new Zone("Blue", "random", Colour.Blue, new Point(200, 200), 50, 50);
             Planet.World.AddZone(nullZone);
             Planet.World.AddZone(blueZone);
 

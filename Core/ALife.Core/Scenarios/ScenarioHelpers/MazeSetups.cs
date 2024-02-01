@@ -132,7 +132,7 @@ namespace ALife.Core.Scenarios.ScenarioHelpers
 
             walls.AddRange(Build60Curve(230, 280, 1, "Inside NW"));
 
-            walls.Add(new Wall(new Geometry.Shapes.Point(128, 330), 200, new Angle(0), "FinishLine"));
+            walls.Add(new Wall(new Point(128, 330), 200, new Angle(0), "FinishLine"));
 
             foreach(Wall w in walls)
             {

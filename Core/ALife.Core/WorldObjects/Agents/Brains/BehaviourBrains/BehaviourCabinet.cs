@@ -81,6 +81,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains
             //A strange, but simple, little algorithm.
             //Each type has a different number of values, so there is no simple way to go directly to the correct type for that random number
             //So we must iteratively subtract each type until we find the one that the number lies within.
+            //TODO: xplain this a little better.
             int randomNumber = Planet.World.NumberGen.Next(0, totalInputs);
             foreach(Type aType in TypeToListBI.Keys)
             {

@@ -29,7 +29,7 @@ namespace ALife.Core
         public readonly WorldObjectDistributor Distributor;
 
         public Zone(String name, String distributorType, Colour color
-                    , Geometry.Shapes.Point topLeft, double xWidth, double yHeight) : base(topLeft, xWidth, yHeight, color)
+                    , Point topLeft, double xWidth, double yHeight) : base(topLeft, xWidth, yHeight, color)
         {
             Colour lowAlpha = new Colour(Colour)
             {

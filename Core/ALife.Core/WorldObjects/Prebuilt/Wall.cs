@@ -28,7 +28,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
             }
         }
 
-        public Wall(Geometry.Shapes.Point centrePoint, double Length, Angle orientation, string individualLabel)
+        public Wall(Point centrePoint, double Length, Angle orientation, string individualLabel)
             : base("Wall", individualLabel, ReferenceValues.CollisionLevelPhysical)
         {
 
@@ -75,7 +75,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
                 Angle ori = wall.Shape.Orientation.Clone();
                 double indexer = i - ((numSplits + 1) / 2.0);
 
-                Geometry.Shapes.Point p = GeometryMath.TranslateByVector(wall.Shape.CentrePoint, ori, segmentLength * indexer);
+                Point p = GeometryMath.TranslateByVector(wall.Shape.CentrePoint, ori, segmentLength * indexer);
                 Wall w = new Wall(p, segmentLength, ori, wall.IndividualLabel + "~" + (i + 1));
                 segments.Add(w);
             }

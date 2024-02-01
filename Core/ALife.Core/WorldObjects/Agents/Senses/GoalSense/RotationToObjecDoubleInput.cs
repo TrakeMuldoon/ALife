@@ -9,7 +9,6 @@ namespace ALife.Core.WorldObjects.Agents.Senses.GoalSense
         {
         }
 
-        //TODO: Add Deprecated tag to this so it's a compiler error, instead.
         public override void SetValue(List<WorldObject> collisions)
         {
             throw new InvalidOperationException("Do Not Use this SetValue on RotationToObjectDoubleInput");

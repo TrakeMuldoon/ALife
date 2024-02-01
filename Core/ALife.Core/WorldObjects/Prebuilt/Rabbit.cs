@@ -1,4 +1,5 @@
 ﻿using ALife.Core.Collision;
+using ALife.Core.Geometry.Shapes;
 using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents;
@@ -58,8 +59,8 @@ namespace ALife.Core.WorldObjects.Prebuilt
         {
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[CollisionLevel];
 
-            //Get a new free Geometry.Shapes.Point within the start zone.
-            Geometry.Shapes.Point myPoint = HomeZone.Distributor.NextObjectCentre(Shape.BoundingBox.XLength, Shape.BoundingBox.YHeight);
+            //Get a new free Point within the start zone.
+            Point myPoint = HomeZone.Distributor.NextObjectCentre(Shape.BoundingBox.XLength, Shape.BoundingBox.YHeight);
             Shape.CentrePoint = myPoint;
             collider.MoveObject(this);
 

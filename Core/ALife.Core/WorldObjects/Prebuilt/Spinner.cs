@@ -7,7 +7,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
 {
     class Spinner : WorldObject
     {
-        public Spinner(Geometry.Shapes.Point centrePoint, IShape shape, string genusLabel, string individualLabel, string collisionLevel, Colour color)
+        public Spinner(Point centrePoint, IShape shape, string genusLabel, string individualLabel, string collisionLevel, Colour color)
             : base(centrePoint, shape, genusLabel, individualLabel, collisionLevel, color)
         {
         }

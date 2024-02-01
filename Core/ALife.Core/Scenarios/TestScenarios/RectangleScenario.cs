@@ -29,9 +29,9 @@ namespace ALife.Core.Scenarios.TestScenarios
             agent.HomeZone = parentZone;
             agent.TargetZone = targetZone;
 
-            Geometry.Shapes.Point centrePoint = parentZone.Distributor.NextObjectCentre(40, 80);
+            Point centrePoint = parentZone.Distributor.NextObjectCentre(40, 80);
 
-            IShape myShape = new Geometry.Shapes.Rectangle(centrePoint, 40, 80, color);
+            IShape myShape = new Rectangle(centrePoint, 40, 80, color);
             agent.StartOrientation = startOrientation;
             myShape.Orientation.Degrees = startOrientation;
             myShape.Colour = color;
@@ -83,18 +83,18 @@ namespace ALife.Core.Scenarios.TestScenarios
 
         public virtual void PlanetSetup()
         {
-            Zone nullZone = new Zone("Null", "random", Colour.Black, new Geometry.Shapes.Point(0, 0), 1000, 1000);
+            Zone nullZone = new Zone("Null", "random", Colour.Black, new Point(0, 0), 1000, 1000);
             Planet.World.AddZone(nullZone);
 
-            //Geometry.Shapes.Point ap = new Geometry.Shapes.Point(30, 30);
+            //Point ap = new Point(30, 30);
             //Agent a = AgentFactory.CreateAgent("Agent", nullZone, nullZone, Colour.Red, 0);
             //a.Shape.CentrePoint = ap;
 
-            //Geometry.Shapes.Point bp = new Geometry.Shapes.Point(60, 100);
+            //Point bp = new Point(60, 100);
             //Agent b = AgentFactory.CreateAgent("Agent", nullZone, nullZone, Colour.Red, 0);
             //b.Shape.CentrePoint = bp;
 
-            Geometry.Shapes.Point mp = new Geometry.Shapes.Point(60, 60);
+            Point mp = new Point(60, 60);
             MazeRunner mr = new MazeRunner(nullZone, nullZone);
 
             mr.Shape.CentrePoint = mp;
@@ -103,7 +103,7 @@ namespace ALife.Core.Scenarios.TestScenarios
             //collider.MoveObject(b);
             collider.MoveObject(mr);
 
-            Planet.World.AddObjectToWorld(new Wall(new Geometry.Shapes.Point(299, 78), 200, new Angle(35), "wa"));
+            Planet.World.AddObjectToWorld(new Wall(new Point(299, 78), 200, new Angle(35), "wa"));
         }
 
         public void GlobalEndOfTurnActions()

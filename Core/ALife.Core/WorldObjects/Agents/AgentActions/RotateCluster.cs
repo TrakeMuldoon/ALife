@@ -38,7 +38,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
             return false;
         }
 
-        double netTurn = -999;
+        double netTurn = 0;
 
         protected override bool AttemptEnact()
         {
@@ -57,7 +57,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
             //    netTurn = netRightTurnPercent * MAXIMUM_TURN_DEGREES;
             //}
 
-            netTurn = netRightTurnPercent * MAXIMUM_TURN_DEGREES; //TODO: Abstract this into a config or the scenario
+            netTurn = netRightTurnPercent * MAXIMUM_TURN_DEGREES;
 
             Angle myOrientation = self.Shape.Orientation;
             myOrientation.Degrees += netTurn;

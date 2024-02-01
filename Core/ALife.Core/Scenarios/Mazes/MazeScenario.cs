@@ -1,4 +1,5 @@
-﻿using ALife.Core.Scenarios.ScenarioHelpers;
+﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility.Collections;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.EvoNumbers;
@@ -124,8 +125,8 @@ If an agent reaches the goal line, the simuluation stops."
             double height = instance.WorldHeight;
             double width = instance.WorldWidth;
 
-            Zone red = new Zone("Red(Blue)", "Random", Colour.Red, new Geometry.Shapes.Point(0, 0), 50, height);
-            Zone blue = new Zone("Blue(Red)", "Random", Colour.Blue, new Geometry.Shapes.Point(width - 50, 0), 50, height);
+            Zone red = new Zone("Red(Blue)", "Random", Colour.Red, new Point(0, 0), 50, height);
+            Zone blue = new Zone("Blue(Red)", "Random", Colour.Blue, new Point(width - 50, 0), 50, height);
             red.OppositeZone = blue;
             red.OrientationDegrees = 0;
 
@@ -147,7 +148,7 @@ If an agent reaches the goal line, the simuluation stops."
         int bestXNum = 5;
         public virtual void GlobalEndOfTurnActions()
         {
-            List<Agent> winners = Planet.World.BestXAgents;
+            List<Agent> winners = BestXAgents;
             foreach(Agent ag in Planet.World.AllActiveObjects.OfType<Agent>())
             {
                 if(winners.Count < bestXNum)
@@ -189,9 +190,9 @@ If an agent reaches the goal line, the simuluation stops."
             Zone blue = Planet.World.Zones["Blue(Red)"];
             if(Planet.World.AllActiveObjects.OfType<Agent>().Count() < 50)
             {
-                Planet.World.ReproduceBest();
-                Planet.World.ReproduceBest();
-                Planet.World.ReproduceBest();
+                ReproduceBest();
+                ReproduceBest();
+                ReproduceBest();
                 Colour randomColourA = Colour.GetRandomColour(Planet.World.NumberGen);
                 Colour randomColourB = Colour.GetRandomColour(Planet.World.NumberGen);
                 Colour randomColourC = Colour.GetRandomColour(Planet.World.NumberGen);
@@ -206,6 +207,22 @@ If an agent reaches the goal line, the simuluation stops."
                     Planet.World.InactiveObjects.Remove(wo);
                 }
             }
+        }
+
+        public List<Agent> BestXAgents = new List<Agent>();
+        private int bestAgentCounter = 0;
+        public void ReproduceBest()
+        {
+            if(BestXAgents.Count == 0)
+            {
+                return;
+            }
+            if(bestAgentCounter >= BestXAgents.Count)
+            {
+                bestAgentCounter = 0;
+            }
+            BestXAgents[bestAgentCounter].Reproduce();
+            bestAgentCounter++;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ALife.Core.Geometry;
+using ALife.Core.Geometry.Shapes;
 using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
@@ -61,8 +62,8 @@ If they reach the target zone, they will restart in their own zones, and an evol
             {
                 int angleDelta = i % 2 == 0 ? 10 : -10;
 
-                walls.Add(new Wall(new Geometry.Shapes.Point(50 + (i * 65), 100 + (i * 65)), 50, new Angle(angleDelta), $"x-1.{i}"));
-                walls.Add(new Wall(new Geometry.Shapes.Point(950 - (i * 65), 100 + (i * 65)), 50, new Angle(90 + angleDelta), $"x-2.{i}"));
+                walls.Add(new Wall(new Point(50 + (i * 65), 100 + (i * 65)), 50, new Angle(angleDelta), $"x-1.{i}"));
+                walls.Add(new Wall(new Point(950 - (i * 65), 100 + (i * 65)), 50, new Angle(90 + angleDelta), $"x-2.{i}"));
             }
 
             walls.ForEach(w => Planet.World.AddObjectToWorld(w));

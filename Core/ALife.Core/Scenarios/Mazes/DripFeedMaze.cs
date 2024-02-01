@@ -1,4 +1,5 @@
-﻿using ALife.Core.Scenarios.ScenarioHelpers;
+﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility.Collections;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
@@ -141,8 +142,8 @@ If an agent reaches the goal line, the simuluation stops."
             double height = instance.WorldHeight;
             double width = instance.WorldWidth;
 
-            startZone = new Zone("Red(Blue)", "Random", Colour.Red, new Geometry.Shapes.Point(0, 0), 50, height);
-            endZone = new Zone("Blue(Red)", "Random", Colour.Blue, new Geometry.Shapes.Point(width - 50, 0), 50, height);
+            startZone = new Zone("Red(Blue)", "Random", Colour.Red, new Point(0, 0), 50, height);
+            endZone = new Zone("Blue(Red)", "Random", Colour.Blue, new Point(width - 50, 0), 50, height);
             startZone.OppositeZone = endZone;
             startZone.OrientationDegrees = 0;
 

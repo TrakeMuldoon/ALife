@@ -74,14 +74,14 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
         private bool Move(double forwardMagnitude, double rightMagnitude)
         {
             IShape theShape = self.Shape;
-            Geometry.Shapes.Point origin = new Geometry.Shapes.Point(theShape.CentrePoint.X, theShape.CentrePoint.Y);
+            Point origin = new Point(theShape.CentrePoint.X, theShape.CentrePoint.Y);
 
-            //Move forward, then move right from that Geometry.Shapes.Point
+            //Move forward, then move right from that Point
             forwardDist = Speed * forwardMagnitude;
             rightDist = Speed * rightMagnitude;
 
-            Geometry.Shapes.Point tempPoint = GeometryMath.TranslateByVector(origin, theShape.Orientation, forwardDist);
-            Geometry.Shapes.Point finalPoint = GeometryMath.TranslateByVector(tempPoint, theShape.Orientation.Radians + (Math.PI / 2), rightDist);
+            Point tempPoint = GeometryMath.TranslateByVector(origin, theShape.Orientation, forwardDist);
+            Point finalPoint = GeometryMath.TranslateByVector(tempPoint, theShape.Orientation.Radians + (Math.PI / 2), rightDist);
 
             double halfXLength = theShape.BoundingBox.XLength / 2;
             double halfYHeight = theShape.BoundingBox.YHeight / 2;

@@ -1,4 +1,5 @@
-﻿using ALife.Core.Scenarios.ScenarioHelpers;
+﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility.Collections;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.EvoNumbers;
@@ -142,13 +143,10 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
         /*  PLANET STUFF  */
         /******************/
 
-        //TODO: Fully Comment This
         public virtual int WorldWidth => 735;
 
-        //TODO: Fully Comment This
         public virtual int WorldHeight => 735;
 
-        //TODO: Fully Comment This
         public virtual bool FixedWidthHeight => false;
 
 
@@ -157,7 +155,7 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
             double height = Planet.World.WorldHeight;
             double width = Planet.World.WorldWidth;
 
-            Zone worldZone = new Zone("WholeWorld", "Random", Colour.Yellow, new Geometry.Shapes.Point(0, 0), width, height);
+            Zone worldZone = new Zone("WholeWorld", "Random", Colour.Yellow, new Point(0, 0), width, height);
             Planet.World.AddZone(worldZone);
 
             TargetRabbit = new Rabbit(worldZone);
@@ -170,7 +168,6 @@ If the agents bump into the rabbit, they reproduce 5 times, and the rabbit respa
 
         }
 
-        //TODO: Fully Comment This
         public virtual void GlobalEndOfTurnActions()
         {
             //Default, no special actions

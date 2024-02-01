@@ -27,9 +27,9 @@ namespace ALifeUni.ScenarioRunners.ScenarioRunnerConfigs
             // Find all the types in the assembly that are subclasses of AbstractScenarioRunnerConfig and have the
             // ScenarioRunnerConfigRegistration attribute
             Type[] typesInAssembly = Assembly.GetCallingAssembly().GetTypes();
-            List<Type> potentialConfigs = typesInAssembly.Where(x => x.IsClass 
-                                                                && !x.IsAbstract 
-                                                                && x.IsSubclassOf(typeof(AbstractScenarionRunnerConfig)) 
+            List<Type> potentialConfigs = typesInAssembly.Where(x => x.IsClass
+                                                                && !x.IsAbstract
+                                                                && x.IsSubclassOf(typeof(AbstractScenarionRunnerConfig))
                                                                 && x.IsDefined(typeof(ScenarioRunnerConfigRegistration), false)
                                                                 ).ToList();
 

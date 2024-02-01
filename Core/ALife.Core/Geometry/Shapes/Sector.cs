@@ -29,7 +29,7 @@ namespace ALife.Core.Geometry.Shapes
             set;
         }
 
-        public virtual Geometry.Shapes.Point CentrePoint
+        public virtual Point CentrePoint
         {
             get;
             set;
@@ -41,8 +41,8 @@ namespace ALife.Core.Geometry.Shapes
             set;
         }
 
-        private Geometry.Shapes.Point leftPoint;
-        public Geometry.Shapes.Point LeftPoint
+        private Point leftPoint;
+        public Point LeftPoint
         {
             get
             {
@@ -54,8 +54,8 @@ namespace ALife.Core.Geometry.Shapes
             }
         }
 
-        private Geometry.Shapes.Point rightPoint;
-        public Geometry.Shapes.Point RightPoint
+        private Point rightPoint;
+        public Point RightPoint
         {
             get
             {
@@ -69,7 +69,7 @@ namespace ALife.Core.Geometry.Shapes
 
         private BoundingBox? myBox = null;
 
-        public Sector(Geometry.Shapes.Point centrePoint, float radius, Angle sweepAngle, Colour color)
+        public Sector(Point centrePoint, float radius, Angle sweepAngle, Colour color)
         {
             CentrePoint = centrePoint;
             Radius = radius;
@@ -103,7 +103,7 @@ namespace ALife.Core.Geometry.Shapes
                 }
             }
             Angle absOrientationAngle = rotation;
-            Geometry.Shapes.Point myOriginPoint = CentrePoint;
+            Point myOriginPoint = CentrePoint;
 
             List<double> xValues = new List<double>();
             List<double> yValues = new List<double>();
@@ -190,7 +190,7 @@ namespace ALife.Core.Geometry.Shapes
 
         public virtual IShape CloneShape()
         {
-            Sector newSec = new Sector(new Geometry.Shapes.Point(CentrePoint.X, CentrePoint.Y), Radius, SweepAngle.Clone(), (Colour)Colour.Clone());
+            Sector newSec = new Sector(new Point(CentrePoint.X, CentrePoint.Y), Radius, SweepAngle.Clone(), (Colour)Colour.Clone());
             newSec.Orientation = Orientation.Clone();
             return newSec;
         }

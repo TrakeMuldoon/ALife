@@ -84,7 +84,7 @@ namespace ALife.Core.WorldObjects.Agents
             TargetZone = targetZone;
         }
 
-        internal void ApplyCircleShapeToAgent(Geometry.Shapes.Point centrePoint, Colour colour, int circleRadius, double startOrientation)
+        internal void ApplyCircleShapeToAgent(Point centrePoint, Colour colour, int circleRadius, double startOrientation)
         {
             IShape myShape = new Circle(centrePoint, circleRadius);
             StartOrientation = startOrientation;
@@ -95,7 +95,7 @@ namespace ALife.Core.WorldObjects.Agents
 
         internal void ApplyCircleShapeToAgent(WorldObjectDistributor distributor, Colour colour, int circleRadius, double startOrientation)
         {
-            Geometry.Shapes.Point centrePoint = distributor.NextObjectCentre(circleRadius * 2, circleRadius * 2);
+            Point centrePoint = distributor.NextObjectCentre(circleRadius * 2, circleRadius * 2);
             IShape myShape = new Circle(centrePoint, circleRadius);
             StartOrientation = startOrientation;
             myShape.Orientation.Degrees = startOrientation;
@@ -203,8 +203,6 @@ namespace ALife.Core.WorldObjects.Agents
 
 
         public virtual void ScenarioEndOfTurnTriggers()
-
-
         {
             Planet.World.Scenario.AgentEndOfTurnTriggers(this);
         }

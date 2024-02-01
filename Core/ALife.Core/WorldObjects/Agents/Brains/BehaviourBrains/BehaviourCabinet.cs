@@ -79,9 +79,11 @@ namespace ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains
         public BehaviourInput GetRandomBehaviourInput()
         {
             //A strange, but simple, little algorithm.
-            //Each type has a different number of values, so there is no simple way to go directly to the correct type for that random number
-            //So we must iteratively subtract each type until we find the one that the number lies within.
-            //TODO: xplain this a little better.
+            // We know the total number of inputs, but not how they are distributed by type.
+            // So a random number is generated,
+            // then we iterate through the lists of input by type
+            // subtracting the number of that that type from the random number,
+            // until the remainder lies within that type.
             int randomNumber = Planet.World.NumberGen.Next(0, totalInputs);
             foreach(Type aType in TypeToListBI.Keys)
             {
@@ -92,7 +94,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains
                     return TypeToListBI[aType][randomNumber];
                 }
             }
-            throw new IndexOutOfRangeException("Some, I was unable to return a random number");
+            throw new IndexOutOfRangeException("Random number was too high.");
         }
         public BehaviourCondition GetRandomConditionForInputs(BehaviourInput b1, BehaviourInput b2)
         {

@@ -40,7 +40,6 @@ namespace ALife.Core.WorldObjects.Prebuilt
 
         public override void Die()
         {
-            //TODO: Abstract this out
             this.Alive = false;
             Planet.World.RemoveWorldObject(this);
         }

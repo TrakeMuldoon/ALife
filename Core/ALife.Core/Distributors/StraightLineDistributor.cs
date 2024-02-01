@@ -92,7 +92,7 @@ namespace ALife.Core.Distributors
                 counter++;
                 attempts++;
             } while(collisions.Count > 0
-                    && attempts < MAX_PLACEMENT_ATTEMPTS); 
+                    && attempts < MAX_PLACEMENT_ATTEMPTS);
 
             if(collisions.Count == 0)
             {

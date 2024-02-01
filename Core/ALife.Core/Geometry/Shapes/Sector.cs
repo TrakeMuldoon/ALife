@@ -29,7 +29,7 @@ namespace ALife.Core.Geometry.Shapes
             set;
         }
 
-        public virtual  Point CentrePoint
+        public virtual Point CentrePoint
         {
             get;
             set;

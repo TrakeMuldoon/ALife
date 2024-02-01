@@ -1,8 +1,6 @@
 ﻿using ALife.Core.Utility.Colours;
-using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using System;
-using System.Collections.Generic;
 
 namespace ALife.Core.Scenarios
 {

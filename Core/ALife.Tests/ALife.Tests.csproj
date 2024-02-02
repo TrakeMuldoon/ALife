@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Utility\Maths\TestExtraMath.cs">
+    <None Include="Core\Utility\Maths\TestExtraMath.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>TestExtraMath.tt</DependentUpon>
@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Utility\Maths\TestExtraMath.tt">
+    <None Update="Core\Utility\Maths\TestExtraMath.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TestExtraMath.cs</LastGenOutput>
     </None>
@@ -40,15 +40,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Utility\Maths\TestExtraMath.cs">
+    <Compile Update="Core\Utility\Maths\TestExtraMath.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>TestExtraMath.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Utility\Maths\TestExtraMaths.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>TestExtraMaths.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

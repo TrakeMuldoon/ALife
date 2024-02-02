@@ -243,6 +243,14 @@ namespace ALife.Core.WorldObjects.Agents.Brains
 
         public string ExportNewBrain()
         {
+            // public double ModificationRate;
+            // public double MutabilityRate;
+            // public List<Layer> Layers = new List<Layer>();
+            // private Layer actions;
+
+            //BRAIN! {ModificationRate} {MutabilityRate}
+
+
             throw new NotImplementedException("Not imported. But will be imported in a commit very soon.");
         }
     }

@@ -46,5 +46,10 @@ namespace ALife.Core.WorldObjects.Agents.Brains
                 ac.ActivateAction();
             }
         }
+
+        public string ExportNewBrain()
+        {
+            throw new System.NotImplementedException("Exporting of RandomBrain not supported, nor required, to be honest.");
+        }
     }
 }

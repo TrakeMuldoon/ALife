@@ -240,5 +240,10 @@ namespace ALife.Core.WorldObjects.Agents.Brains
         {
             return new NeuralNetworkBrain(self, this, false);
         }
+
+        public string ExportNewBrain()
+        {
+            throw new NotImplementedException("Not imported. But will be imported in a commit very soon.");
+        }
     }
 }

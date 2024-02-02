@@ -40,5 +40,10 @@ namespace ALife.Core.WorldObjects.Agents.Brains
                 ac.ActivateAction();
             }
         }
+
+        public string ExportNewBrain()
+        {
+            throw new System.NotImplementedException("Please don't export TesterBrain. It makes no sense");
+        }
     }
 }

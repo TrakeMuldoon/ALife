@@ -101,5 +101,10 @@ namespace ALife.Core.WorldObjects.Agents.Brains
                 act.ActivateAction();
             }
         }
+
+        public string ExportNewBrain()
+        {
+            throw new NotImplementedException("Exporting BehaviourBrain not implemented yet");
+        }
     }
 }

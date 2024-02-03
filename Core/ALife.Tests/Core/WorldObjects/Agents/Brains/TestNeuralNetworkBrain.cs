@@ -14,7 +14,7 @@ namespace ALife.Tests.Core.WorldObjects.Agents.Brains
             Planet.CreateWorld(123, new NeuralNetScenario());
 
             Agent firstAgent = Planet.World.AllActiveObjects.OfType<Agent>().First();
-            String export = firstAgent.MyBrain.ExportNewBrain();
+            string export = firstAgent.MyBrain.ExportNewBrain();
 
             Assert.AreEqual(export, "blahBlah");
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ALife.Core.ImportExport;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -58,8 +59,8 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
                 int id = neuronNameToId[dendrite.TargetNeuronName];
                 denWeights[id] = dendrite.Weight;
             }
-            string denArray = $"DW:[{string.Join(",", denWeights)}]";
-            stringBuilder.AppendLine(denArray);
+            //stringBuilder.AppendLine($"DW:[{string.Join(",", denWeights)}]");
+            stringBuilder.AppendLine($"DW2:[{AgentCodeSerializer.ConvertDoubleArrayToString(denWeights)}]");
             return stringBuilder.ToString();
         }
     }

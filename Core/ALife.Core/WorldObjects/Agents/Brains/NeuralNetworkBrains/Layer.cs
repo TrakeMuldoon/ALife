@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ALife.Core.ImportExport;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
@@ -38,7 +39,8 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
             }
 
             sb.AppendLine($"NN:[{string.Join(",", currentNameArray)}]");
-            sb.AppendLine($"NB:[{string.Join(",", currentBiases)}]");
+            string bitstring = AgentCodeSerializer.ConvertDoubleArrayToString(currentBiases);
+            sb.AppendLine($"NB2:[{bitstring}]");
 
             if(neuronNameToId == null)
             {

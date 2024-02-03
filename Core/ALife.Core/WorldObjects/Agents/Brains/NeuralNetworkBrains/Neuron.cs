@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
 {
@@ -46,6 +47,17 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
         private double Sigmoid(double x)
         {
             return ((1 / (1 + Math.Exp(-x))) * 2) - 1;
+        }
+
+        public string ExportNewBrain_Neuron()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine($"\t\tNEURON: {Name} _ {Bias} _ Dens: {UpstreamDendrites.Count}");
+            foreach(Dendrite dendrite in UpstreamDendrites) 
+            {
+                stringBuilder.AppendLine(dendrite.ExportNewBrain_Dendrite());
+            }
+            return stringBuilder.ToString();
         }
     }
 }

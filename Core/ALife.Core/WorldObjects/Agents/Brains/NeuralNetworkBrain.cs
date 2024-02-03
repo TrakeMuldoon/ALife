@@ -4,6 +4,7 @@ using ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains;
 using ALife.Core.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 
 namespace ALife.Core.WorldObjects.Agents.Brains
@@ -250,8 +251,15 @@ namespace ALife.Core.WorldObjects.Agents.Brains
 
             //BRAIN! {ModificationRate} {MutabilityRate}
 
+            StringBuilder result = new StringBuilder();
+            result.AppendLine($"Brain: ModR:{ModificationRate} MutR:{MutabilityRate}");
 
-            throw new NotImplementedException("Not imported. But will be imported in a commit very soon.");
+            foreach(Layer layer in Layers)
+            {
+                result.Append(layer.ExportNewBrain_Layer());
+            }
+
+            return result.ToString();
         }
     }
 }

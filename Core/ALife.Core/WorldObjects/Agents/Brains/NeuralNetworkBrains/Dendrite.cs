@@ -32,5 +32,10 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
             }
             Weight = weight;
         }
+
+        public string ExportNewBrain_Dendrite()
+        {
+            return $"\t\t\tDendrite: TargetName: {TargetNeuronName} Weight:{Weight}";
+        }
     }
 }

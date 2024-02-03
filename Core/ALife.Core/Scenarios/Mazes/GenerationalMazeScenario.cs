@@ -188,7 +188,7 @@ If an agent reaches the goal line, the simuluation stops."
                 double averageX = allAgents.Average((ag) => ag.Shape.CentrePoint.X);
                 double maxX = allAgents.Max((ag) => ag.Shape.CentrePoint.X);
 
-                String generationString = String.Format("Gen {0}: Stragglers: {1} Avg: {2:0.000}, MaxX: {3:0}", Iteration, living, averageX, maxX);
+                string generationString = string.Format("Gen {0}: Stragglers: {1} Avg: {2:0.000}, MaxX: {3:0}", Iteration, living, averageX, maxX);
                 Planet.World.MessagePump.Add(generationString);
 
                 List<Agent> bestX = FindTopX<Agent>(bestXNum, allAgents, (ag) => (double)(ag.Shape.CentrePoint.X));

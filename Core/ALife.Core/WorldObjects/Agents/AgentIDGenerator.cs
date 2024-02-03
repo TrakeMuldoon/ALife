@@ -4,10 +4,10 @@ namespace ALife.Core.WorldObjects.Agents
 {
     internal static class AgentIDGenerator
     {
-        const String PrimaryIDChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        const string PrimaryIDChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-        const String ChildIDCharsSetOne = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        const String ChildIDCharsSetTwo = "abcdefghijklmnopqrstuvwxyz-0123456789";
+        const string ChildIDCharsSetOne = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const string ChildIDCharsSetTwo = "abcdefghijklmnopqrstuvwxyz-0123456789";
 
         static int primLen = PrimaryIDChars.Length;
         static int primLenSq = primLen * primLen;
@@ -30,7 +30,7 @@ namespace ALife.Core.WorldObjects.Agents
             {
                 throw new Exception("Maxed Out On New IDs");
             }
-            string ret = String.Empty + three + two + one;
+            string ret = string.Empty + three + two + one;
             return ret;
         }
 

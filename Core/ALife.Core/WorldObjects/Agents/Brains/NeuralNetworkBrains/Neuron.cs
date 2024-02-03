@@ -58,7 +58,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
                 int id = neuronNameToId[dendrite.TargetNeuronName];
                 denWeights[id] = dendrite.Weight;
             }
-            string denArray = $"\t\t\tDenWeights:[{string.Join(",", denWeights)}]";
+            string denArray = $"DW:[{string.Join(",", denWeights)}]";
             stringBuilder.AppendLine(denArray);
             return stringBuilder.ToString();
         }

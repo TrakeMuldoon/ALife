@@ -16,7 +16,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
         public string ExportNewBrain_Layer(Dictionary<string, int> neuronNameToId)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"\tLAYER: NeuronCount: {Neurons.Count}");
+            sb.AppendLine($"LAYER:{Neurons.Count}");
 
             if(neuronNameToId != null)
             {
@@ -25,20 +25,20 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
                 {
                     parentNameArray[neuronNameToId[key]] = key;
                 }
-                sb.AppendLine($"\t\tParentNames:[{string.Join(",", parentNameArray)}]");
+                sb.AppendLine($"PN:[{string.Join(",", parentNameArray)}]");
             }
 
             string[] currentNameArray = new string[Neurons.Count];
             double[] currentBiases = new double[Neurons.Count];
-            for(int i = 1; i < Neurons.Count; ++i)
+            for(int i = 0; i < Neurons.Count; ++i)
             {
                 Neuron n = Neurons[i];
                 currentNameArray[i] = n.Name;
                 currentBiases[i] = n.Bias;
             }
 
-            sb.AppendLine($"\t\tNNames:[{string.Join(",", currentNameArray)}]");
-            sb.AppendLine($"\t\tNBiases:[{string.Join(",", currentBiases)}]");
+            sb.AppendLine($"NN:[{string.Join(",", currentNameArray)}]");
+            sb.AppendLine($"NB:[{string.Join(",", currentBiases)}]");
 
             if(neuronNameToId == null)
             {

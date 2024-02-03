@@ -1,6 +1,5 @@
 ﻿using ALife.Core.ImportExport;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Text;
 
 namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains

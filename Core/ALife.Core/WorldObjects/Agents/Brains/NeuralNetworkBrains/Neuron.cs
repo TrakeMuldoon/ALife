@@ -54,7 +54,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
         {
             StringBuilder stringBuilder = new StringBuilder();
             double[] denWeights = new double[neuronNameToId.Count];
-            foreach(Dendrite dendrite in UpstreamDendrites) 
+            foreach(Dendrite dendrite in UpstreamDendrites)
             {
                 int id = neuronNameToId[dendrite.TargetNeuronName];
                 denWeights[id] = dendrite.Weight;

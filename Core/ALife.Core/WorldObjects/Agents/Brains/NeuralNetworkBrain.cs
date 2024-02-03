@@ -254,7 +254,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             StringBuilder result = new StringBuilder();
 
             string topLevelBrainInfo = $"Brain: ModR: { ModificationRate} MutR: { MutabilityRate}";
-            
+
             result.AppendLine(topLevelBrainInfo);
 
             for(int i = 0; i < Layers.Count; ++i)
@@ -265,7 +265,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
                 if(i != 0)
                 {
                     neuronNameToID = new Dictionary<string, int>();
-                    for(int j = 0; j < Layers[i-1].Neurons.Count; ++j)
+                    for(int j = 0; j < Layers[i - 1].Neurons.Count; ++j)
                     {
                         Neuron n = Layers[i-1].Neurons[j];
                         neuronNameToID.Add(n.Name, j);

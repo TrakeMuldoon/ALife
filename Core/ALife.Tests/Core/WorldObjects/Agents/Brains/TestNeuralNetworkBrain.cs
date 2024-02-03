@@ -1,7 +1,6 @@
 ﻿using ALife.Core;
 using ALife.Core.Scenarios.TestScenarios;
 using ALife.Core.WorldObjects.Agents;
-using System.Linq;
 
 namespace ALife.Tests.Core.WorldObjects.Agents.Brains
 {

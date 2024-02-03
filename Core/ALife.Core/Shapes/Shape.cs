@@ -25,6 +25,16 @@ namespace ALife.Core.Shapes
         public Shape Parent;
 
         /// <summary>
+        /// Whether to allow this shape to combine its bounding box with its children.
+        /// </summary>
+        public bool AllowChildBoxesToCombine { get; protected set; }
+
+        /// <summary>
+        /// Whether to allow this shape to combine its bounding box with its parent.
+        /// </summary>
+        public bool JoinParentBoundingBox { get; protected set; }
+
+        /// <summary>
         /// Gets the bounding box.
         /// </summary>
         /// <returns>The bounding box for the current shape.</returns>
@@ -36,20 +46,34 @@ namespace ALife.Core.Shapes
         /// <returns></returns>
         public BoundingBox GetCombinedBoundingBox()
         {
-            if(Children.Count == 0)
+            if(Children.Count == 0 || !AllowChildBoxesToCombine)
             {
                 return GetBoundingBox();
             }
             else
             {
-                BoundingBox[] boxes = Children.Select(child => child.GetCombinedBoundingBox()).ToArray();
+                IEnumerable<Shape> combinableChildren = Children.Where(child => child.JoinParentBoundingBox);
+                IEnumerable<BoundingBox> childBoxes = combinableChildren.Select(child => child.GetCombinedBoundingBox());
+                childBoxes.Append(GetBoundingBox());
 
-                return BoundingBox.FromBoundingBoxes(boxes);
+                return BoundingBox.FromBoundingBoxes(childBoxes.ToArray());
             }
         }
 
         public bool IsCollision(Shape other)
         {
+        }
+
+        public bool IsCollisionWithBoundingBox(Shape other)
+        {
+            BoundingBox thisBox = GetCombinedBoundingBox();
+            BoundingBox otherBox = other.GetCombinedBoundingBox();
+
+            if(thisBox.IsCollision(otherBox))
+            {
+                return IsCollision(other);
+            }
+            return false;
         }
     }
 }

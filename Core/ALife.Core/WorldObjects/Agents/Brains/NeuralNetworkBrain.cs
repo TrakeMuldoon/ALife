@@ -252,11 +252,15 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             //BRAIN! {ModificationRate} {MutabilityRate}
 
             StringBuilder result = new StringBuilder();
-            result.AppendLine($"Brain: ModR:{ModificationRate} MutR:{MutabilityRate}");
+
+            string topLevelBrainInfo = $"Brain: ModR: { ModificationRate} MutR: { MutabilityRate}";
+            
+            result.AppendLine(topLevelBrainInfo);
 
             for(int i = 0; i < Layers.Count; ++i)
             {
-                Layer layer = Layers[i];
+                //Build dictionary of the names of the parent nodes.
+                //The dictionary will be null if it is the first layer. Inelegant... yes.
                 Dictionary<string, int> neuronNameToID = null;
                 if(i != 0)
                 {
@@ -264,12 +268,11 @@ namespace ALife.Core.WorldObjects.Agents.Brains
                     for(int j = 0; j < Layers[i-1].Neurons.Count; ++j)
                     {
                         Neuron n = Layers[i-1].Neurons[j];
-                        result.Append($"[{n.Name}]");
                         neuronNameToID.Add(n.Name, j);
                     }
-                    result.AppendLine();
                 }
-                result.Append(layer.ExportNewBrain_Layer(neuronNameToID));
+
+                result.Append(Layers[i].ExportNewBrain_Layer(neuronNameToID));
             }
 
             return result.ToString();

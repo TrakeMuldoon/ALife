@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
@@ -16,6 +17,34 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"\tLAYER: NeuronCount: {Neurons.Count}");
+
+            if(neuronNameToId != null)
+            {
+                string[] parentNameArray = new string[neuronNameToId.Count];
+                foreach(string key in neuronNameToId.Keys)
+                {
+                    parentNameArray[neuronNameToId[key]] = key;
+                }
+                sb.AppendLine($"\t\tParentNames:[{string.Join(",", parentNameArray)}]");
+            }
+
+            string[] currentNameArray = new string[Neurons.Count];
+            double[] currentBiases = new double[Neurons.Count];
+            for(int i = 1; i < Neurons.Count; ++i)
+            {
+                Neuron n = Neurons[i];
+                currentNameArray[i] = n.Name;
+                currentBiases[i] = n.Bias;
+            }
+
+            sb.AppendLine($"\t\tNNames:[{string.Join(",", currentNameArray)}]");
+            sb.AppendLine($"\t\tNBiases:[{string.Join(",", currentBiases)}]");
+
+            if(neuronNameToId == null)
+            {
+                return sb.ToString();
+            }
+
             foreach(Neuron neuron in Neurons)
             {
                 sb.Append(neuron.ExportNewBrain_Neuron(neuronNameToId));

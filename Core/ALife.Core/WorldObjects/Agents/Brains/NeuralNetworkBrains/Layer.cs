@@ -12,7 +12,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
             Neurons = new List<Neuron>(numNeurons);
         }
 
-        public string ExportNewBrain_Layer()
+        public string ExportNewBrain_Layer(Dictionary<string, int> neuronNameToId)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"\tLAYER: NeuronCount: {Neurons.Count}");

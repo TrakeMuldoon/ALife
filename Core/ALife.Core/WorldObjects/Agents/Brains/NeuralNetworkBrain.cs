@@ -254,9 +254,21 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             StringBuilder result = new StringBuilder();
             result.AppendLine($"Brain: ModR:{ModificationRate} MutR:{MutabilityRate}");
 
-            foreach(Layer layer in Layers)
+            for(int i = 0; i < Layers.Count; ++i)
             {
-                result.Append(layer.ExportNewBrain_Layer());
+                Layer layer = Layers[i];
+                Dictionary<string, int> neuronNameToID = null;
+                if(i != 0)
+                {
+                    neuronNameToID = new Dictionary<string, int>();
+                    for(int j = 0; j < Layers[i-1].Neurons.Count; ++j)
+                    {
+                        Neuron n = Layers[i-1].Neurons[j];
+                        result.AppendLine($"\t{n.Name}:{j}");
+                        neuronNameToID.Add(n.Name, j);
+                    }
+                }
+                result.Append(layer.ExportNewBrain_Layer(neuronNameToID));
             }
 
             return result.ToString();

@@ -18,7 +18,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
             sb.AppendLine($"\tLAYER: NeuronCount: {Neurons.Count}");
             foreach(Neuron neuron in Neurons)
             {
-                sb.AppendLine(neuron.ExportNewBrain_Neuron());
+                sb.Append(neuron.ExportNewBrain_Neuron(neuronNameToId));
             }
 
             return sb.ToString();

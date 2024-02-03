@@ -49,14 +49,22 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
             return ((1 / (1 + Math.Exp(-x))) * 2) - 1;
         }
 
-        public string ExportNewBrain_Neuron()
+        public string ExportNewBrain_Neuron(Dictionary<string, int> neuronNameToId)
         {
+            if(neuronNameToId == null)
+            {
+                return $"\t\tNEURON: {Name} _ {Bias} _ Dens: {UpstreamDendrites.Count}{Environment.NewLine}";
+            }
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine($"\t\tNEURON: {Name} _ {Bias} _ Dens: {UpstreamDendrites.Count}");
+            double[] denWeights = new double[neuronNameToId.Count];
             foreach(Dendrite dendrite in UpstreamDendrites) 
             {
-                stringBuilder.AppendLine(dendrite.ExportNewBrain_Dendrite());
+                int id = neuronNameToId[dendrite.TargetNeuronName];
+                denWeights[id] = dendrite.Weight;
             }
+            string denArray = $"[{string.Join(",", denWeights)}]";
+            stringBuilder.AppendLine(denArray);
             return stringBuilder.ToString();
         }
     }

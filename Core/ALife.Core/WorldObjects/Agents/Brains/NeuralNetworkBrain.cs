@@ -264,9 +264,10 @@ namespace ALife.Core.WorldObjects.Agents.Brains
                     for(int j = 0; j < Layers[i-1].Neurons.Count; ++j)
                     {
                         Neuron n = Layers[i-1].Neurons[j];
-                        result.AppendLine($"\t{n.Name}:{j}");
+                        result.Append($"[{n.Name}]");
                         neuronNameToID.Add(n.Name, j);
                     }
+                    result.AppendLine();
                 }
                 result.Append(layer.ExportNewBrain_Layer(neuronNameToID));
             }

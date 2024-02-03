@@ -39,17 +39,23 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
 
             sb.AppendLine($"NN:[{string.Join(",", currentNameArray)}]");
             string bitstring = AgentCodeSerializer.ConvertDoubleArrayToString(currentBiases);
-            sb.AppendLine($"NB2:[{bitstring}]");
+            sb.AppendLine($"NB:[{bitstring}]");
 
             if(neuronNameToId == null)
             {
                 return sb.ToString();
             }
 
+            List<double> doubleList = new List<double>();
             foreach(Neuron neuron in Neurons)
             {
                 sb.Append(neuron.ExportNewBrain_Neuron(neuronNameToId));
+                doubleList.AddRange(neuron.DenWeights(neuronNameToId));
             }
+
+            double[] allDoubles = doubleList.ToArray();
+            string output = AgentCodeSerializer.ConvertDoubleArrayToString(allDoubles);
+            sb.AppendLine($"ALLDW:{output}");
 
             return sb.ToString();
         }

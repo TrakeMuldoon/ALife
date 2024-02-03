@@ -67,6 +67,11 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             actions = actionLayer;
         }
 
+        public NeuralNetworkBrain(Agent self, string inputString)
+        {
+
+        }
+
         private NeuralNetworkBrain(Agent self, NeuralNetworkBrain templateBrain, bool exactCopy)
         {
             this.self = self;

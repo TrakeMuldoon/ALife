@@ -282,5 +282,10 @@ namespace ALife.Core.WorldObjects.Agents.Brains
 
             return result.ToString();
         }
+
+        public bool CloneEquals(NeuralNetworkBrain testBrain)
+        {
+            return false;
+        }
     }
 }

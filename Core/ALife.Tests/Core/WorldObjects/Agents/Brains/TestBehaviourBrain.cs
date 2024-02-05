@@ -17,8 +17,8 @@ namespace ALife.Tests.Core.WorldObjects.Agents.Brains
             BehaviourBrain brain = (BehaviourBrain) firstAgent.MyBrain;
             BehaviourBrain cloneBrain = (BehaviourBrain) brain.Clone(firstAgent);
 
-            //Assert.IsTrue(brain.CloneEquals(cloneBrain));
-            //Assert.IsTrue(cloneBrain.CloneEquals(brain));
+            Assert.IsTrue(brain.CloneEquals(cloneBrain));
+            Assert.IsTrue(cloneBrain.CloneEquals(brain));
         }
     }
 }

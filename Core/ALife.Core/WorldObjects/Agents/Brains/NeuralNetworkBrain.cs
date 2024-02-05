@@ -283,9 +283,94 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             return result.ToString();
         }
 
-        public bool CloneEquals(NeuralNetworkBrain testBrain)
+        /// <summary>
+        /// This function ensures that a brain has been cloned successfully.
+        /// For a clone to be valid, the clone parent must have identical (and identically named) inputs (Senses, Properties and Statistics)
+        /// to the original parent.
+        /// </summary>
+        /// <param name="cloneBrain">The Brain to test against.</param>
+        /// <returns></returns>
+        public bool CloneEquals(IBrain testBrain)
         {
-            return false;
+            NeuralNetworkBrain cloneBrain = testBrain as NeuralNetworkBrain;
+            if(cloneBrain is null)
+            {
+                return false;
+            }    
+            if(cloneBrain.MutabilityRate != this.MutabilityRate
+                || cloneBrain.ModificationRate != this.ModificationRate)
+            {
+                return false;
+            }
+
+            Dictionary<string, double> NeuronBiases = new Dictionary<string, double>();
+            Dictionary<string, double> DendriteWeights = new Dictionary<string, double>();
+
+            // We add all the neurons in a dictionary
+            // We add all the denrites in a dictionary.
+            // Each Neuron should be uniquely named, each dendrite should uniquely match two neurons.
+            foreach(Layer layer in Layers)
+            {
+                foreach(Neuron neuron in layer.Neurons)
+                {
+                    if(NeuronBiases.ContainsKey(neuron.Name))
+                    {
+                        throw new Exception("Invalid assumptions somewhere. Two neurons have the same name.");
+                    }
+                    NeuronBiases.Add(neuron.Name, neuron.Bias);
+                    foreach(Dendrite dendrite in neuron.UpstreamDendrites)
+                    {
+                        string key = $"{neuron.Name}->{dendrite.TargetNeuronName}";
+                        if(DendriteWeights.ContainsKey(key))
+                        {
+                            throw new Exception("Invalid assumption somewhere. Each dendrites should be unique");
+                        }
+                        DendriteWeights.Add(key, dendrite.Weight);
+                    }
+                }
+            }
+
+            //Now we iteratively remove the elements of the dictionaries while examining the second brain
+            //If there are any mismatches, they aren't clones.
+            foreach(Layer cloneLayer in cloneBrain.Layers)
+            {
+                foreach(Neuron cloneNeuron in cloneLayer.Neurons)
+                {
+                    if(!NeuronBiases.ContainsKey(cloneNeuron.Name)
+                        || NeuronBiases[cloneNeuron.Name] != cloneNeuron.Bias)
+                    {
+                        //Neuron doesn't exist in original or doesn't match.
+                        return false;
+                    }
+
+                    //Remove it. It's been matched.
+                    NeuronBiases.Remove(cloneNeuron.Name);
+
+                    foreach(Dendrite cloneDendrite in cloneNeuron.UpstreamDendrites)
+                    {
+                        string cloneKey = $"{cloneNeuron.Name}->{cloneDendrite.TargetNeuronName}";
+                        if(!DendriteWeights.ContainsKey(cloneKey)
+                            || DendriteWeights[cloneKey] != cloneDendrite.Weight)
+                        {
+                            //Dendrite doesn't exist in original or doesn't match
+                            return false;
+                        }
+
+                        //Remove it, it's been matched.
+                        DendriteWeights.Remove(cloneKey);
+                    }
+                }
+
+
+                if(DendriteWeights.Count > 0
+                    || NeuronBiases.Count > 0)
+                {
+                    //There are extra dendrites or extra neurons
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

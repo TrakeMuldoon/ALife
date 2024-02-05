@@ -45,5 +45,11 @@ namespace ALife.Core.WorldObjects.Agents.Brains
         {
             throw new System.NotImplementedException("Please don't export TesterBrain. It makes no sense");
         }
+
+        public bool CloneEquals(IBrain testBrain)
+        {
+            //All tester brains are identical.
+            return testBrain is TesterBrain;
+        }
     }
 }

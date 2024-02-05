@@ -7,6 +7,12 @@ namespace ALife.Core.WorldObjects.Agents.Brains
     {
         private Agent body;
 
+        /// <summary>
+        /// A Brain which will make the agent select actions and intensity at random every turn.
+        /// The randomization is based on the global random, and is therefore not individually reproducable
+        /// TODO: Implement RandomBrain to have its own random from a seed.
+        /// </summary>
+        /// <param name="body"></param>
         public RandomBrain(Agent body)
         {
             this.body = body;
@@ -45,6 +51,12 @@ namespace ALife.Core.WorldObjects.Agents.Brains
                 }
                 ac.ActivateAction();
             }
+        }
+
+        public bool CloneEquals(IBrain testBrain)
+        {
+            //All RandomBrains are "the same"
+            return testBrain is RandomBrain;
         }
 
         public string ExportNewBrain()

@@ -360,15 +360,15 @@ namespace ALife.Core.WorldObjects.Agents.Brains
                         DendriteWeights.Remove(cloneKey);
                     }
                 }
-
-
-                if(DendriteWeights.Count > 0
-                    || NeuronBiases.Count > 0)
-                {
-                    //There are extra dendrites or extra neurons
-                    return false;
-                }
             }
+
+            if(DendriteWeights.Count > 0
+                || NeuronBiases.Count > 0)
+            {
+                //There are extra dendrites or extra neurons
+                return false;
+            }
+
 
             return true;
         }

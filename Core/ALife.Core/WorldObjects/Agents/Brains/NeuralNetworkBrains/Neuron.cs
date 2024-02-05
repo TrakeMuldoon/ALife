@@ -1,10 +1,12 @@
 ﻿using ALife.Core.ImportExport;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
 {
+    [DebuggerDisplay("{Name}")]
     public class Neuron
     {
         public List<Dendrite> UpstreamDendrites { get; set; }

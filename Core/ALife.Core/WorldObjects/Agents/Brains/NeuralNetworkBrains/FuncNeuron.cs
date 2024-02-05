@@ -9,7 +9,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
         private double theVal;
 
         public FuncNeuron(String name, Func<double> getValueFunction)
-            : base(name)
+            : base(name, 0.0)
         {
             GetValue = getValueFunction;
         }

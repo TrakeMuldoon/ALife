@@ -69,7 +69,8 @@ namespace ALife.Core.WorldObjects.Agents.Brains
 
         public NeuralNetworkBrain(Agent self, string inputString)
         {
-
+            this.self = self;
+            ImportFromString(inputString);
         }
 
         private NeuralNetworkBrain(Agent self, NeuralNetworkBrain templateBrain, bool exactCopy)
@@ -245,6 +246,18 @@ namespace ALife.Core.WorldObjects.Agents.Brains
         public IBrain Reproduce(Agent self)
         {
             return new NeuralNetworkBrain(self, this, false);
+        }
+
+        private void ImportFromString(string inputString)
+        {
+            string[] lines = inputString.Split(Environment.NewLine.ToCharArray());
+            //Parse TopLevel
+
+            //Parse Sense Layer
+
+            //Parse Middle Layers
+
+            //Parse Action Layer
         }
 
         public string ExportNewBrain()

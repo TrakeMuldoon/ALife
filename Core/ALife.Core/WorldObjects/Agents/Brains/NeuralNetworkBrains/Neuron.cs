@@ -56,7 +56,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
         {
             StringBuilder stringBuilder = new StringBuilder();
             double[] denWeights = DenWeights(neuronNameToId);
-            //stringBuilder.AppendLine($"DW:[{string.Join(",", denWeights)}]");
+            stringBuilder.AppendLine($"DW({Name}:\t[{string.Join(",", denWeights)}]");
             //stringBuilder.AppendLine($"DW:[{AgentCodeSerializer.ConvertDoubleArrayToString(denWeights)}]");
             return stringBuilder.ToString();
         }

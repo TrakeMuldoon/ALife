@@ -14,9 +14,14 @@ namespace ALife.Tests.Core.WorldObjects.Agents.Brains
             Planet.CreateWorld(123, new NeuralNetScenario());
 
             Agent firstAgent = Planet.World.AllActiveObjects.OfType<Agent>().First();
-            string export = firstAgent.MyBrain.ExportNewBrain();
+            NeuralNetworkBrain brain = (NeuralNetworkBrain) firstAgent.MyBrain;
+            
+            string exportString = brain.ExportNewBrain();
 
-            Assert.AreEqual(export, "blahBlah");
+            NeuralNetworkBrain importBrain = new NeuralNetworkBrain(firstAgent, exportString);
+
+            Assert.IsTrue(brain.CloneEquals(importBrain));
+            Assert.IsTrue(importBrain.CloneEquals(brain));
         }
 
         [TestMethod]

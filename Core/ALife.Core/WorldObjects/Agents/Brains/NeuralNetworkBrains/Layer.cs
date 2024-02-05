@@ -54,8 +54,9 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
             }
 
             double[] allDoubles = doubleList.ToArray();
-            string output = AgentCodeSerializer.ConvertDoubleArrayToString(allDoubles);
-            sb.AppendLine($"ALLDW:{output}");
+            //string output = AgentCodeSerializer.ConvertDoubleArrayToString(allDoubles);
+            //sb.AppendLine($"ALLDW:{output}");
+            //sb.AppendLine($"[{string.Join(",", allDoubles)}]");
 
             return sb.ToString();
         }

@@ -13,52 +13,52 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
             Neurons = new List<Neuron>(numNeurons);
         }
 
-        public string ExportNewBrain_Layer(Dictionary<string, int> neuronNameToId)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"LAYER:{Neurons.Count}");
+        //public string ExportNewBrain_Layer(Dictionary<string, int> neuronNameToId)
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    sb.AppendLine($"LAYER:{Neurons.Count}");
 
-            if(neuronNameToId != null)
-            {
-                string[] parentNameArray = new string[neuronNameToId.Count];
-                foreach(string key in neuronNameToId.Keys)
-                {
-                    parentNameArray[neuronNameToId[key]] = key;
-                }
-                sb.AppendLine($"PN:[{string.Join(",", parentNameArray)}]");
-            }
+        //    if(neuronNameToId != null)
+        //    {
+        //        string[] parentNameArray = new string[neuronNameToId.Count];
+        //        foreach(string key in neuronNameToId.Keys)
+        //        {
+        //            parentNameArray[neuronNameToId[key]] = key;
+        //        }
+        //        sb.AppendLine($"PN:[{string.Join(",", parentNameArray)}]");
+        //    }
 
-            string[] currentNameArray = new string[Neurons.Count];
-            double[] currentBiases = new double[Neurons.Count];
-            for(int i = 0; i < Neurons.Count; ++i)
-            {
-                Neuron n = Neurons[i];
-                currentNameArray[i] = n.Name;
-                currentBiases[i] = n.Bias;
-            }
+        //    string[] currentNameArray = new string[Neurons.Count];
+        //    double[] currentBiases = new double[Neurons.Count];
+        //    for(int i = 0; i < Neurons.Count; ++i)
+        //    {
+        //        Neuron n = Neurons[i];
+        //        currentNameArray[i] = n.Name;
+        //        currentBiases[i] = n.Bias;
+        //    }
 
-            sb.AppendLine($"NN:[{string.Join(",", currentNameArray)}]");
-            string bitstring = AgentCodeSerializer.ConvertDoubleArrayToString(currentBiases);
-            sb.AppendLine($"NB:[{bitstring}]");
+        //    sb.AppendLine($"NN:[{string.Join(",", currentNameArray)}]");
+        //    string bitstring = AgentCodeSerializer.ConvertDoubleArrayToString(currentBiases);
+        //    sb.AppendLine($"NB:[{bitstring}]");
 
-            if(neuronNameToId == null)
-            {
-                return sb.ToString();
-            }
+        //    if(neuronNameToId == null)
+        //    {
+        //        return sb.ToString();
+        //    }
 
-            List<double> doubleList = new List<double>();
-            foreach(Neuron neuron in Neurons)
-            {
-                sb.Append(neuron.ExportNewBrain_Neuron(neuronNameToId));
-                doubleList.AddRange(neuron.DenWeights(neuronNameToId));
-            }
+        //    List<double> doubleList = new List<double>();
+        //    foreach(Neuron neuron in Neurons)
+        //    {
+        //        sb.Append(neuron.ExportNewBrain_Neuron(neuronNameToId));
+        //        doubleList.AddRange(neuron.DenWeights(neuronNameToId));
+        //    }
 
-            double[] allDoubles = doubleList.ToArray();
-            //string output = AgentCodeSerializer.ConvertDoubleArrayToString(allDoubles);
-            //sb.AppendLine($"ALLDW:{output}");
-            //sb.AppendLine($"[{string.Join(",", allDoubles)}]");
+        //    double[] allDoubles = doubleList.ToArray();
+        //    //string output = AgentCodeSerializer.ConvertDoubleArrayToString(allDoubles);
+        //    //sb.AppendLine($"ALLDW:{output}");
+        //    //sb.AppendLine($"[{string.Join(",", allDoubles)}]");
 
-            return sb.ToString();
-        }
+        //    return sb.ToString();
+        //}
     }
 }

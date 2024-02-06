@@ -4,7 +4,9 @@ using ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains;
 using ALife.Core.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 
 namespace ALife.Core.WorldObjects.Agents.Brains
@@ -248,52 +250,165 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             return new NeuralNetworkBrain(self, this, false);
         }
 
-        private void ImportFromString(string inputString)
-        {
-            string[] lines = inputString.Split(Environment.NewLine.ToCharArray());
-            //Parse TopLevel
-
-            //Parse Sense Layer
-
-            //Parse Middle Layers
-
-            //Parse Action Layer
-        }
-
         public string ExportNewBrain()
         {
-            // public double ModificationRate;
-            // public double MutabilityRate;
-            // public List<Layer> Layers = new List<Layer>();
-            // private Layer actions;
+            //SPEC V2
+            //Line1: Bitstream
+            //Line2: NeuronNameArray
 
-            //BRAIN! {ModificationRate} {MutabilityRate}
+            //bitstream
+            //int (number of layers) = L
+            //int[L] neurons in each layer, sum = N
+            //double ModificationRate
+            //double MutationRate
+            //double[N]  NeuronBiases
+            //L double[n*pn] DendriteWeights for the neuron and parentNeurons
 
-            StringBuilder result = new StringBuilder();
 
-            string topLevelBrainInfo = $"Brain: ModR: { ModificationRate} MutR: { MutabilityRate}";
-
-            result.AppendLine(topLevelBrainInfo);
-
-            for(int i = 0; i < Layers.Count; ++i)
+            byte layerCount = (byte)Layers.Count;
+            byte[] layerInfoArray = new byte[layerCount+1];
+            layerInfoArray[0] = layerCount;
+            for(int i = 0; i < layerCount; ++i)
             {
-                //Build dictionary of the names of the parent nodes.
-                //The dictionary will be null if it is the first layer. Inelegant... yes.
-                Dictionary<string, int> neuronNameToID = null;
-                if(i != 0)
-                {
-                    neuronNameToID = new Dictionary<string, int>();
-                    for(int j = 0; j < Layers[i - 1].Neurons.Count; ++j)
-                    {
-                        Neuron n = Layers[i-1].Neurons[j];
-                        neuronNameToID.Add(n.Name, j);
-                    }
-                }
-
-                result.Append(Layers[i].ExportNewBrain_Layer(neuronNameToID));
+                layerInfoArray[i + 1] = (byte)Layers[i].Neurons.Count;
             }
 
-            return result.ToString();
+            List<double> doubleInfo = new List<double>();
+            doubleInfo.Add(ModificationRate);
+            doubleInfo.Add(MutabilityRate);
+
+            List<double> biases = new List<double>();
+            for(int j = 0; j < layerCount; ++j)
+            {
+                biases.AddRange(Layers[j].Neurons.Select(neu => neu.Bias));
+            }
+            //TODO: These could be added directly. But for now, easier to have some debuggability
+            doubleInfo.AddRange(biases);
+
+            List<double> dendriteWeights = new List<double>();
+            for(int k = 0; k < layerCount; ++k)
+            {
+                Layer lay = Layers[k];
+                for(int j = 0; j < lay.Neurons.Count; ++j) 
+                {
+                    Neuron n = lay.Neurons[j];
+                    dendriteWeights.AddRange(n.UpstreamDendrites.Select(den => den.Weight));
+                }
+            }
+            doubleInfo.AddRange(dendriteWeights);
+
+            List<string> NeuronNames = new List<string>();
+            for(int m = 0; m < layerCount; ++m)
+            {
+                NeuronNames.AddRange(Layers[m].Neurons.Select(neu => neu.Name));
+            }
+
+            StringBuilder sb = new StringBuilder();
+            //sb.Append($"[{string.Join(",", layerInfoArray)}]");
+            //sb.AppendLine($"[{string.Join(",", doubleInfo.ToArray())}]");
+            sb.AppendLine(ConvertBrainArraysToStr(layerInfoArray, doubleInfo.ToArray()));
+            sb.AppendLine(String.Join(",", NeuronNames));
+
+            return sb.ToString();
+        }
+
+        private string ConvertBrainArraysToStr(byte[] layerInfo, double[] allOtherInfo)
+        {
+            int shortLength = layerInfo.Length * sizeof(byte);
+            int doubleLength = allOtherInfo.Length * sizeof(double);
+
+            byte[] asBytes = new byte[shortLength + doubleLength];
+            Buffer.BlockCopy(layerInfo, 0, asBytes, 0, shortLength);
+            Buffer.BlockCopy(allOtherInfo, 0, asBytes, shortLength, doubleLength);
+            string s = Convert.ToBase64String(asBytes);
+
+            return s;
+        }
+        
+        struct BrainSpec
+        {
+            public byte LayerCount;
+            public byte[] NeuronCounts;
+            public double[] ModStats;
+            public string[][] NeuronNames;
+            public double[][] NeuronBiases;
+            public double[][][] DendriteWeights;
+        }
+
+
+        private void ImportFromString(string inputString)
+        {
+            BrainSpec BrainSpecification = ExtractBrainInfoFromStr(inputString);
+
+            int j = 12;
+        }
+
+        private BrainSpec ExtractBrainInfoFromStr(string exportedBrain)
+        {
+            string[] lines = exportedBrain.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            string numeric = lines[0];
+
+            BrainSpec output = new BrainSpec();
+
+            byte[] inputBytes = Convert.FromBase64String(numeric);
+            
+            byte layerCount = inputBytes[0];
+            output.LayerCount = layerCount;
+            output.NeuronCounts = new ArraySegment<byte>(inputBytes, 1, layerCount).ToArray();
+
+            output.NeuronBiases = new double[layerCount][];
+            output.DendriteWeights = new double[layerCount][][];
+
+            int streamCursor = 1 + layerCount; //This is in bytes because the preceding information are bytes!!! 
+
+            double[] modStats = new double[2];
+            Buffer.BlockCopy(inputBytes, streamCursor, modStats, 0, 2 * sizeof(double));
+            streamCursor += 2 * sizeof(double);
+            output.ModStats = modStats;
+
+            for(int i = 0; i < layerCount; ++i)
+            {
+                int neuronCount = output.NeuronCounts[i];
+                double[] neuronBiasesForLayer = new double[neuronCount];
+                output.NeuronBiases[i] = neuronBiasesForLayer;
+
+                int byteCount = neuronCount * sizeof(double);
+                Buffer.BlockCopy(inputBytes, streamCursor, neuronBiasesForLayer, 0, byteCount);
+                streamCursor += byteCount;
+            }
+
+            //Layer 0 (sense layer) has no dendrites
+            for(int i = 1; i < layerCount; ++i)
+            {
+                int neuronCount = output.NeuronCounts[i];
+                double[][] neuronDendriteWeightsForLayer = new double[neuronCount][];
+                output.DendriteWeights[i] = neuronDendriteWeightsForLayer;
+
+                for(int j = 0; j < neuronCount; ++j)
+                {
+                    int parentNodes = output.NeuronCounts[i-1];
+                    double[] denWeights = new double[parentNodes];
+                    neuronDendriteWeightsForLayer[j] = denWeights;
+
+                    int byteCount = parentNodes * sizeof(double);
+                    Buffer.BlockCopy(inputBytes, streamCursor, denWeights, 0, byteCount);
+                    streamCursor += byteCount;
+                }
+            }
+
+            string[] names = lines[1].Split(',');
+            string[][] neuronNames = new string[layerCount][];
+            output.NeuronNames = neuronNames;
+
+            int nameCursor = 0;
+            for(int i = 0; i < layerCount; ++i)
+            {
+                int layerNeuronCount = output.NeuronCounts[i];
+                neuronNames[i] = new ArraySegment<string>(names, nameCursor, layerNeuronCount).ToArray();
+                nameCursor += layerNeuronCount;
+            }
+
+            return output;
         }
 
         /// <summary>

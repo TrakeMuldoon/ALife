@@ -69,12 +69,6 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             actions = actionLayer;
         }
 
-        public NeuralNetworkBrain(Agent self, string inputString)
-        {
-            this.self = self;
-            ImportFromString(inputString);
-        }
-
         private NeuralNetworkBrain(Agent self, NeuralNetworkBrain templateBrain, bool exactCopy)
         {
             this.self = self;
@@ -106,13 +100,13 @@ namespace ALife.Core.WorldObjects.Agents.Brains
                     double neuBias = templateNeuron.Bias;
                     if(!exactCopy)
                     {
-                        neuBias = ModifyBetweenNegOneAndOne(neuBias);
+                        neuBias = EvolveBetweenNegOneAndOne(neuBias);
                     }
 
                     //Add a neuron
                     Neuron newNeuron = new Neuron("HN:" + (i + 1) + "." + (n + 1), neuBias);
                     newLayer.Neurons.Add(newNeuron);
-                    CreateDendrites(aboveLayerNeurons, templateNeuron, newNeuron, exactCopy);
+                    CreateDendritesFromTemplate(aboveLayerNeurons, templateNeuron, newNeuron, exactCopy);
                 }
             }
 
@@ -121,20 +115,28 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             actions = actionLayer;
         }
 
-        private void CreateDendrites(List<Neuron> aboveLayerNeurons, Neuron templateNeuron, Neuron newNeuron, bool exactCopy)
+        public NeuralNetworkBrain(Agent self, string inputString)
+        {
+            this.self = self;
+            NeuralNetworkBrainImport BrainSpecification = ExtractBrainInfoFromStr(inputString);
+            
+            //WORK HERE
+        }
+
+        private void CreateDendritesFromTemplate(List<Neuron> aboveLayerNeurons, Neuron templateNeuron, Neuron newNeuron, bool exactCopy)
         {
             for(int d = 0; d < aboveLayerNeurons.Count; d++)
             {
                 double denWeight = templateNeuron.UpstreamDendrites[d].Weight;
                 if(!exactCopy)
                 {
-                    denWeight = ModifyBetweenNegOneAndOne(denWeight);
+                    denWeight = EvolveBetweenNegOneAndOne(denWeight);
                 }
                 newNeuron.UpstreamDendrites.Add(new Dendrite(aboveLayerNeurons[d], denWeight));
             }
         }
 
-        private double ModifyBetweenNegOneAndOne(double original)
+        private double EvolveBetweenNegOneAndOne(double original)
         {
             double val = original;
             double shouldMod = Planet.World.NumberGen.NextDouble();
@@ -180,12 +182,12 @@ namespace ALife.Core.WorldObjects.Agents.Brains
                     double neuBias = currNeuron.Bias;
                     if(!exactCopy)
                     {
-                        neuBias = ModifyBetweenNegOneAndOne(neuBias);
+                        neuBias = EvolveBetweenNegOneAndOne(neuBias);
                     }
 
                     ActionNeuron neu = new ActionNeuron(ap, neuBias);
                     actionNeurons.Add(neu);
-                    CreateDendrites(aboveLayer.Neurons, currNeuron, neu, exactCopy);
+                    CreateDendritesFromTemplate(aboveLayer.Neurons, currNeuron, neu, exactCopy);
                     apIndex++;
                 }
             }
@@ -324,31 +326,13 @@ namespace ALife.Core.WorldObjects.Agents.Brains
 
             return s;
         }
-        
-        struct BrainSpec
-        {
-            public byte LayerCount;
-            public byte[] NeuronCounts;
-            public double[] ModStats;
-            public string[][] NeuronNames;
-            public double[][] NeuronBiases;
-            public double[][][] DendriteWeights;
-        }
 
-
-        private void ImportFromString(string inputString)
-        {
-            BrainSpec BrainSpecification = ExtractBrainInfoFromStr(inputString);
-
-            int j = 12;
-        }
-
-        private BrainSpec ExtractBrainInfoFromStr(string exportedBrain)
+        private NeuralNetworkBrainImport ExtractBrainInfoFromStr(string exportedBrain)
         {
             string[] lines = exportedBrain.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             string numeric = lines[0];
 
-            BrainSpec output = new BrainSpec();
+            NeuralNetworkBrainImport output = new NeuralNetworkBrainImport();
 
             byte[] inputBytes = Convert.FromBase64String(numeric);
             

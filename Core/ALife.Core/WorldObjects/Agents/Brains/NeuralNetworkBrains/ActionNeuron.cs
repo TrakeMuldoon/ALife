@@ -8,7 +8,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
         {
             Activity = actionPart;
         }
-        public ActionNeuron(ActionPart actionPart, double weight) : base(actionPart.Name, weight)
+        public ActionNeuron(ActionPart actionPart, double bias) : base(actionPart.Name, bias)
         {
             Activity = actionPart;
         }

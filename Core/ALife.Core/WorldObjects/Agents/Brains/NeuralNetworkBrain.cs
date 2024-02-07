@@ -24,6 +24,16 @@ namespace ALife.Core.WorldObjects.Agents.Brains
         {
         }
 
+        public NeuralNetworkBrain(Agent self, List<int> layers, bool newStyle)
+        {
+            this.self = self;
+            this.ModificationRate = 0.70;
+            this.MutabilityRate = 0.005;
+
+            this.Layers = NeuralNetworkBrainFactory.CreateNeuralNetworkForAgent(self, layers);
+            this.actions = Layers[Layers.Count - 1];
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -150,6 +160,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             return val;
         }
 
+        //TODO DELETE
         private Layer CreateActionLayer(Agent self, Layer aboveLayer)
         {
             List<ActionNeuron> actionNeurons = new List<ActionNeuron>();
@@ -200,6 +211,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             return actionLayer;
         }
 
+        //TODO DELETE
         private static Layer CreateSenseLayer(Agent self)
         {
             List<FuncNeuron> senseNeurons = new List<FuncNeuron>();

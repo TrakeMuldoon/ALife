@@ -80,7 +80,7 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
             IBrain newBrain;
-            newBrain = new NeuralNetworkBrain(agent, new List<int> { 18, 15, 12 }, true);
+            newBrain = new NeuralNetworkBrain(agent, new List<int> { 18, 15, 12 });
             agent.Shape.DebugColour = Colour.Red;
 
             agent.CompleteInitialization(null, 1, newBrain);

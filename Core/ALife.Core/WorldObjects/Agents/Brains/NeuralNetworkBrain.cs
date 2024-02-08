@@ -30,10 +30,11 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             this.ModificationRate = 0.70;
             this.MutabilityRate = 0.005;
 
-            this.Layers = NeuralNetworkBrainFactory.CreateNeuralNetworkForAgent(self, layers);
+            this.Layers = NeuralNetworkBrainFactory.CreateRandomNeuralNetwork(self, layers);
             this.actions = Layers[Layers.Count - 1];
         }
 
+        //TODO DELETE
         /// <summary>
         /// 
         /// </summary>
@@ -79,6 +80,17 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             actions = actionLayer;
         }
 
+        public NeuralNetworkBrain(Agent self, NeuralNetworkBrain templateBrain, bool exactCopy, bool newStyle)
+        {
+            this.self = self;
+            this.ModificationRate = templateBrain.ModificationRate;
+            this.MutabilityRate = templateBrain.MutabilityRate;
+
+            this.Layers = NeuralNetworkBrainFactory.CreateClonedNeuralNetwork(self, templateBrain);
+            this.actions = Layers[Layers.Count - 1];
+        }
+
+        //TODO DELETE
         private NeuralNetworkBrain(Agent self, NeuralNetworkBrain templateBrain, bool exactCopy)
         {
             this.self = self;
@@ -129,10 +141,16 @@ namespace ALife.Core.WorldObjects.Agents.Brains
         {
             this.self = self;
             NeuralNetworkBrainImport BrainSpecification = ExtractBrainInfoFromStr(inputString);
-            
-            //WORK HERE
+
+            this.self = self;
+            this.ModificationRate = BrainSpecification.ModStats[0];
+            this.MutabilityRate = BrainSpecification.ModStats[1];
+
+            this.Layers = NeuralNetworkBrainFactory.CreateFromBrainSpec(self, BrainSpecification);
+            this.actions = Layers[Layers.Count - 1];
         }
 
+        //TODO DELETE
         private void CreateDendritesFromTemplate(List<Neuron> aboveLayerNeurons, Neuron templateNeuron, Neuron newNeuron, bool exactCopy)
         {
             for(int d = 0; d < aboveLayerNeurons.Count; d++)
@@ -146,6 +164,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             }
         }
 
+        //TODO DELETE
         private double EvolveBetweenNegOneAndOne(double original)
         {
             double val = original;
@@ -181,6 +200,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             return actionLayer;
         }
 
+        //TODO DELETE
         private Layer CreateClonedActionLayer(Agent self, Layer aboveLayer, Layer templateLayer, bool exactCopy)
         {
             List<ActionNeuron> actionNeurons = new List<ActionNeuron>();
@@ -256,7 +276,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
 
         public IBrain Clone(Agent self)
         {
-            return new NeuralNetworkBrain(self, this, true);
+            return new NeuralNetworkBrain(self, this, true, true);
         }
 
         public IBrain Reproduce(Agent self)

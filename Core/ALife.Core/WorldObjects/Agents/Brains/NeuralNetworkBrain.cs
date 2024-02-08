@@ -19,22 +19,11 @@ namespace ALife.Core.WorldObjects.Agents.Brains
         public List<Layer> Layers = new List<Layer>();
         private Layer actions;
 
-        public NeuralNetworkBrain(Agent self, List<int> layers)
-            : this(self, 0.70, 0.005, layers)
+        public NeuralNetworkBrain(Agent self, List<int> hiddenLayerNeuronCounts)
+            : this(self, 0.70, 0.005, hiddenLayerNeuronCounts)
         {
         }
 
-        public NeuralNetworkBrain(Agent self, List<int> layers, bool newStyle)
-        {
-            this.self = self;
-            this.ModificationRate = 0.70;
-            this.MutabilityRate = 0.005;
-
-            this.Layers = NeuralNetworkBrainFactory.CreateRandomNeuralNetwork(self, layers);
-            this.actions = Layers[Layers.Count - 1];
-        }
-
-        //TODO DELETE
         /// <summary>
         /// 
         /// </summary>
@@ -42,211 +31,50 @@ namespace ALife.Core.WorldObjects.Agents.Brains
         /// <param name="modificationRate">The rate at which dendrite weights or neuron bias' get modified in Repro</param>
         /// <param name="mutabilityRate">The maximum percentage to which they will be modified</param>
         /// <param name="layerNeuronCounts">the neuron counts for the hidden layers</param>
-        public NeuralNetworkBrain(Agent self, double modificationRate, double mutabilityRate, List<int> layerNeuronCounts)
+        public NeuralNetworkBrain(Agent self, double modificationRate, double mutabilityRate, List<int> hiddenLayerNeuronCounts)
         {
-            if(layerNeuronCounts.Count < 1) throw new ArgumentOutOfRangeException("Not enough layers for a Neural Network Brain");
-
-            this.self = self;
-            ModificationRate = modificationRate;
-            MutabilityRate = mutabilityRate;
-
-            //First we initialize the Top Layer to have all the inputs available.
-            Layer senseLayer = CreateSenseLayer(self);
-            Layers.Add(senseLayer);
-
-            //Next we implement all the middle layers
-            for(int i = 0; i < layerNeuronCounts.Count; i++)
+            if(hiddenLayerNeuronCounts is null
+               || hiddenLayerNeuronCounts.Count < 1)
             {
-                Layer newLayer = new Layer(layerNeuronCounts[i]);
-                Layers.Add(newLayer);
-
-                //This pulls the layer above us. Layer 0 is the sense layer. Layer 1 is the first created hidden layer.
-                List<Neuron> aboveLayerNeurons = Layers[i].Neurons;
-
-                for(int n = 0; n < layerNeuronCounts[i]; n++)
-                {
-                    //Add a neuron
-                    Neuron neu = new Neuron("HN:" + (i + 1) + "." + (n + 1));
-                    newLayer.Neurons.Add(neu);
-                    for(int d = 0; d < aboveLayerNeurons.Count; d++)
-                    {
-                        neu.UpstreamDendrites.Add(new Dendrite(aboveLayerNeurons[d]));
-                    }
-                }
+                throw new ArgumentOutOfRangeException("Not enough layers for a Neural Network Brain");
             }
+            this.self = self;
+            this.ModificationRate = 0.70;
+            this.MutabilityRate = 0.005;
 
-            Layer actionLayer = CreateActionLayer(self, Layers[Layers.Count - 1]);
-            Layers.Add(actionLayer);
-            actions = actionLayer;
+            this.Layers = NeuralNetworkBrainFactory.CreateRandomNeuralNetwork(self, hiddenLayerNeuronCounts);
+            this.actions = Layers[Layers.Count - 1];
         }
 
-        public NeuralNetworkBrain(Agent self, NeuralNetworkBrain templateBrain, bool exactCopy, bool newStyle)
+        public NeuralNetworkBrain(Agent self, NeuralNetworkBrain templateBrain, bool exactCopy)
         {
             this.self = self;
             this.ModificationRate = templateBrain.ModificationRate;
             this.MutabilityRate = templateBrain.MutabilityRate;
 
-            this.Layers = NeuralNetworkBrainFactory.CreateClonedNeuralNetwork(self, templateBrain);
+            if(exactCopy)
+            {
+                this.Layers = NeuralNetworkBrainFactory.CreateClonedNeuralNetwork(self, templateBrain);
+            }
+            else
+            {
+                this.Layers = NeuralNetworkBrainFactory.CreateEvolvedNeuralNetwork(self, templateBrain);
+            }
+            
             this.actions = Layers[Layers.Count - 1];
-        }
-
-        //TODO DELETE
-        private NeuralNetworkBrain(Agent self, NeuralNetworkBrain templateBrain, bool exactCopy)
-        {
-            this.self = self;
-            ModificationRate = templateBrain.ModificationRate;
-            MutabilityRate = templateBrain.MutabilityRate;
-
-            Layer senseLayer = CreateSenseLayer(self);
-            if(senseLayer.Neurons.Count != templateBrain.Layers[0].Neurons.Count)
-            {
-                throw new NotImplementedException("Cannot clone or reproduce brain with different number of inputs");
-            }
-            Layers.Add(senseLayer);
-
-            //This is the number of hidden layers we need to make
-            int hiddenLayerCount = templateBrain.Layers.Count - 2;
-            for(int i = 0; i < hiddenLayerCount; i++)
-            {
-                List<Neuron> templateCurrLayerNeurons = templateBrain.Layers[i + 1].Neurons;
-                int currentLayerNeuronCount = templateCurrLayerNeurons.Count;
-                Layer newLayer = new Layer(currentLayerNeuronCount);
-                Layers.Add(newLayer);
-
-                //This works because we know that there is always a layer above us.
-                List<Neuron> aboveLayerNeurons = Layers[i].Neurons;
-
-                for(int n = 0; n < currentLayerNeuronCount; n++)
-                {
-                    Neuron templateNeuron = templateCurrLayerNeurons[n];
-                    double neuBias = templateNeuron.Bias;
-                    if(!exactCopy)
-                    {
-                        neuBias = EvolveBetweenNegOneAndOne(neuBias);
-                    }
-
-                    //Add a neuron
-                    Neuron newNeuron = new Neuron("HN:" + (i + 1) + "." + (n + 1), neuBias);
-                    newLayer.Neurons.Add(newNeuron);
-                    CreateDendritesFromTemplate(aboveLayerNeurons, templateNeuron, newNeuron, exactCopy);
-                }
-            }
-
-            Layer actionLayer = CreateClonedActionLayer(self, Layers[Layers.Count - 1], templateBrain.Layers[Layers.Count], exactCopy);
-            Layers.Add(actionLayer);
-            actions = actionLayer;
         }
 
         public NeuralNetworkBrain(Agent self, string inputString)
         {
             this.self = self;
             NeuralNetworkBrainImport BrainSpecification = ExtractBrainInfoFromStr(inputString);
-
-            this.self = self;
+            
             this.ModificationRate = BrainSpecification.ModStats[0];
             this.MutabilityRate = BrainSpecification.ModStats[1];
 
-            this.Layers = NeuralNetworkBrainFactory.CreateFromBrainSpec(self, BrainSpecification);
+            
+            this.Layers = NeuralNetworkBrainFactory.CreateBrainSpecNeuralNetwork(self, BrainSpecification);
             this.actions = Layers[Layers.Count - 1];
-        }
-
-        //TODO DELETE
-        private void CreateDendritesFromTemplate(List<Neuron> aboveLayerNeurons, Neuron templateNeuron, Neuron newNeuron, bool exactCopy)
-        {
-            for(int d = 0; d < aboveLayerNeurons.Count; d++)
-            {
-                double denWeight = templateNeuron.UpstreamDendrites[d].Weight;
-                if(!exactCopy)
-                {
-                    denWeight = EvolveBetweenNegOneAndOne(denWeight);
-                }
-                newNeuron.UpstreamDendrites.Add(new Dendrite(aboveLayerNeurons[d], denWeight));
-            }
-        }
-
-        //TODO DELETE
-        private double EvolveBetweenNegOneAndOne(double original)
-        {
-            double val = original;
-            double shouldMod = Planet.World.NumberGen.NextDouble();
-            if(shouldMod < ModificationRate)
-            {
-                double rawMod = Planet.World.NumberGen.NextDouble();
-                double modification = ((rawMod * 2) - 1) * MutabilityRate;
-                val += modification;
-                val = ExtraMath.Clamp(val, -1, 1);
-            }
-            return val;
-        }
-
-        //TODO DELETE
-        private Layer CreateActionLayer(Agent self, Layer aboveLayer)
-        {
-            List<ActionNeuron> actionNeurons = new List<ActionNeuron>();
-            foreach(ActionCluster ac in self.Actions.Values)
-            {
-                foreach(ActionPart ap in ac.SubActions.Values)
-                {
-                    ActionNeuron neu = new ActionNeuron(ap);
-                    actionNeurons.Add(neu);
-                    for(int d = 0; d < aboveLayer.Neurons.Count; d++)
-                    {
-                        neu.UpstreamDendrites.Add(new Dendrite(aboveLayer.Neurons[d]));
-                    }
-                }
-            }
-            Layer actionLayer = new Layer(actionNeurons.Count);
-            actionLayer.Neurons.AddRange(actionNeurons);
-            return actionLayer;
-        }
-
-        //TODO DELETE
-        private Layer CreateClonedActionLayer(Agent self, Layer aboveLayer, Layer templateLayer, bool exactCopy)
-        {
-            List<ActionNeuron> actionNeurons = new List<ActionNeuron>();
-            int apIndex = 0;
-            foreach(ActionCluster ac in self.Actions.Values)
-            {
-                foreach(ActionPart ap in ac.SubActions.Values)
-                {
-                    Neuron currNeuron = templateLayer.Neurons[apIndex];
-                    double neuBias = currNeuron.Bias;
-                    if(!exactCopy)
-                    {
-                        neuBias = EvolveBetweenNegOneAndOne(neuBias);
-                    }
-
-                    ActionNeuron neu = new ActionNeuron(ap, neuBias);
-                    actionNeurons.Add(neu);
-                    CreateDendritesFromTemplate(aboveLayer.Neurons, currNeuron, neu, exactCopy);
-                    apIndex++;
-                }
-            }
-            if(actionNeurons.Count != templateLayer.Neurons.Count)
-            {
-                throw new NotImplementedException("Cannot clone a brain with a different number of actions");
-            }
-            Layer actionLayer = new Layer(actionNeurons.Count);
-            actionLayer.Neurons.AddRange(actionNeurons);
-            return actionLayer;
-        }
-
-        //TODO DELETE
-        private static Layer CreateSenseLayer(Agent self)
-        {
-            List<FuncNeuron> senseNeurons = new List<FuncNeuron>();
-            foreach(SenseCluster sc in self.Senses)
-            {
-                foreach(SenseInput si in sc.SubInputs)
-                {
-                    List<FuncNeuron> siNeurons = FuncNeuronFactory.GenerateFuncNeuronsForSenseInput(si);
-                    senseNeurons.AddRange(siNeurons);
-                }
-            }
-
-            Layer senseLayer = new Layer(senseNeurons.Count);
-            senseLayer.Neurons.AddRange(senseNeurons);
-            return senseLayer;
         }
 
         public void ExecuteTurn()
@@ -276,7 +104,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
 
         public IBrain Clone(Agent self)
         {
-            return new NeuralNetworkBrain(self, this, true, true);
+            return new NeuralNetworkBrain(self, this, true);
         }
 
         public IBrain Reproduce(Agent self)

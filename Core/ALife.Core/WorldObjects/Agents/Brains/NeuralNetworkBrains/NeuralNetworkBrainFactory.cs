@@ -3,6 +3,7 @@ using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
 {
@@ -45,8 +46,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
 
             //Create Sense Layer
             Layer senseLayer = CreateSenseLayer(self);
-            Dictionary<string, double> senseBiases = GenerateNeuronBiasesDictionaryFromLayer(existingBrain.Layers[0]); //It'll be all zeros, but this will verify the names.
-            ApplyBiasesToLayer(senseLayer, senseBiases);
+            VerifyLayerNames(senseLayer, existingBrain.Layers[0].Neurons.Select(neuron => neuron.Name).ToArray());
             layers.Add(senseLayer);
 
             int hiddenLayerCount = existingBrain.Layers.Count - 2; //We skip the top layer (Senses) and bottom layer (Actions)
@@ -78,14 +78,13 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
             return layers;
         }
 
-        public static List<Layer> CreateEvolvedBrain(Agent self, NeuralNetworkBrain existingBrain)
+        public static List<Layer> CreateEvolvedNeuralNetwork(Agent self, NeuralNetworkBrain existingBrain)
         {
             List<Layer> layers = new List<Layer>();
 
             //Create Sense Layer
             Layer senseLayer = CreateSenseLayer(self);
-            Dictionary<string, double> senseBiases = GenerateNeuronBiasesDictionaryFromLayer(existingBrain.Layers[0]); //It'll be all zeros, but this will verify the names.
-            ApplyBiasesToLayer(senseLayer, senseBiases);
+            VerifyLayerNames(senseLayer, existingBrain.Layers[0].Neurons.Select(neuron => neuron.Name).ToArray());
             layers.Add(senseLayer);
 
             int hiddenLayerCount = existingBrain.Layers.Count - 2; //We skip the top layer (Senses) and bottom layer (Actions)
@@ -111,13 +110,13 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
             //Create Dendrites
             for(int i = 1; i < layers.Count; ++i)
             {
-                CreateDendritesFromLayerTemplate(layers, existingBrain.Layers, i);
+                CreateEvolvedDendritesFromLayerTemplate(layers, existingBrain, i);
             }
 
             return layers;
         }
 
-        public static List<Layer> CreateFromBrainSpec(Agent self, NeuralNetworkBrainImport brainSpec)
+        public static List<Layer> CreateBrainSpecNeuralNetwork(Agent self, NeuralNetworkBrainImport brainSpec)
         {
             List<Layer> layers = new List<Layer>();
 
@@ -153,54 +152,6 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
             }
 
             return layers;
-        }
-
-        private static void CreateDendritesFromBrainSpec(List<Layer> newLayers, NeuralNetworkBrainImport brainSpec, int layerNum)
-        {
-            Layer parent = newLayers[layerNum - 1];
-            Layer current = newLayers[layerNum];
-
-            string[] specParentNames = brainSpec.NeuronNames[layerNum - 1];
-            string[] specNeuronNames = brainSpec.NeuronNames[layerNum];
-            double[][] dendritesForLayer = brainSpec.DendriteWeights[layerNum];
-
-            Dictionary<string, Neuron> parentNameToNeuron = PopulateNameToNeuron(parent.Neurons);
-            //Dictionary<string, Neuron> templateNameToNeuron = PopulateNameToNeuron(templateLayer.Neurons);
-            Dictionary<string, Dictionary<string, double>> nameToTargetToWeight = CreateNeuronDenWeightDictionary(specNeuronNames, specParentNames, dendritesForLayer);
-
-            foreach(Neuron n in current.Neurons)
-            {
-                if(!nameToTargetToWeight.ContainsKey(n.Name))
-                {
-                    throw new Exception($"Neuron {n.Name} missing from spec. Should have been caught earlier");
-                }
-                Dictionary<string, double> templateDenWeights = nameToTargetToWeight[n.Name];
-                foreach(string targetName in templateDenWeights.Keys)
-                {
-                    if(!parentNameToNeuron.ContainsKey(targetName))
-                    {
-                        throw new Exception($"Neuron {n.Name} missing from parent. Should have been caught earlier");
-                    }
-                    Dendrite newDendrite = new Dendrite(parentNameToNeuron[targetName], templateDenWeights[targetName]);
-                    n.UpstreamDendrites.Add(newDendrite);
-                }
-            }
-        }
-
-        private static Dictionary<string, Dictionary<string, double>> CreateNeuronDenWeightDictionary(string[] specNeuronNames, string[] specParentNames, double[][] dendritesForLayer)
-        {
-            Dictionary<string, Dictionary<string, double>> output = new Dictionary<string, Dictionary<string, double>>();
-            for(int i = 0; i < specNeuronNames.Length; ++i) 
-            {
-                Dictionary<string, double> denWeightsDict = new Dictionary<string, double>();
-                output.Add(specNeuronNames[i], denWeightsDict);
-                double[] weightsArray = dendritesForLayer[i];
-                for(int j = 0; j < specParentNames.Length; ++j)
-                {
-                    denWeightsDict.Add(specParentNames[j], weightsArray[j]);
-                }
-            }
-            return output;
         }
 
         private static Layer CreateSenseLayer(Agent self)
@@ -265,6 +216,54 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
             return;
         }
 
+        private static void CreateDendritesFromBrainSpec(List<Layer> newLayers, NeuralNetworkBrainImport brainSpec, int layerNum)
+        {
+            Layer parent = newLayers[layerNum - 1];
+            Layer current = newLayers[layerNum];
+
+            string[] specParentNames = brainSpec.NeuronNames[layerNum - 1];
+            string[] specNeuronNames = brainSpec.NeuronNames[layerNum];
+            double[][] dendritesForLayer = brainSpec.DendriteWeights[layerNum];
+
+            Dictionary<string, Neuron> parentNameToNeuron = PopulateNameToNeuron(parent.Neurons);
+            //Dictionary<string, Neuron> templateNameToNeuron = PopulateNameToNeuron(templateLayer.Neurons);
+            Dictionary<string, Dictionary<string, double>> nameToTargetToWeight = CreateNeuronDenWeightDictionary(specNeuronNames, specParentNames, dendritesForLayer);
+
+            foreach(Neuron n in current.Neurons)
+            {
+                if(!nameToTargetToWeight.ContainsKey(n.Name))
+                {
+                    throw new Exception($"Neuron {n.Name} missing from spec. Should have been caught earlier");
+                }
+                Dictionary<string, double> templateDenWeights = nameToTargetToWeight[n.Name];
+                foreach(string targetName in templateDenWeights.Keys)
+                {
+                    if(!parentNameToNeuron.ContainsKey(targetName))
+                    {
+                        throw new Exception($"Neuron {n.Name} missing from parent. Should have been caught earlier");
+                    }
+                    Dendrite newDendrite = new Dendrite(parentNameToNeuron[targetName], templateDenWeights[targetName]);
+                    n.UpstreamDendrites.Add(newDendrite);
+                }
+            }
+        }
+
+        private static Dictionary<string, Dictionary<string, double>> CreateNeuronDenWeightDictionary(string[] specNeuronNames, string[] specParentNames, double[][] dendritesForLayer)
+        {
+            Dictionary<string, Dictionary<string, double>> output = new Dictionary<string, Dictionary<string, double>>();
+            for(int i = 0; i < specNeuronNames.Length; ++i) 
+            {
+                Dictionary<string, double> denWeightsDict = new Dictionary<string, double>();
+                output.Add(specNeuronNames[i], denWeightsDict);
+                double[] weightsArray = dendritesForLayer[i];
+                for(int j = 0; j < specParentNames.Length; ++j)
+                {
+                    denWeightsDict.Add(specParentNames[j], weightsArray[j]);
+                }
+            }
+            return output;
+        }
+
         private static Dictionary<string, double> GenerateRandomNeuronBiasesDictionary(Layer newLayer)
         {
             Dictionary<string, double> neuronBiases = new Dictionary<string, double>();
@@ -285,12 +284,13 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
             return neuronBiases;
         }
 
+        //TODO: Dupe of GenerateNeuronBiasesDictionaryFromLayer
         private static Dictionary<string, double> GenerateEvolvedNeuronBiasesDictionaryFromLayer(Layer oldLayer, NeuralNetworkBrain oldBrain)
         {
             Dictionary<string, double> neuronBiases = new Dictionary<string, double>();
             foreach(Neuron n in oldLayer.Neurons)
             {
-                neuronBiases.Add(n.Name, EvolveBetweenNegOneAndOne(n.Bias, oldBrain));
+                neuronBiases.Add(n.Name, EvolveBetweenNegOneAndOne(n.Bias, oldBrain)); //Line diff
             }
             return neuronBiases;
         }
@@ -320,6 +320,38 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
                 }
             }
         }
+
+        //TODO: DUPE OF CreateDendritesFromLayerTemplate
+        private static void CreateEvolvedDendritesFromLayerTemplate(List<Layer> newLayers, NeuralNetworkBrain templateBrain, int layerNum)
+        {
+            Layer templateLayer = templateBrain.Layers[layerNum]; //Line Diff
+
+            Layer parent = newLayers[layerNum - 1];
+            Layer current = newLayers[layerNum];
+
+            Dictionary<string, Neuron> parentNameToNeuron = PopulateNameToNeuron(parent.Neurons);
+            Dictionary<string, Neuron> templateNameToNeuron = PopulateNameToNeuron(templateLayer.Neurons);
+
+            foreach(Neuron n in current.Neurons)
+            {
+                if(!templateNameToNeuron.ContainsKey(n.Name))
+                {
+                    throw new Exception($"Neuron {n.Name} missing from template. Should have been caught earlier");
+                }
+                Neuron templateNeuron = templateNameToNeuron[n.Name];
+                foreach(Dendrite templateDendrite in templateNeuron.UpstreamDendrites)
+                {
+                    if(!parentNameToNeuron.ContainsKey(templateDendrite.TargetNeuronName))
+                    {
+                        throw new Exception($"Neuron {n.Name} missing from parent. Should have been caught earlier");
+                    }
+                    Dendrite newDendrite = new Dendrite(parentNameToNeuron[templateDendrite.TargetNeuronName]
+                                                        , EvolveBetweenNegOneAndOne(templateDendrite.Weight, templateBrain)); //Line Diff
+                    n.UpstreamDendrites.Add(newDendrite);
+                }
+            }
+        }
+
         private static void CreateDendritesFromLayerTemplate(List<Layer> newLayers, List<Layer> templateLayers, int layerNum)
         {
             Layer templateLayer = templateLayers[layerNum];
@@ -343,7 +375,8 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
                     {
                         throw new Exception($"Neuron {n.Name} missing from parent. Should have been caught earlier");
                     }
-                    Dendrite newDendrite = new Dendrite(parentNameToNeuron[templateDendrite.TargetNeuronName], templateDendrite.Weight);
+                    Dendrite newDendrite = new Dendrite(parentNameToNeuron[templateDendrite.TargetNeuronName]
+                                                        , templateDendrite.Weight);
                     n.UpstreamDendrites.Add(newDendrite);
                 }
             }

@@ -12,6 +12,7 @@ using ALife.Core.WorldObjects.Agents.Senses;
 using ALife.Core.WorldObjects.Prebuilt;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ALife.Core.Scenarios.FieldCrossings
 {
@@ -134,7 +135,8 @@ If they reach the target zone, they will restart in their own zones, and an evol
             child.Shape.CentrePoint = reverseChildPoint;
             child.Shape.Orientation.Degrees = specification.StartOrientation;
             child.Shape.Colour = specification.AgentColor;
-            (child.Senses[0] as GoalSenseCluster).ChangeTarget(specification.TargetZone);
+            GoalSenseCluster gsc = child.Senses.OfType<GoalSenseCluster>().FirstOrDefault();
+            gsc.ChangeTarget(specification.TargetZone);
 
             collider.MoveObject(child);
         }

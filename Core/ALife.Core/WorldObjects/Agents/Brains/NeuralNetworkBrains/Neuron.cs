@@ -52,15 +52,6 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
             return ((1 / (1 + Math.Exp(-x))) * 2) - 1;
         }
 
-        //public string ExportNewBrain_Neuron(Dictionary<string, int> neuronNameToId)
-        //{
-        //    StringBuilder stringBuilder = new StringBuilder();
-        //    double[] denWeights = DenWeights(neuronNameToId);
-        //    stringBuilder.AppendLine($"DW({Name}:\t[{string.Join(",", denWeights)}]");
-        //    //stringBuilder.AppendLine($"DW:[{AgentCodeSerializer.ConvertDoubleArrayToString(denWeights)}]");
-        //    return stringBuilder.ToString();
-        //}
-
         public double[] DenWeights(Dictionary<string, int> neuronNameToId)
         {
             double[] denWeights = new double[neuronNameToId.Count];

@@ -64,6 +64,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             this.actions = Layers[Layers.Count - 1];
         }
 
+        //TODO: Make Private?
         public NeuralNetworkBrain(Agent self, string inputString)
         {
             this.self = self;
@@ -126,7 +127,6 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             //double[N]  NeuronBiases
             //L double[n*pn] DendriteWeights for the neuron and parentNeurons
 
-
             byte layerCount = (byte)Layers.Count;
             byte[] layerInfoArray = new byte[layerCount+1];
             layerInfoArray[0] = layerCount;
@@ -136,6 +136,9 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             }
 
             List<double> doubleInfo = new List<double>();
+
+            //Item 1 in the double bitstream is ModificationRate
+            //Item 2 in the double bitstream is MutabilityRate
             doubleInfo.Add(ModificationRate);
             doubleInfo.Add(MutabilityRate);
 
@@ -166,6 +169,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             }
 
             StringBuilder sb = new StringBuilder();
+            //Uncomment these lines if debugging is necessary
             //sb.Append($"[{string.Join(",", layerInfoArray)}]");
             //sb.AppendLine($"[{string.Join(",", doubleInfo.ToArray())}]");
             sb.AppendLine(ConvertBrainArraysToStr(layerInfoArray, doubleInfo.ToArray()));
@@ -176,7 +180,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
 
         private string ConvertBrainArraysToStr(byte[] layerInfo, double[] allOtherInfo)
         {
-            int shortLength = layerInfo.Length * sizeof(byte);
+            int shortLength = layerInfo.Length * sizeof(byte); //TODO: replace with constant value + comment
             int doubleLength = allOtherInfo.Length * sizeof(double);
 
             byte[] asBytes = new byte[shortLength + doubleLength];
@@ -210,6 +214,9 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             streamCursor += 2 * sizeof(double);
             output.ModStats = modStats;
 
+
+            //TODO: Exctract the three tasks into Functions
+            //Get Neurons and Neuron Biases
             for(int i = 0; i < layerCount; ++i)
             {
                 int neuronCount = output.NeuronCounts[i];
@@ -222,6 +229,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             }
 
             //Layer 0 (sense layer) has no dendrites
+            //Get Dendrites
             for(int i = 1; i < layerCount; ++i)
             {
                 int neuronCount = output.NeuronCounts[i];
@@ -240,6 +248,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
                 }
             }
 
+            //Get Names
             string[] names = lines[1].Split(',');
             string[][] neuronNames = new string[layerCount][];
             output.NeuronNames = neuronNames;
@@ -268,7 +277,8 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             if(cloneBrain is null)
             {
                 return false;
-            }    
+            }
+            //Checking properties
             if(cloneBrain.MutabilityRate != this.MutabilityRate
                 || cloneBrain.ModificationRate != this.ModificationRate)
             {
@@ -278,6 +288,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             Dictionary<string, double> NeuronBiases = new Dictionary<string, double>();
             Dictionary<string, double> DendriteWeights = new Dictionary<string, double>();
 
+            //TODO: Move To HelperMethod
             // We add all the neurons in a dictionary
             // We add all the denrites in a dictionary.
             // Each Neuron should be uniquely named, each dendrite should uniquely match two neurons.
@@ -302,6 +313,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
                 }
             }
 
+            //TODO: Move To HelperMethod
             //Now we iteratively remove the elements of the dictionaries while examining the second brain
             //If there are any mismatches, they aren't clones.
             foreach(Layer cloneLayer in cloneBrain.Layers)

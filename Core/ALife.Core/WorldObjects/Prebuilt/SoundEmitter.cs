@@ -26,7 +26,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
         public override void ExecuteAliveTurn()
         {
             turnCount += 1;
-            if(turnCount % 3 == 0)
+            if(turnCount % 10 == 0)
             {
                 SoundWave sw = new SoundWave(255, 0, 0, Shape.CentrePoint);
                 Planet.World.AddObjectToWorld(sw);

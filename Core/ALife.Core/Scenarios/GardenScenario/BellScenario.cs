@@ -56,10 +56,13 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
                                     , new ReadOnlyEvoNumber(20, 4, 10, 40)) //Radius
                 , new EarCluster(agent, "LeftEar"
                                  , new ReadOnlyEvoNumber(270, 3, 190, 350) //Orientation around parent
-                                 , new ReadOnlyEvoNumber(10, 1, 7, 13)) // Radius
+                                 , new ReadOnlyEvoNumber(5, 1, 4, 10)) // Radius
                 , new EarCluster(agent, "RightEar"
                                  , new ReadOnlyEvoNumber(90, 3, 10, 170) //Orientation around parent
-                                 , new ReadOnlyEvoNumber(10, 1, 7, 13)) // Radius
+                                 , new ReadOnlyEvoNumber(5, 1, 4, 10)) // Radius
+                , new EarCluster(agent, "BackEar"
+                                 , new ReadOnlyEvoNumber(180, 3, 10, 170) //Orientation around parent
+                                 , new ReadOnlyEvoNumber(5, 1, 4, 10)) // Radius
             };
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();

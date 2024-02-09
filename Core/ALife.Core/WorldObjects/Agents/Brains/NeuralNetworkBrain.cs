@@ -39,8 +39,8 @@ namespace ALife.Core.WorldObjects.Agents.Brains
                 throw new ArgumentOutOfRangeException("Not enough layers for a Neural Network Brain");
             }
             this.self = self;
-            this.ModificationRate = 0.70;
-            this.MutabilityRate = 0.005;
+            this.ModificationRate = modificationRate;
+            this.MutabilityRate = mutabilityRate;
 
             this.Layers = NeuralNetworkBrainFactory.CreateRandomNeuralNetwork(self, hiddenLayerNeuronCounts);
             this.actions = Layers[Layers.Count - 1];

@@ -1,6 +1,6 @@
 ﻿using ALife.Core.Utility.Colours;
 
-namespace ALife.Core.CollisionDetection.Shapes
+namespace ALife.Core.CollisionDetection.Geometry
 {
     /// <summary>
     /// Defines the colouration of a shape. This is used in rendering and with some agent behaviours.

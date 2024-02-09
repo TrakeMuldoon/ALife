@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using ALife.Core.Utility;
 using ALife.Core.Utility.Colours;
 
-namespace ALife.Core.CollisionDetection.Shapes
+namespace ALife.Core.CollisionDetection.Geometry
 {
     /// <summary>
     /// Represents a layer of colouration for a shape.

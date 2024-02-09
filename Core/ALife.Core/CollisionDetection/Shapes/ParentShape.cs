@@ -1,6 +1,6 @@
 ﻿namespace ALife.Core.CollisionDetection.Shapes
 {
-    public class Shape
+    public class ParentShape : Shape
     {
     }
 }

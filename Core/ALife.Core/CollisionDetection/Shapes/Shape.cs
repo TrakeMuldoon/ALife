@@ -1,8 +1,7 @@
-﻿using ALife.Core.CollisionDetection;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace ALife.Core.Shapes
+namespace ALife.Core.CollisionDetection.Shapes
 {
     /// <summary>
     /// An abstract class that defines a shape.

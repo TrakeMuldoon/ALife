@@ -1,9 +1,9 @@
-﻿using ALife.Core.Utility;
-using ALife.Core.Utility.Colours;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.Json.Serialization;
+using ALife.Core.Utility;
+using ALife.Core.Utility.Colours;
 
-namespace ALife.Core.Shapes
+namespace ALife.Core.CollisionDetection.Shapes
 {
     /// <summary>
     /// Represents a layer of colouration for a shape.
@@ -118,7 +118,7 @@ namespace ALife.Core.Shapes
         /// <summary>
         /// Converts to string.
         /// </summary>
-        /// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+        /// <returns>A <see cref="string"/> that represents this instance.</returns>
         public override string ToString()
         {
             return $"Fill: {_fillColour}, Outline: {_outlineColour}, Width: {_outlineStrokeWidth}";

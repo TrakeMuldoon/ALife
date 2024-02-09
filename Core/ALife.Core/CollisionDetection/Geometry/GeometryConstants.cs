@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ALife.Core.Geometry
+namespace ALife.Core.CollisionDetection.Geometry
 {
     /// <summary>
     /// Constants for the Geometry namespace.

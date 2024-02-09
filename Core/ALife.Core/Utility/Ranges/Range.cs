@@ -1,8 +1,9 @@
-﻿using ALife.Core.Utility.Maths;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.Json.Serialization;
+using ALife.Core.CommonInterfaces;
+using ALife.Core.Utility.Maths;
 
 namespace ALife.Core.Utility.Ranges
 {
@@ -13,7 +14,7 @@ namespace ALife.Core.Utility.Ranges
     /// </summary>
     /// <typeparam name="T">The type of the range.</typeparam>
     [DebuggerDisplay("{ToString()}")]
-    public struct Range<T> where T : struct
+    public struct Range<T> : IDeepCloneable<Range<T>> where T : struct
     {
         /// <summary>
         /// The maximum value of the range.
@@ -136,6 +137,15 @@ namespace ALife.Core.Utility.Ranges
         {
             dynamic output = ExtraMath.Clamp((dynamic)value, (dynamic)Minimum, (dynamic)Maximum);
             return output;
+        }
+
+        /// <summary>
+        /// Deep clones this instance.
+        /// </summary>
+        /// <returns>The new cloned instance.</returns>
+        public Range<T> Clone()
+        {
+            return new Range<T>(Minimum, Maximum);
         }
 
         /// <summary>

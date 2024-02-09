@@ -1,6 +1,6 @@
-﻿using ALife.Core.Utility.Ranges;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.Json.Serialization;
+using ALife.Core.Utility.Ranges;
 
 namespace ALife.Core.Utility.Numerics
 {
@@ -9,7 +9,7 @@ namespace ALife.Core.Utility.Numerics
     /// TODO: We could make a numeric-generic version of this struct once we're on .NET 8 fairly easily...
     /// </summary>
     [DebuggerDisplay("{ToString()}")]
-    public struct BoundedNumber
+    public struct BoundedNumber : IDeepCloneable<BoundedNumber>
     {
         /// <summary>
         /// The range

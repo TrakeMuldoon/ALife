@@ -1,10 +1,11 @@
-﻿using ALife.Core.Utility;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Numerics;
 using System.Text.Json.Serialization;
+using ALife.Core.Geometry;
+using ALife.Core.Utility;
 
-namespace ALife.Core.Geometry
+namespace ALife.Core.CollisionDetection.Geometry
 {
     /// <summary>
     /// Defines a Point in space
@@ -182,7 +183,7 @@ namespace ALife.Core.Geometry
         /// <returns>The transformed point.</returns>
         public Point GetTransformedPoint(Matrix matrix)
         {
-            Point newPoint = this.Clone();
+            Point newPoint = Clone();
             newPoint.TransformPoint(matrix);
             return newPoint;
         }

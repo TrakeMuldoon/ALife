@@ -1,8 +1,9 @@
-﻿using System;
+﻿using ALife.Core.Geometry;
+using ALife.Core.Utility;
+using System;
 using System.Numerics;
-using ALife.Core.Geometry;
 
-namespace ALife.Core.Utility
+namespace ALife.Core.CollisionDetection.Geometry
 {
     /// <summary>
     /// Represents a right-handed 4x4 matrix. Used by us for translation and rotation info.
@@ -145,7 +146,7 @@ namespace ALife.Core.Utility
         /// <param name="angle">The angle.</param>
         /// <param name="axis">The axis.</param>
         /// <returns>The transformation matrix.</returns>
-        public static Matrix CreateFromAngle(Angle angle, Nullable<Point> axis = null)
+        public static Matrix CreateFromAngle(Angle angle, Point? axis = null)
         {
             return CreateFromAngle(angle.Radians, axis);
         }
@@ -156,7 +157,7 @@ namespace ALife.Core.Utility
         /// <param name="radians">The radians.</param>
         /// <param name="axis">The axis.</param>
         /// <returns>The transformation matrix.</returns>
-        public static Matrix CreateFromAngle(double radians, Nullable<Point> axis = null)
+        public static Matrix CreateFromAngle(double radians, Point? axis = null)
         {
             Point actualAxis = axis ?? Point.Zero;
             Matrix output = new Matrix();
@@ -279,7 +280,7 @@ namespace ALife.Core.Utility
         /// <param name="translation">The translation.</param>
         /// <param name="axis">The axis.</param>
         /// <returns>The transformation matrix.</returns>
-        public static Matrix CreateFromTranslationAndAngle(Angle angle, Point translation, Nullable<Point> axis = null)
+        public static Matrix CreateFromTranslationAndAngle(Angle angle, Point translation, Point? axis = null)
         {
             return CreateFromTranslationAndAngle(angle.Radians, translation.X, translation.Y, 0, axis);
         }
@@ -291,7 +292,7 @@ namespace ALife.Core.Utility
         /// <param name="translation">The translation.</param>
         /// <param name="axis">The axis.</param>
         /// <returns>The transformation matrix.</returns>
-        public static Matrix CreateFromTranslationAndAngle(double radians, Point translation, Nullable<Point> axis = null)
+        public static Matrix CreateFromTranslationAndAngle(double radians, Point translation, Point? axis = null)
         {
             return CreateFromTranslationAndAngle(radians, translation.X, translation.Y, 0, axis);
         }
@@ -303,7 +304,7 @@ namespace ALife.Core.Utility
         /// <param name="translation">The translation.</param>
         /// <param name="axis">The axis.</param>
         /// <returns>The transformation matrix.</returns>
-        public static Matrix CreateFromTranslationAndAngle(Angle angle, Vector2 translation, Nullable<Point> axis = null)
+        public static Matrix CreateFromTranslationAndAngle(Angle angle, Vector2 translation, Point? axis = null)
         {
             return CreateFromTranslationAndAngle(angle.Radians, translation.X, translation.Y, 0, axis);
         }
@@ -316,7 +317,7 @@ namespace ALife.Core.Utility
         /// <param name="">The .</param>
         /// <param name="axis">The axis.</param>
         /// <returns>The transformation matrix.</returns>
-        public static Matrix CreateFromTranslationAndAngle(double radians, Vector2 translation, Nullable<Point> axis = null)
+        public static Matrix CreateFromTranslationAndAngle(double radians, Vector2 translation, Point? axis = null)
         {
             return CreateFromTranslationAndAngle(radians, translation.X, translation.Y, 0, axis);
         }
@@ -330,7 +331,7 @@ namespace ALife.Core.Utility
         /// <param name="z">The z.</param>
         /// <param name="axis">The axis.</param>
         /// <returns>The transformation matrix.</returns>
-        public static Matrix CreateFromTranslationAndAngle(Angle angle, double x, double y, double z = 0, Nullable<Point> axis = null)
+        public static Matrix CreateFromTranslationAndAngle(Angle angle, double x, double y, double z = 0, Point? axis = null)
         {
             return CreateFromTranslationAndAngle(angle.Radians, x, y, z, axis);
         }
@@ -344,7 +345,7 @@ namespace ALife.Core.Utility
         /// <param name="z">The z.</param>
         /// <param name="axis">The axis.</param>
         /// <returns>The transformation matrix.</returns>
-        public static Matrix CreateFromTranslationAndAngle(double radians, double x, double y, double z = 0, Nullable<Point> axis = null)
+        public static Matrix CreateFromTranslationAndAngle(double radians, double x, double y, double z = 0, Point? axis = null)
         {
             Matrix output = CreateFromAngle(radians, axis);
 
@@ -355,12 +356,10 @@ namespace ALife.Core.Utility
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="System.Object"/>, is equal to this instance.
+        /// Determines whether the specified <see cref="object"/>, is equal to this instance.
         /// </summary>
-        /// <param name="obj">The <see cref="System.Object"/> to compare with this instance.</param>
-        /// <returns>
-        /// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise, <c>false</c>.
-        /// </returns>
+        /// <param name="obj">The <see cref="object"/> to compare with this instance.</param>
+        /// <returns><c>true</c> if the specified <see cref="object"/> is equal to this instance; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
             return obj is Matrix mat &&
@@ -396,7 +395,7 @@ namespace ALife.Core.Utility
         /// <summary>
         /// Converts to string.
         /// </summary>
-        /// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+        /// <returns>A <see cref="string"/> that represents this instance.</returns>
         public override string ToString()
         {
             string output = $"[[[{M11}], [{M12}], [{M13}], [{M14}]], [[{M21}], [{M22}], [{M23}], [{M24}]], [[{M31}], [{M32}], [{M33}], [{M34}]], [[{M41}], [{M42}], [{M43}], [{M44}]]]";

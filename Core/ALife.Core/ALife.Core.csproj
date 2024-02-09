@@ -57,4 +57,9 @@
     </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CollisionDetectionNew\Grids\" />
+    <Folder Include="CollisionDetection\Grids\" />
+  </ItemGroup>
+
 </Project>

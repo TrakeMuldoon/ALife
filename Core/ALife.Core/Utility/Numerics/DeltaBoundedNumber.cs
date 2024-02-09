@@ -1,6 +1,6 @@
-﻿using ALife.Core.Utility.Maths;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.Json.Serialization;
+using ALife.Core.Utility.Maths;
 
 namespace ALife.Core.Utility.Numerics
 {
@@ -8,7 +8,7 @@ namespace ALife.Core.Utility.Numerics
     /// A bounded auto-clamping number that can only change by a certain amount.
     /// </summary>
     [DebuggerDisplay("{ToString()}")]
-    public struct DeltaBoundedNumber
+    public struct DeltaBoundedNumber : IDeepCloneable<DeltaBoundedNumber>
     {
         /// <summary>
         /// The delta maximum

@@ -46,7 +46,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             this.actions = Layers[Layers.Count - 1];
         }
 
-        public NeuralNetworkBrain(Agent self, NeuralNetworkBrain templateBrain, bool exactCopy)
+        private NeuralNetworkBrain(Agent self, NeuralNetworkBrain templateBrain, bool exactCopy)
         {
             this.self = self;
             this.ModificationRate = templateBrain.ModificationRate;

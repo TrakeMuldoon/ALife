@@ -73,7 +73,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             int rotationValue;
 
 
-            //The Geometry.Shapes.Point 0,0 is TopLeft of the scenario
+            //The Point 0,0 is TopLeft of the scenario
 
             //This detects if "myself" is inline with the "X" (Above, Below or Within)            
             if(targBB.MinX <= myCP.X
@@ -119,7 +119,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             }
             else
             {
-                //I am not inline with it. Therefore the closest Geometry.Shapes.Point will be one of the corners. 
+                //I am not inline with it. Therefore the closest Point will be one of the corners. 
                 double xTarg = myCP.X < targBB.MinX ? targBB.MinX : targBB.MaxX;
                 double yTarg = myCP.Y < targBB.MinY ? targBB.MinY : targBB.MaxY;
                 Point target = new Point(xTarg, yTarg);

@@ -1,5 +1,6 @@
-﻿using System;
-using ALife.Core.GeometryOld;
+﻿using ALife.Core.Geometry;
+using ALife.Core.Geometry.Shapes;
+using System;
 
 namespace ALife.Core.Utility.Maths
 {
@@ -9,7 +10,7 @@ namespace ALife.Core.Utility.Maths
     /// </summary>
     public class GeometryMath
     {
-        public static double AngleBetweenPoints(ALife.Core.GeometryOld.Shapes.Point target, ALife.Core.GeometryOld.Shapes.Point source)
+        public static double AngleBetweenPoints(Point target, Point source)
         {
             double deltaX = target.X - source.X;
             double deltaY = target.Y - source.Y;
@@ -18,12 +19,12 @@ namespace ALife.Core.Utility.Maths
             return angleBetweenPoints;
         }
 
-        public static double DistanceBetweenTwoPoints(ALife.Core.GeometryOld.Shapes.Point a, ALife.Core.GeometryOld.Shapes.Point b)
+        public static double DistanceBetweenTwoPoints(Point a, Point b)
         {
             return Math.Sqrt(SquaredDistanceBetweenTwoPoints(a, b));
         }
 
-        public static double SquaredDistanceBetweenTwoPoints(ALife.Core.GeometryOld.Shapes.Point a, ALife.Core.GeometryOld.Shapes.Point b)
+        public static double SquaredDistanceBetweenTwoPoints(Point a, Point b)
         {
             //pythagorean theorem c^2 = a^2 + b^2
             //thus c = square root(a^2 + b^2)
@@ -33,15 +34,15 @@ namespace ALife.Core.Utility.Maths
             return (delX * delX) + (delY * delY);
         }
 
-        public static ALife.Core.GeometryOld.Shapes.Point TranslateByVector(ALife.Core.GeometryOld.Shapes.Point startPoint, double radians, double distance)
+        public static Point TranslateByVector(Point startPoint, double radians, double distance)
         {
             double newX = (distance * Math.Cos(radians)) + startPoint.X;
             double newY = (distance * Math.Sin(radians)) + startPoint.Y;
 
-            return new ALife.Core.GeometryOld.Shapes.Point(newX, newY);
+            return new Point(newX, newY);
         }
 
-        public static ALife.Core.GeometryOld.Shapes.Point TranslateByVector(ALife.Core.GeometryOld.Shapes.Point startPoint, Angle angle, double distance)
+        public static Point TranslateByVector(Point startPoint, Angle angle, double distance)
         {
             return TranslateByVector(startPoint, angle.Radians, distance);
         }

@@ -1,4 +1,5 @@
 ﻿using ALife.Core.Collision;
+using ALife.Core.Geometry.Shapes;
 using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility.Collections;
 using ALife.Core.Utility.Colours;
@@ -11,6 +12,7 @@ using ALife.Core.WorldObjects.Agents.Senses;
 using ALife.Core.WorldObjects.Prebuilt;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ALife.Core.Scenarios.FieldCrossings
 {
@@ -107,8 +109,8 @@ If they reach the target zone, they will restart in their own zones, and an evol
         {
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[me.CollisionLevel];
 
-            //Get a new free Geometry.Shapes.Point within the start zone.
-            ALife.Core.GeometryOld.Shapes.Point myPoint = me.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
+            //Get a new free Point within the start zone.
+            Point myPoint = me.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
             me.Shape.CentrePoint = myPoint;
             collider.MoveObject(me);
 
@@ -129,11 +131,12 @@ If they reach the target zone, they will restart in their own zones, and an evol
             Agent child = (Agent)me.Reproduce();
             child.HomeZone = specification.StartZone;
             child.TargetZone = specification.TargetZone;
-            ALife.Core.GeometryOld.Shapes.Point reverseChildPoint = child.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
+            Point reverseChildPoint = child.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
             child.Shape.CentrePoint = reverseChildPoint;
             child.Shape.Orientation.Degrees = specification.StartOrientation;
             child.Shape.Colour = specification.AgentColor;
-            (child.Senses[0] as GoalSenseCluster).ChangeTarget(specification.TargetZone);
+            GoalSenseCluster gsc = child.Senses.OfType<GoalSenseCluster>().FirstOrDefault();
+            gsc.ChangeTarget(specification.TargetZone);
 
             collider.MoveObject(child);
         }
@@ -181,8 +184,8 @@ If they reach the target zone, they will restart in their own zones, and an evol
                 }
             }
 
-            ALife.Core.GeometryOld.Shapes.Point rockCP = new ALife.Core.GeometryOld.Shapes.Point((width / 2) + (width / 3), height / 2);
-            ALife.Core.GeometryOld.Shapes.Rectangle rec = new ALife.Core.GeometryOld.Shapes.Rectangle(rockCP, 40, 20, Colour.Black);
+            Point rockCP = new Point((width / 2) + (width / 3), height / 2);
+            Rectangle rec = new Rectangle(rockCP, 40, 20, Colour.Black);
             FallingRock fr = new FallingRock(rockCP, rec, Colour.Black);
             Planet.World.AddObjectToWorld(fr);
         }

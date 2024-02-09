@@ -1,19 +1,17 @@
 ﻿using ALife.Core.Utility.Colours;
 using System;
-using ALife.Core.GeometryOld;
-using ALife.Core.GeometryOld.Shapes;
 
-namespace ALife.Core.GeometryOld.Shapes
+namespace ALife.Core.Geometry.Shapes
 {
     public class AARectangle : IShape
     {
-        public ALife.Core.GeometryOld.Shapes.Point CentrePoint
+        public Point CentrePoint
         {
             get
             {
                 double cpX = TopLeft.X + XWidth / 2;
                 double cpY = TopLeft.Y + YHeight / 2;
-                return new ALife.Core.GeometryOld.Shapes.Point(cpX, cpY);
+                return new Point(cpX, cpY);
             }
             set
             {
@@ -23,7 +21,7 @@ namespace ALife.Core.GeometryOld.Shapes
 
         private Angle ori = new Angle(0);
 
-        public AARectangle(ALife.Core.GeometryOld.Shapes.Point topLeft, double xWidth, double yHeight, Colour color)
+        public AARectangle(Point topLeft, double xWidth, double yHeight, Colour color)
         {
             XWidth = xWidth;
             YHeight = yHeight;
@@ -42,7 +40,7 @@ namespace ALife.Core.GeometryOld.Shapes
             set;
         }
 
-        public ALife.Core.GeometryOld.Shapes.Point TopLeft
+        public Point TopLeft
         {
             get;
             set;

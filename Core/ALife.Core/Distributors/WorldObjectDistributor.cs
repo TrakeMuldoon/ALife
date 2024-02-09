@@ -1,4 +1,6 @@
-﻿namespace ALife.Core.Distributors
+﻿using ALife.Core.Geometry.Shapes;
+
+namespace ALife.Core.Distributors
 {
     public abstract class WorldObjectDistributor
     {
@@ -13,6 +15,6 @@
             CollisionLevel = collisionLevel;
         }
 
-        public abstract ALife.Core.GeometryOld.Shapes.Point NextObjectCentre(double BBLength, double BBHeight);
+        public abstract Point NextObjectCentre(double BBLength, double BBHeight);
     }
 }

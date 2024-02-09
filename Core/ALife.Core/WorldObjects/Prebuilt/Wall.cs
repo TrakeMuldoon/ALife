@@ -1,9 +1,9 @@
-﻿using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Geometry;
+using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.Maths;
 using System;
 using System.Collections.Generic;
-using ALife.Core.GeometryOld;
-using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.WorldObjects.Prebuilt
 {
@@ -28,7 +28,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
             }
         }
 
-        public Wall(ALife.Core.GeometryOld.Shapes.Point centrePoint, double Length, Angle orientation, string individualLabel)
+        public Wall(Point centrePoint, double Length, Angle orientation, string individualLabel)
             : base("Wall", individualLabel, ReferenceValues.CollisionLevelPhysical)
         {
 
@@ -40,7 +40,6 @@ namespace ALife.Core.WorldObjects.Prebuilt
 
         public override void Die()
         {
-            //TODO: Abstract this out
             this.Alive = false;
             Planet.World.RemoveWorldObject(this);
         }
@@ -75,7 +74,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
                 Angle ori = wall.Shape.Orientation.Clone();
                 double indexer = i - ((numSplits + 1) / 2.0);
 
-                ALife.Core.GeometryOld.Shapes.Point p = GeometryMath.TranslateByVector(wall.Shape.CentrePoint, ori, segmentLength * indexer);
+                Point p = GeometryMath.TranslateByVector(wall.Shape.CentrePoint, ori, segmentLength * indexer);
                 Wall w = new Wall(p, segmentLength, ori, wall.IndividualLabel + "~" + (i + 1));
                 segments.Add(w);
             }

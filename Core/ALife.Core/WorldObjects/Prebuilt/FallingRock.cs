@@ -1,12 +1,12 @@
 ﻿using ALife.Core.Collision;
+using ALife.Core.Geometry;
+using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Agents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ALife.Core.GeometryOld;
-using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.WorldObjects.Prebuilt
 {
@@ -16,7 +16,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
         private Zone start;
         private Zone finish;
 
-        public FallingRock(ALife.Core.GeometryOld.Shapes.Point centrePoint, IShape shape, Colour color, Zone startZone, Zone targetZone)
+        public FallingRock(Point centrePoint, IShape shape, Colour color, Zone startZone, Zone targetZone)
             : base(centrePoint, shape, "Rock", AgentIDGenerator.GetNextAgentId(), ReferenceValues.CollisionLevelPhysical, color)
         {
             Shape.Orientation = new Angle(90);
@@ -24,7 +24,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
             finish = targetZone;
         }
 
-        public FallingRock(ALife.Core.GeometryOld.Shapes.Point centrePoint, IShape shape, Colour color)
+        public FallingRock(Point centrePoint, IShape shape, Colour color)
             : base(centrePoint, shape, "Rock", AgentIDGenerator.GetNextAgentId(), ReferenceValues.CollisionLevelPhysical, color)
         {
             Shape.Orientation = new Angle(90);
@@ -43,10 +43,10 @@ namespace ALife.Core.WorldObjects.Prebuilt
 
         public override void ExecuteAliveTurn()
         {
-            ALife.Core.GeometryOld.Shapes.Point origin = new ALife.Core.GeometryOld.Shapes.Point(Shape.CentrePoint.X, Shape.CentrePoint.Y);
+            Point origin = new Point(Shape.CentrePoint.X, Shape.CentrePoint.Y);
             Angle turnRotation = new Angle(2);
 
-            ALife.Core.GeometryOld.Shapes.Point newCentre = GeometryMath.TranslateByVector(Shape.CentrePoint, Shape.Orientation, 10);
+            Point newCentre = GeometryMath.TranslateByVector(Shape.CentrePoint, Shape.Orientation, 10);
             Shape.CentrePoint = newCentre;
 
             Shape.Orientation += turnRotation;
@@ -65,14 +65,14 @@ namespace ALife.Core.WorldObjects.Prebuilt
             }
             collider.MoveObject(this);
 
-            /* This code made the falling rock zoom across the map and then reappear at the starting Geometry.Shapes.Point
+            /* This code made the falling rock zoom across the map and then reappear at the starting point
              * Could be used like a raindrop animation, if there were many of them */
 
             //List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(Shape.BoundingBox);
             //Zone z = inZones.Where((zone) => zone.Name == finish.Name).FirstOrDefault();
             //if(z != null)
             //{
-            //    Geometry.Shapes.Point myPoint = start.Distributor.NextAgentCentre(Shape.BoundingBox.XLength, Shape.BoundingBox.YHeight);
+            //    Point myPoint = start.Distributor.NextAgentCentre(Shape.BoundingBox.XLength, Shape.BoundingBox.YHeight);
             //    Shape.CentrePoint = myPoint;
             //    collider.MoveObject(this);
             //}

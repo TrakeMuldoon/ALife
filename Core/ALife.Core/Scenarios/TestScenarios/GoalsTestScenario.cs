@@ -1,11 +1,11 @@
-﻿using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
 using System.Collections.Generic;
-using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.Scenarios.TestScenarios
 {
@@ -24,7 +24,7 @@ namespace ALife.Core.Scenarios.TestScenarios
             agent.HomeZone = parentZone;
             agent.TargetZone = targetZone;
 
-            ALife.Core.GeometryOld.Shapes.Point centrePoint = parentZone.Distributor.NextObjectCentre(10, 10);
+            Point centrePoint = parentZone.Distributor.NextObjectCentre(10, 10);
 
             IShape myShape = new Circle(centrePoint, 5);
             agent.StartOrientation = startOrientation;
@@ -76,8 +76,8 @@ namespace ALife.Core.Scenarios.TestScenarios
 
         public virtual void PlanetSetup()
         {
-            Zone nullZone = new Zone("Null", "random", Colour.Green, new ALife.Core.GeometryOld.Shapes.Point(0, 0), 500, 500);
-            Zone blueZone = new Zone("Blue", "random", Colour.Blue, new ALife.Core.GeometryOld.Shapes.Point(200, 200), 50, 50);
+            Zone nullZone = new Zone("Null", "random", Colour.Green, new Point(0, 0), 500, 500);
+            Zone blueZone = new Zone("Blue", "random", Colour.Blue, new Point(200, 200), 50, 50);
             Planet.World.AddZone(nullZone);
             Planet.World.AddZone(blueZone);
 

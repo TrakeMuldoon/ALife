@@ -1,12 +1,10 @@
 ﻿using ALife.Core.Utility.Colours;
-using ALife.Core.GeometryOld;
-using ALife.Core.GeometryOld.Shapes;
 
-namespace ALife.Core.GeometryOld.Shapes
+namespace ALife.Core.Geometry.Shapes
 {
     public class Circle : IShape
     {
-        public virtual ALife.Core.GeometryOld.Shapes.Point CentrePoint
+        public virtual Point CentrePoint
         {
             get;
             set;
@@ -42,7 +40,7 @@ namespace ALife.Core.GeometryOld.Shapes
             set;
         }
 
-        public Circle(ALife.Core.GeometryOld.Shapes.Point coords, float radius)
+        public Circle(Point coords, float radius)
         {
             CentrePoint = coords;
             Radius = radius;
@@ -67,7 +65,7 @@ namespace ALife.Core.GeometryOld.Shapes
 
         public virtual IShape CloneShape()
         {
-            Circle cir = new Circle(new ALife.Core.GeometryOld.Shapes.Point(CentrePoint.X, CentrePoint.Y), Radius);
+            Circle cir = new Circle(new Point(CentrePoint.X, CentrePoint.Y), Radius);
             cir.Orientation = Orientation.Clone();
             cir.Colour = (Colour)Colour.Clone();
             return cir;

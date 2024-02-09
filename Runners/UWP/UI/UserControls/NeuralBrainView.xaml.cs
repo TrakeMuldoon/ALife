@@ -108,7 +108,7 @@ namespace ALifeUni.UI.UserControls
             //This is just used to stagger the neuron names
             int neuronCounter = 0;
 
-            //This backup exists because there is a race condition when another agent is selected WHILE
+            //This backup exists because there is a race condition when another agent is selected
             // while the neural net is being drawn. Keeping the original brain temporarily in context solves the error.
             Dictionary<Neuron, Vector2> backup = NodeMap;
             foreach(var (neuron, point) in backup)
@@ -124,7 +124,7 @@ namespace ALifeUni.UI.UserControls
             //This is just used to stagger the neuron names
             int neuronCounter = 0;
 
-            //This backup exists because there is a race condition when another agent is selected WHILE
+            //This backup exists because there is a race condition when another agent is selected
             // while the neural net is being drawn. Keeping the original brain temporarily in context solves the error.
             Dictionary<Neuron, Vector2> backup = NodeMap;
 
@@ -250,8 +250,6 @@ namespace ALifeUni.UI.UserControls
                 topPoint.X -= 8; topPoint.Y -= 6;
                 args.DrawingSession.DrawText("───", topPoint, Colors.Black, ctf);
             }
-
-
 
             //Draw bottom half of Neuron beneath it.
             Vector2 textPoint = new Vector2(point.X - 5, point.Y + 8);

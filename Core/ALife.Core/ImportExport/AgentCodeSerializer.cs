@@ -167,5 +167,21 @@ namespace ALife.Core.ImportExport
             return sb.ToString();
         }
 
+        public static string ConvertDoubleArrayToString(double[] inputDoubles)
+        {
+            byte[] asBytes = new byte[inputDoubles.Length * sizeof(double)];
+            Buffer.BlockCopy(inputDoubles, 0, asBytes, 0, asBytes.Length);
+            string s = Convert.ToBase64String(asBytes);
+
+            return s;
+        }
+
+        public static double[] ConvertStringToDoubleArray(string str)
+        {
+            byte[] inputBytes = Convert.FromBase64String(str);
+            double[] output = new double[inputBytes.Length / 8];
+            Buffer.BlockCopy(inputBytes, 0, output, 0, inputBytes.Length);
+            return output;
+        }
     }
 }

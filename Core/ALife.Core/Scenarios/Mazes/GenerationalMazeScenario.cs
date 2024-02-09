@@ -1,4 +1,5 @@
-﻿using ALife.Core.Scenarios.ScenarioHelpers;
+﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility.Collections;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.EvoNumbers;
@@ -142,8 +143,8 @@ If an agent reaches the goal line, the simuluation stops."
             double height = instance.WorldHeight;
             double width = instance.WorldWidth;
 
-            Zone red = new Zone("Red(Blue)", "Random", Colour.Red, new ALife.Core.GeometryOld.Shapes.Point(0, 0), 50, height);
-            Zone blue = new Zone("Blue(Red)", "Random", Colour.Blue, new ALife.Core.GeometryOld.Shapes.Point(width - 50, 0), 50, height);
+            Zone red = new Zone("Red(Blue)", "Random", Colour.Red, new Point(0, 0), 50, height);
+            Zone blue = new Zone("Blue(Red)", "Random", Colour.Blue, new Point(width - 50, 0), 50, height);
             red.OppositeZone = blue;
             red.OrientationDegrees = 0;
 
@@ -187,7 +188,7 @@ If an agent reaches the goal line, the simuluation stops."
                 double averageX = allAgents.Average((ag) => ag.Shape.CentrePoint.X);
                 double maxX = allAgents.Max((ag) => ag.Shape.CentrePoint.X);
 
-                String generationString = String.Format("Gen {0}: Stragglers: {1} Avg: {2:0.000}, MaxX: {3:0}", Iteration, living, averageX, maxX);
+                string generationString = string.Format("Gen {0}: Stragglers: {1} Avg: {2:0.000}, MaxX: {3:0}", Iteration, living, averageX, maxX);
                 Planet.World.MessagePump.Add(generationString);
 
                 List<Agent> bestX = FindTopX<Agent>(bestXNum, allAgents, (ag) => (double)(ag.Shape.CentrePoint.X));

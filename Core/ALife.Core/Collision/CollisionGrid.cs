@@ -1,27 +1,25 @@
-﻿using ALife.Core.GeometryOld.Shapes;
+﻿using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Maths;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ALife.Core.CollisionNew
+namespace ALife.Core.Collision
 {
     public class CollisionGrid<T> : ICollisionMap<T> where T : IHasShape
     {
-        public readonly string GridName;
-        public readonly int GridSize;
         public readonly int Height;
         public readonly int Width;
-        private const int DEFAULT_GRID_SIZE = 25;
-
-        private Dictionary<T, List<Point>> agentLocationTracker = new Dictionary<T, List<Point>>();
+        public readonly int GridSize;
+        public readonly string GridName;
 
         //TODO: Load from Default Configuration
         private int GridXMax;
-
         private int GridYMax;
+        private const int DEFAULT_GRID_SIZE = 25;
         private List<T>[,] objectGrid;
         private List<T> trackedObjects;
+        private Dictionary<T, List<Point>> agentLocationTracker = new Dictionary<T, List<Point>>();
 
         public CollisionGrid(int gridHeight, int gridWidth, string gridName)
             : this(gridHeight, gridWidth, DEFAULT_GRID_SIZE, gridName)
@@ -80,43 +78,6 @@ namespace ALife.Core.CollisionNew
             }
         }
 
-        public List<T> DetectCollisions(T myBody)
-        {
-            List<T> collisions = QueryForBoundingBoxCollisions(myBody.Shape.BoundingBox, myBody);
-            List<IHasShape> colShapes = CollisionDetector.FineGrainedCollisionDetection(collisions.Cast<IHasShape>(), myBody.Shape);
-            collisions = colShapes.Cast<T>().ToList();
-            return collisions;
-        }
-
-        public List<T> DetectCollisions(IHasShape detectionArea, T myBody)
-        {
-            List<T> collisions = QueryForBoundingBoxCollisions(detectionArea.Shape.BoundingBox, myBody);
-            List<IHasShape> colShapes = CollisionDetector.FineGrainedCollisionDetection(collisions.Cast<IHasShape>(), detectionArea.Shape);
-            collisions = colShapes.Cast<T>().ToList();
-            return collisions;
-        }
-
-        public IEnumerable<T> EnumerateItems()
-        {
-            int i = 0;
-            while(i < trackedObjects.Count)
-            {
-                T ret = trackedObjects[0];
-
-                try { ret = trackedObjects[i++]; }
-                catch(ArgumentOutOfRangeException)
-                {
-                    //TODO Find out if this causes bugs, where some itemse are getting hit up twice.
-                    /* Swallowed, it is possible that while enumerating items, the list is modified. We'll return the first item in the list */
-                }
-                yield return ret;
-            }
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return trackedObjects.GetEnumerator();
-        }
 
         public bool Insert(T newObject)
         {
@@ -130,17 +91,17 @@ namespace ALife.Core.CollisionNew
             int yMinBucket = (int)(bb.MinY) / GridSize;
 
             //This creates a list of grid buckets that the agent falls within
-            List<ALife.Core.GeometryOld.Shapes.Point> myCoords = new List<ALife.Core.GeometryOld.Shapes.Point>();
+            List<Point> myCoords = new List<Point>();
             for(int x = xMinBucket; x <= xMaxBucket; x++)
             {
                 for(int y = yMinBucket; y <= yMaxBucket; y++)
                 {
-                    myCoords.Add(new ALife.Core.GeometryOld.Shapes.Point(x, y));
+                    myCoords.Add(new Point(x, y));
                 }
             }
 
             //insert into all applicable buckets
-            foreach(ALife.Core.GeometryOld.Shapes.Point gc in myCoords)
+            foreach(Point gc in myCoords)
             {
                 if(gc.X < 0
                    || gc.Y < 0
@@ -163,6 +124,25 @@ namespace ALife.Core.CollisionNew
 
             //TODO: If there is ever a meaningful chance this could fail, return false
             return true;
+        }
+
+        public void RemoveObject(T killMe)
+        {
+            trackedObjects.Remove(killMe);
+            List<Point> myCoords = agentLocationTracker[killMe];
+            foreach(Point coord in myCoords)
+            {
+                //In case some objects go out of bounds.
+                if(coord.X < 0
+                   || coord.Y < 0
+                   || coord.X >= GridXMax
+                   || coord.Y >= GridYMax)
+                {
+                    continue;
+                }
+                objectGrid[(int)coord.X, (int)coord.Y].Remove(killMe);
+            }
+            agentLocationTracker.Remove(killMe);
         }
 
         public void MoveObject(T moveMe)
@@ -224,23 +204,43 @@ namespace ALife.Core.CollisionNew
             return tempList;
         }
 
-        public void RemoveObject(T killMe)
+        public List<T> DetectCollisions(T myBody)
         {
-            trackedObjects.Remove(killMe);
-            List<ALife.Core.GeometryOld.Shapes.Point> myCoords = agentLocationTracker[killMe];
-            foreach(ALife.Core.GeometryOld.Shapes.Point coord in myCoords)
-            {
-                //In case some objects go out of bounds.
-                if(coord.X < 0
-                   || coord.Y < 0
-                   || coord.X >= GridXMax
-                   || coord.Y >= GridYMax)
-                {
-                    continue;
-                }
-                objectGrid[(int)coord.X, (int)coord.Y].Remove(killMe);
-            }
-            agentLocationTracker.Remove(killMe);
+            List<T> collisions = QueryForBoundingBoxCollisions(myBody.Shape.BoundingBox, myBody);
+            List<IHasShape> colShapes = CollisionDetector.FineGrainedCollisionDetection(collisions.Cast<IHasShape>(), myBody.Shape);
+            collisions = colShapes.Cast<T>().ToList();
+            return collisions;
         }
+
+        public List<T> DetectCollisions(IHasShape detectionArea, T myBody)
+        {
+            List<T> collisions = QueryForBoundingBoxCollisions(detectionArea.Shape.BoundingBox, myBody);
+            List<IHasShape> colShapes = CollisionDetector.FineGrainedCollisionDetection(collisions.Cast<IHasShape>(), detectionArea.Shape);
+            collisions = colShapes.Cast<T>().ToList();
+            return collisions;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return trackedObjects.GetEnumerator();
+        }
+
+        public IEnumerable<T> EnumerateItems()
+        {
+            int i = 0;
+            while(i < trackedObjects.Count)
+            {
+                T ret = trackedObjects[0];
+
+                try { ret = trackedObjects[i++]; }
+                catch(ArgumentOutOfRangeException)
+                {
+                    //TODO Find out if this causes bugs, where some itemse are getting hit up twice.
+                    /* Swallowed, it is possible that while enumerating items, the list is modified. We'll return the first item in the list */
+                }
+                yield return ret;
+            }
+        }
+
     }
 }

@@ -58,8 +58,8 @@ namespace ALife.Core.WorldObjects.Agents.Senses
                 //SubInputs.Add(new ColorInput(name + ".HowGreen", (WorldObject wo) => wo.Shape.Colour.G));
             }
 
-            //Re: "TODO: HUUGE BUUG." The code there is setting the distance for the root Geometry.Shapes.Point of the childSector (the vision radius of the eye) 
-            //to 5.0 away from the parent center Geometry.Shapes.Point. This is a bug, because if the parent radius is modified to be larger than the that distancce, then the eye will be inside it.
+            //Re: "TODO: HUUGE BUUG." The code there is setting the distance for the root Point of the childSector (the vision radius of the eye) 
+            //to 5.0 away from the parent center Point. This is a bug, because if the parent radius is modified to be larger than the that distancce, then the eye will be inside it.
             //The reason we can't set it to be "parent.Shape.Radius" is that the parent is not guaranteed to be a circle.
             //Technically, there are two "solves" for this. 
             // 1. Do some sort of math to determine based on a 360 degree orientation, the distance to the shape perimeter at that point. 

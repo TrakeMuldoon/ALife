@@ -1,4 +1,5 @@
-﻿using ALife.Core.Scenarios.ScenarioHelpers;
+﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility.Collections;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.EvoNumbers;
@@ -158,11 +159,11 @@ Reaching the finish line, reproduces 3 times and then dies... Victorious!"
         {
             MazeSetups.BuildThinningCarTrack();
 
-            Zone startZone = new Zone("Start", "Random", Colour.Green, new ALife.Core.GeometryOld.Shapes.Point(30, 331), 190, 80);
-            Zone midOne = new Zone("Mid1", "Random", Colour.Orange, new ALife.Core.GeometryOld.Shapes.Point(800, 585), 20, 200);
-            Zone halfWay = new Zone("Half", "Random", Colour.Orange, new ALife.Core.GeometryOld.Shapes.Point(1320, 320), 200, 20);
-            Zone midThree = new Zone("Mid3", "Random", Colour.Orange, new ALife.Core.GeometryOld.Shapes.Point(800, 18), 20, 115);
-            Zone endZone = new Zone("End", "Random", Colour.Red, new ALife.Core.GeometryOld.Shapes.Point(30, 285), 190, 40);
+            Zone startZone = new Zone("Start", "Random", Colour.Green, new Point(30, 331), 190, 80);
+            Zone midOne = new Zone("Mid1", "Random", Colour.Orange, new Point(800, 585), 20, 200);
+            Zone halfWay = new Zone("Half", "Random", Colour.Orange, new Point(1320, 320), 200, 20);
+            Zone midThree = new Zone("Mid3", "Random", Colour.Orange, new Point(800, 18), 20, 115);
+            Zone endZone = new Zone("End", "Random", Colour.Red, new Point(30, 285), 190, 40);
 
             Planet.World.AddZone(startZone);
             Planet.World.AddZone(midOne);

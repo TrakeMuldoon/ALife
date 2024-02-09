@@ -1,4 +1,5 @@
-﻿using ALife.Core.Utility.Collections;
+﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Collections;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects;
@@ -130,14 +131,10 @@ If they eat two green mushrooms, they reproduce."
         /******************/
         /*  PLANET STUFF  */
         /******************/
-
-        //TODO: Fully Comment This
         public virtual int WorldWidth => 850;
 
-        //TODO: Fully Comment This
         public virtual int WorldHeight => 850;
 
-        //TODO: Fully Comment This
         public virtual bool FixedWidthHeight
         {
             get { return false; }
@@ -158,7 +155,7 @@ If they eat two green mushrooms, they reproduce."
             double height = Planet.World.WorldHeight;
             double width = Planet.World.WorldWidth;
 
-            WorldZone = new Zone("WholeWorld", "Random", Colour.Yellow, new ALife.Core.GeometryOld.Shapes.Point(0, 0), width, height);
+            WorldZone = new Zone("WholeWorld", "Random", Colour.Yellow, new Point(0, 0), width, height);
             Planet.World.AddZone(WorldZone);
 
             int numAgents = 200;

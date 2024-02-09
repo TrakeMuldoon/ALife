@@ -1,4 +1,5 @@
 ﻿using ALife.Core.Collision;
+using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects;
@@ -55,10 +56,13 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
                                     , new ReadOnlyEvoNumber(20, 4, 10, 40)) //Radius
                 , new EarCluster(agent, "LeftEar"
                                  , new ReadOnlyEvoNumber(270, 3, 190, 350) //Orientation around parent
-                                 , new ReadOnlyEvoNumber(10, 1, 7, 13)) // Radius
+                                 , new ReadOnlyEvoNumber(5, 1, 4, 10)) // Radius
                 , new EarCluster(agent, "RightEar"
                                  , new ReadOnlyEvoNumber(90, 3, 10, 170) //Orientation around parent
-                                 , new ReadOnlyEvoNumber(10, 1, 7, 13)) // Radius
+                                 , new ReadOnlyEvoNumber(5, 1, 4, 10)) // Radius
+                , new EarCluster(agent, "BackEar"
+                                 , new ReadOnlyEvoNumber(180, 3, 10, 170) //Orientation around parent
+                                 , new ReadOnlyEvoNumber(5, 1, 4, 10)) // Radius
             };
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
@@ -78,7 +82,9 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
-            IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 18, 15, 12 });
+            IBrain newBrain;
+            newBrain = new NeuralNetworkBrain(agent, new List<int> { 18, 15, 12 });
+            agent.Shape.DebugColour = Colour.Red;
 
             agent.CompleteInitialization(null, 1, newBrain);
 
@@ -111,7 +117,7 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
 
             //Move to a random position so they can attempt to find the zone again. 
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[winner.CollisionLevel];
-            ALife.Core.GeometryOld.Shapes.Point myPoint = winner.HomeZone.Distributor.NextObjectCentre(winner.Shape.BoundingBox.XLength, winner.Shape.BoundingBox.YHeight);
+            Point myPoint = winner.HomeZone.Distributor.NextObjectCentre(winner.Shape.BoundingBox.XLength, winner.Shape.BoundingBox.YHeight);
             winner.Shape.CentrePoint = myPoint;
             collider.MoveObject(winner);
         }
@@ -140,7 +146,7 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
             double height = Planet.World.WorldHeight;
             double width = Planet.World.WorldWidth;
 
-            Zone WorldZone = new Zone("WholeWorld", "Random", Colour.Yellow, new ALife.Core.GeometryOld.Shapes.Point(0, 0), width, height);
+            Zone WorldZone = new Zone("WholeWorld", "Random", Colour.Yellow, new Point(0, 0), width, height);
             Planet.World.AddZone(WorldZone);
 
 
@@ -158,10 +164,10 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
         private int EmitterPairs = 0;
         private void AddEmitterPair(double x, double y)
         {
-            ALife.Core.GeometryOld.Shapes.Point targetPoint = new ALife.Core.GeometryOld.Shapes.Point(x, y);
+            Point targetPoint = new Point(x, y);
             Zone targetZone = new Zone($"{TARGET_ZONENAME_PREFIX}{++EmitterPairs}", "Random", Colour.Red, targetPoint, 12,12);
             Planet.World.AddZone(targetZone);
-            SoundEmitter emitter = new SoundEmitter(new ALife.Core.GeometryOld.Shapes.Point(targetPoint.X + 6, targetPoint.Y + 6));
+            SoundEmitter emitter = new SoundEmitter(new Point(targetPoint.X + 6, targetPoint.Y + 6));
             Planet.World.AddObjectToWorld(emitter);
         }
 

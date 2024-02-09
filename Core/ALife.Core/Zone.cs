@@ -1,8 +1,8 @@
 ﻿using ALife.Core.Distributors;
+using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using System;
 using System.Diagnostics;
-using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core
 {
@@ -29,7 +29,7 @@ namespace ALife.Core
         public readonly WorldObjectDistributor Distributor;
 
         public Zone(String name, String distributorType, Colour color
-                    , ALife.Core.GeometryOld.Shapes.Point topLeft, double xWidth, double yHeight) : base(topLeft, xWidth, yHeight, color)
+                    , Point topLeft, double xWidth, double yHeight) : base(topLeft, xWidth, yHeight, color)
         {
             Colour lowAlpha = new Colour(Colour)
             {

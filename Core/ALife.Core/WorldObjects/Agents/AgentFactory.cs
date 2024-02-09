@@ -1,10 +1,10 @@
-﻿using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
 using System.Collections.Generic;
-using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.WorldObjects.Agents
 {
@@ -28,7 +28,7 @@ namespace ALife.Core.WorldObjects.Agents
             clonedShape.Orientation.Degrees = toClone.StartOrientation;
             newClone.SetShape(clonedShape);
 
-            ALife.Core.GeometryOld.Shapes.Point newCentrePoint = toClone.HomeZone.Distributor.NextObjectCentre(clonedShape.BoundingBox.XLength, clonedShape.BoundingBox.YHeight);
+            Point newCentrePoint = toClone.HomeZone.Distributor.NextObjectCentre(clonedShape.BoundingBox.XLength, clonedShape.BoundingBox.YHeight);
             clonedShape.CentrePoint = newCentrePoint;
 
             List<SenseCluster> clonedSenses = new List<SenseCluster>();
@@ -68,7 +68,7 @@ namespace ALife.Core.WorldObjects.Agents
             evolvedShape.Orientation.Degrees = newParent.StartOrientation;
             newChild.SetShape(evolvedShape);
 
-            ALife.Core.GeometryOld.Shapes.Point newCentrePoint = newParent.HomeZone.Distributor.NextObjectCentre(evolvedShape.BoundingBox.XLength, evolvedShape.BoundingBox.YHeight);
+            Point newCentrePoint = newParent.HomeZone.Distributor.NextObjectCentre(evolvedShape.BoundingBox.XLength, evolvedShape.BoundingBox.YHeight);
             evolvedShape.CentrePoint = newCentrePoint;
 
             List<SenseCluster> evolvedSenses = new List<SenseCluster>();

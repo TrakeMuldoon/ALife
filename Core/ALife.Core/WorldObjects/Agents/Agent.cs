@@ -1,4 +1,5 @@
 ﻿using ALife.Core.Distributors;
+using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
@@ -8,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.WorldObjects.Agents
 {
@@ -84,7 +84,7 @@ namespace ALife.Core.WorldObjects.Agents
             TargetZone = targetZone;
         }
 
-        internal void ApplyCircleShapeToAgent(ALife.Core.GeometryOld.Shapes.Point centrePoint, Colour colour, int circleRadius, double startOrientation)
+        internal void ApplyCircleShapeToAgent(Point centrePoint, Colour colour, int circleRadius, double startOrientation)
         {
             IShape myShape = new Circle(centrePoint, circleRadius);
             StartOrientation = startOrientation;
@@ -95,7 +95,7 @@ namespace ALife.Core.WorldObjects.Agents
 
         internal void ApplyCircleShapeToAgent(WorldObjectDistributor distributor, Colour colour, int circleRadius, double startOrientation)
         {
-            ALife.Core.GeometryOld.Shapes.Point centrePoint = distributor.NextObjectCentre(circleRadius * 2, circleRadius * 2);
+            Point centrePoint = distributor.NextObjectCentre(circleRadius * 2, circleRadius * 2);
             IShape myShape = new Circle(centrePoint, circleRadius);
             StartOrientation = startOrientation;
             myShape.Orientation.Degrees = startOrientation;
@@ -203,8 +203,6 @@ namespace ALife.Core.WorldObjects.Agents
 
 
         public virtual void ScenarioEndOfTurnTriggers()
-
-
         {
             Planet.World.Scenario.AgentEndOfTurnTriggers(this);
         }

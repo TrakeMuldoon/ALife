@@ -1,13 +1,13 @@
-﻿using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Utility.Colours;
 using System;
-using ALife.Core.GeometryOld.Shapes;
 
 namespace ALife.Core.WorldObjects.Prebuilt
 {
     public class SoundEmitter : WorldObject
     {
         private static int EmitterCount = 1;
-        public SoundEmitter(ALife.Core.GeometryOld.Shapes.Point centrePoint) :
+        public SoundEmitter(Point centrePoint) :
             base(centrePoint, new Circle(1), "SoundEmitter", (++EmitterCount).ToString(), ReferenceValues.CollisionLevelSound, Colour.Black)
         {
         }
@@ -26,7 +26,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
         public override void ExecuteAliveTurn()
         {
             turnCount += 1;
-            if(turnCount % 3 == 0)
+            if(turnCount % 10 == 0)
             {
                 SoundWave sw = new SoundWave(255, 0, 0, Shape.CentrePoint);
                 Planet.World.AddObjectToWorld(sw);

@@ -56,7 +56,7 @@ namespace ALife.Core.Scenarios.TestScenarios
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
-            IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 8, 8 });
+            IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 7, 9 });
 
             agent.CompleteInitialization(null, 1, newBrain);
 

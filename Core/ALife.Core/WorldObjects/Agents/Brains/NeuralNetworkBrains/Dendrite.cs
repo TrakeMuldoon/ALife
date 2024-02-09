@@ -6,7 +6,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
     {
         public double Weight { get; set; }
         public Neuron TargetNeuron { get; set; }
-        public String TargetNeuronName { get; set; }
+        public string TargetNeuronName { get; set; }
 
         public double CurrentValue
         {

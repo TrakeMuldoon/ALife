@@ -22,7 +22,6 @@ namespace ALife.Core.WorldObjects.Agents.Brains
         private BehaviourCabinet behaviorCabinet;
         private BehaviourWaitQueue bwq = new BehaviourWaitQueue(BehaviourWaitMax);
 
-
         public BehaviourBrain(Agent self, params string[] behaviourStrings)
         {
             this.behaviorCabinet = new BehaviourCabinet(self);
@@ -100,6 +99,16 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             {
                 act.ActivateAction();
             }
+        }
+
+        public bool CloneEquals(IBrain cloneBrain)
+        {
+            throw new NotImplementedException("Haven't implemented this yet");
+        }
+
+        public string ExportNewBrain()
+        {
+            throw new NotImplementedException("Exporting BehaviourBrain not implemented yet");
         }
     }
 }

@@ -1,12 +1,9 @@
-﻿using ALife.Core.Utility.Maths;
-using ALife.Core.WorldObjects.Agents.AgentActions;
+﻿using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains;
-using ALife.Core.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 
 
 namespace ALife.Core.WorldObjects.Agents.Brains
@@ -60,7 +57,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             {
                 this.Layers = NeuralNetworkBrainFactory.CreateEvolvedNeuralNetwork(self, templateBrain);
             }
-            
+
             this.actions = Layers[Layers.Count - 1];
         }
 
@@ -68,12 +65,23 @@ namespace ALife.Core.WorldObjects.Agents.Brains
         public NeuralNetworkBrain(Agent self, string inputString)
         {
             this.self = self;
+
+            /* Unmerged change from project 'ALife.Core (net8.0)'
+            Before:
+                        NeuralNetworkBrainImport BrainSpecification = ExtractBrainInfoFromStr(inputString);
+
+                        this.ModificationRate = BrainSpecification.ModStats[0];
+            After:
+                        NeuralNetworkBrainImport BrainSpecification = ExtractBrainInfoFromStr(inputString);
+
+                        this.ModificationRate = BrainSpecification.ModStats[0];
+            */
             NeuralNetworkBrainImport BrainSpecification = ExtractBrainInfoFromStr(inputString);
-            
+
             this.ModificationRate = BrainSpecification.ModStats[0];
             this.MutabilityRate = BrainSpecification.ModStats[1];
 
-            
+
             this.Layers = NeuralNetworkBrainFactory.CreateBrainSpecNeuralNetwork(self, BrainSpecification);
             this.actions = Layers[Layers.Count - 1];
         }
@@ -154,7 +162,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             for(int k = 0; k < layerCount; ++k)
             {
                 Layer lay = Layers[k];
-                for(int j = 0; j < lay.Neurons.Count; ++j) 
+                for(int j = 0; j < lay.Neurons.Count; ++j)
                 {
                     Neuron n = lay.Neurons[j];
                     dendriteWeights.AddRange(n.UpstreamDendrites.Select(den => den.Weight));
@@ -199,7 +207,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             NeuralNetworkBrainImport output = new NeuralNetworkBrainImport();
 
             byte[] inputBytes = Convert.FromBase64String(numeric);
-            
+
             byte layerCount = inputBytes[0];
             output.LayerCount = layerCount;
             output.NeuronCounts = new ArraySegment<byte>(inputBytes, 1, layerCount).ToArray();

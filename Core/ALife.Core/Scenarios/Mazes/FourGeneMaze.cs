@@ -131,17 +131,6 @@ If an agent reaches the goal line, the simuluation stops."
         public void AgentDeathBehaviour(Agent toDie)
         {
             //Find the gene the agent belongs to 
-
-            /* Unmerged change from project 'ALife.Core (netstandard2.0)'
-            Before:
-                        String gene = toDie.IndividualLabel.Substring(0,3);
-
-                        //Find where this agent sits in the gene ranking
-            After:
-                        String gene = toDie.IndividualLabel.Substring(0,3);
-
-                        //Find where this agent sits in the gene ranking
-            */
             String gene = toDie.IndividualLabel.Substring(0,3);
 
             //Find where this agent sits in the gene ranking

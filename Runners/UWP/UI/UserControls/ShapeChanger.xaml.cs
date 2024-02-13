@@ -1,7 +1,7 @@
 ﻿using ALife.Core;
 using ALife.Core.Collision;
 using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
+using ALife.Core.Geometry.OLD.Shapes;
 using ALife.Core.WorldObjects;
 using Microsoft.UI.Xaml.Controls;
 using System;

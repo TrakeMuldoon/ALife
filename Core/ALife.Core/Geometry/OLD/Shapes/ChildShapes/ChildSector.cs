@@ -1,7 +1,9 @@
-﻿using ALife.Core.Utility.Maths;
+﻿using ALife.Core.Geometry.OLD;
+using ALife.Core.Geometry.OLD.Shapes;
+using ALife.Core.Utility.Maths;
 using System;
 
-namespace ALife.Core.Geometry.Shapes.ChildShapes
+namespace ALife.Core.Geometry.OLD.Shapes.ChildShapes
 {
     public class ChildSector : Sector, IChildShape
     {
@@ -79,7 +81,7 @@ namespace ALife.Core.Geometry.Shapes.ChildShapes
         public IShape CloneChildShape(IShape parent)
         {
             ChildSector cs = new ChildSector(parent, OrientationAroundParent.Clone(), distanceFromParentCentre, RelativeOrientation.Clone(), Radius, SweepAngle.Clone());
-            cs.Colour = this.Colour;
+            cs.Colour = Colour;
             return cs;
         }
     }

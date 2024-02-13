@@ -1,4 +1,7 @@
-﻿namespace ALife.Core.Geometry.Shapes.ChildShapes
+﻿using ALife.Core.Geometry.OLD;
+using ALife.Core.Geometry.OLD.Shapes;
+
+namespace ALife.Core.Geometry.OLD.Shapes.ChildShapes
 {
     public interface IChildShape
     {

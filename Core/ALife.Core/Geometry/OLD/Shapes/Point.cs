@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Numerics;
 
-namespace ALife.Core.Geometry.Shapes
+namespace ALife.Core.Geometry.OLD.Shapes
 {
     /// <summary>
     /// Defines a Geometry.Shapes.Point in space

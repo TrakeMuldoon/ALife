@@ -1,5 +1,5 @@
 using ALife.Core.Collision;
-using ALife.Core.Geometry.Shapes;
+using ALife.Core.Geometry.OLD.Shapes;
 using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;

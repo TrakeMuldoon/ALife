@@ -1,4 +1,4 @@
-﻿namespace ALife.Core.Geometry.Shapes
+﻿namespace ALife.Core.Geometry.OLD.Shapes
 {
     public interface IHasShape
     {

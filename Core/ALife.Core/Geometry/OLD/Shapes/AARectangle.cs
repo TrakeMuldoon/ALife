@@ -1,7 +1,8 @@
-﻿using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Geometry.OLD;
+using ALife.Core.Utility.Colours;
 using System;
 
-namespace ALife.Core.Geometry.Shapes
+namespace ALife.Core.Geometry.OLD.Shapes
 {
     public class AARectangle : IShape
     {

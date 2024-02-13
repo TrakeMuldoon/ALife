@@ -1,9 +1,10 @@
-﻿using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Geometry.OLD;
+using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.Maths;
 using System;
 using System.Collections.Generic;
 
-namespace ALife.Core.Geometry.Shapes
+namespace ALife.Core.Geometry.OLD.Shapes
 {
     public class Sector : IShape
     {

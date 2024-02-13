@@ -1,6 +1,6 @@
-﻿using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
-using ALife.Core.Geometry.Shapes.ChildShapes;
+﻿using ALife.Core.Geometry.OLD;
+using ALife.Core.Geometry.OLD.Shapes;
+using ALife.Core.Geometry.OLD.Shapes.ChildShapes;
 using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Agents.Senses.GoalSense;
 using System;

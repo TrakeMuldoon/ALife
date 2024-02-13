@@ -1,7 +1,7 @@
 ﻿using ALife.Core;
 using ALife.Core.Collision;
-using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
+using ALife.Core.Geometry.OLD;
+using ALife.Core.Geometry.OLD.Shapes;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Prebuilt;
 using System;
@@ -159,7 +159,7 @@ namespace ALifeUni.UI.UserControls
         {
             try
             {
-                ALife.Core.Geometry.Shapes.Point centre = new ALife.Core.Geometry.Shapes.Point(Double.Parse(WallXPos.Text), Double.Parse(WallYPos.Text));
+                Point centre = new ALife.Core.Geometry.Shapes.Point(Double.Parse(WallXPos.Text), Double.Parse(WallYPos.Text));
                 int Length = Int32.Parse(WallLength.Text);
                 Angle angle = new Angle(Int32.Parse(WallOrientation.Text));
                 Wall w = new Wall(centre, Length, angle, $"Custom_{++customCreated}");

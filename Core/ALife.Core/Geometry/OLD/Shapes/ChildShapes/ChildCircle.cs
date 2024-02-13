@@ -1,7 +1,9 @@
-﻿using ALife.Core.Utility.Maths;
+﻿using ALife.Core.Geometry.OLD;
+using ALife.Core.Geometry.OLD.Shapes;
+using ALife.Core.Utility.Maths;
 using System;
 
-namespace ALife.Core.Geometry.Shapes.ChildShapes
+namespace ALife.Core.Geometry.OLD.Shapes.ChildShapes
 {
     public class ChildCircle : Circle, IChildShape
     {

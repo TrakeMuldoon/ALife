@@ -1,8 +1,9 @@
-﻿using ALife.Core.Utility.Colours;
+﻿using ALife.Core.Geometry.OLD;
+using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.Maths;
 using System;
 
-namespace ALife.Core.Geometry.Shapes
+namespace ALife.Core.Geometry.OLD.Shapes
 {
     public class Rectangle : IShape
     {
@@ -140,10 +141,10 @@ namespace ALife.Core.Geometry.Shapes
 
             Point tempPoint = CentrePoint;
             tempPoint = GeometryMath.TranslateByVector(tempPoint, Orientation, FBLength / 2);
-            topLeft = GeometryMath.TranslateByVector(tempPoint, Orientation.Radians - (Math.PI / 2), RLWidth / 2);
-            topRight = GeometryMath.TranslateByVector(topLeft, Orientation.Radians + (Math.PI / 2), RLWidth);
+            topLeft = GeometryMath.TranslateByVector(tempPoint, Orientation.Radians - Math.PI / 2, RLWidth / 2);
+            topRight = GeometryMath.TranslateByVector(topLeft, Orientation.Radians + Math.PI / 2, RLWidth);
             bottomRight = GeometryMath.TranslateByVector(topRight, Orientation.Radians + Math.PI, FBLength);
-            bottomLeft = GeometryMath.TranslateByVector(bottomRight, Orientation.Radians + (Math.PI * 3 / 2), RLWidth);
+            bottomLeft = GeometryMath.TranslateByVector(bottomRight, Orientation.Radians + Math.PI * 3 / 2, RLWidth);
 
             double maxX = ExtraMath.Maximum(topLeft.X, topRight.X, bottomLeft.X, bottomRight.X);
             double minX = ExtraMath.Minimum(topLeft.X, topRight.X, bottomLeft.X, bottomRight.X);

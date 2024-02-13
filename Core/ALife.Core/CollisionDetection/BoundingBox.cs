@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using ALife.Core.CollisionDetection.Geometry;
+using ALife.Core.NewGeometry;
 using ALife.Core.Utility;
 using ALife.Core.Utility.Maths;
 

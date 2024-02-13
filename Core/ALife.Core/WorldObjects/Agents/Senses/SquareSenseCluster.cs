@@ -2,8 +2,8 @@
 using ALife.Core.WorldObjects.Agents.Senses.GenericInputs;
 using System;
 using ALife.Core.GeometryOld;
-using ALife.Core.GeometryOld.Shapes;
 using ALife.Core.GeometryOld.Shapes.ChildShapes;
+using ALife.Core.NewGeometry.OLD.Shapes;
 
 namespace ALife.Core.WorldObjects.Agents.Senses
 {

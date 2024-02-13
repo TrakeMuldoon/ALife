@@ -1,9 +1,9 @@
 ﻿using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Agents.Senses.GoalSense;
 using System;
-using ALife.Core.GeometryOld;
-using ALife.Core.GeometryOld.Shapes;
-using ALife.Core.GeometryOld.Shapes.ChildShapes;
+using ALife.Core.NewGeometry.OLD;
+using ALife.Core.NewGeometry.OLD.Shapes;
+using ALife.Core.NewGeometry.OLD.Shapes.ChildShapes;
 
 namespace ALife.Core.WorldObjects.Agents.Senses
 {

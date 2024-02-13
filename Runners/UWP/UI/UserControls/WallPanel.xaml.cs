@@ -6,8 +6,8 @@ using System;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using ALife.Core.GeometryOld;
-using ALife.Core.GeometryOld.Shapes;
+using ALife.Core.NewGeometry.OLD;
+using ALife.Core.NewGeometry.OLD.Shapes;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -159,7 +159,7 @@ namespace ALifeUni.UI.UserControls
         {
             try
             {
-                ALife.Core.GeometryOld.Shapes.Point centre = new ALife.Core.GeometryOld.Shapes.Point(Double.Parse(WallXPos.Text), Double.Parse(WallYPos.Text));
+                Point centre = new ALife.Core.GeometryOld.Shapes.Point(Double.Parse(WallXPos.Text), Double.Parse(WallYPos.Text));
                 int Length = Int32.Parse(WallLength.Text);
                 Angle angle = new Angle(Int32.Parse(WallOrientation.Text));
                 Wall w = new Wall(centre, Length, angle, $"Custom_{++customCreated}");

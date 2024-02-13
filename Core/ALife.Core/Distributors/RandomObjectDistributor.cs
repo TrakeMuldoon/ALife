@@ -1,7 +1,7 @@
 ﻿using ALife.Core.WorldObjects;
 using System;
 using System.Collections.Generic;
-using ALife.Core.GeometryOld.Shapes;
+using ALife.Core.NewGeometry.OLD.Shapes;
 
 namespace ALife.Core.Distributors
 {

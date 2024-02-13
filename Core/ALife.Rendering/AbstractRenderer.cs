@@ -1,7 +1,7 @@
 ﻿using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.Maths;
 using ALife.Core.WorldObjects.Agents;
-using ALife.Core.GeometryOld.Shapes;
+using ALife.Core.NewGeometry.OLD.Shapes;
 
 namespace ALife.Rendering
 {

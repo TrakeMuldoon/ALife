@@ -1,7 +1,7 @@
 ﻿using ALife.Core.Collision;
 using System.Collections.Generic;
-using ALife.Core.GeometryOld;
 using ALife.Core.GeometryOld.Shapes;
+using ALife.Core.NewGeometry.OLD;
 
 namespace ALife.Core.WorldObjects.Agents.AgentActions
 {

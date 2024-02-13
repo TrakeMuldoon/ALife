@@ -3,9 +3,9 @@ using ALife.Core.WorldObjects.Agents.Senses.Ears;
 using ALife.Core.WorldObjects.Agents.Senses.GenericInputs;
 using System;
 using System.Collections.Generic;
-using ALife.Core.GeometryOld;
-using ALife.Core.GeometryOld.Shapes;
 using ALife.Core.GeometryOld.Shapes.ChildShapes;
+using ALife.Core.NewGeometry.OLD;
+using ALife.Core.NewGeometry.OLD.Shapes;
 
 namespace ALife.Core.WorldObjects.Agents.Senses
 {

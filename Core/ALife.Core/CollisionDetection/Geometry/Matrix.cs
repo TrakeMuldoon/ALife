@@ -1,7 +1,7 @@
-﻿using ALife.Core.Geometry;
-using ALife.Core.Utility;
-using System;
+﻿using System;
 using System.Numerics;
+using ALife.Core.NewGeometry;
+using ALife.Core.Utility;
 
 namespace ALife.Core.CollisionDetection.Geometry
 {

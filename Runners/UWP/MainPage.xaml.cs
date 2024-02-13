@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using ALife.Core.GeometryOld;
 using ALife.Core.GeometryOld.Shapes;
+using ALife.Core.NewGeometry.OLD.Shapes;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 

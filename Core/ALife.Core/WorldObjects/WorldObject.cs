@@ -2,8 +2,8 @@
 using ALife.Core.WorldObjects.Agents.Properties;
 using System;
 using System.Collections.Generic;
-using Point = ALife.Core.GeometryOld.Shapes.Point;
-using ALife.Core.GeometryOld.Shapes;
+using Point = ALife.Core.NewGeometry.OLD.Shapes.Point;
+using ALife.Core.NewGeometry.OLD.Shapes;
 
 namespace ALife.Core.WorldObjects
 {

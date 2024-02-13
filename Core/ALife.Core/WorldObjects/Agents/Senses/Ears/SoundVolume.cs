@@ -2,7 +2,7 @@
 using ALife.Core.WorldObjects.Prebuilt;
 using System;
 using System.Collections.Generic;
-using ALife.Core.GeometryOld.Shapes;
+using ALife.Core.NewGeometry.OLD.Shapes;
 
 namespace ALife.Core.WorldObjects.Agents.Senses.Ears
 {

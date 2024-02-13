@@ -1,4 +1,4 @@
-﻿using ALife.Core.GeometryOld.Shapes;
+﻿using ALife.Core.NewGeometry.OLD.Shapes;
 
 namespace ALife.Core.WorldObjects.Agents.AgentActions
 {

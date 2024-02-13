@@ -14,7 +14,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Threading;
-using ALPoint = ALife.Core.GeometryOld.Shapes.Point;
+using ALPoint = ALife.Core.NewGeometry.OLD.Shapes.Point;
 using AvPoint = Avalonia.Point;
 
 namespace ALife.Avalonia.Controls.SingularRunnerControls

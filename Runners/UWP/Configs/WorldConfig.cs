@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Windows.Foundation;
-using ALife.Core.GeometryOld;
+using ALife.Core.NewGeometry.OLD;
 
 
 namespace ALifeUni.Configs

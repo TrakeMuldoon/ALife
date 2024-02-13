@@ -11,8 +11,8 @@ using System.Linq;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
-using ALife.Core.GeometryOld;
-using ALife.Core.GeometryOld.Shapes;
+using ALife.Core.NewGeometry.OLD;
+using ALife.Core.NewGeometry.OLD.Shapes;
 
 namespace ALifeUni.UI
 {

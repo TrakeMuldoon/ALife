@@ -9,7 +9,7 @@ namespace ALifeUni
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        public static ALife.Core.GeometryOld.Shapes.Point ToALifePoint(this Windows.Foundation.Point point)
+        public static ALife.Core.NewGeometry.OLD.Shapes.Point ToALifePoint(this Windows.Foundation.Point point)
         {
             return new ALife.Core.GeometryOld.Shapes.Point(point.X, point.Y);
         }
@@ -19,7 +19,7 @@ namespace ALifeUni
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        public static Windows.Foundation.Point ToUwpPoint(this ALife.Core.GeometryOld.Shapes.Point point)
+        public static Windows.Foundation.Point ToUwpPoint(this ALife.Core.NewGeometry.OLD.Shapes.Point point)
         {
             return new Windows.Foundation.Point(point.X, point.Y);
         }

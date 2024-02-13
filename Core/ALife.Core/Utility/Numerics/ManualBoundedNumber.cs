@@ -1,6 +1,7 @@
-﻿using ALife.Core.Utility.Ranges;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.Json.Serialization;
+using ALife.Core.CommonInterfaces;
+using ALife.Core.Utility.Ranges;
 
 namespace ALife.Core.Utility.Numerics
 {
@@ -9,7 +10,7 @@ namespace ALife.Core.Utility.Numerics
     /// TODO: We could make a numeric-generic version of this struct once we're on .NET 8 fairly easily...
     /// </summary>
     [DebuggerDisplay("{ToString()}")]
-    public struct ManualBoundedNumber
+    public struct ManualBoundedNumber : IDeepCloneable<ManualBoundedNumber>
     {
         /// <summary>
         /// The range
@@ -161,9 +162,9 @@ namespace ALife.Core.Utility.Numerics
         }
 
         /// <summary>
-        /// Clones this instance.
+        /// Deep clones this instance.
         /// </summary>
-        /// <returns>A cloned instance.</returns>
+        /// <returns>The new cloned instance.</returns>
         public ManualBoundedNumber Clone()
         {
             return new ManualBoundedNumber(this);

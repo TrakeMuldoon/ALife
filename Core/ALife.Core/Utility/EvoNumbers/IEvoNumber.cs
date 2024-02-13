@@ -1,11 +1,12 @@
-﻿using ALife.Core.Utility.Numerics;
+﻿using ALife.Core.CommonInterfaces;
+using ALife.Core.Utility.Numerics;
 
 namespace ALife.Core.Utility.EvoNumbers
 {
     /// <summary>
     /// The interface for a number that can be evolved within a range.
     /// </summary>
-    public interface IEvoNumber
+    public interface IEvoNumber : IDeepCloneable<IEvoNumber>
     {
         /// <summary>
         /// Gets the original (start) value.
@@ -90,11 +91,5 @@ namespace ALife.Core.Utility.EvoNumbers
         /// </summary>
         /// <value>The value minimum value.</value>
         double ValueMinimumValue { get; set; }
-
-        /// <summary>
-        /// Clones this instance.
-        /// </summary>
-        /// <returns>The cloned instance.</returns>
-        IEvoNumber Clone();
     }
 }

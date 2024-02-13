@@ -1,8 +1,8 @@
-﻿using ALife.Core.Utility.Random;
-using ALife.Core.Utility.Ranges;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
+using ALife.Core.Utility.Random;
+using ALife.Core.Utility.Ranges;
 
 namespace ALife.Core.Utility.Colours
 {
@@ -79,6 +79,12 @@ namespace ALife.Core.Utility.Colours
         public static readonly Colour IndianRed = PredefineColour("CD5C5C");
 
         /// <summary>
+        /// A colour representing the colour lawn green.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly Colour LawnGreen = PredefineColour("7cfc00");
+
+        /// <summary>
         /// A colour representing the colour magenta.
         /// </summary>
         [JsonIgnore]
@@ -89,12 +95,6 @@ namespace ALife.Core.Utility.Colours
         /// </summary>
         [JsonIgnore]
         public static readonly Colour Maroon = PredefineColour("800000");
-
-        /// <summary>
-        /// A colour representing the colour lawn green.
-        /// </summary>
-        [JsonIgnore]
-        public static readonly Colour LawnGreen = PredefineColour("7cfc00");
 
         /// <summary>
         /// A colour representing the colour orange.
@@ -378,18 +378,6 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
-        /// Creates a Colour object from the specified TSL values.
-        /// </summary>
-        /// <param name="tint"></param>
-        /// <param name="saturation"></param>
-        /// <param name="value"></param>
-        /// <returns>The Colour object.</returns>
-        public static Colour FromTsl(double tint, double saturation, double value)
-        {
-            return FromATSL(255, tint, saturation, value);
-        }
-
-        /// <summary>
         /// Creates a Colour object from the specified RGB value.
         /// </summary>
         /// <param name="red">The red channel.</param>
@@ -402,9 +390,23 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
+        /// Creates a Colour object from the specified TSL values.
+        /// </summary>
+        /// <param name="tint"></param>
+        /// <param name="saturation"></param>
+        /// <param name="value"></param>
+        /// <returns>The Colour object.</returns>
+        public static Colour FromTsl(double tint, double saturation, double value)
+        {
+            return FromATSL(255, tint, saturation, value);
+        }
+
+        /// <summary>
         /// Generates a random Colour.
         /// </summary>
-        /// <param name="randomizer">The random number generator. TODO: this should use a Simulation object once those exist.</param>
+        /// <param name="randomizer">
+        /// The random number generator. TODO: this should use a Simulation object once those exist.
+        /// </param>
         /// <param name="alphaRange">The range of valid byte values for the Alpha channel. Defaults to 255-255.</param>
         /// <param name="redRange">The range of valid byte values for the Red channel. Defaults to 100-255.</param>
         /// <param name="greenRange">The range of valid byte values for the Green channel. Defaults to 100-255.</param>
@@ -423,17 +425,6 @@ namespace ALife.Core.Utility.Colours
             byte blue = randomizer.NextByte(actualBlueRange.Minimum, actualBlueRange.Maximum);
 
             return new Colour(alpha, red, green, blue);
-        }
-
-        /// <summary>
-        /// Predefines the colour specified by the hex code.
-        /// </summary>
-        /// <param name="hex">The hex code.</param>
-        /// <returns>The Colour object.</returns>
-        internal static Colour PredefineColour(string hex)
-        {
-            ColourHelpers.ConvertHexToRgb(hex, out byte r, out byte g, out byte b);
-            return new Colour(255, r, g, b, true);
         }
 
         /// <summary>
@@ -459,9 +450,9 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
-        /// Clones this instance.
+        /// Deep clones this instance.
         /// </summary>
-        /// <returns>The cloned instance.</returns>
+        /// <returns>The new cloned instance.</returns>
         public IColour Clone()
         {
             return new Colour(this);
@@ -516,6 +507,17 @@ namespace ALife.Core.Utility.Colours
             string hex = this.ToHexadecimal();
             string output = $"a{A}#{hex}";
             return output;
+        }
+
+        /// <summary>
+        /// Predefines the colour specified by the hex code.
+        /// </summary>
+        /// <param name="hex">The hex code.</param>
+        /// <returns>The Colour object.</returns>
+        internal static Colour PredefineColour(string hex)
+        {
+            ColourHelpers.ConvertHexToRgb(hex, out byte r, out byte g, out byte b);
+            return new Colour(255, r, g, b, true);
         }
     }
 }

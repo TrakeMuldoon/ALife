@@ -1,8 +1,8 @@
-﻿using ALife.Core.Utility.Random;
-using ALife.Core.Utility.Ranges;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
+using ALife.Core.Utility.Random;
+using ALife.Core.Utility.Ranges;
 
 namespace ALife.Core.Utility.Colours
 {
@@ -80,6 +80,12 @@ namespace ALife.Core.Utility.Colours
         public static readonly TslColour IndianRed = PredefineColour("CD5C5C");
 
         /// <summary>
+        /// A colour representing the colour lawn green.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly TslColour LawnGreen = PredefineColour("7cfc00");
+
+        /// <summary>
         /// A colour representing the colour magenta.
         /// </summary>
         [JsonIgnore]
@@ -90,12 +96,6 @@ namespace ALife.Core.Utility.Colours
         /// </summary>
         [JsonIgnore]
         public static readonly TslColour Maroon = PredefineColour("800000");
-
-        /// <summary>
-        /// A colour representing the colour lawn green.
-        /// </summary>
-        [JsonIgnore]
-        public static readonly TslColour LawnGreen = PredefineColour("7cfc00");
 
         /// <summary>
         /// A colour representing the colour orange.
@@ -146,12 +146,6 @@ namespace ALife.Core.Utility.Colours
         private byte _alpha;
 
         /// <summary>
-        /// The tint
-        /// </summary>
-        [JsonIgnore]
-        private double _tint;
-
-        /// <summary>
         /// The lightness
         /// </summary>
         [JsonIgnore]
@@ -162,6 +156,12 @@ namespace ALife.Core.Utility.Colours
         /// </summary>
         [JsonIgnore]
         private double _saturation;
+
+        /// <summary>
+        /// The tint
+        /// </summary>
+        [JsonIgnore]
+        private double _tint;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TslColour"/> struct.
@@ -243,25 +243,6 @@ namespace ALife.Core.Utility.Colours
         public byte G { get; private set; }
 
         /// <summary>
-        /// Gets the tint.
-        /// </summary>
-        /// <value>The tint.</value>
-        [JsonPropertyName("tint")]
-        public double Tint
-        {
-            get => _tint;
-            set
-            {
-                _tint = value;
-                WasPredefined = false;
-                ColourHelpers.ConvertTslToRgb(_tint, _saturation, _lightness, out byte red, out byte green, out byte blue);
-                R = red;
-                G = green;
-                B = blue;
-            }
-        }
-
-        /// <summary>
         /// Gets the lightness.
         /// </summary>
         /// <value>The lightness.</value>
@@ -298,6 +279,25 @@ namespace ALife.Core.Utility.Colours
             set
             {
                 _saturation = value;
+                WasPredefined = false;
+                ColourHelpers.ConvertTslToRgb(_tint, _saturation, _lightness, out byte red, out byte green, out byte blue);
+                R = red;
+                G = green;
+                B = blue;
+            }
+        }
+
+        /// <summary>
+        /// Gets the tint.
+        /// </summary>
+        /// <value>The tint.</value>
+        [JsonPropertyName("tint")]
+        public double Tint
+        {
+            get => _tint;
+            set
+            {
+                _tint = value;
                 WasPredefined = false;
                 ColourHelpers.ConvertTslToRgb(_tint, _saturation, _lightness, out byte red, out byte green, out byte blue);
                 R = red;
@@ -416,18 +416,6 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
-        /// Creates a TslColour object from the specified TSL values.
-        /// </summary>
-        /// <param name="tint"></param>
-        /// <param name="saturation"></param>
-        /// <param name="value"></param>
-        /// <returns>The TslColour object.</returns>
-        public static TslColour FromTsl(double tint, double saturation, double value)
-        {
-            return FromATSL(255, tint, saturation, value);
-        }
-
-        /// <summary>
         /// Creates a TslColour object from the specified RGB value.
         /// </summary>
         /// <param name="red">The red channel.</param>
@@ -440,9 +428,23 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
+        /// Creates a TslColour object from the specified TSL values.
+        /// </summary>
+        /// <param name="tint"></param>
+        /// <param name="saturation"></param>
+        /// <param name="value"></param>
+        /// <returns>The TslColour object.</returns>
+        public static TslColour FromTsl(double tint, double saturation, double value)
+        {
+            return FromATSL(255, tint, saturation, value);
+        }
+
+        /// <summary>
         /// Generates a random Colour.
         /// </summary>
-        /// <param name="randomizer">The random number generator. TODO: this should use a Simulation object once those exist.</param>
+        /// <param name="randomizer">
+        /// The random number generator. TODO: this should use a Simulation object once those exist.
+        /// </param>
         /// <param name="alphaRange">The range of valid byte values for the Alpha channel. Defaults to 255-255.</param>
         /// <param name="tintRange">The range of valid double values for the Tint. Defaults to 0-1.</param>
         /// <param name="saturationRange">The range of valid double values for the Saturation. Defaults to 0-1.</param>
@@ -461,17 +463,6 @@ namespace ALife.Core.Utility.Colours
             double lightness = randomizer.NextDouble(actualLightnessRange.Minimum, actualLightnessRange.Maximum);
 
             return new TslColour(alpha, tint, saturation, lightness);
-        }
-
-        /// <summary>
-        /// Predefines the colour specified by the hex code.
-        /// </summary>
-        /// <param name="hex">The hex code.</param>
-        /// <returns>The TslColour object.</returns>
-        internal static TslColour PredefineColour(string hex)
-        {
-            ColourHelpers.ConvertHexToTsl(hex, out double tint, out double saturation, out double lightness);
-            return new TslColour(255, tint, saturation, lightness, true);
         }
 
         /// <summary>
@@ -507,9 +498,9 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
-        /// Clones this instance.
+        /// Deep clones this instance.
         /// </summary>
-        /// <returns>The cloned instance.</returns>
+        /// <returns>The new cloned instance.</returns>
         public IColour Clone()
         {
             return new Colour(this);
@@ -564,6 +555,17 @@ namespace ALife.Core.Utility.Colours
             string hex = this.ToHexadecimal();
             string output = $"a{A}#{hex} (t{Tint:0.00}, s{Saturation:0.00}, l{Lightness:0.00})";
             return output;
+        }
+
+        /// <summary>
+        /// Predefines the colour specified by the hex code.
+        /// </summary>
+        /// <param name="hex">The hex code.</param>
+        /// <returns>The TslColour object.</returns>
+        internal static TslColour PredefineColour(string hex)
+        {
+            ColourHelpers.ConvertHexToTsl(hex, out double tint, out double saturation, out double lightness);
+            return new TslColour(255, tint, saturation, lightness, true);
         }
     }
 }

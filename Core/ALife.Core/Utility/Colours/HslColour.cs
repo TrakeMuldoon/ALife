@@ -1,8 +1,8 @@
-﻿using ALife.Core.Utility.Random;
-using ALife.Core.Utility.Ranges;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
+using ALife.Core.Utility.Random;
+using ALife.Core.Utility.Ranges;
 
 namespace ALife.Core.Utility.Colours
 {
@@ -80,6 +80,12 @@ namespace ALife.Core.Utility.Colours
         public static readonly HslColour IndianRed = PredefineColour("CD5C5C");
 
         /// <summary>
+        /// A colour representing the colour lawn green.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly HslColour LawnGreen = PredefineColour("7cfc00");
+
+        /// <summary>
         /// A colour representing the colour magenta.
         /// </summary>
         [JsonIgnore]
@@ -90,12 +96,6 @@ namespace ALife.Core.Utility.Colours
         /// </summary>
         [JsonIgnore]
         public static readonly HslColour Maroon = PredefineColour("800000");
-
-        /// <summary>
-        /// A colour representing the colour lawn green.
-        /// </summary>
-        [JsonIgnore]
-        public static readonly HslColour LawnGreen = PredefineColour("7cfc00");
 
         /// <summary>
         /// A colour representing the colour orange.
@@ -416,18 +416,6 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
-        /// Creates a HslColour object from the specified TSL values.
-        /// </summary>
-        /// <param name="tint"></param>
-        /// <param name="saturation"></param>
-        /// <param name="value"></param>
-        /// <returns>The HslColour object.</returns>
-        public static HslColour FromTsl(double tint, double saturation, double value)
-        {
-            return FromATSL(255, tint, saturation, value);
-        }
-
-        /// <summary>
         /// Creates a HslColour object from the specified RGB value.
         /// </summary>
         /// <param name="red">The red channel.</param>
@@ -440,9 +428,23 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
+        /// Creates a HslColour object from the specified TSL values.
+        /// </summary>
+        /// <param name="tint"></param>
+        /// <param name="saturation"></param>
+        /// <param name="value"></param>
+        /// <returns>The HslColour object.</returns>
+        public static HslColour FromTsl(double tint, double saturation, double value)
+        {
+            return FromATSL(255, tint, saturation, value);
+        }
+
+        /// <summary>
         /// Generates a random Colour.
         /// </summary>
-        /// <param name="randomizer">The random number generator. TODO: this should use a Simulation object once those exist.</param>
+        /// <param name="randomizer">
+        /// The random number generator. TODO: this should use a Simulation object once those exist.
+        /// </param>
         /// <param name="alphaRange">The range of valid byte values for the Alpha channel. Defaults to 255-255.</param>
         /// <param name="hueRange">The range of valid int values for the Hue. Defaults to 0-360.</param>
         /// <param name="saturationRange">The range of valid double values for the Saturation. Defaults to 0-1.</param>
@@ -461,17 +463,6 @@ namespace ALife.Core.Utility.Colours
             double lightness = randomizer.NextDouble(actualLightnessRange.Minimum, actualLightnessRange.Maximum);
 
             return new HslColour(alpha, hue, saturation, lightness);
-        }
-
-        /// <summary>
-        /// Predefines the colour specified by the hex code.
-        /// </summary>
-        /// <param name="hex">The hex code.</param>
-        /// <returns>The HslColour object.</returns>
-        internal static HslColour PredefineColour(string hex)
-        {
-            ColourHelpers.ConvertHexToHsl(hex, out int hue, out double saturation, out double lightness);
-            return new HslColour(255, hue, saturation, lightness, true);
         }
 
         /// <summary>
@@ -507,9 +498,9 @@ namespace ALife.Core.Utility.Colours
         }
 
         /// <summary>
-        /// Clones this instance.
+        /// Deep clones this instance.
         /// </summary>
-        /// <returns>The cloned instance.</returns>
+        /// <returns>The new cloned instance.</returns>
         public IColour Clone()
         {
             return new Colour(this);
@@ -564,6 +555,17 @@ namespace ALife.Core.Utility.Colours
             string hex = this.ToHexadecimal();
             string output = $"a{A}#{hex} (h{Hue}, s{Saturation:0.00}, l{Lightness:0.00})";
             return output;
+        }
+
+        /// <summary>
+        /// Predefines the colour specified by the hex code.
+        /// </summary>
+        /// <param name="hex">The hex code.</param>
+        /// <returns>The HslColour object.</returns>
+        internal static HslColour PredefineColour(string hex)
+        {
+            ColourHelpers.ConvertHexToHsl(hex, out int hue, out double saturation, out double lightness);
+            return new HslColour(255, hue, saturation, lightness, true);
         }
     }
 }

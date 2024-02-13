@@ -1,11 +1,12 @@
 ﻿using System;
+using ALife.Core.CommonInterfaces;
 
 namespace ALife.Core.Utility.Colours
 {
     /// <summary>
     /// Defines a colour with alpha, red, green and blue components.
     /// </summary>
-    public interface IColour : IEquatable<IColour>
+    public interface IColour : IEquatable<IColour>, IDeepCloneable<IColour>
     {
         /// <summary>
         /// Gets alpha channel.
@@ -36,11 +37,5 @@ namespace ALife.Core.Utility.Colours
         /// </summary>
         /// <value><c>true</c> if [was predefined]; otherwise, <c>false</c>.</value>
         bool WasPredefined { get; }
-
-        /// <summary>
-        /// Clones this instance.
-        /// </summary>
-        /// <returns>The cloned instance.</returns>
-        IColour Clone();
     }
 }

@@ -1,7 +1,7 @@
-﻿using ALife.Core.Utility.Maths;
-using ALife.Core.Utility.Numerics;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.Json.Serialization;
+using ALife.Core.Utility.Maths;
+using ALife.Core.Utility.Numerics;
 
 namespace ALife.Core.Utility.EvoNumbers
 {
@@ -287,9 +287,9 @@ namespace ALife.Core.Utility.EvoNumbers
         }
 
         /// <summary>
-        /// Clones this instance.
+        /// Deep clones this instance.
         /// </summary>
-        /// <returns>The cloned instance.</returns>
+        /// <returns>The new cloned instance.</returns>
         public IEvoNumber Clone()
         {
             return new EvoNumber(this);

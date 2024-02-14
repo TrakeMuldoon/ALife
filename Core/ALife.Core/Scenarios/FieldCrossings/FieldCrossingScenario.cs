@@ -117,28 +117,12 @@ If they reach the target zone, they will restart in their own zones, and an evol
             //Reproduce one child for each direction
             foreach(AgentZoneSpec spec in AgentZoneSpecs.Values)
             {
-                CreateZonedChild(me, collider, spec);
+                FieldCrossingHelpers.CreateZonedChild(me, collider, spec);
             }
 
             //You have a new countdown
             me.Statistics["DeathTimer"].Value = 0;
             me.Statistics["ZoneEscapeTimer"].Value = 0;
-        }
-
-        protected static void CreateZonedChild(Agent me, ICollisionMap<WorldObject> collider, AgentZoneSpec specification)
-        {
-            //TODO: Refactor this into the Agent
-            Agent child = (Agent)me.Reproduce();
-            child.HomeZone = specification.StartZone;
-            child.TargetZone = specification.TargetZone;
-            Point reverseChildPoint = child.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
-            child.Shape.CentrePoint = reverseChildPoint;
-            child.Shape.Orientation.Degrees = specification.StartOrientation;
-            child.Shape.Colour = specification.AgentColor;
-            GoalSenseCluster gsc = child.Senses.OfType<GoalSenseCluster>().FirstOrDefault();
-            gsc.ChangeTarget(specification.TargetZone);
-
-            collider.MoveObject(child);
         }
 
         public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)

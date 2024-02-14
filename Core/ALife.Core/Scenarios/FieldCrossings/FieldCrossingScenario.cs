@@ -6,6 +6,7 @@ using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
+using ALife.Core.WorldObjects.Agents.AgentCreationStructs;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
@@ -35,23 +36,41 @@ If they reach the target zone, they will restart in their own zones, and an evol
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
+
+        AgentCreator theAgentCreator = new AgentCreator();
+        private void InitializeAgentSpecs()
         {
-            Agent agent = new Agent(genusName
-                                    , AgentIDGenerator.GetNextAgentId()
-                                    , ReferenceValues.CollisionLevelPhysical
-                                    , parentZone
-                                    , targetZone);
+            AgentCreator creator = new AgentCreator();
+            creator.BrainCreatorFunction = CreateAgentBrain;
+            creator.PropertiesCreatorFunction = CreateAgentCabinet;
+            creator.AgentEndOfTurnActivities = AgentEndOfTurnTriggers;
+            theAgentCreator = creator;
+        }
 
-            int agentRadius = 5;
-            agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
 
+        protected Agent CreateZonedAgent(AgentZoneSpec spec)
+        {
+            AgentConstructor ac = new AgentConstructor();
+
+            ac.GenusName = "Agent";
+            ac.StartOrientation = spec.StartOrientation;
+            ac.ParentZone = spec.StartZone;
+            ac.TargetZone = spec.TargetZone;
+            ac.AgentColour = spec.AgentColor;
+
+            theAgentCreator.BasicInformation = ac;
+
+            return AgentFactory.CreateCircularAgent(theAgentCreator);
+        }
+
+        private AgentCabinet CreateAgentCabinet(Agent me)
+        {
             List<SenseCluster> agentSenses = ListHelpers.CompileList(
                 new IEnumerable<SenseCluster>[]
                 {
-                    CommonSenses.PairOfEyes(agent)
+                    CommonSenses.PairOfEyes(me)
                 },
-                new GoalSenseCluster(agent, "GoalSense", targetZone)
+                new GoalSenseCluster(me, "GoalSense", me.TargetZone)
             );
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
@@ -65,21 +84,28 @@ If they reach the target zone, they will restart in their own zones, and an evol
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
             {
-                new MoveCluster(agent, CollisionBehaviour),
-                new RotateCluster(agent, CollisionBehaviour)
+                new MoveCluster(me, CollisionBehaviour),
+                new RotateCluster(me, CollisionBehaviour)
             };
 
-            agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
+            AgentCabinet cabinet = new AgentCabinet()
+            {
+                AgentSenses = agentSenses,
+                AgentProperties = agentProperties,
+                AgentStatistics = agentStatistics,
+                AgentActions = agentActions
+            };
 
-            //IBrain newBrain = new BehaviourBrain(agent, "IF Age.Value GreaterThan [10] THEN Move.GoForward AT [0.2]", "*", "*", "*", "*");
-            IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 15, 12 });
-
-            agent.CompleteInitialization(null, 1, newBrain);
-
-            return agent;
+            return cabinet;
         }
 
-        public virtual void AgentEndOfTurnTriggers(Agent me)
+        private IBrain CreateAgentBrain(Agent me)
+        {
+            IBrain newBrain = new NeuralNetworkBrain(me, new List<int> { 15, 12 });
+            return newBrain;
+        }
+
+        private void AgentEndOfTurnTriggers(Agent me)
         {
             if(me.Statistics["DeathTimer"].Value > 1899)
             {
@@ -100,7 +126,7 @@ If they reach the target zone, they will restart in their own zones, and an evol
                 }
                 else if(z.Name == me.TargetZone.Name)
                 {
-                    this.VictoryBehaviour(me);
+                    VictoryBehaviour(me);
                 }
             }
         }
@@ -148,12 +174,12 @@ If they reach the target zone, they will restart in their own zones, and an evol
 
         public virtual bool FixedWidthHeight { get { return false; } }
 
-
-
         protected Dictionary<Zone, AgentZoneSpec> AgentZoneSpecs = new Dictionary<Zone, AgentZoneSpec>();
 
         public virtual void PlanetSetup()
         {
+            InitializeAgentSpecs();
+
             int width = Planet.World.WorldWidth;
             int height = Planet.World.WorldHeight;
 
@@ -179,13 +205,14 @@ If they reach the target zone, they will restart in their own zones, and an evol
             //Do Nothing
         }
 
-        protected Agent CreateZonedAgent(AgentZoneSpec spec)
+        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
-            return AgentFactory.CreateAgent("Agent"
-                                            , spec.StartZone
-                                            , spec.TargetZone
-                                            , spec.AgentColor
-                                            , spec.StartOrientation);
+            throw new NotImplementedException();
+        }
+
+        void IScenario.AgentEndOfTurnTriggers(Agent me)
+        {
+            throw new NotImplementedException();
         }
     }
 }

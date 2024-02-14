@@ -44,7 +44,7 @@ If an agent reaches the goal line, the simuluation stops."
                                     , targetZone);
 
             int agentRadius = 5;
-            agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
+            AgentFactory.ApplyCircleShapeToAgent(agent, parentZone.Distributor, colour, null, agentRadius, startOrientation);
 
             List<SenseCluster> agentSenses = ListHelpers.CompileList(
                 new IEnumerable<SenseCluster>[]

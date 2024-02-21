@@ -37,7 +37,7 @@ If they reach the target zone, they will restart in their own zones, and an evol
 
         protected Agent CreateZonedAgent(AgentZoneSpec spec)
         {
-           Agent me = AgentFactory.ConstructCircularAgent("Agent"
+           Agent agent = AgentFactory.ConstructCircularAgent("Agent"
                                                         , spec.StartZone
                                                         , spec.TargetZone
                                                         , spec.AgentColor
@@ -47,9 +47,9 @@ If they reach the target zone, they will restart in their own zones, and an evol
             List<SenseCluster> agentSenses = ListHelpers.CompileList(
                 new IEnumerable<SenseCluster>[]
                 {
-                    CommonSenses.PairOfEyes(me)
+                    CommonSenses.PairOfEyes(agent)
                 },
-                new GoalSenseCluster(me, "GoalSense", me.TargetZone)
+                new GoalSenseCluster(agent, "GoalSense", agent.TargetZone)
             );
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
@@ -63,17 +63,17 @@ If they reach the target zone, they will restart in their own zones, and an evol
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
             {
-                new MoveCluster(me, CollisionBehaviour),
-                new RotateCluster(me, CollisionBehaviour)
+                new MoveCluster(agent, CollisionBehaviour),
+                new RotateCluster(agent, CollisionBehaviour)
             };
 
-            me.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
+            agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
-            IBrain newBrain = new NeuralNetworkBrain(me, new List<int> { 15, 12 });
+            IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 15, 12 });
 
-            me.CompleteInitialization(null, 1, newBrain);
+            agent.CompleteInitialization(null, 1, newBrain);
 
-            return me;
+            return agent;
         }
 
         protected virtual void VictoryBehaviour(Agent me)

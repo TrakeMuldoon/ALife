@@ -107,38 +107,43 @@ If they reach the target zone, they will restart in their own zones, and an evol
 
         protected Agent CreateZonedAgent(AgentZoneSpec spec)
         {
-            return AgentFactory.ConstructCircularAgent("Agent"
+           Agent me = AgentFactory.ConstructCircularAgent("Agent"
                                                         , spec.StartZone
                                                         , spec.TargetZone
                                                         , spec.AgentColor
                                                         , null
                                                         , spec.StartOrientation);
-        }
 
-        private void AgentEndOfTurnTriggers(Agent me)
-        {
-            if(me.Statistics["DeathTimer"].Value > 1899)
-            {
-                me.Die();
-                return;
-            }
-            //TODO: Refactor this into a world function called "WhatZonesAmIIn" or something like that. Get the scenario a little further from the nuts/bolts.
-            List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(me.Shape.BoundingBox);
-            foreach(Zone z in inZones)
-            {
-                if(z.Name == me.HomeZone.Name)
-                {
-                    if(me.Statistics["ZoneEscapeTimer"].Value > 200)
+            List<SenseCluster> agentSenses = ListHelpers.CompileList(
+                    new IEnumerable<SenseCluster>[]
                     {
-                        me.Die();
-                        return;
-                    }
-                }
-                else if(z.Name == me.TargetZone.Name)
+                        CommonSenses.PairOfEyes(me)
+                    },
+                    new GoalSenseCluster(me, "GoalSense", me.TargetZone)
+                );
+
+            List<PropertyInput> agentProperties = new List<PropertyInput>();
+
+            List<StatisticInput> agentStatistics = new List<StatisticInput>()
                 {
-                    VictoryBehaviour(me);
-                }
-            }
+                    new StatisticInput("Age", 0, Int32.MaxValue, StatisticInputType.Incrementing),
+                    new StatisticInput("DeathTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing),
+                    new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing)
+                };
+
+            List<ActionCluster> agentActions = new List<ActionCluster>()
+                {
+                    new MoveCluster(me, CollisionBehaviour),
+                    new RotateCluster(me, CollisionBehaviour)
+                };
+
+            me.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
+
+            IBrain newBrain = new NeuralNetworkBrain(me, new List<int> { 15, 12 });
+
+            me.CompleteInitialization(null, 1, newBrain);
+
+            return me;
         }
 
         protected virtual void VictoryBehaviour(Agent me)
@@ -219,9 +224,31 @@ If they reach the target zone, they will restart in their own zones, and an evol
             throw new NotImplementedException();
         }
 
-        void IScenario.AgentEndOfTurnTriggers(Agent me)
+
+        public void AgentEndOfTurnTriggers(Agent me)
         {
-            throw new NotImplementedException();
+            if(me.Statistics["DeathTimer"].Value > 1899)
+            {
+                me.Die();
+                return;
+            }
+            //TODO: Refactor this into a world function called "WhatZonesAmIIn" or something like that. Get the scenario a little further from the nuts/bolts.
+            List<Zone> inZones = Planet.World.ZoneMap.QueryForBoundingBoxCollisions(me.Shape.BoundingBox);
+            foreach(Zone z in inZones)
+            {
+                if(z.Name == me.HomeZone.Name)
+                {
+                    if(me.Statistics["ZoneEscapeTimer"].Value > 200)
+                    {
+                        me.Die();
+                        return;
+                    }
+                }
+                else if(z.Name == me.TargetZone.Name)
+                {
+                    VictoryBehaviour(me);
+                }
+            }
         }
     }
 }

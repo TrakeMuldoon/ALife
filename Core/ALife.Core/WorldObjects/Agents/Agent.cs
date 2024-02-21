@@ -195,7 +195,6 @@ namespace ALife.Core.WorldObjects.Agents
 
         public Action<Agent> CustomEndOfTurnTriggers;
 
-        //TODO: This is temporarily an IF while I convert to the more generic option
         public virtual void ScenarioEndOfTurnTriggers()
         {
             //if(CustomEndOfTurnTriggers != null)

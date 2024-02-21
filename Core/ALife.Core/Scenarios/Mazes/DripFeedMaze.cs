@@ -30,16 +30,14 @@ If an agent reaches the goal line, the simuluation stops."
     )]
     public class DripFeedMaze : IScenario
     {
-        public Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
+        public Agent CreateAgentOne(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
-            Agent agent = new Agent(genusName
-                                    , AgentIDGenerator.GetNextAgentId()
-                                    , ReferenceValues.CollisionLevelPhysical
-                                    , parentZone
-                                    , targetZone);
-
-            int agentRadius = 5;
-            agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
+            Agent agent = AgentFactory.ConstructCircularAgent(genusName
+                                                             , parentZone
+                                                             , targetZone
+                                                             , colour
+                                                             , null
+                                                             , startOrientation);
 
             List<SenseCluster> agentSenses = ListHelpers.CompileList(
                 new IEnumerable<SenseCluster>[]
@@ -155,7 +153,7 @@ If an agent reaches the goal line, the simuluation stops."
             for(int i = 0; i < numAgents; i++)
             {
                 Colour randomColour = Colour.GetRandomColour(Planet.World.NumberGen);
-                Agent rag = AgentFactory.CreateAgent("Agent", startZone, endZone, randomColour, 0);
+                Agent rag = CreateAgentOne("Agent", startZone, endZone, randomColour, 0);
             }
 
             MazeSetups.SetUpMaze();
@@ -168,8 +166,8 @@ If an agent reaches the goal line, the simuluation stops."
             {
                 Colour randomColourA = Colour.GetRandomColour(Planet.World.NumberGen);
                 Colour randomColourB = Colour.GetRandomColour(Planet.World.NumberGen);
-                AgentFactory.CreateAgent("Agent", startZone, endZone, randomColourA, 0);
-                AgentFactory.CreateAgent("Agent", startZone, endZone, randomColourB, 0);
+                CreateAgentOne("Agent", startZone, endZone, randomColourA, 0);
+                CreateAgentOne("Agent", startZone, endZone, randomColourB, 0);
             }
         }
     }

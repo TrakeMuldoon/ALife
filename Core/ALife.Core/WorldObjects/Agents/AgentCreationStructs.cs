@@ -8,7 +8,15 @@ using System.Collections.Generic;
 
 namespace ALife.Core.WorldObjects.Agents.AgentCreationStructs
 {
-    public struct AgentCabinet 
+    public struct AgentCreator
+    {
+        public AgentConstructor BasicInformation;
+        public Func<Agent, AgentCabinet> PropertiesCreatorFunction;
+        public Func<Agent, IBrain> BrainCreatorFunction;
+        public Action<Agent> AgentEndOfTurnActivities;
+    }
+
+    public struct AgentCabinet
     {
         public List<SenseCluster> AgentSenses;
         public List<PropertyInput> AgentProperties;
@@ -24,13 +32,5 @@ namespace ALife.Core.WorldObjects.Agents.AgentCreationStructs
         public Colour AgentColour;
         public Colour? DebugColour;
         public double StartOrientation;
-    }
-
-    public struct AgentCreator
-    {
-        public AgentConstructor BasicInformation;
-        public Func<Agent, AgentCabinet> PropertiesCreatorFunction;
-        public Func<Agent, IBrain> BrainCreatorFunction;
-        public Action<Agent> AgentEndOfTurnActivities;
     }
 }

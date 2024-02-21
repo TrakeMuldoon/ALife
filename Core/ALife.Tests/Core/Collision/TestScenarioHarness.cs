@@ -23,7 +23,7 @@ namespace ALife.Tests.Core.Collision
         {
         }
 
-        public Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour color, double startOrientation)
+        public Agent CreateAgentOne(string genusName, Zone parentZone, Zone targetZone, Colour color, double startOrientation)
         {
             throw new NotImplementedException();
         }

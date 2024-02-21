@@ -17,7 +17,7 @@ namespace ALife.Core.Scenarios.TestScenarios
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour color, double startOrientation)
+        public virtual Agent CreateAgentOne(string genusName, Zone parentZone, Zone targetZone, Colour color, double startOrientation)
         {
             Agent agent = new Agent(genusName
                                     , AgentIDGenerator.GetNextAgentId()
@@ -86,7 +86,7 @@ namespace ALife.Core.Scenarios.TestScenarios
             int numAgents = 50;
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", nullZone, null, Colour.Blue, 0);
+                Agent rag = CreateAgentOne("Agent", nullZone, null, Colour.Blue, 0);
             }
         }
 

@@ -2,12 +2,13 @@
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents.AgentActions;
-using ALife.Core.WorldObjects.Agents.AgentCreationStructs;
+//using ALife.Core.WorldObjects.Agents.AgentCreationStructs;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace ALife.Core.WorldObjects.Agents
 {
@@ -15,43 +16,59 @@ namespace ALife.Core.WorldObjects.Agents
     {
         private const int DEFAULT_AGENT_RADIUS = 5; //TODO: Migrate generic config values to config class.
 
-        public static Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour color, double startOrientation)
-        {
-            return Planet.World.Scenario.CreateAgent(genusName, parentZone, targetZone, color, startOrientation);
-        }
+        //public static Agent CreateAgentOne(string genusName, Zone parentZone, Zone targetZone, Colour color, double startOrientation)
+        //{
+        //    return Planet.World.Scenario.CreateAgent(genusName, parentZone, targetZone, color, startOrientation);
+        //}
 
-        public static Agent CreateCircularAgent(AgentCreator AgentSpecification)
+        //public static Agent CreateCircularAgent(AgentCreator AgentSpecification)
+        //{
+        //    AgentConstructor constructorParams = AgentSpecification.BasicInformation;
+        //    Agent newAgent = new Agent(constructorParams.GenusName
+        //                                , AgentIDGenerator.GetNextAgentId()
+        //                                , ReferenceValues.CollisionLevelPhysical
+        //                                , constructorParams.ParentZone
+        //                                , constructorParams.TargetZone);
+
+        //    ApplyCircleShapeToAgent(newAgent, constructorParams);
+        //    AgentCabinet allAttributes = AgentSpecification.PropertiesCreatorFunction(newAgent);
+
+        //    newAgent.AttachAttributes(allAttributes.AgentSenses, allAttributes.AgentProperties, allAttributes.AgentStatistics, allAttributes.AgentActions);
+
+        //    IBrain brain = AgentSpecification.BrainCreatorFunction(newAgent);
+
+        //    newAgent.CompleteInitialization(null, 1, brain);
+        //    newAgent.CustomEndOfTurnTriggers = AgentSpecification.AgentEndOfTurnActivities;
+
+        //    return newAgent;
+        //}
+
+        public static Agent ConstructCircularAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, Colour? debugColour, double startOrientation)
         {
-            AgentConstructor constructorParams = AgentSpecification.BasicInformation;
-            Agent newAgent = new Agent(constructorParams.GenusName
+            Agent newAgent = new Agent(genusName
                                         , AgentIDGenerator.GetNextAgentId()
                                         , ReferenceValues.CollisionLevelPhysical
-                                        , constructorParams.ParentZone
-                                        , constructorParams.TargetZone);
+                                        , parentZone
+                                        , targetZone);
 
-            ApplyCircleShapeToAgent(newAgent, constructorParams);
-            AgentCabinet allAttributes = AgentSpecification.PropertiesCreatorFunction(newAgent);
-
-            newAgent.AttachAttributes(allAttributes.AgentSenses, allAttributes.AgentProperties, allAttributes.AgentStatistics, allAttributes.AgentActions);
-
-            IBrain brain = AgentSpecification.BrainCreatorFunction(newAgent);
-
-            newAgent.CompleteInitialization(null, 1, brain);
-            newAgent.CustomEndOfTurnTriggers = AgentSpecification.AgentEndOfTurnActivities;
-
+            ApplyCircleShapeToAgent(newAgent
+                                    , parentZone.Distributor
+                                    , colour, debugColour
+                                    , DEFAULT_AGENT_RADIUS
+                                    , startOrientation);
             return newAgent;
         }
 
 
-        private static void ApplyCircleShapeToAgent(Agent agent, AgentConstructor agentSpec)
-        {
-            ApplyCircleShapeToAgent(agent
-                                    , agentSpec.ParentZone.Distributor
-                                    , agentSpec.AgentColour
-                                    , agentSpec.DebugColour
-                                    , DEFAULT_AGENT_RADIUS
-                                    , agentSpec.StartOrientation);
-        }
+        //private static void ApplyCircleShapeToAgent(Agent agent, AgentConstructor agentSpec)
+        //{
+        //    ApplyCircleShapeToAgent(agent
+        //                            , agentSpec.ParentZone.Distributor
+        //                            , agentSpec.AgentColour
+        //                            , agentSpec.DebugColour
+        //                            , DEFAULT_AGENT_RADIUS
+        //                            , agentSpec.StartOrientation);
+        //}
 
         //TODO: This should be private. But I'm in the middle of migrating.
         public static void ApplyCircleShapeToAgent(Agent agent, WorldObjectDistributor distributor, Colour colour, Colour? debugColour, int circleRadius, double startOrientation)

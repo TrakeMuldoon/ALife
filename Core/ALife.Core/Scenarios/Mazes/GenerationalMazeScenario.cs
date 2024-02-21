@@ -35,16 +35,14 @@ If an agent reaches the goal line, the simuluation stops."
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
+        public virtual Agent CreateAgentOne(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
-            Agent agent = new Agent(genusName
-                                    , AgentIDGenerator.GetNextAgentId()
-                                    , ReferenceValues.CollisionLevelPhysical
-                                    , parentZone
-                                    , targetZone);
-
-            int agentRadius = 5;
-            agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
+            Agent agent = AgentFactory.ConstructCircularAgent(genusName
+                                                             , parentZone
+                                                             , targetZone
+                                                             , colour
+                                                             , null
+                                                             , startOrientation);
 
             List<SenseCluster> agentSenses = ListHelpers.CompileList(
                 new IEnumerable<SenseCluster>[]
@@ -154,7 +152,7 @@ If an agent reaches the goal line, the simuluation stops."
             int numAgents = 30;
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, Colour.Blue, 0);
+                Agent rag = CreateAgentOne("Agent", red, blue, Colour.Blue, 0);
             }
 
             MazeSetups.SetUpMaze();

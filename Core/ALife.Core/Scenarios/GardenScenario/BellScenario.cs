@@ -39,16 +39,14 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
+        public virtual Agent CreateAgentOne(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
-            Agent agent = new Agent(genusName
-                                    , AgentIDGenerator.GetNextAgentId()
-                                    , ReferenceValues.CollisionLevelPhysical
-                                    , parentZone
-                                    , targetZone);
-
-            int agentRadius = 5;
-            agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
+            Agent agent = AgentFactory.ConstructCircularAgent(genusName
+                                                             , parentZone
+                                                             , targetZone
+                                                             , colour
+                                                             , null
+                                                             , startOrientation);
 
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {
@@ -157,7 +155,7 @@ Arrive at the source of the sound. Reproduce twice, and get moved to a random lo
 
             for(int i = 0; i < NUM_AGENTS; ++i)
             {
-                AgentFactory.CreateAgent("Agent", WorldZone, WorldZone, Colour.Blue, 0);
+                CreateAgentOne("Agent", WorldZone, WorldZone, Colour.Blue, 0);
             }
         }
 

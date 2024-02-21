@@ -61,7 +61,6 @@ namespace ALife.Core.Scenarios.ScenarioHelpers
 
         public static void CreateZonedChild(Agent me, ICollisionMap<WorldObject> collider, AgentZoneSpec specification)
         {
-            //TODO: Refactor this into the Agent
             Agent child = (Agent)me.Reproduce();
             child.HomeZone = specification.StartZone;
             child.TargetZone = specification.TargetZone;

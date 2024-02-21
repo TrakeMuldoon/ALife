@@ -198,14 +198,14 @@ namespace ALife.Core.WorldObjects.Agents
         //TODO: This is temporarily an IF while I convert to the more generic option
         public virtual void ScenarioEndOfTurnTriggers()
         {
-            if(CustomEndOfTurnTriggers != null)
-            {
-                CustomEndOfTurnTriggers(this);
-            }
-            else
-            {
+            //if(CustomEndOfTurnTriggers != null)
+            //{
+            //    CustomEndOfTurnTriggers(this);
+            //}
+            //else
+            //{
                 Planet.World.Scenario.AgentEndOfTurnTriggers(this);
-            }
+            //}
         }
 
         public override WorldObject Clone()

@@ -18,7 +18,7 @@ namespace ALife.Core.WorldObjects.Prebuilt
             TargetZone = targetZone;
 
             int agentRadius = 5;
-            ApplyCircleShapeToAgent(parentZone.Distributor, Colour.Red, agentRadius, 0);
+            AgentFactory.ApplyCircleShapeToAgent(this, parentZone.Distributor, Colour.Red, null, agentRadius, 0);
 
             List<SenseCluster> agentSenses = new List<SenseCluster>()
             {

@@ -37,72 +37,82 @@ If they reach the target zone, they will restart in their own zones, and an evol
         /******************/
 
 
-        AgentCreator theAgentCreator = new AgentCreator();
-        private void InitializeAgentSpecs()
-        {
-            AgentCreator creator = new AgentCreator();
-            creator.BrainCreatorFunction = CreateAgentBrain;
-            creator.PropertiesCreatorFunction = CreateAgentCabinet;
-            creator.AgentEndOfTurnActivities = AgentEndOfTurnTriggers;
-            theAgentCreator = creator;
-        }
+        //AgentCreator theAgentCreator = new AgentCreator();
+        //private void InitializeAgentSpecs()
+        //{
+        //    AgentCreator creator = new AgentCreator();
+        //    creator.BrainCreatorFunction = CreateAgentBrain;
+        //    creator.PropertiesCreatorFunction = CreateAgentCabinet;
+        //    creator.AgentEndOfTurnActivities = AgentEndOfTurnTriggers;
+        //    theAgentCreator = creator;
+        //}
 
+
+        //protected Agent CreateZonedAgent(AgentZoneSpec spec)
+        //{
+        //    AgentConstructor ac = new AgentConstructor();
+
+        //    ac.GenusName = "Agent";
+        //    ac.StartOrientation = spec.StartOrientation;
+        //    ac.ParentZone = spec.StartZone;
+        //    ac.TargetZone = spec.TargetZone;
+        //    ac.AgentColour = spec.AgentColor;
+
+        //    theAgentCreator.BasicInformation = ac;
+
+        //    return AgentFactory.CreateCircularAgent(theAgentCreator);
+        //}
+
+        //private AgentCabinet CreateAgentCabinet(Agent me)
+        //{
+        //    List<SenseCluster> agentSenses = ListHelpers.CompileList(
+        //        new IEnumerable<SenseCluster>[]
+        //        {
+        //            CommonSenses.PairOfEyes(me)
+        //        },
+        //        new GoalSenseCluster(me, "GoalSense", me.TargetZone)
+        //    );
+
+        //    List<PropertyInput> agentProperties = new List<PropertyInput>();
+
+        //    List<StatisticInput> agentStatistics = new List<StatisticInput>()
+        //    {
+        //        new StatisticInput("Age", 0, Int32.MaxValue, StatisticInputType.Incrementing),
+        //        new StatisticInput("DeathTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing),
+        //        new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing)
+        //    };
+
+        //    List<ActionCluster> agentActions = new List<ActionCluster>()
+        //    {
+        //        new MoveCluster(me, CollisionBehaviour),
+        //        new RotateCluster(me, CollisionBehaviour)
+        //    };
+
+        //    AgentCabinet cabinet = new AgentCabinet()
+        //    {
+        //        AgentSenses = agentSenses,
+        //        AgentProperties = agentProperties,
+        //        AgentStatistics = agentStatistics,
+        //        AgentActions = agentActions
+        //    };
+
+        //    return cabinet;
+        //}
+
+        //private IBrain CreateAgentBrain(Agent me)
+        //{
+        //    IBrain newBrain = new NeuralNetworkBrain(me, new List<int> { 15, 12 });
+        //    return newBrain;
+        //}
 
         protected Agent CreateZonedAgent(AgentZoneSpec spec)
         {
-            AgentConstructor ac = new AgentConstructor();
-
-            ac.GenusName = "Agent";
-            ac.StartOrientation = spec.StartOrientation;
-            ac.ParentZone = spec.StartZone;
-            ac.TargetZone = spec.TargetZone;
-            ac.AgentColour = spec.AgentColor;
-
-            theAgentCreator.BasicInformation = ac;
-
-            return AgentFactory.CreateCircularAgent(theAgentCreator);
-        }
-
-        private AgentCabinet CreateAgentCabinet(Agent me)
-        {
-            List<SenseCluster> agentSenses = ListHelpers.CompileList(
-                new IEnumerable<SenseCluster>[]
-                {
-                    CommonSenses.PairOfEyes(me)
-                },
-                new GoalSenseCluster(me, "GoalSense", me.TargetZone)
-            );
-
-            List<PropertyInput> agentProperties = new List<PropertyInput>();
-
-            List<StatisticInput> agentStatistics = new List<StatisticInput>()
-            {
-                new StatisticInput("Age", 0, Int32.MaxValue, StatisticInputType.Incrementing),
-                new StatisticInput("DeathTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing),
-                new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing)
-            };
-
-            List<ActionCluster> agentActions = new List<ActionCluster>()
-            {
-                new MoveCluster(me, CollisionBehaviour),
-                new RotateCluster(me, CollisionBehaviour)
-            };
-
-            AgentCabinet cabinet = new AgentCabinet()
-            {
-                AgentSenses = agentSenses,
-                AgentProperties = agentProperties,
-                AgentStatistics = agentStatistics,
-                AgentActions = agentActions
-            };
-
-            return cabinet;
-        }
-
-        private IBrain CreateAgentBrain(Agent me)
-        {
-            IBrain newBrain = new NeuralNetworkBrain(me, new List<int> { 15, 12 });
-            return newBrain;
+            return AgentFactory.ConstructCircularAgent("Agent"
+                                                        , spec.StartZone
+                                                        , spec.TargetZone
+                                                        , spec.AgentColor
+                                                        , null
+                                                        , spec.StartOrientation);
         }
 
         private void AgentEndOfTurnTriggers(Agent me)
@@ -178,7 +188,6 @@ If they reach the target zone, they will restart in their own zones, and an evol
 
         public virtual void PlanetSetup()
         {
-            InitializeAgentSpecs();
 
             int width = Planet.World.WorldWidth;
             int height = Planet.World.WorldHeight;
@@ -205,7 +214,7 @@ If they reach the target zone, they will restart in their own zones, and an evol
             //Do Nothing
         }
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
+        public virtual Agent CreateAgentOne(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
             throw new NotImplementedException();
         }

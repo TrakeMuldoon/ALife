@@ -25,7 +25,7 @@ namespace ALife.Core.Scenarios
         /******************/
 
         //TODO: Fully Comment This
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
+        public virtual Agent CreateAgentOne(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
 
             throw new NotImplementedException();

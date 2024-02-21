@@ -37,10 +37,46 @@ If they reach the target zone, they will restart in their own zones, and an evol
 
         public virtual Agent CreateAgentOne(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
-            throw new NotImplementedException();
+            Agent agent = AgentFactory.ConstructCircularAgent("Agent"
+                                                        , parentZone
+                                                        , targetZone
+                                                        , colour
+                                                        , null
+                                                        , startOrientation);
+
+            List<SenseCluster> agentSenses = ListHelpers.CompileList(
+                new IEnumerable<SenseCluster>[]
+                {
+                    CommonSenses.PairOfEyes(agent)
+                },
+                new GoalSenseCluster(agent, "GoalSense", agent.TargetZone)
+            );
+
+            List<PropertyInput> agentProperties = new List<PropertyInput>();
+
+            List<StatisticInput> agentStatistics = new List<StatisticInput>()
+            {
+                new StatisticInput("Age", 0, Int32.MaxValue, StatisticInputType.Incrementing),
+                new StatisticInput("DeathTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing),
+                new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing)
+            };
+
+            List<ActionCluster> agentActions = new List<ActionCluster>()
+            {
+                new MoveCluster(agent, CollisionBehaviour),
+                new RotateCluster(agent, CollisionBehaviour)
+            };
+
+            agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
+
+            IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 15, 12 });
+
+            agent.CompleteInitialization(null, 1, newBrain);
+
+            return agent;
         }
 
-        public void AgentEndOfTurnTriggers(Agent me)
+        public virtual void AgentEndOfTurnTriggers(Agent me)
         {
             if(me.Statistics["DeathTimer"].Value > 1899)
             {
@@ -61,7 +97,7 @@ If they reach the target zone, they will restart in their own zones, and an evol
                 }
                 else if(z.Name == me.TargetZone.Name)
                 {
-                    VictoryBehaviour(me);
+                    this.VictoryBehaviour(me);
                 }
             }
         }
@@ -113,7 +149,6 @@ If they reach the target zone, they will restart in their own zones, and an evol
 
         public virtual void PlanetSetup()
         {
-
             int width = Planet.World.WorldWidth;
             int height = Planet.World.WorldHeight;
 
@@ -141,43 +176,11 @@ If they reach the target zone, they will restart in their own zones, and an evol
 
         protected Agent CreateZonedAgent(AgentZoneSpec spec)
         {
-            Agent agent = AgentFactory.ConstructCircularAgent("Agent"
-                                                        , spec.StartZone
-                                                        , spec.TargetZone
-                                                        , spec.AgentColor
-                                                        , null
-                                                        , spec.StartOrientation);
-
-            List<SenseCluster> agentSenses = ListHelpers.CompileList(
-                new IEnumerable<SenseCluster>[]
-                {
-                    CommonSenses.PairOfEyes(agent)
-                },
-                new GoalSenseCluster(agent, "GoalSense", agent.TargetZone)
-            );
-
-            List<PropertyInput> agentProperties = new List<PropertyInput>();
-
-            List<StatisticInput> agentStatistics = new List<StatisticInput>()
-            {
-                new StatisticInput("Age", 0, Int32.MaxValue, StatisticInputType.Incrementing),
-                new StatisticInput("DeathTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing),
-                new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing)
-            };
-
-            List<ActionCluster> agentActions = new List<ActionCluster>()
-            {
-                new MoveCluster(agent, CollisionBehaviour),
-                new RotateCluster(agent, CollisionBehaviour)
-            };
-
-            agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
-
-            IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 15, 12 });
-
-            agent.CompleteInitialization(null, 1, newBrain);
-
-            return agent;
+            return CreateAgentOne("Agent"
+                                , spec.StartZone
+                                , spec.TargetZone
+                                , spec.AgentColor
+                                , spec.StartOrientation);
         }
 
     }

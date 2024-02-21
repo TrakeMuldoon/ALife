@@ -6,7 +6,6 @@ using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
-using ALife.Core.WorldObjects.Agents.AgentCreationStructs;
 using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
@@ -36,75 +35,6 @@ If they reach the target zone, they will restart in their own zones, and an evol
         /*   AGENT STUFF  */
         /******************/
 
-
-        //AgentCreator theAgentCreator = new AgentCreator();
-        //private void InitializeAgentSpecs()
-        //{
-        //    AgentCreator creator = new AgentCreator();
-        //    creator.BrainCreatorFunction = CreateAgentBrain;
-        //    creator.PropertiesCreatorFunction = CreateAgentCabinet;
-        //    creator.AgentEndOfTurnActivities = AgentEndOfTurnTriggers;
-        //    theAgentCreator = creator;
-        //}
-
-
-        //protected Agent CreateZonedAgent(AgentZoneSpec spec)
-        //{
-        //    AgentConstructor ac = new AgentConstructor();
-
-        //    ac.GenusName = "Agent";
-        //    ac.StartOrientation = spec.StartOrientation;
-        //    ac.ParentZone = spec.StartZone;
-        //    ac.TargetZone = spec.TargetZone;
-        //    ac.AgentColour = spec.AgentColor;
-
-        //    theAgentCreator.BasicInformation = ac;
-
-        //    return AgentFactory.CreateCircularAgent(theAgentCreator);
-        //}
-
-        //private AgentCabinet CreateAgentCabinet(Agent me)
-        //{
-        //    List<SenseCluster> agentSenses = ListHelpers.CompileList(
-        //        new IEnumerable<SenseCluster>[]
-        //        {
-        //            CommonSenses.PairOfEyes(me)
-        //        },
-        //        new GoalSenseCluster(me, "GoalSense", me.TargetZone)
-        //    );
-
-        //    List<PropertyInput> agentProperties = new List<PropertyInput>();
-
-        //    List<StatisticInput> agentStatistics = new List<StatisticInput>()
-        //    {
-        //        new StatisticInput("Age", 0, Int32.MaxValue, StatisticInputType.Incrementing),
-        //        new StatisticInput("DeathTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing),
-        //        new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing)
-        //    };
-
-        //    List<ActionCluster> agentActions = new List<ActionCluster>()
-        //    {
-        //        new MoveCluster(me, CollisionBehaviour),
-        //        new RotateCluster(me, CollisionBehaviour)
-        //    };
-
-        //    AgentCabinet cabinet = new AgentCabinet()
-        //    {
-        //        AgentSenses = agentSenses,
-        //        AgentProperties = agentProperties,
-        //        AgentStatistics = agentStatistics,
-        //        AgentActions = agentActions
-        //    };
-
-        //    return cabinet;
-        //}
-
-        //private IBrain CreateAgentBrain(Agent me)
-        //{
-        //    IBrain newBrain = new NeuralNetworkBrain(me, new List<int> { 15, 12 });
-        //    return newBrain;
-        //}
-
         protected Agent CreateZonedAgent(AgentZoneSpec spec)
         {
            Agent me = AgentFactory.ConstructCircularAgent("Agent"
@@ -115,27 +45,27 @@ If they reach the target zone, they will restart in their own zones, and an evol
                                                         , spec.StartOrientation);
 
             List<SenseCluster> agentSenses = ListHelpers.CompileList(
-                    new IEnumerable<SenseCluster>[]
-                    {
-                        CommonSenses.PairOfEyes(me)
-                    },
-                    new GoalSenseCluster(me, "GoalSense", me.TargetZone)
-                );
+                new IEnumerable<SenseCluster>[]
+                {
+                    CommonSenses.PairOfEyes(me)
+                },
+                new GoalSenseCluster(me, "GoalSense", me.TargetZone)
+            );
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
 
             List<StatisticInput> agentStatistics = new List<StatisticInput>()
-                {
-                    new StatisticInput("Age", 0, Int32.MaxValue, StatisticInputType.Incrementing),
-                    new StatisticInput("DeathTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing),
-                    new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing)
-                };
+            {
+                new StatisticInput("Age", 0, Int32.MaxValue, StatisticInputType.Incrementing),
+                new StatisticInput("DeathTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing),
+                new StatisticInput("ZoneEscapeTimer", 0, Int32.MaxValue, StatisticInputType.Incrementing)
+            };
 
             List<ActionCluster> agentActions = new List<ActionCluster>()
-                {
-                    new MoveCluster(me, CollisionBehaviour),
-                    new RotateCluster(me, CollisionBehaviour)
-                };
+            {
+                new MoveCluster(me, CollisionBehaviour),
+                new RotateCluster(me, CollisionBehaviour)
+            };
 
             me.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 

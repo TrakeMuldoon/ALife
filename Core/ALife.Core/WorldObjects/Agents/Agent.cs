@@ -1,5 +1,4 @@
-﻿using ALife.Core.Distributors;
-using ALife.Core.Geometry.Shapes;
+﻿using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
@@ -197,14 +196,7 @@ namespace ALife.Core.WorldObjects.Agents
 
         public virtual void ScenarioEndOfTurnTriggers()
         {
-            //if(CustomEndOfTurnTriggers != null)
-            //{
-            //    CustomEndOfTurnTriggers(this);
-            //}
-            //else
-            //{
-                Planet.World.Scenario.AgentEndOfTurnTriggers(this);
-            //}
+            Planet.World.Scenario.AgentEndOfTurnTriggers(this);
         }
 
         public override WorldObject Clone()

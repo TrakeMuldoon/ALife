@@ -12,7 +12,6 @@ using ALife.Core.WorldObjects.Agents.Senses;
 using ALife.Core.WorldObjects.Prebuilt;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ALife.Core.Scenarios.FieldCrossings
 {

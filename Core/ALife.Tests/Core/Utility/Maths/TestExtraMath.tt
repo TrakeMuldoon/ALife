@@ -21,9 +21,6 @@
     typeof(double), typeof(float)
     };
 #>
-
-using System;
-using System.Linq;
 using ALife.Core.Utility.Maths;
 
 namespace ALife.Tests.Core.Utility.Maths

@@ -1,5 +1,4 @@
-﻿using ALife.Core.Distributors;
-using ALife.Core.Geometry.Shapes;
+﻿using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
@@ -38,11 +37,22 @@ namespace ALife.Core.WorldObjects.Agents
             private set;
         }
 
+        /// <summary>
+        /// The Parent of the agent.
+        /// </summary>
         public Agent Parent
         {
             get;
             set;
         }
+
+        /// <summary>
+        /// The Nearest Living Ancestor of the parent.
+        /// It is updated externally. 
+        /// If the "LivingAncestor" is dead, 
+        ///     1. Replace this value with the LivingAncestor of that agent
+        ///     2. If LivingAncestor is still Dead, repeat step 1, until it is either NULL (the beginning of the scenario) or a living Agent.
+        /// </summary>
         public Agent LivingAncestor
         {
             get;
@@ -82,25 +92,6 @@ namespace ALife.Core.WorldObjects.Agents
         {
             HomeZone = parentZone;
             TargetZone = targetZone;
-        }
-
-        internal void ApplyCircleShapeToAgent(Point centrePoint, Colour colour, int circleRadius, double startOrientation)
-        {
-            IShape myShape = new Circle(centrePoint, circleRadius);
-            StartOrientation = startOrientation;
-            myShape.Orientation.Degrees = startOrientation;
-            myShape.Colour = colour;
-            SetShape(myShape);
-        }
-
-        internal void ApplyCircleShapeToAgent(WorldObjectDistributor distributor, Colour colour, int circleRadius, double startOrientation)
-        {
-            Point centrePoint = distributor.NextObjectCentre(circleRadius * 2, circleRadius * 2);
-            IShape myShape = new Circle(centrePoint, circleRadius);
-            StartOrientation = startOrientation;
-            myShape.Orientation.Degrees = startOrientation;
-            myShape.Colour = colour;
-            SetShape(myShape);
         }
 
         internal void CompleteInitialization(Agent parent, int generation, IBrain newBrain, bool AddToWorld = true)
@@ -201,6 +192,7 @@ namespace ALife.Core.WorldObjects.Agents
             }
         }
 
+        public Action<Agent> CustomEndOfTurnTriggers;
 
         public virtual void ScenarioEndOfTurnTriggers()
         {

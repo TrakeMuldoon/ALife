@@ -12,7 +12,6 @@ using ALife.Core.WorldObjects.Agents.Senses;
 using ALife.Core.WorldObjects.Prebuilt;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ALife.Core.Scenarios.FieldCrossings
 {
@@ -35,23 +34,21 @@ If they reach the target zone, they will restart in their own zones, and an evol
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
+        public virtual Agent CreateAgentOne(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
-            Agent agent = new Agent(genusName
-                                    , AgentIDGenerator.GetNextAgentId()
-                                    , ReferenceValues.CollisionLevelPhysical
-                                    , parentZone
-                                    , targetZone);
-
-            int agentRadius = 5;
-            agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
+            Agent agent = AgentFactory.ConstructCircularAgent("Agent"
+                                                        , parentZone
+                                                        , targetZone
+                                                        , colour
+                                                        , null
+                                                        , startOrientation);
 
             List<SenseCluster> agentSenses = ListHelpers.CompileList(
                 new IEnumerable<SenseCluster>[]
                 {
                     CommonSenses.PairOfEyes(agent)
                 },
-                new GoalSenseCluster(agent, "GoalSense", targetZone)
+                new GoalSenseCluster(agent, "GoalSense", agent.TargetZone)
             );
 
             List<PropertyInput> agentProperties = new List<PropertyInput>();
@@ -71,7 +68,6 @@ If they reach the target zone, they will restart in their own zones, and an evol
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
-            //IBrain newBrain = new BehaviourBrain(agent, "IF Age.Value GreaterThan [10] THEN Move.GoForward AT [0.2]", "*", "*", "*", "*");
             IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 15, 12 });
 
             agent.CompleteInitialization(null, 1, newBrain);
@@ -117,28 +113,12 @@ If they reach the target zone, they will restart in their own zones, and an evol
             //Reproduce one child for each direction
             foreach(AgentZoneSpec spec in AgentZoneSpecs.Values)
             {
-                CreateZonedChild(me, collider, spec);
+                FieldCrossingHelpers.CreateZonedChild(me, collider, spec);
             }
 
             //You have a new countdown
             me.Statistics["DeathTimer"].Value = 0;
             me.Statistics["ZoneEscapeTimer"].Value = 0;
-        }
-
-        protected static void CreateZonedChild(Agent me, ICollisionMap<WorldObject> collider, AgentZoneSpec specification)
-        {
-            //TODO: Refactor this into the Agent
-            Agent child = (Agent)me.Reproduce();
-            child.HomeZone = specification.StartZone;
-            child.TargetZone = specification.TargetZone;
-            Point reverseChildPoint = child.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
-            child.Shape.CentrePoint = reverseChildPoint;
-            child.Shape.Orientation.Degrees = specification.StartOrientation;
-            child.Shape.Colour = specification.AgentColor;
-            GoalSenseCluster gsc = child.Senses.OfType<GoalSenseCluster>().FirstOrDefault();
-            gsc.ChangeTarget(specification.TargetZone);
-
-            collider.MoveObject(child);
         }
 
         public virtual void CollisionBehaviour(Agent me, List<WorldObject> collisions)
@@ -163,8 +143,6 @@ If they reach the target zone, they will restart in their own zones, and an evol
         public virtual int WorldHeight { get { return 1000; } }
 
         public virtual bool FixedWidthHeight { get { return false; } }
-
-
 
         protected Dictionary<Zone, AgentZoneSpec> AgentZoneSpecs = new Dictionary<Zone, AgentZoneSpec>();
 
@@ -197,11 +175,12 @@ If they reach the target zone, they will restart in their own zones, and an evol
 
         protected Agent CreateZonedAgent(AgentZoneSpec spec)
         {
-            return AgentFactory.CreateAgent("Agent"
-                                            , spec.StartZone
-                                            , spec.TargetZone
-                                            , spec.AgentColor
-                                            , spec.StartOrientation);
+            return CreateAgentOne("Agent"
+                                , spec.StartZone
+                                , spec.TargetZone
+                                , spec.AgentColor
+                                , spec.StartOrientation);
         }
+
     }
 }

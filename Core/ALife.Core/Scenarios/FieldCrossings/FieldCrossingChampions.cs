@@ -61,7 +61,7 @@ If they reach the target zone, they will restart in their own zones, and two evo
             collider.MoveObject(me);
 
             //Create one child
-            FieldCrossingScenario.CreateZonedChild(me, collider, RotatedZoneSpecs[me.TargetZone]);
+            FieldCrossingHelpers.CreateZonedChild(me, collider, RotatedZoneSpecs[me.TargetZone]);
 
             //You have a new countdown
             me.Statistics["DeathTimer"].Value = 0;
@@ -98,16 +98,14 @@ If they reach the target zone, they will restart in their own zones, and two evo
         private string inputString = null;
         private Colour debugColour = Colour.Blue;
 
-        public override Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
+        public override Agent CreateAgentOne(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
-            Agent agent = new Agent(genusName
-                                    , AgentIDGenerator.GetNextAgentId()
-                                    , ReferenceValues.CollisionLevelPhysical
-                                    , parentZone
-                                    , targetZone);
-
-            int agentRadius = 5;
-            agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
+            Agent agent = AgentFactory.ConstructCircularAgent(genusName
+                                                             , parentZone
+                                                             , targetZone
+                                                             , colour
+                                                             , null
+                                                             , startOrientation);
 
             List<SenseCluster> agentSenses = ListHelpers.CompileList(
                 new IEnumerable<SenseCluster>[]

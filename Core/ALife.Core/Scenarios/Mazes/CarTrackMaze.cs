@@ -35,16 +35,14 @@ Reaching the finish line, reproduces 3 times and then dies... Victorious!"
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
+        public virtual Agent CreateAgentOne(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
-            Agent agent = new Agent(genusName
-                                    , AgentIDGenerator.GetNextAgentId()
-                                    , ReferenceValues.CollisionLevelPhysical
-                                    , parentZone
-                                    , targetZone);
-
-            int agentRadius = 5;
-            agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
+            Agent agent = AgentFactory.ConstructCircularAgent(genusName
+                                                             , parentZone
+                                                             , targetZone
+                                                             , colour
+                                                             , null
+                                                             , startOrientation);
 
             List<SenseCluster> agentSenses = ListHelpers.CompileList<SenseCluster>(
                 new IEnumerable<SenseCluster>[]
@@ -175,7 +173,7 @@ Reaching the finish line, reproduces 3 times and then dies... Victorious!"
             for(int i = 0; i < numAgents; i++)
             {
                 Colour randomColour = Colour.GetRandomColour(Planet.World.NumberGen);
-                Agent rag = AgentFactory.CreateAgent("Agent", startZone, endZone, randomColour, 90);
+                Agent rag = CreateAgentOne("Agent", startZone, endZone, randomColour, 90);
             }
         }
 

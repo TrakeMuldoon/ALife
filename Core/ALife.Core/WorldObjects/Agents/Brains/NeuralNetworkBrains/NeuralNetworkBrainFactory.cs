@@ -251,7 +251,7 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
         private static Dictionary<string, Dictionary<string, double>> CreateNeuronDenWeightDictionary(string[] specNeuronNames, string[] specParentNames, double[][] dendritesForLayer)
         {
             Dictionary<string, Dictionary<string, double>> output = new Dictionary<string, Dictionary<string, double>>();
-            for(int i = 0; i < specNeuronNames.Length; ++i) 
+            for(int i = 0; i < specNeuronNames.Length; ++i)
             {
                 Dictionary<string, double> denWeightsDict = new Dictionary<string, double>();
                 output.Add(specNeuronNames[i], denWeightsDict);

@@ -52,8 +52,8 @@ If they reach the target zone, they will restart in their own zones, and two evo
             collider.MoveObject(me);
 
             //Create two Children
-            FieldCrossingScenario.CreateZonedChild(me, collider, RotatedZoneSpecs[me.TargetZone]);
-            FieldCrossingScenario.CreateZonedChild(me, collider, RotatedZoneSpecs[me.HomeZone]);
+            FieldCrossingHelpers.CreateZonedChild(me, collider, RotatedZoneSpecs[me.TargetZone]);
+            FieldCrossingHelpers.CreateZonedChild(me, collider, RotatedZoneSpecs[me.HomeZone]);
 
             //You have a new countdown
             me.Statistics["DeathTimer"].Value = 0;

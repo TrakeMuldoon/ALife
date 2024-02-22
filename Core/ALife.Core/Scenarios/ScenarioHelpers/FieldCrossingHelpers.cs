@@ -1,6 +1,11 @@
+using ALife.Core.Collision;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
+using ALife.Core.WorldObjects;
+using ALife.Core.WorldObjects.Agents;
+using ALife.Core.WorldObjects.Agents.Senses;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ALife.Core.Scenarios.ScenarioHelpers
 {
@@ -10,12 +15,12 @@ namespace ALife.Core.Scenarios.ScenarioHelpers
         public Zone TargetZone;
         public Colour AgentColor;
         public int StartOrientation;
-        public AgentZoneSpec(Zone start, Zone target, Colour color, int ori)
+        public AgentZoneSpec(Zone start, Zone target, Colour color, int orientation)
         {
             StartZone = start;
             TargetZone = target;
             AgentColor = color;
-            StartOrientation = ori;
+            StartOrientation = orientation;
         }
     }
 
@@ -52,6 +57,21 @@ namespace ALife.Core.Scenarios.ScenarioHelpers
             zoneSpecs.Add(orange, new AgentZoneSpec(orange, green, Colour.Green, 270));
 
             return zoneSpecs;
+        }
+
+        public static void CreateZonedChild(Agent me, ICollisionMap<WorldObject> collider, AgentZoneSpec specification)
+        {
+            Agent child = (Agent)me.Reproduce();
+            child.HomeZone = specification.StartZone;
+            child.TargetZone = specification.TargetZone;
+            Point reverseChildPoint = child.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
+            child.Shape.CentrePoint = reverseChildPoint;
+            child.Shape.Orientation.Degrees = specification.StartOrientation;
+            child.Shape.Colour = specification.AgentColor;
+            GoalSenseCluster gsc = child.Senses.OfType<GoalSenseCluster>().FirstOrDefault();
+            gsc.ChangeTarget(specification.TargetZone);
+
+            collider.MoveObject(child);
         }
     }
 }

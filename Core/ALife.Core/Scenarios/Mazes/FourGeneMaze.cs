@@ -35,16 +35,14 @@ If an agent reaches the goal line, the simuluation stops."
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
+        public virtual Agent CreateAgentOne(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
-            Agent agent = new Agent(genusName
-                                    , AgentIDGenerator.GetNextAgentId()
-                                    , ReferenceValues.CollisionLevelPhysical
-                                    , parentZone
-                                    , targetZone);
-
-            int agentRadius = 5;
-            agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
+            Agent agent = AgentFactory.ConstructCircularAgent(genusName
+                                                             , parentZone
+                                                             , targetZone
+                                                             , colour
+                                                             , null
+                                                             , startOrientation);
 
             List<SenseCluster> agentSenses = ListHelpers.CompileList(
                 new IEnumerable<SenseCluster>[]
@@ -131,17 +129,6 @@ If an agent reaches the goal line, the simuluation stops."
         public void AgentDeathBehaviour(Agent toDie)
         {
             //Find the gene the agent belongs to 
-
-            /* Unmerged change from project 'ALife.Core (netstandard2.0)'
-            Before:
-                        String gene = toDie.IndividualLabel.Substring(0,3);
-
-                        //Find where this agent sits in the gene ranking
-            After:
-                        String gene = toDie.IndividualLabel.Substring(0,3);
-
-                        //Find where this agent sits in the gene ranking
-            */
             String gene = toDie.IndividualLabel.Substring(0,3);
 
             //Find where this agent sits in the gene ranking
@@ -229,7 +216,7 @@ If an agent reaches the goal line, the simuluation stops."
             Colour[] colors = new Colour[] { Colour.Orange, Colour.Red, Colour.Green, Colour.Blue };
             for(int i = 0; i < numGenes; i++)
             {
-                Agent geneParent = AgentFactory.CreateAgent("Agent", red, blue, colors[i], 0);
+                Agent geneParent = CreateAgentOne("Agent", red, blue, colors[i], 0);
                 Top4ByGene.Add(geneParent.IndividualLabel, new List<Agent>() { geneParent, geneParent, geneParent, geneParent });
                 for(int j = 0; j < numAgentsPerGene; ++j)
                 {

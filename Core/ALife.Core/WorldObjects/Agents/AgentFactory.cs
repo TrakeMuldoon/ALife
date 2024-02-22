@@ -1,4 +1,5 @@
-﻿using ALife.Core.Geometry.Shapes;
+﻿using ALife.Core.Distributors;
+using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
@@ -10,11 +11,40 @@ namespace ALife.Core.WorldObjects.Agents
 {
     public static class AgentFactory
     {
-        public static Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour color, double startOrientation)
+        private const int DEFAULT_AGENT_RADIUS = 5; //TODO: Migrate generic config values to config class.
+
+        public static Agent ConstructCircularAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, Colour? debugColour, double startOrientation)
         {
-            return Planet.World.Scenario.CreateAgent(genusName, parentZone, targetZone, color, startOrientation);
+            Agent newAgent = new Agent(genusName
+                                        , AgentIDGenerator.GetNextAgentId()
+                                        , ReferenceValues.CollisionLevelPhysical
+                                        , parentZone
+                                        , targetZone);
+
+            ApplyCircleShapeToAgent(newAgent
+                                    , parentZone.Distributor
+                                    , colour, debugColour
+                                    , DEFAULT_AGENT_RADIUS
+                                    , startOrientation);
+            return newAgent;
         }
 
+        //TODO: This should be private. But I'm in the middle of migrating.
+        public static void ApplyCircleShapeToAgent(Agent agent, WorldObjectDistributor distributor, Colour colour, Colour? debugColour, int circleRadius, double startOrientation)
+        {
+            Point centrePoint = distributor.NextObjectCentre(circleRadius * 2, circleRadius * 2);
+            IShape myShape = new Circle(centrePoint, circleRadius);
+            agent.StartOrientation = startOrientation;
+            myShape.Orientation.Degrees = startOrientation;
+            myShape.Colour = colour;
+            if(debugColour.HasValue)
+            {
+                myShape.DebugColour = debugColour.Value;
+            }
+            agent.SetShape(myShape);
+        }
+
+        //TODO: Another area where code is duplicated.
         public static Agent CloneAgent(Agent toClone)
         {
             Agent newClone = new Agent(toClone.GenusLabel
@@ -43,11 +73,13 @@ namespace ALife.Core.WorldObjects.Agents
             List<ActionCluster> clonedActions = new List<ActionCluster>();
             foreach(ActionCluster ac in toClone.Actions.Values) clonedActions.Add(ac.CloneAction(newClone));
 
-            CompleteAgentInitialization(newClone, clonedSenses, clonedProperties, clonedStatistics, clonedActions);
+            newClone.AttachAttributes(clonedSenses, clonedProperties, clonedStatistics, clonedActions);
+
 
             IBrain newBrain = toClone.MyBrain.Clone(newClone);
 
             newClone.CompleteInitialization(toClone, toClone.Generation + 1, newBrain);
+            newClone.CustomEndOfTurnTriggers = toClone.CustomEndOfTurnTriggers;
 
             return newClone;
         }
@@ -83,26 +115,14 @@ namespace ALife.Core.WorldObjects.Agents
             List<ActionCluster> evolvedActions = new List<ActionCluster>();
             foreach(ActionCluster ac in newParent.Actions.Values) evolvedActions.Add(ac.CloneAction(newChild)); //TODO: EVOLVE THIS
 
-            CompleteAgentInitialization(newChild, evolvedSenses, evolvedProperties, evolvedStatistics, evolvedActions);
+            newChild.AttachAttributes(evolvedSenses, evolvedProperties, evolvedStatistics, evolvedActions);
 
             IBrain newBrain = newParent.MyBrain.Reproduce(newChild);
 
             newChild.CompleteInitialization(newParent, newParent.Generation + 1, newBrain);
+            newChild.CustomEndOfTurnTriggers = newParent.CustomEndOfTurnTriggers;
 
             return newChild;
-        }
-
-        private static void CompleteAgentInitialization(Agent newAgent
-                                                        , List<SenseCluster> senses
-                                                        , List<PropertyInput> properties
-                                                        , List<StatisticInput> statistics
-                                                        , List<ActionCluster> actions
-                                                        )
-        {
-            newAgent.AttachAttributes(senses
-                                      , properties
-                                      , statistics
-                                      , actions);
         }
     }
 }

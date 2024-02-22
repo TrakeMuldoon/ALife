@@ -15,7 +15,7 @@ namespace ALife.Tests.Core.WorldObjects.Agents.Brains
 
             Agent firstAgent = Planet.World.AllActiveObjects.OfType<Agent>().First();
             NeuralNetworkBrain brain = (NeuralNetworkBrain) firstAgent.MyBrain;
-            
+
             string exportString = brain.ExportNewBrain();
 
             NeuralNetworkBrain importBrain = new NeuralNetworkBrain(firstAgent, exportString);

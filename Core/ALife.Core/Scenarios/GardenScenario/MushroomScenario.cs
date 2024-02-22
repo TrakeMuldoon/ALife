@@ -36,16 +36,14 @@ If they eat two green mushrooms, they reproduce."
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
+        public virtual Agent CreateAgentOne(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
-            Agent agent = new Agent(genusName
-                                    , AgentIDGenerator.GetNextAgentId()
-                                    , ReferenceValues.CollisionLevelPhysical
-                                    , parentZone
-                                    , targetZone);
-
-            int agentRadius = 5;
-            agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
+            Agent agent = AgentFactory.ConstructCircularAgent(genusName
+                                                             , parentZone
+                                                             , targetZone
+                                                             , colour
+                                                             , null
+                                                             , startOrientation);
 
             List<SenseCluster> agentSenses = ListHelpers.CompileList<SenseCluster>(
                 new EyeCluster(agent, "EyeLeft", true
@@ -162,12 +160,12 @@ If they eat two green mushrooms, they reproduce."
 
             for(int i = 0; i < numAgents; i++)
             {
-                Agent rag = AgentFactory.CreateAgent("Agent", WorldZone, null, PURE_BLUE, 0);
+                Agent rag = CreateAgentOne("Agent", WorldZone, null, PURE_BLUE, 0);
             }
 
             for(int k = 0; k < 5; k++)
             {
-                Agent mg = AgentFactory.CreateAgent("MushroomGatherer", WorldZone, null, PURE_RED, 0);
+                Agent mg = CreateAgentOne("MushroomGatherer", WorldZone, null, PURE_RED, 0);
                 MutateIntoMushroomGatherer(mg);
             }
 

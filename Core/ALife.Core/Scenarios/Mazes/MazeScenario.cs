@@ -33,16 +33,14 @@ If an agent reaches the goal line, the simuluation stops."
         /*   AGENT STUFF  */
         /******************/
 
-        public virtual Agent CreateAgent(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
+        public virtual Agent CreateAgentOne(string genusName, Zone parentZone, Zone targetZone, Colour colour, double startOrientation)
         {
-            Agent agent = new Agent(genusName
-                                    , AgentIDGenerator.GetNextAgentId()
-                                    , ReferenceValues.CollisionLevelPhysical
-                                    , parentZone
-                                    , targetZone);
-
-            int agentRadius = 5;
-            agent.ApplyCircleShapeToAgent(parentZone.Distributor, colour, agentRadius, startOrientation);
+            Agent agent = AgentFactory.ConstructCircularAgent(genusName
+                                                             , parentZone
+                                                             , targetZone
+                                                             , colour
+                                                             , null
+                                                             , startOrientation);
 
             List<SenseCluster> agentSenses = ListHelpers.CompileList(
                 new IEnumerable<SenseCluster>[]
@@ -138,7 +136,7 @@ If an agent reaches the goal line, the simuluation stops."
             for(int i = 0; i < numAgents; i++)
             {
                 Colour randomColour = Colour.GetRandomColour(Planet.World.NumberGen);
-                Agent rag = AgentFactory.CreateAgent("Agent", red, blue, randomColour, 0);
+                Agent rag = CreateAgentOne("Agent", red, blue, randomColour, 0);
             }
             //MazeRunner mr = new MazeRunner(red, blue);
 
@@ -196,9 +194,9 @@ If an agent reaches the goal line, the simuluation stops."
                 Colour randomColourA = Colour.GetRandomColour(Planet.World.NumberGen);
                 Colour randomColourB = Colour.GetRandomColour(Planet.World.NumberGen);
                 Colour randomColourC = Colour.GetRandomColour(Planet.World.NumberGen);
-                Agent ag1 = AgentFactory.CreateAgent("Agent", red, blue, randomColourA, 0);
-                Agent ag2 = AgentFactory.CreateAgent("Agent", red, blue, randomColourB, 0);
-                Agent ag3 = AgentFactory.CreateAgent("Agent", red, blue, randomColourC, 0);
+                Agent ag1 = CreateAgentOne("Agent", red, blue, randomColourA, 0);
+                Agent ag2 = CreateAgentOne("Agent", red, blue, randomColourB, 0);
+                Agent ag3 = CreateAgentOne("Agent", red, blue, randomColourC, 0);
 
                 //TODO: This should be rewritten to only capture Agents.
                 List<WorldObject> weaklings = Planet.World.InactiveObjects.Where((wo) => wo.Shape.CentrePoint.X < 50).ToList();

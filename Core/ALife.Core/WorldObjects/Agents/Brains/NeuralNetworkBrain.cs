@@ -66,21 +66,10 @@ namespace ALife.Core.WorldObjects.Agents.Brains
         {
             this.self = self;
 
-            /* Unmerged change from project 'ALife.Core (net8.0)'
-            Before:
-                        NeuralNetworkBrainImport BrainSpecification = ExtractBrainInfoFromStr(inputString);
-
-                        this.ModificationRate = BrainSpecification.ModStats[0];
-            After:
-                        NeuralNetworkBrainImport BrainSpecification = ExtractBrainInfoFromStr(inputString);
-
-                        this.ModificationRate = BrainSpecification.ModStats[0];
-            */
             NeuralNetworkBrainImport BrainSpecification = ExtractBrainInfoFromStr(inputString);
 
             this.ModificationRate = BrainSpecification.ModStats[0];
             this.MutabilityRate = BrainSpecification.ModStats[1];
-
 
             this.Layers = NeuralNetworkBrainFactory.CreateBrainSpecNeuralNetwork(self, BrainSpecification);
             this.actions = Layers[Layers.Count - 1];

@@ -65,9 +65,11 @@
 ## Fixing the Basics - Avalonia
 * [*] Time Controls
 * [*] Layer Controls
-* [ ] Zoom Controls
+* [*] Zoom Controls
+* [ ] ClickSelect
+* [ ] AgentInfoPanel
 * [ ] Brain Viewers
-* [ ] Interactivity
+* [ ] Get rid of black panel.
 
 ## Code CleanUp / Refactors
 * [ ] Migrate Clone and Reproduce OUT of WorldObjects. They are only relevant to Agents. (... is this true?)

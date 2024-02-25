@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Scenarios\Configs\FullConfig.alife" />
     <None Remove="WorldObjects\Agents\Brains\BehaviourBrains\spec.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Scenarios\Configs\FullConfig.alife" />
     <Content Include="WorldObjects\Agents\Brains\BehaviourBrains\spec.txt" />
   </ItemGroup>
 

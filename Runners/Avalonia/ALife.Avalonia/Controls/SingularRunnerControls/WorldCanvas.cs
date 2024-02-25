@@ -1,6 +1,7 @@
 ﻿using ALife.Avalonia.ALifeImplementations;
 using ALife.Avalonia.ViewModels;
 using ALife.Core;
+using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
@@ -15,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ALPoint = ALife.Core.Geometry.Shapes.Point;
+using Point = Avalonia.Point;
 
 namespace ALife.Avalonia.Controls.SingularRunnerControls
 {
@@ -73,11 +75,6 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
         /// The view model
         /// </summary>
         private SingularRunnerViewModel _vm;
-
-        /// <summary>
-        /// The movement
-        /// </summary>
-        private int movement = 0;
 
         /// <summary>
         /// Initializes the <see cref="WorldCanvas"/> class.
@@ -165,29 +162,26 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
         /// <returns></returns>
         public override void Render(DrawingContext drawingContext)
         {
-            if(_simulation.IsInitialized)
+            if(!_simulation.IsInitialized)
             {
-                _renderer.SetContext(drawingContext);
-                Planet p = Planet.World;
-                _renderer.FillAARectangle(new ALPoint(0, 0), new ALPoint(p.WorldWidth, p.WorldHeight), Colour.PapayaWhip);
-                _simulation.Render(_renderer);
-                // TODO: for _whatever_ reason, this updates the FPS item, but _not_ the textblock...
-                _vm.FramesPerSecond = _simulation.FpsCounter.AverageFramesPerTicks;
-
-                Pen pen = new(Brushes.Green, 1, lineCap: PenLineCap.Square);
-                Pen boundPen = new(Brushes.Black);
-
-                Point shapePont = new(150 + movement, 150 + movement);
-                Rect r = new(shapePont.X, shapePont.Y, 12, 20);
-                drawingContext.DrawRectangle(boundPen, r);
-                drawingContext.DrawEllipse(Brushes.Aqua, pen, shapePont, 5, 5);
-
-                movement += 1;
-                if(movement >= 300)
-                {
-                    movement = 0;
-                }
+                base.Render(drawingContext);
+                return;
             }
+            
+            _renderer.SetContext(drawingContext);
+            Planet p = Planet.World;
+            _renderer.FillAARectangle(new ALPoint(0, 0), new ALPoint(p.WorldWidth, p.WorldHeight), Colour.PapayaWhip);
+            _simulation.Render(_renderer);
+            // TODO: for _whatever_ reason, this updates the FPS item, but _not_ the textblock...
+            _vm.FramesPerSecond = _simulation.FpsCounter.AverageFramesPerTicks;
+
+            if(special != null)
+            {
+                RenderSpecial(drawingContext);
+            }
+            
+            RenderDebug(drawingContext);
+
             base.Render(drawingContext);
         }
 
@@ -306,6 +300,53 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
             _vm.AgentsActive = Planet.World.AllActiveObjects.Where(wo => wo.Alive && wo is Agent).Count();
         }
 
+        private int movement = 0;
+        private void RenderDebug(DrawingContext drawingContext)
+        {
+            RenderDebugIcon(drawingContext);
+            RenderDebugPoints(drawingContext);
+        }
+
+        private void RenderDebugIcon(DrawingContext drawingContext)
+        {
+            Pen pen = new(Brushes.Green, 1, lineCap: PenLineCap.Square);
+            Pen boundPen = new(Brushes.Black);
+
+            Point shapePont = new(150 + movement, 150 + movement);
+            Rect r = new(shapePont.X, shapePont.Y, 12, 20);
+            drawingContext.DrawRectangle(boundPen, r);
+            drawingContext.DrawEllipse(Brushes.Aqua, pen, shapePont, 5, 5);
+
+            movement += 1;
+            if(movement >= 300)
+            {
+                movement = 0;
+            }
+        }
+
+        List<Point> points = new List<Point>();
+        private void RenderDebugPoints(DrawingContext drawingContext)
+        {
+            Pen pen = new(Brushes.Red, 1, lineCap: PenLineCap.Square);
+            foreach(Point point in points) 
+            {
+                drawingContext.DrawEllipse(Brushes.DarkKhaki, pen, point, 4, 4);
+            }
+        }
+
+        private void RenderSpecial(DrawingContext drawingContext)
+        {
+            Pen pen = new Pen(Brushes.HotPink);
+            if(special is Agent)
+            {
+                Agent ag = (Agent)special;
+                Circle cir = ag.Shape as Circle; //This is the only supported agent shape temporarily
+                Point centre = new Point(cir.CentrePoint.X, cir.CentrePoint.Y);
+                    
+                drawingContext.DrawEllipse(null, pen, centre, cir.Radius + 8, cir.Radius + 3);
+            }
+        }
+
         /// <summary>
         /// Worlds the canvas pointer pressed.
         /// </summary>
@@ -328,6 +369,35 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
         private void WorldCanvas_Tapped(object? sender, TappedEventArgs e)
         {
             movement -= 15;
+
+            Point tapPoint = e.GetPosition(this);
+            BoundingBox bb = new BoundingBox(tapPoint.X - 5, tapPoint.Y - 5, tapPoint.X + 5, tapPoint.Y + 5);
+            List<WorldObject> colls = Planet.World.CollisionLevels[ReferenceValues.CollisionLevelPhysical].QueryForBoundingBoxCollisions(bb);
+
+            MakeSpecial(colls);
+        }
+
+        private WorldObject? special;
+        private int specialCounter = 0;
+        private void MakeSpecial(List<WorldObject> colls)
+        {
+            if(colls.Count < 1)
+            {
+                //They clicked in empty space
+                return;
+            }
+
+            //The counter has rolled too far
+            if(!(specialCounter < colls.Count))
+            {
+                specialCounter = 0;
+            }
+
+            //Select whatever object is at that index
+            special = colls[specialCounter];
+
+            //move the counter up, so a second click with select the next object in the list
+            specialCounter += 1;
         }
     }
 }

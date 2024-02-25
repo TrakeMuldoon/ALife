@@ -3,10 +3,9 @@
  * It remains because it might represent something of value someday
  * And it reflects a time when I was very thoroughly thinking about the design of the inheritance tree
  * */
-using ALife.Core.Geometry;
+/*using ALife.Core.Geometry;
 using System;
 using System.Collections.Generic;
-using Windows.Foundation;
 
 
 namespace ALifeUni.Configs
@@ -232,3 +231,4 @@ namespace ALifeUni.Configs
         T DeltaHardMax;
     }
 }
+*/

@@ -379,6 +379,7 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
 
         private WorldObject? special;
         private int specialCounter = 0;
+        private AgentInfoPanel agentInfoPanel = null;
         private void MakeSpecial(List<WorldObject> colls)
         {
             if(colls.Count < 1)
@@ -394,7 +395,26 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
             }
 
             //Select whatever object is at that index
-            special = colls[specialCounter];
+            WorldObject selected = colls[specialCounter];
+
+            if(agentInfoPanel == null)
+            {
+                agentInfoPanel = new AgentInfoPanel
+                {
+                    Title = "Agnet Window",
+                    Width = 300,
+                    Height = 300,
+                    ZIndex = 999
+                };
+            }
+
+            // open the window
+            agentInfoPanel.Show();
+            if(selected != special)
+            {
+                special = selected;
+                agentInfoPanel.DataContext = special;
+            }
 
             //move the counter up, so a second click with select the next object in the list
             specialCounter += 1;

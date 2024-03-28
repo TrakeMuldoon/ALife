@@ -238,6 +238,7 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
                     _vm.TurnCount = TurnCount;
                     UpdateZoneInfo();
                     UpdateGeneology();
+                    UpdatePopups();
                 }
             }
         }
@@ -403,13 +404,13 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
                 {
                     Title = "Agnet Window",
                     Width = 300,
-                    Height = 300,
-                    ZIndex = 999
+                    Height = 300
                 };
             }
 
-            // open the window
-            agentInfoPanel.Show();
+            //Dispatcher.UIThread.InvokeAsync(() => agentInfoPanel.Show(VisualRoot as Window));
+            Dispatcher.UIThread.InvokeAsync(() => agentInfoPanel.Show());
+
             if(selected != special)
             {
                 special = selected;
@@ -418,6 +419,15 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
 
             //move the counter up, so a second click with select the next object in the list
             specialCounter += 1;
+        }
+
+        private void UpdatePopups()
+        {
+            if(agentInfoPanel != null
+                && agentInfoPanel.IsVisible)
+            {
+                agentInfoPanel.updateInfo();
+            }
         }
     }
 }

@@ -5,11 +5,33 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="ALife.Avalonia.Controls.SingularRunnerControls.AgentInfoPanel"
         Title="AgentInfoPanel">
-  <StackPanel>
-    <TextBlock>
-      Welcome to Avalonia!
-      Words and junk
-    </TextBlock>
-    <Label Name="AgentName">blahb</Label>
-  </StackPanel>
+    <StackPanel x:Name="SelectedAgent">
+        <TextBlock x:Name="NameLabel" Text="Name" />
+        <TextBlock x:Name="AgentName" />
+        <TextBlock x:Name="AgentLocation" />
+
+        <TextBlock x:Name="SensesLabel" Text="Senses" />
+        <TextBlock x:Name="Senses" />
+        
+        <TextBlock x:Name="PropertiesLabel" Text="Properties" />
+        <TextBlock x:Name="Properties" />
+        
+        <TextBlock x:Name="ActionsLabel" Text="Actions"/>
+        <TextBlock x:Name="Actions" />
+
+        <TextBlock x:Name="BrainDisplayLabel" Text="Brain"/>
+      <!-- <Button x:Name="ExportAgent" Click="ExportAgent_Click">Export</Button>-->
+        <TextBlock x:Name="BrainDisplay" />
+      <!-- 
+        <Button x:Name="NeuralNetworkPopupButton" Visibility="Collapsed" Click="NeuralNetworkPopupButton_Click">Brain Viewer</Button>
+ 
+        <Popup x:Name="NeuralNetworkBrainViewer" IsOpen="False"
+                 HorizontalOffset="-75"
+                 VerticalOffset="-550">
+          
+          <local:NeuralBrainView x:Name="AgentNeuralBrain"></local:NeuralBrainView>
+          
+        </Popup>
+       -->
+    </StackPanel>
 </Window>

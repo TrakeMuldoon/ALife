@@ -1,6 +1,6 @@
 ﻿using ALife.Avalonia.ViewModels;
 using ALife.Avalonia.Views;
-
+using Avalonia.Controls;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -22,6 +22,7 @@ public partial class App : Application
             {
                 DataContext = new MainWindowViewModel()
             };
+            desktop.ShutdownMode = ShutdownMode.OnMainWindowClose;
         }
 
         base.OnFrameworkInitializationCompleted();

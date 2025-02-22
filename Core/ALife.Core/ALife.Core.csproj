@@ -1,21 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFrameworks>net9.0;netstandard2.0</TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="Scenarios\Configs\FullConfig.alife" />
     <None Remove="WorldObjects\Agents\Brains\BehaviourBrains\spec.txt" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="Scenarios\Configs\FullConfig.alife" />
     <Content Include="WorldObjects\Agents\Brains\BehaviourBrains\spec.txt" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="Utility\Maths\ExtraMath.cs">
       <DesignTime>True</DesignTime>
@@ -23,24 +19,20 @@
       <DependentUpon>ExtraMath.tt</DependentUpon>
     </None>
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
-    <PackageReference Include="System.Text.Json" Version="8.0.1" />
+    <PackageReference Include="Microsoft.CSharp" />
+    <PackageReference Include="System.Numerics.Vectors" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
-
   <ItemGroup>
     <None Update="Utility\Maths\ExtraMath.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ExtraMath.cs</LastGenOutput>
     </None>
   </ItemGroup>
-
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Utility\Maths\ExtraMath.cs">
       <DesignTime>True</DesignTime>
@@ -58,5 +50,4 @@
       <DependentUpon>ExtraMathTemplate.tt</DependentUpon>
     </Compile>
   </ItemGroup>
-
 </Project>

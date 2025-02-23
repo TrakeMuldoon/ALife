@@ -1,0 +1,23 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+    <NoWarn>$(NoWarn);NU1507</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Avalonia" Version="11.2.4" />
+    <PackageVersion Include="Avalonia.Controls.PanAndZoom" Version="11.2.0" />
+    <PackageVersion Include="Avalonia.Desktop" Version="11.2.4" />
+    <PackageVersion Include="Avalonia.Diagnostics" Version="11.2.4" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.2.4" />
+    <PackageVersion Include="Avalonia.ReactiveUI" Version="11.2.4" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.2.4" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+    <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageVersion Include="MSTest.TestAdapter" Version="3.8.2" />
+    <PackageVersion Include="MSTest.TestFramework" Version="3.8.2" />
+    <PackageVersion Include="System.Numerics.Vectors" Version="4.6.0" />
+    <PackageVersion Include="System.Text.Json" Version="9.0.2" />
+  </ItemGroup>
+</Project>

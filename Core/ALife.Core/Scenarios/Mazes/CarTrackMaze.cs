@@ -161,7 +161,7 @@ Reaching the finish line, reproduces 3 times and then dies... Victorious!"
             Zone midOne = new Zone("Mid1", "Random", Colour.Orange, new Point(800, 585), 20, 200);
             Zone halfWay = new Zone("Half", "Random", Colour.Orange, new Point(1320, 320), 200, 20);
             Zone midThree = new Zone("Mid3", "Random", Colour.Orange, new Point(800, 18), 20, 115);
-            Zone endZone = new Zone("End", "Random", Colour.Red, new Point(30, 285), 190, 40);
+            Zone endZone = new Zone("End", "Random", Colour.Red, new Point(30, 255), 190, 70);
 
             Planet.World.AddZone(startZone);
             Planet.World.AddZone(midOne);

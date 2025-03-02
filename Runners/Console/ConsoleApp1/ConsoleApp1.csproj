@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <OutputType>Exe</OutputType>
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Collision\" />
-      <Folder Include="Geometry\" />
-      <Folder Include="WorldObjects\" />
+      <ProjectReference Include="..\..\..\Core\ALife.Core\ALife.Core.csproj" />
+      <ProjectReference Include="..\..\..\Core\ALife.Scenarios\ALife.Scenarios.csproj" />
     </ItemGroup>
 
 </Project>

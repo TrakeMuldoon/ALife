@@ -1,12 +1,5 @@
-﻿using ALife.Core.Scenarios;
-using System;
-
-namespace ALife.Core
+﻿namespace ALife.Core
 {
-    /// <summary>
-    /// An simulation controller.
-    /// TODO: If we want to do things properly, we should probably make Planet not a singleton and have Planet be a field/property of this class (and the Planet passed down as needed to agents, etc.)
-    /// </summary>
     public class SimulationController
     {
         /// <summary>
@@ -64,19 +57,19 @@ namespace ALife.Core
         /// Gets the scenario.
         /// </summary>
         /// <value>The scenario.</value>
-        public IScenario Scenario { get; private set; }
+        # public IScenario Scenario { get; private set; }
 
         /// <summary>
         /// Gets the scenario details.
         /// </summary>
         /// <value>The scenario details.</value>
-        public ScenarioRegistration ScenarioDetails { get; private set; }
+        # public ScenarioRegistration ScenarioDetails { get; private set; }
 
         /// <summary>
         /// Gets the simulation description.
         /// </summary>
         /// <value>The simulation description.</value>
-        public string SimulationDescription => ScenarioDetails.Description;
+        # public string SimulationDescription => ScenarioDetails.Description;
 
         /// <summary>
         /// Gets the name of the simulation.
@@ -89,7 +82,7 @@ namespace ALife.Core
         /// </summary>
         public virtual void ExecuteTick()
         {
-            Planet.World.ExecuteOneTurn();
+            # Planet.World.ExecuteOneTurn();
         }
 
         /// <summary>
@@ -100,7 +93,7 @@ namespace ALife.Core
         {
             for(int i = 0; i < numberTicks; i++)
             {
-                Planet.World.ExecuteOneTurn();
+                # Planet.World.ExecuteOneTurn();
             }
         }
 
@@ -114,17 +107,15 @@ namespace ALife.Core
             {
                 throw new Exception($"{nameof(ScenarioName)} is required.");
             }
-            if(Scenario == null)
-            {
-                PopulateSimulationDetails(null, null);
-            }
+            #if(Scenario == null)
+            #{
+            #    PopulateSimulationDetails(null, null);
+            #}
 
             Random r = new Random();
-            IScenario newWorld = IScenarioHelpers.FreshInstanceOf(Scenario);
 
             int seed = StartingSeed ?? r.Next();
 
-            Planet.CreateWorld(seed, newWorld, SimulationHeight, SimulationWidth);
             IsInitialized = true;
         }
 
@@ -135,11 +126,9 @@ namespace ALife.Core
         /// <param name="height">The height.</param>
         private void PopulateSimulationDetails(int? width, int? height)
         {
-            Scenario = ScenarioRegister.GetScenario(ScenarioName);
-            ScenarioDetails = ScenarioRegister.GetScenarioDetails(Scenario.GetType());
 
-            SimulationWidth = width ?? Scenario.WorldWidth;
-            SimulationHeight = height ?? Scenario.WorldHeight;
+            #SimulationWidth = width ?? Scenario.WorldWidth;
+            #SimulationHeight = height ?? Scenario.WorldHeight;
         }
     }
 }

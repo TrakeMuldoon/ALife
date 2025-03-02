@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using System;
 
-namespace ALife.Avalonia.Desktop;
+namespace ALife.Avalonia.Desktop.ARM;
 
 class Program
 {

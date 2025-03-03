@@ -8,8 +8,8 @@
 
     <ItemGroup>
       <Folder Include="Collision\" />
-      <Folder Include="Geometry\" />
-      <Folder Include="WorldObjects\" />
+      <Folder Include="Scenarios\ScenarioConfigs\" />
+      <Folder Include="WorldInfoObjects\Geometry\" />
     </ItemGroup>
 
 </Project>

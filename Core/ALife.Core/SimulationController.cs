@@ -1,6 +1,5 @@
-﻿namespace ALife.Core
+﻿namespace ALife.Core;
+
+public class SimulationController
 {
-    public class SimulationController
-    {
-    }
 }

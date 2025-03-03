@@ -1,13 +1,12 @@
-﻿namespace ALife.Core.Utility.Logging
+﻿namespace ALife.Core.Utility.Logging;
+
+/// <summary>
+/// Arguments for when an event to log a message is raised.
+/// </summary>
+public class LogMessageEventArgs(string message) : EventArgs
 {
     /// <summary>
-    /// Arguments for when an event to log a message is raised.
+    /// The message to log.
     /// </summary>
-    public class LogMessageEventArgs(string message) : EventArgs
-    {
-        /// <summary>
-        /// The message to log.
-        /// </summary>
-        public string Message = message;
-    }
+    public string Message = message;
 }

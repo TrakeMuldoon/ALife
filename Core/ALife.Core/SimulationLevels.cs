@@ -1,12 +1,14 @@
-﻿namespace ALife.Core
+﻿namespace ALife.Core;
+
+/// <summary>
+/// The levels of the simulation.
+/// </summary>
+public enum SimulationLevels
 {
-    public enum SimulationLevels
-    {
-        Zone = 0,
-        Physical = 1,
-        Sight = 2,
-        Scent = 4,
-        Sound = 8,
-        Dead = 16384,
-    }
+    Dead = 1,
+    Zone = 2,
+    Physical = 4,
+    Sight = 8,
+    Scent = 16,
+    Sound = 32,
 }

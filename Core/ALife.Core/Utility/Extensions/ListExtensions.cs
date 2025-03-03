@@ -1,19 +1,18 @@
-﻿namespace ALife.Core.Utility.Extensions
+﻿namespace ALife.Core.Utility.Extensions;
+
+/// <summary>
+/// Extensions for lists.
+/// </summary>
+public static class ListExtensions
 {
     /// <summary>
-    /// Extensions for lists.
+    /// Adds the items.
     /// </summary>
-    public static class ListExtensions
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list">The list.</param>
+    /// <param name="items">The items.</param>
+    public static void AddItems<T>(this List<T> list, params T[] items)
     {
-        /// <summary>
-        /// Adds the items.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="list">The list.</param>
-        /// <param name="items">The items.</param>
-        public static void AddItems<T>(this List<T> list, params T[] items)
-        {
-            list.AddRange(items);
-        }
+        list.AddRange(items);
     }
 }

@@ -1,28 +1,27 @@
-﻿namespace ALife.Core.Utility.Numerics
+﻿namespace ALife.Core.Utility.Numerics;
+
+/// <summary>
+/// Extensions for numeric utility classes.
+/// </summary>
+public static class NumericExtensions
 {
     /// <summary>
-    /// Extensions for numeric utility classes.
+    /// Converts a ManualBoundedNumber to a BoundedAutoNumber.
     /// </summary>
-    public static class NumericExtensions
+    /// <param name="number">The ManualBoundedNumber to convert</param>
+    /// <returns></returns>
+    public static BoundedNumber ToAutoBoundedNumber(this ManualBoundedNumber number)
     {
-        /// <summary>
-        /// Converts a ManualBoundedNumber to a BoundedAutoNumber.
-        /// </summary>
-        /// <param name="number">The ManualBoundedNumber to convert</param>
-        /// <returns></returns>
-        public static BoundedNumber ToAutoBoundedNumber(this ManualBoundedNumber number)
-        {
-            return new BoundedNumber(number.Value, number.Minimum, number.Maximum);
-        }
+        return new BoundedNumber(number.Value, number.Minimum, number.Maximum);
+    }
 
-        /// <summary>
-        /// Converts a BoundedNumber to a ManualBoundedNumber.
-        /// </summary>
-        /// <param name="number">The BoundedNumber to convert</param>
-        /// <returns></returns>
-        public static ManualBoundedNumber ToManuallyBoundedNumber(this BoundedNumber number)
-        {
-            return new ManualBoundedNumber(number.Value, number.Minimum, number.Maximum);
-        }
+    /// <summary>
+    /// Converts a BoundedNumber to a ManualBoundedNumber.
+    /// </summary>
+    /// <param name="number">The BoundedNumber to convert</param>
+    /// <returns></returns>
+    public static ManualBoundedNumber ToManuallyBoundedNumber(this BoundedNumber number)
+    {
+        return new ManualBoundedNumber(number.Value, number.Minimum, number.Maximum);
     }
 }

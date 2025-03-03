@@ -1,8 +1,4 @@
 ﻿<Solution>
-  <Configurations>
-    <Platform Name="Any CPU" />
-    <Platform Name="ARM64" />
-  </Configurations>
   <Folder Name="/Assets/">
     <File Path="Assets\ConsoleSplash.ico" />
     <File Path="Assets\ConsoleSplash.png" />
@@ -10,22 +6,10 @@
     <File Path="Assets\GuiSplash.png" />
   </Folder>
   <Folder Name="/Core/">
-    <Project Path="Core\ALife.Core\ALife.Core.csproj" Type="Classic C#">
-      <Configuration Solution="Debug|ARM64" Project="Debug|Any CPU" />
-      <Configuration Solution="Release|ARM64" Project="Release|Any CPU" />
-    </Project>
-    <Project Path="Core\ALife.Rendering\ALife.Rendering.csproj" Type="Classic C#">
-      <Configuration Solution="Debug|ARM64" Project="Debug|Any CPU" />
-      <Configuration Solution="Release|ARM64" Project="Release|Any CPU" />
-    </Project>
-    <Project Path="Core\ALife.Scenarios\ALife.Scenarios.csproj" Type="Classic C#">
-      <Configuration Solution="Debug|ARM64" Project="Debug|Any CPU" />
-      <Configuration Solution="Release|ARM64" Project="Release|Any CPU" />
-    </Project>
-    <Project Path="Core\ALife.Tests\ALife.Tests.csproj" Type="Classic C#">
-      <Configuration Solution="Debug|ARM64" Project="Debug|Any CPU" />
-      <Configuration Solution="Release|ARM64" Project="Release|Any CPU" />
-    </Project>
+    <Project Path="Core\ALife.Core\ALife.Core.csproj" Type="Classic C#" />
+    <Project Path="Core\ALife.Rendering\ALife.Rendering.csproj" Type="Classic C#" />
+    <Project Path="Core\ALife.Scenarios\ALife.Scenarios.csproj" Type="Classic C#" />
+    <Project Path="Core\ALife.Tests\ALife.Tests.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/Documentation/">
     <File Path="Documentation\NewConfig.txt" />
@@ -40,23 +24,14 @@
   </Folder>
   <Folder Name="/Runners/" />
   <Folder Name="/Runners/Avalonia/">
-    <Project Path="Runners\Avalonia\ALife.Avalonia.Core\ALife.Avalonia.Core.csproj" Type="Classic C#">
-      <Configuration Solution="Debug|ARM64" Project="Debug|Any CPU" />
-      <Configuration Solution="Release|ARM64" Project="Release|Any CPU" />
-    </Project>
+    <Project Path="Runners\Avalonia\ALife.Avalonia.Core\ALife.Avalonia.Core.csproj" Type="Classic C#" />
     <Project Path="Runners\Avalonia\ALife.Avalonia.Desktop.ARM\ALife.Avalonia.Desktop.ARM.csproj" Type="Classic C#">
-      <Configuration Solution="Debug|ARM64" Project="Debug|Any CPU" />
-      <Configuration Solution="Release|ARM64" Project="Release|Any CPU" />
+      <Configuration Solution="Debug|Any CPU" Project="Debug|ARM64" />
+      <Configuration Solution="Release|Any CPU" Project="Release|ARM64" />
     </Project>
-    <Project Path="Runners\Avalonia\ALife.Avalonia.Desktop\ALife.Avalonia.Desktop.csproj" Type="Classic C#">
-      <Configuration Solution="Debug|ARM64" Project="Debug|Any CPU" />
-      <Configuration Solution="Release|ARM64" Project="Release|Any CPU" />
-    </Project>
+    <Project Path="Runners\Avalonia\ALife.Avalonia.Desktop\ALife.Avalonia.Desktop.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/Runners/Console/">
-    <Project Path="Runners\Console\ConsoleApp1\ConsoleApp1.csproj" Type="Classic C#">
-      <Configuration Solution="Debug|ARM64" Project="Debug|Any CPU" />
-      <Configuration Solution="Release|ARM64" Project="Release|Any CPU" />
-    </Project>
+    <Project Path="Runners\Console\ConsoleApp1\ConsoleApp1.csproj" Type="Classic C#" />
   </Folder>
 </Solution>

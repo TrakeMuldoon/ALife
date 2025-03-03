@@ -2,350 +2,349 @@
 using System.Text.Json.Serialization;
 using ALife.Core.Utility.Numerics;
 
-namespace ALife.Core.Utility.EvoNumbers
+namespace ALife.Core.Utility.EvoNumbers;
+
+/// <summary>
+/// A number that can be evolved within a range. This version can only be read, not written to.
+/// </summary>
+/// <seealso cref="ALife.Core.Utility.EvoNumbers.IEvoNumber"/>
+[DebuggerDisplay("{ToString()}")]
+public struct ReadOnlyEvoNumber : IEvoNumber, IEquatable<ReadOnlyEvoNumber>
 {
     /// <summary>
-    /// A number that can be evolved within a range. This version can only be read, not written to.
+    /// The actual value
     /// </summary>
-    /// <seealso cref="ALife.Core.Utility.EvoNumbers.IEvoNumber"/>
-    [DebuggerDisplay("{ToString()}")]
-    public struct ReadOnlyEvoNumber : IEvoNumber, IEquatable<ReadOnlyEvoNumber>
+    [JsonIgnore]
+    private double _value;
+
+    /// <summary>
+    /// The value delta maximum
+    /// </summary>
+    [JsonIgnore]
+    private DeltaBoundedNumber _valueDeltaMaximum;
+
+    /// <summary>
+    /// The value maximum
+    /// </summary>
+    [JsonIgnore]
+    private BoundedNumber _valueMaximum;
+
+    /// <summary>
+    /// The value minimum
+    /// </summary>
+    [JsonIgnore]
+    private BoundedNumber _valueMinimum;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ReadOnlyEvoNumber"/> class.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="originalValueEvolutionDeltaMax">The original value evolution delta maximum.</param>
+    /// <param name="minimumValue">The minimum value.</param>
+    /// <param name="maximumValue">The maximum value.</param>
+    /// <param name="valueMinimumAndMaximumEvolutionDeltaMax">The value minimum and maximum evolution delta maximum.</param>
+    /// <param name="valueDelta">The value delta.</param>
+    [JsonConstructor]
+    public ReadOnlyEvoNumber(double value, double originalValueEvolutionDeltaMax, BoundedNumber minimumValue, BoundedNumber maximumValue, double valueMinimumAndMaximumEvolutionDeltaMax, DeltaBoundedNumber valueDelta)
     {
-        /// <summary>
-        /// The actual value
-        /// </summary>
-        [JsonIgnore]
-        private double _value;
+        OriginalValue = value;
+        _value = value;
+        OriginalValueEvolutionDeltaMax = originalValueEvolutionDeltaMax;
+        _valueMinimum = minimumValue;
+        _valueMaximum = maximumValue;
+        ValueMaximumAndMinimumEvolutionDeltaMax = valueMinimumAndMaximumEvolutionDeltaMax;
+        _valueDeltaMaximum = valueDelta;
+    }
 
-        /// <summary>
-        /// The value delta maximum
-        /// </summary>
-        [JsonIgnore]
-        private DeltaBoundedNumber _valueDeltaMaximum;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ReadOnlyEvoNumber"/> class.
+    /// </summary>
+    /// <param name="startValue">The value.</param>
+    /// <param name="evoDeltaMax">The evolution delta maximum.</param>
+    /// <param name="hardMin">The absolute minimum.</param>
+    /// <param name="hardMax">The absolute maximum.</param>
+    public ReadOnlyEvoNumber(double startValue, double evoDeltaMax, double hardMin, double hardMax) : this(startValue, evoDeltaMax, new BoundedNumber(hardMin, hardMin, hardMax), new BoundedNumber(hardMax, hardMin, hardMax), evoDeltaMax, new DeltaBoundedNumber(evoDeltaMax, evoDeltaMax, evoDeltaMax - 1, evoDeltaMax + 1))
+    {
+    }
 
-        /// <summary>
-        /// The value maximum
-        /// </summary>
-        [JsonIgnore]
-        private BoundedNumber _valueMaximum;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ReadOnlyEvoNumber"/> class.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="originalValueEvolutionDeltaMax">The original value evolution delta maximum.</param>
+    /// <param name="minimumValue">The minimum value.</param>
+    /// <param name="maximumValue">The maximum value.</param>
+    /// <param name="absoluteMinimumValue">The absolute minimum value.</param>
+    /// <param name="absoluteMaximumValue">The absolute maximum value.</param>
+    /// <param name="valueMinimumAndMaximumEvolutionDeltaMax">The value minimum and maximum evolution delta maximum.</param>
+    /// <param name="valueDeltaMax">The value delta maximum.</param>
+    /// <param name="valueDeltaMaxEvolutionMax">The value delta maximum evolution maximum.</param>
+    /// <param name="valueDeltaMaxEvolutionAbsoluteMax">The value delta maximum evolution absolute maximum.</param>
+    public ReadOnlyEvoNumber(double value, double originalValueEvolutionDeltaMax, double minimumValue, double maximumValue, double absoluteMinimumValue, double absoluteMaximumValue, double valueMinimumAndMaximumEvolutionDeltaMax, double valueDeltaMax, double valueDeltaMaxEvolutionMax, double valueDeltaMaxEvolutionAbsoluteMax) : this(value, originalValueEvolutionDeltaMax, new BoundedNumber(minimumValue, absoluteMinimumValue, absoluteMaximumValue), new BoundedNumber(maximumValue, absoluteMinimumValue, absoluteMaximumValue), valueMinimumAndMaximumEvolutionDeltaMax, new DeltaBoundedNumber(valueDeltaMax, valueDeltaMaxEvolutionMax, 0, valueDeltaMaxEvolutionAbsoluteMax))
+    {
+    }
 
-        /// <summary>
-        /// The value minimum
-        /// </summary>
-        [JsonIgnore]
-        private BoundedNumber _valueMinimum;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ReadOnlyEvoNumber"/> class.
+    /// </summary>
+    /// <param name="evoNumber">The evo number to clone.</param>
+    public ReadOnlyEvoNumber(IEvoNumber evoNumber) : this(evoNumber.Value, evoNumber.OriginalValueEvolutionDeltaMax, evoNumber.ValueMinimum, evoNumber.ValueMaximum, evoNumber.ValueMaximumAndMinimumEvolutionDeltaMax, evoNumber.ValueDeltaMaximum)
+    {
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ReadOnlyEvoNumber"/> class.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="originalValueEvolutionDeltaMax">The original value evolution delta maximum.</param>
-        /// <param name="minimumValue">The minimum value.</param>
-        /// <param name="maximumValue">The maximum value.</param>
-        /// <param name="valueMinimumAndMaximumEvolutionDeltaMax">The value minimum and maximum evolution delta maximum.</param>
-        /// <param name="valueDelta">The value delta.</param>
-        [JsonConstructor]
-        public ReadOnlyEvoNumber(double value, double originalValueEvolutionDeltaMax, BoundedNumber minimumValue, BoundedNumber maximumValue, double valueMinimumAndMaximumEvolutionDeltaMax, DeltaBoundedNumber valueDelta)
+    /// <summary>
+    /// Gets the original (start) value.
+    /// </summary>
+    /// <value>The original value.</value>
+    [JsonIgnore]
+    public double OriginalValue { get; }
+
+    /// <summary>
+    /// Gets the original value evolution delta maximum.
+    /// </summary>
+    /// <value>The original value evolution delta maximum.</value>
+    [JsonPropertyName("originalValueEvolutionDeltaMax")]
+    public double OriginalValueEvolutionDeltaMax { get; }
+
+    /// <summary>
+    /// Gets or sets the value.
+    /// </summary>
+    /// <value>The value.</value>
+    /// <exception cref="System.InvalidOperationException">Cannot set the value of a ReadOnlyEvoNumber</exception>
+    [JsonPropertyName("value")]
+    public double Value
+    {
+        get => _value;
+        set => throw new InvalidOperationException("Cannot set the value of a ReadOnlyEvoNumber");
+    }
+
+    /// <summary>
+    /// Gets or sets the value absolute minimum. This is the absolute minimum that the Value can grow to be.
+    /// </summary>
+    /// <value>The value absolute minimum.</value>
+    [JsonIgnore]
+    public double ValueAbsoluteMaximum
+    {
+        get => _valueMaximum.Maximum;
+        set
         {
-            OriginalValue = value;
-            _value = value;
-            OriginalValueEvolutionDeltaMax = originalValueEvolutionDeltaMax;
-            _valueMinimum = minimumValue;
-            _valueMaximum = maximumValue;
-            ValueMaximumAndMinimumEvolutionDeltaMax = valueMinimumAndMaximumEvolutionDeltaMax;
-            _valueDeltaMaximum = valueDelta;
+            _valueMinimum.Maximum = value;
+            _valueMaximum.Maximum = value;
         }
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ReadOnlyEvoNumber"/> class.
-        /// </summary>
-        /// <param name="startValue">The value.</param>
-        /// <param name="evoDeltaMax">The evolution delta maximum.</param>
-        /// <param name="hardMin">The absolute minimum.</param>
-        /// <param name="hardMax">The absolute maximum.</param>
-        public ReadOnlyEvoNumber(double startValue, double evoDeltaMax, double hardMin, double hardMax) : this(startValue, evoDeltaMax, new BoundedNumber(hardMin, hardMin, hardMax), new BoundedNumber(hardMax, hardMin, hardMax), evoDeltaMax, new DeltaBoundedNumber(evoDeltaMax, evoDeltaMax, evoDeltaMax - 1, evoDeltaMax + 1))
+    /// <summary>
+    /// Gets or sets the value absolute maximum. This is the absolute maximum that the Value can grow to be.
+    /// </summary>
+    /// <value>The value absolute maximum.</value>
+    [JsonIgnore]
+    public double ValueAbsoluteMinimum
+    {
+        get => _valueMinimum.Minimum;
+        set
         {
+            _valueMinimum.Minimum = value;
+            _valueMaximum.Minimum = value;
         }
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ReadOnlyEvoNumber"/> class.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="originalValueEvolutionDeltaMax">The original value evolution delta maximum.</param>
-        /// <param name="minimumValue">The minimum value.</param>
-        /// <param name="maximumValue">The maximum value.</param>
-        /// <param name="absoluteMinimumValue">The absolute minimum value.</param>
-        /// <param name="absoluteMaximumValue">The absolute maximum value.</param>
-        /// <param name="valueMinimumAndMaximumEvolutionDeltaMax">The value minimum and maximum evolution delta maximum.</param>
-        /// <param name="valueDeltaMax">The value delta maximum.</param>
-        /// <param name="valueDeltaMaxEvolutionMax">The value delta maximum evolution maximum.</param>
-        /// <param name="valueDeltaMaxEvolutionAbsoluteMax">The value delta maximum evolution absolute maximum.</param>
-        public ReadOnlyEvoNumber(double value, double originalValueEvolutionDeltaMax, double minimumValue, double maximumValue, double absoluteMinimumValue, double absoluteMaximumValue, double valueMinimumAndMaximumEvolutionDeltaMax, double valueDeltaMax, double valueDeltaMaxEvolutionMax, double valueDeltaMaxEvolutionAbsoluteMax) : this(value, originalValueEvolutionDeltaMax, new BoundedNumber(minimumValue, absoluteMinimumValue, absoluteMaximumValue), new BoundedNumber(maximumValue, absoluteMinimumValue, absoluteMaximumValue), valueMinimumAndMaximumEvolutionDeltaMax, new DeltaBoundedNumber(valueDeltaMax, valueDeltaMaxEvolutionMax, 0, valueDeltaMaxEvolutionAbsoluteMax))
-        {
-        }
+    /// <summary>
+    /// Gets the value delta. This is the maximum amount that the Value can change when it is updated.
+    /// </summary>
+    /// <value>The value delta.</value>
+    [JsonPropertyName("valueDelta")]
+    public DeltaBoundedNumber ValueDeltaMaximum => _valueDeltaMaximum;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ReadOnlyEvoNumber"/> class.
-        /// </summary>
-        /// <param name="evoNumber">The evo number to clone.</param>
-        public ReadOnlyEvoNumber(IEvoNumber evoNumber) : this(evoNumber.Value, evoNumber.OriginalValueEvolutionDeltaMax, evoNumber.ValueMinimum, evoNumber.ValueMaximum, evoNumber.ValueMaximumAndMinimumEvolutionDeltaMax, evoNumber.ValueDeltaMaximum)
-        {
-        }
+    /// <summary>
+    /// Gets or sets the value delta maximum absolute maximum. This is the absolute maximum that the ValueDelta can be.
+    /// </summary>
+    /// <value>The value delta maximum absolute maximum.</value>
+    [JsonIgnore]
+    public double ValueDeltaMaximumAbsoluteMaximum
+    {
+        get => _valueDeltaMaximum.DeltaAbsoluteMaximumValue;
+        set => _valueDeltaMaximum.DeltaAbsoluteMaximumValue = value;
+    }
 
-        /// <summary>
-        /// Gets the original (start) value.
-        /// </summary>
-        /// <value>The original value.</value>
-        [JsonIgnore]
-        public double OriginalValue { get; }
+    /// <summary>
+    /// Gets or sets the value delta maximum evolution maximum. This is the maximum that the ValueDeltaMaximumValue
+    /// value can change during the next evolution.
+    /// </summary>
+    /// <value>The value delta maximum evolution maximum.</value>
+    [JsonIgnore]
+    public double ValueDeltaMaximumEvolutionMax
+    {
+        get => _valueDeltaMaximum.DeltaMaxValue;
+        set => _valueDeltaMaximum.DeltaMaxValue = value;
+    }
 
-        /// <summary>
-        /// Gets the original value evolution delta maximum.
-        /// </summary>
-        /// <value>The original value evolution delta maximum.</value>
-        [JsonPropertyName("originalValueEvolutionDeltaMax")]
-        public double OriginalValueEvolutionDeltaMax { get; }
+    /// <summary>
+    /// Gets or sets the value delta maximum value. This is the maximum that the value can change during the next evolution.
+    /// </summary>
+    /// <value>The value delta maximum value.</value>
+    [JsonIgnore]
+    public double ValueDeltaMaximumValue
+    {
+        get => _valueDeltaMaximum.Value;
+        set => _valueDeltaMaximum.Value = value;
+    }
 
-        /// <summary>
-        /// Gets or sets the value.
-        /// </summary>
-        /// <value>The value.</value>
-        /// <exception cref="System.InvalidOperationException">Cannot set the value of a ReadOnlyEvoNumber</exception>
-        [JsonPropertyName("value")]
-        public double Value
-        {
-            get => _value;
-            set => throw new InvalidOperationException("Cannot set the value of a ReadOnlyEvoNumber");
-        }
+    /// <summary>
+    /// The maximum that the value can be.
+    /// </summary>
+    [JsonPropertyName("maximumValue")]
+    public BoundedNumber ValueMaximum => _valueMaximum;
 
-        /// <summary>
-        /// Gets or sets the value absolute minimum. This is the absolute minimum that the Value can grow to be.
-        /// </summary>
-        /// <value>The value absolute minimum.</value>
-        [JsonIgnore]
-        public double ValueAbsoluteMaximum
-        {
-            get => _valueMaximum.Maximum;
-            set
-            {
-                _valueMinimum.Maximum = value;
-                _valueMaximum.Maximum = value;
-            }
-        }
+    /// <summary>
+    /// Gets or sets the value maximum and minimum evolution delta maximum. This is the maximum amount that the
+    /// ValueMaximum and ValueMinimum can change when they are evolved.
+    /// </summary>
+    /// <value>The value maximum and minimum evolution delta maximum.</value>
+    [JsonPropertyName("valueMinimumAndMaximumEvolutionDeltaMax")]
+    public double ValueMaximumAndMinimumEvolutionDeltaMax { get; set; }
 
-        /// <summary>
-        /// Gets or sets the value absolute maximum. This is the absolute maximum that the Value can grow to be.
-        /// </summary>
-        /// <value>The value absolute maximum.</value>
-        [JsonIgnore]
-        public double ValueAbsoluteMinimum
-        {
-            get => _valueMinimum.Minimum;
-            set
-            {
-                _valueMinimum.Minimum = value;
-                _valueMaximum.Minimum = value;
-            }
-        }
+    /// <summary>
+    /// Gets or sets the value maximum value. This is the current maximum the value could grow to be.
+    /// </summary>
+    /// <value>The value maximum value.</value>
+    [JsonIgnore]
+    public double ValueMaximumValue
+    {
+        get => _valueMaximum.Value;
+        set => _valueMaximum.Value = value;
+    }
 
-        /// <summary>
-        /// Gets the value delta. This is the maximum amount that the Value can change when it is updated.
-        /// </summary>
-        /// <value>The value delta.</value>
-        [JsonPropertyName("valueDelta")]
-        public DeltaBoundedNumber ValueDeltaMaximum => _valueDeltaMaximum;
+    /// <summary>
+    /// The minimum that the value can be.
+    /// </summary>
+    [JsonPropertyName("minimumValue")]
+    public BoundedNumber ValueMinimum => _valueMinimum;
 
-        /// <summary>
-        /// Gets or sets the value delta maximum absolute maximum. This is the absolute maximum that the ValueDelta can be.
-        /// </summary>
-        /// <value>The value delta maximum absolute maximum.</value>
-        [JsonIgnore]
-        public double ValueDeltaMaximumAbsoluteMaximum
-        {
-            get => _valueDeltaMaximum.DeltaAbsoluteMaximumValue;
-            set => _valueDeltaMaximum.DeltaAbsoluteMaximumValue = value;
-        }
+    /// <summary>
+    /// Gets or sets the value minimum value. This is the current minimum the value could grow to be.
+    /// </summary>
+    /// <value>The value minimum value.</value>
+    [JsonIgnore]
+    public double ValueMinimumValue
+    {
+        get => _valueMinimum.Value;
+        set => _valueMinimum.Value = value;
+    }
 
-        /// <summary>
-        /// Gets or sets the value delta maximum evolution maximum. This is the maximum that the ValueDeltaMaximumValue
-        /// value can change during the next evolution.
-        /// </summary>
-        /// <value>The value delta maximum evolution maximum.</value>
-        [JsonIgnore]
-        public double ValueDeltaMaximumEvolutionMax
-        {
-            get => _valueDeltaMaximum.DeltaMaxValue;
-            set => _valueDeltaMaximum.DeltaMaxValue = value;
-        }
+    /// <summary>
+    /// Implements the operator !=.
+    /// </summary>
+    /// <param name="left">The left.</param>
+    /// <param name="right">The right.</param>
+    /// <returns>The result of the operator.</returns>
+    public static bool operator !=(ReadOnlyEvoNumber left, ReadOnlyEvoNumber right)
+    {
+        return !left.Equals(right);
+    }
 
-        /// <summary>
-        /// Gets or sets the value delta maximum value. This is the maximum that the value can change during the next evolution.
-        /// </summary>
-        /// <value>The value delta maximum value.</value>
-        [JsonIgnore]
-        public double ValueDeltaMaximumValue
-        {
-            get => _valueDeltaMaximum.Value;
-            set => _valueDeltaMaximum.Value = value;
-        }
+    /// <summary>
+    /// Implements the operator &lt;.
+    /// </summary>
+    /// <param name="left">The left.</param>
+    /// <param name="right">The right.</param>
+    /// <returns>The result of the operator.</returns>
+    public static bool operator <(ReadOnlyEvoNumber left, ReadOnlyEvoNumber right)
+    {
+        return left.Value < right.Value;
+    }
 
-        /// <summary>
-        /// The maximum that the value can be.
-        /// </summary>
-        [JsonPropertyName("maximumValue")]
-        public BoundedNumber ValueMaximum => _valueMaximum;
+    /// <summary>
+    /// Implements the operator &lt;=.
+    /// </summary>
+    /// <param name="left">The left.</param>
+    /// <param name="right">The right.</param>
+    /// <returns>The result of the operator.</returns>
+    public static bool operator <=(ReadOnlyEvoNumber left, ReadOnlyEvoNumber right)
+    {
+        return left.Value <= right.Value;
+    }
 
-        /// <summary>
-        /// Gets or sets the value maximum and minimum evolution delta maximum. This is the maximum amount that the
-        /// ValueMaximum and ValueMinimum can change when they are evolved.
-        /// </summary>
-        /// <value>The value maximum and minimum evolution delta maximum.</value>
-        [JsonPropertyName("valueMinimumAndMaximumEvolutionDeltaMax")]
-        public double ValueMaximumAndMinimumEvolutionDeltaMax { get; set; }
+    /// <summary>
+    /// Implements the operator ==.
+    /// </summary>
+    /// <param name="left">The left.</param>
+    /// <param name="right">The right.</param>
+    /// <returns>The result of the operator.</returns>
+    public static bool operator ==(ReadOnlyEvoNumber left, ReadOnlyEvoNumber right)
+    {
+        return left.Equals(right);
+    }
 
-        /// <summary>
-        /// Gets or sets the value maximum value. This is the current maximum the value could grow to be.
-        /// </summary>
-        /// <value>The value maximum value.</value>
-        [JsonIgnore]
-        public double ValueMaximumValue
-        {
-            get => _valueMaximum.Value;
-            set => _valueMaximum.Value = value;
-        }
+    /// <summary>
+    /// Implements the operator &gt;.
+    /// </summary>
+    /// <param name="left">The left.</param>
+    /// <param name="right">The right.</param>
+    /// <returns>The result of the operator.</returns>
+    public static bool operator >(ReadOnlyEvoNumber left, ReadOnlyEvoNumber right)
+    {
+        return left.Value > right.Value;
+    }
 
-        /// <summary>
-        /// The minimum that the value can be.
-        /// </summary>
-        [JsonPropertyName("minimumValue")]
-        public BoundedNumber ValueMinimum => _valueMinimum;
+    /// <summary>
+    /// Implements the operator &gt;=.
+    /// </summary>
+    /// <param name="left">The left.</param>
+    /// <param name="right">The right.</param>
+    /// <returns>The result of the operator.</returns>
+    public static bool operator >=(ReadOnlyEvoNumber left, ReadOnlyEvoNumber right)
+    {
+        return left.Value >= right.Value;
+    }
 
-        /// <summary>
-        /// Gets or sets the value minimum value. This is the current minimum the value could grow to be.
-        /// </summary>
-        /// <value>The value minimum value.</value>
-        [JsonIgnore]
-        public double ValueMinimumValue
-        {
-            get => _valueMinimum.Value;
-            set => _valueMinimum.Value = value;
-        }
+    /// <summary>
+    /// Deep clones this instance.
+    /// </summary>
+    /// <returns>The new cloned instance.</returns>
+    public IEvoNumber Clone()
+    {
+        return new ReadOnlyEvoNumber(this);
+    }
 
-        /// <summary>
-        /// Implements the operator !=.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>The result of the operator.</returns>
-        public static bool operator !=(ReadOnlyEvoNumber left, ReadOnlyEvoNumber right)
-        {
-            return !left.Equals(right);
-        }
+    /// <summary>
+    /// Determines whether the specified <see cref="System.Object"/>, is equal to this instance.
+    /// </summary>
+    /// <param name="obj">The <see cref="System.Object"/> to compare with this instance.</param>
+    /// <returns>
+    /// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+    /// </returns>
+    public override bool Equals(object? obj)
+    {
+        return obj is ReadOnlyEvoNumber number && Equals(number);
+    }
 
-        /// <summary>
-        /// Implements the operator &lt;.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>The result of the operator.</returns>
-        public static bool operator <(ReadOnlyEvoNumber left, ReadOnlyEvoNumber right)
-        {
-            return left.Value < right.Value;
-        }
+    /// <summary>
+    /// Returns a hash code for this instance.
+    /// </summary>
+    /// <returns>
+    /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
+    /// </returns>
+    public override int GetHashCode()
+    {
+        return HashCodeHelper.Combine(Value, ValueDeltaMaximum, ValueMaximum, ValueMinimum, ValueMaximumAndMinimumEvolutionDeltaMax, OriginalValue, OriginalValueEvolutionDeltaMax);
+    }
 
-        /// <summary>
-        /// Implements the operator &lt;=.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>The result of the operator.</returns>
-        public static bool operator <=(ReadOnlyEvoNumber left, ReadOnlyEvoNumber right)
-        {
-            return left.Value <= right.Value;
-        }
+    /// <summary>
+    /// Converts to string.
+    /// </summary>
+    /// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+    public override string ToString()
+    {
+        return $"ReadOnlyEvoNumber: {Value} (Original: {OriginalValue})";
+    }
 
-        /// <summary>
-        /// Implements the operator ==.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>The result of the operator.</returns>
-        public static bool operator ==(ReadOnlyEvoNumber left, ReadOnlyEvoNumber right)
-        {
-            return left.Equals(right);
-        }
-
-        /// <summary>
-        /// Implements the operator &gt;.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>The result of the operator.</returns>
-        public static bool operator >(ReadOnlyEvoNumber left, ReadOnlyEvoNumber right)
-        {
-            return left.Value > right.Value;
-        }
-
-        /// <summary>
-        /// Implements the operator &gt;=.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>The result of the operator.</returns>
-        public static bool operator >=(ReadOnlyEvoNumber left, ReadOnlyEvoNumber right)
-        {
-            return left.Value >= right.Value;
-        }
-
-        /// <summary>
-        /// Deep clones this instance.
-        /// </summary>
-        /// <returns>The new cloned instance.</returns>
-        public IEvoNumber Clone()
-        {
-            return new ReadOnlyEvoNumber(this);
-        }
-
-        /// <summary>
-        /// Determines whether the specified <see cref="System.Object"/>, is equal to this instance.
-        /// </summary>
-        /// <param name="obj">The <see cref="System.Object"/> to compare with this instance.</param>
-        /// <returns>
-        /// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise, <c>false</c>.
-        /// </returns>
-        public override bool Equals(object? obj)
-        {
-            return obj is ReadOnlyEvoNumber number && Equals(number);
-        }
-
-        /// <summary>
-        /// Returns a hash code for this instance.
-        /// </summary>
-        /// <returns>
-        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
-        /// </returns>
-        public override int GetHashCode()
-        {
-            return HashCodeHelper.Combine(Value, ValueDeltaMaximum, ValueMaximum, ValueMinimum, ValueMaximumAndMinimumEvolutionDeltaMax, OriginalValue, OriginalValueEvolutionDeltaMax);
-        }
-
-        /// <summary>
-        /// Converts to string.
-        /// </summary>
-        /// <returns>A <see cref="System.String"/> that represents this instance.</returns>
-        public override string ToString()
-        {
-            return $"ReadOnlyEvoNumber: {Value} (Original: {OriginalValue})";
-        }
-
-        /// <summary>
-        /// Determines whether the specified <see cref="ReadOnlyEvoNumber"/> is equal to this instance.
-        /// </summary>
-        /// <param name="other">The other instance.</param>
-        /// <returns>True if equals, False otherwise.</returns>
-        public bool Equals(ReadOnlyEvoNumber other)
-        {
-            return _value.Equals(other._value) && _valueDeltaMaximum.Equals(other._valueDeltaMaximum) && _valueMaximum.Equals(other._valueMaximum) && _valueMinimum.Equals(other._valueMinimum) && OriginalValue.Equals(other.OriginalValue) && OriginalValueEvolutionDeltaMax.Equals(other.OriginalValueEvolutionDeltaMax) && ValueMaximumAndMinimumEvolutionDeltaMax.Equals(other.ValueMaximumAndMinimumEvolutionDeltaMax);
-        }
+    /// <summary>
+    /// Determines whether the specified <see cref="ReadOnlyEvoNumber"/> is equal to this instance.
+    /// </summary>
+    /// <param name="other">The other instance.</param>
+    /// <returns>True if equals, False otherwise.</returns>
+    public bool Equals(ReadOnlyEvoNumber other)
+    {
+        return _value.Equals(other._value) && _valueDeltaMaximum.Equals(other._valueDeltaMaximum) && _valueMaximum.Equals(other._valueMaximum) && _valueMinimum.Equals(other._valueMinimum) && OriginalValue.Equals(other.OriginalValue) && OriginalValueEvolutionDeltaMax.Equals(other.OriginalValueEvolutionDeltaMax) && ValueMaximumAndMinimumEvolutionDeltaMax.Equals(other.ValueMaximumAndMinimumEvolutionDeltaMax);
     }
 }

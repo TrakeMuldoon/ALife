@@ -1,40 +1,39 @@
-﻿namespace ALife.Core.Utility
+﻿namespace ALife.Core.Utility;
+
+/// <summary>
+/// Various helpers for lists.
+/// </summary>
+public static class ListHelpers
 {
     /// <summary>
-    /// Various helpers for lists.
+    /// Adds individuals to a starting list.
     /// </summary>
-    public static class ListHelpers
+    /// <typeparam name="T"></typeparam>
+    /// <param name="lists">The lists.</param>
+    /// <param name="individuals">The individuals.</param>
+    /// <returns>The compiled list</returns>
+    public static List<T> CompileList<T>(IEnumerable<T>[] lists, params T[] individuals)
     {
-        /// <summary>
-        /// Adds individuals to a starting list.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="lists">The lists.</param>
-        /// <param name="individuals">The individuals.</param>
-        /// <returns>The compiled list</returns>
-        public static List<T> CompileList<T>(IEnumerable<T>[] lists, params T[] individuals)
+        List<T> toReturn = individuals.ToList();
+        if(lists != null)
         {
-            List<T> toReturn = individuals.ToList();
-            if(lists != null)
+            foreach(IEnumerable<T> list in lists)
             {
-                foreach(IEnumerable<T> list in lists)
-                {
-                    toReturn.AddRange(list);
-                }
+                toReturn.AddRange(list);
             }
-            return toReturn;
         }
+        return toReturn;
+    }
 
-        /// <summary>
-        /// Adds individuals to a starting list.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="individuals">The individuals.</param>
-        /// <returns>The compiled list</returns>
-        public static List<T> CompileList<T>(params T[] individuals)
-        {
-            List<T> toReturn = individuals.ToList();
-            return toReturn;
-        }
+    /// <summary>
+    /// Adds individuals to a starting list.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="individuals">The individuals.</param>
+    /// <returns>The compiled list</returns>
+    public static List<T> CompileList<T>(params T[] individuals)
+    {
+        List<T> toReturn = individuals.ToList();
+        return toReturn;
     }
 }

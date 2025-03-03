@@ -1,13 +1,12 @@
-﻿namespace ALife.Core.Utility.Logging
+﻿namespace ALife.Core.Utility.Logging;
+
+/// <summary>
+/// Constants for logging
+/// </summary>
+public static class LoggingConstants
 {
     /// <summary>
-    /// Constants for logging
+    /// The line seperator
     /// </summary>
-    public static class LoggingConstants
-    {
-        /// <summary>
-        /// The line seperator
-        /// </summary>
-        public static readonly string LINE_SEPERATOR = "--------------------------------------------------------------------------";
-    }
+    public static readonly string LINE_SEPERATOR = "--------------------------------------------------------------------------";
 }

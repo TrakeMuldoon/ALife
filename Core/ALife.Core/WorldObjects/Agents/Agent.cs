@@ -1,7 +1,6 @@
-﻿namespace ALife.Core.WorldObjects.Agents
+﻿namespace ALife.Core.WorldObjects.Agents;
+
+public class Agent : WorldObject
 {
-    public class Agent : WorldObject
-    {
-        
-    }
+    
 }

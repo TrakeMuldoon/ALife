@@ -7,9 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Collision\" />
       <Folder Include="Scenarios\ScenarioConfigs\" />
-      <Folder Include="WorldInfoObjects\Geometry\" />
     </ItemGroup>
 
 </Project>

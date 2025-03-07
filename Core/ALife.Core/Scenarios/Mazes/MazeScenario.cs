@@ -25,7 +25,7 @@ If they go 600 turns without increasing their X value, they die without reproduc
 
 Success Cases:
 If there are less than 50 agents remaining, 6 more will be added, taken from the best agents to ever live.
-If an agent reaches the goal line, the simuluation stops."
+If an agent reaches the goal line, the simulation stops."
     )]
     public class MazeScenario : IScenario
     {

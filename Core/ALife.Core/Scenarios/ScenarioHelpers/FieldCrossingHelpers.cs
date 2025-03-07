@@ -32,8 +32,8 @@ namespace ALife.Core.Scenarios.ScenarioHelpers
             double width = Planet.World.WorldWidth;
 
             Dictionary<Zone, AgentZoneSpec> zoneSpecs = new Dictionary<Zone, AgentZoneSpec>();
-            Zone red = new Zone("Red(->Blue)", "Random", Colour.Red, new Point(0, 0), 50, height);
-            Zone blue = new Zone("Blue(->Red)", "Random", Colour.Blue, new Point(width - 50, 0), 50, height);
+            Zone red = new Zone("Red(->Blue)", "Random", Colour.Red, new Point(0, 0), 40, height);
+            Zone blue = new Zone("Blue(->Red)", "Random", Colour.Blue, new Point(width - 40, 0), 40, height);
             red.OppositeZone = blue;
             red.OrientationDegrees = 0;
             blue.OppositeZone = red;

@@ -168,7 +168,7 @@ If they reach the target zone, they will restart in their own zones, and an evol
             Planet.World.AddObjectToWorld(fr);
         }
 
-        public void GlobalEndOfTurnActions()
+        public virtual void GlobalEndOfTurnActions()
         {
             //Do Nothing
         }

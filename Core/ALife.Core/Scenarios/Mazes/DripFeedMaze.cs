@@ -25,8 +25,8 @@ If they crash into each other, or a wall, they die without reproducing.
 If they go 600 turns without increasing their X value, they die without reproducing.
 
 Success Cases:
-Whichever agents reached the furthest during the timelimit will be reproduced.
-If an agent reaches the goal line, the simuluation stops."
+Whichever agents reached the furthest during the time limit will be reproduced.
+If an agent reaches the goal line, the simulation stops."
     )]
     public class DripFeedMaze : IScenario
     {

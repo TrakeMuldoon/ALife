@@ -74,8 +74,8 @@ namespace RunningDots
             foreach(BioCell bc in theSim.agents)
             {
                 e.Graphics.FillEllipse(brushes[bc.myColour]
-                    , bc.Location.X - bc.Radius
-                    , bc.Location.Y - bc.Radius
+                    , (float)bc.Location.X - bc.Radius
+                    , (float)bc.Location.Y - bc.Radius
                     , bc.Radius * 2
                     , bc.Radius * 2);
             }    

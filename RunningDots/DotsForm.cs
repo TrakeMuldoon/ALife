@@ -27,7 +27,7 @@ namespace RunningDots
             ControlStyles.AllPaintingInWmPaint |
             ControlStyles.DoubleBuffer, true);
 
-            theSim = new Simulation(32423423, 5);
+            theSim = new Simulation(StaticRandom.NextInt(int.MaxValue), 5);
             foreach(Color c in theSim.colours)
             {
                 Brush b = new SolidBrush(c);
@@ -40,7 +40,7 @@ namespace RunningDots
 
 
             System.Windows.Forms.Timer GameTimer = new System.Windows.Forms.Timer();
-            GameTimer.Interval = 10;
+            GameTimer.Interval = 50;
             GameTimer.Tick += new EventHandler(GameTimer_Tick);
             GameTimer.Start();
 
@@ -98,8 +98,8 @@ namespace RunningDots
             foreach(BioCell bc in theSim.agents)
             {
                 e.Graphics.FillEllipse(brushes[bc.myColour]
-                    , bc.Location.X - bc.Radius
-                    , bc.Location.Y - bc.Radius
+                    , (float)bc.Location.X - bc.Radius
+                    , (float)bc.Location.Y - bc.Radius
                     , bc.Radius * 2
                     , bc.Radius * 2);
             }

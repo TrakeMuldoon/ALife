@@ -11,11 +11,11 @@ namespace RunningDots
 {
     internal class Simulation
     {
-        const int GRID_WIDTH_IN_CELLS = 40;
+        const int GRID_WIDTH_IN_CELLS = 35;
         const int GRID_HEIGHT_IN_CELLS = 25;
-        const int CELL_WIDTH = 30;
-        const int CELL_HEIGHT = 30;
-        const int CELLS_TOTAL = 1000;
+        const int CELL_WIDTH = 35;
+        const int CELL_HEIGHT = 35;
+        const int CELLS_TOTAL = 2000;
 
         public readonly List<BioCell> agents = new List<BioCell>();
         public readonly List<Color> colours = new List<Color>();
@@ -36,9 +36,17 @@ namespace RunningDots
 
             for(int i = 0; i < numColours; i++)
             {
+                List<SenseSet> senses = new List<SenseSet>()
+                {
+                    new SenseSet(25.0, colours),
+                    new SenseSet(6.0, colours),
+                    new SenseSet(2.0, colours)
+                };
+                
+
                 for(int cellIndex = 0; cellIndex < CELLS_TOTAL / numColours; cellIndex++)
                 {
-                    BioCell bc = new BioCell(colours[i], worldGrid);
+                    BioCell bc = new BioCell(colours[i], worldGrid, senses);
                     agents.Add(bc);
                 }
             }
@@ -46,9 +54,17 @@ namespace RunningDots
 
         internal void RunForegroundStep()
         {
-            Parallel.ForEach(agents, (ag) => { ag.SetTargetDirection(); });
+            //Parallel.ForEach(agents, (ag) => { ag.SetTargetDirection(); });
+            foreach(BioCell bc in agents)
+            {
+                bc.SetTargetDirection();
+            }
 
-            Parallel.ForEach(agents, (ag) => { ag.ExecuteTargetDirection(); });
+            //Parallel.ForEach(agents, (ag) => { ag.ExecuteTargetDirection(); });
+            foreach(BioCell bc in agents)
+            {
+                bc.ExecuteTargetDirection();
+            }
 
         }
 
@@ -95,25 +111,41 @@ namespace RunningDots
         {
             return myRandom.Next(maxValue);
         }
-    } 
+    }
+
+    internal class DoublePoint
+    {
+        public double X;
+        public double Y;
+        public DoublePoint(double x, double y)
+        {
+            X = x;
+            Y = y;
+        }
+    }
+    
 
     internal class BioCell
     {
-        public Point Location;
-        public Point targetLocation;
+        private static int global_cell_number = 0;
+
+        public DoublePoint Location;
+        public DoublePoint targetLocation;
         public int Radius;
         public Color myColour;
         List<SenseSet> senses;
         AAGrid theWorld;
+        public readonly int NUMBER;
 
-        public BioCell(Color newColour, AAGrid theWorld)
+        public BioCell(Color newColour, AAGrid theWorld, List<SenseSet> senses)
         {
-            senses = new List<SenseSet>();
+            this.NUMBER = global_cell_number++;
+            this.senses = senses;
             Radius = 2;
             myColour = newColour;
             this.theWorld = theWorld;
 
-            Location = new Point(StaticRandom.NextInt(theWorld.cellWidth * theWorld.gridWidthInCells - 1)
+            Location = new DoublePoint(StaticRandom.NextInt(theWorld.cellWidth * theWorld.gridWidthInCells - 1)
                                 , StaticRandom.NextInt(theWorld.cellHeight * theWorld.gridHeightInCells - 1)
                                 );
 
@@ -122,36 +154,49 @@ namespace RunningDots
 
         public void SetTargetDirection()
         {
-            double xDiff = -1;//StaticRandom.BetweenNegOneAndOne();
-            double yDiff = -1;//StaticRandom.BetweenNegOneAndOne();
+            double xDiff = 0;//StaticRandom.BetweenNegOneAndOne();
+            double yDiff = 0;//StaticRandom.BetweenNegOneAndOne();
 
-            //foreach(SenseSet sense in senses)
-            //{
-            //    List<BioCell> hits = theWorld.GetBBCollisions(Location, sense.Radius);
-            //    foreach(BioCell target in hits)
-            //    {
-            //        double multiplier = sense.Reactions[target.myColour];
+            foreach(SenseSet sense in senses)
+            {
+                List<BioCell> hits = theWorld.GetBBCollisions(Location, sense.Radius);
+                foreach(BioCell target in hits)
+                {
+                    double multiplier = sense.Reactions[target.myColour];
 
-            //        double distSquared = GetDistSquared(this, target);
-            //        if (distSquared > sense.RadiusSquared)
-            //        {
-            //            //Too far away
-            //            continue;
-            //        }
+                    double distSquared = GetDistSquared(this, target);
+                    if(distSquared > sense.RadiusSquared)
+                    {
+                        //Too far away
+                        continue;
+                    }
 
-            //        double proximity = (sense.RadiusSquared - distSquared) / sense.RadiusSquared;
+                    double proximity = (sense.RadiusSquared - distSquared) / sense.RadiusSquared;
 
-            //        double push = proximity * multiplier;
+                    double push = proximity * multiplier;
 
-            //        xDiff += (Location.X - target.Location.X) * push;
-            //        yDiff += (Location.Y - target.Location.Y) * push;
-            //    }
-            //}
+                    xDiff += (Location.X - target.Location.X) * push;
+                    yDiff += (Location.Y - target.Location.Y) * push;
+                }
+            }
 
-            int targetX = ClampValue(0, theWorld.worldWidth - 1, (int)(Location.X + xDiff));
-            int targetY = ClampValue(0, theWorld.worldHeight - 1, (int)(Location.Y + yDiff));
+            double targetX = ClampValue(0, theWorld.worldWidth - 1, Location.X + xDiff);
+            double targetY = ClampValue(0, theWorld.worldHeight - 1, Location.Y + yDiff);
 
-            targetLocation = new Point(targetX, targetY);
+            targetLocation = new DoublePoint(targetX, targetY);
+        }
+
+        private double ClampValue(double min, double max, double value)
+        {
+            if(value >= min && value <= max)
+            {
+                return value;
+            }
+            if(value < min)
+            {
+                return min;
+            }
+            return max; //this is the only option left
         }
 
         private int ClampValue(int min, int max, int value)
@@ -167,11 +212,12 @@ namespace RunningDots
             return max; //this is the only option left
         }
 
+
         private static double GetDistSquared(BioCell origin, BioCell target)
         {
             //c^2 = a^2 + b^2
-            double distSquared = Math.Pow(origin.Location.X + target.Location.X, 2) 
-                                 + Math.Pow(origin.Location.Y + target.Location.Y, 2);
+            double distSquared = Math.Pow(origin.Location.X - target.Location.X, 2) 
+                                 + Math.Pow(origin.Location.Y - target.Location.Y, 2);
             return distSquared;
         }
 
@@ -188,6 +234,17 @@ namespace RunningDots
         public readonly double Radius;
         public readonly double RadiusSquared;
         public readonly Dictionary<Color, double> Reactions = new Dictionary<Color, double>();
+
+        public SenseSet(double radius, List<Color> colors)
+        {
+            Radius = radius;
+            RadiusSquared = radius * radius;
+
+            foreach(Color c in colors)
+            {
+                Reactions.Add(c, StaticRandom.BetweenNegOneAndOne());
+            }
+        }
     }
 
     internal class AAGrid
@@ -220,7 +277,7 @@ namespace RunningDots
             }
         }
 
-        internal List<BioCell> GetBBCollisions(Point location, double radius)
+        internal List<BioCell> GetBBCollisions(DoublePoint location, double radius)
         {
             double left = location.X - radius;
             double right = location.X + radius;
@@ -240,19 +297,15 @@ namespace RunningDots
                 {
                     foreach(BioCell bc in gridCells[x,y])
                     {
-                        if(!cellList.Contains(bc))
-                        {
-                            cellList.Add(bc);
-                        }
+                        cellList.Add(bc);
                     }
                 }
             }
             return cellList.ToList();
         }
 
-        internal void InsertCellAt(BioCell cell, Point location)
+        internal void InsertCellAt(BioCell cell, DoublePoint location)
         {
-
             double left = location.X - cell.Radius;
             double right = location.X + cell.Radius;
             double top = location.Y - cell.Radius;
@@ -272,7 +325,7 @@ namespace RunningDots
             }
         }
 
-        internal void RemoveCellFrom(BioCell cell, Point location)
+        internal void RemoveCellFrom(BioCell cell, DoublePoint location)
         {
 
             double left = location.X - cell.Radius;
@@ -289,7 +342,7 @@ namespace RunningDots
             {
                 for(int y = firstBucketY; y <= lastBucketY && y < gridHeightInCells; y++)
                 {
-                    gridCells[x, y].Add(cell);
+                    gridCells[x, y].Remove(cell);
                 }
             }
         }

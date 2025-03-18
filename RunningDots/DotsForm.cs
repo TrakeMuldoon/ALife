@@ -6,14 +6,6 @@ namespace RunningDots
 {
     public partial class DotsForm : Form
     {
-        Bitmap Backbuffer;
-
-        const int BlackBallAxisSpeed = 2;
-
-        Point BlackBallPos = new Point(30, 30);
-        Point BlackBallSpeed = new Point(BlackBallAxisSpeed, BlackBallAxisSpeed);
-        const int BlackBallSize = 50;
-
         Rectangle GridRectangle;
         Simulation theSim;
         Dictionary<Color, Brush> brushes = new Dictionary<Color, Brush>();
@@ -44,8 +36,6 @@ namespace RunningDots
             GameTimer.Tick += new EventHandler(GameTimer_Tick);
             GameTimer.Start();
 
-            this.ResizeEnd += DotsForm_CreateBackBuffer;
-            this.Load += new EventHandler(DotsForm_CreateBackBuffer);
             this.Paint += new PaintEventHandler(DotsForm_Paint);
 
             this.KeyDown += new KeyEventHandler(DotsForm_KeyDown);
@@ -53,14 +43,6 @@ namespace RunningDots
 
         void DotsForm_KeyDown(object? sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Left)
-                BlackBallSpeed.X = -BlackBallAxisSpeed;
-            else if(e.KeyCode == Keys.Right)
-                BlackBallSpeed.X = BlackBallAxisSpeed;
-            else if(e.KeyCode == Keys.Up)
-                BlackBallSpeed.Y = -BlackBallAxisSpeed; // Y axis is downwards so -ve is up.
-            else if(e.KeyCode == Keys.Down)
-                BlackBallSpeed.Y = BlackBallAxisSpeed;
         }
 
         private float PenWidth = 3;
@@ -71,7 +53,6 @@ namespace RunningDots
 
         private void BioRunner_Paint(object? sender, PaintEventArgs e)
         {
-
         }
 
         void DotsForm_Paint(object? sender, PaintEventArgs e)
@@ -103,40 +84,15 @@ namespace RunningDots
                     , bc.Radius * 2
                     , bc.Radius * 2);
             }
-
-            //if(Backbuffer != null)
-            //{
-            //    e.Graphics.DrawImageUnscaled(Backbuffer, Point.Empty);
-            //}
-        }
-
-        void DotsForm_CreateBackBuffer(object? sender, EventArgs e)
-        {
-            //if(Backbuffer != null)
-            //    Backbuffer.Dispose();
-
-            //Backbuffer = new Bitmap(ClientSize.Width, ClientSize.Height);
         }
 
         void Draw()
         {
-            //if(Backbuffer != null)
-            //{
-            //    using(var g = Graphics.FromImage(Backbuffer))
-            //    {
-            //        g.Clear(Color.White);
-            //        g.FillEllipse(Brushes.Black, BlackBallPos.X - BlackBallSize / 2, BlackBallPos.Y - BlackBallSize / 2, BlackBallSize, BlackBallSize);
-            //    }
 
-            //    Invalidate();
-            //}
         }
 
         void GameTimer_Tick(object? sender, EventArgs e)
         {
-            BlackBallPos.X += BlackBallSpeed.X;
-            BlackBallPos.Y += BlackBallSpeed.Y;
-
             theSim.RunForegroundStep();
             Invalidate();
             Draw();

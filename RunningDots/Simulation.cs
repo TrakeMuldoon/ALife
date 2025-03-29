@@ -40,7 +40,7 @@ namespace RunningDots
                 List<SenseSet> senses = new List<SenseSet>()
                 {
                     new SenseSet(50.0, colours),
-                    new SenseSet(8.0, colours)
+                    //new SenseSet(8.0, colours)
                     //new SenseSet(2.0, colours)
                 };
                 
@@ -149,6 +149,8 @@ namespace RunningDots
         AAGrid theWorld;
         public readonly int NUMBER;
         public Boolean collision = false;
+        private const double WALK_MAX = 15;
+        private readonly double WALK_MAX_2 = WALK_MAX * WALK_MAX;
 
         public BioCell(Color newColour, AAGrid theWorld, List<SenseSet> senses)
         {
@@ -167,8 +169,8 @@ namespace RunningDots
 
         public void SetTargetDirection()
         {
-            double xDiff = StaticRandom.BetweenNegOneAndOne() / 100;
-            double yDiff = StaticRandom.BetweenNegOneAndOne() / 100;
+            double xDiff = StaticRandom.BetweenNegOneAndOne() - StaticRandom.BetweenNegOneAndOne();
+            double yDiff = StaticRandom.BetweenNegOneAndOne();
 
             foreach(SenseSet sense in senses)
             {
@@ -184,7 +186,7 @@ namespace RunningDots
                         continue;
                     }
 
-                    double proximity = (sense.RadiusSquared - distSquared) / sense.RadiusSquared;
+                    double proximity = (sense.RadiusSquared - distSquared) / (sense.RadiusSquared);
 
                     double push = proximity * multiplier;
 
@@ -192,6 +194,19 @@ namespace RunningDots
                     yDiff += (Location.Y - target.Location.Y) * push;
                 }
             }
+
+            double walkDistSq = (xDiff * xDiff) + (yDiff * yDiff);
+            if (walkDistSq > WALK_MAX_2)
+            {
+                double ratio = walkDistSq / WALK_MAX_2;
+
+                xDiff = xDiff * WALK_MAX_2 / walkDistSq;
+                yDiff = yDiff * WALK_MAX_2 / walkDistSq;
+            }
+            
+
+            //xDiff = ClampValue(-30, 30, xDiff);
+            //yDiff = ClampValue(-30, 30, yDiff);
 
             double targetX = ClampValue(0, theWorld.worldWidth - 1, Location.X + xDiff);
             double targetY = ClampValue(0, theWorld.worldHeight - 1, Location.Y + yDiff);

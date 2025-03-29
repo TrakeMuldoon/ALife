@@ -40,7 +40,7 @@ namespace RunningDots
                 List<SenseSet> senses = new List<SenseSet>()
                 {
                     new SenseSet(50.0, colours),
-                    //new SenseSet(8.0, colours)
+                    new SenseSet(8.0, colours)
                     //new SenseSet(2.0, colours)
                 };
                 
@@ -149,7 +149,7 @@ namespace RunningDots
         AAGrid theWorld;
         public readonly int NUMBER;
         public Boolean collision = false;
-        private const double WALK_MAX = 15;
+        private const double WALK_MAX = 12;
         private readonly double WALK_MAX_2 = WALK_MAX * WALK_MAX;
 
         public BioCell(Color newColour, AAGrid theWorld, List<SenseSet> senses)
@@ -203,10 +203,6 @@ namespace RunningDots
                 xDiff = xDiff * WALK_MAX_2 / walkDistSq;
                 yDiff = yDiff * WALK_MAX_2 / walkDistSq;
             }
-            
-
-            //xDiff = ClampValue(-30, 30, xDiff);
-            //yDiff = ClampValue(-30, 30, yDiff);
 
             double targetX = ClampValue(0, theWorld.worldWidth - 1, Location.X + xDiff);
             double targetY = ClampValue(0, theWorld.worldHeight - 1, Location.Y + yDiff);
@@ -255,10 +251,13 @@ namespace RunningDots
             //check if collision, move only halfway.
             if(collision)
             {
-                double newX = (this.Location.X + this.targetLocation.X) / 2;
-                double newY = (this.Location.Y + this.targetLocation.Y) / 2;
-                DoublePoint halfway = new DoublePoint(newX, newY);
-                this.targetLocation = halfway;
+                double deltaXShrink = (this.Location.X - this.targetLocation.X) / 10;
+                double deltaYShrink = (this.Location.Y - this.targetLocation.Y) / 10;
+
+                double newX = this.Location.X - deltaXShrink;
+                double newY = this.Location.Y - deltaYShrink;
+                DoublePoint smallMove = new DoublePoint(newX, newY);
+                this.targetLocation = smallMove;
             }    
             theWorld.InsertCellAt(this, this.targetLocation);
             this.Location = this.targetLocation;
@@ -270,12 +269,18 @@ namespace RunningDots
             List<BioCell> hits = futureGrid.GetBCsInRange(targetLocation, Radius);
             foreach(BioCell target in hits)
             {
+                if(this == target)
+                {
+                    //me!
+                    continue;
+                }
                 double distSquared = GetDistSquared(this.targetLocation, target.targetLocation);
                 if(distSquared > Radius * Radius)
                 {
                     //Too far away
                     continue;
                 }
+
                 collision = true;
                 return;
             }

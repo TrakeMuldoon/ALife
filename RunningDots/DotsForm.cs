@@ -9,6 +9,7 @@ namespace RunningDots
         Rectangle GridRectangle;
         Simulation theSim;
         Dictionary<Color, Brush> brushes = new Dictionary<Color, Brush>();
+        const int GAME_SPEED = 50;
 
         public DotsForm()
         {
@@ -32,7 +33,8 @@ namespace RunningDots
 
 
             System.Windows.Forms.Timer GameTimer = new System.Windows.Forms.Timer();
-            GameTimer.Interval = 60;
+            GameTimer.Interval = GAME_SPEED
+                ;
             GameTimer.Tick += new EventHandler(GameTimer_Tick);
             GameTimer.Start();
 

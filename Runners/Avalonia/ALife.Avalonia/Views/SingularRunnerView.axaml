@@ -136,7 +136,7 @@
           <TextBlock VerticalAlignment="Center" Margin="3, 3, 3, 3">SenseBB:</TextBlock>
           <CheckBox Name="AgentSenseBBBox" IsChecked ="{Binding ShowSenseBoundingBoxes, Mode=TwoWay}" Margin="3, 3, 3, 3" />
         </StackPanel>
-        <CheckBox x:Name="ShowGeneology" Checked="ShowGeneology_Checked" Margin="3, 3, 3, 3">Show Ancestry</CheckBox>
+        <CheckBox x:Name="ShowGeneology" IsCheckedChanged="ShowGeneology_Checked" Margin="3, 3, 3, 3">Show Ancestry</CheckBox>
       </StackPanel>
     </StackPanel>
 

@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sort -t: -k2 -rn)",
+      "Bash(xargs wc *)",
+      "Read(//mnt/c/Users/ricky/RiderProjects/**)",
+      "Bash(dotnet build *)",
+      "Bash(dotnet package *)",
+      "Bash(powershell -Command 'Add-Type -Path '\\\\''C:/Users/ricky/.nuget/packages/reactiveui.avalonia/12.0.1/lib/net10.0/ReactiveUI.Avalonia.dll'\\\\''; [System.AppDomain]::CurrentDomain.GetAssemblies\\(\\) | Where-Object { $_.GetName\\(\\).Name -eq '\\\\''ReactiveUI.Avalonia'\\\\'' } | ForEach-Object { $_.GetTypes\\(\\) | ForEach-Object { $_.FullName } }')",
+      "Bash(dotnet run *)",
+      "Bash(dotnet clean *)",
+      "Bash(grep -v \"^$\\\\|NU1510\")"
+    ]
+  }
+}

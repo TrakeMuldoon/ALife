@@ -173,7 +173,10 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
             _renderer.FillAARectangle(new ALPoint(0, 0), new ALPoint(p.WorldWidth, p.WorldHeight), Colour.PapayaWhip);
             _simulation.Render(_renderer);
             // TODO: for _whatever_ reason, this updates the FPS item, but _not_ the textblock...
-            _vm.FramesPerSecond = _simulation.FpsCounter.AverageFramesPerTicks;
+            if(_vm != null)
+            {
+                _vm.FramesPerSecond = _simulation.FpsCounter.AverageFramesPerTicks;
+            }
 
             if(special != null)
             {
@@ -224,7 +227,9 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
             {
                 if(!_simulation.IsInitialized)
                 {
-                    _vm = (SingularRunnerViewModel)Parent.DataContext;
+                    var vm = Parent?.DataContext as SingularRunnerViewModel;
+                    if(vm == null) return;
+                    _vm = vm;
                     _simulation.InitializeSimulation();
                     _renderer = new AvaloniaRenderer();
 
@@ -234,8 +239,11 @@ namespace ALife.Avalonia.Controls.SingularRunnerControls
                 else
                 {
                     ExecuteTick();
-                    _vm.TicksPerSecond = Planet.World.SimulationPerformance.AverageFramesPerTicks;
-                    _vm.TurnCount = TurnCount;
+                    if(_vm != null)
+                    {
+                        _vm.TicksPerSecond = Planet.World.SimulationPerformance.AverageFramesPerTicks;
+                        _vm.TurnCount = TurnCount;
+                    }
                     UpdateZoneInfo();
                     UpdateGeneology();
                 }

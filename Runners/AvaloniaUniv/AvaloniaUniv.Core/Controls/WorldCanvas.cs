@@ -106,16 +106,16 @@ public class WorldCanvas : Control
         TurnCount = Planet.World.Turns;
     }
 
-    public void SetSimulationSpeed(int speed)
+    public void SetSimulationSpeed(double speed)
     {
         if (Planet.HasWorld) Planet.World.SimulationPerformance?.ClearBuffer();
         _simulation.FpsCounter?.ClearBuffer();
 
         Timer?.Stop();
-        Timer = new DispatcherTimer
-        {
-            Interval = TimeSpan.FromSeconds(1.0 / Math.Max(1, speed))
-        };
+        var interval = double.IsInfinity(speed)
+            ? TimeSpan.FromMilliseconds(1)
+            : TimeSpan.FromSeconds(1.0 / speed);
+        Timer = new DispatcherTimer { Interval = interval };
         Timer.Tick += OnTimerTick;
         Timer.Start();
     }

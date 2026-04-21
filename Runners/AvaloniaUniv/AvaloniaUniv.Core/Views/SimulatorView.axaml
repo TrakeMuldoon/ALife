@@ -139,14 +139,40 @@
                       HorizontalContentAlignment="Center"
                       ToolTip.Tip="Advance one turn">1 Turn</Button>
             </StackPanel>
-            <WrapPanel Orientation="Horizontal">
-              <Button Name="Speed2" Tag="2" Click="Speed_Click" Margin="2" Width="44" HorizontalContentAlignment="Center">2</Button>
-              <Button Name="Speed10" Tag="10" Click="Speed_Click" Margin="2" Width="44" HorizontalContentAlignment="Center">10</Button>
-              <Button Name="Speed30" Tag="30" Click="Speed_Click" Margin="2" Width="44" HorizontalContentAlignment="Center">30</Button>
-              <Button Name="Speed60" Tag="60" Click="Speed_Click" Margin="2" Width="44" HorizontalContentAlignment="Center">60</Button>
-              <Button Name="Speed120" Tag="120" Click="Speed_Click" Margin="2" Width="44" HorizontalContentAlignment="Center">120</Button>
-              <Button Name="SpeedMax" Click="SpeedMax_Click" Margin="2" Width="44" HorizontalContentAlignment="Center">∞</Button>
-            </WrapPanel>
+            <StackPanel Spacing="2">
+              <DockPanel>
+                <TextBlock DockPanel.Dock="Left" Text="Speed:" Foreground="#AAA" FontSize="11" VerticalAlignment="Center"/>
+                <TextBlock Name="SpeedLabel" DockPanel.Dock="Right" Text="60x"
+                           FontFamily="Consolas" FontSize="11" Foreground="White"
+                           HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="36"/>
+              </DockPanel>
+              <Slider Name="SpeedSlider"
+                      Minimum="0" Maximum="8" Value="6"
+                      IsSnapToTickEnabled="True" TickFrequency="1"
+                      ValueChanged="SpeedSlider_ValueChanged"/>
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="¼" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Text="½" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="2" Text="1" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="3" Text="2" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="4" Text="10" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="5" Text="30" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="6" Text="60" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="7" Text="120" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="8" Text="∞" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+              </Grid>
+            </StackPanel>
             <TextBlock Text="Fast Forward:" Foreground="#AAA" FontSize="11"/>
             <StackPanel Orientation="Horizontal" Spacing="4">
               <TextBox Name="FFTurns" Text="{Binding FastForwardTicks}"
@@ -244,7 +270,7 @@
                     DropDownOpened="AgentComboBox_DropDownOpened">
             <ComboBox.ItemTemplate>
               <DataTemplate>
-                <TextBlock Text="{Binding IndividualLabel}" FontFamily="Consolas" FontSize="11"/>
+                <TextBlock Text="{Binding IndividualLabel}" FontFamily="Consolas" FontSize="11" Foreground="#CCC"/>
               </DataTemplate>
             </ComboBox.ItemTemplate>
           </ComboBox>

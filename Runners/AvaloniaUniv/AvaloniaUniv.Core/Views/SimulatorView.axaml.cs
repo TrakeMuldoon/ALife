@@ -70,17 +70,15 @@ public partial class SimulatorView : UserControl, IDisposable
         TheWorldCanvas.InvalidateVisual();
     }
 
-    public void Speed_Click(object sender, RoutedEventArgs args)
-    {
-        if (sender is Button b && int.TryParse(b.Tag?.ToString(), out int speed))
-        {
-            TheWorldCanvas.SetSimulationSpeed(speed);
-        }
-    }
+    private static readonly double[] SpeedValues = { 0.25, 0.5, 1.0, 2.0, 10.0, 30.0, 60.0, 120.0, double.PositiveInfinity };
+    private static readonly string[] SpeedLabels = { "¼x", "½x", "1x", "2x", "10x", "30x", "60x", "120x", "∞" };
 
-    public void SpeedMax_Click(object sender, RoutedEventArgs args)
+    public void SpeedSlider_ValueChanged(object sender, Avalonia.Controls.Primitives.RangeBaseValueChangedEventArgs args)
     {
-        TheWorldCanvas.SetSimulationSpeed((int)SimulationSpeed.VeryVeryVeryFast);
+        int index = (int)Math.Round(args.NewValue);
+        index = Math.Clamp(index, 0, SpeedValues.Length - 1);
+        TheWorldCanvas.SetSimulationSpeed(SpeedValues[index]);
+        SpeedLabel.Text = SpeedLabels[index];
     }
 
     public void FF_Click(object sender, RoutedEventArgs args)

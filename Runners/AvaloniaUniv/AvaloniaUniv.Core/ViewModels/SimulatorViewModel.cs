@@ -3,6 +3,8 @@ using ALife.Core.WorldObjects.Agents.Brains;
 using ALife.Core.WorldObjects.Agents.Brains.BehaviourBrains;
 using ReactiveUI;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace AvaloniaUniv.Core.ViewModels;
@@ -24,6 +26,7 @@ public class SimulatorViewModel : ViewModelBase
     private string _zoneInfo = string.Empty;
     private bool _showGeneology;
     private Agent? _selectedAgent;
+    private readonly ObservableCollection<Agent> _aliveAgents = new();
 
     public SimulatorViewModel()
     {
@@ -125,6 +128,17 @@ public class SimulatorViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _zoneInfo, value);
     }
 
+    public ObservableCollection<Agent> AliveAgents => _aliveAgents;
+
+    public string BrainViewerTitle => _selectedAgent != null ? $"Brain: {AgentName}" : "Brain Viewer";
+
+    public void UpdateAliveAgents(IEnumerable<Agent> agents)
+    {
+        _aliveAgents.Clear();
+        foreach (var a in agents)
+            _aliveAgents.Add(a);
+    }
+
     public Agent? SelectedAgent
     {
         get => _selectedAgent;
@@ -139,6 +153,7 @@ public class SimulatorViewModel : ViewModelBase
             this.RaisePropertyChanged(nameof(HasSelectedAgent));
             this.RaisePropertyChanged(nameof(HasNeuralBrain));
             this.RaisePropertyChanged(nameof(HasBehaviourBrain));
+            this.RaisePropertyChanged(nameof(BrainViewerTitle));
         }
     }
 

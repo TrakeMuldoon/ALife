@@ -1,5 +1,9 @@
+using ALife.Core.WorldObjects.Agents;
 using ALife.Rendering;
+using System.Linq;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using AvaloniaUniv.Core.ViewModels;
@@ -14,6 +18,7 @@ public partial class SimulatorView : UserControl, IDisposable
     private CancellationTokenSource _cts = new();
     private Task? _perfUpdateTask;
     private bool _disposed;
+    private BrainViewerWindow? _brainViewer;
 
     public SimulatorView()
     {
@@ -103,12 +108,49 @@ public partial class SimulatorView : UserControl, IDisposable
         if (Vm != null) Vm.ShowGeneology = show;
     }
 
+    public void PopOutBrain_Click(object sender, RoutedEventArgs args)
+    {
+        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime)
+            return;
+
+        if (_brainViewer?.IsVisible == true)
+        {
+            _brainViewer.Activate();
+            return;
+        }
+
+        _brainViewer = new BrainViewerWindow { DataContext = Vm };
+        _brainViewer.Closed += (_, _) => _brainViewer = null;
+        _brainViewer.Show();
+    }
+
+    private void AgentComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (sender is not ComboBox cb) return;
+        if (cb.SelectedItem is not Agent agent) return;
+
+        Vm.SelectedAgent = agent;
+        TheWorldCanvas.SetSelectedAgent(agent);
+    }
+
+    private void AgentComboBox_DropDownOpened(object sender, EventArgs e)
+    {
+        if (!ALife.Core.Planet.HasWorld) return;
+        var agents = ALife.Core.Planet.World.AllActiveObjects
+            .OfType<Agent>()
+            .Where(ag => ag.Alive);
+        Vm.UpdateAliveAgents(agents);
+        if (sender is ComboBox cb)
+            cb.SelectedItem = Vm.SelectedAgent;
+    }
+
     public void Dispose()
     {
         if (!_disposed)
         {
             _cts.Cancel();
             TheWorldCanvas.Timer?.Stop();
+            _brainViewer?.Close();
             _disposed = true;
         }
         GC.SuppressFinalize(this);

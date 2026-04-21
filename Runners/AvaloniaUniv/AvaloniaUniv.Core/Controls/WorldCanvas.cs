@@ -52,6 +52,7 @@ public class WorldCanvas : Control
     public WorldCanvas()
     {
         SetSimulationSpeed((int)SimulationSpeed.Normal);
+        Focusable = true;
     }
 
     public bool Enabled
@@ -83,6 +84,14 @@ public class WorldCanvas : Control
     }
 
     public WorldObject? SelectedObject => _special;
+
+    public void SetSelectedAgent(Agent? agent)
+    {
+        _special = agent;
+        _specialCounter = 0;
+        _simulation.SpecialObject = agent;
+        InvalidateVisual();
+    }
 
     public void SetGeneologyVisible(bool show)
     {
@@ -167,8 +176,29 @@ public class WorldCanvas : Control
         }
     }
 
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        base.OnKeyDown(e);
+        if (e.Key == Key.X)
+        {
+            _simulation.ViewPast = true;
+            InvalidateVisual();
+        }
+    }
+
+    protected override void OnKeyUp(KeyEventArgs e)
+    {
+        base.OnKeyUp(e);
+        if (e.Key == Key.X)
+        {
+            _simulation.ViewPast = false;
+            InvalidateVisual();
+        }
+    }
+
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
+        Focus();
         if (!_simulation.IsInitialized) return;
         var pos = e.GetPosition(this);
         var bb = new BoundingBox(pos.X - 5, pos.Y - 5, pos.X + 5, pos.Y + 5);
@@ -219,6 +249,9 @@ public class WorldCanvas : Control
         _vm.AgentsActive = agentCount;
         _vm.GenesActive = geneCount.Count;
 
+        if (_vm.SelectedAgent != null && !_vm.SelectedAgent.Alive)
+            _vm.SelectedAgent = null;
+
         if (zoneCount.Count > 0)
         {
             int maxNameLen = zoneCount.Keys.Max(k => k.Length);
@@ -235,5 +268,6 @@ public class WorldCanvas : Control
     {
         if (_vm == null) return;
         _vm.SelectedAgent = _special as Agent;
+        _simulation.SpecialObject = _special;
     }
 }

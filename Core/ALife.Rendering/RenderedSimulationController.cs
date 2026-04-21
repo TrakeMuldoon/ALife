@@ -42,6 +42,16 @@ namespace ALife.Rendering
         public List<LayerUISettings> Layers = LayerUISettings.GetDefaultSettings();
 
         /// <summary>
+        /// When true, renders the world as the selected object saw it at its execution turn.
+        /// </summary>
+        public bool ViewPast { get; set; }
+
+        /// <summary>
+        /// The object whose execution order determines the past-state snapshot.
+        /// </summary>
+        public WorldObject? SpecialObject { get; set; }
+
+        /// <summary>
         /// Renders the specified renderer.
         /// </summary>
         /// <param name="renderer">The renderer.</param>
@@ -84,31 +94,16 @@ namespace ALife.Rendering
                     return;
                 }
 
-                /* TODO restore this code
-                 *
-                if(special != null && viewPast)
+                if(ViewPast && SpecialObject != null)
                 {
-                    //This is for when the 'x' key is depressed, it means we view what the selected agent saw when it's
-                    //turn happened.
-                    //Because each agent executes in order, any agents BEFORE the execution order of the selected agent, are in the correct
-                    //spots, but any agents with a HIGHER execution order will have been moved.
-                    //So they must be drawn in their previous location.
-                    RenderLogic.DrawPastState(ui, aui, renderer, special.ExecutionOrder);
+                    RenderLogic.DrawPastState(ui, aui, renderer, SpecialObject.ExecutionOrder);
                 }
                 else
                 {
-                    //Default Draw Normal case
                     foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
                     {
                         RenderLogic.DrawWorldObject(wo, ui, aui, renderer);
                     }
-                }
-                 */
-
-                //Default Draw Normal case
-                foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
-                {
-                    RenderLogic.DrawWorldObject(wo, ui, aui, renderer);
                 }
             }
             catch(Exception)

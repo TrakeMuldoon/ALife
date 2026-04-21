@@ -235,9 +235,23 @@
                        Foreground="White" LetterSpacing="1"/>
           </Border>
 
+          <!-- Agent selector combobox -->
+          <ComboBox Name="AgentSelectorComboBox"
+                    ItemsSource="{Binding AliveAgents}"
+                    HorizontalAlignment="Stretch"
+                    PlaceholderText="Select an agent..."
+                    SelectionChanged="AgentComboBox_SelectionChanged"
+                    DropDownOpened="AgentComboBox_DropDownOpened">
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding IndividualLabel}" FontFamily="Consolas" FontSize="11"/>
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+
           <!-- No selection -->
           <TextBlock Name="NoSelectionText"
-                     Text="Click on an agent in the world to inspect it."
+                     Text="Click an agent in the world or select one above."
                      TextWrapping="Wrap" Foreground="#666" FontStyle="Italic" FontSize="11"
                      IsVisible="{Binding !HasSelectedAgent}"/>
 
@@ -276,7 +290,18 @@
 
             <Border Background="#2D2D30" CornerRadius="3" Padding="6,4">
               <StackPanel Spacing="2">
-                <TextBlock Text="BRAIN" FontSize="9" Foreground="#0078D4" LetterSpacing="1"/>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                  </Grid.ColumnDefinitions>
+                  <TextBlock Grid.Column="0" Text="BRAIN" FontSize="9" Foreground="#0078D4"
+                             LetterSpacing="1" VerticalAlignment="Center"/>
+                  <Button Grid.Column="1" Name="PopOutBrainButton" Click="PopOutBrain_Click"
+                          FontSize="10" Padding="4,1"
+                          IsVisible="{Binding HasNeuralBrain}"
+                          ToolTip.Tip="Open brain in a larger window">⤢ Pop Out</Button>
+                </Grid>
                 <TextBlock Text="{Binding AgentBrain}"
                            FontFamily="Consolas" FontSize="10" Foreground="#CCC"
                            TextWrapping="Wrap"

@@ -38,8 +38,17 @@ public class AvaloniaRenderer : AbstractRenderer
         if (agent.LivingAncestor == null) return;
         var start = ToAvPoint(agent.Shape.CentrePoint);
         var end = ToAvPoint(agent.LivingAncestor.Shape.CentrePoint);
-        var pen = new Pen(new SolidColorBrush(ToAvColor(agent.Shape.Colour), 0.6), 1.0);
-        Context.DrawLine(pen, start, end);
+        var gradient = new LinearGradientBrush
+        {
+            StartPoint = new RelativePoint(start, RelativeUnit.Absolute),
+            EndPoint   = new RelativePoint(end,   RelativeUnit.Absolute),
+            GradientStops = new GradientStops
+            {
+                new GradientStop(Colors.Red,   0),
+                new GradientStop(Colors.Black, 1)
+            }
+        };
+        Context.DrawLine(new Pen(gradient, 1.0), start, end);
     }
 
     public override void DrawCircle(Point centerPoint, float radius, Colour color)
@@ -73,12 +82,14 @@ public class AvaloniaRenderer : AbstractRenderer
     {
         var brush = new SolidColorBrush(ToAvColor(color));
         var geo = new PathGeometry();
-        var ctx = geo.Open();
-        ctx.BeginFigure(ToAvPoint(topLeft), true);
-        ctx.LineTo(ToAvPoint(topRight));
-        ctx.LineTo(ToAvPoint(bottomRight));
-        ctx.LineTo(ToAvPoint(bottomLeft));
-        ctx.EndFigure(true);
+        using (var ctx = geo.Open())
+        {
+            ctx.BeginFigure(ToAvPoint(topLeft), true);
+            ctx.LineTo(ToAvPoint(topRight));
+            ctx.LineTo(ToAvPoint(bottomRight));
+            ctx.LineTo(ToAvPoint(bottomLeft));
+            ctx.EndFigure(true);
+        }
         Context.DrawGeometry(brush, _blackPen, geo);
     }
 
@@ -101,11 +112,14 @@ public class AvaloniaRenderer : AbstractRenderer
         var brush = new SolidColorBrush(ToAvColor(sector.Colour));
         var pen = new Pen(brush);
         var geo = new PathGeometry();
-        var ctx = geo.Open();
-        ctx.BeginFigure(ToAvPoint(sector.CentrePoint), fillIn);
-        ctx.LineTo(ToAvPoint(sector.LeftPoint));
-        ctx.ArcTo(ToAvPoint(sector.RightPoint), new AvSize(sector.Radius, sector.Radius), 0, false, SweepDirection.Clockwise);
-        ctx.EndFigure(true);
+        bool isLargeArc = sector.SweepAngle.Degrees > 180.0;
+        using (var ctx = geo.Open())
+        {
+            ctx.BeginFigure(ToAvPoint(sector.CentrePoint), fillIn);
+            ctx.LineTo(ToAvPoint(sector.LeftPoint));
+            ctx.ArcTo(ToAvPoint(sector.RightPoint), new AvSize(sector.Radius, sector.Radius), 0, isLargeArc, SweepDirection.Clockwise);
+            ctx.EndFigure(true);
+        }
         Context.DrawGeometry(fillIn ? brush : null, pen, geo);
     }
 

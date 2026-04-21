@@ -147,7 +147,7 @@
                            HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="36"/>
               </DockPanel>
               <Slider Name="SpeedSlider"
-                      Minimum="0" Maximum="8" Value="6"
+                      Minimum="0" Maximum="8" Value="4"
                       IsSnapToTickEnabled="True" TickFrequency="1"
                       ValueChanged="SpeedSlider_ValueChanged"/>
               <Grid>
@@ -162,14 +162,14 @@
                   <ColumnDefinition Width="*"/>
                   <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="¼" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Column="1" Text="½" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Column="2" Text="1" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Column="3" Text="2" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Column="4" Text="10" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Column="5" Text="30" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Column="6" Text="60" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Column="7" Text="120" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="0" Text="1" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Text="2" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="2" Text="10" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="3" Text="30" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="4" Text="60" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="5" Text="90" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="6" Text="120" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="7" Text="240" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
                 <TextBlock Grid.Column="8" Text="∞" FontSize="9" Foreground="#666" HorizontalAlignment="Center"/>
               </Grid>
             </StackPanel>
@@ -180,6 +180,31 @@
               <Button Name="FFButton" Click="FF_Click" HorizontalContentAlignment="Center">
                 ⏩ Skip
               </Button>
+            </StackPanel>
+          </StackPanel>
+        </Border>
+
+        <!-- Zoom -->
+        <Border Background="#2D2D30" CornerRadius="4" Padding="8,6">
+          <StackPanel Spacing="4">
+            <TextBlock Text="ZOOM" FontSize="10" FontWeight="Bold"
+                       Foreground="#0078D4" LetterSpacing="1"/>
+            <DockPanel>
+              <TextBlock DockPanel.Dock="Left" Text="Level:" Foreground="#AAA" FontSize="11" VerticalAlignment="Center"/>
+              <TextBlock Name="ZoomLabel" DockPanel.Dock="Right" Text="1.00x"
+                         FontFamily="Consolas" FontSize="11" Foreground="White"
+                         HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="50"/>
+            </DockPanel>
+            <StackPanel Orientation="Horizontal" Spacing="4">
+              <Button Name="ZoomOutButton" Click="ZoomOut_Click" Width="32"
+                      HorizontalContentAlignment="Center"
+                      ToolTip.Tip="Zoom out">-</Button>
+              <Button Name="ZoomInButton" Click="ZoomIn_Click" Width="32"
+                      HorizontalContentAlignment="Center"
+                      ToolTip.Tip="Zoom in">+</Button>
+              <Button Name="ZoomResetButton" Click="ZoomReset_Click" Width="78"
+                      HorizontalContentAlignment="Center"
+                      ToolTip.Tip="Reset zoom and pan">Reset</Button>
             </StackPanel>
           </StackPanel>
         </Border>

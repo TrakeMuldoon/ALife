@@ -28,6 +28,8 @@ public partial class SimulatorView : UserControl, IDisposable
         LayersList.ItemsSource = TheWorldCanvas.Simulation.Layers;
         AgentUI.DataContext = TheWorldCanvas.Simulation.AgentUiSettings;
 
+        ZoomBorder.ZoomChanged += (_, _) => UpdateZoomLabel();
+
         SetRunState(true);
 
         _perfUpdateTask = Task.Run(() => UpdatePerfLoop(_cts.Token));
@@ -70,8 +72,8 @@ public partial class SimulatorView : UserControl, IDisposable
         TheWorldCanvas.InvalidateVisual();
     }
 
-    private static readonly double[] SpeedValues = { 0.25, 0.5, 1.0, 2.0, 10.0, 30.0, 60.0, 120.0, double.PositiveInfinity };
-    private static readonly string[] SpeedLabels = { "¼x", "½x", "1x", "2x", "10x", "30x", "60x", "120x", "∞" };
+    private static readonly double[] SpeedValues = { 1.0, 2.0, 10.0, 30.0, 60.0, 90.0, 120.0, 240.0, double.PositiveInfinity };
+    private static readonly string[] SpeedLabels = { "1x", "2x", "10x", "30x", "60x", "90x", "120x", "240x", "∞" };
 
     public void SpeedSlider_ValueChanged(object sender, Avalonia.Controls.Primitives.RangeBaseValueChangedEventArgs args)
     {
@@ -79,6 +81,29 @@ public partial class SimulatorView : UserControl, IDisposable
         index = Math.Clamp(index, 0, SpeedValues.Length - 1);
         TheWorldCanvas.SetSimulationSpeed(SpeedValues[index]);
         SpeedLabel.Text = SpeedLabels[index];
+    }
+
+    public void ZoomIn_Click(object sender, RoutedEventArgs args)
+    {
+        ZoomBorder.ZoomIn();
+        UpdateZoomLabel();
+    }
+
+    public void ZoomOut_Click(object sender, RoutedEventArgs args)
+    {
+        ZoomBorder.ZoomOut();
+        UpdateZoomLabel();
+    }
+
+    public void ZoomReset_Click(object sender, RoutedEventArgs args)
+    {
+        ZoomBorder.ResetMatrix();
+        UpdateZoomLabel();
+    }
+
+    private void UpdateZoomLabel()
+    {
+        ZoomLabel.Text = $"{ZoomBorder.ZoomX:F2}x";
     }
 
     public void FF_Click(object sender, RoutedEventArgs args)

@@ -1,0 +1,298 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+             xmlns:paz="using:Avalonia.Controls.PanAndZoom"
+             xmlns:controls="using:AvaloniaUniv.Core.Controls"
+             xmlns:vm="clr-namespace:AvaloniaUniv.Core.ViewModels"
+             x:Class="AvaloniaUniv.Core.Views.SimulatorView"
+             x:CompileBindings="False">
+  <Design.DataContext>
+    <vm:SimulatorViewModel />
+  </Design.DataContext>
+
+  <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Grid.ColumnDefinitions>
+      <!-- World canvas -->
+      <ColumnDefinition Width="1440*" MinWidth="400" />
+      <!-- Splitter -->
+      <ColumnDefinition Width="5" MinWidth="5" MaxWidth="5" />
+      <!-- Controls panel -->
+      <ColumnDefinition Width="260*" MinWidth="120" />
+      <!-- Splitter -->
+      <ColumnDefinition Width="5" MinWidth="5" MaxWidth="5" />
+      <!-- Agent details panel -->
+      <ColumnDefinition Width="220*" MinWidth="180" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="38" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <!-- ── Top bar ── -->
+    <Border Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0"
+            Background="#1A3A5C" Padding="8,0">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" Text="{Binding ScenarioLabel}"
+                   FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" Foreground="White"/>
+        <TextBlock Grid.Column="1" Name="PerformanceLabel"
+                   FontFamily="Consolas" FontSize="12" VerticalAlignment="Center"
+                   Margin="12,0" Foreground="#DDD"
+                   ToolTip.Tip="TPS = turns per second  |  FPS = frames per second"/>
+        <Button Grid.Column="2" Name="ReturnToLauncher" Click="ReturnToLauncher_Click"
+                VerticalAlignment="Center" Margin="4,2"
+                ToolTip.Tip="Stop simulation and return to launcher">
+          Return to Launcher
+        </Button>
+      </Grid>
+    </Border>
+
+    <!-- ── World canvas (zoomable) ── -->
+    <paz:ZoomBorder Name="ZoomBorder" Grid.Column="0" Grid.Row="1"
+                    ZoomSpeed="1.2" Background="#222"
+                    ClipToBounds="True" Focusable="True"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+      <controls:WorldCanvas Name="TheWorldCanvas"
+                            HorizontalAlignment="Center" VerticalAlignment="Center"
+                            ScenarioName="{Binding StartingScenarioName}"
+                            StartingSeed="{Binding StartingSeed}"
+                            Enabled="{Binding IsEnabled}" />
+    </paz:ZoomBorder>
+
+    <!-- ── Splitters ── -->
+    <GridSplitter Grid.Column="1" Grid.Row="1"
+                  ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                  Background="#444" />
+    <GridSplitter Grid.Column="3" Grid.Row="1"
+                  ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                  Background="#444" />
+
+    <!-- ── Controls panel ── -->
+    <ScrollViewer Grid.Column="2" Grid.Row="1"
+                  HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto"
+                  Background="#252526">
+      <StackPanel Margin="6" Spacing="4">
+
+        <!-- World Details -->
+        <Border Background="#2D2D30" CornerRadius="4" Padding="8,6">
+          <StackPanel Spacing="3">
+            <TextBlock Text="WORLD DETAILS" FontSize="10" FontWeight="Bold"
+                       Foreground="#0078D4" LetterSpacing="1"/>
+            <StackPanel Orientation="Horizontal" Spacing="4">
+              <TextBlock Text="Turn:" Foreground="#AAA" Width="55"/>
+              <TextBlock Text="{Binding TurnCount}" FontFamily="Consolas" Foreground="White"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="4">
+              <TextBlock Text="Agents:" Foreground="#AAA" Width="55"/>
+              <TextBlock Text="{Binding AgentsActive}" FontFamily="Consolas" Foreground="White"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="4">
+              <TextBlock Text="Genes:" Foreground="#AAA" Width="55"/>
+              <TextBlock Text="{Binding GenesActive}" FontFamily="Consolas" Foreground="White"/>
+            </StackPanel>
+            <TextBlock Text="Zones:" Foreground="#AAA" Margin="0,2,0,0"/>
+            <TextBox Text="{Binding ZoneInfo}" IsReadOnly="True"
+                     FontFamily="Consolas" FontSize="11"
+                     MinHeight="60" MaxHeight="100"
+                     BorderThickness="0" Background="#1E1E1E" Foreground="#DDD"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Seed Settings -->
+        <Border Background="#2D2D30" CornerRadius="4" Padding="8,6">
+          <StackPanel Spacing="4">
+            <TextBlock Text="SEED SETTINGS" FontSize="10" FontWeight="Bold"
+                       Foreground="#0078D4" LetterSpacing="1"/>
+            <TextBox Name="SeedBox" Text="{Binding StartingSeed}"
+                     FontFamily="Consolas" PlaceholderText="Seed value"/>
+            <StackPanel Orientation="Horizontal" Spacing="4">
+              <Button Name="ResetButton" Click="Reset_Click" HorizontalContentAlignment="Center"
+                      Width="96" ToolTip.Tip="Restart with current seed">Reset</Button>
+              <Button Name="RandomButton" Click="Random_Click" HorizontalContentAlignment="Center"
+                      Width="96" ToolTip.Tip="Restart with a random seed">Random</Button>
+            </StackPanel>
+          </StackPanel>
+        </Border>
+
+        <!-- Simulation Speed -->
+        <Border Background="#2D2D30" CornerRadius="4" Padding="8,6">
+          <StackPanel Spacing="4">
+            <TextBlock Text="SIMULATION SPEED" FontSize="10" FontWeight="Bold"
+                       Foreground="#0078D4" LetterSpacing="1"/>
+            <StackPanel Orientation="Horizontal" Spacing="4">
+              <Button Name="PauseButton" Click="Pause_Click" Width="60"
+                      HorizontalContentAlignment="Center"
+                      ToolTip.Tip="Pause simulation">⏸ Pause</Button>
+              <Button Name="PlayButton" Click="Play_Click" Width="60"
+                      HorizontalContentAlignment="Center"
+                      ToolTip.Tip="Resume simulation">▶ Play</Button>
+              <Button Name="OneTurnButton" Click="OneTurn_Click" Width="70"
+                      HorizontalContentAlignment="Center"
+                      ToolTip.Tip="Advance one turn">1 Turn</Button>
+            </StackPanel>
+            <WrapPanel Orientation="Horizontal">
+              <Button Name="Speed2" Tag="2" Click="Speed_Click" Margin="2" Width="44" HorizontalContentAlignment="Center">2</Button>
+              <Button Name="Speed10" Tag="10" Click="Speed_Click" Margin="2" Width="44" HorizontalContentAlignment="Center">10</Button>
+              <Button Name="Speed30" Tag="30" Click="Speed_Click" Margin="2" Width="44" HorizontalContentAlignment="Center">30</Button>
+              <Button Name="Speed60" Tag="60" Click="Speed_Click" Margin="2" Width="44" HorizontalContentAlignment="Center">60</Button>
+              <Button Name="Speed120" Tag="120" Click="Speed_Click" Margin="2" Width="44" HorizontalContentAlignment="Center">120</Button>
+              <Button Name="SpeedMax" Click="SpeedMax_Click" Margin="2" Width="44" HorizontalContentAlignment="Center">∞</Button>
+            </WrapPanel>
+            <TextBlock Text="Fast Forward:" Foreground="#AAA" FontSize="11"/>
+            <StackPanel Orientation="Horizontal" Spacing="4">
+              <TextBox Name="FFTurns" Text="{Binding FastForwardTicks}"
+                       Width="80" FontFamily="Consolas"/>
+              <Button Name="FFButton" Click="FF_Click" HorizontalContentAlignment="Center">
+                ⏩ Skip
+              </Button>
+            </StackPanel>
+          </StackPanel>
+        </Border>
+
+        <!-- Layers -->
+        <Border Background="#2D2D30" CornerRadius="4" Padding="8,6">
+          <StackPanel Spacing="4">
+            <TextBlock Text="LAYERS" FontSize="10" FontWeight="Bold"
+                       Foreground="#0078D4" LetterSpacing="1"/>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+              </Grid.ColumnDefinitions>
+              <TextBlock Grid.Column="0" Text="Layer" FontSize="10" Foreground="#888"/>
+              <TextBlock Grid.Column="1" Text="Show" FontSize="10" Foreground="#888" HorizontalAlignment="Center"/>
+              <TextBlock Grid.Column="2" Text="BB" FontSize="10" Foreground="#888" HorizontalAlignment="Center" ToolTip.Tip="Show Bounding Boxes"/>
+            </Grid>
+            <ListBox Name="LayersList" Background="Transparent" BorderThickness="0" Padding="0">
+              <ListBox.Styles>
+                <Style Selector="ListBoxItem">
+                  <Setter Property="Margin" Value="0"/>
+                  <Setter Property="Padding" Value="0,2"/>
+                  <Setter Property="Background" Value="Transparent"/>
+                </Style>
+              </ListBox.Styles>
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*"/>
+                      <ColumnDefinition Width="50"/>
+                      <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{Binding LayerName}"
+                               FontSize="11" VerticalAlignment="Center" Foreground="#CCC"/>
+                    <CheckBox Grid.Column="1" IsChecked="{Binding ShowObjects, Mode=TwoWay}"
+                              HorizontalAlignment="Center" Padding="0"/>
+                    <CheckBox Grid.Column="2" IsChecked="{Binding ShowBoundingBoxes, Mode=TwoWay}"
+                              HorizontalAlignment="Center" Padding="0"/>
+                  </Grid>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+          </StackPanel>
+        </Border>
+
+        <!-- Agent View Settings -->
+        <Border Background="#2D2D30" CornerRadius="4" Padding="8,6">
+          <StackPanel Name="AgentUI" Spacing="4">
+            <TextBlock Text="AGENT VIEW" FontSize="10" FontWeight="Bold"
+                       Foreground="#0078D4" LetterSpacing="1"/>
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <CheckBox Name="ShowSenses"
+                        IsChecked="{Binding ShowSenses, Mode=TwoWay}"
+                        Content="Senses" ToolTip.Tip="Show agent sense radii"/>
+              <CheckBox Name="ShowSenseBB"
+                        IsChecked="{Binding ShowSenseBoundingBoxes, Mode=TwoWay}"
+                        Content="Sense BB" ToolTip.Tip="Show sense bounding boxes"/>
+            </StackPanel>
+            <CheckBox Name="ShowGeneologyBox"
+                      IsCheckedChanged="ShowGeneology_Changed"
+                      Content="Show Ancestry Lines"
+                      ToolTip.Tip="Draw lines from agents to their living ancestors"/>
+          </StackPanel>
+        </Border>
+
+      </StackPanel>
+    </ScrollViewer>
+
+    <!-- ── Agent Details panel ── -->
+    <Border Grid.Column="4" Grid.Row="1" Background="#1E1E1E" BorderBrush="#333" BorderThickness="1,0,0,0">
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="8" Spacing="6">
+
+          <Border Background="#2D4A6A" CornerRadius="4" Padding="8,5">
+            <TextBlock Text="SELECTED AGENT" FontSize="10" FontWeight="Bold"
+                       Foreground="White" LetterSpacing="1"/>
+          </Border>
+
+          <!-- No selection -->
+          <TextBlock Name="NoSelectionText"
+                     Text="Click on an agent in the world to inspect it."
+                     TextWrapping="Wrap" Foreground="#666" FontStyle="Italic" FontSize="11"
+                     IsVisible="{Binding !HasSelectedAgent}"/>
+
+          <!-- Agent info -->
+          <StackPanel IsVisible="{Binding HasSelectedAgent}" Spacing="5">
+            <TextBlock Text="{Binding AgentName}"
+                       FontSize="13" FontWeight="Bold" Foreground="#E8E8E8"
+                       TextWrapping="Wrap"/>
+
+            <Border Background="#2D2D30" CornerRadius="3" Padding="6,4">
+              <StackPanel Spacing="2">
+                <TextBlock Text="LOCATION" FontSize="9" Foreground="#0078D4" LetterSpacing="1"/>
+                <TextBlock Text="{Binding AgentLocation}"
+                           FontFamily="Consolas" FontSize="11" Foreground="#CCC"
+                           TextWrapping="Wrap"/>
+              </StackPanel>
+            </Border>
+
+            <Border Background="#2D2D30" CornerRadius="3" Padding="6,4">
+              <StackPanel Spacing="2">
+                <TextBlock Text="SENSES" FontSize="9" Foreground="#0078D4" LetterSpacing="1"/>
+                <TextBlock Text="{Binding AgentSenses}"
+                           FontFamily="Consolas" FontSize="10" Foreground="#CCC"
+                           TextWrapping="Wrap"/>
+              </StackPanel>
+            </Border>
+
+            <Border Background="#2D2D30" CornerRadius="3" Padding="6,4">
+              <StackPanel Spacing="2">
+                <TextBlock Text="ACTIONS" FontSize="9" Foreground="#0078D4" LetterSpacing="1"/>
+                <TextBlock Text="{Binding AgentActions}"
+                           FontFamily="Consolas" FontSize="10" Foreground="#CCC"
+                           TextWrapping="Wrap"/>
+              </StackPanel>
+            </Border>
+
+            <Border Background="#2D2D30" CornerRadius="3" Padding="6,4">
+              <StackPanel Spacing="2">
+                <TextBlock Text="BRAIN" FontSize="9" Foreground="#0078D4" LetterSpacing="1"/>
+                <TextBlock Text="{Binding AgentBrain}"
+                           FontFamily="Consolas" FontSize="10" Foreground="#CCC"
+                           TextWrapping="Wrap"
+                           IsVisible="{Binding HasBehaviourBrain}"/>
+                <controls:NeuralBrainCanvas
+                    Agent="{Binding SelectedAgent}"
+                    TurnCount="{Binding TurnCount}"
+                    IsVisible="{Binding HasNeuralBrain}"
+                    Height="280" HorizontalAlignment="Stretch"/>
+              </StackPanel>
+            </Border>
+          </StackPanel>
+
+        </StackPanel>
+      </ScrollViewer>
+    </Border>
+
+  </Grid>
+</UserControl>

@@ -1,0 +1,431 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+             xmlns:paz="using:Avalonia.Controls.PanAndZoom"
+             xmlns:controls="using:ALife.Avalonia.Controls"
+             xmlns:vm="clr-namespace:ALife.Avalonia.ViewModels"
+             x:Class="ALife.Avalonia.Views.SimulatorView"
+             x:CompileBindings="False">
+  <Design.DataContext>
+    <vm:SimulatorViewModel />
+  </Design.DataContext>
+
+  <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="38" />   <!-- header -->
+      <RowDefinition Height="38" />   <!-- top toolbar -->
+      <RowDefinition Height="*" />    <!-- content -->
+      <RowDefinition Height="38" />   <!-- bottom bar: playback + speed -->
+      <RowDefinition Height="38" />   <!-- bottom bar: layers + view settings -->
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" MinWidth="400" />
+      <ColumnDefinition Width="5" MinWidth="5" MaxWidth="5" />
+      <ColumnDefinition Width="240" MinWidth="200" />
+    </Grid.ColumnDefinitions>
+
+    <!-- ── Row 0: Header ── -->
+    <Border Grid.Row="0" Grid.ColumnSpan="3"
+            Background="{DynamicResource ALife.PanelBrush}" Padding="8,0">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+          <Ellipse Width="8" Height="8" Fill="{DynamicResource ALife.BioGreenBrush}"
+                   IsVisible="{Binding IsEnabled}"/>
+          <Ellipse Width="8" Height="8" Fill="{DynamicResource ALife.AmberBrush}"
+                   IsVisible="{Binding !IsEnabled}"/>
+          <TextBlock Text="{Binding ScenarioHeader}"
+                     FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center"
+                     Foreground="{DynamicResource ALife.BioTealBrush}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="16"
+                    VerticalAlignment="Center" Margin="12,0"
+                    ToolTip.Tip="TPS = turns per second  |  FPS = frames per second">
+          <StackPanel Orientation="Horizontal" Spacing="5">
+            <TextBlock Text="TPS" FontSize="10" FontWeight="Bold" LetterSpacing="1"
+                       Foreground="{DynamicResource ALife.TextDimBrush}" VerticalAlignment="Center"/>
+            <TextBlock Name="TpsLabel" Text="---"
+                       FontFamily="Consolas" FontSize="12" MinWidth="64"
+                       Foreground="{DynamicResource ALife.TextPrimaryBrush}" VerticalAlignment="Center"/>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal" Spacing="5">
+            <TextBlock Text="FPS" FontSize="10" FontWeight="Bold" LetterSpacing="1"
+                       Foreground="{DynamicResource ALife.TextDimBrush}" VerticalAlignment="Center"/>
+            <TextBlock Name="FpsLabel" Text="---"
+                       FontFamily="Consolas" FontSize="12" MinWidth="52"
+                       Foreground="{DynamicResource ALife.TextPrimaryBrush}" VerticalAlignment="Center"/>
+          </StackPanel>
+        </StackPanel>
+
+        <Button Grid.Column="2" Name="ReturnToLauncher" Click="ReturnToLauncher_Click"
+                VerticalAlignment="Center" Margin="0,3"
+                ToolTip.Tip="Stop simulation and return to launcher">
+          ← Return to Launcher
+        </Button>
+      </Grid>
+    </Border>
+
+    <!-- ── Row 1: Top toolbar ── -->
+    <Border Grid.Row="1" Grid.ColumnSpan="3"
+            Background="{DynamicResource ALife.PanelBrush}"
+            BorderBrush="{DynamicResource ALife.BorderBrush}" BorderThickness="0,0,0,1"
+            Padding="8,0">
+      <DockPanel VerticalAlignment="Center">
+
+        <!-- Seed controls -->
+        <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+          <TextBlock Text="Seed:" FontSize="11"
+                     Foreground="{DynamicResource ALife.TextSecondaryBrush}" VerticalAlignment="Center"/>
+          <TextBox Name="SeedBox" Text="{Binding StartingSeed}"
+                   Width="100" FontFamily="Consolas" PlaceholderText="seed value"
+                   VerticalAlignment="Center"/>
+          <Button Name="RandomButton" Click="Random_Click"
+                  ToolTip.Tip="Restart with a random seed">Random</Button>
+          <Button Name="ResetButton" Click="Reset_Click"
+                  ToolTip.Tip="Restart with current seed">↺ Reset</Button>
+        </StackPanel>
+
+        <Separator DockPanel.Dock="Left" Width="1" Margin="8,4" Background="{DynamicResource ALife.BorderBrush}"/>
+
+        <!-- Zoom controls -->
+        <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+          <TextBlock Text="Zoom:" FontSize="11"
+                     Foreground="{DynamicResource ALife.TextSecondaryBrush}" VerticalAlignment="Center"/>
+          <TextBlock Name="ZoomLabel" Text="1.00×"
+                     FontFamily="Consolas" FontSize="12" MinWidth="52"
+                     Foreground="{DynamicResource ALife.TextPrimaryBrush}" VerticalAlignment="Center"/>
+          <Button Name="ZoomOutButton" Click="ZoomOut_Click" Width="26"
+                  HorizontalContentAlignment="Center" ToolTip.Tip="Zoom out">−</Button>
+          <Button Name="ZoomInButton" Click="ZoomIn_Click" Width="26"
+                  HorizontalContentAlignment="Center" ToolTip.Tip="Zoom in">+</Button>
+          <Button Name="ZoomResetButton" Click="ZoomReset_Click"
+                  ToolTip.Tip="Reset zoom and pan">Reset</Button>
+        </StackPanel>
+
+        <Separator DockPanel.Dock="Left" Width="1" Margin="8,4" Background="{DynamicResource ALife.BorderBrush}"/>
+
+        <!-- World stats -->
+        <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
+          <StackPanel Orientation="Horizontal" Spacing="4">
+            <TextBlock Text="Turn:" FontSize="11"
+                       Foreground="{DynamicResource ALife.TextSecondaryBrush}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding TurnCount}" FontFamily="Consolas" FontSize="12"
+                       Foreground="{DynamicResource ALife.TextPrimaryBrush}" VerticalAlignment="Center"
+                       MinWidth="50"/>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal" Spacing="4">
+            <TextBlock Text="Agents:" FontSize="11"
+                       Foreground="{DynamicResource ALife.TextSecondaryBrush}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding AgentsActive}" FontFamily="Consolas" FontSize="12"
+                       Foreground="{DynamicResource ALife.TextPrimaryBrush}" VerticalAlignment="Center"
+                       MinWidth="36"/>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal" Spacing="4">
+            <TextBlock Text="Genes:" FontSize="11"
+                       Foreground="{DynamicResource ALife.TextSecondaryBrush}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding GenesActive}" FontFamily="Consolas" FontSize="12"
+                       Foreground="{DynamicResource ALife.TextPrimaryBrush}" VerticalAlignment="Center"
+                       MinWidth="36"/>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal" Spacing="4"
+                      ToolTip.Tip="{Binding ZoneInfo}">
+            <TextBlock Text="Zones:" FontSize="11"
+                       Foreground="{DynamicResource ALife.TextSecondaryBrush}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding ZoneInfoCompact}" FontFamily="Consolas" FontSize="12"
+                       Foreground="{DynamicResource ALife.TextPrimaryBrush}" VerticalAlignment="Center"/>
+          </StackPanel>
+        </StackPanel>
+
+        <!-- Fills remaining space -->
+        <Grid DockPanel.Dock="Left"/>
+
+      </DockPanel>
+    </Border>
+
+    <!-- ── Row 2: World canvas ── -->
+    <paz:ZoomBorder Name="ZoomBorder" Grid.Row="2" Grid.Column="0"
+                    ZoomSpeed="1.2" Background="{DynamicResource ALife.WorldCanvasBrush}"
+                    ClipToBounds="True" Focusable="True"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+      <controls:WorldCanvas Name="TheWorldCanvas"
+                            HorizontalAlignment="Center" VerticalAlignment="Center"
+                            ScenarioName="{Binding StartingScenarioName}"
+                            StartingSeed="{Binding StartingSeed}"
+                            Enabled="{Binding IsEnabled}" />
+    </paz:ZoomBorder>
+
+    <!-- ── Row 2: GridSplitter ── -->
+    <GridSplitter Grid.Row="2" Grid.Column="1"
+                  ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+    <!-- ── Row 2: Agent Details panel ── -->
+    <Border Grid.Row="2" Grid.Column="2"
+            Background="{DynamicResource ALife.VoidBrush}"
+            BorderBrush="{DynamicResource ALife.BorderBrush}" BorderThickness="1,0,0,0">
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="8" Spacing="6">
+
+          <TextBlock Text="SELECTED AGENT" FontSize="10" FontWeight="Bold"
+                     Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"
+                     Margin="0,0,0,2"/>
+
+          <ComboBox Name="AgentSelectorComboBox"
+                    ItemsSource="{Binding AliveAgents}"
+                    HorizontalAlignment="Stretch"
+                    PlaceholderText="Select an agent..."
+                    SelectionChanged="AgentComboBox_SelectionChanged"
+                    DropDownOpened="AgentComboBox_DropDownOpened">
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding IndividualLabel}" FontFamily="Consolas" FontSize="11"
+                           Foreground="{DynamicResource ALife.TextPrimaryBrush}"/>
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+
+          <TextBlock Name="NoSelectionText"
+                     Text="Click an agent in the world or select one above."
+                     TextWrapping="Wrap"
+                     Foreground="{DynamicResource ALife.TextDimBrush}"
+                     FontStyle="Italic" FontSize="11"
+                     IsVisible="{Binding !HasSelectedAgent}"/>
+
+          <StackPanel IsVisible="{Binding HasSelectedAgent}" Spacing="5">
+
+            <!-- Name + alive/dead badge -->
+            <DockPanel>
+              <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                <Border CornerRadius="3" Padding="5,1"
+                        Background="{DynamicResource ALife.BioGreenDarkBrush}"
+                        IsVisible="{Binding IsSelectedAgentAlive}">
+                  <TextBlock Text="ALIVE" FontSize="9" FontWeight="Bold"
+                             Foreground="{DynamicResource ALife.BioTealBrush}"/>
+                </Border>
+                <Border CornerRadius="3" Padding="5,1"
+                        Background="{DynamicResource ALife.DangerBrush}"
+                        IsVisible="{Binding IsSelectedAgentDead}">
+                  <TextBlock Text="DEAD" FontSize="9" FontWeight="Bold"
+                             Foreground="{DynamicResource ALife.AmberBrush}"/>
+                </Border>
+              </StackPanel>
+              <TextBlock Text="{Binding AgentName}"
+                         FontSize="13" FontWeight="Bold"
+                         Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                         TextWrapping="Wrap" VerticalAlignment="Center"/>
+            </DockPanel>
+
+            <!-- Descendants (shown when agent is dead) -->
+            <Border Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,5"
+                    IsVisible="{Binding IsSelectedAgentDead}">
+              <StackPanel Spacing="4">
+                <TextBlock Text="DESCENDANTS" FontSize="9" FontWeight="Bold"
+                           Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"/>
+                <TextBlock Text="None surviving"
+                           FontSize="11" FontStyle="Italic"
+                           Foreground="{DynamicResource ALife.TextDimBrush}"
+                           IsVisible="{Binding !HasDescendants}"/>
+                <ComboBox Name="DescendantComboBox"
+                          ItemsSource="{Binding DescendantsOfSelected}"
+                          SelectedItem="{Binding SelectedDescendant}"
+                          IsVisible="{Binding HasDescendants}"
+                          HorizontalAlignment="Stretch"
+                          PlaceholderText="Select a descendant..."
+                          SelectionChanged="DescendantComboBox_SelectionChanged"
+                          DropDownOpened="DescendantComboBox_DropDownOpened"
+                          DropDownClosed="DescendantComboBox_DropDownClosed"
+                          ToolTip.Tip="Select a descendant to track them">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                      <TextBlock Text="{Binding IndividualLabel}" FontFamily="Consolas" FontSize="11"
+                                 Foreground="{DynamicResource ALife.TextPrimaryBrush}"/>
+                    </DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+              </StackPanel>
+            </Border>
+
+            <Border Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,4">
+              <StackPanel Spacing="2">
+                <TextBlock Text="LOCATION" FontSize="9" Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"/>
+                <TextBlock Text="{Binding AgentLocation}"
+                           FontFamily="Consolas" FontSize="11"
+                           Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                           TextWrapping="Wrap"/>
+              </StackPanel>
+            </Border>
+
+            <Border Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,4">
+              <StackPanel Spacing="2">
+                <TextBlock Text="SENSES" FontSize="9" Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"/>
+                <TextBlock Text="{Binding AgentSenses}"
+                           FontFamily="Consolas" FontSize="10"
+                           Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                           TextWrapping="Wrap"/>
+              </StackPanel>
+            </Border>
+
+            <Border Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,4">
+              <StackPanel Spacing="2">
+                <TextBlock Text="ACTIONS" FontSize="9" Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"/>
+                <TextBlock Text="{Binding AgentActions}"
+                           FontFamily="Consolas" FontSize="10"
+                           Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                           TextWrapping="Wrap"/>
+              </StackPanel>
+            </Border>
+
+            <Border Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,4">
+              <StackPanel Spacing="2">
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                  </Grid.ColumnDefinitions>
+                  <TextBlock Grid.Column="0" Text="BRAIN" FontSize="9"
+                             Foreground="{DynamicResource ALife.BioTealBrush}"
+                             LetterSpacing="1" VerticalAlignment="Center"/>
+                  <Button Grid.Column="1" Name="PopOutBrainButton" Click="PopOutBrain_Click"
+                          FontSize="10" Padding="4,1"
+                          IsVisible="{Binding HasNeuralBrain}"
+                          ToolTip.Tip="Open brain in a larger window">⤢ Pop Out</Button>
+                </Grid>
+                <TextBlock Text="{Binding AgentBrain}"
+                           FontFamily="Consolas" FontSize="10"
+                           Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                           TextWrapping="Wrap"
+                           IsVisible="{Binding HasBehaviourBrain}"/>
+                <controls:NeuralBrainCanvas
+                    Agent="{Binding SelectedAgent}"
+                    TurnCount="{Binding TurnCount}"
+                    IsVisible="{Binding HasNeuralBrain}"
+                    Height="280" HorizontalAlignment="Stretch"/>
+              </StackPanel>
+            </Border>
+
+          </StackPanel>
+        </StackPanel>
+      </ScrollViewer>
+    </Border>
+
+    <!-- ── Row 3: Bottom bar — playback + speed + fast forward ── -->
+    <Border Grid.Row="3" Grid.ColumnSpan="3"
+            Background="{DynamicResource ALife.PanelBrush}"
+            BorderBrush="{DynamicResource ALife.BorderBrush}" BorderThickness="0,1,0,0"
+            Padding="8,0">
+      <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+
+        <!-- Playback -->
+        <Button Name="PlayPauseButton" Click="PlayPause_Click" Width="92"
+                HorizontalContentAlignment="Center"
+                ToolTip.Tip="Toggle pause / resume">⏸ Pause</Button>
+        <Button Name="OneTurnButton" Click="OneTurn_Click" Width="70"
+                HorizontalContentAlignment="Center"
+                ToolTip.Tip="Advance exactly one turn">1 Turn</Button>
+
+        <Separator Width="1" Margin="2,4" Background="{DynamicResource ALife.BorderBrush}"/>
+
+        <!-- Speed -->
+        <TextBlock Text="Speed:" FontSize="11"
+                   Foreground="{DynamicResource ALife.TextSecondaryBrush}" VerticalAlignment="Center"/>
+        <TextBlock Name="SpeedLabel" Text="60×"
+                   FontFamily="Consolas" FontSize="11" MinWidth="34"
+                   Foreground="{DynamicResource ALife.TextPrimaryBrush}" VerticalAlignment="Center"/>
+        <Slider Name="SpeedSlider"
+                Minimum="0" Maximum="8" Value="4" Width="200"
+                IsSnapToTickEnabled="True" TickFrequency="1"
+                TickPlacement="BottomRight"
+                VerticalAlignment="Center"
+                ValueChanged="SpeedSlider_ValueChanged"/>
+
+        <Separator Width="1" Margin="2,4" Background="{DynamicResource ALife.BorderBrush}"/>
+
+        <!-- Fast forward -->
+        <TextBlock Text="Skip:" FontSize="11"
+                   Foreground="{DynamicResource ALife.TextSecondaryBrush}" VerticalAlignment="Center"/>
+        <TextBox Name="FFTurns" Text="{Binding FastForwardTicks}"
+                 Width="72" FontFamily="Consolas" VerticalAlignment="Center"/>
+        <Button Name="FFButton" Click="FF_Click"
+                ToolTip.Tip="Fast-forward without rendering">⏩</Button>
+        <TextBlock Text="turns (headless)" FontSize="9" FontStyle="Italic"
+                   Foreground="{DynamicResource ALife.TextDimBrush}" VerticalAlignment="Center"/>
+
+      </StackPanel>
+    </Border>
+
+    <!-- ── Row 4: Bottom bar — layers + view settings ── -->
+    <Border Grid.Row="4" Grid.ColumnSpan="3"
+            Background="{DynamicResource ALife.PanelBrush}"
+            BorderBrush="{DynamicResource ALife.BorderBrush}" BorderThickness="0,1,0,0"
+            Padding="8,0">
+      <DockPanel VerticalAlignment="Center">
+
+        <!-- Agent view settings docked right -->
+        <Separator DockPanel.Dock="Right" Width="1" Margin="8,4"
+                   Background="{DynamicResource ALife.BorderBrush}"/>
+        <StackPanel Name="AgentUI" DockPanel.Dock="Right" Orientation="Horizontal"
+                    Spacing="10" VerticalAlignment="Center">
+          <TextBlock Text="VIEW:" FontSize="10" FontWeight="Bold" LetterSpacing="1"
+                     Foreground="{DynamicResource ALife.BioTealBrush}" VerticalAlignment="Center"/>
+          <CheckBox Name="ShowSenses"
+                    IsChecked="{Binding ShowSenses, Mode=TwoWay}"
+                    Content="Senses" FontSize="11"
+                    ToolTip.Tip="Show agent sense radii"/>
+          <CheckBox Name="ShowSenseBB"
+                    IsChecked="{Binding ShowSenseBoundingBoxes, Mode=TwoWay}"
+                    Content="Sense BB" FontSize="11"
+                    ToolTip.Tip="Show sense bounding boxes"/>
+          <CheckBox Name="ShowGeneologyBox"
+                    IsCheckedChanged="ShowGeneology_Changed"
+                    Content="Ancestry Lines" FontSize="11"
+                    ToolTip.Tip="Draw lines from agents to their living ancestors"/>
+        </StackPanel>
+
+        <!-- Layers -->
+        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+          <TextBlock Text="LAYERS:" FontSize="10" FontWeight="Bold" LetterSpacing="1"
+                     Foreground="{DynamicResource ALife.BioTealBrush}" VerticalAlignment="Center"/>
+          <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"
+                        VerticalAlignment="Center">
+            <ListBox Name="LayersList" Background="Transparent" BorderThickness="0" Padding="0">
+              <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel Orientation="Horizontal" Spacing="14"/>
+                </ItemsPanelTemplate>
+              </ListBox.ItemsPanel>
+              <ListBox.Styles>
+                <Style Selector="ListBoxItem">
+                  <Setter Property="Padding" Value="0"/>
+                  <Setter Property="Margin" Value="0"/>
+                  <Setter Property="Background" Value="Transparent"/>
+                </Style>
+              </ListBox.Styles>
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding LayerName}" FontSize="11" VerticalAlignment="Center"
+                               Foreground="{DynamicResource ALife.TextPrimaryBrush}"/>
+                    <CheckBox IsChecked="{Binding ShowObjects, Mode=TwoWay}"
+                              ToolTip.Tip="Show objects" Padding="0"/>
+                    <CheckBox IsChecked="{Binding ShowBoundingBoxes, Mode=TwoWay}"
+                              Content="BB" ToolTip.Tip="Show bounding boxes" Padding="0"/>
+                  </StackPanel>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+          </ScrollViewer>
+        </StackPanel>
+
+      </DockPanel>
+    </Border>
+
+  </Grid>
+</UserControl>

@@ -1,0 +1,237 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
+             xmlns:vm="clr-namespace:ALife.Avalonia.ViewModels"
+             x:Class="ALife.Avalonia.Views.BatchRunnerView"
+             x:CompileBindings="False">
+  <Design.DataContext>
+    <vm:BatchRunnerViewModel />
+  </Design.DataContext>
+
+  <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="38" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="230" MinWidth="180" />
+      <ColumnDefinition Width="5" MinWidth="5" MaxWidth="5" />
+      <ColumnDefinition Width="*" MinWidth="300" />
+      <ColumnDefinition Width="5" MinWidth="5" MaxWidth="5" />
+      <ColumnDefinition Width="210" MinWidth="160" />
+    </Grid.ColumnDefinitions>
+
+    <!-- ── Header ── -->
+    <Border Grid.Row="0" Grid.ColumnSpan="5"
+            Background="{DynamicResource ALife.PanelBrush}" Padding="8,0">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Title -->
+        <TextBlock Grid.Column="0" Text="BATCH RUNNER" FontSize="12" FontWeight="Bold"
+                   LetterSpacing="1" VerticalAlignment="Center" Margin="0,0,14,0"
+                   Foreground="{DynamicResource ALife.BioTealBrush}"/>
+
+        <!-- Scenario info -->
+        <TextBlock Grid.Column="1" Text="{Binding ScenarioHeader}"
+                   FontFamily="Consolas" FontSize="12" VerticalAlignment="Center"
+                   Foreground="{DynamicResource ALife.TextSecondaryBrush}"/>
+
+        <!-- State indicator -->
+        <StackPanel Grid.Column="2" Orientation="Horizontal"
+                    VerticalAlignment="Center" Spacing="6" Margin="0,0,10,0">
+          <Ellipse Width="8" Height="8" VerticalAlignment="Center"
+                   Fill="{DynamicResource ALife.BioGreenBrush}"
+                   IsVisible="{Binding CanStopRunner}"/>
+          <Ellipse Width="8" Height="8" VerticalAlignment="Center"
+                   Fill="{DynamicResource ALife.AmberBrush}"
+                   IsVisible="{Binding CanStartRunner}"/>
+          <TextBlock Text="{Binding State}" FontSize="12" VerticalAlignment="Center"
+                     Foreground="{DynamicResource ALife.TextSecondaryBrush}"/>
+        </StackPanel>
+
+        <!-- TPS display -->
+        <TextBlock Grid.Column="3"
+                   Text="{Binding TpsDisplay}"
+                   FontFamily="Consolas" FontSize="12" VerticalAlignment="Center"
+                   Foreground="{DynamicResource ALife.BioTealBrush}"
+                   Margin="0,0,14,0"
+                   IsVisible="{Binding CanStopRunner}"/>
+
+        <!-- Return to Launcher -->
+        <Button Grid.Column="4" Name="ReturnToLauncher" Click="ReturnToLauncher_Click"
+                VerticalAlignment="Center" Margin="0,3"
+                ToolTip.Tip="Stop runner and return to launcher">
+          ← Return to Launcher
+        </Button>
+      </Grid>
+    </Border>
+
+    <!-- ── Left panel: scenario info + parameters + controls ── -->
+    <DockPanel Grid.Row="1" Grid.Column="0"
+               Background="{DynamicResource ALife.PanelBrush}">
+
+      <!-- Control buttons pinned to bottom -->
+      <Border DockPanel.Dock="Bottom"
+              BorderBrush="{DynamicResource ALife.BorderBrush}" BorderThickness="0,1,0,0"
+              Padding="8,8,8,10">
+        <StackPanel Spacing="4">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="4"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Name="StartButton" IsEnabled="{Binding CanStartRunner}"
+                    Click="Start_Click"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                    Height="34" FontWeight="SemiBold"
+                    Background="{DynamicResource ALife.BioGreenDarkBrush}"
+                    Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                    ToolTip.Tip="Start the batch run">
+              ▶ Start
+            </Button>
+            <Button Grid.Column="2" Name="StopButton" IsEnabled="{Binding CanStopRunner}"
+                    Click="Stop_Click"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                    Height="34" FontWeight="SemiBold"
+                    Background="{DynamicResource ALife.DangerBrush}"
+                    Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                    ToolTip.Tip="Stop the batch run">
+              ⏹ Stop
+            </Button>
+          </Grid>
+          <Button Name="RestartButton" IsEnabled="{Binding CanRestartRunner}"
+                  Click="Restart_Click"
+                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                  Height="30"
+                  ToolTip.Tip="Stop and restart from the beginning">
+            ↺ Restart
+          </Button>
+        </StackPanel>
+      </Border>
+
+      <!-- Scrollable info + parameters -->
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="8" Spacing="6">
+
+          <!-- Scenario info card -->
+          <Border Background="{DynamicResource ALife.SectionBrush}" CornerRadius="4" Padding="8,6">
+            <StackPanel Spacing="3">
+              <TextBlock Text="SCENARIO" FontSize="10" FontWeight="Bold"
+                         Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"/>
+              <TextBlock Text="{Binding ScenarioName}"
+                         FontFamily="Consolas" FontSize="12"
+                         Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                         TextWrapping="Wrap"/>
+              <StackPanel Orientation="Horizontal" Spacing="6"
+                          IsVisible="{Binding ScenarioSeed, Converter={x:Static ObjectConverters.IsNotNull}}">
+                <TextBlock Text="seed:" FontSize="11"
+                           Foreground="{DynamicResource ALife.TextDimBrush}"/>
+                <TextBlock Text="{Binding ScenarioSeed}" FontFamily="Consolas" FontSize="11"
+                           Foreground="{DynamicResource ALife.TextSecondaryBrush}"/>
+              </StackPanel>
+            </StackPanel>
+          </Border>
+
+          <!-- Parameters card -->
+          <Border Background="{DynamicResource ALife.SectionBrush}" CornerRadius="4" Padding="8,6">
+            <StackPanel Spacing="5">
+              <TextBlock Text="PARAMETERS" FontSize="10" FontWeight="Bold"
+                         Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"/>
+
+              <TextBlock Text="Scenarios to run:" Foreground="{DynamicResource ALife.TextSecondaryBrush}" FontSize="11"/>
+              <TextBox Text="{Binding ExecutionCount}" FontFamily="Consolas"/>
+
+              <TextBlock Text="Max turns per scenario:" Foreground="{DynamicResource ALife.TextSecondaryBrush}" FontSize="11"/>
+              <TextBox Text="{Binding MaxTurnCount}" FontFamily="Consolas"/>
+
+              <TextBlock Text="Turn batch size:" Foreground="{DynamicResource ALife.TextSecondaryBrush}" FontSize="11"/>
+              <TextBox Text="{Binding TurnBatchCount}" FontFamily="Consolas"/>
+
+              <TextBlock Text="UI update frequency:" Foreground="{DynamicResource ALife.TextSecondaryBrush}" FontSize="11"/>
+              <TextBox Text="{Binding UpdateFrequencyCount}" FontFamily="Consolas"/>
+
+              <TextBlock Text="⚠ Changes take effect on next restart."
+                         FontSize="10" FontStyle="Italic"
+                         Foreground="{DynamicResource ALife.AmberBrush}"
+                         TextWrapping="Wrap" Margin="0,4,0,0"/>
+            </StackPanel>
+          </Border>
+
+        </StackPanel>
+      </ScrollViewer>
+    </DockPanel>
+
+    <!-- ── Splitters ── -->
+    <GridSplitter Grid.Row="1" Grid.Column="1"
+                  ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+    <GridSplitter Grid.Row="1" Grid.Column="3"
+                  ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+    <!-- ── Console output ── -->
+    <Grid Grid.Row="1" Grid.Column="2" Background="{DynamicResource ALife.VoidBrush}">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="28"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <Border Grid.Row="0" Background="{DynamicResource ALife.SectionBrush}"
+              BorderBrush="{DynamicResource ALife.BorderBrush}" BorderThickness="0,0,0,1"
+              Padding="8,0">
+        <Grid>
+          <TextBlock Text="CONSOLE OUTPUT" FontSize="10" FontWeight="Bold"
+                     LetterSpacing="1" VerticalAlignment="Center"
+                     Foreground="{DynamicResource ALife.TextDimBrush}"/>
+          <Button HorizontalAlignment="Right" VerticalAlignment="Center"
+                  Name="ClearConsoleButton" Click="ClearConsole_Click"
+                  FontSize="10" Padding="6,2"
+                  ToolTip.Tip="Clear console output">
+            Clear
+          </Button>
+        </Grid>
+      </Border>
+
+      <TextBox Grid.Row="1" Name="ConsoleText"
+               Text="{Binding ConsoleLog}"
+               CaretIndex="{Binding ConsoleCaretIndex}"
+               IsReadOnly="True" TextWrapping="Wrap"
+               FontFamily="Consolas" FontSize="12"
+               BorderThickness="0"/>
+    </Grid>
+
+    <!-- ── Successful seeds ── -->
+    <Grid Grid.Row="1" Grid.Column="4" Background="{DynamicResource ALife.VoidBrush}">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="28"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <Border Grid.Row="0" Background="{DynamicResource ALife.SectionBrush}"
+              BorderBrush="{DynamicResource ALife.BorderBrush}" BorderThickness="0,0,0,1"
+              Padding="8,0">
+        <TextBlock Text="{Binding SuccessfulSeedCount, StringFormat='SUCCESSFUL SEEDS ({0})'}"
+                   FontSize="10" FontWeight="Bold" LetterSpacing="1" VerticalAlignment="Center"
+                   Foreground="{DynamicResource ALife.TextDimBrush}"/>
+      </Border>
+
+      <TextBox Grid.Row="1" Name="SeedText"
+               Text="{Binding SeedLog}"
+               IsReadOnly="True" TextWrapping="Wrap"
+               FontFamily="Consolas" FontSize="12"
+               Foreground="{DynamicResource ALife.BioTealBrush}"
+               BorderThickness="0"/>
+    </Grid>
+
+  </Grid>
+</UserControl>

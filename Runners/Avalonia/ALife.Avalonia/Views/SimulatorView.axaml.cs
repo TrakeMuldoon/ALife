@@ -1,0 +1,237 @@
+using ALife.Avalonia.ViewModels;
+using ALife.Core.WorldObjects.Agents;
+using ALife.Rendering;
+using System.Linq;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
+using Avalonia.Threading;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace ALife.Avalonia.Views;
+
+public partial class SimulatorView : UserControl, IDisposable
+{
+    private CancellationTokenSource _cts = new();
+    private Task? _perfUpdateTask;
+    private bool _disposed;
+    private bool _wasRunningBeforeDescendantOpen;
+    private BrainViewerWindow? _brainViewer;
+
+    public SimulatorView()
+    {
+        InitializeComponent();
+
+        // Wire up layers and agent settings once the canvas is ready
+        LayersList.ItemsSource = TheWorldCanvas.Simulation.Layers;
+        AgentUI.DataContext = TheWorldCanvas.Simulation.AgentUiSettings;
+
+        ZoomBorder.ZoomChanged += (_, _) => UpdateZoomLabel();
+        TheWorldCanvas.AllAgentsDied += (_, _) => SetRunState(false);
+
+        SetRunState(true);
+
+        _perfUpdateTask = Task.Run(() => UpdatePerfLoop(_cts.Token));
+    }
+
+    private SimulatorViewModel Vm => (SimulatorViewModel)DataContext!;
+
+    public void ReturnToLauncher_Click(object sender, RoutedEventArgs args)
+    {
+        Dispose();
+        var windowVm = (MainWindowViewModel)Parent!.DataContext!;
+        windowVm.CurrentViewModel = new LauncherViewModel();
+    }
+
+    public void Reset_Click(object sender, RoutedEventArgs args)
+    {
+        if (!int.TryParse(SeedBox.Text, out int seed))
+        {
+            seed = new Random().Next();
+            SeedBox.Text = seed.ToString();
+        }
+        TheWorldCanvas.StartingSeed = seed;
+        TheWorldCanvas.Simulation.InitializeSimulation();
+        SetRunState(true);
+    }
+
+    public void Random_Click(object sender, RoutedEventArgs args)
+    {
+        SeedBox.Text = new Random().Next().ToString();
+        Reset_Click(sender, args);
+    }
+
+    public void PlayPause_Click(object sender, RoutedEventArgs args) => SetRunState(!TheWorldCanvas.IsEnabled);
+
+    public void OneTurn_Click(object sender, RoutedEventArgs args)
+    {
+        SetRunState(false);
+        TheWorldCanvas.ExecuteTick();
+        TheWorldCanvas.InvalidateVisual();
+    }
+
+    private static readonly double[] SpeedValues = { 1.0, 2.0, 10.0, 30.0, 60.0, 90.0, 120.0, 240.0, double.PositiveInfinity };
+    private static readonly string[] SpeedLabels = { "1x", "2x", "10x", "30x", "60x", "90x", "120x", "240x", "∞" };
+
+    public void SpeedSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs args)
+    {
+        int index = (int)Math.Round(args.NewValue);
+        index = Math.Clamp(index, 0, SpeedValues.Length - 1);
+        TheWorldCanvas.SetSimulationSpeed(SpeedValues[index]);
+        SpeedLabel.Text = SpeedLabels[index];
+    }
+
+    public void ZoomIn_Click(object sender, RoutedEventArgs args)
+    {
+        ZoomBorder.ZoomIn();
+        UpdateZoomLabel();
+    }
+
+    public void ZoomOut_Click(object sender, RoutedEventArgs args)
+    {
+        ZoomBorder.ZoomOut();
+        UpdateZoomLabel();
+    }
+
+    public void ZoomReset_Click(object sender, RoutedEventArgs args)
+    {
+        ZoomBorder.ResetMatrix();
+        UpdateZoomLabel();
+    }
+
+    private void UpdateZoomLabel()
+    {
+        ZoomLabel.Text = $"{ZoomBorder.ZoomX:F2}x";
+    }
+
+    public void FF_Click(object sender, RoutedEventArgs args)
+    {
+        if (!TheWorldCanvas.Simulation.IsInitialized) return;
+        if (!int.TryParse(FFTurns.Text, out int ticks) || ticks <= 0) return;
+
+        SetRunState(false);
+        Task.Run(() =>
+        {
+            for (int i = 0; i < ticks; i++)
+                ALife.Core.Planet.World.ExecuteOneTurn();
+            Dispatcher.UIThread.Post(() =>
+            {
+                TheWorldCanvas.TurnCount = ALife.Core.Planet.World.Turns;
+                TheWorldCanvas.InvalidateVisual();
+            });
+        });
+    }
+
+    public void ShowGeneology_Changed(object sender, RoutedEventArgs args)
+    {
+        bool show = ShowGeneologyBox.IsChecked == true;
+        TheWorldCanvas.SetGeneologyVisible(show);
+        if (Vm != null) Vm.ShowGeneology = show;
+    }
+
+    public void PopOutBrain_Click(object sender, RoutedEventArgs args)
+    {
+        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime)
+            return;
+
+        if (_brainViewer?.IsVisible == true)
+        {
+            _brainViewer.Activate();
+            return;
+        }
+
+        _brainViewer = new BrainViewerWindow { DataContext = Vm };
+        _brainViewer.Closed += (_, _) => _brainViewer = null;
+        _brainViewer.Show();
+    }
+
+    private void AgentComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (sender is not ComboBox cb || cb.SelectedItem is not Agent agent) return;
+        Vm.SelectedAgent = agent;
+        TheWorldCanvas.SetSelectedAgent(agent);
+    }
+
+    private void DescendantComboBox_DropDownOpened(object sender, EventArgs e)
+    {
+        _wasRunningBeforeDescendantOpen = TheWorldCanvas.IsEnabled;
+        Vm.FreezeDescendantUpdates = true;
+        SetRunState(false);
+    }
+
+    private void DescendantComboBox_DropDownClosed(object sender, EventArgs e)
+    {
+        Vm.FreezeDescendantUpdates = false;
+        if (_wasRunningBeforeDescendantOpen)
+            SetRunState(true);
+    }
+
+    private void DescendantComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (sender is not ComboBox cb || cb.SelectedItem is not Agent agent) return;
+        // Defer until after the SelectionChanged event finishes — the SelectedAgent setter
+        // clears DescendantsOfSelected, which crashes if the ComboBox is still mid-event.
+        Dispatcher.UIThread.Post(() =>
+        {
+            Vm.SelectedAgent = agent;
+            TheWorldCanvas.SetSelectedAgent(agent);
+        });
+    }
+
+    private void AgentComboBox_DropDownOpened(object sender, EventArgs e)
+    {
+        if (!ALife.Core.Planet.HasWorld) return;
+        var agents = ALife.Core.Planet.World.AllActiveObjects
+            .OfType<Agent>()
+            .Where(ag => ag.Alive)
+            .OrderBy(ag => TheWorldCanvas.GetBirthTurn(ag.IndividualLabel));
+        Vm.UpdateAliveAgents(agents);
+        if (sender is ComboBox cb)
+            cb.SelectedItem = Vm.SelectedAgent;
+    }
+
+    public void Dispose()
+    {
+        if (!_disposed)
+        {
+            _cts.Cancel();
+            TheWorldCanvas.Timer?.Stop();
+            _brainViewer?.Close();
+            _disposed = true;
+        }
+        GC.SuppressFinalize(this);
+    }
+
+    private void SetRunState(bool running)
+    {
+        TheWorldCanvas.IsEnabled = running;
+        if (Vm != null) Vm.IsEnabled = running;
+
+        PlayPauseButton.Content = running ? "⏸ Pause" : "▶ Resume";
+        OneTurnButton.IsEnabled = !running;
+    }
+
+    private void UpdatePerfLoop(CancellationToken ct)
+    {
+        while (!ct.IsCancellationRequested)
+        {
+            try
+            {
+                Dispatcher.UIThread.Post(() =>
+                {
+                    if (Vm == null) return;
+                    double tps = Vm.TicksPerSecond;
+                    double fps = Vm.FramesPerSecond;
+                    TpsLabel.Text = tps > 0 ? $"{tps:N0}" : "---";
+                    FpsLabel.Text = fps > 0 ? $"{fps:0.00}" : "---";
+                });
+            }
+            catch { }
+            Thread.Sleep(500);
+        }
+    }
+}

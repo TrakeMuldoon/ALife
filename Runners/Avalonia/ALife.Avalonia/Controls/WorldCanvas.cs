@@ -43,6 +43,7 @@ public class WorldCanvas : Control
     private int _specialCounter;
     private bool _showGeneology;
     private readonly Dictionary<string, int> _agentBirthTurns = new();
+    private int _zeroAgentTicks;
     public DispatcherTimer? Timer { get; private set; }
     public event EventHandler? AllAgentsDied;
 
@@ -258,7 +259,15 @@ public class WorldCanvas : Control
         _vm.GenesActive = geneCount.Count;
 
         if (agentCount == 0 && IsEnabled)
-            AllAgentsDied?.Invoke(this, EventArgs.Empty);
+        {
+            _zeroAgentTicks++;
+            if (_zeroAgentTicks >= 5)
+                AllAgentsDied?.Invoke(this, EventArgs.Empty);
+        }
+        else
+        {
+            _zeroAgentTicks = 0;
+        }
 
         if (_vm.SelectedAgent != null)
         {

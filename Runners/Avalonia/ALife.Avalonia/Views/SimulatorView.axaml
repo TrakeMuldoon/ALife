@@ -47,9 +47,24 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="16"
-                    VerticalAlignment="Center" Margin="12,0"
-                    ToolTip.Tip="TPS = turns per second  |  FPS = frames per second">
-          <StackPanel Orientation="Horizontal" Spacing="5">
+                    VerticalAlignment="Center" Margin="12,0">
+          <StackPanel Orientation="Horizontal" Spacing="4">
+            <TextBlock Text="Turn:" FontSize="11"
+                       Foreground="{DynamicResource ALife.TextSecondaryBrush}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding TurnCount}" FontFamily="Consolas" FontSize="12"
+                       Foreground="{DynamicResource ALife.TextPrimaryBrush}" VerticalAlignment="Center"
+                       MinWidth="50"/>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal" Spacing="4">
+            <TextBlock Text="Agents:" FontSize="11"
+                       Foreground="{DynamicResource ALife.TextSecondaryBrush}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding AgentsActive}" FontFamily="Consolas" FontSize="12"
+                       Foreground="{DynamicResource ALife.TextPrimaryBrush}" VerticalAlignment="Center"
+                       MinWidth="36"/>
+          </StackPanel>
+          <Separator Width="1" Margin="0,4" Background="{DynamicResource ALife.BorderBrush}"/>
+          <StackPanel Orientation="Horizontal" Spacing="5"
+                      ToolTip.Tip="TPS = turns per second  |  FPS = frames per second">
             <TextBlock Text="TPS" FontSize="10" FontWeight="Bold" LetterSpacing="1"
                        Foreground="{DynamicResource ALife.TextDimBrush}" VerticalAlignment="Center"/>
             <TextBlock Name="TpsLabel" Text="---"
@@ -95,39 +110,8 @@
 
         <Separator DockPanel.Dock="Left" Width="1" Margin="8,4" Background="{DynamicResource ALife.BorderBrush}"/>
 
-        <!-- Zoom controls -->
-        <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
-          <TextBlock Text="Zoom:" FontSize="11"
-                     Foreground="{DynamicResource ALife.TextSecondaryBrush}" VerticalAlignment="Center"/>
-          <TextBlock Name="ZoomLabel" Text="1.00×"
-                     FontFamily="Consolas" FontSize="12" MinWidth="52"
-                     Foreground="{DynamicResource ALife.TextPrimaryBrush}" VerticalAlignment="Center"/>
-          <Button Name="ZoomOutButton" Click="ZoomOut_Click" Width="26"
-                  HorizontalContentAlignment="Center" ToolTip.Tip="Zoom out">−</Button>
-          <Button Name="ZoomInButton" Click="ZoomIn_Click" Width="26"
-                  HorizontalContentAlignment="Center" ToolTip.Tip="Zoom in">+</Button>
-          <Button Name="ZoomResetButton" Click="ZoomReset_Click"
-                  ToolTip.Tip="Reset zoom and pan">Reset</Button>
-        </StackPanel>
-
-        <Separator DockPanel.Dock="Left" Width="1" Margin="8,4" Background="{DynamicResource ALife.BorderBrush}"/>
-
         <!-- World stats -->
         <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
-          <StackPanel Orientation="Horizontal" Spacing="4">
-            <TextBlock Text="Turn:" FontSize="11"
-                       Foreground="{DynamicResource ALife.TextSecondaryBrush}" VerticalAlignment="Center"/>
-            <TextBlock Text="{Binding TurnCount}" FontFamily="Consolas" FontSize="12"
-                       Foreground="{DynamicResource ALife.TextPrimaryBrush}" VerticalAlignment="Center"
-                       MinWidth="50"/>
-          </StackPanel>
-          <StackPanel Orientation="Horizontal" Spacing="4">
-            <TextBlock Text="Agents:" FontSize="11"
-                       Foreground="{DynamicResource ALife.TextSecondaryBrush}" VerticalAlignment="Center"/>
-            <TextBlock Text="{Binding AgentsActive}" FontFamily="Consolas" FontSize="12"
-                       Foreground="{DynamicResource ALife.TextPrimaryBrush}" VerticalAlignment="Center"
-                       MinWidth="36"/>
-          </StackPanel>
           <StackPanel Orientation="Horizontal" Spacing="4">
             <TextBlock Text="Genes:" FontSize="11"
                        Foreground="{DynamicResource ALife.TextSecondaryBrush}" VerticalAlignment="Center"/>
@@ -357,6 +341,21 @@
                 ToolTip.Tip="Fast-forward without rendering">⏩</Button>
         <TextBlock Text="turns (headless)" FontSize="9" FontStyle="Italic"
                    Foreground="{DynamicResource ALife.TextDimBrush}" VerticalAlignment="Center"/>
+
+        <Separator Width="1" Margin="2,4" Background="{DynamicResource ALife.BorderBrush}"/>
+
+        <!-- Zoom controls -->
+        <TextBlock Text="Zoom:" FontSize="11"
+                   Foreground="{DynamicResource ALife.TextSecondaryBrush}" VerticalAlignment="Center"/>
+        <TextBlock Name="ZoomLabel" Text="1.00×"
+                   FontFamily="Consolas" FontSize="12" MinWidth="52"
+                   Foreground="{DynamicResource ALife.TextPrimaryBrush}" VerticalAlignment="Center"/>
+        <Button Name="ZoomOutButton" Click="ZoomOut_Click" Width="26"
+                HorizontalContentAlignment="Center" ToolTip.Tip="Zoom out">−</Button>
+        <Button Name="ZoomInButton" Click="ZoomIn_Click" Width="26"
+                HorizontalContentAlignment="Center" ToolTip.Tip="Zoom in">+</Button>
+        <Button Name="ZoomResetButton" Click="ZoomReset_Click"
+                ToolTip.Tip="Reset zoom and pan">⌖ Reset</Button>
 
       </StackPanel>
     </Border>

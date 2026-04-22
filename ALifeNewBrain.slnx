@@ -1,0 +1,57 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="ARM" />
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Assets/">
+    <File Path="Assets/ConsoleSplash.ico" />
+    <File Path="Assets/ConsoleSplash.png" />
+    <File Path="Assets/GuiSplash.ico" />
+    <File Path="Assets/GuiSplash.png" />
+    <File Path="Runners/UWP/ALifeUniv/PackageAssets/splashscreen.scale-200.png" />
+  </Folder>
+  <Folder Name="/Core/">
+    <Project Path="Core/ALife.Core/ALife.Core.csproj" />
+    <Project Path="Core/ALife.Rendering/ALife.Rendering.csproj" />
+    <Project Path="Core/ALife.Tests/ALife.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Documentation/">
+    <File Path="Documentation/NewConfig.txt" />
+    <File Path="Documentation/Roadmap2024.md" />
+    <File Path="Documentation/ValuableLinks.txt" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Documentation/DocumentationArtifacts/">
+    <File Path="Documentation/DocumentationArtifacts/Config.txt" />
+    <File Path="Documentation/DocumentationArtifacts/HighLevelFeatureScratchpad.txt" />
+    <File Path="Documentation/DocumentationArtifacts/Roadmap.md" />
+  </Folder>
+  <Folder Name="/Runners/">
+    <Project Path="Runners/ScenarioRunner/ScenarioRunner.csproj" />
+  </Folder>
+  <Folder Name="/Runners/Avalonia/">
+    <Project Path="Runners/Avalonia/ALife.Avalonia.Desktop/ALife.Avalonia.Desktop.csproj" />
+    <Project Path="Runners/Avalonia/ALife.Avalonia/ALife.Avalonia.csproj" />
+  </Folder>
+  <Folder Name="/Runners/Avalonia2/" />
+  <Folder Name="/Runners/UWP/">
+    <Project Path="Runners/UWP/ALifeUniv.csproj">
+      <Platform Solution="*|ARM" Project="ARM" />
+      <Platform Solution="*|ARM64" Project="ARM64" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Deploy />
+    </Project>
+  </Folder>
+  <Folder Name="/SolutionItems/">
+    <File Path=".gitignore" />
+  </Folder>
+  <Folder Name="/Xperiments/">
+    <Project Path="RunningDots/RunningDots.csproj">
+      <Platform Solution="Debug|x64" Project="x64" />
+    </Project>
+  </Folder>
+</Solution>

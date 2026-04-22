@@ -29,6 +29,7 @@ Reaching 3/4 resets death timer, and reproduces twice at the start line.
 Reaching the finish line, reproduces 3 times and then dies... Victorious!"
     )]
     [SuggestedSeed(1832460063, "Fun scenario!!!")]
+    [SuggestedSeed(1188464775, "Claude Rework Seed")]
     public class CarTrackMaze : IScenario
     {
         /******************/

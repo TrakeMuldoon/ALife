@@ -7,18 +7,19 @@
         Title="{Binding BrainViewerTitle}"
         Width="800" Height="600"
         MinWidth="400" MinHeight="300"
-        Background="#1E1E1E">
+        Background="{DynamicResource ALife.VoidBrush}">
   <Grid RowDefinitions="Auto,*">
 
-    <Border Grid.Row="0" Background="#2D4A6A" Padding="10,7">
-      <TextBlock Text="{Binding AgentName}" FontSize="13" FontWeight="Bold" Foreground="White"/>
+    <Border Grid.Row="0" Background="{DynamicResource ALife.ElevatedBrush}" Padding="10,7">
+      <TextBlock Text="{Binding AgentName}" FontSize="13" FontWeight="Bold"
+                 Foreground="{DynamicResource ALife.BioTealBrush}"/>
     </Border>
 
     <!-- No agent selected -->
     <TextBlock Grid.Row="1"
                Text="No agent selected. Click an agent in the simulation to inspect its brain."
                IsVisible="{Binding !HasSelectedAgent}"
-               TextWrapping="Wrap" Foreground="#666" FontStyle="Italic"
+               TextWrapping="Wrap" Foreground="{DynamicResource ALife.TextDimBrush}" FontStyle="Italic"
                VerticalAlignment="Center" HorizontalAlignment="Center"
                Margin="24"/>
 
@@ -26,7 +27,7 @@
     <ScrollViewer Grid.Row="1" IsVisible="{Binding HasBehaviourBrain}"
                   VerticalScrollBarVisibility="Auto">
       <TextBlock Text="{Binding AgentBrain}"
-                 FontFamily="Consolas" FontSize="12" Foreground="#CCC"
+                 FontFamily="Consolas" FontSize="12" Foreground="{DynamicResource ALife.TextPrimaryBrush}"
                  TextWrapping="Wrap" Margin="12"/>
     </ScrollViewer>
 

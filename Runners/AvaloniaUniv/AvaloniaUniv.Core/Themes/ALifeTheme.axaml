@@ -1,0 +1,164 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Styles.Resources>
+    <ResourceDictionary>
+      <!-- ===================================================
+           Abiogenesis — inspired by the origin of digital life
+           Deep void from which bioluminescent organisms emerge
+           =================================================== -->
+
+      <!-- Backgrounds: the dark void and ocean depths -->
+      <Color x:Key="ALife.Void">#08111A</Color>
+      <Color x:Key="ALife.DeepOcean">#0C1820</Color>
+      <Color x:Key="ALife.Panel">#111E2A</Color>
+      <Color x:Key="ALife.Section">#152233</Color>
+      <Color x:Key="ALife.Elevated">#1B2E40</Color>
+      <Color x:Key="ALife.InputBg">#0A1420</Color>
+      <Color x:Key="ALife.WorldCanvas">#091422</Color>
+
+      <!-- Life: bioluminescent organism colors -->
+      <Color x:Key="ALife.BioTeal">#00E0B8</Color>
+      <Color x:Key="ALife.BioTealDark">#00A888</Color>
+      <Color x:Key="ALife.BioTealDim">#007A64</Color>
+      <Color x:Key="ALife.BioGreen">#5EC85E</Color>
+      <Color x:Key="ALife.BioGreenDark">#1A5A1A</Color>
+      <Color x:Key="ALife.Danger">#6B1818</Color>
+      <Color x:Key="ALife.Amber">#E8A030</Color>
+
+      <!-- Text: cool near-white with slight teal tint -->
+      <Color x:Key="ALife.TextPrimary">#BDD8D0</Color>
+      <Color x:Key="ALife.TextSecondary">#6AA09A</Color>
+      <Color x:Key="ALife.TextDim">#3A6860</Color>
+
+      <!-- Borders: subtle separation in the void -->
+      <Color x:Key="ALife.Border">#1A3344</Color>
+      <Color x:Key="ALife.BorderHover">#26506A</Color>
+
+      <!-- Brushes -->
+      <SolidColorBrush x:Key="ALife.VoidBrush"           Color="{StaticResource ALife.Void}" />
+      <SolidColorBrush x:Key="ALife.DeepOceanBrush"      Color="{StaticResource ALife.DeepOcean}" />
+      <SolidColorBrush x:Key="ALife.PanelBrush"          Color="{StaticResource ALife.Panel}" />
+      <SolidColorBrush x:Key="ALife.SectionBrush"        Color="{StaticResource ALife.Section}" />
+      <SolidColorBrush x:Key="ALife.ElevatedBrush"       Color="{StaticResource ALife.Elevated}" />
+      <SolidColorBrush x:Key="ALife.InputBgBrush"        Color="{StaticResource ALife.InputBg}" />
+      <SolidColorBrush x:Key="ALife.WorldCanvasBrush"    Color="{StaticResource ALife.WorldCanvas}" />
+      <SolidColorBrush x:Key="ALife.BioTealBrush"        Color="{StaticResource ALife.BioTeal}" />
+      <SolidColorBrush x:Key="ALife.BioTealDarkBrush"    Color="{StaticResource ALife.BioTealDark}" />
+      <SolidColorBrush x:Key="ALife.BioGreenBrush"       Color="{StaticResource ALife.BioGreen}" />
+      <SolidColorBrush x:Key="ALife.BioGreenDarkBrush"   Color="{StaticResource ALife.BioGreenDark}" />
+      <SolidColorBrush x:Key="ALife.DangerBrush"         Color="{StaticResource ALife.Danger}" />
+      <SolidColorBrush x:Key="ALife.AmberBrush"          Color="{StaticResource ALife.Amber}" />
+      <SolidColorBrush x:Key="ALife.TextPrimaryBrush"    Color="{StaticResource ALife.TextPrimary}" />
+      <SolidColorBrush x:Key="ALife.TextSecondaryBrush"  Color="{StaticResource ALife.TextSecondary}" />
+      <SolidColorBrush x:Key="ALife.TextDimBrush"        Color="{StaticResource ALife.TextDim}" />
+      <SolidColorBrush x:Key="ALife.BorderBrush"         Color="{StaticResource ALife.Border}" />
+      <SolidColorBrush x:Key="ALife.BorderHoverBrush"    Color="{StaticResource ALife.BorderHover}" />
+
+      <!-- Fluent accent overrides: bioluminescent teal replaces system blue -->
+      <Color x:Key="SystemAccentColor">#00E0B8</Color>
+      <Color x:Key="SystemAccentColorDark1">#00A888</Color>
+      <Color x:Key="SystemAccentColorDark2">#007A64</Color>
+      <Color x:Key="SystemAccentColorDark3">#005040</Color>
+      <Color x:Key="SystemAccentColorLight1">#33E8C6</Color>
+      <Color x:Key="SystemAccentColorLight2">#66EED4</Color>
+      <Color x:Key="SystemAccentColorLight3">#99F4E2</Color>
+    </ResourceDictionary>
+  </Styles.Resources>
+
+  <!-- Window: the void -->
+  <Style Selector="Window">
+    <Setter Property="Background" Value="{StaticResource ALife.VoidBrush}" />
+  </Style>
+
+  <!-- All text: cool teal-white -->
+  <Style Selector="TextBlock">
+    <Setter Property="Foreground" Value="{StaticResource ALife.TextPrimaryBrush}" />
+  </Style>
+
+  <!-- Buttons: dark panels with bioluminescent text, glow on hover -->
+  <Style Selector="Button">
+    <Setter Property="Background" Value="{StaticResource ALife.ElevatedBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource ALife.BioTealBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource ALife.BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="3" />
+    <Setter Property="Padding" Value="8,4" />
+  </Style>
+  <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="#1E3A4E" />
+  </Style>
+  <Style Selector="Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="#0F2030" />
+  </Style>
+
+  <!-- TextBox: scientific data display -->
+  <Style Selector="TextBox">
+    <Setter Property="Background" Value="{StaticResource ALife.InputBgBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource ALife.TextPrimaryBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource ALife.BorderBrush}" />
+    <Setter Property="CaretBrush" Value="{StaticResource ALife.BioTealBrush}" />
+    <Setter Property="SelectionBrush" Value="#1A5A48" />
+    <Setter Property="CornerRadius" Value="2" />
+  </Style>
+  <Style Selector="TextBox:focus">
+    <Setter Property="BorderBrush" Value="{StaticResource ALife.BioTealDarkBrush}" />
+  </Style>
+
+  <!-- ListBox: dark habitat for list items -->
+  <Style Selector="ListBox">
+    <Setter Property="Background" Value="{StaticResource ALife.InputBgBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource ALife.BorderBrush}" />
+  </Style>
+  <Style Selector="ListBoxItem">
+    <Setter Property="Foreground" Value="{StaticResource ALife.TextPrimaryBrush}" />
+  </Style>
+  <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="#142030" />
+  </Style>
+  <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+    <Setter Property="Background" Value="#1A3A4A" />
+  </Style>
+  <Style Selector="ListBoxItem:selected:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="#204860" />
+  </Style>
+
+  <!-- ComboBox -->
+  <Style Selector="ComboBox">
+    <Setter Property="Background" Value="{StaticResource ALife.ElevatedBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource ALife.TextPrimaryBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource ALife.BorderBrush}" />
+  </Style>
+  <Style Selector="ComboBoxItem">
+    <Setter Property="Foreground" Value="{StaticResource ALife.TextPrimaryBrush}" />
+  </Style>
+
+  <!-- CheckBox: teal accent (SystemAccentColor handles the fill) -->
+  <Style Selector="CheckBox">
+    <Setter Property="Foreground" Value="{StaticResource ALife.TextPrimaryBrush}" />
+  </Style>
+
+  <!-- Slider: teal track -->
+  <Style Selector="Slider">
+    <Setter Property="Foreground" Value="{StaticResource ALife.BioTealBrush}" />
+  </Style>
+
+  <!-- Separator: border color -->
+  <Style Selector="Separator">
+    <Setter Property="Background" Value="{StaticResource ALife.BorderBrush}" />
+  </Style>
+
+  <!-- ScrollBar: fade into the void -->
+  <Style Selector="ScrollBar">
+    <Setter Property="Opacity" Value="0.5" />
+  </Style>
+  <Style Selector="ScrollBar:pointerover">
+    <Setter Property="Opacity" Value="1" />
+  </Style>
+
+  <!-- GridSplitter: subtle void divider -->
+  <Style Selector="GridSplitter">
+    <Setter Property="Background" Value="{StaticResource ALife.BorderBrush}" />
+  </Style>
+
+</Styles>

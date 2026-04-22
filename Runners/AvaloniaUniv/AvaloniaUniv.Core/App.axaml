@@ -10,5 +10,6 @@
 
     <Application.Styles>
         <FluentTheme />
+        <StyleInclude Source="avares://AvaloniaUniv.Core/Themes/ALifeTheme.axaml" />
     </Application.Styles>
 </Application>

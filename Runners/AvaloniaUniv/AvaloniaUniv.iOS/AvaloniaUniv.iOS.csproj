@@ -8,6 +8,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <BundleResource Include="Resources\AppIcon.png" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Avalonia.iOS" Version="12.0.1"/>
     </ItemGroup>
 

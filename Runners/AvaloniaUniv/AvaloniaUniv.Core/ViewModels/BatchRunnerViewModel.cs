@@ -1,8 +1,11 @@
+using ALife.Core;
 using ALife.Core.ScenarioRunners;
+using Avalonia.Threading;
 using AvaloniaUniv.Core.ALifeImplementations;
 using ReactiveUI;
 using System;
 using System.Threading;
+using System.Timers;
 
 namespace AvaloniaUniv.Core.ViewModels;
 
@@ -18,8 +21,12 @@ public class BatchRunnerViewModel : ViewModelBase
     private AvaloniaScenarioRunner? _scenarioRunner;
     private string _seedText;
     private string _state;
+    private string _tpsDisplay;
     private string _turnBatch;
     private string _updateFrequency;
+    private System.Timers.Timer? _tpsTimer;
+    private int _lastTurnSample;
+    private DateTime _lastSampleTime;
 
     public BatchRunnerViewModel()
     {
@@ -90,16 +97,34 @@ public class BatchRunnerViewModel : ViewModelBase
     public string ScenarioName { get; set; }
     public int? ScenarioSeed { get; set; }
 
+    public string ScenarioHeader => ScenarioSeed.HasValue
+        ? $"{ScenarioName}  ·  seed {ScenarioSeed}"
+        : ScenarioName;
+
+    public int SuccessfulSeedCount =>
+        string.IsNullOrWhiteSpace(_seedText) ? 0
+        : _seedText.Split('\n', StringSplitOptions.RemoveEmptyEntries).Length;
+
     public string SeedLog
     {
         get => _seedText;
-        set => this.RaiseAndSetIfChanged(ref _seedText, value);
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _seedText, value);
+            this.RaisePropertyChanged(nameof(SuccessfulSeedCount));
+        }
     }
 
     public string State
     {
         get => _state;
         set => this.RaiseAndSetIfChanged(ref _state, value);
+    }
+
+    public string TpsDisplay
+    {
+        get => _tpsDisplay;
+        set => this.RaiseAndSetIfChanged(ref _tpsDisplay, value);
     }
 
     public string TurnBatchCount
@@ -128,6 +153,8 @@ public class BatchRunnerViewModel : ViewModelBase
 
     public void StopRunner()
     {
+        StopTpsTimer();
+        TpsDisplay = string.Empty;
         State = "Stopped";
         CanStartRunner = true;
         CanRestartRunner = false;
@@ -149,10 +176,47 @@ public class BatchRunnerViewModel : ViewModelBase
         _consoleCaretIndex = 0;
         _consoleText = string.Empty;
         _seedText = string.Empty;
+        _tpsDisplay = string.Empty;
         _executionCount = Constants.DEFAULT_NUMBER_SEEDS_EXECUTED.ToString();
         _maxTurns = Constants.DEFAULT_TOTAL_TURNS.ToString();
         _turnBatch = Constants.DEFAULT_TURN_BATCH.ToString();
         _updateFrequency = Constants.DEFAULT_UPDATE_FREQUENCY.ToString();
+    }
+
+    private void StartTpsTimer()
+    {
+        _lastTurnSample = 0;
+        _lastSampleTime = DateTime.Now;
+        _tpsTimer = new System.Timers.Timer(500);
+        _tpsTimer.Elapsed += OnTpsTimerElapsed;
+        _tpsTimer.AutoReset = true;
+        _tpsTimer.Start();
+    }
+
+    private void StopTpsTimer()
+    {
+        _tpsTimer?.Stop();
+        _tpsTimer?.Dispose();
+        _tpsTimer = null;
+    }
+
+    private void OnTpsTimerElapsed(object? sender, ElapsedEventArgs e)
+    {
+        if (!Planet.HasWorld)
+            return;
+
+        int currentTurns = Planet.World.Turns;
+        DateTime now = DateTime.Now;
+        double elapsed = (now - _lastSampleTime).TotalSeconds;
+
+        if (elapsed > 0)
+        {
+            double tps = (currentTurns - _lastTurnSample) / elapsed;
+            Dispatcher.UIThread.Post(() => TpsDisplay = $"{tps:N0} TPS");
+        }
+
+        _lastTurnSample = currentTurns;
+        _lastSampleTime = now;
     }
 
     private (int, int, int, int) GetOrResetScenarioParameters()
@@ -190,5 +254,6 @@ public class BatchRunnerViewModel : ViewModelBase
         CanStartRunner = false;
         CanRestartRunner = true;
         CanStopRunner = true;
+        StartTpsTimer();
     }
 }

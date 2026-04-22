@@ -10,103 +10,202 @@
     <vm:LauncherViewModel />
   </Design.DataContext>
 
-  <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="50" />
-      <RowDefinition Height="*" />
-    </Grid.RowDefinitions>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="160" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
 
-    <!-- Header -->
-    <Border Grid.Row="0" Background="#1A3A5C" Padding="16,0">
-      <TextBlock Text="ALife Universe — Scenario Launcher"
-                 FontSize="20" FontWeight="Bold"
-                 VerticalAlignment="Center" Foreground="White"/>
+    <!-- ── Navigation sidebar ── -->
+    <Border Grid.Column="0"
+            Background="{DynamicResource ALife.PanelBrush}"
+            BorderBrush="{DynamicResource ALife.BorderBrush}"
+            BorderThickness="0,0,1,0">
+      <DockPanel>
+
+        <!-- Branding -->
+        <StackPanel DockPanel.Dock="Top" Margin="14,22,14,14" Spacing="2">
+          <TextBlock Text="ALife" FontSize="24" FontWeight="Bold"
+                     Foreground="{DynamicResource ALife.BioTealBrush}"/>
+          <TextBlock Text="Artificial Life Simulator" FontSize="7" FontWeight="Bold" LetterSpacing="2"
+                     Foreground="{DynamicResource ALife.TextDimBrush}"/>
+        </StackPanel>
+
+        <Separator DockPanel.Dock="Top" Margin="14,0,14,8"/>
+
+        <!-- Nav items -->
+        <StackPanel DockPanel.Dock="Top" Spacing="1">
+
+          <!-- New Simulation — active -->
+          <Border Background="{DynamicResource ALife.SectionBrush}">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Rectangle Grid.Column="0" Fill="{DynamicResource ALife.BioTealBrush}"/>
+              <StackPanel Grid.Column="1" Orientation="Horizontal"
+                          Margin="10,10,10,10" Spacing="8">
+                <TextBlock Text="▶" FontSize="11" VerticalAlignment="Center"
+                           Foreground="{DynamicResource ALife.BioTealBrush}"/>
+                <TextBlock Text="New Simulation" FontSize="12" FontWeight="SemiBold"
+                           VerticalAlignment="Center"
+                           Foreground="{DynamicResource ALife.BioTealBrush}"/>
+              </StackPanel>
+            </Grid>
+          </Border>
+
+          <!-- Load Save — coming soon -->
+          <Border Opacity="0.4" ToolTip.Tip="Coming soon">
+            <StackPanel Margin="13,10,10,10" Spacing="8" Orientation="Horizontal">
+              <TextBlock Text="⬆" FontSize="11" VerticalAlignment="Center"
+                         Foreground="{DynamicResource ALife.TextSecondaryBrush}"/>
+              <StackPanel Spacing="1" VerticalAlignment="Center">
+                <TextBlock Text="Load Save" FontSize="12"
+                           Foreground="{DynamicResource ALife.TextSecondaryBrush}"/>
+                <TextBlock Text="coming soon" FontSize="9" FontStyle="Italic"
+                           Foreground="{DynamicResource ALife.TextDimBrush}"/>
+              </StackPanel>
+            </StackPanel>
+          </Border>
+
+          <!-- Settings — coming soon -->
+          <Border Opacity="0.4" ToolTip.Tip="Coming soon">
+            <StackPanel Margin="13,10,10,10" Spacing="8" Orientation="Horizontal">
+              <TextBlock Text="⚙" FontSize="11" VerticalAlignment="Center"
+                         Foreground="{DynamicResource ALife.TextSecondaryBrush}"/>
+              <StackPanel Spacing="1" VerticalAlignment="Center">
+                <TextBlock Text="Settings" FontSize="12"
+                           Foreground="{DynamicResource ALife.TextSecondaryBrush}"/>
+                <TextBlock Text="coming soon" FontSize="9" FontStyle="Italic"
+                           Foreground="{DynamicResource ALife.TextDimBrush}"/>
+              </StackPanel>
+            </StackPanel>
+          </Border>
+
+        </StackPanel>
+
+        <!-- Exit button pinned to sidebar bottom -->
+        <Button DockPanel.Dock="Bottom"
+                Name="ExitButton" Click="Exit_Click"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                Margin="14,0,14,14"
+                Foreground="{DynamicResource ALife.AmberBrush}"
+                ToolTip.Tip="Quit">
+          ✕  Exit
+        </Button>
+
+        <!-- Fills remaining sidebar space -->
+        <Grid DockPanel.Dock="Bottom"/>
+      </DockPanel>
     </Border>
 
-    <!-- Main 3-column grid -->
-    <Grid Grid.Row="1" Margin="8">
+    <!-- ── Content area ── -->
+    <Grid Grid.Column="1" Margin="14">
       <Grid.ColumnDefinitions>
-        <ColumnDefinition MinWidth="200" Width="*" />
-        <ColumnDefinition Width="8" />
-        <ColumnDefinition MinWidth="260" Width="*" />
-        <ColumnDefinition Width="8" />
-        <ColumnDefinition MinWidth="220" Width="0.8*" />
+        <!-- Scenario list -->
+        <ColumnDefinition Width="2*" MinWidth="200"/>
+        <ColumnDefinition Width="12"/>
+        <!-- Description + seed + launch -->
+        <ColumnDefinition Width="3*" MinWidth="280"/>
       </Grid.ColumnDefinitions>
 
-      <!-- Column 0: Scenario list -->
-      <Border Grid.Column="0" BorderBrush="#444" BorderThickness="1" CornerRadius="4">
-        <Grid>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="32" />
-            <RowDefinition Height="*" />
-          </Grid.RowDefinitions>
-          <Border Grid.Row="0" Background="#2D4A6A" CornerRadius="4,4,0,0" Padding="8,0">
-            <TextBlock Text="Available Scenarios" FontWeight="SemiBold"
-                       VerticalAlignment="Center" Foreground="White"/>
-          </Border>
-          <ListBox Name="ScenariosList" Grid.Row="1"
-                   ItemsSource="{Binding AvailableScenarios}"
-                   SelectionChanged="ScenariosList_SelectionChanged"
-                   SelectionMode="Single" Margin="0"/>
+      <!-- Left: Scenario list -->
+      <Grid Grid.Column="0">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="SCENARIOS" FontSize="10" FontWeight="Bold"
+                   LetterSpacing="1" Foreground="{DynamicResource ALife.BioTealBrush}"
+                   Margin="0,0,0,6"/>
+        <ListBox Name="ScenariosList" Grid.Row="1"
+                 ItemsSource="{Binding AvailableScenarios}"
+                 SelectionChanged="ScenariosList_SelectionChanged"
+                 SelectionMode="Single"
+                 BorderBrush="{DynamicResource ALife.BorderBrush}" BorderThickness="1"
+                 CornerRadius="4"/>
+      </Grid>
+
+      <!-- Right: Description → Seeds → Launch -->
+      <Grid Grid.Column="2">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>          <!-- Description label -->
+          <RowDefinition Height="170*" MinHeight="170"/>           <!-- Description text -->
+          <RowDefinition Height="14"/>            <!-- Gap -->
+          <RowDefinition Height="Auto"/>          <!-- Seeds label -->
+          <RowDefinition Height="60*" MinHeight="60"/>  <!-- Suggested seeds list -->
+          <RowDefinition Height="Auto"/>          <!-- Seed input row -->
+          <RowDefinition Height="Auto"/>          <!-- Options checkbox -->
+          <RowDefinition Height="16"/>            <!-- Gap before launch -->
+          <RowDefinition Height="44"/>            <!-- Launch buttons -->
+        </Grid.RowDefinitions>
+
+        <!-- Description -->
+        <TextBlock Grid.Row="0" Text="DESCRIPTION" FontSize="10" FontWeight="Bold"
+                   LetterSpacing="1" Foreground="{DynamicResource ALife.BioTealBrush}"
+                   Margin="0,0,0,6"/>
+        <TextBox Name="DescriptionText" Grid.Row="1"
+                 Text="{Binding SelectedScenarioDescription}"
+                 TextWrapping="Wrap" IsReadOnly="True"
+                 PlaceholderText="Select a scenario to see its description."
+                 BorderBrush="{DynamicResource ALife.BorderBrush}" BorderThickness="1"
+                 CornerRadius="4"/>
+
+        <!-- Suggested seeds -->
+        <TextBlock Grid.Row="3" Text="SUGGESTED SEEDS" FontSize="10" FontWeight="Bold"
+                   LetterSpacing="1" Foreground="{DynamicResource ALife.BioTealBrush}"
+                   Margin="0,0,0,6"/>
+        <ListBox Name="SeedSuggestions" Grid.Row="4"
+                 ItemsSource="{Binding SuggestedSeeds}"
+                 SelectionChanged="SeedSuggestions_SelectionChanged"
+                 SelectionMode="Single"
+                 BorderBrush="{DynamicResource ALife.BorderBrush}" BorderThickness="1"
+                 CornerRadius="4"/>
+
+        <!-- Seed input -->
+        <DockPanel Grid.Row="5" Margin="0,10,0,0">
+          <TextBlock DockPanel.Dock="Left" Text="Seed:" FontSize="11"
+                     Foreground="{DynamicResource ALife.TextSecondaryBrush}"
+                     VerticalAlignment="Center" Margin="0,0,8,0"/>
+          <TextBox Name="SeedText" Text="{Binding CurrentSeedText}"
+                   FontFamily="Consolas"
+                   PlaceholderText="numerical seed value"/>
+        </DockPanel>
+
+        <!-- Options -->
+        <CheckBox Name="AutoStartScenarioRunner" Grid.Row="6"
+                  IsChecked="{Binding AutoStartScenarioRunner}"
+                  Content="Auto-start Batch Runner"
+                  Margin="0,8,0,0"/>
+
+        <!-- Launch buttons -->
+        <Grid Grid.Row="8">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="8"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Button Grid.Column="0" Name="LaunchScenarioUI" Click="LaunchGui_Click"
+                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                  VerticalContentAlignment="Center"
+                  Background="{DynamicResource ALife.BioTealDarkBrush}"
+                  Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                  FontWeight="SemiBold"
+                  ToolTip.Tip="Open the interactive simulation viewer">
+            ▶  Scenario Viewer
+          </Button>
+          <Button Grid.Column="2" Name="LaunchScenarioRunner" Click="LaunchRunner_Click"
+                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                  VerticalContentAlignment="Center"
+                  FontWeight="SemiBold"
+                  ToolTip.Tip="Run many scenarios headlessly and collect results">
+            ⚙  Batch Runner
+          </Button>
         </Grid>
-      </Border>
 
-      <!-- Column 2: Description -->
-      <Border Grid.Column="2" BorderBrush="#444" BorderThickness="1" CornerRadius="4">
-        <Grid>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="32" />
-            <RowDefinition Height="*" />
-          </Grid.RowDefinitions>
-          <Border Grid.Row="0" Background="#2D4A6A" CornerRadius="4,4,0,0" Padding="8,0">
-            <TextBlock Text="Description" FontWeight="SemiBold"
-                       VerticalAlignment="Center" Foreground="White"/>
-          </Border>
-          <TextBox Name="DescriptionText" Grid.Row="1"
-                   Text="{Binding SelectedScenarioDescription}"
-                   TextWrapping="Wrap" IsReadOnly="True"
-                   BorderThickness="0" Margin="4"/>
-        </Grid>
-      </Border>
-
-      <!-- Column 4: Seeds + controls -->
-      <Border Grid.Column="4" BorderBrush="#444" BorderThickness="1" CornerRadius="4">
-        <Grid>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="32" />
-            <RowDefinition Height="*" MinHeight="120" />
-            <RowDefinition Height="Auto" />
-          </Grid.RowDefinitions>
-
-          <Border Grid.Row="0" Background="#2D4A6A" CornerRadius="4,4,0,0" Padding="8,0">
-            <TextBlock Text="Suggested Seeds" FontWeight="SemiBold"
-                       VerticalAlignment="Center" Foreground="White"/>
-          </Border>
-
-          <ListBox Name="SeedSuggestions" Grid.Row="1"
-                   ItemsSource="{Binding SuggestedSeeds}"
-                   SelectionChanged="SeedSuggestions_SelectionChanged"
-                   SelectionMode="Single" Margin="0"/>
-
-          <StackPanel Grid.Row="2" Margin="8" Spacing="6">
-            <TextBlock Text="Seed:" FontSize="11" Foreground="#AAA"/>
-            <TextBox Name="SeedText" Text="{Binding CurrentSeedText}"
-                     PlaceholderText="Enter a Numerical Seed Here"/>
-            <CheckBox Name="AutoStartScenarioRunner"
-                      IsChecked="{Binding AutoStartScenarioRunner}"
-                      Content="Auto-start Batch Runner"/>
-            <Button Name="LaunchScenarioUI" Click="LaunchGui_Click"
-                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-                    Background="#0078D4" Foreground="White">
-              ▶  Launch Scenario Viewer
-            </Button>
-            <Button Name="LaunchScenarioRunner" Click="LaunchRunner_Click"
-                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
-              ⚙  Launch Batch Runner
-            </Button>
-          </StackPanel>
-        </Grid>
-      </Border>
+      </Grid>
     </Grid>
+
   </Grid>
 </UserControl>

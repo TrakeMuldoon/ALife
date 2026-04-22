@@ -23,4 +23,5 @@ public partial class BatchRunnerView : UserControl
     public void Start_Click(object sender, RoutedEventArgs args) => Vm.StartRunner();
     public void Stop_Click(object sender, RoutedEventArgs args) => Vm.StopRunner();
     public void Restart_Click(object sender, RoutedEventArgs args) => Vm.StartRunner();
+    public void ClearConsole_Click(object sender, RoutedEventArgs args) => Vm.ConsoleLog = string.Empty;
 }

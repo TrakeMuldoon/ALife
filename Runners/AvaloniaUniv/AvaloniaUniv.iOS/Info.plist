@@ -4,6 +4,12 @@
 <dict>
 	<key>CFBundleDisplayName</key>
 	<string>AvaloniaApplication1</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>AppIcon</string>
+	</array>
 	<key>CFBundleIdentifier</key>
 	<string>companyName.AvaloniaApplication1</string>
 	<key>CFBundleShortVersionString</key>

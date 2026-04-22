@@ -1,5 +1,6 @@
 using ALife.Core.Scenarios;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
 using AvaloniaUniv.Core.ViewModels;
 
@@ -45,6 +46,12 @@ public partial class LauncherView : UserControl
     {
         string selected = ((ListBox)sender).SelectedItem?.ToString() ?? string.Empty;
         Vm.SelectSeed(selected);
+    }
+
+    public void Exit_Click(object sender, RoutedEventArgs args)
+    {
+        if (Avalonia.Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime app)
+            app.Shutdown();
     }
 
     private void StartSimulation(AutoStartMode mode)

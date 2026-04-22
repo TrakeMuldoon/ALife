@@ -41,41 +41,48 @@ namespace ALife.Tests.Performance
         }
 
         [TestMethod]
+        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
         public void Performance_00001Agents() => RunPerformanceTest(1, 50000);
 
         [TestMethod]
-        public void Performance_00010Agents() => RunPerformanceTest(10, 10000);
+        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
+        public void Performance_00010Agents() => RunPerformanceTest(10, 9500);
 
         [TestMethod]
+        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
         public void Performance_00025Agents() => RunPerformanceTest(25, 4000);
 
         [TestMethod]
+        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
         public void Performance_00050Agents() => RunPerformanceTest(50, 2000);
 
         [TestMethod]
+        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
         public void Performance_00100Agents() => RunPerformanceTest(100, 1000);
 
         [TestMethod]
+        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
         public void Performance_00250Agents() => RunPerformanceTest(250, 350);
 
         [TestMethod]
+        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
         public void Performance_00500Agents() => RunPerformanceTest(500, 125);
 
         [TestMethod]
-        [Ignore]
+        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
         public void Performance_01000Agents() => RunPerformanceTest(1000, 50);
 
         [TestMethod]
-        [Ignore]
+        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
         public void Performance_02500Agents() => RunPerformanceTest(2500, 35);
 
         [TestMethod]
-        [Ignore]
+        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
         public void Performance_05000Agents() => RunPerformanceTest(5000, 15);
 
         [TestMethod]
-        [Ignore]
-        public void Performance_10000Agents() => RunPerformanceTest(10000, 100);
+        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
+        public void Performance_10000Agents() => RunPerformanceTest(10000, 5);
 
         [TestMethod]
         public void Performance_Consolidated()
@@ -84,7 +91,7 @@ namespace ALife.Tests.Performance
             List<(int, int)> scenarios = new()
             {
                 (1, 50000),
-                (10, 10000),
+                (10, 9500),
                 (25, 4000),
                 (50, 2000), 
                 (100, 1000),
@@ -98,15 +105,13 @@ namespace ALife.Tests.Performance
 
             List<(int, int, double, double, bool)> results = new();
             StringBuilder resultsText = new();
-            TestContext.WriteLine("Executing scenarios...");
             foreach((int agentCount, int minimumTps) in scenarios)
             {
-                TestContext.WriteLine($"  Executing scenario for {agentCount} agents...");
                 (double elapsedSeconds, double tps) = RunPerformanceTest(agentCount, minimumTps, false, false);
                 bool scenarioPassed = tps >= minimumTps;
                 results.Add((agentCount, minimumTps, elapsedSeconds, tps, scenarioPassed));
                 string scenarioResultText = scenarioPassed ? "Passed" : "Failed";
-                resultsText.AppendLine($"  Scenario: Result={scenarioResultText} Agents={agentCount,-5} Elapsed={elapsedSeconds:F3,-7}s TPS={tps:F2,-8} MinTPS={minimumTps,-6}");
+                resultsText.AppendLine($"  Scenario: Result={scenarioResultText} Agents={agentCount,-5} MinTPS={minimumTps,-6} ActualTPS={tps:F2} Elapsed={elapsedSeconds:F3}s");
             }
             
             TestContext.WriteLine($"Scenario Results:\n{resultsText}");

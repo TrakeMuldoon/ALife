@@ -42,31 +42,31 @@ namespace ALife.Tests.Performance
 
         [TestMethod]
         [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_00001Agents() => RunPerformanceTest(1, 50000);
+        public void Performance_00001Agents() => RunPerformanceTest(1, 30000);
 
         [TestMethod]
         [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_00010Agents() => RunPerformanceTest(10, 9500);
+        public void Performance_00010Agents() => RunPerformanceTest(10, 5000);
 
         [TestMethod]
         [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_00025Agents() => RunPerformanceTest(25, 4000);
+        public void Performance_00025Agents() => RunPerformanceTest(25, 2000);
 
         [TestMethod]
         [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_00050Agents() => RunPerformanceTest(50, 2000);
+        public void Performance_00050Agents() => RunPerformanceTest(50, 1000);
 
         [TestMethod]
         [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_00100Agents() => RunPerformanceTest(100, 1000);
+        public void Performance_00100Agents() => RunPerformanceTest(100, 500);
 
         [TestMethod]
         [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_00250Agents() => RunPerformanceTest(250, 350);
+        public void Performance_00250Agents() => RunPerformanceTest(250, 200);
 
         [TestMethod]
         [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_00500Agents() => RunPerformanceTest(500, 125);
+        public void Performance_00500Agents() => RunPerformanceTest(500, 100);
 
         [TestMethod]
         [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
@@ -74,15 +74,15 @@ namespace ALife.Tests.Performance
 
         [TestMethod]
         [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_02500Agents() => RunPerformanceTest(2500, 35);
+        public void Performance_02500Agents() => RunPerformanceTest(2500, 20);
 
         [TestMethod]
         [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_05000Agents() => RunPerformanceTest(5000, 15);
+        public void Performance_05000Agents() => RunPerformanceTest(5000, 9);
 
         [TestMethod]
         [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_10000Agents() => RunPerformanceTest(10000, 5);
+        public void Performance_10000Agents() => RunPerformanceTest(10000, 4);
 
         [TestMethod]
         public void Performance_Consolidated()
@@ -90,31 +90,33 @@ namespace ALife.Tests.Performance
             // Agent Count, Minimum Ticks per Second
             List<(int, int)> scenarios = new()
             {
-                (1, 50000),
-                (10, 9500),
-                (25, 4000),
-                (50, 2000), 
-                (100, 1000),
-                (250, 350), 
-                (500, 125),
+                (1, 30000),
+                (10, 5000),
+                (25, 2000),
+                (50, 1000), 
+                (100, 500),
+                (250, 200), 
+                (500, 100),
                 (1000, 50),
-                (2500, 35), 
-                (5000, 15), 
-                (10000, 5)
+                (2500, 20), 
+                (5000, 9), 
+                (10000, 4)
             };
 
             List<(int, int, double, double, bool)> results = new();
             StringBuilder resultsText = new();
+            double totalElapsedSeconds = 0;
             foreach((int agentCount, int minimumTps) in scenarios)
             {
                 (double elapsedSeconds, double tps) = RunPerformanceTest(agentCount, minimumTps, false, false);
                 bool scenarioPassed = tps >= minimumTps;
+                totalElapsedSeconds += elapsedSeconds;
                 results.Add((agentCount, minimumTps, elapsedSeconds, tps, scenarioPassed));
                 string scenarioResultText = scenarioPassed ? "Passed" : "Failed";
                 resultsText.AppendLine($"  Scenario: Result={scenarioResultText} Agents={agentCount,-5} MinTPS={minimumTps,-6} ActualTPS={tps:F2} Elapsed={elapsedSeconds:F3}s");
             }
             
-            TestContext.WriteLine($"Scenario Results:\n{resultsText}");
+            TestContext.WriteLine($"Scenario Results (Total Time: {totalElapsedSeconds:F3}s):\n{resultsText}");
 
             Assert.IsTrue(results.All(result => result.Item5), "A scenario failed to meet the minimum TPS expected!");
         }

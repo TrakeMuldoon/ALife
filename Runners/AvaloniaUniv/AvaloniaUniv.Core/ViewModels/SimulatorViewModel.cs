@@ -5,6 +5,7 @@ using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 
 namespace AvaloniaUniv.Core.ViewModels;
@@ -18,6 +19,7 @@ public class SimulatorViewModel : ViewModelBase
     private int _fastForwardTicks;
     private double _fps;
     private int _genesActive;
+    private bool _isSelectedAgentAlive;
     private string _performancePerTickLabel = string.Empty;
     private string _scenarioName = string.Empty;
     private int _seed;
@@ -26,7 +28,9 @@ public class SimulatorViewModel : ViewModelBase
     private string _zoneInfo = string.Empty;
     private bool _showGeneology;
     private Agent? _selectedAgent;
+    private Agent? _selectedDescendant;
     private readonly ObservableCollection<Agent> _aliveAgents = new();
+    private readonly ObservableCollection<Agent> _descendantsOfSelected = new();
 
     public SimulatorViewModel()
     {
@@ -84,6 +88,8 @@ public class SimulatorViewModel : ViewModelBase
 
     public string ScenarioLabel => $"Scenario: {StartingScenarioName}";
 
+    public string ScenarioHeader => $"{StartingScenarioName}  ·  seed {StartingSeed}";
+
     public string StartingScenarioName
     {
         get => _scenarioName;
@@ -93,7 +99,11 @@ public class SimulatorViewModel : ViewModelBase
     public int StartingSeed
     {
         get => _seed;
-        set => this.RaiseAndSetIfChanged(ref _seed, value);
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _seed, value);
+            this.RaisePropertyChanged(nameof(ScenarioHeader));
+        }
     }
 
     public bool ShowGeneology
@@ -125,7 +135,66 @@ public class SimulatorViewModel : ViewModelBase
     public string ZoneInfo
     {
         get => _zoneInfo;
-        set => this.RaiseAndSetIfChanged(ref _zoneInfo, value);
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _zoneInfo, value);
+            this.RaisePropertyChanged(nameof(ZoneInfoCompact));
+        }
+    }
+
+    public string ZoneInfoCompact
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(_zoneInfo)) return "—";
+            return string.Join("  ", _zoneInfo
+                .Split('\n', StringSplitOptions.RemoveEmptyEntries)
+                .Select(l => l.Trim().Replace(": ", ":")));
+        }
+    }
+
+    public bool IsSelectedAgentAlive
+    {
+        get => _isSelectedAgentAlive;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _isSelectedAgentAlive, value);
+            this.RaisePropertyChanged(nameof(IsSelectedAgentDead));
+        }
+    }
+
+    public bool IsSelectedAgentDead => HasSelectedAgent && !_isSelectedAgentAlive;
+
+    public bool HasDescendants => _descendantsOfSelected.Count > 0;
+
+    public ObservableCollection<Agent> DescendantsOfSelected => _descendantsOfSelected;
+
+    public Agent? SelectedDescendant
+    {
+        get => _selectedDescendant;
+        set => this.RaiseAndSetIfChanged(ref _selectedDescendant, value);
+    }
+
+    public bool FreezeDescendantUpdates { get; set; }
+
+    public void UpdateDescendants(IEnumerable<Agent> allLivingAgents)
+    {
+        if (_selectedAgent == null || FreezeDescendantUpdates) return;
+        _descendantsOfSelected.Clear();
+        foreach (var a in allLivingAgents.Where(a => IsDescendantOf(a, _selectedAgent)))
+            _descendantsOfSelected.Add(a);
+        this.RaisePropertyChanged(nameof(HasDescendants));
+    }
+
+    private static bool IsDescendantOf(Agent agent, Agent ancestor)
+    {
+        Agent? current = agent.Parent;
+        while (current != null)
+        {
+            if (ReferenceEquals(current, ancestor)) return true;
+            current = current.Parent;
+        }
+        return false;
     }
 
     public ObservableCollection<Agent> AliveAgents => _aliveAgents;
@@ -145,6 +214,9 @@ public class SimulatorViewModel : ViewModelBase
         set
         {
             this.RaiseAndSetIfChanged(ref _selectedAgent, value);
+            _isSelectedAgentAlive = value?.Alive ?? false;
+            _descendantsOfSelected.Clear();
+            _selectedDescendant = null;
             this.RaisePropertyChanged(nameof(AgentName));
             this.RaisePropertyChanged(nameof(AgentLocation));
             this.RaisePropertyChanged(nameof(AgentSenses));
@@ -154,6 +226,9 @@ public class SimulatorViewModel : ViewModelBase
             this.RaisePropertyChanged(nameof(HasNeuralBrain));
             this.RaisePropertyChanged(nameof(HasBehaviourBrain));
             this.RaisePropertyChanged(nameof(BrainViewerTitle));
+            this.RaisePropertyChanged(nameof(IsSelectedAgentAlive));
+            this.RaisePropertyChanged(nameof(IsSelectedAgentDead));
+            this.RaisePropertyChanged(nameof(HasDescendants));
         }
     }
 
@@ -231,6 +306,8 @@ public class SimulatorViewModel : ViewModelBase
         this.RaisePropertyChanged(nameof(AgentSenses));
         this.RaisePropertyChanged(nameof(AgentActions));
         this.RaisePropertyChanged(nameof(AgentBrain));
+        this.RaisePropertyChanged(nameof(IsSelectedAgentAlive));
+        this.RaisePropertyChanged(nameof(IsSelectedAgentDead));
     }
 
     private void InitDefaults()
@@ -246,5 +323,6 @@ public class SimulatorViewModel : ViewModelBase
         _agentsActive = 0;
         _fastForwardTicks = 200;
         _showGeneology = false;
+        _isSelectedAgentAlive = false;
     }
 }

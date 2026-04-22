@@ -18,6 +18,7 @@ public partial class SimulatorView : UserControl, IDisposable
     private CancellationTokenSource _cts = new();
     private Task? _perfUpdateTask;
     private bool _disposed;
+    private bool _wasRunningBeforeDescendantOpen;
     private BrainViewerWindow? _brainViewer;
 
     public SimulatorView()
@@ -29,6 +30,7 @@ public partial class SimulatorView : UserControl, IDisposable
         AgentUI.DataContext = TheWorldCanvas.Simulation.AgentUiSettings;
 
         ZoomBorder.ZoomChanged += (_, _) => UpdateZoomLabel();
+        TheWorldCanvas.AllAgentsDied += (_, _) => SetRunState(false);
 
         SetRunState(true);
 
@@ -62,8 +64,7 @@ public partial class SimulatorView : UserControl, IDisposable
         Reset_Click(sender, args);
     }
 
-    public void Pause_Click(object sender, RoutedEventArgs args) => SetRunState(false);
-    public void Play_Click(object sender, RoutedEventArgs args) => SetRunState(true);
+    public void PlayPause_Click(object sender, RoutedEventArgs args) => SetRunState(!TheWorldCanvas.IsEnabled);
 
     public void OneTurn_Click(object sender, RoutedEventArgs args)
     {
@@ -149,11 +150,35 @@ public partial class SimulatorView : UserControl, IDisposable
 
     private void AgentComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (sender is not ComboBox cb) return;
-        if (cb.SelectedItem is not Agent agent) return;
-
+        if (sender is not ComboBox cb || cb.SelectedItem is not Agent agent) return;
         Vm.SelectedAgent = agent;
         TheWorldCanvas.SetSelectedAgent(agent);
+    }
+
+    private void DescendantComboBox_DropDownOpened(object sender, EventArgs e)
+    {
+        _wasRunningBeforeDescendantOpen = TheWorldCanvas.IsEnabled;
+        Vm.FreezeDescendantUpdates = true;
+        SetRunState(false);
+    }
+
+    private void DescendantComboBox_DropDownClosed(object sender, EventArgs e)
+    {
+        Vm.FreezeDescendantUpdates = false;
+        if (_wasRunningBeforeDescendantOpen)
+            SetRunState(true);
+    }
+
+    private void DescendantComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (sender is not ComboBox cb || cb.SelectedItem is not Agent agent) return;
+        // Defer until after the SelectionChanged event finishes — the SelectedAgent setter
+        // clears DescendantsOfSelected, which crashes if the ComboBox is still mid-event.
+        Dispatcher.UIThread.Post(() =>
+        {
+            Vm.SelectedAgent = agent;
+            TheWorldCanvas.SetSelectedAgent(agent);
+        });
     }
 
     private void AgentComboBox_DropDownOpened(object sender, EventArgs e)
@@ -161,7 +186,8 @@ public partial class SimulatorView : UserControl, IDisposable
         if (!ALife.Core.Planet.HasWorld) return;
         var agents = ALife.Core.Planet.World.AllActiveObjects
             .OfType<Agent>()
-            .Where(ag => ag.Alive);
+            .Where(ag => ag.Alive)
+            .OrderBy(ag => TheWorldCanvas.GetBirthTurn(ag.IndividualLabel));
         Vm.UpdateAliveAgents(agents);
         if (sender is ComboBox cb)
             cb.SelectedItem = Vm.SelectedAgent;
@@ -184,8 +210,7 @@ public partial class SimulatorView : UserControl, IDisposable
         TheWorldCanvas.IsEnabled = running;
         if (Vm != null) Vm.IsEnabled = running;
 
-        PauseButton.IsEnabled = running;
-        PlayButton.IsEnabled = !running;
+        PlayPauseButton.Content = running ? "⏸ Pause" : "▶ Resume";
         OneTurnButton.IsEnabled = !running;
     }
 
@@ -197,8 +222,11 @@ public partial class SimulatorView : UserControl, IDisposable
             {
                 Dispatcher.UIThread.Post(() =>
                 {
-                    if (Vm != null)
-                        PerformanceLabel.Text = Vm.PerformancePerTickLabel;
+                    if (Vm == null) return;
+                    double tps = Vm.TicksPerSecond;
+                    double fps = Vm.FramesPerSecond;
+                    TpsLabel.Text = tps > 0 ? $"{tps:N0}" : "---";
+                    FpsLabel.Text = fps > 0 ? $"{fps:0.00}" : "---";
                 });
             }
             catch { }

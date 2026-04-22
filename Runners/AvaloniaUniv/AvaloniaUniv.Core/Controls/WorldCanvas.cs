@@ -42,7 +42,12 @@ public class WorldCanvas : Control
     private WorldObject? _special;
     private int _specialCounter;
     private bool _showGeneology;
+    private readonly Dictionary<string, int> _agentBirthTurns = new();
     public DispatcherTimer? Timer { get; private set; }
+    public event EventHandler? AllAgentsDied;
+
+    public int GetBirthTurn(string individualLabel) =>
+        _agentBirthTurns.TryGetValue(individualLabel, out int t) ? t : int.MaxValue;
 
     static WorldCanvas()
     {
@@ -234,6 +239,7 @@ public class WorldCanvas : Control
         int agentCount = 0;
         var geneCount = new Dictionary<string, int>();
 
+        var livingAgents = new List<Agent>();
         foreach (var wo in Planet.World.AllActiveObjects)
         {
             if (wo is Agent ag && ag.Alive)
@@ -243,14 +249,22 @@ public class WorldCanvas : Control
                 string gene = ag.IndividualLabel[..Math.Min(3, ag.IndividualLabel.Length)];
                 geneCount.TryAdd(gene, 0);
                 geneCount[gene]++;
+                _agentBirthTurns.TryAdd(ag.IndividualLabel, TurnCount);
+                livingAgents.Add(ag);
             }
         }
 
         _vm.AgentsActive = agentCount;
         _vm.GenesActive = geneCount.Count;
 
-        if (_vm.SelectedAgent != null && !_vm.SelectedAgent.Alive)
-            _vm.SelectedAgent = null;
+        if (agentCount == 0 && IsEnabled)
+            AllAgentsDied?.Invoke(this, EventArgs.Empty);
+
+        if (_vm.SelectedAgent != null)
+        {
+            _vm.IsSelectedAgentAlive = _vm.SelectedAgent.Alive;
+            _vm.UpdateDescendants(livingAgents.OrderBy(a => GetBirthTurn(a.IndividualLabel)));
+        }
 
         if (zoneCount.Count > 0)
         {

@@ -88,7 +88,7 @@ public class SimulatorViewModel : ViewModelBase
 
     public string ScenarioLabel => $"Scenario: {StartingScenarioName}";
 
-    public string ScenarioHeader => $"{StartingScenarioName}  ·  seed {StartingSeed}";
+    public string ScenarioHeader => StartingScenarioName;
 
     public string StartingScenarioName
     {

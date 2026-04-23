@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>AvaloniaApplication1</string>
+	<string>ALife.Avalonia.iOS</string>
 	<key>CFBundleIconFile</key>
 	<string>AppIcon</string>
 	<key>CFBundleIconFiles</key>
@@ -11,7 +11,7 @@
 		<string>AppIcon</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>companyName.AvaloniaApplication1</string>
+	<string>TrakeMuldoon.ALife</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>

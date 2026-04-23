@@ -94,16 +94,14 @@ namespace ALife.Rendering
                     return;
                 }
 
-                if(ViewPast && SpecialObject != null)
+                
+                if(SpecialObject is not null && ViewPast)
                 {
                     RenderLogic.DrawPastState(ui, aui, renderer, SpecialObject.ExecutionOrder);
                 }
-                else
+                foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
                 {
-                    foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
-                    {
-                        RenderLogic.DrawWorldObject(wo, ui, aui, renderer);
-                    }
+                    RenderLogic.DrawWorldObject(wo, ui, aui, renderer);
                 }
             }
             catch(Exception)

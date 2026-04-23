@@ -199,7 +199,7 @@ public partial class SimulatorView : UserControl, IDisposable
         if (!_disposed)
         {
             _cts.Cancel();
-            TheWorldCanvas.Timer?.Stop();
+            TheWorldCanvas.StopAll();
             _brainViewer?.Close();
             _disposed = true;
         }

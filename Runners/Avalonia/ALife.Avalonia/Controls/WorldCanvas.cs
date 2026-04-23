@@ -13,8 +13,10 @@ using Avalonia.Media;
 using Avalonia.Threading;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using ALPoint = ALife.Core.Geometry.Shapes.Point;
 using AvPoint = Avalonia.Point;
 
@@ -34,6 +36,22 @@ public class WorldCanvas : Control
     public static readonly DirectProperty<WorldCanvas, int> TurnCountProperty =
         AvaloniaProperty.RegisterDirect<WorldCanvas, int>(nameof(TurnCount), x => x.TurnCount);
 
+    // Protects Planet.World between the sim thread and the UI thread.
+    private readonly object _worldLock = new();
+
+    // Sim thread state — all readable from the background thread without UI-thread access.
+    private Thread? _simThread;
+    private volatile bool _simThreadRunning;
+    private volatile bool _isRunning;   // mirrors IsEnabled, updated via OnPropertyChanged
+
+    // volatile double is not legal in C# — store as long bits via Interlocked instead.
+    private long TargetSpeedBits = BitConverter.DoubleToInt64Bits((int)SimulationSpeed.Normal);
+    private double TargetSpeed
+    {
+        get => BitConverter.Int64BitsToDouble(Interlocked.Read(ref TargetSpeedBits));
+        set => Interlocked.Exchange(ref TargetSpeedBits, BitConverter.DoubleToInt64Bits(value));
+    }
+
     private bool _enabled;
     private AvaloniaRenderer? _renderer;
     private readonly RenderedSimulationController _simulation = new();
@@ -44,7 +62,10 @@ public class WorldCanvas : Control
     private bool _showGeneology;
     private readonly Dictionary<string, int> _agentBirthTurns = new();
     private int _zeroAgentTicks;
-    public DispatcherTimer? Timer { get; private set; }
+
+    // Single 60 Hz timer: handles init detection, render triggers, and VM updates.
+    private readonly DispatcherTimer _uiTimer;
+
     public event EventHandler? AllAgentsDied;
 
     public int GetBirthTurn(string individualLabel) =>
@@ -57,9 +78,16 @@ public class WorldCanvas : Control
 
     public WorldCanvas()
     {
-        SetSimulationSpeed((int)SimulationSpeed.Normal);
+        TargetSpeed = (int)SimulationSpeed.Normal;
+
+        _uiTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1.0 / 60.0) };
+        _uiTimer.Tick += OnUiTick;
+        _uiTimer.Start();
+
         Focusable = true;
     }
+
+    // ── Public API ───────────────────────────────────────────────────────────
 
     public bool Enabled
     {
@@ -105,25 +133,35 @@ public class WorldCanvas : Control
         InvalidateVisual();
     }
 
+    // Manual single-step (used when paused).
     public void ExecuteTick()
     {
         if (!_simulation.IsInitialized) return;
-        Planet.World.ExecuteOneTurn();
+        lock (_worldLock)
+            Planet.World.ExecuteOneTurn();
         TurnCount = Planet.World.Turns;
     }
 
+    // Speed change: just update the target — the sim thread picks it up on the next cycle.
     public void SetSimulationSpeed(double speed)
     {
-        if (Planet.HasWorld) Planet.World.SimulationPerformance?.ClearBuffer();
+        TargetSpeed = speed;
+        if (Planet.HasWorld)
+        {
+            lock (_worldLock)
+                Planet.World.SimulationPerformance?.ClearBuffer();
+        }
         _simulation.FpsCounter?.ClearBuffer();
+    }
 
-        Timer?.Stop();
-        var interval = double.IsInfinity(speed)
-            ? TimeSpan.FromMilliseconds(1)
-            : TimeSpan.FromSeconds(1.0 / speed);
-        Timer = new DispatcherTimer { Interval = interval };
-        Timer.Tick += OnTimerTick;
-        Timer.Start();
+    // Called by SimulatorView.Dispose.
+    public void StopAll()
+    {
+        _simThreadRunning = false;
+        _isRunning = false;
+        _uiTimer.Stop();
+        _simThread?.Join(500);
+        _simThread = null;
     }
 
     public override void Render(DrawingContext drawingContext)
@@ -134,6 +172,107 @@ public class WorldCanvas : Control
             return;
         }
 
+        // Always lock: sim thread may be writing world state concurrently.
+        lock (_worldLock)
+            RenderCore(drawingContext);
+    }
+
+    // ── Avalonia overrides ───────────────────────────────────────────────────
+
+    // Sync _isRunning (sim-thread-readable) with IsEnabled (UI-thread-only).
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+        if (change.Property == IsEnabledProperty && change.NewValue is bool enabled)
+            _isRunning = enabled;
+    }
+
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        base.OnKeyDown(e);
+        if (e.Key == Key.X)
+        {
+            _simulation.ViewPast = true;
+            InvalidateVisual();
+        }
+    }
+
+    protected override void OnKeyUp(KeyEventArgs e)
+    {
+        base.OnKeyUp(e);
+        if (e.Key == Key.X)
+        {
+            _simulation.ViewPast = false;
+            InvalidateVisual();
+        }
+    }
+
+    // ── Private ─────────────────────────────────────────────────────────────
+
+    // 60 Hz UI-thread callback: initializes on first call, then drives render + VM.
+    private void OnUiTick(object? sender, EventArgs e)
+    {
+        if (!_simulation.IsInitialized)
+        {
+            var vm = DataContext as SimulatorViewModel;
+            if (vm == null) return;
+
+            _vm = vm;
+            _simulation.InitializeSimulation();
+            Width = _simulation.SimulationWidth;
+            Height = _simulation.SimulationHeight;
+            _renderer = new AvaloniaRenderer();
+            PointerPressed += OnPointerPressed;
+
+            _isRunning = IsEnabled;
+            _simThreadRunning = true;
+            _simThread = new Thread(SimLoop) { IsBackground = true, Name = "ALife-Sim" };
+            _simThread.Start();
+            return;
+        }
+
+        lock (_worldLock)
+        {
+            TurnCount = Planet.World.Turns; // triggers render via AffectsRender
+            UpdateViewModel();
+        }
+    }
+
+    // Sim loop: runs entirely on the background thread.
+    // Reads only volatile fields and _worldLock — never touches UI-thread-owned objects.
+    private void SimLoop()
+    {
+        var sw = Stopwatch.StartNew();
+        while (_simThreadRunning)
+        {
+            if (!_isRunning)
+            {
+                Thread.Sleep(5);
+                sw.Restart();
+                continue;
+            }
+
+            lock (_worldLock)
+                Planet.World.ExecuteOneTurn();
+
+            // Throttle for finite speeds ≤ 60 TPS; faster speeds run uncapped.
+            double speed = TargetSpeed;
+            if (!double.IsInfinity(speed) && speed <= 60.0)
+            {
+                double targetMs = 1000.0 / speed;
+                double sleepMs = targetMs - 15.0; // leave 15 ms for spin precision
+                if (sleepMs > 0)
+                    Thread.Sleep((int)sleepMs);
+                while (sw.Elapsed.TotalMilliseconds < targetMs)
+                    Thread.SpinWait(10);
+            }
+
+            sw.Restart();
+        }
+    }
+
+    private void RenderCore(DrawingContext drawingContext)
+    {
         _renderer!.SetContext(drawingContext);
         Planet p = Planet.World;
         _renderer.FillAARectangle(new ALPoint(0, 0), new ALPoint(p.WorldWidth, p.WorldHeight), Colour.PapayaWhip);
@@ -158,48 +297,6 @@ public class WorldCanvas : Control
         var pen = new Pen(Brushes.HotPink, 2);
         ctx.DrawEllipse(null, pen, new AvPoint(cir.CentrePoint.X, cir.CentrePoint.Y),
             cir.Radius + 6, cir.Radius + 6);
-    }
-
-    private void OnTimerTick(object? sender, EventArgs e)
-    {
-        if (!IsEnabled) return;
-
-        if (!_simulation.IsInitialized)
-        {
-            var vm = DataContext as SimulatorViewModel;
-            if (vm == null) return;
-            _vm = vm;
-            _simulation.InitializeSimulation();
-            Width = _simulation.SimulationWidth;
-            Height = _simulation.SimulationHeight;
-            _renderer = new AvaloniaRenderer();
-            PointerPressed += OnPointerPressed;
-        }
-        else
-        {
-            ExecuteTick();
-            UpdateViewModel();
-        }
-    }
-
-    protected override void OnKeyDown(KeyEventArgs e)
-    {
-        base.OnKeyDown(e);
-        if (e.Key == Key.X)
-        {
-            _simulation.ViewPast = true;
-            InvalidateVisual();
-        }
-    }
-
-    protected override void OnKeyUp(KeyEventArgs e)
-    {
-        base.OnKeyUp(e);
-        if (e.Key == Key.X)
-        {
-            _simulation.ViewPast = false;
-            InvalidateVisual();
-        }
     }
 
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
@@ -232,15 +329,14 @@ public class WorldCanvas : Control
         _vm.TicksPerSecond = Planet.World.SimulationPerformance.AverageFramesPerTicks;
         _vm.TurnCount = TurnCount;
 
-        // Zone and gene counts
         var zoneCount = new Dictionary<string, int>();
         foreach (var z in Planet.World.Zones.Values)
             zoneCount[z.Name] = 0;
 
         int agentCount = 0;
         var geneCount = new Dictionary<string, int>();
-
         var livingAgents = new List<Agent>();
+
         foreach (var wo in Planet.World.AllActiveObjects)
         {
             if (wo is Agent ag && ag.Alive)

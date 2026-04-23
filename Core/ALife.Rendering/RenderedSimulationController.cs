@@ -85,7 +85,7 @@ namespace ALife.Rendering
                     {
                         WorldObject obj = Planet.World.InactiveObjects[i];
                         RenderLogic.DrawInactiveObject(obj, ui, renderer);
-                    }
+                    } 
                     return;
                 }
 

@@ -255,16 +255,27 @@ public class WorldCanvas : Control
             lock (_worldLock)
                 Planet.World.ExecuteOneTurn();
 
-            // Throttle for finite speeds ≤ 60 TPS; faster speeds run uncapped.
             double speed = TargetSpeed;
-            if (!double.IsInfinity(speed) && speed <= 60.0)
+            if (double.IsInfinity(speed))
             {
+                // Unlimited: yield after every tick so the UI thread can acquire
+                // _worldLock for rendering. Without this the sim re-acquires the lock
+                // immediately and the render thread starves.
+                Thread.Sleep(0);
+            }
+            else
+            {
+                // Throttled: sleep for the bulk of the remaining interval (coarse),
+                // then spin for the last ≤15 ms (precision). We subtract elapsed tick
+                // time so the target interval is measured from the start of the tick.
                 double targetMs = 1000.0 / speed;
-                double sleepMs = targetMs - 15.0; // leave 15 ms for spin precision
-                if (sleepMs > 0)
-                    Thread.Sleep((int)sleepMs);
+                double remaining = targetMs - sw.Elapsed.TotalMilliseconds;
+                if (remaining > 15.0)
+                    Thread.Sleep((int)(remaining - 15));
                 while (sw.Elapsed.TotalMilliseconds < targetMs)
                     Thread.SpinWait(10);
+                // During both the sleep and the spin the lock is NOT held,
+                // so the UI thread is free to render at any point in this window.
             }
 
             sw.Restart();

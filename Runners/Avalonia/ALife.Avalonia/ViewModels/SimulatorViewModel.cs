@@ -262,7 +262,7 @@ public class SimulatorViewModel : ViewModelBase
         _parentAgent = p;
         _parentButtonLabel = p == null ? string.Empty
             : p.Alive ? $"↑ {p.IndividualLabel}"
-            : $"↑ {p.IndividualLabel} (dead)";
+            : $"↑ (dead) {p.IndividualLabel}";
     }
 
     public string AgentName => _selectedAgent?.IndividualLabel ?? string.Empty;

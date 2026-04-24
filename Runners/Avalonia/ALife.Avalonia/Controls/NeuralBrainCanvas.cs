@@ -26,6 +26,7 @@ public class NeuralBrainCanvas : Control
     private Dictionary<Neuron, List<(Dendrite, Neuron)>>? _downstreamMap;
     private Neuron? _selectedNeuron;
     private int _forgiveness;
+    private Size _lastBuiltSize;
     private const int NeuronRadius = 8;
 
     static NeuralBrainCanvas()
@@ -42,6 +43,7 @@ public class NeuralBrainCanvas : Control
             _nodeMap = null;
             _downstreamMap = null;
             _selectedNeuron = null;
+            _lastBuiltSize = default;
             InvalidateVisual();
         }
     }
@@ -58,7 +60,7 @@ public class NeuralBrainCanvas : Control
         if (_agent?.MyBrain is not NeuralNetworkBrain brain) return;
         if (Bounds.Width <= 0 || Bounds.Height <= 0) return;
 
-        if (_nodeMap == null) BuildNodeMap(brain);
+        if (_nodeMap == null || _lastBuiltSize != Bounds.Size) BuildNodeMap(brain);
 
         ctx.FillRectangle(new SolidColorBrush(Color.FromRgb(20, 20, 20)),
             new Rect(0, 0, Bounds.Width, Bounds.Height));
@@ -154,6 +156,7 @@ public class NeuralBrainCanvas : Control
     {
         _nodeMap = new Dictionary<Neuron, AvPoint>();
         _downstreamMap = new Dictionary<Neuron, List<(Dendrite, Neuron)>>();
+        _lastBuiltSize = Bounds.Size;
 
         double h = Math.Max(Bounds.Height, 200);
         double w = Math.Max(Bounds.Width, 150);

@@ -225,8 +225,7 @@
                     Content="{Binding ParentButtonLabel}"/>
 
             <!-- Descendants (shown when agent is dead) -->
-            <Border Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,5"
-                    IsVisible="{Binding IsSelectedAgentDead}">
+            <Border Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,5" IsVisible="True">
               <StackPanel Spacing="4">
                 <TextBlock Text="DESCENDANTS" FontSize="9" FontWeight="Bold"
                            Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"/>

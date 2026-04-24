@@ -150,24 +150,18 @@ namespace ALife.Rendering
                     continue;
                 }
 
-                if(!(wo is Agent))
+                if (compnumber == wo.ExecutionOrder && wo is Agent)
                 {
-                    //TODO: Should ALL objects have shadows??
-                    //TODO: Yes, they should, because some objects (like the falling rock) move. 
-                    //TODO: Currently they don't.
-                    RenderLogic.DrawPastObject(wo.Shape, uiSettings, renderer);
-                    continue;
-                }
-
-                Agent ag = (Agent)wo;
-
-                if(compnumber == wo.ExecutionOrder)
-                {
+                    Agent ag = (Agent)wo;
                     RenderLogic.DrawAgentShadow(ag.Shadow, uiSettings, auiSettings, renderer);
                     continue;
                 }
                 
-                RenderLogic.DrawPastObject(ag.Shadow.Shape, uiSettings, renderer);
+                if (wo.Shadow is not null)
+                {
+                    RenderLogic.DrawPastObject(wo.Shadow.Shape, uiSettings, renderer);
+                }
+                
             }
         }
 

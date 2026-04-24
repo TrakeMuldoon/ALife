@@ -95,7 +95,9 @@ namespace ALife.Rendering
                 }
 
                 
-                if(SpecialObject is not null && ViewPast)
+                if(SpecialObject is not null 
+                    && SpecialObject.Shadow is not null
+                    && ViewPast)
                 {
                     RenderLogic.DrawPastState(ui, aui, renderer, SpecialObject.ExecutionOrder);
                 }

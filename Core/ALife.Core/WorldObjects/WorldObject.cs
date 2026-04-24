@@ -49,6 +49,9 @@ namespace ALife.Core.WorldObjects
         }
         public bool Alive;
 
+        protected WorldObjectShadow _shadow;
+        public virtual WorldObjectShadow Shadow => _shadow;
+
         protected WorldObject(Point centrePoint, IShape shape, string genusLabel, string individualLabel, string collisionLevel, Colour color)
         {
             NumChildren = 0;
@@ -74,6 +77,15 @@ namespace ALife.Core.WorldObjects
         /* METHODS */
         public virtual void ExecuteTurn()
         {
+            if(Planet.World.GenerateShadow)
+            {
+                CaptureShadow();
+            }
+            else
+            {
+                _shadow = null;
+            }
+
             if(Alive)
             {
                 ExecuteAliveTurn();
@@ -82,6 +94,11 @@ namespace ALife.Core.WorldObjects
             {
                 ExecuteDeadTurn();
             }
+        }
+
+        protected virtual void CaptureShadow()
+        {
+            _shadow = new WorldObjectShadow(this);
         }
 
         /// <summary>

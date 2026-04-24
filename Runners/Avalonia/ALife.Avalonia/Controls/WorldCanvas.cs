@@ -36,8 +36,15 @@ public class WorldCanvas : Control
     public static readonly DirectProperty<WorldCanvas, int> TurnCountProperty =
         AvaloniaProperty.RegisterDirect<WorldCanvas, int>(nameof(TurnCount), x => x.TurnCount);
 
-    // Protects Planet.World between the sim thread and the UI thread.
+    // Protects Planet.World between the sim thread and the UI/render threads.
     private readonly object _worldLock = new();
+
+    // Set by the render thread before it calls lock(_worldLock).
+    // The sim thread checks this after each release and yields if set, creating a
+    // guaranteed window where the lock is free and the sim isn't competing.
+    // Without this, Monitor (which is not fair) lets the sim re-acquire immediately,
+    // starving the render thread even on multi-core hardware.
+    private volatile bool _renderPending;
 
     // Sim thread state — all readable from the background thread without UI-thread access.
     private Thread? _simThread;
@@ -172,9 +179,15 @@ public class WorldCanvas : Control
             return;
         }
 
-        // Always lock: sim thread may be writing world state concurrently.
+        // Signal to the sim thread that we want the lock. The sim checks this flag
+        // after each release and yields (Sleep(0)) if set, giving us a guaranteed
+        // window where the lock is free and no thread is competing for it.
+        _renderPending = true;
         lock (_worldLock)
+        {
+            _renderPending = false;
             RenderCore(drawingContext);
+        }
     }
 
     // ── Avalonia overrides ───────────────────────────────────────────────────
@@ -258,24 +271,25 @@ public class WorldCanvas : Control
             double speed = TargetSpeed;
             if (double.IsInfinity(speed))
             {
-                // Unlimited: yield after every tick so the UI thread can acquire
-                // _worldLock for rendering. Without this the sim re-acquires the lock
-                // immediately and the render thread starves.
-                Thread.Sleep(0);
+                // In unlimited mode, Monitor is unfair: the sim can re-acquire the lock
+                // before the render thread gets scheduled, even after many releases.
+                // If a render is pending, yield here — the lock is already free and the
+                // sim is not competing, so the render thread wins the next acquire race.
+                if (_renderPending)
+                    Thread.Sleep(0);
             }
             else
             {
                 // Throttled: sleep for the bulk of the remaining interval (coarse),
                 // then spin for the last ≤15 ms (precision). We subtract elapsed tick
                 // time so the target interval is measured from the start of the tick.
+                // The lock is NOT held during sleep/spin, so render is free to acquire.
                 double targetMs = 1000.0 / speed;
                 double remaining = targetMs - sw.Elapsed.TotalMilliseconds;
                 if (remaining > 15.0)
                     Thread.Sleep((int)(remaining - 15));
                 while (sw.Elapsed.TotalMilliseconds < targetMs)
                     Thread.SpinWait(10);
-                // During both the sleep and the spin the lock is NOT held,
-                // so the UI thread is free to render at any point in this window.
             }
 
             sw.Restart();

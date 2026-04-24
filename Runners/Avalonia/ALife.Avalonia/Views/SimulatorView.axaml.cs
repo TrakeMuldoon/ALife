@@ -6,6 +6,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using System;
@@ -74,15 +75,65 @@ public partial class SimulatorView : UserControl, IDisposable
         TheWorldCanvas.InvalidateVisual();
     }
 
-    private static readonly double[] SpeedValues = { 1.0, 2.0, 10.0, 30.0, 60.0, 90.0, 120.0, 240.0, double.PositiveInfinity };
-    private static readonly string[] SpeedLabels = { "1x", "2x", "10x", "30x", "60x", "90x", "120x", "240x", "∞" };
+    private static readonly double[] SpeedValues = { 1.0, 2.0, 10.0, 30.0, 60.0, 90.0, 120.0, 240.0, 500.0, 750.0, 1000.0, 1500.0, 2000.0, 5000.0, double.PositiveInfinity };
+    private static readonly string[] SpeedLabels = { "1×", "2×", "10×", "30×", "60×", "90×", "120×", "240×", "500×", "750×", "1000×", "1500×", "2000×", "5000×", "∞" };
 
     public void SpeedSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs args)
     {
         int index = (int)Math.Round(args.NewValue);
         index = Math.Clamp(index, 0, SpeedValues.Length - 1);
-        TheWorldCanvas.SetSimulationSpeed(SpeedValues[index]);
+        double speed = SpeedValues[index];
+        TheWorldCanvas.SetSimulationSpeed(speed);
         SpeedLabel.Text = SpeedLabels[index];
+        CustomTpsBox.Text = double.IsInfinity(speed) ? "∞" : ((int)speed).ToString();
+    }
+
+    public void CustomTps_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Enter)
+            ApplyCustomTps();
+    }
+
+    public void CustomTps_LostFocus(object sender, RoutedEventArgs e)
+    {
+        ApplyCustomTps();
+    }
+
+    private void ApplyCustomTps()
+    {
+        string text = CustomTpsBox.Text?.Trim() ?? "";
+        double speed;
+        if (text == "∞")
+        {
+            speed = double.PositiveInfinity;
+        }
+        else if (int.TryParse(text, out int tps) && tps >= 1)
+        {
+            speed = Math.Clamp(tps, 1, 10000);
+        }
+        else
+        {
+            return; // invalid — leave as-is
+        }
+
+        TheWorldCanvas.SetSimulationSpeed(speed);
+
+        // Sync slider to a preset if the value matches one exactly.
+        int matchIndex = -1;
+        for (int i = 0; i < SpeedValues.Length; i++)
+            if (SpeedValues[i] == speed) { matchIndex = i; break; }
+
+        if (matchIndex >= 0)
+        {
+            SpeedSlider.Value = matchIndex;
+            SpeedLabel.Text = SpeedLabels[matchIndex];
+        }
+        else
+        {
+            SpeedLabel.Text = double.IsInfinity(speed) ? "∞" : $"{(int)speed}×";
+        }
+
+        CustomTpsBox.Text = double.IsInfinity(speed) ? "∞" : ((int)speed).ToString();
     }
 
     public void ZoomIn_Click(object sender, RoutedEventArgs args)
@@ -185,6 +236,9 @@ public partial class SimulatorView : UserControl, IDisposable
     private void AgentComboBox_DropDownOpened(object sender, EventArgs e)
     {
         if (!ALife.Core.Planet.HasWorld) return;
+        _wasRunningBeforeDescendantOpen = TheWorldCanvas.IsEnabled;
+        Vm.FreezeDescendantUpdates = true;
+        SetRunState(false);
         var agents = ALife.Core.Planet.World.AllActiveObjects
             .OfType<Agent>()
             .Where(ag => ag.Alive)
@@ -192,6 +246,13 @@ public partial class SimulatorView : UserControl, IDisposable
         Vm.UpdateAliveAgents(agents);
         if (sender is ComboBox cb)
             cb.SelectedItem = Vm.SelectedAgent;
+    }
+
+    private void AgentComboBox_DropDownClosed(object sender, EventArgs e)
+    {
+        Vm.FreezeDescendantUpdates = false;
+        if (_wasRunningBeforeDescendantOpen)
+            SetRunState(true);
     }
 
     public void Dispose()

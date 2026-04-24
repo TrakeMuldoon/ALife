@@ -167,7 +167,8 @@
                     HorizontalAlignment="Stretch"
                     PlaceholderText="Select an agent..."
                     SelectionChanged="AgentComboBox_SelectionChanged"
-                    DropDownOpened="AgentComboBox_DropDownOpened">
+                    DropDownOpened="AgentComboBox_DropDownOpened"
+                    DropDownClosed="AgentComboBox_DropDownClosed">
             <ComboBox.ItemTemplate>
               <DataTemplate>
                 <TextBlock Text="{Binding IndividualLabel}" FontFamily="Consolas" FontSize="11"
@@ -324,11 +325,18 @@
                    FontFamily="Consolas" FontSize="11" MinWidth="34"
                    Foreground="{DynamicResource ALife.TextPrimaryBrush}" VerticalAlignment="Center"/>
         <Slider Name="SpeedSlider"
-                Minimum="0" Maximum="8" Value="4" Width="200"
+                Minimum="0" Maximum="14" Value="4" Width="200"
                 IsSnapToTickEnabled="True" TickFrequency="1"
                 TickPlacement="BottomRight"
                 VerticalAlignment="Center"
                 ValueChanged="SpeedSlider_ValueChanged"/>
+        <TextBlock Text="TPS:" FontSize="11"
+                   Foreground="{DynamicResource ALife.TextSecondaryBrush}" VerticalAlignment="Center"/>
+        <TextBox Name="CustomTpsBox" Text="60" Width="60"
+                 FontFamily="Consolas" VerticalAlignment="Center"
+                 ToolTip.Tip="Enter a custom integer TPS target and press Enter (1–10000, or ∞)"
+                 KeyDown="CustomTps_KeyDown"
+                 LostFocus="CustomTps_LostFocus"/>
 
         <Separator Width="1" Margin="2,4" Background="{DynamicResource ALife.BorderBrush}"/>
 

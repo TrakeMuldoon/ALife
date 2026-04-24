@@ -166,7 +166,7 @@ namespace ALife.Rendering
                     RenderLogic.DrawAgentShadow(ag.Shadow, uiSettings, auiSettings, renderer);
                     continue;
                 }
-
+                
                 RenderLogic.DrawPastObject(ag.Shadow.Shape, uiSettings, renderer);
             }
         }

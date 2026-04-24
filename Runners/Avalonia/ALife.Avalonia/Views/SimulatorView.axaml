@@ -142,8 +142,7 @@
       <controls:WorldCanvas Name="TheWorldCanvas"
                             HorizontalAlignment="Center" VerticalAlignment="Center"
                             ScenarioName="{Binding StartingScenarioName}"
-                            StartingSeed="{Binding StartingSeed}"
-                            Enabled="{Binding IsEnabled}" />
+                            StartingSeed="{Binding StartingSeed}" />
     </paz:ZoomBorder>
 
     <!-- ── Row 2: GridSplitter ── -->

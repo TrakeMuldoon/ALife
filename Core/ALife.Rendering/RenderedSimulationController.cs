@@ -99,9 +99,12 @@ namespace ALife.Rendering
                 {
                     RenderLogic.DrawPastState(ui, aui, renderer, SpecialObject.ExecutionOrder);
                 }
-                foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
+                else
                 {
-                    RenderLogic.DrawWorldObject(wo, ui, aui, renderer);
+                    foreach(WorldObject wo in Planet.World.CollisionLevels[ui.LayerName].EnumerateItems())
+                    {
+                        RenderLogic.DrawWorldObject(wo, ui, aui, renderer);
+                    }
                 }
             }
             catch(Exception)

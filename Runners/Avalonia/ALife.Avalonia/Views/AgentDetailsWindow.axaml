@@ -1,0 +1,107 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:ALife.Avalonia.Controls"
+        xmlns:vm="clr-namespace:ALife.Avalonia.ViewModels"
+        x:Class="ALife.Avalonia.Views.AgentDetailsWindow"
+        x:CompileBindings="False"
+        Width="300" Height="640"
+        MinWidth="240" MinHeight="300"
+        Background="{DynamicResource ALife.VoidBrush}">
+
+  <Grid RowDefinitions="Auto,*" Margin="8">
+
+    <!-- Top: scrollable non-brain sections -->
+    <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto">
+      <StackPanel Spacing="6">
+
+        <!-- Name + alive/dead badge -->
+        <DockPanel>
+          <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+            <Border CornerRadius="3" Padding="5,1"
+                    Background="{DynamicResource ALife.BioGreenDarkBrush}"
+                    IsVisible="{Binding IsAlive}">
+              <TextBlock Text="ALIVE" FontSize="9" FontWeight="Bold"
+                         Foreground="{DynamicResource ALife.BioTealBrush}"/>
+            </Border>
+            <Border CornerRadius="3" Padding="5,1"
+                    Background="{DynamicResource ALife.DangerBrush}"
+                    IsVisible="{Binding IsDead}">
+              <TextBlock Text="DEAD" FontSize="9" FontWeight="Bold"
+                         Foreground="{DynamicResource ALife.AmberBrush}"/>
+            </Border>
+          </StackPanel>
+          <TextBlock Text="{Binding AgentName}"
+                     FontSize="13" FontWeight="Bold"
+                     Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                     TextWrapping="Wrap" VerticalAlignment="Center"/>
+        </DockPanel>
+
+        <!-- Dead notice -->
+        <Border Background="{DynamicResource ALife.DangerBrush}" CornerRadius="3" Padding="6,4"
+                IsVisible="{Binding IsDead}">
+          <TextBlock Text="Agent has died — showing last known state."
+                     FontSize="11" FontStyle="Italic"
+                     Foreground="{DynamicResource ALife.AmberBrush}"
+                     TextWrapping="Wrap"/>
+        </Border>
+
+        <!-- Location -->
+        <Border Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,4">
+          <StackPanel Spacing="2">
+            <TextBlock Text="LOCATION" FontSize="9" Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"/>
+            <TextBlock Text="{Binding AgentLocation}"
+                       FontFamily="Consolas" FontSize="11"
+                       Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                       TextWrapping="Wrap"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Senses -->
+        <Border Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,4">
+          <StackPanel Spacing="2">
+            <TextBlock Text="SENSES" FontSize="9" Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"/>
+            <TextBlock Text="{Binding AgentSenses}"
+                       FontFamily="Consolas" FontSize="10"
+                       Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                       TextWrapping="Wrap"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Actions -->
+        <Border Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,4">
+          <StackPanel Spacing="2">
+            <TextBlock Text="ACTIONS" FontSize="9" Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"/>
+            <TextBlock Text="{Binding AgentActions}"
+                       FontFamily="Consolas" FontSize="10"
+                       Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                       TextWrapping="Wrap"/>
+          </StackPanel>
+        </Border>
+
+      </StackPanel>
+    </ScrollViewer>
+
+    <!-- Bottom: brain fills remaining space -->
+    <Border Grid.Row="1" Background="{DynamicResource ALife.SectionBrush}"
+            CornerRadius="3" Padding="6,4" Margin="0,6,0,0">
+      <Grid RowDefinitions="Auto,*">
+        <TextBlock Grid.Row="0" Text="BRAIN" FontSize="9"
+                   Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"/>
+        <TextBlock Grid.Row="1"
+                   Text="{Binding AgentBrain}"
+                   FontFamily="Consolas" FontSize="10"
+                   Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                   TextWrapping="Wrap"
+                   IsVisible="{Binding HasBehaviourBrain}"/>
+        <controls:NeuralBrainCanvas Grid.Row="1"
+            Agent="{Binding Agent}"
+            TurnCount="{Binding TurnCount}"
+            IsVisible="{Binding HasNeuralBrain}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"/>
+      </Grid>
+    </Border>
+
+  </Grid>
+</Window>

@@ -1,20 +1,11 @@
-﻿using ALife.Avalonia.ViewModels;
+using ALife.Avalonia.ViewModels;
 
-namespace ALife.Avalonia.ALifeImplementations
+namespace ALife.Avalonia.ALifeImplementations;
+
+public class SeedLogger(BatchRunnerViewModel vm) : AvaloniaLogger(vm)
 {
-    /// <summary>
-    /// Defines the logger used for outputting to the Seed Textbox
-    /// </summary>
-    /// <seealso cref="ALife.Avalonia.ALifeImplementations.AvaloniaLogger"/>
-    public class SeedLogger(BatchRunnerViewModel vm) : AvaloniaLogger(vm)
+    protected override void WriteInternal(string message)
     {
-        /// <summary>
-        /// Writes the message to the actual output.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        protected override void WriteInternal(string message)
-        {
-            _vm.SeedLog += message;
-        }
+        _vm.SeedLog += message;
     }
 }

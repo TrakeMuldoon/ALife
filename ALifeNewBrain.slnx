@@ -33,18 +33,11 @@
     <Project Path="Runners/ScenarioRunner/ScenarioRunner.csproj" />
   </Folder>
   <Folder Name="/Runners/Avalonia/">
+    <Project Path="Runners/Avalonia/ALife.Avalonia.Android/ALife.Avalonia.Android.csproj" />
+    <Project Path="Runners/Avalonia/ALife.Avalonia.Browser/ALife.Avalonia.Browser.csproj" />
     <Project Path="Runners/Avalonia/ALife.Avalonia.Desktop/ALife.Avalonia.Desktop.csproj" />
+    <Project Path="Runners/Avalonia/ALife.Avalonia.iOS/ALife.Avalonia.iOS.csproj" />
     <Project Path="Runners/Avalonia/ALife.Avalonia/ALife.Avalonia.csproj" />
-  </Folder>
-  <Folder Name="/Runners/Avalonia2/" />
-  <Folder Name="/Runners/UWP/">
-    <Project Path="Runners/UWP/ALifeUniv.csproj">
-      <Platform Solution="*|ARM" Project="ARM" />
-      <Platform Solution="*|ARM64" Project="ARM64" />
-      <Platform Solution="*|x64" Project="x64" />
-      <Platform Solution="*|x86" Project="x86" />
-      <Deploy />
-    </Project>
   </Folder>
   <Folder Name="/SolutionItems/">
     <File Path=".gitignore" />

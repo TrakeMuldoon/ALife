@@ -1,32 +1,19 @@
-﻿using ReactiveUI;
+using ReactiveUI;
 
-namespace ALife.Avalonia.ViewModels
+namespace ALife.Avalonia.ViewModels;
+
+public class MainWindowViewModel : ViewModelBase
 {
-    /// <summary>
-    /// View model for the main window. This primarily controls changing between views.
-    /// </summary>
-    /// <seealso cref="ALife.Avalonia.ViewModels.ViewModelBase"/>
-    public class MainWindowViewModel : ViewModelBase
+    private ViewModelBase _currentViewModel;
+
+    public MainWindowViewModel()
     {
-        // The default is the first page
-        private ViewModelBase _currentViewModel;
+        _currentViewModel = new LauncherViewModel();
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
-        /// </summary>
-        public MainWindowViewModel()
-        {
-            // We will default going to the launcher page and have logic from there to go where-ever we need to go
-            _currentViewModel = new LauncherViewModel();
-        }
-
-        /// <summary>
-        /// Gets the current page. The property is read-only
-        /// </summary>
-        public ViewModelBase CurrentViewModel
-        {
-            get => _currentViewModel;
-            set => this.RaiseAndSetIfChanged(ref _currentViewModel, value);
-        }
+    public ViewModelBase CurrentViewModel
+    {
+        get => _currentViewModel;
+        set => this.RaiseAndSetIfChanged(ref _currentViewModel, value);
     }
 }

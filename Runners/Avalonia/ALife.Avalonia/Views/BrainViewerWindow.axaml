@@ -1,0 +1,43 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:ALife.Avalonia.Controls"
+        xmlns:vm="clr-namespace:ALife.Avalonia.ViewModels"
+        x:Class="ALife.Avalonia.Views.BrainViewerWindow"
+        x:CompileBindings="False"
+        Title="{Binding BrainViewerTitle}"
+        Width="800" Height="600"
+        MinWidth="400" MinHeight="300"
+        Background="{DynamicResource ALife.VoidBrush}">
+  <Grid RowDefinitions="Auto,*">
+
+    <Border Grid.Row="0" Background="{DynamicResource ALife.ElevatedBrush}" Padding="10,7">
+      <TextBlock Text="{Binding AgentName}" FontSize="13" FontWeight="Bold"
+                 Foreground="{DynamicResource ALife.BioTealBrush}"/>
+    </Border>
+
+    <!-- No agent selected -->
+    <TextBlock Grid.Row="1"
+               Text="No agent selected. Click an agent in the simulation to inspect its brain."
+               IsVisible="{Binding !HasSelectedAgent}"
+               TextWrapping="Wrap" Foreground="{DynamicResource ALife.TextDimBrush}" FontStyle="Italic"
+               VerticalAlignment="Center" HorizontalAlignment="Center"
+               Margin="24"/>
+
+    <!-- Behaviour brain text -->
+    <ScrollViewer Grid.Row="1" IsVisible="{Binding HasBehaviourBrain}"
+                  VerticalScrollBarVisibility="Auto">
+      <TextBlock Text="{Binding AgentBrain}"
+                 FontFamily="Consolas" FontSize="12" Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                 TextWrapping="Wrap" Margin="12"/>
+    </ScrollViewer>
+
+    <!-- Neural network canvas -->
+    <controls:NeuralBrainCanvas Grid.Row="1"
+        Agent="{Binding SelectedAgent}"
+        TurnCount="{Binding TurnCount}"
+        IsVisible="{Binding HasNeuralBrain}"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"/>
+
+  </Grid>
+</Window>

@@ -28,8 +28,8 @@ namespace ALife.Core.WorldObjects
             protected set;
         }
 
-        public readonly String GenusLabel;
-        public readonly String IndividualLabel;
+        public string GenusLabel { get; }
+        public string IndividualLabel { get; }
 
         public int ExecutionOrder;
         public int NumChildren

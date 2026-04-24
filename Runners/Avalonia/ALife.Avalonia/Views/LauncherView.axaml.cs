@@ -1,115 +1,72 @@
 using ALife.Avalonia.ViewModels;
 using ALife.Core.Scenarios;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
 
-namespace ALife.Avalonia.Views
+namespace ALife.Avalonia.Views;
+
+public partial class LauncherView : UserControl
 {
-    /// <summary>
-    /// The LauncherView is the first view that is shown to the user. It allows the user to select a scenario and seed
-    /// to run.
-    /// </summary>
-    /// <seealso cref="Avalonia.Controls.UserControl"/>
-    public partial class LauncherView : UserControl
+    public LauncherView()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LauncherView"/> class.
-        /// </summary>
-        public LauncherView()
+        DataContext = new LauncherViewModel();
+        InitializeComponent();
+
+        (string, int?, AutoStartMode)? autoStart = ScenarioRegister.GetAutoStartScenario();
+        if (autoStart != null)
         {
-            InitializeComponent();
-
-            (string, int?, AutoStartMode)? startingScenario = ScenarioRegister.GetAutoStartScenario();
-            if(startingScenario != null)
-            {
-                _vm.SelectedScenario = startingScenario.Value.Item1;
-                _vm.CurrentSeedText = startingScenario.Value.Item2?.ToString() ?? string.Empty;
-
-                StartSimulation(startingScenario.Value.Item3);
-            }
-            else
-            {
-                // otherwise setup the DataContext
-                DataContext = new LauncherViewModel();
-            }
+            Vm.SelectedScenario = autoStart.Value.Item1;
+            Vm.CurrentSeedText = autoStart.Value.Item2?.ToString() ?? string.Empty;
+            StartSimulation(autoStart.Value.Item3);
         }
+    }
 
-        /// <summary>
-        /// Gets the view model.
-        /// </summary>
-        /// <value>The vm.</value>
-        private LauncherViewModel _vm => (LauncherViewModel)DataContext;
+    private LauncherViewModel Vm => (LauncherViewModel)DataContext!;
 
-        /// <summary>
-        /// Handles the Click event of the LaunchGui control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        public void LaunchGui_Click(object sender, RoutedEventArgs args)
+    public void LaunchGui_Click(object sender, RoutedEventArgs args)
+    {
+        if (!string.IsNullOrWhiteSpace(Vm.SelectedScenario))
+            StartSimulation(AutoStartMode.AutoStartVisual);
+    }
+
+    public void LaunchRunner_Click(object sender, RoutedEventArgs args)
+    {
+        if (!string.IsNullOrWhiteSpace(Vm.SelectedScenario))
+            StartSimulation(AutoStartMode.AutoStartConsole);
+    }
+
+    public void ScenariosList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        string selected = ((ListBox)sender).SelectedItem?.ToString() ?? string.Empty;
+        Vm.SelectScenario(selected);
+    }
+
+    public void SeedSuggestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        string selected = ((ListBox)sender).SelectedItem?.ToString() ?? string.Empty;
+        Vm.SelectSeed(selected);
+    }
+
+    public void Exit_Click(object sender, RoutedEventArgs args)
+    {
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime app)
+            app.Shutdown();
+    }
+
+    private void StartSimulation(AutoStartMode mode)
+    {
+        int? seed = int.TryParse(Vm.CurrentSeedText, out int s) ? s : null;
+
+        ViewModelBase vm = mode switch
         {
-            if(!string.IsNullOrWhiteSpace(_vm.SelectedScenario))
-            {
-                StartSimulation(AutoStartMode.AutoStartVisual);
-            }
-        }
+            AutoStartMode.AutoStartConsole => new BatchRunnerViewModel(Vm.SelectedScenario, seed, Vm.AutoStartScenarioRunner),
+            AutoStartMode.AutoStartVisual => new SimulatorViewModel(Vm.SelectedScenario, seed),
+            _ => throw new System.Exception($"Unhandled AutoStartMode: {mode}")
+        };
 
-        /// <summary>
-        /// Handles the Click event of the LaunchRunner control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        public void LaunchRunner_Click(object sender, RoutedEventArgs args)
-        {
-            if(!string.IsNullOrWhiteSpace(_vm.SelectedScenario))
-            {
-                StartSimulation(AutoStartMode.AutoStartConsole);
-            }
-        }
-
-        /// <summary>
-        /// Handles the SelectionChanged event of the ScenariosList control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
-        public void ScenariosList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ListBox listBox = (ListBox)sender;
-            string selectedItem = listBox.SelectedItem?.ToString() ?? string.Empty;
-            _vm.SelectScenario(selectedItem);
-        }
-
-        /// <summary>
-        /// Handles the SelectionChanged event of the SeedSuggestions control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
-        public void SeedSuggestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ListBox listBox = (ListBox)sender;
-            string selectedItem = listBox.SelectedItem?.ToString() ?? string.Empty;
-            _vm.SelectSeed(selectedItem);
-        }
-
-        /// <summary>
-        /// Starts the simulation.
-        /// </summary>
-        /// <param name="startMode">The start mode.</param>
-        private void StartSimulation(AutoStartMode startMode)
-        {
-            // grab the seed from the text box
-            int? seed = int.TryParse(_vm.CurrentSeedText, out int x) ? x : null;
-
-            // Instantiate a new ViewModel based on the start mode
-            ViewModelBase vm = startMode switch
-            {
-                AutoStartMode.AutoStartConsole => new BatchRunnerViewModel(_vm.SelectedScenario, seed, _vm.AutoStartScenarioRunner),
-                AutoStartMode.AutoStartVisual => new SingularRunnerViewModel(_vm.SelectedScenario, seed),
-                _ => throw new System.Exception($"Invalid start mode: {startMode}"),
-            };
-
-            // Change the page to the selected ViewModel
-            MainWindowViewModel? windowMvm = (MainWindowViewModel)Parent.DataContext;
-            windowMvm.CurrentViewModel = vm;
-        }
+        var windowVm = (MainWindowViewModel)Parent!.DataContext!;
+        windowVm.CurrentViewModel = vm;
     }
 }

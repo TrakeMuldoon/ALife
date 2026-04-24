@@ -1,12 +1,7 @@
 ﻿using ReactiveUI;
 
-namespace ALife.Avalonia.ViewModels
+namespace ALife.Avalonia.ViewModels;
+
+public abstract class ViewModelBase : ReactiveObject
 {
-    /// <summary>
-    /// The base View Model class used in the application.
-    /// </summary>
-    /// <seealso cref="ReactiveUI.ReactiveObject"/>
-    public class ViewModelBase : ReactiveObject
-    {
-    }
 }

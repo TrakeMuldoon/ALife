@@ -1,347 +1,259 @@
-﻿using ALife.Avalonia.ALifeImplementations;
+using ALife.Avalonia.ALifeImplementations;
+using ALife.Core;
 using ALife.Core.ScenarioRunners;
+using Avalonia.Threading;
 using ReactiveUI;
 using System;
 using System.Threading;
+using System.Timers;
 
-namespace ALife.Avalonia.ViewModels
+namespace ALife.Avalonia.ViewModels;
+
+public class BatchRunnerViewModel : ViewModelBase
 {
-    /// <summary>
-    /// The View Model for the Scenario Runner view
-    /// </summary>
-    /// <seealso cref="ALife.Avalonia.ViewModels.ViewModelBase"/>
-    public class BatchRunnerViewModel : ViewModelBase
+    private bool _canRestartRunner;
+    private bool _canStartRunner;
+    private bool _canStopRunner;
+    private int _consoleCaretIndex;
+    private string _consoleText;
+    private string _executionCount;
+    private string _maxTurns;
+    private AvaloniaScenarioRunner? _scenarioRunner;
+    private string _seedText;
+    private string _state;
+    private string _tpsDisplay;
+    private string _turnBatch;
+    private string _updateFrequency;
+    private System.Timers.Timer? _tpsTimer;
+    private int _lastTurnSample;
+    private DateTime _lastSampleTime;
+
+    public BatchRunnerViewModel()
     {
-        /// <summary>
-        /// The can restart runner
-        /// </summary>
-        private bool _canRestartRunner = false;
+        ScenarioName = string.Empty;
+        ScenarioSeed = null;
+        AutoStartScenarioRunner = false;
+        Init();
+    }
 
-        /// <summary>
-        /// The can start runner
-        /// </summary>
-        private bool _canStartRunner = false;
-
-        /// <summary>
-        /// The can stop runner
-        /// </summary>
-        private bool _canStopRunner = false;
-
-        /// <summary>
-        /// The console caret index
-        /// </summary>
-        private int _consoleCaretIndex = 0;
-
-        /// <summary>
-        /// The console text
-        /// </summary>
-        private string _consoleText = string.Empty;
-
-        /// <summary>
-        /// The execution count
-        /// </summary>
-        private string _executionCount = string.Empty;
-
-        /// <summary>
-        /// The maximum turns
-        /// </summary>
-        private string _maxTurns = string.Empty;
-
-        /// <summary>
-        /// The scenario runner
-        /// </summary>
-        private AvaloniaScenarioRunner? _scenarioRunner = null;
-
-        /// <summary>
-        /// The seed text
-        /// </summary>
-        private string _seedText = string.Empty;
-
-        /// <summary>
-        /// The state
-        /// </summary>
-        private string _state = string.Empty;
-
-        /// <summary>
-        /// The turn batch
-        /// </summary>
-        private string _turnBatch = string.Empty;
-
-        /// <summary>
-        /// The update frequency
-        /// </summary>
-        private string _updateFrequency = string.Empty;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BatchRunnerViewModel"/> class.
-        /// </summary>
-        public BatchRunnerViewModel()
-        {
-            ScenarioName = string.Empty;
-            ScenarioSeed = null;
-            AutoStartScenarioRunner = false;
-
-            _state = "Stopped";
-            _canStartRunner = true;
-            _canStopRunner = false;
-            _canRestartRunner = false;
-
-            _consoleCaretIndex = 0;
-            _consoleText = string.Empty;
-            _seedText = string.Empty;
-            _executionCount = Constants.DEFAULT_NUMBER_SEEDS_EXECUTED.ToString();
-            _maxTurns = Constants.DEFAULT_TOTAL_TURNS.ToString();
-            _turnBatch = Constants.DEFAULT_TURN_BATCH.ToString();
-            _updateFrequency = Constants.DEFAULT_UPDATE_FREQUENCY.ToString();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BatchRunnerViewModel"/> class.
-        /// </summary>
-        public BatchRunnerViewModel(string scenarioName, int? scenarioSeed, bool autoStartScenarioRunner)
-        {
-            ScenarioName = scenarioName;
-            ScenarioSeed = scenarioSeed;
-            AutoStartScenarioRunner = autoStartScenarioRunner;
-
-            _state = "Stopped";
-            _canStartRunner = true;
-            _canStopRunner = false;
-            _canRestartRunner = false;
-
-            _consoleCaretIndex = 0;
-            _consoleText = string.Empty;
-            _seedText = string.Empty;
-            _executionCount = Constants.DEFAULT_NUMBER_SEEDS_EXECUTED.ToString();
-            _maxTurns = Constants.DEFAULT_TOTAL_TURNS.ToString();
-            _turnBatch = Constants.DEFAULT_TURN_BATCH.ToString();
-            _updateFrequency = Constants.DEFAULT_UPDATE_FREQUENCY.ToString();
-
-            if(AutoStartScenarioRunner)
-            {
-                StartScenarioRunner();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [automatic start scenario runner].
-        /// </summary>
-        /// <value><c>true</c> if [automatic start scenario runner]; otherwise, <c>false</c>.</value>
-        public bool AutoStartScenarioRunner { get; set; } = false;
-
-        /// <summary>
-        /// Gets or sets the can restart runner.
-        /// </summary>
-        /// <value>The can restart runner.</value>
-        public bool CanRestartRunner
-        {
-            get => _canRestartRunner;
-            set => this.RaiseAndSetIfChanged(ref _canRestartRunner, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the can start runner.
-        /// </summary>
-        /// <value>The can start runner.</value>
-        public bool CanStartRunner
-        {
-            get => _canStartRunner;
-            set => this.RaiseAndSetIfChanged(ref _canStartRunner, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the can stop runner.
-        /// </summary>
-        /// <value>The can stop runner.</value>
-        public bool CanStopRunner
-        {
-            get => _canStopRunner;
-            set => this.RaiseAndSetIfChanged(ref _canStopRunner, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the index of the console caret.
-        /// </summary>
-        /// <value>The index of the console caret.</value>
-        public int ConsoleCaretIndex
-        {
-            get => _consoleCaretIndex;
-            set => this.RaiseAndSetIfChanged(ref _consoleCaretIndex, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the console log.
-        /// </summary>
-        /// <value>The console log.</value>
-        public string ConsoleLog
-        {
-            get => _consoleText;
-            set
-            {
-                _ = this.RaiseAndSetIfChanged(ref _consoleText, value);
-                ConsoleCaretIndex = _consoleText.Length;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the execution count.
-        /// </summary>
-        /// <value>The execution count.</value>
-        public string ExecutionCount
-        {
-            get => _executionCount;
-            set => this.RaiseAndSetIfChanged(ref _executionCount, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the maximum turn count.
-        /// </summary>
-        /// <value>The maximum turn count.</value>
-        public string MaxTurnCount
-        {
-            get => _maxTurns;
-            set => this.RaiseAndSetIfChanged(ref _maxTurns, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the name of the scenario.
-        /// </summary>
-        /// <value>The name of the scenario.</value>
-        public string ScenarioName { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets or sets the scenario seed.
-        /// </summary>
-        /// <value>The scenario seed.</value>
-        public int? ScenarioSeed { get; set; } = null;
-
-        /// <summary>
-        /// Gets or sets the seed log.
-        /// </summary>
-        /// <value>The seed log.</value>
-        public string SeedLog
-        {
-            get => _seedText;
-            set => this.RaiseAndSetIfChanged(ref _seedText, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the state.
-        /// </summary>
-        /// <value>The state.</value>
-        public string State
-        {
-            get => _state;
-            set => this.RaiseAndSetIfChanged(ref _state, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the turn batch count.
-        /// </summary>
-        /// <value>The turn batch count.</value>
-        public string TurnBatchCount
-        {
-            get => _turnBatch;
-            set => this.RaiseAndSetIfChanged(ref _turnBatch, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the update frequency count.
-        /// </summary>
-        /// <value>The update frequency count.</value>
-        public string UpdateFrequencyCount
-        {
-            get => _updateFrequency;
-            set => this.RaiseAndSetIfChanged(ref _updateFrequency, value);
-        }
-
-        /// <summary>
-        /// Starts the runner.
-        /// </summary>
-        public void StartRunner()
-        {
-            if(_scenarioRunner != null && !_scenarioRunner.IsStopped)
-            {
-                StopRunner();
-
-                String LINEBLOCK = "------------------------------------------------------";
-                String nl = Environment.NewLine;
-
-                ConsoleLog += $"{nl}{nl}{nl}{nl}{LINEBLOCK}{nl}{LINEBLOCK}{nl}{nl}{nl}";
-            }
-
+    public BatchRunnerViewModel(string scenarioName, int? scenarioSeed, bool autoStart)
+    {
+        ScenarioName = scenarioName;
+        ScenarioSeed = scenarioSeed;
+        AutoStartScenarioRunner = autoStart;
+        Init();
+        if (AutoStartScenarioRunner)
             StartScenarioRunner();
-        }
+    }
 
-        /// <summary>
-        /// Stops the runner.
-        /// </summary>
-        public void StopRunner()
+    public bool AutoStartScenarioRunner { get; set; }
+
+    public bool CanRestartRunner
+    {
+        get => _canRestartRunner;
+        set => this.RaiseAndSetIfChanged(ref _canRestartRunner, value);
+    }
+
+    public bool CanStartRunner
+    {
+        get => _canStartRunner;
+        set => this.RaiseAndSetIfChanged(ref _canStartRunner, value);
+    }
+
+    public bool CanStopRunner
+    {
+        get => _canStopRunner;
+        set => this.RaiseAndSetIfChanged(ref _canStopRunner, value);
+    }
+
+    public int ConsoleCaretIndex
+    {
+        get => _consoleCaretIndex;
+        set => this.RaiseAndSetIfChanged(ref _consoleCaretIndex, value);
+    }
+
+    public string ConsoleLog
+    {
+        get => _consoleText;
+        set
         {
-            State = "Simulation Stopped";
-            CanStartRunner = true;
-            CanRestartRunner = false;
-            CanStopRunner = false;
-
-            if(_scenarioRunner != null && !_scenarioRunner.IsStopped)
-            {
-                _scenarioRunner.StopRunner(true);
-                // add some extra sleep time to make sure we're done writing to the console
-                Thread.Sleep(50);
-            }
+            _ = this.RaiseAndSetIfChanged(ref _consoleText, value);
+            ConsoleCaretIndex = _consoleText.Length;
         }
+    }
 
-        /// <summary>
-        /// Gets the or reset scenario parameters.
-        /// </summary>
-        /// <param name="reset">if set to <c>true</c> [reset].</param>
-        /// <returns></returns>
-        private (int, int, int, int) GetOrResetScenarioParameters(bool reset = false)
+    public string ExecutionCount
+    {
+        get => _executionCount;
+        set => this.RaiseAndSetIfChanged(ref _executionCount, value);
+    }
+
+    public string MaxTurnCount
+    {
+        get => _maxTurns;
+        set => this.RaiseAndSetIfChanged(ref _maxTurns, value);
+    }
+
+    public string ScenarioName { get; set; }
+    public int? ScenarioSeed { get; set; }
+
+    public string ScenarioHeader => ScenarioSeed.HasValue
+        ? $"{ScenarioName}  ·  seed {ScenarioSeed}"
+        : ScenarioName;
+
+    public int SuccessfulSeedCount =>
+        string.IsNullOrWhiteSpace(_seedText) ? 0
+        : _seedText.Split('\n', StringSplitOptions.RemoveEmptyEntries).Length;
+
+    public string SeedLog
+    {
+        get => _seedText;
+        set
         {
-            // get the number of scenarios we want to execute
-            if(!int.TryParse(ExecutionCount, out int seedCount) || reset)
-            {
-                seedCount = Constants.DEFAULT_NUMBER_SEEDS_EXECUTED;
-                ExecutionCount = seedCount.ToString();
-            }
-
-            // get the number of turns we want per scenario
-            if(!int.TryParse(MaxTurnCount, out int maxTurns) || reset)
-            {
-                maxTurns = Constants.DEFAULT_TOTAL_TURNS;
-                MaxTurnCount = maxTurns.ToString();
-            }
-
-            // get the number of turns we want per scenario
-            if(!int.TryParse(TurnBatchCount, out int turnBatch) || reset)
-            {
-                turnBatch = Constants.DEFAULT_TURN_BATCH;
-                TurnBatchCount = turnBatch.ToString();
-            }
-
-            // get the number of turns we want per scenario
-            if(!int.TryParse(UpdateFrequencyCount, out int updateFrequency) || reset)
-            {
-                updateFrequency = Constants.DEFAULT_UPDATE_FREQUENCY;
-                UpdateFrequencyCount = updateFrequency.ToString();
-            }
-
-            return (seedCount, maxTurns, turnBatch, updateFrequency);
+            this.RaiseAndSetIfChanged(ref _seedText, value);
+            this.RaisePropertyChanged(nameof(SuccessfulSeedCount));
         }
+    }
 
-        /// <summary>
-        /// Starts the scenario runner.
-        /// </summary>
-        private void StartScenarioRunner()
+    public string State
+    {
+        get => _state;
+        set => this.RaiseAndSetIfChanged(ref _state, value);
+    }
+
+    public string TpsDisplay
+    {
+        get => _tpsDisplay;
+        set => this.RaiseAndSetIfChanged(ref _tpsDisplay, value);
+    }
+
+    public string TurnBatchCount
+    {
+        get => _turnBatch;
+        set => this.RaiseAndSetIfChanged(ref _turnBatch, value);
+    }
+
+    public string UpdateFrequencyCount
+    {
+        get => _updateFrequency;
+        set => this.RaiseAndSetIfChanged(ref _updateFrequency, value);
+    }
+
+    public void StartRunner()
+    {
+        if (_scenarioRunner != null && !_scenarioRunner.IsStopped)
         {
-            (int seedCount, int maxTurns, int turnBatch, int updateFrequency) = GetOrResetScenarioParameters();
-
-            _scenarioRunner = new AvaloniaScenarioRunner(this, ScenarioName, ScenarioSeed, numberSeedsToExecute: seedCount, totalTurns: maxTurns, turnBatch: turnBatch, updateFrequency: updateFrequency);
-
-            State = "Simulation Running (or ran)";
-            CanStartRunner = false;
-            CanRestartRunner = true;
-            CanStopRunner = true;
+            StopRunner();
+            string sep = "------------------------------------------------------";
+            string nl = Environment.NewLine;
+            ConsoleLog += $"{nl}{nl}{sep}{nl}{sep}{nl}{nl}";
         }
+        StartScenarioRunner();
+    }
+
+    public void StopRunner()
+    {
+        StopTpsTimer();
+        TpsDisplay = string.Empty;
+        State = "Stopped";
+        CanStartRunner = true;
+        CanRestartRunner = false;
+        CanStopRunner = false;
+
+        if (_scenarioRunner != null && !_scenarioRunner.IsStopped)
+        {
+            _scenarioRunner.StopRunner(true);
+            Thread.Sleep(50);
+        }
+    }
+
+    private void Init()
+    {
+        _state = "Stopped";
+        _canStartRunner = true;
+        _canStopRunner = false;
+        _canRestartRunner = false;
+        _consoleCaretIndex = 0;
+        _consoleText = string.Empty;
+        _seedText = string.Empty;
+        _tpsDisplay = string.Empty;
+        _executionCount = Constants.DEFAULT_NUMBER_SEEDS_EXECUTED.ToString();
+        _maxTurns = Constants.DEFAULT_TOTAL_TURNS.ToString();
+        _turnBatch = Constants.DEFAULT_TURN_BATCH.ToString();
+        _updateFrequency = Constants.DEFAULT_UPDATE_FREQUENCY.ToString();
+    }
+
+    private void StartTpsTimer()
+    {
+        _lastTurnSample = 0;
+        _lastSampleTime = DateTime.Now;
+        _tpsTimer = new System.Timers.Timer(500);
+        _tpsTimer.Elapsed += OnTpsTimerElapsed;
+        _tpsTimer.AutoReset = true;
+        _tpsTimer.Start();
+    }
+
+    private void StopTpsTimer()
+    {
+        _tpsTimer?.Stop();
+        _tpsTimer?.Dispose();
+        _tpsTimer = null;
+    }
+
+    private void OnTpsTimerElapsed(object? sender, ElapsedEventArgs e)
+    {
+        if (!Planet.HasWorld)
+            return;
+
+        int currentTurns = Planet.World.Turns;
+        DateTime now = DateTime.Now;
+        double elapsed = (now - _lastSampleTime).TotalSeconds;
+
+        if (elapsed > 0)
+        {
+            double tps = (currentTurns - _lastTurnSample) / elapsed;
+            Dispatcher.UIThread.Post(() => TpsDisplay = $"{tps:N0} TPS");
+        }
+
+        _lastTurnSample = currentTurns;
+        _lastSampleTime = now;
+    }
+
+    private (int, int, int, int) GetOrResetScenarioParameters()
+    {
+        if (!int.TryParse(ExecutionCount, out int seedCount))
+        {
+            seedCount = Constants.DEFAULT_NUMBER_SEEDS_EXECUTED;
+            ExecutionCount = seedCount.ToString();
+        }
+        if (!int.TryParse(MaxTurnCount, out int maxTurns))
+        {
+            maxTurns = Constants.DEFAULT_TOTAL_TURNS;
+            MaxTurnCount = maxTurns.ToString();
+        }
+        if (!int.TryParse(TurnBatchCount, out int turnBatch))
+        {
+            turnBatch = Constants.DEFAULT_TURN_BATCH;
+            TurnBatchCount = turnBatch.ToString();
+        }
+        if (!int.TryParse(UpdateFrequencyCount, out int updateFrequency))
+        {
+            updateFrequency = Constants.DEFAULT_UPDATE_FREQUENCY;
+            UpdateFrequencyCount = updateFrequency.ToString();
+        }
+        return (seedCount, maxTurns, turnBatch, updateFrequency);
+    }
+
+    private void StartScenarioRunner()
+    {
+        (int seedCount, int maxTurns, int turnBatch, int updateFrequency) = GetOrResetScenarioParameters();
+        _scenarioRunner = new AvaloniaScenarioRunner(this, ScenarioName, ScenarioSeed,
+            numberSeedsToExecute: seedCount, totalTurns: maxTurns, turnBatch: turnBatch,
+            updateFrequency: updateFrequency);
+        State = "Running";
+        CanStartRunner = false;
+        CanRestartRunner = true;
+        CanStopRunner = true;
+        StartTpsTimer();
     }
 }

@@ -2,6 +2,7 @@ using ALife.Avalonia.ViewModels;
 using ALife.Avalonia.Views;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Rendering;
+using System.Collections.Generic;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
@@ -23,10 +24,17 @@ public partial class SimulatorView : UserControl, IDisposable
     private bool _disposed;
     private bool _wasRunningBeforeDescendantOpen;
     private BrainViewerWindow? _brainViewer;
+    private readonly List<Window> _childWindows = new();
 
     public SimulatorView()
     {
         InitializeComponent();
+
+        AttachedToVisualTree += (_, _) =>
+        {
+            if (TopLevel.GetTopLevel(this) is Window w)
+                w.Closing += (_, _) => Dispose();
+        };
 
         // Wire up layers and agent settings once the canvas is ready
         LayersList.ItemsSource = TheWorldCanvas.Simulation.Layers;
@@ -199,7 +207,10 @@ public partial class SimulatorView : UserControl, IDisposable
         if (Vm.SelectedAgent == null) return;
 
         var detailsVm = new AgentDetailsViewModel(Vm.SelectedAgent);
-        new AgentDetailsWindow(detailsVm).Show();
+        var win = new AgentDetailsWindow(detailsVm);
+        _childWindows.Add(win);
+        win.Closed += (_, _) => _childWindows.Remove(win);
+        win.Show();
     }
 
     public void PopOutBrain_Click(object sender, RoutedEventArgs args)
@@ -214,7 +225,8 @@ public partial class SimulatorView : UserControl, IDisposable
         }
 
         _brainViewer = new BrainViewerWindow { DataContext = Vm };
-        _brainViewer.Closed += (_, _) => _brainViewer = null;
+        _childWindows.Add(_brainViewer);
+        _brainViewer.Closed += (_, _) => { _childWindows.Remove(_brainViewer!); _brainViewer = null; };
         _brainViewer.Show();
     }
 
@@ -279,7 +291,10 @@ public partial class SimulatorView : UserControl, IDisposable
         {
             _cts.Cancel();
             TheWorldCanvas.StopAll();
-            _brainViewer?.Close();
+            foreach (var w in _childWindows.ToList())
+                w.Close();
+            _childWindows.Clear();
+            _brainViewer = null;
             _disposed = true;
         }
         GC.SuppressFinalize(this);

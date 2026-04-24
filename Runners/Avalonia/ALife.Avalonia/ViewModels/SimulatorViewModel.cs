@@ -229,6 +229,7 @@ public class SimulatorViewModel : ViewModelBase
             this.RaisePropertyChanged(nameof(IsSelectedAgentAlive));
             this.RaisePropertyChanged(nameof(IsSelectedAgentDead));
             this.RaisePropertyChanged(nameof(HasDescendants));
+            SnapshotParentState();
             this.RaisePropertyChanged(nameof(HasParent));
             this.RaisePropertyChanged(nameof(IsParentAlive));
             this.RaisePropertyChanged(nameof(ParentAgent));
@@ -240,17 +241,28 @@ public class SimulatorViewModel : ViewModelBase
     public bool HasNeuralBrain => _selectedAgent?.MyBrain is NeuralNetworkBrain;
     public bool HasBehaviourBrain => _selectedAgent?.MyBrain is BehaviourBrain;
 
-    public bool HasParent => _selectedAgent?.Parent != null;
-    public bool IsParentAlive => _selectedAgent?.Parent?.Alive == true;
-    public Agent? ParentAgent => _selectedAgent?.Parent;
-    public string ParentButtonLabel
+    // Cached inside the world lock by RefreshSelectedAgent / SelectedAgent setter so the
+    // binding system reads a snapshot rather than a live agent field that the sim thread
+    // could flip between the lock release and the UI evaluation.
+    private bool _hasParent;
+    private bool _isParentAlive;
+    private Agent? _parentAgent;
+    private string _parentButtonLabel = string.Empty;
+
+    public bool HasParent => _hasParent;
+    public bool IsParentAlive => _isParentAlive;
+    public Agent? ParentAgent => _parentAgent;
+    public string ParentButtonLabel => _parentButtonLabel;
+
+    private void SnapshotParentState()
     {
-        get
-        {
-            var p = _selectedAgent?.Parent;
-            if (p == null) return string.Empty;
-            return p.Alive ? $"↑ {p.IndividualLabel}" : $"↑ {p.IndividualLabel} (dead)";
-        }
+        var p = _selectedAgent?.Parent;
+        _hasParent = p != null;
+        _isParentAlive = p?.Alive == true;
+        _parentAgent = p;
+        _parentButtonLabel = p == null ? string.Empty
+            : p.Alive ? $"↑ {p.IndividualLabel}"
+            : $"↑ {p.IndividualLabel} (dead)";
     }
 
     public string AgentName => _selectedAgent?.IndividualLabel ?? string.Empty;
@@ -319,13 +331,16 @@ public class SimulatorViewModel : ViewModelBase
     public void RefreshSelectedAgent()
     {
         if (_selectedAgent == null) return;
+        SnapshotParentState();
         this.RaisePropertyChanged(nameof(AgentLocation));
         this.RaisePropertyChanged(nameof(AgentSenses));
         this.RaisePropertyChanged(nameof(AgentActions));
         this.RaisePropertyChanged(nameof(AgentBrain));
         this.RaisePropertyChanged(nameof(IsSelectedAgentAlive));
         this.RaisePropertyChanged(nameof(IsSelectedAgentDead));
+        this.RaisePropertyChanged(nameof(HasParent));
         this.RaisePropertyChanged(nameof(IsParentAlive));
+        this.RaisePropertyChanged(nameof(ParentAgent));
         this.RaisePropertyChanged(nameof(ParentButtonLabel));
     }
 

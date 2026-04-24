@@ -1,4 +1,4 @@
-﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Geometry.Shapes;
 using ALife.Core.Geometry.Shapes.ChildShapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents;
@@ -7,15 +7,12 @@ using System.Collections.Generic;
 
 namespace ALife.Core.WorldObjects
 {
-    public class AgentShadow : IHasShape
+    public class AgentShadow : WorldObjectShadow
     {
         public readonly List<IShape> SenseShapes = new List<IShape>();
 
-        public AgentShadow(Agent self)
+        public AgentShadow(Agent self) : base(self)
         {
-            shape = self.Shape.CloneShape();
-            shape.DebugColour = Colour.Yellow;
-            shape.Orientation = self.Shape.Orientation.Clone();
             foreach(SenseCluster sc in self.Senses)
             {
                 IChildShape cs = sc.Shape as IChildShape;
@@ -24,11 +21,6 @@ namespace ALife.Core.WorldObjects
                 clone.Colour = Colour.White;
                 SenseShapes.Add(clone);
             }
-        }
-        private IShape shape;
-        public IShape Shape
-        {
-            get { return shape; }
         }
     }
 }

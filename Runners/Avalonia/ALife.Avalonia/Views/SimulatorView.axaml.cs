@@ -43,6 +43,9 @@ public partial class SimulatorView : UserControl, IDisposable
         ZoomBorder.ZoomChanged += (_, _) => UpdateZoomLabel();
         TheWorldCanvas.AllAgentsDied += (_, _) => SetRunState(false);
 
+        AddHandler(KeyDownEvent, OnViewKeyDown, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+        AddHandler(KeyUpEvent, OnViewKeyUp, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+
         SetRunState(true);
 
         _perfUpdateTask = Task.Run(() => UpdatePerfLoop(_cts.Token));
@@ -75,7 +78,7 @@ public partial class SimulatorView : UserControl, IDisposable
         Reset_Click(sender, args);
     }
 
-    public void PlayPause_Click(object sender, RoutedEventArgs args) => SetRunState(!TheWorldCanvas.IsEnabled);
+    public void PlayPause_Click(object sender, RoutedEventArgs args) => SetRunState(!TheWorldCanvas.IsSimulationRunning);
 
     public void OneTurn_Click(object sender, RoutedEventArgs args)
     {
@@ -239,7 +242,7 @@ public partial class SimulatorView : UserControl, IDisposable
 
     private void DescendantComboBox_DropDownOpened(object sender, EventArgs e)
     {
-        _wasRunningBeforeDescendantOpen = TheWorldCanvas.IsEnabled;
+        _wasRunningBeforeDescendantOpen = TheWorldCanvas.IsSimulationRunning;
         Vm.FreezeDescendantUpdates = true;
         SetRunState(false);
     }
@@ -266,7 +269,7 @@ public partial class SimulatorView : UserControl, IDisposable
     private void AgentComboBox_DropDownOpened(object sender, EventArgs e)
     {
         if (!ALife.Core.Planet.HasWorld) return;
-        _wasRunningBeforeDescendantOpen = TheWorldCanvas.IsEnabled;
+        _wasRunningBeforeDescendantOpen = TheWorldCanvas.IsSimulationRunning;
         Vm.FreezeDescendantUpdates = true;
         SetRunState(false);
         var agents = ALife.Core.Planet.World.AllActiveObjects
@@ -300,9 +303,27 @@ public partial class SimulatorView : UserControl, IDisposable
         GC.SuppressFinalize(this);
     }
 
+    private void OnViewKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.X && !TheWorldCanvas.Simulation.ViewPast)
+        {
+            TheWorldCanvas.Simulation.ViewPast = true;
+            TheWorldCanvas.InvalidateVisual();
+        }
+    }
+
+    private void OnViewKeyUp(object? sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.X)
+        {
+            TheWorldCanvas.Simulation.ViewPast = false;
+            TheWorldCanvas.InvalidateVisual();
+        }
+    }
+
     private void SetRunState(bool running)
     {
-        TheWorldCanvas.IsEnabled = running;
+        TheWorldCanvas.IsSimulationRunning = running;
         if (Vm != null) Vm.IsEnabled = running;
 
         PlayPauseButton.Content = running ? "⏸ Pause" : "▶ Resume";

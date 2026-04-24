@@ -31,11 +31,7 @@ namespace ALife.Core.WorldObjects.Agents
             private set;
         }
 
-        public AgentShadow Shadow
-        {
-            get;
-            private set;
-        }
+        public override AgentShadow Shadow => (AgentShadow)_shadow;
 
         /// <summary>
         /// The Parent of the agent.
@@ -101,7 +97,7 @@ namespace ALife.Core.WorldObjects.Agents
 
             Parent = parent;
             LivingAncestor = parent;
-            Shadow = new AgentShadow(this);
+            _shadow = new AgentShadow(this);
             if(AddToWorld)
             {
                 //Release them out into the world
@@ -139,17 +135,20 @@ namespace ALife.Core.WorldObjects.Agents
             Planet.World.RemoveWorldObject(this);
         }
 
-        public override void ExecuteAliveTurn()
+        protected override void CaptureShadow()
         {
-            //Save the previous state of agent, so we can look back on it next turn.
-            if(Planet.World.GenerateShadow)
+            if(Alive)
             {
-                Shadow = new AgentShadow(this);
+                _shadow = new AgentShadow(this);
             }
             else
             {
-                Shadow = null;
+                _shadow = null;
             }
+        }
+
+        public override void ExecuteAliveTurn()
+        {
             JustReproduced = false;
 
             MyBrain.ExecuteTurn();

@@ -24,9 +24,6 @@ namespace ALife.Avalonia.Controls;
 
 public class WorldCanvas : Control
 {
-    public static readonly DirectProperty<WorldCanvas, bool> EnabledProperty =
-        AvaloniaProperty.RegisterDirect<WorldCanvas, bool>(nameof(Enabled), x => x.Enabled, (x, v) => x.Enabled = v);
-
     public static readonly DirectProperty<WorldCanvas, string> ScenarioNameProperty =
         AvaloniaProperty.RegisterDirect<WorldCanvas, string>(nameof(ScenarioName), x => x.ScenarioName, (x, v) => x.ScenarioName = v);
 
@@ -49,7 +46,7 @@ public class WorldCanvas : Control
     // Sim thread state — all readable from the background thread without UI-thread access.
     private Thread? _simThread;
     private volatile bool _simThreadRunning;
-    private volatile bool _isRunning;   // mirrors IsEnabled, updated via OnPropertyChanged
+    private volatile bool _isRunning = true;
 
     // volatile double is not legal in C# — store as long bits via Interlocked instead.
     private long TargetSpeedBits = BitConverter.DoubleToInt64Bits((int)SimulationSpeed.Normal);
@@ -59,7 +56,6 @@ public class WorldCanvas : Control
         set => Interlocked.Exchange(ref TargetSpeedBits, BitConverter.DoubleToInt64Bits(value));
     }
 
-    private bool _enabled;
     private AvaloniaRenderer? _renderer;
     private readonly RenderedSimulationController _simulation = new();
     private int _turnCount;
@@ -96,10 +92,10 @@ public class WorldCanvas : Control
 
     // ── Public API ───────────────────────────────────────────────────────────
 
-    public bool Enabled
+    public bool IsSimulationRunning
     {
-        get => _enabled;
-        set => SetAndRaise(EnabledProperty, ref _enabled, value);
+        get => _isRunning;
+        set => _isRunning = value;
     }
 
     public string ScenarioName
@@ -131,6 +127,7 @@ public class WorldCanvas : Control
         _special = agent;
         _specialCounter = 0;
         _simulation.SpecialObject = agent;
+        Planet.World.GenerateShadow = agent is not null;
         InvalidateVisual();
     }
 
@@ -190,36 +187,6 @@ public class WorldCanvas : Control
         }
     }
 
-    // ── Avalonia overrides ───────────────────────────────────────────────────
-
-    // Sync _isRunning (sim-thread-readable) with IsEnabled (UI-thread-only).
-    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
-    {
-        base.OnPropertyChanged(change);
-        if (change.Property == IsEnabledProperty && change.NewValue is bool enabled)
-            _isRunning = enabled;
-    }
-
-    protected override void OnKeyDown(KeyEventArgs e)
-    {
-        base.OnKeyDown(e);
-        if (e.Key == Key.X)
-        {
-            _simulation.ViewPast = true;
-            InvalidateVisual();
-        }
-    }
-
-    protected override void OnKeyUp(KeyEventArgs e)
-    {
-        base.OnKeyUp(e);
-        if (e.Key == Key.X)
-        {
-            _simulation.ViewPast = false;
-            InvalidateVisual();
-        }
-    }
-
     // ── Private ─────────────────────────────────────────────────────────────
 
     // 60 Hz UI-thread callback: initializes on first call, then drives render + VM.
@@ -237,7 +204,6 @@ public class WorldCanvas : Control
             _renderer = new AvaloniaRenderer();
             PointerPressed += OnPointerPressed;
 
-            _isRunning = IsEnabled;
             _simThreadRunning = true;
             _simThread = new Thread(SimLoop) { IsBackground = true, Name = "ALife-Sim" };
             _simThread.Start();
@@ -379,7 +345,7 @@ public class WorldCanvas : Control
         _vm.AgentsActive = agentCount;
         _vm.GenesActive = geneCount.Count;
 
-        if (agentCount == 0 && IsEnabled)
+        if (agentCount == 0 && _isRunning)
         {
             _zeroAgentTicks++;
             if (_zeroAgentTicks >= 5)
@@ -413,5 +379,6 @@ public class WorldCanvas : Control
         if (_vm == null) return;
         _vm.SelectedAgent = _special as Agent;
         _simulation.SpecialObject = _special;
+        Planet.World.GenerateShadow = (_special is not null);
     }
 }

@@ -1,4 +1,5 @@
 using ALife.Avalonia.ViewModels;
+using ALife.Avalonia.Views;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Rendering;
 using System.Linq;
@@ -182,6 +183,23 @@ public partial class SimulatorView : UserControl, IDisposable
         bool show = ShowGeneologyBox.IsChecked == true;
         TheWorldCanvas.SetGeneologyVisible(show);
         if (Vm != null) Vm.ShowGeneology = show;
+    }
+
+    public void GoToParent_Click(object sender, RoutedEventArgs args)
+    {
+        var parent = Vm.SelectedAgent?.Parent;
+        if (parent == null || !parent.Alive) return;
+        Vm.SelectedAgent = parent;
+        TheWorldCanvas.SetSelectedAgent(parent);
+    }
+
+    public void PopOutAgentDetails_Click(object sender, RoutedEventArgs args)
+    {
+        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime) return;
+        if (Vm.SelectedAgent == null) return;
+
+        var detailsVm = new AgentDetailsViewModel(Vm.SelectedAgent);
+        new AgentDetailsWindow(detailsVm).Show();
     }
 
     public void PopOutBrain_Click(object sender, RoutedEventArgs args)

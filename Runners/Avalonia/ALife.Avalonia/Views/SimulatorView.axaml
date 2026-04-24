@@ -158,9 +158,15 @@
       <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="8" Spacing="6">
 
-          <TextBlock Text="SELECTED AGENT" FontSize="10" FontWeight="Bold"
-                     Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"
-                     Margin="0,0,0,2"/>
+          <DockPanel Margin="0,0,0,2">
+            <Button DockPanel.Dock="Right" Click="PopOutAgentDetails_Click"
+                    FontSize="10" Padding="4,1"
+                    IsVisible="{Binding HasSelectedAgent}"
+                    ToolTip.Tip="Open this agent's details in a separate window">⤢ Pop Out</Button>
+            <TextBlock Text="SELECTED AGENT" FontSize="10" FontWeight="Bold"
+                       Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"
+                       VerticalAlignment="Center"/>
+          </DockPanel>
 
           <ComboBox Name="AgentSelectorComboBox"
                     ItemsSource="{Binding AliveAgents}"
@@ -207,6 +213,16 @@
                          Foreground="{DynamicResource ALife.TextPrimaryBrush}"
                          TextWrapping="Wrap" VerticalAlignment="Center"/>
             </DockPanel>
+
+            <!-- Parent navigation -->
+            <Button Click="GoToParent_Click"
+                    IsVisible="{Binding HasParent}"
+                    IsEnabled="{Binding IsParentAlive}"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Left"
+                    FontFamily="Consolas" FontSize="11" Padding="6,3"
+                    ToolTip.Tip="Select the parent agent (disabled if parent has died)"
+                    Content="{Binding ParentButtonLabel}"/>
 
             <!-- Descendants (shown when agent is dead) -->
             <Border Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,5"

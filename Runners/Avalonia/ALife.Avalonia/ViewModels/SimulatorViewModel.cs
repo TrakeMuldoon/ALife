@@ -229,12 +229,29 @@ public class SimulatorViewModel : ViewModelBase
             this.RaisePropertyChanged(nameof(IsSelectedAgentAlive));
             this.RaisePropertyChanged(nameof(IsSelectedAgentDead));
             this.RaisePropertyChanged(nameof(HasDescendants));
+            this.RaisePropertyChanged(nameof(HasParent));
+            this.RaisePropertyChanged(nameof(IsParentAlive));
+            this.RaisePropertyChanged(nameof(ParentAgent));
+            this.RaisePropertyChanged(nameof(ParentButtonLabel));
         }
     }
 
     public bool HasSelectedAgent => _selectedAgent != null;
     public bool HasNeuralBrain => _selectedAgent?.MyBrain is NeuralNetworkBrain;
     public bool HasBehaviourBrain => _selectedAgent?.MyBrain is BehaviourBrain;
+
+    public bool HasParent => _selectedAgent?.Parent != null;
+    public bool IsParentAlive => _selectedAgent?.Parent?.Alive == true;
+    public Agent? ParentAgent => _selectedAgent?.Parent;
+    public string ParentButtonLabel
+    {
+        get
+        {
+            var p = _selectedAgent?.Parent;
+            if (p == null) return string.Empty;
+            return p.Alive ? $"↑ {p.IndividualLabel}" : $"↑ {p.IndividualLabel} (dead)";
+        }
+    }
 
     public string AgentName => _selectedAgent?.IndividualLabel ?? string.Empty;
 
@@ -308,6 +325,8 @@ public class SimulatorViewModel : ViewModelBase
         this.RaisePropertyChanged(nameof(AgentBrain));
         this.RaisePropertyChanged(nameof(IsSelectedAgentAlive));
         this.RaisePropertyChanged(nameof(IsSelectedAgentDead));
+        this.RaisePropertyChanged(nameof(IsParentAlive));
+        this.RaisePropertyChanged(nameof(ParentButtonLabel));
     }
 
     private void InitDefaults()

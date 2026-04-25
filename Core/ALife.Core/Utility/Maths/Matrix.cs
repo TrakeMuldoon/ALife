@@ -219,11 +219,11 @@ public struct Matrix
         double xy = x * y;
 
         output.M11 = xx + cos * (1 - xx);
-        output.M12 = xy - cos * xy;
+        output.M12 = xy - cos * xy + sin;
         output.M13 = -(sin * y);
         output.M14 = 0;
 
-        output.M21 = xy - cos * xy;
+        output.M21 = xy - cos * xy - sin;
         output.M22 = yy + cos * (1 - yy);
         output.M23 = sin * x;
         output.M24 = 0;

@@ -1,4 +1,5 @@
 ﻿using ALife.Core.Distributors;
+using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents.AgentActions;
@@ -35,7 +36,7 @@ namespace ALife.Core.WorldObjects.Agents
             Point centrePoint = distributor.NextObjectCentre(circleRadius * 2, circleRadius * 2);
             IShape myShape = new Circle(centrePoint, circleRadius);
             agent.StartOrientation = startOrientation;
-            myShape.Orientation.SetDegrees(startOrientation);
+            myShape.Orientation = new Angle(startOrientation);
             myShape.Colour = colour;
             if(debugColour.HasValue)
             {
@@ -55,7 +56,7 @@ namespace ALife.Core.WorldObjects.Agents
 
             IShape clonedShape = toClone.Shape.CloneShape();
             newClone.StartOrientation = toClone.StartOrientation;
-            clonedShape.Orientation.SetDegrees(toClone.StartOrientation);
+            clonedShape.Orientation = new Angle(toClone.StartOrientation);
             newClone.SetShape(clonedShape);
 
             Point newCentrePoint = toClone.HomeZone.Distributor.NextObjectCentre(clonedShape.BoundingBox.XLength, clonedShape.BoundingBox.YHeight);
@@ -97,7 +98,7 @@ namespace ALife.Core.WorldObjects.Agents
 
             IShape evolvedShape = newParent.Shape.CloneShape();
             newChild.StartOrientation = newParent.StartOrientation;
-            evolvedShape.Orientation.SetDegrees(newParent.StartOrientation);
+            evolvedShape.Orientation = new Angle(newParent.StartOrientation);
             newChild.SetShape(evolvedShape);
 
             Point newCentrePoint = newParent.HomeZone.Distributor.NextObjectCentre(evolvedShape.BoundingBox.XLength, evolvedShape.BoundingBox.YHeight);

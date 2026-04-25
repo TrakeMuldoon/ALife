@@ -1,4 +1,5 @@
-﻿using ALife.Core.Geometry.Shapes;
+﻿using ALife.Core.Geometry;
+using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
@@ -28,7 +29,7 @@ namespace ALife.Core.Scenarios.TestScenarios
 
             IShape myShape = new Circle(centrePoint, 5);
             agent.StartOrientation = startOrientation;
-            myShape.Orientation.SetDegrees(startOrientation);
+            myShape.Orientation = new Angle(startOrientation);
             myShape.Colour = color;
             agent.SetShape(myShape);
 

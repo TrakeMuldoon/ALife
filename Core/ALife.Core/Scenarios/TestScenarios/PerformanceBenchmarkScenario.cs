@@ -1,3 +1,4 @@
+using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.EvoNumbers;
@@ -32,7 +33,7 @@ namespace ALife.Core.Scenarios.TestScenarios
             Point centrePoint = parentZone.Distributor.NextObjectCentre(10, 10);
             IShape myShape = new Circle(centrePoint, 5);
             agent.StartOrientation = startOrientation;
-            myShape.Orientation.SetDegrees(startOrientation);
+            myShape.Orientation = new Angle(startOrientation);
             myShape.Colour = colour;
             agent.SetShape(myShape);
 

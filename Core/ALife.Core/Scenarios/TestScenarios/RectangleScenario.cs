@@ -33,7 +33,7 @@ namespace ALife.Core.Scenarios.TestScenarios
 
             IShape myShape = new Rectangle(centrePoint, 40, 80, color);
             agent.StartOrientation = startOrientation;
-            myShape.Orientation.SetDegrees(startOrientation);
+            myShape.Orientation = new Angle(startOrientation);
             myShape.Colour = color;
             agent.SetShape(myShape);
 

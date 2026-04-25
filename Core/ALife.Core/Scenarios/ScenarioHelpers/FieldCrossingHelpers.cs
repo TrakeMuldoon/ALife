@@ -1,4 +1,5 @@
 using ALife.Core.Collision;
+using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
@@ -66,7 +67,7 @@ namespace ALife.Core.Scenarios.ScenarioHelpers
             child.TargetZone = specification.TargetZone;
             Point reverseChildPoint = child.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
             child.Shape.CentrePoint = reverseChildPoint;
-            child.Shape.Orientation.SetDegrees(specification.StartOrientation);
+            child.Shape.Orientation = new Angle(specification.StartOrientation);
             child.Shape.Colour = specification.AgentColor;
             GoalSenseCluster gsc = child.Senses.OfType<GoalSenseCluster>().FirstOrDefault();
             gsc.ChangeTarget(specification.TargetZone);

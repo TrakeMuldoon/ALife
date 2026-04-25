@@ -140,7 +140,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses
             intRotationInput.SetValue(rotationValue);
             double dubValue = (double)rotationValue / 180;
             doubRotationInput.SetValue(dubValue);
-            myShape.Orientation.SetDegrees(rotationValue);
+            myShape.Orientation = new Angle(rotationValue);
         }
 
         private void DetectAgainstCircle(Circle targetCircle)

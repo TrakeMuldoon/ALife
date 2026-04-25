@@ -59,9 +59,8 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
 
             netTurn = netRightTurnPercent * MAXIMUM_TURN_DEGREES;
 
-            Angle myOrientation = self.Shape.Orientation;
-            myOrientation.Degrees += netTurn;
-
+            double originalDegrees = self.Shape.Orientation.Degrees;
+            self.Shape.Orientation = new Angle(originalDegrees + netTurn);
 
             if(self.Shape is Circle)
             {
@@ -69,7 +68,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
                 return true;
             }
 
-            // But other shapes do. 
+            // But other shapes do.
             ICollisionMap<WorldObject> collider = Planet.World.CollisionLevels[self.CollisionLevel];
             List<WorldObject> collisions = collider.DetectCollisions(self);
 
@@ -81,7 +80,7 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
             }
             else
             {
-                myOrientation.Degrees -= netTurn; //cancel the move
+                self.Shape.Orientation = new Angle(originalDegrees); //cancel the move
                 Interaction(self, collisions);
                 return false;
             }

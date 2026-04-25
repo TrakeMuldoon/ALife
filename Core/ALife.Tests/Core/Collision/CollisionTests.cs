@@ -217,12 +217,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(80, 80);
             Circle shape1 = new Circle(point1, 11);
-            shape1.Orientation.SetDegrees(0);
+            shape1.Orientation = new Angle(0);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(100, 100);
             Rectangle shape2 = new Rectangle(point2, 30, 20, Colour.Pink);
-            shape2.Orientation.SetDegrees(45);
+            shape2.Orientation = new Angle(45);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -241,12 +241,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(85, 70);
             Circle shape1 = new Circle(point1, 10);
-            shape1.Orientation.SetDegrees(0);
+            shape1.Orientation = new Angle(0);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(100, 100);
             Rectangle shape2 = new Rectangle(point2, 40, 20, Colour.Pink);
-            shape2.Orientation.SetDegrees(45);
+            shape2.Orientation = new Angle(45);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -265,12 +265,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(70, 100);
             Circle shape1 = new Circle(point1, 10);
-            shape1.Orientation.SetDegrees(0);
+            shape1.Orientation = new Angle(0);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(100, 100);
             Rectangle shape2 = new Rectangle(point2, 40, 20, Colour.Pink);
-            shape2.Orientation.SetDegrees(45);
+            shape2.Orientation = new Angle(45);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -289,12 +289,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(130, 100);
             Circle shape1 = new Circle(point1, 10);
-            shape1.Orientation.SetDegrees(0);
+            shape1.Orientation = new Angle(0);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(100, 100);
             Rectangle shape2 = new Rectangle(point2, 40, 20, Colour.Pink);
-            shape2.Orientation.SetDegrees(45);
+            shape2.Orientation = new Angle(45);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -313,12 +313,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(115, 130);
             Circle shape1 = new Circle(point1, 10);
-            shape1.Orientation.SetDegrees(0);
+            shape1.Orientation = new Angle(0);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(100, 100);
             Rectangle shape2 = new Rectangle(point2, 40, 20, Colour.Pink);
-            shape2.Orientation.SetDegrees(45);
+            shape2.Orientation = new Angle(45);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -337,12 +337,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(115, 130);
             Circle shape1 = new Circle(point1, 50);
-            shape1.Orientation.SetDegrees(0);
+            shape1.Orientation = new Angle(0);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(120, 110);
             Rectangle shape2 = new Rectangle(point2, 40, 20, Colour.Pink);
-            shape2.Orientation.SetDegrees(45);
+            shape2.Orientation = new Angle(45);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -361,12 +361,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(100, 100);
             Circle shape1 = new Circle(point1, 10);
-            shape1.Orientation.SetDegrees(0);
+            shape1.Orientation = new Angle(0);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(120, 110);
             Rectangle shape2 = new Rectangle(point2, 70, 40, Colour.Pink);
-            shape2.Orientation.SetDegrees(45);
+            shape2.Orientation = new Angle(45);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -385,12 +385,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(200, 100);
             Circle shape1 = new Circle(point1, 10);
-            shape1.Orientation.SetDegrees(0);
+            shape1.Orientation = new Angle(0);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(120, 110);
             Rectangle shape2 = new Rectangle(point2, 70, 40, Colour.Pink);
-            shape2.Orientation.SetDegrees(45);
+            shape2.Orientation = new Angle(45);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -411,12 +411,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 20, new Angle(50), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(60, 40);
             Rectangle shape2 = new Rectangle(point2, 20, 10, Colour.Pink);
-            shape2.Orientation.SetDegrees(45);
+            shape2.Orientation = new Angle(45);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -435,12 +435,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 20, new Angle(50), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(60, 45);
             Rectangle shape2 = new Rectangle(point2, 20, 10, Colour.Pink);
-            shape2.Orientation.SetDegrees(45);
+            shape2.Orientation = new Angle(45);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -459,12 +459,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 20, new Angle(50), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(65, 45);
             Rectangle shape2 = new Rectangle(point2, 20, 10, Colour.Pink);
-            shape2.Orientation.SetDegrees(135);
+            shape2.Orientation = new Angle(135);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -483,12 +483,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 20, new Angle(50), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(60, 45);
             Rectangle shape2 = new Rectangle(point2, 20, 10, Colour.Pink);
-            shape2.Orientation.SetDegrees(215);
+            shape2.Orientation = new Angle(215);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -507,12 +507,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 20, new Angle(50), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(60, 41);
             Rectangle shape2 = new Rectangle(point2, 20, 10, Colour.Pink);
-            shape2.Orientation.SetDegrees(305);
+            shape2.Orientation = new Angle(305);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -531,12 +531,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(80, 66);
             Rectangle shape2 = new Rectangle(point2, 20, 10, Colour.Pink);
-            shape2.Orientation.SetDegrees(299);
+            shape2.Orientation = new Angle(299);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -555,12 +555,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(84, 69);
             Rectangle shape2 = new Rectangle(point2, 20, 50, Colour.Pink);
-            shape2.Orientation.SetDegrees(27);
+            shape2.Orientation = new Angle(27);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -579,12 +579,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(80, 66);
             Rectangle shape2 = new Rectangle(point2, 20, 10, Colour.Pink);
-            shape2.Orientation.SetDegrees(117);
+            shape2.Orientation = new Angle(117);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -603,12 +603,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(84, 69);
             Rectangle shape2 = new Rectangle(point2, 20, 50, Colour.Pink);
-            shape2.Orientation.SetDegrees(207);
+            shape2.Orientation = new Angle(207);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -627,12 +627,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(45, 85);
             Rectangle shape2 = new Rectangle(point2, 20, 50, Colour.Pink);
-            shape2.Orientation.SetDegrees(200);
+            shape2.Orientation = new Angle(200);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -651,12 +651,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(45, 73);
             Rectangle shape2 = new Rectangle(point2, 20, 40, Colour.Pink);
-            shape2.Orientation.SetDegrees(110);
+            shape2.Orientation = new Angle(110);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -675,12 +675,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(45, 85);
             Rectangle shape2 = new Rectangle(point2, 20, 50, Colour.Pink);
-            shape2.Orientation.SetDegrees(20);
+            shape2.Orientation = new Angle(20);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -699,12 +699,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(45, 65);
             Rectangle shape2 = new Rectangle(point2, 20, 40, Colour.Pink);
-            shape2.Orientation.SetDegrees(120);
+            shape2.Orientation = new Angle(120);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -723,12 +723,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(87, 69);
             Rectangle shape2 = new Rectangle(point2, 20, 50, Colour.Pink);
-            shape2.Orientation.SetDegrees(207);
+            shape2.Orientation = new Angle(207);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -747,12 +747,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(35, 65);
             Rectangle shape2 = new Rectangle(point2, 20, 40, Colour.Pink);
-            shape2.Orientation.SetDegrees(120);
+            shape2.Orientation = new Angle(120);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -771,12 +771,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(40, 50);
             Sector shape1 = new Sector(point1, 50, new Angle(70), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(65, 65);
             Rectangle shape2 = new Rectangle(point2, 10, 20, Colour.Pink);
-            shape2.Orientation.SetDegrees(120);
+            shape2.Orientation = new Angle(120);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -795,12 +795,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(40, 50);
             Sector shape1 = new Sector(point1, 25, new Angle(40), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(50, 65);
             Rectangle shape2 = new Rectangle(point2, 40, 60, Colour.Pink);
-            shape2.Orientation.SetDegrees(120);
+            shape2.Orientation = new Angle(120);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -819,12 +819,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 30, new Angle(50), Colour.Pink);
-            shape1.Orientation.SetDegrees(5);
+            shape1.Orientation = new Angle(5);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(25, 65);
             Rectangle shape2 = new Rectangle(point2, 20, 40, Colour.Pink);
-            shape2.Orientation.SetDegrees(120);
+            shape2.Orientation = new Angle(120);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -845,12 +845,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(80, 116);
             Sector shape1 = new Sector(point1, 50, new Angle(45), Colour.Pink);
-            shape1.Orientation.SetDegrees(0);
+            shape1.Orientation = new Angle(0);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(105, 100);
             Circle shape2 = new Circle(point2, 20);
-            shape2.Orientation.SetDegrees(0);
+            shape2.Orientation = new Angle(0);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -869,12 +869,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(120, 116);
             Sector shape1 = new Sector(point1, 50, new Angle(45), Colour.Pink);
-            shape1.Orientation.SetDegrees(0);
+            shape1.Orientation = new Angle(0);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(105, 100);
             Circle shape2 = new Circle(point2, 20);
-            shape2.Orientation.SetDegrees(0);
+            shape2.Orientation = new Angle(0);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -893,12 +893,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(170, 92);
             Sector shape1 = new Sector(point1, 50, new Angle(45), Colour.Pink);
-            shape1.Orientation.SetDegrees(150);
+            shape1.Orientation = new Angle(150);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(105, 100);
             Circle shape2 = new Circle(point2, 20);
-            shape2.Orientation.SetDegrees(150);
+            shape2.Orientation = new Angle(150);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -917,12 +917,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(95, 65);
             Sector shape1 = new Sector(point1, 50, new Angle(45), Colour.Pink);
-            shape1.Orientation.SetDegrees(0);
+            shape1.Orientation = new Angle(0);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(105, 100);
             Circle shape2 = new Circle(point2, 20);
-            shape2.Orientation.SetDegrees(150);
+            shape2.Orientation = new Angle(150);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -941,12 +941,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(95, 65);
             Sector shape1 = new Sector(point1, 50, new Angle(45), Colour.Pink);
-            shape1.Orientation.SetDegrees(0);
+            shape1.Orientation = new Angle(0);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(125, 80);
             Circle shape2 = new Circle(point2, 10);
-            shape2.Orientation.SetDegrees(150);
+            shape2.Orientation = new Angle(150);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -965,12 +965,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(95, 65);
             Sector shape1 = new Sector(point1, 20, new Angle(45), Colour.Pink);
-            shape1.Orientation.SetDegrees(0);
+            shape1.Orientation = new Angle(0);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(125, 80);
             Circle shape2 = new Circle(point2, 40);
-            shape2.Orientation.SetDegrees(150);
+            shape2.Orientation = new Angle(150);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -989,12 +989,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(50, 50);
             Sector shape1 = new Sector(point1, 50, new Angle(45), Colour.Pink);
-            shape1.Orientation.SetDegrees(0);
+            shape1.Orientation = new Angle(0);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(105, 100);
             Circle shape2 = new Circle(point2, 20);
-            shape2.Orientation.SetDegrees(0);
+            shape2.Orientation = new Angle(0);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }
@@ -1013,12 +1013,12 @@ namespace ALife.Tests.Core.Collision
             ICollisionMap<ShapeWrapper> collMap = new CollisionGrid<ShapeWrapper>(1000, 1000, "TestGrid");
             Point point1 = new Point(20, 20);
             Sector shape1 = new Sector(point1, 50, new Angle(45), Colour.Pink);
-            shape1.Orientation.SetDegrees(0);
+            shape1.Orientation = new Angle(0);
             ShapeWrapper wrap1 = new ShapeWrapper("shape1", shape1);
 
             Point point2 = new Point(125, 80);
             Circle shape2 = new Circle(point2, 10);
-            shape2.Orientation.SetDegrees(150);
+            shape2.Orientation = new Angle(150);
             ShapeWrapper wrap2 = new ShapeWrapper("shape2", shape2);
 
             if(!collMap.Insert(wrap1)) { Assert.Fail("Failed To Insert wrap 1"); }

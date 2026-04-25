@@ -1,6 +1,5 @@
-﻿using ALife.Core.Geometry.Shapes;
+using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Maths;
-using ALife.Core.Utility.Numerics;
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -22,16 +21,16 @@ public struct Angle : IEquatable<Angle>
     public static readonly Angle Zero = new(0d);
 
     /// <summary>
-    /// The degrees
+    /// The degrees, always in [0, 360).
     /// </summary>
     [JsonIgnore]
-    private CircularBoundedNumber _degrees;
+    private double _degrees;
 
     /// <summary>
-    /// The radians
+    /// The radians, always in [0, 2π).
     /// </summary>
     [JsonIgnore]
-    private CircularBoundedNumber _radians;
+    private double _radians;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Angle"/> class.
@@ -40,8 +39,8 @@ public struct Angle : IEquatable<Angle>
     [JsonConstructor]
     public Angle(double degrees)
     {
-        _degrees = new CircularBoundedNumber(degrees, GeometryConstants.MinDegrees, GeometryConstants.MaxDegrees);
-        _radians = new CircularBoundedNumber(degrees * GeometryConstants.Pi / GeometryConstants.HalfDegrees, GeometryConstants.ZeroPi, GeometryConstants.TwoPi);
+        _degrees = WrapDegrees(degrees);
+        _radians = DegreesToRadians(_degrees);
     }
 
     /// <summary>
@@ -50,8 +49,8 @@ public struct Angle : IEquatable<Angle>
     /// <param name="angle">The angle.</param>
     public Angle(Angle angle)
     {
-        _degrees = new CircularBoundedNumber(angle._degrees);
-        _radians = new CircularBoundedNumber(angle._radians);
+        _degrees = angle._degrees;
+        _radians = angle._radians;
     }
 
     /// <summary>
@@ -63,13 +62,13 @@ public struct Angle : IEquatable<Angle>
     {
         if(isRads)
         {
-            _degrees = new CircularBoundedNumber(RadiansToDegrees(value), GeometryConstants.MinDegrees, GeometryConstants.MaxDegrees);
-            _radians = new CircularBoundedNumber(value, GeometryConstants.ZeroPi, GeometryConstants.TwoPi);
+            _radians = WrapRadians(value);
+            _degrees = RadiansToDegrees(_radians);
         }
         else
         {
-            _degrees = new CircularBoundedNumber(value, GeometryConstants.MinDegrees, GeometryConstants.MaxDegrees);
-            _radians = new CircularBoundedNumber(DegreesToRadians(value), GeometryConstants.ZeroPi, GeometryConstants.TwoPi);
+            _degrees = WrapDegrees(value);
+            _radians = DegreesToRadians(_degrees);
         }
     }
 
@@ -83,8 +82,8 @@ public struct Angle : IEquatable<Angle>
         get => _degrees;
         set
         {
-            _degrees.Value = value;
-            _radians.Value = DegreesToRadians(_degrees);
+            _degrees = WrapDegrees(value);
+            _radians = DegreesToRadians(_degrees);
         }
     }
 
@@ -93,14 +92,14 @@ public struct Angle : IEquatable<Angle>
     /// </summary>
     /// <value>The inverse degrees.</value>
     [JsonIgnore]
-    public double InverseDegrees => -(GeometryConstants.MaxDegrees - Degrees);
+    public double InverseDegrees => -(GeometryConstants.MaxDegrees - _degrees);
 
     /// <summary>
     /// Gets the inverse radians.
     /// </summary>
     /// <value>The inverse radians.</value>
     [JsonIgnore]
-    public double InverseRadians => -(GeometryConstants.TwoPi - Radians);
+    public double InverseRadians => -(GeometryConstants.TwoPi - _radians);
 
     /// <summary>
     /// Gets or sets the radians.
@@ -112,15 +111,15 @@ public struct Angle : IEquatable<Angle>
         get => _radians;
         set
         {
-            _radians.Value = value;
-            _degrees.Value = RadiansToDegrees(_radians);
+            _radians = WrapRadians(value);
+            _degrees = RadiansToDegrees(_radians);
         }
     }
 
     public void SetDegrees(double degrees)
     {
-        _degrees.Value = degrees;
-        _radians.Value = DegreesToRadians(_degrees);
+        _degrees = WrapDegrees(degrees);
+        _radians = DegreesToRadians(_degrees);
     }
 
     /// <summary>
@@ -140,16 +139,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>A new.</returns>
     public static Angle FromRadians(double radians)
     {
-        while(radians < GeometryConstants.ZeroPi)
-        {
-            radians += GeometryConstants.TwoPi;
-        }
-        while(radians > GeometryConstants.TwoPi)
-        {
-            radians -= GeometryConstants.TwoPi;
-        }
-        double degrees = RadiansToDegrees(radians);
-        return new(degrees);
+        return new(radians, true);
     }
 
     /// <summary>
@@ -160,7 +150,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>The result of the operator.</returns>
     public static Angle operator -(Angle a, Angle b)
     {
-        return new(a.Degrees - b.Degrees);
+        return new(a._degrees - b._degrees);
     }
 
     /// <summary>
@@ -171,7 +161,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>The result of the operator.</returns>
     public static Angle operator -(Angle a, double b)
     {
-        return new(a.Degrees - b);
+        return new(a._degrees - b);
     }
 
     /// <summary>
@@ -182,7 +172,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>The result of the operator.</returns>
     public static Angle operator -(double a, Angle b)
     {
-        return new(a - b.Degrees);
+        return new(a - b._degrees);
     }
 
     /// <summary>
@@ -204,7 +194,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>The result of the operator.</returns>
     public static Angle operator *(Angle a, Angle b)
     {
-        return new(a.Degrees * b.Degrees);
+        return new(a._degrees * b._degrees);
     }
 
     /// <summary>
@@ -215,7 +205,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>The result of the operator.</returns>
     public static Angle operator *(Angle a, double b)
     {
-        return new(a.Degrees * b);
+        return new(a._degrees * b);
     }
 
     /// <summary>
@@ -226,7 +216,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>The result of the operator.</returns>
     public static Angle operator *(double a, Angle b)
     {
-        return new(a * b.Degrees);
+        return new(a * b._degrees);
     }
 
     /// <summary>
@@ -237,7 +227,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>The result of the operator.</returns>
     public static Angle operator /(Angle a, Angle b)
     {
-        return new(a.Degrees / b.Degrees);
+        return new(a._degrees / b._degrees);
     }
 
     /// <summary>
@@ -248,7 +238,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>The result of the operator.</returns>
     public static Angle operator /(Angle a, double b)
     {
-        return new(a.Degrees / b);
+        return new(a._degrees / b);
     }
 
     /// <summary>
@@ -259,7 +249,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>The result of the operator.</returns>
     public static Angle operator /(double a, Angle b)
     {
-        return new(a / b.Degrees);
+        return new(a / b._degrees);
     }
 
     /// <summary>
@@ -270,7 +260,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>The result of the operator.</returns>
     public static Angle operator +(Angle a, double b)
     {
-        return new(a.Degrees + b);
+        return new(a._degrees + b);
     }
 
     /// <summary>
@@ -281,7 +271,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>The result of the operator.</returns>
     public static Angle operator +(double a, Angle b)
     {
-        return new(a + b.Degrees);
+        return new(a + b._degrees);
     }
 
     /// <summary>
@@ -292,7 +282,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>The result of the operator.</returns>
     public static Angle operator +(Angle a, Angle b)
     {
-        return new(a.Degrees + b.Degrees);
+        return new(a._degrees + b._degrees);
     }
 
     /// <summary>
@@ -303,7 +293,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>The result of the operator.</returns>
     public static bool operator <(Angle left, Angle right)
     {
-        return left.Degrees < right.Degrees;
+        return left._degrees < right._degrees;
     }
 
     /// <summary>
@@ -314,7 +304,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>The result of the operator.</returns>
     public static bool operator <=(Angle left, Angle right)
     {
-        return left.Degrees <= right.Degrees;
+        return left._degrees <= right._degrees;
     }
 
     /// <summary>
@@ -336,7 +326,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>The result of the operator.</returns>
     public static bool operator >(Angle left, Angle right)
     {
-        return left.Degrees > right.Degrees;
+        return left._degrees > right._degrees;
     }
 
     /// <summary>
@@ -347,7 +337,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>The result of the operator.</returns>
     public static bool operator >=(Angle left, Angle right)
     {
-        return left.Degrees >= right.Degrees;
+        return left._degrees >= right._degrees;
     }
 
     /// <summary>
@@ -367,7 +357,7 @@ public struct Angle : IEquatable<Angle>
     public override bool Equals(object obj)
     {
         return obj is Angle angle &&
-            angle.Degrees == Degrees;
+            angle._degrees == _degrees;
     }
 
     /// <summary>
@@ -420,7 +410,7 @@ public struct Angle : IEquatable<Angle>
     /// <returns>A <see cref="string"/> that represents this instance.</returns>
     public override string ToString()
     {
-        return $"Deg:{Degrees}, Rads:{Radians}";
+        return $"Deg:{_degrees}, Rads:{_radians}";
     }
 
     /// <summary>
@@ -445,6 +435,20 @@ public struct Angle : IEquatable<Angle>
         return radians * GeometryConstants.HalfDegrees / GeometryConstants.Pi;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static double WrapDegrees(double d)
+    {
+        d %= 360.0;
+        return d < 0 ? d + 360.0 : d;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static double WrapRadians(double r)
+    {
+        r %= GeometryConstants.TwoPi;
+        return r < 0 ? r + GeometryConstants.TwoPi : r;
+    }
+
     /// <summary>
     /// Determines whether this instance and another specified <see cref="Angle"/> object have the same value.
     /// </summary>
@@ -452,6 +456,6 @@ public struct Angle : IEquatable<Angle>
     /// <returns><c>true</c> if the current instance is equal to the <paramref name="other"/> instance; otherwise, <c>false</c>.</returns>
     public bool Equals(Angle other)
     {
-        return _degrees.Equals(other._degrees) && _radians.Equals(other._radians);
+        return _degrees == other._degrees;
     }
 }

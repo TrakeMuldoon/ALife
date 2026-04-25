@@ -66,7 +66,7 @@ namespace ALife.Core.Scenarios.ScenarioHelpers
             child.TargetZone = specification.TargetZone;
             Point reverseChildPoint = child.HomeZone.Distributor.NextObjectCentre(me.Shape.BoundingBox.XLength, me.Shape.BoundingBox.YHeight);
             child.Shape.CentrePoint = reverseChildPoint;
-            child.Shape.Orientation.Degrees = specification.StartOrientation;
+            child.Shape.Orientation.SetDegrees(specification.StartOrientation);
             child.Shape.Colour = specification.AgentColor;
             GoalSenseCluster gsc = child.Senses.OfType<GoalSenseCluster>().FirstOrDefault();
             gsc.ChangeTarget(specification.TargetZone);

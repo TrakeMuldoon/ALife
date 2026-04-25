@@ -28,7 +28,7 @@ namespace ALife.Core.Scenarios.TestScenarios
 
             IShape myShape = new Circle(centrePoint, 5);
             agent.StartOrientation = startOrientation;
-            myShape.Orientation.Degrees = startOrientation;
+            myShape.Orientation.SetDegrees(startOrientation);
             myShape.Colour = color;
             agent.SetShape(myShape);
 

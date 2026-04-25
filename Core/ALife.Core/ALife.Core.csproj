@@ -14,32 +14,14 @@
     <Content Include="WorldObjects\Agents\Brains\BehaviourBrains\spec.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Utility\Maths\ExtraMath.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ExtraMath.tt</DependentUpon>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" />
     <PackageReference Include="System.Numerics.Vectors" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Utility\Maths\ExtraMath.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ExtraMath.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Utility\Maths\ExtraMath.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ExtraMath.tt</DependentUpon>
-    </Compile>
     <Compile Update="Utility\Maths\ExtraMath.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

@@ -32,7 +32,7 @@ namespace ALife.Core.Scenarios.TestScenarios
             Point centrePoint = parentZone.Distributor.NextObjectCentre(10, 10);
             IShape myShape = new Circle(centrePoint, 5);
             agent.StartOrientation = startOrientation;
-            myShape.Orientation.Degrees = startOrientation;
+            myShape.Orientation.SetDegrees(startOrientation);
             myShape.Colour = colour;
             agent.SetShape(myShape);
 

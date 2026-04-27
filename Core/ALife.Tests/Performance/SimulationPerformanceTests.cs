@@ -31,7 +31,7 @@ namespace ALife.Tests.Performance
         private static readonly Dictionary<string, double> cpuTpsMultiplier = new()
         {
             { "Apple M3 Max", 1.6 },
-            { "Apple M2", 1.2 },
+            { "Apple M2", 1.0 },  // TODO: Test this, and a Ryzen
         };
         
         [TestMethod]

@@ -17,6 +17,7 @@ namespace ALife.Core.Utility.Maths
         /// <param name="min">The minimum.</param>
         /// <param name="max">The maximum. Non-inclusive.</param>
         /// <returns>The clamped value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T CircularClamp<T>(T value, T min, T max) where T : INumber<T>
         {
             (T actualMin, T actualMax) = min > max ? (max, min) : (min, max);
@@ -52,6 +53,7 @@ namespace ALife.Core.Utility.Maths
         /// <param name="min">The minimum.</param>
         /// <param name="max">The maximum.</param>
         /// <returns>The (clamped) value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T Clamp<T>(T value, T min, T max) where T : INumber<T>
         {
             if(value < min)
@@ -77,6 +79,7 @@ namespace ALife.Core.Utility.Maths
         /// <param name="absoluteMin">The absolute minimum.</param>
         /// <param name="absoluteMax">The absolute maximum.</param>
         /// <returns>The delta-clamped value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T DeltaClamp<T>(T newValue, T currentValue, T deltaMin, T deltaMax, T absoluteMin, T absoluteMax)
             where T : INumber<T>
         {

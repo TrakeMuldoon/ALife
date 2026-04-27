@@ -455,3 +455,6 @@ $RECYCLE.BIN/
 
 # Claude
 .claude/*
+
+# Performance Tests
+PerformanceTests/*/LocalResults

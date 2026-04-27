@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" />
+    <PackageReference Include="System.Management" />
     <PackageReference Include="System.Numerics.Vectors" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>

@@ -4,6 +4,7 @@ using ALife.Core.Utility.EvoNumbers;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;
 using ALife.Core.WorldObjects.Agents.Brains;
+using ALife.Core.WorldObjects.Agents.Brains.FlatNeuronBrain;
 using ALife.Core.WorldObjects.Agents.Properties;
 using ALife.Core.WorldObjects.Agents.Senses;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ namespace ALife.Core.Scenarios.TestScenarios
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
-            IBrain newBrain = new NeuralNetworkBrain(agent, new List<int> { 7, 9 });
+            IBrain newBrain = new FlatNeuralNetworkBrain(agent, new List<int> { 7, 9 });
             agent.CompleteInitialization(null, 1, newBrain);
 
             return agent;

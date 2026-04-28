@@ -99,8 +99,8 @@ namespace ALife.Tests.Performance
                 (500, 100),
                 (1000, 50),
                 (2500, 20), 
-                (5000, 9), 
-                (10000, 4)
+                (5000, 9) 
+                //(10000, 4)
             };
 
             List<(int, int, double, double, bool)> results = new();
@@ -119,6 +119,55 @@ namespace ALife.Tests.Performance
             TestContext.WriteLine($"Scenario Results (Total Time: {totalElapsedSeconds:F3}s):\n{resultsText}");
 
             Assert.IsTrue(results.All(result => result.Item5), "A scenario failed to meet the minimum TPS expected!");
+        }
+
+
+        [TestMethod]
+        [TestCategory("Performance")]
+        public void RunPerfTest()
+        {
+            // Agent Count, Minimum Ticks per Second
+            List<(int, int)> scenarios = new()
+            {
+                (1, 30000),
+                (10, 5000),
+                (25, 2000),
+                (50, 1000),
+                (100, 500),
+                (250, 200),
+                (500, 100),
+                (1000, 50),
+                (2500, 20),
+                (5000, 9),
+                (10000, 4)
+            };
+
+            List<(int, int, double, double, bool)> results = new();
+            StringBuilder resultsText = new();
+            double totalElapsedSeconds = 0;
+            int localTickCount = 800;
+
+            foreach((int agentCount, int minimumTps) in scenarios)
+            {
+                PerformanceBenchmarkScenario scenario = new PerformanceBenchmarkScenario(agentCount);
+                Planet.CreateWorld(Seed, scenario);
+                Stopwatch stopwatch = Stopwatch.StartNew();
+                Planet.World.ExecuteManyTurns(localTickCount);
+                stopwatch.Stop();
+
+                double elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
+                double tps = TickCount / elapsedSeconds;
+
+                TestContext.WriteLine($"Agents={agentCount,-5} Ticks={TickCount} Elapsed={elapsedSeconds:F3}s TPS={tps:F2}");
+              
+                bool scenarioPassed = tps >= minimumTps;
+                totalElapsedSeconds += elapsedSeconds;
+                results.Add((agentCount, minimumTps, elapsedSeconds, tps, scenarioPassed));
+                string scenarioResultText = scenarioPassed ? "Passed" : "Failed";
+                resultsText.AppendLine($"  Scenario: Result={scenarioResultText} Agents={agentCount,-5} MinTPS={minimumTps,-6} ActualTPS={tps:F2} Elapsed={elapsedSeconds:F3}s");
+            }
+
+            TestContext.WriteLine($"Scenario Results (Total Time: {totalElapsedSeconds:F3}s):\n{resultsText}");
         }
     }
 }

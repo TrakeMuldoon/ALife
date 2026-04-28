@@ -17,4 +17,8 @@
     <ProjectReference Include="..\..\Core\ALife.Core\ALife.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Management" />
+  </ItemGroup>
+
 </Project>

@@ -13,6 +13,7 @@
 
     <ItemGroup>
         <PackageReference Include="Avalonia.iOS" Version="12.0.1"/>
+        <PackageReference Include="System.Management" Version="10.0.7" />
     </ItemGroup>
 
     <ItemGroup>

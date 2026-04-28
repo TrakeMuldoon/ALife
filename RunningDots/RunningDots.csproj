@@ -15,4 +15,8 @@
     </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Management" />
+  </ItemGroup>
+
 </Project>

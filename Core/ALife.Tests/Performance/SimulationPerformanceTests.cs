@@ -40,7 +40,7 @@ public class SimulationPerformanceTests
     [TestMethod]
     public void Performance_Consolidated()
     {
-        RunConsolidatedPerformanceTest(false, True, True);
+        RunConsolidatedPerformanceTest(false, true, true);
     }
     
     [TestMethod]

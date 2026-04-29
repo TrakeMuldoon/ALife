@@ -1,6 +1,4 @@
 ﻿using ALife.Core.Collision;
-using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 
 namespace ALife.Tests.Core.Collision

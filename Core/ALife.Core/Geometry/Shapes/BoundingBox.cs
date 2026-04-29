@@ -1,41 +1,43 @@
-﻿namespace ALife.Core.Geometry.Shapes
+namespace ALife.Core.Geometry.Shapes
 {
     public struct BoundingBox
     {
-        public double MaxX;
-        public double MaxY;
-        public double MinX;
-        public double MinY;
+        private double x;
 
-        public double XLength
+        private double y;
+
+        private double maxX;
+
+        private double maxY;
+
+        private double width;
+
+        private double height;
+
+        public double X
         {
-            get
+            get => x;
+            set
             {
-                return MaxX - MinX;
+                x = value;
             }
         }
-        public double YHeight
+        
+        
+        public BoundingBox(double x, double y, double width, double height)
         {
-            get
-            {
-                return MaxY - MinY;
-            }
+            X = x;
+            Y = y;
+            Width = width;
+            Height = height;
         }
-
-        public BoundingBox(double minX, double minY, double maxX, double maxY)
-        {
-            MinX = minX;
-            MinY = minY;
-            MaxX = maxX;
-            MaxY = maxY;
-        }
-
+        
         public bool IsCollision(BoundingBox interloper)
         {
-            if(MinX < interloper.MaxX
-                && MaxX > interloper.MinX
-                && MinY < interloper.MaxY
-                && MaxY > interloper.MinY)
+            if (X < interloper.X + interloper.Width
+                && X + Width > interloper.X
+                && Y < interloper.Y + interloper.Height
+                && Y + Height > interloper.Y)
             {
                 return true;
             }

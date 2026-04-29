@@ -1,7 +1,7 @@
 ﻿using ALife.Core.Utility.Maths;
 using System;
 
-namespace ALife.Core.Geometry.Shapes.ChildShapes
+namespace ALife.Core.GeometryOld.Shapes.ChildShapes
 {
     public class ChildSector : Sector, IChildShape
     {

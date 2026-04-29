@@ -5,7 +5,7 @@ namespace ALifeUni
     public static class Extensions
     {
         /// <summary>
-        /// Convert a Windows.Foundation.Point to an ALife.Core.Geometry.Shapes.Point
+        /// Convert a Windows.Foundation.Point to an ALife.Core.GeometryOld.Shapes.Point
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
@@ -15,7 +15,7 @@ namespace ALifeUni
         }
 
         /// <summary>
-        /// Converts an ALife.Core.Geometry.Shapes.Point to a Windows.Foundation.Point
+        /// Converts an ALife.Core.GeometryOld.Shapes.Point to a Windows.Foundation.Point
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>

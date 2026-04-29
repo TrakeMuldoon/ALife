@@ -1,4 +1,4 @@
-﻿using ALife.Core.Geometry.Shapes;
+﻿using ALife.Core.GeometryOld.Shapes;
 using System.Collections.Generic;
 
 namespace ALife.Core.Collision

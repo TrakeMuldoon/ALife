@@ -1,4 +1,4 @@
-using ALife.Core.Geometry.Shapes;
+using ALife.Core.GeometryOld.Shapes;
 using ALife.Core.Scenarios;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.AgentActions;

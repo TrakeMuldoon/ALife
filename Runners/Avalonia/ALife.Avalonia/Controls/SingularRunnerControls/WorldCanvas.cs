@@ -1,7 +1,7 @@
 ﻿using ALife.Avalonia.ALifeImplementations;
 using ALife.Avalonia.ViewModels;
 using ALife.Core;
-using ALife.Core.Geometry.Shapes;
+using ALife.Core.GeometryOld.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;
@@ -15,7 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ALPoint = ALife.Core.Geometry.Shapes.Point;
+using ALPoint = ALife.Core.GeometryOld.Shapes.Point;
 using Point = Avalonia.Point;
 
 namespace ALife.Avalonia.Controls.SingularRunnerControls

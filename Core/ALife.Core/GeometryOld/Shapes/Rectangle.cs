@@ -2,7 +2,7 @@
 using ALife.Core.Utility.Maths;
 using System;
 
-namespace ALife.Core.Geometry.Shapes
+namespace ALife.Core.GeometryOld.Shapes
 {
     public class Rectangle : IShape
     {

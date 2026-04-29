@@ -1,5 +1,5 @@
-﻿using ALife.Core.Geometry.Shapes;
-using ALife.Core.Geometry.Shapes.ChildShapes;
+﻿using ALife.Core.GeometryOld.Shapes;
+using ALife.Core.GeometryOld.Shapes.ChildShapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.WorldObjects.Agents;
 using ALife.Core.WorldObjects.Agents.Senses;

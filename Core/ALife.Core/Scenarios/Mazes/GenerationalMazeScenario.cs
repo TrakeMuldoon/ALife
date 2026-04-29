@@ -1,4 +1,4 @@
-﻿using ALife.Core.Geometry.Shapes;
+﻿using ALife.Core.GeometryOld.Shapes;
 using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.Utility.Collections;
 using ALife.Core.Utility.Colours;

@@ -1,6 +1,6 @@
 ﻿using ALife.Core.Collision;
-using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
+using ALife.Core.GeometryOld;
+using ALife.Core.GeometryOld.Shapes;
 using System.Collections.Generic;
 
 namespace ALife.Core.WorldObjects.Agents.AgentActions

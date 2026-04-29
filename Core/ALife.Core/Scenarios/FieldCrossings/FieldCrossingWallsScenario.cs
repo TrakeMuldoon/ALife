@@ -1,5 +1,5 @@
-﻿using ALife.Core.Geometry;
-using ALife.Core.Geometry.Shapes;
+﻿using ALife.Core.GeometryOld;
+using ALife.Core.GeometryOld.Shapes;
 using ALife.Core.Scenarios.ScenarioHelpers;
 using ALife.Core.WorldObjects;
 using ALife.Core.WorldObjects.Agents;

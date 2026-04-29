@@ -1,4 +1,4 @@
-﻿using ALife.Core.Geometry.Shapes;
+﻿using ALife.Core.GeometryOld.Shapes;
 using ALife.Core.Utility.Maths;
 using System;
 using System.Collections.Generic;

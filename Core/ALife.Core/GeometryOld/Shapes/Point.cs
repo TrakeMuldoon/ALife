@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Numerics;
 
-namespace ALife.Core.Geometry.Shapes
+namespace ALife.Core.GeometryOld.Shapes
 {
     /// <summary>
-    /// Defines a Geometry.Shapes.Point in space
+    /// Defines a GeometryOld.Shapes.Point in space
     /// </summary>
     public struct Point
     {
@@ -22,7 +22,7 @@ namespace ALife.Core.Geometry.Shapes
         /// <summary>
         /// Initializes a new instance of the <see cref="Point"/> struct.
         /// </summary>
-        /// <param name="Geometry.Shapes.Point">The Geometry.Shapes.Point.</param>
+        /// <param name="Geometry.Shapes.Point">The GeometryOld.Shapes.Point.</param>
         public Point(Point Point)
         {
             X = Point.X;
@@ -73,7 +73,7 @@ namespace ALife.Core.Geometry.Shapes
         /// <summary>
         /// Converts to string.
         /// </summary>
-        /// <returns>The string representation of the Geometry.Shapes.Point.</returns>
+        /// <returns>The string representation of the GeometryOld.Shapes.Point.</returns>
         public override string ToString()
         {
             return $"({X}, {Y})";
@@ -83,7 +83,7 @@ namespace ALife.Core.Geometry.Shapes
         /// Converts to string.
         /// </summary>
         /// <param name="provider">The provider.</param>
-        /// <returns>The string representation of the Geometry.Shapes.Point.</returns>
+        /// <returns>The string representation of the GeometryOld.Shapes.Point.</returns>
         public string ToString(IFormatProvider provider)
         {
             return ToString();

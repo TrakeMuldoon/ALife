@@ -33,8 +33,9 @@ public class SimulationPerformanceTests
     private static readonly Dictionary<string, double> CpuTpsMultiplier = new()
     {
         { "Apple M3 Max", 1.6 },
-        { "Apple M2", 1.1 },  // TODO: Test this, and an i7-6700k mobile
+        { "Apple M2", 1.25 },
         { "AMD Ryzen 9 5900X 12-Core Processor", 1.0 },
+        // TODO: Test an i7-6700HQ mobile
     };
     
     [TestMethod]
@@ -74,7 +75,7 @@ public class SimulationPerformanceTests
             resultsText.AppendLine($"  Scenario: Result={scenarioResultText} Agents={agentCount,-5} MinTPS={minimumTps,-6} ActualTPS={tps:F2} BaseTPS={baseMinimumTps,-6} Elapsed={elapsedSeconds:F3}s");
         }
         
-        TestContext.WriteLine($"Scenario Results (Total Time: {totalElapsedSeconds:F3}s):\n{resultsText}");
+        TestContext.WriteLine($"Scenario Results (Total Time: {totalElapsedSeconds:F3}s) for {SysInfo.Instance.CpuName}:\n{resultsText}");
         if(exportResults)
         {
             string timeStamp = DateTime.UtcNow.ToString("yyyy-MM-dd_HH-mm-ss");

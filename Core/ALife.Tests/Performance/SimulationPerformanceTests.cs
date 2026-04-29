@@ -32,10 +32,10 @@ public class SimulationPerformanceTests
 
     private static readonly Dictionary<string, double> CpuTpsMultiplier = new()
     {
-        { "Apple M3 Max", 1.6 },
+        { "Apple M3 Max", 1.7 },
         { "Apple M2", 1.25 },
         { "AMD Ryzen 9 5900X 12-Core Processor", 1.0 },
-        // TODO: Test an i7-6700HQ mobile
+        { "Intel(R) Core(TM) i7-6700HQ CPU @ 2.60GHz", 0.5 },
     };
     
     [TestMethod]

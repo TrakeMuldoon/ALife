@@ -3,6 +3,7 @@ using ALife.Core.Utility.Maths;
 using System;
 using System.Diagnostics;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 
 namespace ALife.Core.Geometry.Shapes;
@@ -233,6 +234,76 @@ public struct Point
     }
 
     /// <summary>
+    /// Calculates the angle between the current point and the specified point.
+    /// </summary>
+    /// <param name="other">The point to calculate the angle to.</param>
+    /// <returns>An <see cref="Angle"/> representing the angle between the two points.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public Angle GetAngleBetween(Point other)
+    {
+        double deltaX = other.X - this.X;
+        double deltaY = other.Y - this.Y;
+
+        double angleBetweenPoints = Math.Atan2(deltaY, deltaX);
+        Angle angle = new(angleBetweenPoints, true);
+        return angle;
+    }
+
+    /// <summary>
+    /// Calculates the angle between the current point and another specified point.
+    /// </summary>
+    /// <param name="other">The other point to calculate the angle to.</param>
+    /// <returns>The angle in radians between the current point and the specified point.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public double GetRadiansBetween(Point other)
+    {
+        Angle angle = GetAngleBetween(other);
+        return angle.Radians;
+    }
+
+    /// <summary>
+    /// Calculates the angle between the current point and another specified point.
+    /// </summary>
+    /// <param name="other">The other point to calculate the angle to.</param>
+    /// <returns>The angle in degrees between the current point and the specified point.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public double GetDegreesBetween(Point other)
+    {
+        Angle angle = GetAngleBetween(other);
+        return angle.Degrees;
+    }
+
+    /// <summary>
+    /// Calculates the distance from the current <see cref="Point"/> to another <see cref="Point"/>.
+    /// </summary>
+    /// <param name="other">The other <see cref="Point"/> to calculate the distance from.</param>
+    /// <returns>The distance between the two points as a double.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public double DistanceFrom(Point other)
+    {
+        double squaredDistance = SquaredDistanceFrom(other);
+        double distance = Math.Sqrt(squaredDistance);
+        return distance;
+    }
+
+    /// <summary>
+    /// Computes the squared distance from the current point to another point.
+    /// </summary>
+    /// <param name="other">The other <see cref="Point"/> to compute the squared distance from.</param>
+    /// <returns>The squared distance as a double.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public double SquaredDistanceFrom(Point other)
+    {
+        //pythagorean theorem c^2 = a^2 + b^2
+        //thus c = square root(a^2 + b^2)
+        double delX = this.X - other.X;
+        double delY = this.Y - other.Y;
+        
+        double squaredDistance = (delX * delX) + (delY * delY);
+        return squaredDistance;
+    }
+
+    /// <summary>
     /// Transforms the current point using the specified matrix.
     /// </summary>
     /// <param name="matrix">The matrix.</param>
@@ -317,6 +388,29 @@ public struct Point
     {
         Matrix matrix = Matrix.CreateFromTranslationAndAngle(angle, translation);
         Transform(matrix);
+    }
+
+    /// <summary>
+    /// Applies a transformation to the current point based on the specified radians and distance.
+    /// </summary>
+    /// <param name="radians">The angle in radians to rotate the point.</param>
+    /// <param name="distance">The distance to move the point in the direction of the specified angle.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void TransformByVector(double radians, double distance)
+    {
+        this._x = (distance * Math.Cos(radians)) + this.X;
+        this._y = (distance * Math.Sin(radians)) + this.Y;
+    }
+
+    /// <summary>
+    /// Transforms the current point by a vector defined by an angle and a distance.
+    /// </summary>
+    /// <param name="angle">The angle of the vector in radians.</param>
+    /// <param name="distance">The distance of the vector to transform by.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void TransformByVector(Angle angle, double distance)
+    {
+        TransformByVector(angle.Radians, distance);
     }
 }
 

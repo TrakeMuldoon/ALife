@@ -105,21 +105,15 @@ namespace ALife.Core.Geometry.Shapes
             Angle absOrientationAngle = rotation;
             Point myOriginPoint = CentrePoint;
 
-            double minX = myOriginPoint.X, maxX = myOriginPoint.X;
-            double minY = myOriginPoint.Y, maxY = myOriginPoint.Y;
-
-            void ExpandX(double x) { if(x < minX) minX = x; if(x > maxX) maxX = x; }
-            void ExpandY(double y) { if(y < minY) minY = y; if(y > maxY) maxY = y; }
+            BoundingBox sectorBB = new(myOriginPoint.X, myOriginPoint.Y, myOriginPoint.X, myOriginPoint.Y);
 
             //Get the points that are the edges of the sector
             leftPoint = GeometryMath.TranslateByVector(myOriginPoint, absOrientationAngle, Radius);
-            ExpandX(leftPoint.X);
-            ExpandY(leftPoint.Y);
+            sectorBB.TransformByPoint(leftPoint);
 
             Angle endAngle = absOrientationAngle + SweepAngle;
             rightPoint = GeometryMath.TranslateByVector(myOriginPoint, endAngle, Radius);
-            ExpandX(rightPoint.X);
-            ExpandY(rightPoint.Y);
+            sectorBB.TransformByPoint(rightPoint);
 
             //determine which axis lines the sweep crosses, (ie. positive X axis, Positive Y, negative X, negative y)
             if(absOrientationAngle.Degrees + SweepAngle.Degrees < 360)
@@ -128,52 +122,51 @@ namespace ALife.Core.Geometry.Shapes
                 if(absOrientationAngle.Degrees < 90
                     && endAngle.Degrees > 90)
                 {
-                    ExpandY(myOriginPoint.Y + Radius);
+                    sectorBB.TransformByYCoord(myOriginPoint.Y + Radius);
                 }
                 if(absOrientationAngle.Degrees < 180
                     && endAngle.Degrees > 180)
                 {
-                    ExpandX(myOriginPoint.X - Radius);
+                    sectorBB.TransformByXCoord(myOriginPoint.X - Radius);
                 }
                 if(absOrientationAngle.Degrees < 270
                     && endAngle.Degrees > 270)
                 {
-                    ExpandY(myOriginPoint.Y - Radius);
+                    sectorBB.TransformByYCoord(myOriginPoint.Y - Radius);
                 }
             }
             else
             {
-                ExpandX(myOriginPoint.X + Radius);
+                sectorBB.TransformByXCoord(myOriginPoint.X + Radius);
                 //These if statements cover the potential start locations
                 if(absOrientationAngle.Degrees < 90)
                 {
-                    ExpandY(myOriginPoint.Y + Radius);
+                    sectorBB.TransformByYCoord(myOriginPoint.Y + Radius);
                 }
                 if(absOrientationAngle.Degrees < 180)
                 {
-                    ExpandX(myOriginPoint.X - Radius);
+                    sectorBB.TransformByXCoord(myOriginPoint.X - Radius);
                 }
                 if(absOrientationAngle.Degrees < 270)
                 {
-                    ExpandY(myOriginPoint.Y - Radius);
+                    sectorBB.TransformByYCoord(myOriginPoint.Y - Radius);
                 }
 
                 //These three if statements cover the potential end locations
                 if(endAngle.Degrees > 90)
                 {
-                    ExpandY(myOriginPoint.Y + Radius);
+                    sectorBB.TransformByYCoord(myOriginPoint.Y + Radius);
                 }
                 if(endAngle.Degrees > 180)
                 {
-                    ExpandX(myOriginPoint.X - Radius);
+                    sectorBB.TransformByXCoord(myOriginPoint.X - Radius);
                 }
                 if(endAngle.Degrees > 270)
                 {
-                    ExpandY(myOriginPoint.Y - Radius);
+                    sectorBB.TransformByYCoord(myOriginPoint.Y - Radius);
                 }
             }
 
-            BoundingBox sectorBB = new BoundingBox(minX, minY, maxX, maxY);
             myBox = sectorBB;
             return sectorBB;
         }

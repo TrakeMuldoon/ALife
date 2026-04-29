@@ -3,6 +3,7 @@ using ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 
@@ -84,7 +85,11 @@ namespace ALife.Core.WorldObjects.Agents.Brains
             //Each layer gathers from the layer above it.
             foreach(Layer lay in Layers)
             {
-                lay.Neurons.ForEach((nn) => nn.GatherValue());
+                Span<Neuron> neurons = CollectionsMarshal.AsSpan(lay.Neurons);
+                for(int i = 0; i < neurons.Length; i++)
+                {
+                    neurons[i].GatherValue();
+                }
             }
 
             //This applies the neuron value to the underlying Action

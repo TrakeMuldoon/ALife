@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
 {
@@ -36,10 +37,10 @@ namespace ALife.Core.WorldObjects.Agents.Brains.NeuralNetworkBrains
         public virtual void GatherValue()
         {
             Value = 0;
-            foreach(Dendrite upDen in UpstreamDendrites)
+            Span<Dendrite> span = CollectionsMarshal.AsSpan(UpstreamDendrites);
+            for(int i = 0; i < span.Length; i++)
             {
-                //Apply all the values;
-                Value += upDen.CurrentValue;
+                Value += span[i].CurrentValue;
             }
             //Sigmoid it
             Value = Sigmoid(Value + Bias);

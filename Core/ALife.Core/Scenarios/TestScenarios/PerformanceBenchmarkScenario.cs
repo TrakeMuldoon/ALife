@@ -15,10 +15,13 @@ namespace ALife.Core.Scenarios.TestScenarios
     public class PerformanceBenchmarkScenario : IScenario
     {
         private readonly int _agentCount;
+        
+        private readonly bool _useFlatBrain;
 
-        public PerformanceBenchmarkScenario(int agentCount)
+        public PerformanceBenchmarkScenario(int agentCount, bool useFlatBrain)
         {
             _agentCount = agentCount;
+            _useFlatBrain = useFlatBrain;
         }
 
         public int WorldWidth => 10000;
@@ -61,7 +64,9 @@ namespace ALife.Core.Scenarios.TestScenarios
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
-            IBrain newBrain = new FlatNeuralNetworkBrain(agent, new List<int> { 7, 9 });
+            IBrain newBrain = _useFlatBrain
+                ? new FlatNeuralNetworkBrain(agent, new List<int> { 7, 9 })
+                : new NeuralNetworkBrain(agent, new List<int> { 7, 9 });
             agent.CompleteInitialization(null, 1, newBrain);
 
             return agent;

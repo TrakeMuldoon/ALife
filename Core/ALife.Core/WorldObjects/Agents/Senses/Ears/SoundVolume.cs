@@ -59,7 +59,7 @@ namespace ALife.Core.WorldObjects.Agents.Senses.Ears
                     }
                 }
 
-                double distanceBetween = GeometryMath.DistanceBetweenTwoPoints(this.parentShape.CentrePoint, sw.Shape.CentrePoint);
+                double distanceBetween = this.parentShape.CentrePoint.DistanceFrom(sw.Shape.CentrePoint);
                 double volume = sw.Intensity - distanceBetween;
                 sum += volume * (double)volume / max;
             }

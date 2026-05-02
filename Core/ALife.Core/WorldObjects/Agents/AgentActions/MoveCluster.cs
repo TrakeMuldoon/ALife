@@ -85,8 +85,8 @@ namespace ALife.Core.WorldObjects.Agents.AgentActions
 
             double halfXLength = theShape.BoundingBox.XLength / 2;
             double halfYHeight = theShape.BoundingBox.YHeight / 2;
-            finalPoint.X = ExtraMath.Clamp(finalPoint.X, halfXLength, Planet.World.WorldWidth - halfXLength);
-            finalPoint.Y = ExtraMath.Clamp(finalPoint.Y, halfYHeight, Planet.World.WorldHeight - halfYHeight);
+            finalPoint.SetX(ExtraMath.Clamp(finalPoint.X, halfXLength, Planet.World.WorldWidth - halfXLength));
+            finalPoint.SetY(ExtraMath.Clamp(finalPoint.Y, halfYHeight, Planet.World.WorldHeight - halfYHeight));
 
             theShape.CentrePoint = finalPoint;
 

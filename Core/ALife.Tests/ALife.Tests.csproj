@@ -15,6 +15,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="System.Management" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ALife.Core\ALife.Core.csproj" />

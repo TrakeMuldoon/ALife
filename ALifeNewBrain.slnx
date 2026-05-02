@@ -41,6 +41,7 @@
   </Folder>
   <Folder Name="/SolutionItems/">
     <File Path=".gitignore" />
+    <File Path="Directory.Packages.props" />
   </Folder>
   <Folder Name="/Xperiments/">
     <Project Path="RunningDots/RunningDots.csproj">

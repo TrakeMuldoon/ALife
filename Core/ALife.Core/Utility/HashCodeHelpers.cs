@@ -1,4 +1,7 @@
-﻿namespace ALife.Core.Utility
+﻿using System;
+using System.Runtime.CompilerServices;
+
+namespace ALife.Core.Utility
 {
     /// <summary>
     /// Various helpers for hashcodes.
@@ -10,10 +13,10 @@
         /// </summary>
         /// <param name="hashCodes">The hashcodes to combine.</param>
         /// <returns>The combined hashcode.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Combine(params int[] hashCodes)
         {
-            string hashString = string.Join(",", hashCodes);
-            int hash = hashString.GetHashCode();
+            int hash = HashCode.Combine(hashCodes);
             return hash;
         }
 
@@ -22,6 +25,7 @@
         /// </summary>
         /// <param name="objects"></param>
         /// <returns>The combined hashcode.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Combine(params object[] objects)
         {
             int[] hashes = new int[objects.Length];

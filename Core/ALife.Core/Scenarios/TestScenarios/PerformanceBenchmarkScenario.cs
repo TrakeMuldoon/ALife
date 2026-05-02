@@ -1,3 +1,4 @@
+using ALife.Core.Geometry;
 using ALife.Core.Geometry.Shapes;
 using ALife.Core.Utility.Colours;
 using ALife.Core.Utility.EvoNumbers;
@@ -14,10 +15,13 @@ namespace ALife.Core.Scenarios.TestScenarios
     public class PerformanceBenchmarkScenario : IScenario
     {
         private readonly int _agentCount;
+        
+        private readonly bool _useFlatBrain;
 
-        public PerformanceBenchmarkScenario(int agentCount)
+        public PerformanceBenchmarkScenario(int agentCount, bool useFlatBrain)
         {
             _agentCount = agentCount;
+            _useFlatBrain = useFlatBrain;
         }
 
         public int WorldWidth => 10000;
@@ -33,7 +37,7 @@ namespace ALife.Core.Scenarios.TestScenarios
             Point centrePoint = parentZone.Distributor.NextObjectCentre(10, 10);
             IShape myShape = new Circle(centrePoint, 5);
             agent.StartOrientation = startOrientation;
-            myShape.Orientation.Degrees = startOrientation;
+            myShape.Orientation = new Angle(startOrientation);
             myShape.Colour = colour;
             agent.SetShape(myShape);
 
@@ -60,7 +64,9 @@ namespace ALife.Core.Scenarios.TestScenarios
 
             agent.AttachAttributes(agentSenses, agentProperties, agentStatistics, agentActions);
 
-            IBrain newBrain = new FlatNeuralNetworkBrain(agent, new List<int> { 7, 9 });
+            IBrain newBrain = _useFlatBrain
+                ? new FlatNeuralNetworkBrain(agent, new List<int> { 7, 9 })
+                : new NeuralNetworkBrain(agent, new List<int> { 7, 9 });
             agent.CompleteInitialization(null, 1, newBrain);
 
             return agent;

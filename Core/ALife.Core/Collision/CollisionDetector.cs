@@ -412,14 +412,9 @@ namespace ALife.Core.Collision
 
         private static bool IsPointWithinSweep(Point targetPoint, Sector sector)
         {
-            double angleBetweenPoints = GeometryMath.AngleBetweenPoints(targetPoint, sector.CentrePoint);
-            Angle abp = new Angle(angleBetweenPoints, true);
-
-            //Angle minimum = new Angle(0);
+            Angle abp = sector.CentrePoint.GetAngleBetween(targetPoint);
             abp -= sector.Orientation;
-            Angle maximum = sector.SweepAngle;
-
-            return abp.Degrees < maximum.Degrees;
+            return abp.Degrees < sector.SweepAngle.Degrees;
         }
 
         private static bool IsPointWithinRectangle(Point p, Rectangle rect)

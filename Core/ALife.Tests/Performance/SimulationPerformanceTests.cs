@@ -1,173 +1,170 @@
 using ALife.Core;
 using ALife.Core.Scenarios.TestScenarios;
+using ALife.Core.Utility;
 using System.Diagnostics;
 using System.Text;
 
-namespace ALife.Tests.Performance
+namespace ALife.Tests.Performance;
+
+[TestClass]
+public class SimulationPerformanceTests
 {
-    [TestClass]
-    public class SimulationPerformanceTests
+    public TestContext TestContext { get; set; } = null!;
+    
+    private const int Seed = 42;
+    private const int TickCount = 1000;
+
+    private static readonly Dictionary<int, int> Scenarios = new()
     {
-        private const int Seed = 42;
-        private const int TickCount = 1000;
+        // Agent Count, Minimum Ticks per Second (DEFAULT)
+        { 1, 30000 },
+        { 10, 5000 },
+        { 25, 2000 },
+        { 50, 1000 }, 
+        { 100, 500 },
+        { 250, 200 }, 
+        { 500, 100 },
+        { 1000, 50 },
+        { 2500, 20 }, 
+        { 5000, 9 }, 
+        { 10000, 4 },
+    };
 
-        public TestContext TestContext { get; set; } = null!;
+    private static readonly Dictionary<string, double> CpuTpsMultiplier = new()
+    {
+        { "Apple M3 Max", 1.7 },
+        { "Apple M2", 1.25 },
+        { "AMD Ryzen 9 5900X 12-Core Processor", 1.0 },
+        { "Intel(R) Core(TM) i7-6700HQ CPU @ 2.60GHz", 0.5 },
+    };
+    
+    [TestMethod]
+    public void Performance_Consolidated()
+    {
+        RunConsolidatedPerformanceTest(false, true, true);
+    }
+    
+    [TestMethod]
+    [TestCategory("Performance")]
+    public void RunPerfTest()
+    {
+        RunConsolidatedPerformanceTest(false, false, false);
+    }
 
-        private (double elapsedSeconds, double tps) RunPerformanceTest(int agentCount, int minimumTps, bool printOutputLine = true, bool runTpsAssert = true)
+    private void RunConsolidatedPerformanceTest(bool useFlatBrain, bool assertPassed, bool exportResults)
+    {
+        bool allPassed = true;
+        StringBuilder resultsText = new();
+        StringBuilder resultsCsv = new();
+        resultsCsv.AppendLine("Passed,Agent Count,Minimum TPS,Actual TPS,Base TPS,Elapsed (s)");
+        double totalElapsedSeconds = 0;
+        double tpsMultiplier = CpuTpsMultiplier.GetValueOrDefault(SysInfo.Instance.CpuName, 1);
+        
+        foreach((int agentCount, int baseMinimumTps) in Scenarios)
         {
-            PerformanceBenchmarkScenario scenario = new PerformanceBenchmarkScenario(agentCount);
-            Planet.CreateWorld(Seed, scenario);
-
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            Planet.World.ExecuteManyTurns(TickCount);
-            stopwatch.Stop();
-
-            double elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
-            double tps = TickCount / elapsedSeconds;
-
-            if(printOutputLine)
+            (double elapsedSeconds, double tps) = RunPerformanceTestScenario(agentCount, false, false, useFlatBrain);
+            int minimumTps = (int)(baseMinimumTps * tpsMultiplier);
+            bool scenarioPassed = tps >= minimumTps;
+            totalElapsedSeconds += elapsedSeconds;
+            string scenarioResultText = scenarioPassed ? "Passed" : "Failed";
+            if(!scenarioPassed)
             {
-                TestContext.WriteLine($"Agents={agentCount,-5} Ticks={TickCount} Elapsed={elapsedSeconds:F3}s TPS={tps:F2}");
+                allPassed = false;
             }
-
-            if(runTpsAssert)
+            resultsCsv.AppendLine($"{scenarioResultText},{agentCount},{minimumTps},{tps:F2},{baseMinimumTps},{elapsedSeconds:F5}");
+            resultsText.AppendLine($"  Scenario: Result={scenarioResultText} Agents={agentCount,-5} MinTPS={minimumTps,-6} ActualTPS={tps:F2} BaseTPS={baseMinimumTps,-6} Elapsed={elapsedSeconds:F3}s");
+        }
+        
+        TestContext.WriteLine($"Scenario Results (Total Time: {totalElapsedSeconds:F3}s) for {SysInfo.Instance.CpuName}:\n{resultsText}");
+        if(exportResults)
+        {
+            string timeStamp = DateTime.UtcNow.ToString("yyyy-MM-dd_HH-mm-ss");
+            string performanceDirectory = Path.Join(Helpers.GetSolutionRootFromTestContext(TestContext), "PerformanceTests", "Simulation", "LocalResults");
+            if(!Directory.Exists(performanceDirectory))
             {
-                Assert.IsTrue(tps >= minimumTps, $"Simulation did not meet the expected minimum TPS ({tps:F3} vs {minimumTps:F3} minimum)");
+                Directory.CreateDirectory(performanceDirectory);
             }
-            Assert.AreEqual(TickCount, Planet.World.Turns, "Simulation did not complete the expected number of ticks");
-            Assert.AreEqual(agentCount, Planet.World.AllActiveObjects.Count, "Agent count changed unexpectedly during simulation");
-
-            return (elapsedSeconds, tps);
+        
+            File.WriteAllText(Path.Join(performanceDirectory, $"performance_results_{timeStamp}.txt"), resultsText.ToString());
+            File.WriteAllText(Path.Join(performanceDirectory, $"performance_results_{timeStamp}.csv"), resultsCsv.ToString());
         }
 
-        [TestMethod]
-        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_00001Agents() => RunPerformanceTest(1, 30000);
-
-        [TestMethod]
-        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_00010Agents() => RunPerformanceTest(10, 5000);
-
-        [TestMethod]
-        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_00025Agents() => RunPerformanceTest(25, 2000);
-
-        [TestMethod]
-        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_00050Agents() => RunPerformanceTest(50, 1000);
-
-        [TestMethod]
-        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_00100Agents() => RunPerformanceTest(100, 500);
-
-        [TestMethod]
-        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_00250Agents() => RunPerformanceTest(250, 200);
-
-        [TestMethod]
-        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_00500Agents() => RunPerformanceTest(500, 100);
-
-        [TestMethod]
-        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_01000Agents() => RunPerformanceTest(1000, 50);
-
-        [TestMethod]
-        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_02500Agents() => RunPerformanceTest(2500, 20);
-
-        [TestMethod]
-        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_05000Agents() => RunPerformanceTest(5000, 9);
-
-        [TestMethod]
-        [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
-        public void Performance_10000Agents() => RunPerformanceTest(10000, 4);
-
-        [TestMethod]
-        public void Performance_Consolidated()
+        if(assertPassed)
         {
-            // Agent Count, Minimum Ticks per Second
-            List<(int, int)> scenarios = new()
-            {
-                (1, 30000),
-                (10, 5000),
-                (25, 2000),
-                (50, 1000), 
-                (100, 500),
-                (250, 200), 
-                (500, 100),
-                (1000, 50),
-                (2500, 20), 
-                (5000, 9) 
-                //(10000, 4)
-            };
-
-            List<(int, int, double, double, bool)> results = new();
-            StringBuilder resultsText = new();
-            double totalElapsedSeconds = 0;
-            foreach((int agentCount, int minimumTps) in scenarios)
-            {
-                (double elapsedSeconds, double tps) = RunPerformanceTest(agentCount, minimumTps, false, false);
-                bool scenarioPassed = tps >= minimumTps;
-                totalElapsedSeconds += elapsedSeconds;
-                results.Add((agentCount, minimumTps, elapsedSeconds, tps, scenarioPassed));
-                string scenarioResultText = scenarioPassed ? "Passed" : "Failed";
-                resultsText.AppendLine($"  Scenario: Result={scenarioResultText} Agents={agentCount,-5} MinTPS={minimumTps,-6} ActualTPS={tps:F2} Elapsed={elapsedSeconds:F3}s");
-            }
-            
-            TestContext.WriteLine($"Scenario Results (Total Time: {totalElapsedSeconds:F3}s):\n{resultsText}");
-
-            Assert.IsTrue(results.All(result => result.Item5), "A scenario failed to meet the minimum TPS expected!");
-        }
-
-
-        [TestMethod]
-        [TestCategory("Performance")]
-        public void RunPerfTest()
-        {
-            // Agent Count, Minimum Ticks per Second
-            List<(int, int)> scenarios = new()
-            {
-                (1, 30000),
-                (10, 5000),
-                (25, 2000),
-                (50, 1000),
-                (100, 500),
-                (250, 200),
-                (500, 100),
-                (1000, 50),
-                (2500, 20),
-                (5000, 9),
-                (10000, 4)
-            };
-
-            List<(int, int, double, double, bool)> results = new();
-            StringBuilder resultsText = new();
-            double totalElapsedSeconds = 0;
-            int localTickCount = 800;
-
-            foreach((int agentCount, int minimumTps) in scenarios)
-            {
-                PerformanceBenchmarkScenario scenario = new PerformanceBenchmarkScenario(agentCount);
-                Planet.CreateWorld(Seed, scenario);
-                Stopwatch stopwatch = Stopwatch.StartNew();
-                Planet.World.ExecuteManyTurns(localTickCount);
-                stopwatch.Stop();
-
-                double elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
-                double tps = TickCount / elapsedSeconds;
-
-                TestContext.WriteLine($"Agents={agentCount,-5} Ticks={TickCount} Elapsed={elapsedSeconds:F3}s TPS={tps:F2}");
-              
-                bool scenarioPassed = tps >= minimumTps;
-                totalElapsedSeconds += elapsedSeconds;
-                results.Add((agentCount, minimumTps, elapsedSeconds, tps, scenarioPassed));
-                string scenarioResultText = scenarioPassed ? "Passed" : "Failed";
-                resultsText.AppendLine($"  Scenario: Result={scenarioResultText} Agents={agentCount,-5} MinTPS={minimumTps,-6} ActualTPS={tps:F2} Elapsed={elapsedSeconds:F3}s");
-            }
-
-            TestContext.WriteLine($"Scenario Results (Total Time: {totalElapsedSeconds:F3}s):\n{resultsText}");
+            Assert.IsTrue(allPassed, "A scenario failed to meet the minimum TPS expected!");
         }
     }
+
+    private (double elapsedSeconds, double tps) RunPerformanceTestScenario(int agentCount, bool printOutputLine = true, bool runTpsAssert = true, bool useFlatBrain = false)
+    {
+        PerformanceBenchmarkScenario scenario = new(agentCount, useFlatBrain);
+        Planet.CreateWorld(Seed, scenario);
+
+        Stopwatch stopwatch = Stopwatch.StartNew();
+        Planet.World.ExecuteManyTurns(TickCount);
+        stopwatch.Stop();
+
+        double elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
+        double tps = TickCount / elapsedSeconds;
+
+        if(printOutputLine)
+        {
+            TestContext.WriteLine($"Agents={agentCount,-5} Ticks={TickCount} Elapsed={elapsedSeconds:F3}s TPS={tps:F2}");
+        }
+
+        if(runTpsAssert)
+        {
+            double tpsMultiplier = CpuTpsMultiplier.GetValueOrDefault(SysInfo.Instance.CpuName, 1);
+            int minimumTps = (int)(Scenarios[agentCount] * tpsMultiplier);
+            Assert.IsTrue(tps >= minimumTps, $"Simulation did not meet the expected minimum TPS ({tps:F3} vs {minimumTps:F3} minimum)");
+        }
+        Assert.AreEqual(TickCount, Planet.World.Turns, "Simulation did not complete the expected number of ticks");
+        Assert.AreEqual(agentCount, Planet.World.AllActiveObjects.Count, "Agent count changed unexpectedly during simulation");
+
+        return (elapsedSeconds, tps);
+    }
+
+    [TestMethod]
+    [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
+    public void Performance_00001Agents() => RunPerformanceTestScenario(1);
+
+    [TestMethod]
+    [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
+    public void Performance_00010Agents() => RunPerformanceTestScenario(10);
+
+    [TestMethod]
+    [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
+    public void Performance_00025Agents() => RunPerformanceTestScenario(25);
+
+    [TestMethod]
+    [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
+    public void Performance_00050Agents() => RunPerformanceTestScenario(50);
+
+    [TestMethod]
+    [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
+    public void Performance_00100Agents() => RunPerformanceTestScenario(100);
+
+    [TestMethod]
+    [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
+    public void Performance_00250Agents() => RunPerformanceTestScenario(250);
+
+    [TestMethod]
+    [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
+    public void Performance_00500Agents() => RunPerformanceTestScenario(500);
+
+    [TestMethod]
+    [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
+    public void Performance_01000Agents() => RunPerformanceTestScenario(1000);
+
+    [TestMethod]
+    [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
+    public void Performance_02500Agents() => RunPerformanceTestScenario(2500);
+
+    [TestMethod]
+    [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
+    public void Performance_05000Agents() => RunPerformanceTestScenario(5000);
+
+    [TestMethod]
+    [Ignore("Remove IGNORE attribute to enable for manually testing scenario")]
+    public void Performance_10000Agents() => RunPerformanceTestScenario(10000);
 }

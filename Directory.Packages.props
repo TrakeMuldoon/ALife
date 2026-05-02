@@ -17,6 +17,7 @@
     <PackageVersion Include="MSTest.TestFramework" Version="3.8.2" />
     <PackageVersion Include="PanAndZoom" Version="12.0.0.1" />
     <PackageVersion Include="ReactiveUI.Avalonia" Version="12.0.1" />
+    <PackageVersion Include="System.Management" Version="10.0.7" />
     <PackageVersion Include="System.Numerics.Vectors" Version="4.6.0" />
     <PackageVersion Include="System.Text.Json" Version="9.0.2" />
   </ItemGroup>

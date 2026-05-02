@@ -105,21 +105,15 @@ namespace ALife.Core.Geometry.Shapes
             Angle absOrientationAngle = rotation;
             Point myOriginPoint = CentrePoint;
 
-            List<double> xValues = new List<double>();
-            List<double> yValues = new List<double>();
-
-            xValues.Add(myOriginPoint.X);
-            yValues.Add(myOriginPoint.Y);
+            BoundingBox sectorBB = new(myOriginPoint.X, myOriginPoint.Y, myOriginPoint.X, myOriginPoint.Y);
 
             //Get the points that are the edges of the sector
             leftPoint = GeometryMath.TranslateByVector(myOriginPoint, absOrientationAngle, Radius);
-            xValues.Add(leftPoint.X);
-            yValues.Add(leftPoint.Y);
+            sectorBB.TransformByPoint(leftPoint);
 
             Angle endAngle = absOrientationAngle + SweepAngle;
             rightPoint = GeometryMath.TranslateByVector(myOriginPoint, endAngle, Radius);
-            xValues.Add(rightPoint.X);
-            yValues.Add(rightPoint.Y);
+            sectorBB.TransformByPoint(rightPoint);
 
             //determine which axis lines the sweep crosses, (ie. positive X axis, Positive Y, negative X, negative y)
             if(absOrientationAngle.Degrees + SweepAngle.Degrees < 360)
@@ -128,57 +122,51 @@ namespace ALife.Core.Geometry.Shapes
                 if(absOrientationAngle.Degrees < 90
                     && endAngle.Degrees > 90)
                 {
-                    yValues.Add(myOriginPoint.Y + Radius);
+                    sectorBB.TransformByYCoord(myOriginPoint.Y + Radius);
                 }
                 if(absOrientationAngle.Degrees < 180
                     && endAngle.Degrees > 180)
                 {
-                    xValues.Add(myOriginPoint.X - Radius);
+                    sectorBB.TransformByXCoord(myOriginPoint.X - Radius);
                 }
                 if(absOrientationAngle.Degrees < 270
                     && endAngle.Degrees > 270)
                 {
-                    yValues.Add(myOriginPoint.Y - Radius);
+                    sectorBB.TransformByYCoord(myOriginPoint.Y - Radius);
                 }
             }
             else
             {
-                xValues.Add(myOriginPoint.X + Radius);
+                sectorBB.TransformByXCoord(myOriginPoint.X + Radius);
                 //These if statements cover the potential start locations
                 if(absOrientationAngle.Degrees < 90)
                 {
-                    yValues.Add(myOriginPoint.Y + Radius);
+                    sectorBB.TransformByYCoord(myOriginPoint.Y + Radius);
                 }
                 if(absOrientationAngle.Degrees < 180)
                 {
-                    xValues.Add(myOriginPoint.X - Radius);
+                    sectorBB.TransformByXCoord(myOriginPoint.X - Radius);
                 }
                 if(absOrientationAngle.Degrees < 270)
                 {
-                    yValues.Add(myOriginPoint.Y - Radius);
+                    sectorBB.TransformByYCoord(myOriginPoint.Y - Radius);
                 }
 
                 //These three if statements cover the potential end locations
                 if(endAngle.Degrees > 90)
                 {
-                    yValues.Add(myOriginPoint.Y + Radius);
+                    sectorBB.TransformByYCoord(myOriginPoint.Y + Radius);
                 }
                 if(endAngle.Degrees > 180)
                 {
-                    xValues.Add(myOriginPoint.X - Radius);
+                    sectorBB.TransformByXCoord(myOriginPoint.X - Radius);
                 }
                 if(endAngle.Degrees > 270)
                 {
-                    yValues.Add(myOriginPoint.Y - Radius);
+                    sectorBB.TransformByYCoord(myOriginPoint.Y - Radius);
                 }
             }
 
-            double minX = ExtraMath.Minimum(xValues.ToArray());
-            double minY = ExtraMath.Minimum(yValues.ToArray());
-            double maxX = ExtraMath.Maximum(xValues.ToArray());
-            double maxY = ExtraMath.Maximum(yValues.ToArray());
-
-            BoundingBox sectorBB = new BoundingBox(minX, minY, maxX, maxY);
             myBox = sectorBB;
             return sectorBB;
         }

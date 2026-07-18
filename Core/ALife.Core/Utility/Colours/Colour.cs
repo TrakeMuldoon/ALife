@@ -115,6 +115,12 @@ namespace ALife.Core.Utility.Colours
         public static readonly Colour Pink = PredefineColour("FFC0CB");
 
         /// <summary>
+        /// A colour representing the colour purple.
+        /// </summary>
+        [JsonIgnore]
+        public static readonly Colour Purple = PredefineColour("FF00FF");
+
+        /// <summary>
         /// A colour representing the colour red.
         /// </summary>
         [JsonIgnore]

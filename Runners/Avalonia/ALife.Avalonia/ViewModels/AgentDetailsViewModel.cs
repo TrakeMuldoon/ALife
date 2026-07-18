@@ -15,6 +15,7 @@ public class AgentDetailsViewModel : ViewModelBase
     private string _agentLocation = string.Empty;
     private string _agentSenses = string.Empty;
     private string _agentActions = string.Empty;
+    private string _agentProps = string.Empty;
     private string _agentBrain = string.Empty;
 
     public AgentDetailsViewModel(Agent agent)
@@ -65,6 +66,12 @@ public class AgentDetailsViewModel : ViewModelBase
         private set => this.RaiseAndSetIfChanged(ref _agentActions, value);
     }
 
+    public string AgentProps
+    {
+        get => _agentProps;
+        private set => this.RaiseAndSetIfChanged(ref _agentProps, value);
+    }
+
     public string AgentBrain
     {
         get => _agentBrain;
@@ -84,6 +91,7 @@ public class AgentDetailsViewModel : ViewModelBase
             AgentLocation = ComputeLocation();
             AgentSenses = ComputeSenses();
             AgentActions = ComputeActions();
+            AgentProps = ComputeProps();
             AgentBrain = ComputeBrain();
         }
 
@@ -131,6 +139,20 @@ public class AgentDetailsViewModel : ViewModelBase
             return sb.ToString().TrimEnd();
         }
         catch { return _agentActions; }
+    }
+
+    private string ComputeProps()
+    {
+        try
+        {
+            var sb = new StringBuilder();
+            foreach (var kv in _agent.Statistics)
+                sb.AppendLine($"{kv.Key}: {kv.Value.Value}");
+            foreach (var kv in _agent.Properties)
+                sb.AppendLine($"{kv.Key}: {kv.Value.Value:F3}");
+            return sb.ToString().TrimEnd();
+        }
+        catch { return _agentProps; }
     }
 
     private string ComputeBrain()

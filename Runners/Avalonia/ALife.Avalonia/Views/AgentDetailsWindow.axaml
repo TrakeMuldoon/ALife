@@ -47,37 +47,52 @@
         </Border>
 
         <!-- Location -->
-        <Border Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,4">
-          <StackPanel Spacing="2">
+        <Expander Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,4"
+                  IsExpanded="True" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+          <Expander.Header>
             <TextBlock Text="LOCATION" FontSize="9" Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"/>
-            <TextBlock Text="{Binding AgentLocation}"
-                       FontFamily="Consolas" FontSize="11"
-                       Foreground="{DynamicResource ALife.TextPrimaryBrush}"
-                       TextWrapping="Wrap"/>
-          </StackPanel>
-        </Border>
+          </Expander.Header>
+          <TextBlock Text="{Binding AgentLocation}"
+                     FontFamily="Consolas" FontSize="11"
+                     Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                     TextWrapping="Wrap"/>
+        </Expander>
 
         <!-- Senses -->
-        <Border Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,4">
-          <StackPanel Spacing="2">
+        <Expander Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,4"
+                  IsExpanded="True" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+          <Expander.Header>
             <TextBlock Text="SENSES" FontSize="9" Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"/>
-            <TextBlock Text="{Binding AgentSenses}"
-                       FontFamily="Consolas" FontSize="10"
-                       Foreground="{DynamicResource ALife.TextPrimaryBrush}"
-                       TextWrapping="Wrap"/>
-          </StackPanel>
-        </Border>
+          </Expander.Header>
+          <TextBlock Text="{Binding AgentSenses}"
+                     FontFamily="Consolas" FontSize="10"
+                     Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                     TextWrapping="Wrap"/>
+        </Expander>
 
         <!-- Actions -->
-        <Border Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,4">
-          <StackPanel Spacing="2">
+        <Expander Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,4"
+                  IsExpanded="True" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+          <Expander.Header>
             <TextBlock Text="ACTIONS" FontSize="9" Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"/>
-            <TextBlock Text="{Binding AgentActions}"
-                       FontFamily="Consolas" FontSize="10"
-                       Foreground="{DynamicResource ALife.TextPrimaryBrush}"
-                       TextWrapping="Wrap"/>
-          </StackPanel>
-        </Border>
+          </Expander.Header>
+          <TextBlock Text="{Binding AgentActions}"
+                     FontFamily="Consolas" FontSize="10"
+                     Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                     TextWrapping="Wrap"/>
+        </Expander>
+
+        <!-- Props / Stats -->
+        <Expander Background="{DynamicResource ALife.SectionBrush}" CornerRadius="3" Padding="6,4"
+                  IsExpanded="True" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+          <Expander.Header>
+            <TextBlock Text="PROPS / STATS" FontSize="9" Foreground="{DynamicResource ALife.BioTealBrush}" LetterSpacing="1"/>
+          </Expander.Header>
+          <TextBlock Text="{Binding AgentProps}"
+                     FontFamily="Consolas" FontSize="10"
+                     Foreground="{DynamicResource ALife.TextPrimaryBrush}"
+                     TextWrapping="Wrap"/>
+        </Expander>
 
       </StackPanel>
     </ScrollViewer>

@@ -221,6 +221,7 @@ public class SimulatorViewModel : ViewModelBase
             this.RaisePropertyChanged(nameof(AgentLocation));
             this.RaisePropertyChanged(nameof(AgentSenses));
             this.RaisePropertyChanged(nameof(AgentActions));
+            this.RaisePropertyChanged(nameof(AgentProps));
             this.RaisePropertyChanged(nameof(AgentBrain));
             this.RaisePropertyChanged(nameof(HasSelectedAgent));
             this.RaisePropertyChanged(nameof(HasNeuralBrain));
@@ -310,6 +311,20 @@ public class SimulatorViewModel : ViewModelBase
         }
     }
 
+    public string AgentProps
+    {
+        get
+        {
+            if (_selectedAgent == null) return string.Empty;
+            var sb = new StringBuilder();
+            foreach (var kv in _selectedAgent.Statistics)
+                sb.AppendLine($"{kv.Key}: {kv.Value.Value}");
+            foreach (var kv in _selectedAgent.Properties)
+                sb.AppendLine($"{kv.Key}: {kv.Value.Value:F3}");
+            return sb.ToString().TrimEnd();
+        }
+    }
+
     public string AgentBrain
     {
         get
@@ -335,6 +350,7 @@ public class SimulatorViewModel : ViewModelBase
         this.RaisePropertyChanged(nameof(AgentLocation));
         this.RaisePropertyChanged(nameof(AgentSenses));
         this.RaisePropertyChanged(nameof(AgentActions));
+        this.RaisePropertyChanged(nameof(AgentProps));
         this.RaisePropertyChanged(nameof(AgentBrain));
         this.RaisePropertyChanged(nameof(IsSelectedAgentAlive));
         this.RaisePropertyChanged(nameof(IsSelectedAgentDead));

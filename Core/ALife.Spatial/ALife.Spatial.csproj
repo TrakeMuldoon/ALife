@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>default</LangVersion>
+        <Description>Spatial indexes for broad-phase collision detection of many moving elements, and convex and compound shapes with a narrow phase and rigid-body contacts for them.</Description>
+        <!-- Builds must be warning-free, including missing or broken XML docs. -->
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <InternalsVisibleTo Include="ALife.Spatial.Tests" />
+    </ItemGroup>
+
+</Project>

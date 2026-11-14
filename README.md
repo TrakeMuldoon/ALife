@@ -119,6 +119,10 @@ To change the scenario being executed depends on whether you're running the GUI 
 - Console App: Update the string in Program.cs that is passed to the `ConsoleScenarioRunner` to the name of the scenario you want to run.
 - GUI App: Select the scenario you wish to execute from the list. Suggested seeds are available and you can choose to run either a console-like experience or a GUI experience.
 
+### Collision
+
+Every collision level, and the zone map, is a [SpatialCollisionMap](Documentation/Core/Collision/SpatialCollisionMap.md), built on the spatial indexes in `Core/ALife.Spatial`. Whether shapes really touch is decided by [CollisionDetector](Documentation/Core/Collision/CollisionDetector.md), using that project's [Overlap](Documentation/Spatial/Collisions/Overlap.md) tests. The project also has its own shapes and rigid-body physics, not yet used by the simulation; see [its documentation](Documentation/Spatial/README.md) and the MonoGame demo in `Samples/ALife.Spatial.Demo`.
+
 TODO: Assets Folder
 TODO: Core Folder
 TODO: Documentation Folder

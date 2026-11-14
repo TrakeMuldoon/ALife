@@ -16,6 +16,8 @@
   <Folder Name="/Core/">
     <Project Path="Core/ALife.Core/ALife.Core.csproj" />
     <Project Path="Core/ALife.Rendering/ALife.Rendering.csproj" />
+    <Project Path="Core/ALife.Spatial/ALife.Spatial.csproj" />
+    <Project Path="Core/ALife.Spatial.Tests/ALife.Spatial.Tests.csproj" />
     <Project Path="Core/ALife.Tests/ALife.Tests.csproj" />
   </Folder>
   <Folder Name="/Documentation/">
@@ -38,6 +40,10 @@
     <Project Path="Runners/Avalonia/ALife.Avalonia.Desktop/ALife.Avalonia.Desktop.csproj" />
     <Project Path="Runners/Avalonia/ALife.Avalonia.iOS/ALife.Avalonia.iOS.csproj" />
     <Project Path="Runners/Avalonia/ALife.Avalonia/ALife.Avalonia.csproj" />
+  </Folder>
+  <Folder Name="/Samples/">
+    <Project Path="Samples/ALife.Spatial.Benchmarks/ALife.Spatial.Benchmarks.csproj" />
+    <Project Path="Samples/ALife.Spatial.Demo/ALife.Spatial.Demo.csproj" />
   </Folder>
   <Folder Name="/SolutionItems/">
     <File Path=".gitignore" />

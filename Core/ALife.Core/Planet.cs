@@ -77,8 +77,8 @@ namespace ALife.Core
 
             //Initialize collision grid
             string colLevel = ReferenceValues.CollisionLevelPhysical;
-            instance._collisionLevels.Add(colLevel, new CollisionGrid<WorldObject>(height, width, colLevel));
-            instance.ZoneMap = new CollisionGrid<Zone>(height, width, "Zone");
+            instance._collisionLevels.Add(colLevel, new SpatialCollisionMap<WorldObject>(height, width, colLevel));
+            instance.ZoneMap = new SpatialCollisionMap<Zone>(height, width, "Zone");
 
             instance.Scenario.PlanetSetup();
         }
@@ -241,7 +241,7 @@ namespace ALife.Core
             //Further Thoughts: This is only called on the death of a world-object right now. So not very frequently. I think safety outweighs any miniscule performance gain.
             if(!_collisionLevels.ContainsKey(newLevel))
             {
-                _collisionLevels.Add(newLevel, new CollisionGrid<WorldObject>(WorldHeight, WorldWidth, newLevel));
+                _collisionLevels.Add(newLevel, new SpatialCollisionMap<WorldObject>(WorldHeight, WorldWidth, newLevel));
             }
             CollisionLevels[newLevel].Insert(mySelf);
         }
@@ -250,7 +250,7 @@ namespace ALife.Core
         {
             if(!_collisionLevels.ContainsKey(toAdd.CollisionLevel))
             {
-                _collisionLevels.Add(toAdd.CollisionLevel, new CollisionGrid<WorldObject>(WorldHeight, WorldWidth, toAdd.CollisionLevel));
+                _collisionLevels.Add(toAdd.CollisionLevel, new SpatialCollisionMap<WorldObject>(WorldHeight, WorldWidth, toAdd.CollisionLevel));
             }
             _collisionLevels[toAdd.CollisionLevel].Insert(toAdd);
 
